@@ -975,7 +975,7 @@ int main(int argc, char *argv[])
 	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
 	
 	PlatformModule module = { _platform::m() };
-	app.run_game(module);
-	//app.run_editor(module);
+	//app.run_game(module);
+	app.run_editor(module);
 }
 #endif
