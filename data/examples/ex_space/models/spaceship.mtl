@@ -1,0 +1,12 @@
+# MagicaVoxel @ Ephtracy
+
+newmtl palette
+illum 1
+Ka 0.000 0.000 0.000
+Kd 1.000 1.000 1.000
+Ks 1.000 1.000 1.000
+Pr 0.3
+Pm 1.0
+map_Kd spaceship.png
+map_Ke spaceship_emissive.png
+map_Pm spaceship_metallic.png

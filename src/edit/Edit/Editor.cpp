@@ -1,0 +1,309 @@
+//  Copyright (c) 2018 Hugo Amiard hugo.amiard@laposte.net
+//  This software is licensed  under the terms of the GNU General Public License v3.0.
+//  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
+//  This notice and the license may not be removed or altered from any source distribution.
+
+
+#include <edit/Edit/Editor.h>
+
+#include <tool//EditContext.h>
+#include <edit/Editor/Editor.h>
+
+#include <infra/StringConvert.h>
+#include <obj/Indexer.h>
+#include <refl/System.h>
+#include <refl/Class.h>
+#include <refl/Meta.h>
+
+#include <edit/Editor/Editor.h>
+#include <edit/Editor/Toolbox.h>
+
+#include <core/Entity/Entity.h>
+#include <core/World/World.h>
+#include <core/View/Vision.h>
+#include <core/Selector/Selector.h>
+
+#include <gfx-ui/GfxEdit.h>
+
+#include <uio/Edit/Section.h>
+#include <uio/Edit/Injector.h>
+#include <uio/Edit/Indexer.h>
+#include <uio/Edit/Structure.h>
+#include <uio/Edit/Inspector.h>
+#include <uio/Object.h>
+
+#include <ui/Structs/Container.h>
+#include <ui/Structs/Dock.h>
+
+#include <visu/VisuScene.h>
+
+using namespace mud; namespace toy
+{
+	void context_menu(Widget& parent, Selector& selector, Ref object)
+	{
+		UNUSED(parent); UNUSED(selector); UNUSED(object);
+		//popup(parent, [&] { parent.destroy(); }, nullptr);
+
+		//if(selector.m_selection.has(val<IdObject>(object)))
+		//	for(auto& method : selector.m_methods.store())
+		//		if(ui::button(parent, method->m_name).activated())
+		//			selector.execute(*method);
+		//else
+		//	for(auto& action : selector.m_actions.store())
+		//		if(ui::button(parent, action->m_name).activated())
+		//			selector.execute(*action);
+
+		//for(auto& action : m_echobject.m_methods)
+		//this->emplace<Deck>().maker(&make_device<CarbonMethod, DMethod>).tstore<CarbonMethod>();
+	}
+
+	string to_icon(const string& name)
+	{
+		string clean = replace_all(to_lower(name), " ", "_");
+		return "(" + clean + ")";
+	}
+
+	void edit_toolbox(Widget& parent, Toolbox& toolbox)
+	{
+		Widget& self = ui::toolbar(parent);
+		for(auto& tool : toolbox.m_tools)
+			if(ui::button(self, tool->m_name.c_str()).activated())
+				tool->activate();
+	}
+
+	void edit_toolbelt(Widget& parent, Toolbelt& toolbelt)
+	{
+		Widget& self = ui::tooldock(parent);
+
+		for(auto& name_toolbox : toolbelt.m_toolboxes)
+			edit_toolbox(self, *name_toolbox.second);
+	}
+
+	void edit_selection(Widget& parent, Selection& selection)
+	{
+		Widget& self = ui::select_list(parent);
+
+		for(Ref object : selection)
+			object_item(self, object);
+	}
+
+	void edit_selector(Widget& parent, Selector& selector)
+	{
+		Widget& self = section(parent, "Selector");
+		Widget& tabber = ui::tabber(self);
+
+		edit_selection(tabber, selector.m_selection); // "Selection"
+		edit_selection(tabber, selector.m_targets); // "Targets"
+	}
+
+	void scene_edit(Widget& parent, World& world)
+	{
+		UNUSED(parent); UNUSED(world);
+	}
+
+	void registry(Widget& parent, Indexer& indexer, Selection& selection)
+	{
+		UNUSED(selection);
+		object_indexer(parent, indexer);
+	}
+
+	std::vector<Type*> entity_types()
+	{
+		auto has_component = [](Class& cls, Type& component)
+		{
+			for(Member* member : cls.m_components)
+				if(member->m_type->is(component))
+					return true;
+			return false;
+		};
+
+		std::vector<Type*> types;
+		for(Type* type : system().m_types)
+			if(g_class[type->m_id])
+			{
+				if(has_component(cls(*type), mud::type<Entity>()))
+					types.push_back(type);
+			}
+		return types;
+	}
+
+	void registry_section(Widget& parent, Indexer& indexer, Selection& selection)
+	{
+		enum Modes { CREATE = 1 << 0 };
+
+		Section& self = section(parent, (string(indexer.m_type.m_name) + " Registry").c_str());
+		registry(*self.m_body, indexer, selection);
+
+		if(ui::modal_button(self, *self.m_toolbar, "Create", CREATE))
+		{
+			static std::vector<Type*> types = entity_types();
+
+			Widget& modal = ui::auto_modal(self, CREATE, { 600, 400 });
+			object_switch_creator(*modal.m_body, types);
+		}
+	}
+
+	void library(Widget& parent, const std::vector<Type*>& types, Selection& selection)
+	{
+		Tabber& self = ui::tabber(parent);
+
+		for(Type* type : types)
+			if(Widget* tab = ui::tab(self, type->m_name))
+			{
+				registry_section(*tab, indexer(*type), selection);
+			}
+	}
+
+	void library_section(Widget& parent, const std::vector<Type*>& types, Selection& selection)
+	{
+		Section& self = section(parent, "Library");
+		library(*self.m_body, types, selection);
+	}
+
+	void editor_menu(Widget& parent, ActionGroup& action_group)
+	{
+		Widget& self = ui::menu(parent, action_group.m_name.c_str());
+
+		if(self.m_body)
+			for(auto& action : action_group.m_actions)
+			{
+				if(ui::button(*self.m_body, action.first.c_str()).activated())
+					action.second();
+			}
+	}
+
+	void editor_menu_bar(Widget& parent, Editor& editor)
+	{
+		Widget& self = ui::menubar(parent);
+
+		for(auto& name_group : editor.m_action_groups)
+			editor_menu(self, name_group.second);
+	}
+
+	string entity_name(Entity& entity)
+	{
+		return string(entity.m_complex.m_type.m_name) + ":" + to_string(entity.m_id);
+	}
+
+	string entity_icon(Entity& entity)
+	{
+		return "(" + string(entity.m_complex.m_type.m_name) + ")";
+	}
+
+	void outliner_node(Widget& parent, Entity& entity, std::vector<Ref>& selection)
+	{
+		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
+
+		self.m_header->set_state(SELECTED, vector_has(selection, Ref(&entity.m_complex)));
+
+		if(self.m_header->activated())
+			vector_select(selection, Ref(&entity.m_complex));
+
+		//object_item(self, object);
+
+		if(self.m_body)
+			for(Entity* child : entity.m_contents.store())
+			{
+				outliner_node(*self.m_body, *child, selection);
+			}
+	}
+
+	void outliner_graph(Widget& parent, Entity& entity, std::vector<Ref>& selection)
+	{
+		ScrollSheet& sheet = ui::scroll_sheet(parent);
+		Widget& tree = ui::tree(*sheet.m_body);
+		outliner_node(tree, entity, selection);
+	}
+
+	void editor_graph(Widget& parent, Editor& editor, Selection& selection)
+	{
+		Section& self = section(parent, "Outliner");
+
+		if(!editor.m_edited_world)
+			return;
+
+		Entity& origin = editor.m_edited_world->origin();
+		//structure_view(*self.m_body, Ref(&origin), selection);
+		outliner_graph(*self.m_body, origin, selection);
+	}
+
+	void graphics_debug_section(Widget& parent, Dockspace& dockspace, Editor& editor)
+	{
+		for(Scene* scene : editor.m_scenes)
+		{
+			editor.m_graphics_debug.m_debug_draw_csm = true;
+			if(editor.m_graphics_debug.m_debug_draw_csm)
+			{
+				Widget* dock = ui::dockitem(dockspace, "Screen", carray<uint16_t, 2>{ 0U, 1U });
+				//if(dock)
+				{
+					//Viewer& viewer = ui::viewer(*dock, *scene);
+					Viewer& viewer = ui::viewer(parent, *scene);
+					viewer.m_camera.m_far = 1000.f;
+					ui::orbit_controller(viewer);
+
+					scene->m_pool->iterate_objects<Light>([&](Light& light) {
+						debug_draw_light_slices(scene->m_graph, light);
+					});
+				}
+			}
+		}
+	}
+	
+	Docksystem& editor_docksystem()
+	{
+		static Docksystem docksystem;
+		return docksystem;
+	}
+
+	void editor_components(Widget& parent, Editor& editor)
+	{
+		editor.m_tool_context.m_action_stack = &editor.m_action_stack;
+		editor.m_tool_context.m_work_plane = &editor.m_work_plane;
+
+		static Docksystem& docksystem = editor_docksystem();
+		Dockspace& dockspace = ui::dockspace(parent, docksystem);
+
+		std::vector<Type*> library_types = { &type<Entity>(), &type<World>() };
+		if(Widget* dock = ui::dockitem(dockspace, "Outliner", carray<uint16_t, 2>{ 0U, 0U })) //carray<uint16_t, 2>{ 0U, 0U }))
+			editor_graph(*dock, editor, editor.m_selection);
+		if(Widget* dock = ui::dockitem(dockspace, "Library", carray<uint16_t, 2>{ 0U, 0U })) //carray<uint16_t, 2>{ 0U, 0U }))
+			library_section(*dock, library_types, editor.m_selection);
+		if(Widget* dock = ui::dockitem(dockspace, "Inspector", carray<uint16_t, 2>{ 0U, 2U })) //carray<uint16_t, 2>{ 0U, 2U }))
+			object_editor(*dock, editor.m_selection);
+		//edit_selector(self, editor.m_selection); // dockid { 0, 2 }
+		if(Widget* dock = ui::dockitem(dockspace, "Script", carray<uint16_t, 2>{ 0U, 2U }))
+			script_editor(*dock, editor.m_script_editor);
+		//current_brush_edit(self, editor); // dockid { 0, 0 }
+		//ui_edit(self, editor.m_selection); // dockid { 0, 2 }
+
+		editor.m_screen = ui::dockitem(dockspace, "Screen", carray<uint16_t, 2>{ 0U, 1U }, 4.f);
+		
+		//if(editor.m_editedScene)
+		{
+			//scene_viewport(self, *editor.m_editedScene); // dockid { 0, 1 } dockspan 4.f
+			//painter_panel(self, *editor.m_editedScene); // dockid { 0, 2 }
+		}
+
+		if(editor.m_spatial_tool && editor.m_viewer)
+			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection);
+	}
+
+	void editor_viewer_overlay(Viewer& viewer, Editor& editor)
+	{
+		Widget& layout = ui::screen(*editor.m_viewer);
+		Widget& toolbar = ui::row(layout);
+		tools_transform(toolbar, editor);
+	}
+
+	void editor(Widget& parent, Editor& editor)
+	{
+		Widget& self = ui::layout(parent);
+
+		editor_menu_bar(self, editor);
+		edit_toolbelt(self, editor.m_toolbelt);
+		editor_components(self, editor);
+
+		//m_scriptEditor.m_actions.emplace<Response>("Create Scripted Brush", [this] { this->createScriptedBrush(); });
+	}
+}

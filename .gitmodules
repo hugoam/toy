@@ -1,0 +1,13 @@
+[submodule "3rdparty/bullet"]
+	path = 3rdparty/bullet
+	url = https://github.com/bulletphysics/bullet3
+	branch = master
+[submodule "3rdparty/recast"]
+	path = 3rdparty/recast
+	url = https://github.com/recastnavigation/recastnavigation
+[submodule "3rdparty/remotery"]
+	path = 3rdparty/remotery
+	url = https://github.com/Celtoys/Remotery
+[submodule "mud"]
+	path = mud
+	url = https://github.com/hugoam/mud/

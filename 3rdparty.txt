@@ -1,0 +1,24 @@
+This is a list of the licenses of all dependencies used directly by toy and mud.
+All these licenses are GPL v3.0 compatible. If I am mistaken about any of these please let me know.
+
+- base64           Public Domain
+- bgfx             BSD-2-Clause
+- bimg             BSD-2-Clause
+- bx               BSD-2-Clause
+- FastNoise        MIT
+- GENie            MIT
+- glfw             Zlib
+- glm              MIT
+- json11           MIT
+- jsonlua          MIT
+- lua              MIT
+- mikktspace       Zlib
+- nanovg           Zlib
+- ogg              BSD-3-Clause
+- pycgen           Apache-2.0
+- sqlite3          Public Domain
+- stb              Public Domain
+- vg-renderer      BSD-2-Clause
+- vorbis           BSD-3-Clause
+- bullet           Zlib
+- recast           Zlib

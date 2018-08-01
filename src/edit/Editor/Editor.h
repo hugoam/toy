@@ -1,0 +1,61 @@
+//  Copyright (c) 2018 Hugo Amiard hugo.amiard@laposte.net
+//  This software is licensed  under the terms of the GNU General Public License v3.0.
+//  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
+//  This notice and the license may not be removed or altered from any source distribution.
+
+#pragma once
+
+#include <tool/Tool.h>
+#include <tool/ActionStack.h>
+#include <tool/EditContext.h>
+#include <edit/Forward.h>
+#include <edit/Editor/Toolbox.h>
+
+#include <uio/Edit/Script.h>
+
+using namespace mud; namespace toy
+{
+	using Selection = std::vector<Ref>;
+
+	export_ class refl_ TOY_EDIT_EXPORT PlayTool : public Tool
+	{
+	public:
+		PlayTool(ToolContext& context, Editor& editor);
+
+		virtual void activate() final;
+
+		Editor& m_editor;
+	};
+
+	struct refl_ TOY_EDIT_EXPORT ActionGroup
+	{
+		string m_name;
+		std::map<string, std::function<void()>> m_actions;
+	};
+
+	struct refl_ TOY_EDIT_EXPORT GraphicsDebug
+	{
+		bool m_debug_draw_csm = false;
+	};
+
+	class refl_ TOY_EDIT_EXPORT Editor : public EditContext
+    {
+    public:
+		Editor(GfxSystem& gfx_system);
+        
+		Toolbelt m_toolbelt;
+
+		std::map<string, ActionGroup> m_action_groups;
+
+		World* m_edited_world = nullptr;
+		bool m_run_game = false;
+
+		std::vector<Scene*> m_scenes;
+
+		GraphicsDebug m_graphics_debug;
+
+		void create_scripted_brush();
+
+		ActionGroup& action_group(const string& name);
+    };
+}

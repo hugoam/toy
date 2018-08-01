@@ -1,0 +1,6 @@
+*.sh text eol=lf
+*.sc text eol=lf
+*.mako text eol=lf
+*.patch text eol=lf
+mud/src/db/sqlite3.c linguist-vendored
+mud/src/db/sqlite3.h linguist-vendored

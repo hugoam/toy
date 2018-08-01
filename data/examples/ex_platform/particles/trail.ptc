@@ -1,0 +1,172 @@
+{
+	"angle": {
+		"value": 0,
+		"curve": {
+			"keys": [0]
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Constant"
+	},
+	"billboard": true,
+	"blend": {
+		"curve": {
+			"keys": [0, 1]
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Curve"
+	},
+	"blend_mode": "Add",
+	"colour": {
+		"curve": {
+			"keys": [{
+					"a": 1,
+					"b": 0.32599994540214539,
+					"g": 0.16581642627716064,
+					"r": 0.074000030755996704
+				}, {
+					"a": 1,
+					"b": 0.51299995183944702,
+					"g": 0.21875882148742676,
+					"r": 0.087000012397766113
+				}, {
+					"a": 1,
+					"b": 0.75990009307861328,
+					"g": 0.26009988784790039,
+					"r": 0.70987379550933838
+				}
+			]
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Curve"
+	},
+	"direction": {
+		"x": 0,
+		"y": 0,
+		"z": -1
+	},
+	"duration": 0.5,
+	"flow": "Outward",
+	"gravity": {
+		"value": 0,
+		"curve": {
+			"keys": []
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Constant"
+	},
+	"lifetime": {
+		"value": 1,
+		"curve": {
+			"keys": []
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Constant"
+	},
+	"loop": true,
+	"name": "particles_0",
+	"rate": {
+		"value": 100,
+		"curve": {
+			"keys": []
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Constant"
+	},
+	"rotation": {
+		"w": 1,
+		"x": 0,
+		"y": 0,
+		"z": 0
+	},
+	"scale": {
+		"curve": {
+			"keys": [1, 0.5, 0.20000000149011612]
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Curve"
+	},
+	"shape": {
+		"shape": {
+			"type": "Sphere",
+			"value": {
+				"radius": 0.10000000149011612
+			}
+		}
+	},
+	"speed": {
+		"value": 0.01,
+		"curve": {
+			"keys": []
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Constant"
+	},
+	"sprite_frame": {
+		"value": 0,
+		"curve": {
+			"keys": []
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Constant"
+	},
+	"sprite_name": "particle.ktx",
+	"start_time": 0,
+	"volume": {
+		"value": 0.2,
+		"curve": {
+			"keys": []
+		},
+		"max_curve": {
+			"keys": []
+		},
+		"min_curve": {
+			"keys": []
+		},
+		"mode": "Constant"
+	}
+}
