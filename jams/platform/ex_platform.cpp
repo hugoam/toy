@@ -397,7 +397,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 
 void paint_lamp(Gnode& parent, Lamp& lamp)
 {
-	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::None, Colour::Red));
+	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::None, Colour::Red), ITEM_SELECTABLE);
 	gfx::light(parent, LightType::Point, false, Colour(1.f, 0.3f, 0.2f), 10.f);
 }
 
@@ -536,7 +536,7 @@ Material& plain_material(GfxSystem& gfx_system, cstring name, const Colour& colo
 void paint_crate(Gnode& parent, Crate& crate)
 {
 	static Material& material = plain_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
-	gfx::shape(parent, Cube(crate.m_extents), Symbol(Colour::None, Colour::White), 0U, &material);
+	gfx::shape(parent, Cube(crate.m_extents), Symbol(Colour::None, Colour::White), ITEM_SELECTABLE, &material);
 }
 
 void paint_scene(Gnode& parent)

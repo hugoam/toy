@@ -201,7 +201,7 @@ using namespace mud; namespace toy
 					bounds.mergeSafe(item.m_aabb);
 		});
 
-		gfx::shape(parent, bounds, Symbol(Colour::White));
+		gfx::draw(parent, bounds, Symbol(Colour::White));
 	}
 
 	void update_camera(Camera& camera, mud::Camera& gfx_camera)

@@ -24,6 +24,7 @@
 #include <core/Selector/Selector.h>
 
 #include <gfx-ui/GfxEdit.h>
+#include <gfx-ui/Viewport.h>
 
 #include <uio/Edit/Section.h>
 #include <uio/Edit/Injector.h>
@@ -284,6 +285,17 @@ using namespace mud; namespace toy
 			//scene_viewport(self, *editor.m_editedScene); // dockid { 0, 1 } dockspan 4.f
 			//painter_panel(self, *editor.m_editedScene); // dockid { 0, 2 }
 		}
+
+		if(editor.m_viewer)
+			viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection);
+
+		/*if(editor.m_viewer)
+		{
+			if(editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked))
+			{
+
+			}
+		}*/
 
 		if(editor.m_spatial_tool && editor.m_viewer)
 			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection);
