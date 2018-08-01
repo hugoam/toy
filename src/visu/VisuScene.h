@@ -111,7 +111,7 @@ using namespace mud; namespace toy
 
 	export_ TOY_VISU_EXPORT void update_camera(Camera& camera, mud::Camera& gfx_camera);
 
-	export_ TOY_VISU_EXPORT void paint_selection(Gnode& parent, Selection& selection);
+	export_ TOY_VISU_EXPORT void paint_selection(Gnode& parent, Selection& selection, Ref hovered);
 
 	export_ TOY_VISU_EXPORT void paint_camera(Gnode& parent, Camera& camera);
 	export_ TOY_VISU_EXPORT void paint_light(Gnode& parent, LightSource& light);

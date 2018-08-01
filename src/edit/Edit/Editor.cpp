@@ -287,15 +287,9 @@ using namespace mud; namespace toy
 		}
 
 		if(editor.m_viewer)
-			viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection);
-
-		/*if(editor.m_viewer)
 		{
-			if(editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked))
-			{
-
-			}
-		}*/
+			viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection);
+		}
 
 		if(editor.m_spatial_tool && editor.m_viewer)
 			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection);

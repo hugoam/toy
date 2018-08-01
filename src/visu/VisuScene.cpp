@@ -191,17 +191,23 @@ using namespace mud; namespace toy
 		scene.entity_painter<WorldPage>("WorldPage", store, paint_world_page);
 	}
 
-	void paint_selection(Gnode& parent, Selection& selection)
+	void paint_selection(Gnode& parent, Selection& selection, Ref hovered)
 	{
-		Aabb bounds;
+		Aabb select_bounds;
+		Aabb hover_bounds;
+
 		parent.m_scene->m_pool->iterate_objects<Item>([&](Item& item)
 		{
 			for(Ref object : selection)
 				if(item.m_node.m_object == object)
-					bounds.mergeSafe(item.m_aabb);
+					select_bounds.mergeSafe(item.m_aabb);
+
+			if(hovered != Ref() && item.m_node.m_object == hovered)
+				hover_bounds.mergeSafe(item.m_aabb);
 		});
 
-		gfx::draw(parent, bounds, Symbol(Colour::White));
+		gfx::draw(parent, select_bounds, Symbol(Colour::White));
+		gfx::draw(parent, hover_bounds, Symbol(Colour::AlphaGrey));
 	}
 
 	void update_camera(Camera& camera, mud::Camera& gfx_camera)

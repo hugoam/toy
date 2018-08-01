@@ -273,7 +273,7 @@ using namespace mud; namespace toy
 
 		if(m_editor.m_viewer)
 		{
-			paint_selection(m_editor.m_viewer->m_scene->m_graph, m_editor.m_selection);
+			paint_selection(m_editor.m_viewer->m_scene->m_graph, m_editor.m_selection, m_editor.m_viewer->m_hovered);
 			toy::editor_viewer_overlay(*m_editor.m_viewer, m_editor);
 		}
 	}
