@@ -11,12 +11,12 @@ dofile(path.join(MUD_DIR, "scripts/toolchain.lua"))
 function toy_binary_config()
     mud_binary_config()
     
-    configuration { "not linux", "not asmjs" }
+    configuration { "not linux", "not osx", "not asmjs" }
         defines {
             "TOY_RESOURCE_PATH=\"" .. path.join(TOY_DIR, "data") .. "/\"",
         }
 
-    configuration { "linux", "not asmjs" }
+    configuration { "linux or osx", "not asmjs" }
         defines {
             "TOY_RESOURCE_PATH=\\\"" .. path.join(TOY_DIR, "data") .. "/\\\"",
         }

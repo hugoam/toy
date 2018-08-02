@@ -55,7 +55,7 @@ using namespace mud; namespace toy
 		virtual void add(Ref value) final { self().add(val<T>(value)); }
 		virtual void remove(Ref value) final { self().remove(val<T>(value)); }
 
-		virtual void iterate(const std::function<void(Ref)>& callback) const { self().iterate([this, callback](T& object) { return callback(Ref(&object)); }); }
+		virtual void iterate(const std::function<void(Ref)>& callback) const { self().iterate([callback](T& object) { return callback(Ref(&object)); }); }
 		virtual bool has(Ref object) const { return self().has(val<T>(object)); }
 
 		std::vector<T*> copy() const
