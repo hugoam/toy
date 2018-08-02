@@ -29,19 +29,16 @@ using namespace mud; namespace toy
 
 	Editor::Editor(GfxSystem& gfx_system)
 		: EditContext(gfx_system)
+		, m_undo_tool(m_tool_context)
+		, m_redo_tool(m_tool_context)
+		, m_play_tool(m_tool_context, *this)
+		, m_view_tools(m_tool_context)
+		, m_frame_view_tool(m_tool_context)
 	{
-		m_toolbelt.toolbox("Action").m_tools.push_back(make_object<UndoTool>(m_tool_context));
-		m_toolbelt.toolbox("Action").m_tools.push_back(make_object<RedoTool>(m_tool_context));
+		vector_extend(m_toolbelt.toolbox("Action").m_tools, { &m_undo_tool, &m_redo_tool, &m_play_tool });
+		//vector_extend(m_toolbelt.toolbox("View").m_tools, { &m_view_tools.m_top, &m_view_tools.m_bottom, &m_view_tools.m_front, &m_view_tools.m_back, &m_view_tools.m_left, &m_view_tools.m_right });
+		vector_extend(m_toolbelt.toolbox("View").m_tools, { &m_frame_view_tool });
 
-		m_toolbelt.toolbox("Action").m_tools.push_back(make_object<PlayTool>(m_tool_context, *this));
-
-		//m_toolbelt.toolbox("View").m_tools.add(top_view_tool(camera));
-		//m_toolbelt.toolbox("View").m_tools.add(bottom_view_tool(camera));
-		//m_toolbelt.toolbox("View").m_tools.add(front_view_tool(camera));
-		//m_toolbelt.toolbox("View").m_tools.add(back_view_tool(camera));
-		//m_toolbelt.toolbox("View").m_tools.add(left_view_tool(camera));
-		//m_toolbelt.toolbox("View").m_tools.add(right_view_tool(camera));
-				  
 		//m_toolbelt.toolbox("Brushes").m_tools.add(make_object<PlaceBrush>(*this));
 		//m_toolbelt.toolbox("Brushes").m_tools.add(make_object<CircleBrush>(*this));
 

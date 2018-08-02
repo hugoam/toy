@@ -45,6 +45,15 @@ using namespace mud; namespace toy
         
 		Toolbelt m_toolbelt;
 
+		UndoTool m_undo_tool;
+		RedoTool m_redo_tool;
+
+		PlayTool m_play_tool;
+		
+		ViewTools m_view_tools;
+
+		FrameViewTool m_frame_view_tool;
+
 		std::map<string, ActionGroup> m_action_groups;
 
 		World* m_edited_world = nullptr;

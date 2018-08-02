@@ -37,7 +37,7 @@ using namespace mud; namespace toy
 
 		for(auto& tool : m_tools)
 			if(tool->enabled(targets))
-				vector_add(m_current_tools, tool.get());
+				vector_add(m_current_tools, tool);
 	}
 
 	Toolbelt::Toolbelt()

@@ -64,6 +64,7 @@ using namespace mud; namespace toy
 		return "(" + clean + ")";
 	}
 
+#if 0
 	void edit_toolbox(Widget& parent, Toolbox& toolbox)
 	{
 		Widget& self = ui::toolbar(parent);
@@ -75,10 +76,24 @@ using namespace mud; namespace toy
 	void edit_toolbelt(Widget& parent, Toolbelt& toolbelt)
 	{
 		Widget& self = ui::tooldock(parent);
-
 		for(auto& name_toolbox : toolbelt.m_toolboxes)
 			edit_toolbox(self, *name_toolbox.second);
 	}
+#else
+	void edit_toolbox(Widget& parent, Toolbox& toolbox)
+	{
+		for(auto& tool : toolbox.m_tools)
+			if(ui::button(parent, tool->m_name.c_str()).activated())
+				tool->activate();
+	}
+
+	void edit_toolbelt(Widget& parent, Toolbelt& toolbelt)
+	{
+		Widget& self = ui::toolbar(parent);
+		for(auto& name_toolbox : toolbelt.m_toolboxes)
+			edit_toolbox(self, *name_toolbox.second);
+	}
+#endif
 
 	void edit_selection(Widget& parent, Selection& selection)
 	{
@@ -259,18 +274,15 @@ using namespace mud; namespace toy
 
 	void editor_components(Widget& parent, Editor& editor)
 	{
-		editor.m_tool_context.m_action_stack = &editor.m_action_stack;
-		editor.m_tool_context.m_work_plane = &editor.m_work_plane;
-
 		static Docksystem& docksystem = editor_docksystem();
 		Dockspace& dockspace = ui::dockspace(parent, docksystem);
 
 		std::vector<Type*> library_types = { &type<Entity>(), &type<World>() };
-		if(Widget* dock = ui::dockitem(dockspace, "Outliner", carray<uint16_t, 2>{ 0U, 0U })) //carray<uint16_t, 2>{ 0U, 0U }))
+		if(Widget* dock = ui::dockitem(dockspace, "Outliner", carray<uint16_t, 2>{ 0U, 0U }))
 			editor_graph(*dock, editor, editor.m_selection);
-		if(Widget* dock = ui::dockitem(dockspace, "Library", carray<uint16_t, 2>{ 0U, 0U })) //carray<uint16_t, 2>{ 0U, 0U }))
+		if(Widget* dock = ui::dockitem(dockspace, "Library", carray<uint16_t, 2>{ 0U, 0U }))
 			library_section(*dock, library_types, editor.m_selection);
-		if(Widget* dock = ui::dockitem(dockspace, "Inspector", carray<uint16_t, 2>{ 0U, 2U })) //carray<uint16_t, 2>{ 0U, 2U }))
+		if(Widget* dock = ui::dockitem(dockspace, "Inspector", carray<uint16_t, 2>{ 0U, 2U }))
 			object_editor(*dock, editor.m_selection);
 		//edit_selector(self, editor.m_selection); // dockid { 0, 2 }
 		if(Widget* dock = ui::dockitem(dockspace, "Script", carray<uint16_t, 2>{ 0U, 2U }))
@@ -288,7 +300,14 @@ using namespace mud; namespace toy
 
 		if(editor.m_viewer)
 		{
+			if(MouseEvent mouse_event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputModifier::None, false))
+				editor.m_viewer->take_focus();
+
 			viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection);
+
+			KeyEvent key_event = editor.m_viewer->key_event(KC_F, EventType::Pressed);
+			if(key_event)
+				editor.m_frame_view_tool.activate();
 		}
 
 		if(editor.m_spatial_tool && editor.m_viewer)
@@ -304,6 +323,15 @@ using namespace mud; namespace toy
 
 	void editor(Widget& parent, Editor& editor)
 	{
+		editor.m_tool_context.m_action_stack = &editor.m_action_stack;
+		editor.m_tool_context.m_work_plane = &editor.m_work_plane;
+		editor.m_tool_context.m_selection = &editor.m_selection;
+
+		if(editor.m_viewer)
+		{
+			editor.m_tool_context.m_camera = &editor.m_viewer->m_camera;
+		}
+
 		Widget& self = ui::layout(parent);
 
 		editor_menu_bar(self, editor);

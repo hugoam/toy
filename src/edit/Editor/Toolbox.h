@@ -28,7 +28,7 @@ using namespace mud; namespace toy
 		virtual ~Toolbox();
 
 		string m_name;
-		std::vector<object_ptr<Tool>> m_tools;
+		std::vector<Tool*> m_tools;
 	};
 
 	class refl_ DynamicToolbox : public Toolbox
