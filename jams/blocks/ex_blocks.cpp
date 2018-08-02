@@ -498,7 +498,7 @@ void paint_block_wire(Gnode& parent, Block& block)
 void paint_block(Gnode& parent, TileBlock& block)
 {
 	if(block.m_wfc_block.m_wave.m_solved)
-		paint_tileblock(parent, Ref(&block.m_entity), block.m_wfc_block);
+		paint_tiles(parent, Ref(&block.m_entity), block.m_wfc_block);
 }
 
 void paint_scene(Gnode& parent, bool radiance)

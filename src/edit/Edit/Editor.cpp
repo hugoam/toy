@@ -117,12 +117,6 @@ using namespace mud; namespace toy
 		UNUSED(parent); UNUSED(world);
 	}
 
-	void registry(Widget& parent, Indexer& indexer, Selection& selection)
-	{
-		UNUSED(selection);
-		object_indexer(parent, indexer);
-	}
-
 	std::vector<Type*> entity_types()
 	{
 		auto has_component = [](Class& cls, Type& component)
@@ -148,14 +142,15 @@ using namespace mud; namespace toy
 		enum Modes { CREATE = 1 << 0 };
 
 		Section& self = section(parent, (string(indexer.m_type.m_name) + " Registry").c_str());
-		registry(*self.m_body, indexer, selection);
+		complex_indexer(*self.m_body, indexer, &selection);
 
+		//for(Type* type : cls(indexer.m_type).m_complexes)
 		if(ui::modal_button(self, *self.m_toolbar, "Create", CREATE))
 		{
 			static std::vector<Type*> types = entity_types();
 
-			Widget& modal = ui::auto_modal(self, CREATE, { 600, 400 });
-			object_switch_creator(*modal.m_body, types);
+			Widget& modal = ui::auto_modal(self, CREATE); //, { 600, 400 });
+			object_switch_creator(modal, types);
 		}
 	}
 

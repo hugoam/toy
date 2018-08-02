@@ -520,7 +520,7 @@ void paint_human(Gnode& parent, Human& human)
 void paint_world_block(Gnode& parent, TileBlock& block, const uvec3* exclude = nullptr)
 {
 	if(!block.m_wfc_block.m_wave.m_solved) return;
-	paint_tileblock(parent, Ref(&block.m_entity), block.m_wfc_block, uvec3(UINT_MAX), exclude);
+	paint_tiles(parent, Ref(&block.m_entity), block.m_wfc_block, uvec3(UINT_MAX), exclude);
 	if(!block.m_world_page.m_build_geometry)
 		block.m_world_page.m_build_geometry = [&](WorldPage& page) { build_block_geometry(*parent.m_scene, page, block); };
 }

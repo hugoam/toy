@@ -26,3 +26,4 @@ script:
 
 os:
   - linux
+  - osx
