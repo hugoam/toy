@@ -12,8 +12,6 @@ toy simplicity and modularity makes it deeply **hackable**, **extensible** and *
 
 As a collection of game programming **building blocks**, toy aims to foster an ecosystem of **simple minimal reusable components** suited for **building your own game technology**.
 
-Warning: toy is under heavy development, not yet stable, fully documented or production ready.
-
 Note: I've released toy, for the time being, under the **GPL v3.0** license, hoping for it to evolve into a truly free and open-source technology, by releasing under a **more permissive license**: however this can only happen if it secures a regular financial support, to ensure it's funded as an open-source project: this is where your help comes into play :)
 
 ### principles
