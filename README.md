@@ -4,13 +4,14 @@
 | ------------- | ------------- | --------- |
 [![Build Status](https://travis-ci.org/hugoam/toy.svg?branch=master)](https://travis-ci.org/hugoam/toy) [![Build status](https://ci.appveyor.com/api/projects/status/4a77n3scl71ybcgj?svg=true)](https://ci.appveyor.com/project/hugoam/toy) | [![Community](https://img.shields.io/discourse/https/discourse.toyengine.io/posts.svg)](https://discourse.toyengine.io) [![Gitter](https://badges.gitter.im/hugoam/mud.svg)](https://gitter.im/hugoam/mud) | [![Patreon](https://img.shields.io/badge/donate-patreon-orange.svg)](https://www.patreon.com/bePatron?u=11301355)
 
+
 toy is a **thin and modular c++ game engine**. it aims to provide the **thinnest and simplest stack of technology** for making games **directly from c++**. toy offers **simple expressive c++ idioms** for [user interface](), [rendering](), [audio](),  and the seamless extension of your game code with **zero-cost** [tools](), [editors]() and [scripting](), to design full featured 2d or 3d games in **fast iterations**. toy is built on top of the underlying [mud](https://github.com/hugoam/mud) library, which provides most functionality.
+
+**toy is under heavy development, not yet stable, fully documented or production ready. this mean we can't guarantee any kind of stability yet (including the git history too)**
 
 toy simplicity and modularity makes it deeply **hackable**, **extensible** and **versatile**. toy is perfect to build games with **atypical constraint**: complex user interface and rendering schemes, procedural generation, etc. it provides a **fully programmable 3d renderer**, with full control over *shaders, materials and render paths*, as well as higher level primitives and systems such as **entities**, **physics**, **navmesh generation and navigation**, and **procedural generation** helpers.
 
 As a collection of game programming **building blocks**, toy aims to foster an ecosystem of **simple minimal reusable components** suited for **building your own game technology**.
-
-Warning: toy is under heavy development, not yet stable, fully documented or production ready.
 
 Note: I've released toy, for the time being, under the **GPL v3.0** license, hoping for it to evolve into a truly free and open-source technology, by releasing under a **more permissive license**: however this can only happen if it secures a regular financial support, to ensure it's funded as an open-source project: this is where your help comes into play :)
 
