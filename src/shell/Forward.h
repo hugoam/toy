@@ -18,7 +18,6 @@
 #include <ctx/Forward.h>
 #include <ui/Forward.h>
 #include <uio/Forward.h>
-#include <snd/Forward.h>
 #include <ctx-glfw/Forward.h>
 #include <ui-vg/Forward.h>
 #include <bgfx/Forward.h>
@@ -58,12 +57,10 @@ namespace glm {
     
 }
 
-namespace mud {
-namespace gfx {
+namespace bx {
 
     
     
-}
 }
 
 namespace json11 {
@@ -86,10 +83,12 @@ namespace detail {
 }
 }
 
-namespace bgfx {
+namespace mud {
+namespace gfx {
 
     
     
+}
 }
 
 namespace bimg {
@@ -106,10 +105,11 @@ namespace toy {
     struct GameScene;
     struct Game;
     class GameModule;
+    class GameModuleBind;
     class GameShell;
 }
 
-namespace bx {
+namespace bgfx {
 
     
     

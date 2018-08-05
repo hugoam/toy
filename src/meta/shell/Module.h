@@ -20,7 +20,6 @@
 #include <meta/ctx/Module.h>
 #include <meta/ui/Module.h>
 #include <meta/uio/Module.h>
-#include <meta/snd/Module.h>
 #include <meta/ctx-glfw/Module.h>
 #include <meta/ui-vg/Module.h>
 #include <meta/bgfx/Module.h>
