@@ -367,6 +367,7 @@ void Player::spawn(const vec3& start_position)
 	//m_human->m_headlight = false;
 	m_human->m_stealth = true;
 	m_human->m_walk = false;
+	m_human->m_life = 5.f;
 }
 
 void paint_bullet(Gnode& parent, Bullet& bullet)
@@ -647,7 +648,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 	ui::velocity_controller(viewer, controller.m_force, controller.m_torque, speed);
 
 	if(viewer.key_event(KC_SPACE, EventType::Stroked))
-		human.m_solid->impulse(Y3 * 16.f, Zero3);
+		human.m_solid->impulse(Y3 * 20.f, Zero3);
 
 	if(controller.m_force != Zero3 || controller.m_torque != Zero3)
 	{
@@ -712,7 +713,7 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 			//ui::fill_bar(row, ratio);
 		};
 
-		ui::label(left_panel, "Press ARROWS to move, CTRL to activate shield, SHIFT to switch headlight, SPACE to jump, and LEFT CLICK to fire");
+		//ui::label(left_panel, "Press ARROWS to move, CTRL to activate shield, SHIFT to switch headlight, SPACE to jump, and LEFT CLICK to fire");
 		if(false)
 		{
 			bar(left_panel, health_bar_style(), "(health64)", human.m_life);
@@ -886,7 +887,7 @@ public:
 
 		if(location.m_name != nullptr)
 		{
-			LuaScript& script = app.m_editor.m_script_editor.create_script("enemy_ai");
+			TextScript& script = app.m_editor.m_script_editor.create_script("enemy_ai");
 			script.m_script = read_text_file(std::string(location.m_location) + location.m_name);
 		}
 #endif
@@ -975,7 +976,7 @@ int main(int argc, char *argv[])
 	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
 	
 	PlatformModule module = { _platform::m() };
-	//app.run_game(module);
-	app.run_editor(module);
+	app.run_game(module);
+	//app.run_editor(module);
 }
 #endif

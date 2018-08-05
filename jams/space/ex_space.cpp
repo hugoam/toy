@@ -924,7 +924,7 @@ Player::Player(Galaxy* galaxy, Commander* commander)
 
 void ex_space_lua_check(GameShell& shell, Galaxy& galaxy)
 {
-	LuaInterpreter& lua = *shell.m_interpreter;
+	LuaInterpreter& lua = *shell.m_lua;
 
 	lua.set("col", Ref(&Colour::Pink));
 	lua.call("print('col.r = ' .. col.r)");

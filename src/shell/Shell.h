@@ -3,11 +3,13 @@
 
 #include <tree/Node.h>
 #include <refl/System.h>
+#include <refl/Class.h>
 #include <shell/Forward.h>
 #include <core/Player/Player.h>
 
 #include <edit/Editor/Editor.h>
 #include <lang/Lua.h>
+#include <lang/Wren.h>
 
 #include <visu/VisuScene.h>
 
@@ -24,7 +26,7 @@ using namespace mud; namespace toy
 	
 	using Selection = std::vector<Ref>;
 
-	struct TOY_SHELL_EXPORT GameScene : public VisuScene
+	struct refl_ TOY_SHELL_EXPORT GameScene : public VisuScene
 	{
 		Selection& m_selection;
 		Game& m_game;
@@ -40,7 +42,7 @@ using namespace mud; namespace toy
 		Pause,
 	};
 
-	struct TOY_SHELL_EXPORT Game : public NonCopy
+	struct refl_ TOY_SHELL_EXPORT Game : public NonCopy
 	{
 		Game(User& user, GfxSystem& gfx_system);
 		~Game();
@@ -60,23 +62,38 @@ using namespace mud; namespace toy
 		std::vector<unique_ptr<GameScene>> m_scenes;
 	};
 
-	using GameCallback = void(*)(GameShell& shell, Game& game);
-	using SceneCallback = void(*)(GameShell& shell, GameScene& scene);
+	using GameCallback = void(*)(GameModule& module, GameShell& shell, Game& game);
+	using SceneCallback = void(*)(GameModule& module, GameShell& shell, GameScene& scene);
 
-	class TOY_SHELL_EXPORT GameModule
+	class refl_ TOY_SHELL_EXPORT GameModule
 	{
 	public:
-		GameModule(Module& module)
+		constr_ GameModule(Module& module)
 			: m_module(&module)
 		{}
 
 		string m_module_path = "";
 		Module* m_module = nullptr;
 
-		virtual void init(GameShell& shell, Game& game) = 0;
-		virtual void start(GameShell& shell, Game& game) = 0;
-		virtual void pump(GameShell& shell, Game& game) = 0;
-		virtual void scene(GameShell& shell, GameScene& scene) { UNUSED(shell); UNUSED(scene); }
+		meth_ virtual void init(GameShell& shell, Game& game) = 0;
+		meth_ virtual void start(GameShell& shell, Game& game) = 0;
+		meth_ virtual void pump(GameShell& shell, Game& game) = 0;
+		meth_ virtual void scene(GameShell& shell, GameScene& scene) { UNUSED(shell); UNUSED(scene); }
+	};
+
+	class refl_ TOY_SHELL_EXPORT GameModuleBind : public GameModule
+	{
+	public:
+		constr_ GameModuleBind(Module& module, const VirtualMethod& call)
+			: GameModule(module)
+		{}
+
+		virtual void init(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::init), Ref(this), { params, 2 }); }
+		virtual void start(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::start), Ref(this), { params, 2 }); }
+		virtual void pump(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::pump), Ref(this), { params, 2 }); }
+		virtual void scene(GameShell& app, GameScene& scene) { Var params[2] = { Ref(&app), Ref(&scene) }; m_call(method(&GameModule::scene), Ref(this), { params, 2 }); }
+
+		VirtualMethod m_call;
 	};
 
 	TOY_SHELL_EXPORT Viewer& game_viewport(Widget& parent, GameScene& scene, Camera& camera);
@@ -117,7 +134,8 @@ using namespace mud; namespace toy
 		User m_user;
 
 		object_ptr<Core> m_core;
-		object_ptr<LuaInterpreter> m_interpreter;
+		object_ptr<LuaInterpreter> m_lua;
+		object_ptr<WrenInterpreter> m_wren;
 		object_ptr<GfxSystem> m_gfx_system;
 #ifdef TOY_SOUND
 		object_ptr<SoundManager> m_sound_system;

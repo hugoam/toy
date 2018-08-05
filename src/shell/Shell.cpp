@@ -12,6 +12,10 @@
 #include <emscripten/emscripten.h>
 #endif
 
+#include <lang/Wren.h>
+
+class WrenVM;
+
 using namespace mud; namespace toy
 {
 #if MUD_PLATFORM_EMSCRIPTEN
@@ -81,7 +85,6 @@ using namespace mud; namespace toy
 		: m_exec_path(exec_path(argc, argv))
 		, m_resource_path(resource_paths[0])
 		, m_core(make_object<Core>())
-		, m_interpreter()
 		, m_gfx_system(make_object<GfxSystem>(resource_paths))
 #ifdef TOY_SOUND
 		, m_sound_system(make_object<SoundManager>(resource_paths[0]))
@@ -97,11 +100,14 @@ using namespace mud; namespace toy
 		// @todo this should be automatically done by math module
 		register_math_conversions();
 
-		m_interpreter = make_object<LuaInterpreter>();
-		m_editor.m_script_editor.m_interpreter = m_interpreter.get();
+		m_lua = make_object<LuaInterpreter>();
+		m_wren = make_object<WrenInterpreter>();
+		m_editor.m_script_editor.m_lua = m_lua.get();
+		m_editor.m_script_editor.m_wren = m_wren.get();
 
 		m_game.m_shell = this;
-		m_game.m_editor.m_script_editor.m_interpreter = m_interpreter.get();
+		m_game.m_editor.m_script_editor.m_lua = m_lua.get();
+		m_game.m_editor.m_script_editor.m_wren = m_wren.get();
 
 		this->init();
 	}
@@ -155,7 +161,27 @@ using namespace mud; namespace toy
 
 		System::instance().load_module(*game_module.m_module);
 
-		m_interpreter->declare_types();
+		m_lua->declare_types();
+		m_wren->declare_types();
+
+
+		WrenInterpreter& wren = *m_wren;
+
+		//wren.set("col", Ref(&Colour::Pink));
+
+		wren.call("import \"mud\" for Colour");
+		wren.call("import \"toy\"");
+		wren.call("var col = Colour.create(0.03, 0.4, 1, 1)");
+		wren.call("System.print(\"col.r = %(col.r)\")");
+		wren.call("System.print(\"col.g = %(col.g)\")");
+		wren.call("col.r = 5.93");
+		wren.call("System.print(\"col.r = %(col.r)\")");
+		wren.call("var p = Colour.Pink");
+		wren.call("System.print(\"p.g = %(p.g)\")");
+		wren.call("p.g = 5.93");
+		wren.call("Colour.Pink.g = 5.93");
+		wren.call("System.print(\"col.g = %(col.g)\")");
+		wren.call("System.print(\"Colour.Green.g = %(Colour.Green.g)\")");
 	}
 
 	void GameShell::load(const string& module_name)
