@@ -18,6 +18,17 @@ namespace mud
     // Base Types
     
     // Enums
+    {
+        static Meta meta = { type<toy::CollisionGroup>(), &namspc({ "toy" }), "CollisionGroup", sizeof(toy::CollisionGroup), TypeClass::Enum };
+        static Enum enu = { type<toy::CollisionGroup>(),
+            false,
+            { "CM_NOMASK", "CM_OBJECT", "CM_SOLID", "CM_GROUND", "CM_AREA", "CM_BUFFER", "CM_LIGHT", "CM_LIGHTREFLECTOR", "CM_SOURCE", "CM_RECEPTOR", "CM_OBSTACLE" },
+            { 0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 },
+            { var(toy::CM_NOMASK), var(toy::CM_OBJECT), var(toy::CM_SOLID), var(toy::CM_GROUND), var(toy::CM_AREA), var(toy::CM_BUFFER), var(toy::CM_LIGHT), var(toy::CM_LIGHTREFLECTOR), var(toy::CM_SOURCE), var(toy::CM_RECEPTOR), var(toy::CM_OBSTACLE) }
+        };
+        meta_enum<toy::CollisionGroup>();
+    }
+    
     
     // Sequences
     {
@@ -138,70 +149,6 @@ namespace mud
         init_pool<toy::Agent>(); 
         
         meta_class<toy::Agent>();
-    }
-    
-    
-        
-    // toy::Array<toy::Action>
-    {
-        static Meta meta = { type<toy::Array<toy::Action>>(), &namspc({ "toy" }), "Array<toy::Action>", sizeof(toy::Array<toy::Action>), TypeClass::Object };
-        static Class cls = { type<toy::Array<toy::Action>>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::Array<toy::Action>>();
-    }
-    
-    
-        
-    // toy::Array<toy::Entity>
-    {
-        static Meta meta = { type<toy::Array<toy::Entity>>(), &namspc({ "toy" }), "Array<toy::Entity>", sizeof(toy::Array<toy::Entity>), TypeClass::Object };
-        static Class cls = { type<toy::Array<toy::Entity>>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::Array<toy::Entity>>();
     }
     
     
@@ -359,6 +306,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<toy::Collider>(), [](Ref ref, array<Var> args) { new(&val<toy::Collider>(ref)) toy::Collider( val<toy::Entity>(args[0]), val<toy::CollisionShape>(args[1]), val<toy::Medium>(args[2]), val<toy::CollisionGroup>(args[3]), val<bool>(args[4]) ); }, { { "entity", Ref(type<toy::Entity>()) }, { "collision_shape", Ref(type<toy::CollisionShape>()) }, { "medium", Ref(type<toy::Medium>()) }, { "group", var(toy::CollisionGroup()) }, { "init", var(bool(true)), Param::Default } } }
             },
             // copy constructor
             {
@@ -366,7 +314,10 @@ namespace mud
             // members
             {
                 { type<toy::Collider>(), Address(), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Collider>(object).m_entity); } },
-                { type<toy::Collider>(), Address(), type<toy::Medium>(), "medium", Ref(type<toy::Medium>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Collider>(object).m_medium); } }
+                { type<toy::Collider>(), member_address(&toy::Collider::m_collision_shape), type<toy::CollisionShape>(), "collision_shape", Ref(type<toy::CollisionShape>()), Member::None, nullptr },
+                { type<toy::Collider>(), Address(), type<toy::Medium>(), "medium", Ref(type<toy::Medium>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Collider>(object).m_medium); } },
+                { type<toy::Collider>(), member_address(&toy::Collider::m_group), type<toy::CollisionGroup>(), "group", var(toy::CollisionGroup()), Member::Value, nullptr },
+                { type<toy::Collider>(), member_address(&toy::Collider::m_object), type<toy::ColliderObject>(), "object", Ref(type<toy::ColliderObject>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
             },
             // methods
             {
@@ -377,7 +328,7 @@ namespace mud
         };
         
         
-        
+        init_pool<toy::Collider>(); 
         
         meta_class<toy::Collider>();
     }
@@ -493,6 +444,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<toy::CollisionShape>(), [](Ref ref, array<Var> args) { new(&val<toy::CollisionShape>(ref)) toy::CollisionShape( val<mud::Shape>(args[0]), val<mud::vec3>(args[1]), val<float>(args[2]) ); }, { { "shape", Ref(type<mud::Shape>()) }, { "center", var(mud::vec3()), Param::Default }, { "margin", var(float(0.f)), Param::Default } } }
             },
             // copy constructor
             {
@@ -509,7 +461,7 @@ namespace mud
         };
         
         
-        
+        init_pool<toy::CollisionShape>(); 
         
         meta_class<toy::CollisionShape>();
     }
@@ -612,7 +564,6 @@ namespace mud
         
         meta_class<toy::DetourPath>();
     }
-    
     
     
         
@@ -1476,6 +1427,7 @@ namespace mud
     
     
     
+    
         
     // toy::User
     {
@@ -1692,6 +1644,39 @@ namespace mud
     
     
         
+    // toy::NavmeshShape
+    {
+        static Meta meta = { type<toy::NavmeshShape>(), &namspc({ "toy" }), "NavmeshShape", sizeof(toy::NavmeshShape), TypeClass::Object };
+        static Class cls = { type<toy::NavmeshShape>(),
+            // bases
+            { &type<mud::Shape>() },
+            { base_offset<toy::NavmeshShape, mud::Shape>() },
+            // constructors
+            {
+                { type<toy::NavmeshShape>(), [](Ref ref, array<Var> args) { new(&val<toy::NavmeshShape>(ref)) toy::NavmeshShape( val<toy::Navmesh>(args[0]) ); }, { { "navmesh", Ref(type<toy::Navmesh>()) } } }
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        init_pool<toy::NavmeshShape>(); 
+        
+        meta_class<toy::NavmeshShape>();
+    }
+    
+    
+        
     // toy::DefaultWorld
     {
         static Meta meta = { type<toy::DefaultWorld>(), &namspc({ "toy" }), "DefaultWorld", sizeof(toy::DefaultWorld), TypeClass::Complex };
@@ -1869,39 +1854,6 @@ namespace mud
     
     
         
-    // toy::NavmeshShape
-    {
-        static Meta meta = { type<toy::NavmeshShape>(), &namspc({ "toy" }), "NavmeshShape", sizeof(toy::NavmeshShape), TypeClass::Object };
-        static Class cls = { type<toy::NavmeshShape>(),
-            // bases
-            { &type<mud::Shape>() },
-            { base_offset<toy::NavmeshShape, mud::Shape>() },
-            // constructors
-            {
-                { type<toy::NavmeshShape>(), [](Ref ref, array<Var> args) { new(&val<toy::NavmeshShape>(ref)) toy::NavmeshShape( val<toy::Navmesh>(args[0]) ); }, { { "navmesh", Ref(type<toy::Navmesh>()) } } }
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        init_pool<toy::NavmeshShape>(); 
-        
-        meta_class<toy::NavmeshShape>();
-    }
-    
-    
-        
     // toy::Action
     {
         static Meta meta = { type<toy::Action>(), &namspc({ "toy" }), "Action", sizeof(toy::Action), TypeClass::Object };
@@ -1962,106 +1914,6 @@ namespace mud
         
         
         meta_class<toy::BulletCollider>();
-    }
-    
-    
-        
-    // toy::Solid
-    {
-        static Meta meta = { type<toy::Solid>(), &namspc({ "toy" }), "Solid", sizeof(toy::Solid), TypeClass::Object };
-        static Class cls = { type<toy::Solid>(),
-            // bases
-            { &type<toy::Collider>() },
-            { base_offset<toy::Solid, toy::Collider>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::Solid>();
-    }
-    
-    
-    
-        
-    // toy::ObstacleBody
-    {
-        static Meta meta = { type<toy::ObstacleBody>(), &namspc({ "toy" }), "ObstacleBody", sizeof(toy::ObstacleBody), TypeClass::Object };
-        static Class cls = { type<toy::ObstacleBody>(),
-            // bases
-            { &type<toy::Collider>(), &type<toy::ColliderObject>() },
-            { base_offset<toy::ObstacleBody, toy::Collider>(), base_offset<toy::ObstacleBody, toy::ColliderObject>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-                { type<toy::ObstacleBody>(), member_address(&toy::ObstacleBody::collision_shape), type<toy::CollisionShape>(), "collision_shape", Ref(type<toy::CollisionShape>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::ObstacleBody>(object).collision_shape()); } },
-                { type<toy::ObstacleBody>(), member_address(&toy::ObstacleBody::m_throughput), type<float>(), "throughput", var(float()), Member::Value, nullptr }
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::ObstacleBody>();
-    }
-    
-    
-        
-    // toy::PhysicScope
-    {
-        static Meta meta = { type<toy::PhysicScope>(), &namspc({ "toy" }), "PhysicScope", sizeof(toy::PhysicScope), TypeClass::Object };
-        static Class cls = { type<toy::PhysicScope>(),
-            // bases
-            { &type<toy::Collider>(), &type<toy::ColliderObject>() },
-            { base_offset<toy::PhysicScope, toy::Collider>(), base_offset<toy::PhysicScope, toy::ColliderObject>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-                { type<toy::PhysicScope>(), "scope", member_address(&toy::PhysicScope::scope), [](Ref object, array<Var> args, Var& result) { UNUSED(args);val<std::vector<toy::Entity*>>(result) = val<toy::PhysicScope>(object).scope(); }, {}, var(std::vector<toy::Entity*>()) }
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::PhysicScope>();
     }
     
     
@@ -2140,6 +1992,238 @@ namespace mud
         init_pool<toy::WorldPage>(); 
         
         meta_class<toy::WorldPage>();
+    }
+    
+    
+        
+    // toy::Solid
+    {
+        static Meta meta = { type<toy::Solid>(), &namspc({ "toy" }), "Solid", sizeof(toy::Solid), TypeClass::Object };
+        static Class cls = { type<toy::Solid>(),
+            // bases
+            { &type<toy::Collider>() },
+            { base_offset<toy::Solid, toy::Collider>() },
+            // constructors
+            {
+                { type<toy::Solid>(), [](Ref ref, array<Var> args) { new(&val<toy::Solid>(ref)) toy::Solid( val<toy::Entity>(args[0]), val<toy::CollisionShape>(args[1]), val<toy::Medium>(args[2]), val<toy::CollisionGroup>(args[3]), val<bool>(args[4]), val<float>(args[5]) ); }, { { "entity", Ref(type<toy::Entity>()) }, { "collision_shape", Ref(type<toy::CollisionShape>()) }, { "medium", Ref(type<toy::Medium>()) }, { "group", var(toy::CollisionGroup()) }, { "isstatic", var(bool()) }, { "mass", var(float(0.f)), Param::Default } } },
+                { type<toy::Solid>(), [](Ref ref, array<Var> args) { new(&val<toy::Solid>(ref)) toy::Solid( val<toy::Entity>(args[0]), val<toy::CollisionShape>(args[1]), val<bool>(args[2]), val<float>(args[3]) ); }, { { "entity", Ref(type<toy::Entity>()) }, { "collision_shape", Ref(type<toy::CollisionShape>()) }, { "isstatic", var(bool()) }, { "mass", var(float(0.f)), Param::Default } } }
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        init_pool<toy::Solid>(); 
+        
+        meta_class<toy::Solid>();
+    }
+    
+    
+    
+        
+    // toy::ObstacleBody
+    {
+        static Meta meta = { type<toy::ObstacleBody>(), &namspc({ "toy" }), "ObstacleBody", sizeof(toy::ObstacleBody), TypeClass::Object };
+        static Class cls = { type<toy::ObstacleBody>(),
+            // bases
+            { &type<toy::Collider>(), &type<toy::ColliderObject>() },
+            { base_offset<toy::ObstacleBody, toy::Collider>(), base_offset<toy::ObstacleBody, toy::ColliderObject>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+                { type<toy::ObstacleBody>(), member_address(&toy::ObstacleBody::collision_shape), type<toy::CollisionShape>(), "collision_shape", Ref(type<toy::CollisionShape>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::ObstacleBody>(object).collision_shape()); } },
+                { type<toy::ObstacleBody>(), member_address(&toy::ObstacleBody::m_throughput), type<float>(), "throughput", var(float()), Member::Value, nullptr }
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::ObstacleBody>();
+    }
+    
+    
+        
+    // toy::PhysicScope
+    {
+        static Meta meta = { type<toy::PhysicScope>(), &namspc({ "toy" }), "PhysicScope", sizeof(toy::PhysicScope), TypeClass::Object };
+        static Class cls = { type<toy::PhysicScope>(),
+            // bases
+            { &type<toy::Collider>(), &type<toy::ColliderObject>() },
+            { base_offset<toy::PhysicScope, toy::Collider>(), base_offset<toy::PhysicScope, toy::ColliderObject>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+                { type<toy::PhysicScope>(), "scope", member_address(&toy::PhysicScope::scope), [](Ref object, array<Var> args, Var& result) { UNUSED(args);val<std::vector<toy::Entity*>>(result) = val<toy::PhysicScope>(object).scope(); }, {}, var(std::vector<toy::Entity*>()) }
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::PhysicScope>();
+    }
+    
+    
+    
+        
+    // toy::MonoSection
+    {
+        static Meta meta = { type<toy::MonoSection>(), &namspc({ "toy" }), "MonoSection", sizeof(toy::MonoSection), TypeClass::Object };
+        static Class cls = { type<toy::MonoSection>(),
+            // bases
+            { &type<toy::TaskSection>() },
+            { base_offset<toy::MonoSection, toy::TaskSection>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::MonoSection>();
+    }
+    
+    
+        
+    // toy::ParallelSection
+    {
+        static Meta meta = { type<toy::ParallelSection>(), &namspc({ "toy" }), "ParallelSection", sizeof(toy::ParallelSection), TypeClass::Object };
+        static Class cls = { type<toy::ParallelSection>(),
+            // bases
+            { &type<toy::TaskSection>() },
+            { base_offset<toy::ParallelSection, toy::TaskSection>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::ParallelSection>();
+    }
+    
+    
+        
+    // toy::QueueSection
+    {
+        static Meta meta = { type<toy::QueueSection>(), &namspc({ "toy" }), "QueueSection", sizeof(toy::QueueSection), TypeClass::Object };
+        static Class cls = { type<toy::QueueSection>(),
+            // bases
+            { &type<toy::TaskSection>() },
+            { base_offset<toy::QueueSection, toy::TaskSection>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::QueueSection>();
+    }
+    
+    
+        
+    // toy::BulletWorld
+    {
+        static Meta meta = { type<toy::BulletWorld>(), &namspc({ "toy" }), "BulletWorld", sizeof(toy::BulletWorld), TypeClass::Object };
+        static Class cls = { type<toy::BulletWorld>(),
+            // bases
+            { &type<toy::PhysicWorld>() },
+            { base_offset<toy::BulletWorld, toy::PhysicWorld>() },
+            // constructors
+            {
+                { type<toy::BulletWorld>(), [](Ref ref, array<Var> args) { new(&val<toy::BulletWorld>(ref)) toy::BulletWorld( val<toy::World>(args[0]) ); }, { { "world", Ref(type<toy::World>()) } } }
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        init_pool<toy::BulletWorld>(); 
+        
+        meta_class<toy::BulletWorld>();
     }
     
     
@@ -2364,136 +2448,6 @@ namespace mud
         
         
         meta_class<toy::EventReceptor>();
-    }
-    
-    
-        
-    // toy::MonoSection
-    {
-        static Meta meta = { type<toy::MonoSection>(), &namspc({ "toy" }), "MonoSection", sizeof(toy::MonoSection), TypeClass::Object };
-        static Class cls = { type<toy::MonoSection>(),
-            // bases
-            { &type<toy::TaskSection>() },
-            { base_offset<toy::MonoSection, toy::TaskSection>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::MonoSection>();
-    }
-    
-    
-        
-    // toy::ParallelSection
-    {
-        static Meta meta = { type<toy::ParallelSection>(), &namspc({ "toy" }), "ParallelSection", sizeof(toy::ParallelSection), TypeClass::Object };
-        static Class cls = { type<toy::ParallelSection>(),
-            // bases
-            { &type<toy::TaskSection>() },
-            { base_offset<toy::ParallelSection, toy::TaskSection>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::ParallelSection>();
-    }
-    
-    
-        
-    // toy::QueueSection
-    {
-        static Meta meta = { type<toy::QueueSection>(), &namspc({ "toy" }), "QueueSection", sizeof(toy::QueueSection), TypeClass::Object };
-        static Class cls = { type<toy::QueueSection>(),
-            // bases
-            { &type<toy::TaskSection>() },
-            { base_offset<toy::QueueSection, toy::TaskSection>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::QueueSection>();
-    }
-    
-    
-    
-        
-    // toy::BulletWorld
-    {
-        static Meta meta = { type<toy::BulletWorld>(), &namspc({ "toy" }), "BulletWorld", sizeof(toy::BulletWorld), TypeClass::Object };
-        static Class cls = { type<toy::BulletWorld>(),
-            // bases
-            { &type<toy::PhysicWorld>() },
-            { base_offset<toy::BulletWorld, toy::PhysicWorld>() },
-            // constructors
-            {
-                { type<toy::BulletWorld>(), [](Ref ref, array<Var> args) { new(&val<toy::BulletWorld>(ref)) toy::BulletWorld( val<toy::World>(args[0]) ); }, { { "world", Ref(type<toy::World>()) } } }
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        init_pool<toy::BulletWorld>(); 
-        
-        meta_class<toy::BulletWorld>();
     }
     
     
@@ -2729,13 +2683,76 @@ namespace mud
         meta_class<toy::OmniVision>();
     }
     
+    
+    
+        
+    // toy::Array<toy::Action>
+    {
+        static Meta meta = { type<toy::Array<toy::Action>>(), &namspc({ "toy" }), "Array<toy::Action>", sizeof(toy::Array<toy::Action>), TypeClass::Object };
+        static Class cls = { type<toy::Array<toy::Action>>(),
+            // bases
+            { &type<toy::StoreBase<Array<T>, T>>() },
+            { base_offset<toy::Array<toy::Action>, toy::StoreBase<Array<T>, T>>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::Array<toy::Action>>();
+    }
+    
+    
+        
+    // toy::Array<toy::Entity>
+    {
+        static Meta meta = { type<toy::Array<toy::Entity>>(), &namspc({ "toy" }), "Array<toy::Entity>", sizeof(toy::Array<toy::Entity>), TypeClass::Object };
+        static Class cls = { type<toy::Array<toy::Entity>>(),
+            // bases
+            { &type<toy::StoreBase<Array<T>, T>>() },
+            { base_offset<toy::Array<toy::Entity>, toy::StoreBase<Array<T>, T>>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::Array<toy::Entity>>();
+    }
+    
 
     
         m.m_types.push_back(&type<toy::Active>());
         m.m_types.push_back(&type<toy::Actor>());
         m.m_types.push_back(&type<toy::Agent>());
-        m.m_types.push_back(&type<toy::Array<toy::Action>>());
-        m.m_types.push_back(&type<toy::Array<toy::Entity>>());
         m.m_types.push_back(&type<toy::Behavior>());
         m.m_types.push_back(&type<toy::BufferPage>());
         m.m_types.push_back(&type<toy::BulletShape>());
@@ -2744,16 +2761,19 @@ namespace mud
         m.m_types.push_back(&type<toy::ColliderImpl>());
         m.m_types.push_back(&type<toy::ColliderObject>());
         m.m_types.push_back(&type<toy::Collision>());
+        m.m_types.push_back(&type<toy::CollisionGroup>());
         m.m_types.push_back(&type<toy::CollisionShape>());
         m.m_types.push_back(&type<toy::ComponentPool>());
         m.m_types.push_back(&type<toy::Core>());
         m.m_types.push_back(&type<toy::DetourPath>());
+        m.m_types.push_back(&type<toy::Dispatch<toy::BulletShape>>());
         m.m_types.push_back(&type<toy::Effect>());
         m.m_types.push_back(&type<toy::Emitter>());
         m.m_types.push_back(&type<toy::EntityScript>());
         m.m_types.push_back(&type<toy::EventFilter>());
         m.m_types.push_back(&type<toy::EventRelay>());
         m.m_types.push_back(&type<toy::GroundMotion>());
+        m.m_types.push_back(&type<toy::LazyGlobal<toy::DispatchBulletShape>>());
         m.m_types.push_back(&type<toy::LightReflector>());
         m.m_types.push_back(&type<toy::LightSource>());
         m.m_types.push_back(&type<toy::Medium>());
@@ -2767,10 +2787,17 @@ namespace mud
         m.m_types.push_back(&type<toy::Receptor>());
         m.m_types.push_back(&type<toy::Selector>());
         m.m_types.push_back(&type<toy::State>());
+        m.m_types.push_back(&type<toy::Store<T_Element>>());
+        m.m_types.push_back(&type<toy::StoreBase<Array<T>, T>>());
+        m.m_types.push_back(&type<toy::StoreBase<CountStore<T>, T>>());
+        m.m_types.push_back(&type<toy::StoreObserver<T>>());
+        m.m_types.push_back(&type<toy::StoreObserver<T_Object>>());
+        m.m_types.push_back(&type<toy::StoreObserver<typename T_Array::T>>());
         m.m_types.push_back(&type<toy::SubBulletWorld>());
         m.m_types.push_back(&type<toy::Symbolic>());
         m.m_types.push_back(&type<toy::TaskSection>());
         m.m_types.push_back(&type<toy::User>());
+        m.m_types.push_back(&type<toy::VectorObserver<T_Content, T_Type>>());
         m.m_types.push_back(&type<toy::View>());
         m.m_types.push_back(&type<toy::Vision>());
         m.m_types.push_back(&type<toy::World>());
@@ -2778,19 +2805,23 @@ namespace mud
         m.m_types.push_back(&type<std::vector<mud::Symbol>>());
         m.m_types.push_back(&type<std::vector<toy::Entity*>>());
         m.m_types.push_back(&type<toy::Entity>());
+        m.m_types.push_back(&type<toy::NavmeshShape>());
         m.m_types.push_back(&type<toy::DefaultWorld>());
         m.m_types.push_back(&type<toy::OCamera>());
         m.m_types.push_back(&type<toy::OLight>());
         m.m_types.push_back(&type<toy::OWaypoint>());
         m.m_types.push_back(&type<toy::Origin>());
-        m.m_types.push_back(&type<toy::NavmeshShape>());
         m.m_types.push_back(&type<toy::Action>());
         m.m_types.push_back(&type<toy::BulletCollider>());
+        m.m_types.push_back(&type<toy::Area>());
+        m.m_types.push_back(&type<toy::WorldPage>());
         m.m_types.push_back(&type<toy::Solid>());
         m.m_types.push_back(&type<toy::ObstacleBody>());
         m.m_types.push_back(&type<toy::PhysicScope>());
-        m.m_types.push_back(&type<toy::Area>());
-        m.m_types.push_back(&type<toy::WorldPage>());
+        m.m_types.push_back(&type<toy::MonoSection>());
+        m.m_types.push_back(&type<toy::ParallelSection>());
+        m.m_types.push_back(&type<toy::QueueSection>());
+        m.m_types.push_back(&type<toy::BulletWorld>());
         m.m_types.push_back(&type<toy::BulletSolid>());
         m.m_types.push_back(&type<toy::EmitterScope>());
         m.m_types.push_back(&type<toy::ReceptorScope>());
@@ -2798,10 +2829,6 @@ namespace mud
         m.m_types.push_back(&type<toy::ReceptorSphere>());
         m.m_types.push_back(&type<toy::EventEmitter>());
         m.m_types.push_back(&type<toy::EventReceptor>());
-        m.m_types.push_back(&type<toy::MonoSection>());
-        m.m_types.push_back(&type<toy::ParallelSection>());
-        m.m_types.push_back(&type<toy::QueueSection>());
-        m.m_types.push_back(&type<toy::BulletWorld>());
         m.m_types.push_back(&type<toy::SolidMedium>());
         m.m_types.push_back(&type<toy::SoundMedium>());
         m.m_types.push_back(&type<toy::VisualMedium>());
@@ -2809,6 +2836,8 @@ namespace mud
         m.m_types.push_back(&type<toy::ReceptorView>());
         m.m_types.push_back(&type<toy::StoreView>());
         m.m_types.push_back(&type<toy::OmniVision>());
+        m.m_types.push_back(&type<toy::Array<toy::Action>>());
+        m.m_types.push_back(&type<toy::Array<toy::Entity>>());
     
         {
             auto func = [](array<Var> args, Var& result) {  val<bool>(result) = toy::move_2d(val<toy::Movable>(args[0]), val<mud::vec3>(args[1]), val<float>(args[2]), val<float>(args[3]), val<float>(args[4])); };
