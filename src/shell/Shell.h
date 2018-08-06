@@ -121,6 +121,8 @@ using namespace mud; namespace toy
 		meth_ bool pump();
 		meth_ void cleanup();
 
+		void run_script(Module& module, const string& file);
+
 		void start_game();
 		void pump_game();
 		void pump_editor();

@@ -230,6 +230,30 @@ using namespace mud; namespace toy
 		this->run(iterations);
 	}
 
+	void GameShell::run_script(Module& module, const string& file)
+	{
+		m_wren->declare_types();
+
+		string path = "scripts/" + file;
+		LocatedFile location = m_gfx_system->locate_file(path.c_str());
+
+		if(location.m_name != nullptr)
+		{
+			Signature signature = { { Param{ "app", Ref(type<GameShell>()) }, Param{ "module", Ref(type<Module>()) } } };
+
+			TextScript& script = m_editor.m_script_editor.create_script(file.c_str(), Language::Wren, signature);
+			script.m_script = read_text_file(std::string(location.m_location) + location.m_name);
+
+			Var args[2] = { Ref(this), Ref(&module) };
+			script({ args, 2 });
+
+			Ref game = m_wren->get("game", type<GameModuleBind>());
+			GameModuleBind& game_module = val<GameModuleBind>(game);
+
+			this->run_game(game_module);
+		}
+	}
+
 	void GameShell::run_editor(GameModule& module, size_t iterations)
 	{
 		this->load(module);

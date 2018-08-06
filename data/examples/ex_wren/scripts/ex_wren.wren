@@ -4,26 +4,26 @@ import "toy" for World, Entity, Movable, Solid, CollisionShape, GameShell
 class Human {
 
 	construct Human(id, parent, position) {
-        _complex = Complex.new(id, __type)
+        _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, position, quat.new(0,0,0,1))
         _movable = Movable.new(_entity)
         _solid = Solid.new(_entity, this, CollisionShape.new(Capsule.new(0.35, 1.1), vec3.new(0, 0.9, 0)), false, 1.0)
     }
     
-    static bind() { __type = Type.new("Human") }
+    static bind() { __cls = ScriptClass.new("Human", [Entity.type, Movable.type, Solid.type]) }
 }
 
 class Crate {
 
 	construct new(id, parent, position, extents) {
-        _complex = Complex.new(id, __type)
+        _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, this, parent, position, quat.new(0,0,0,1))
         _movable = Movable.new(_entity)
         _solid = Solid.new(_entity, this, CollisionShape.new(Cube.new(extents)), false, 1.0)
         _extents = extents
     }
     
-    static bind() { __type = Type.new("Crate") }
+    static bind() { __cls = ScriptClass.new("Crate", [Entity.type, Movable.type, Solid.type]) }
 }
 
 class Player {
@@ -37,7 +37,7 @@ class Player {
 class GameWorld {
 
     construct new(id) {
-        _complex = Complex.new(id, __type)
+        _complex = Complex.new(id, __cls.type)
         _world = World.new(id, "Example")
         _player = Player.new(_world)
         _crates = []
@@ -46,7 +46,7 @@ class GameWorld {
         }
     }
     
-    static bind() { __type = Type.new("GameWorld") }
+    static bind() { __cls = ScriptClass.new("GameWorld", [World.type]) }
 }
 
 var MainWorld = null
