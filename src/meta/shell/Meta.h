@@ -37,7 +37,7 @@ namespace mud
         
     // toy::Game
     {
-        static Meta meta = { type<toy::Game>(), &namspc({ "toy" }), "Game", sizeof(toy::Game), TypeClass::Struct };
+        static Meta meta = { type<toy::Game>(), &namspc({ "toy" }), "Game", sizeof(toy::Game), TypeClass::Object };
         static Class cls = { type<toy::Game>(),
             // bases
             {  },
@@ -47,7 +47,7 @@ namespace mud
             },
             // copy constructor
             {
-			},
+            },
             // members
             {
             },
@@ -75,7 +75,8 @@ namespace mud
             {  },
             {  },
             // constructors
-            {},
+            {
+            },
             // copy constructor
             {
             },
@@ -95,7 +96,7 @@ namespace mud
         };
         
         
-        init_pool<toy::GameModule>(); 
+        
         
         meta_class<toy::GameModule>();
     }
@@ -120,6 +121,19 @@ namespace mud
             },
             // methods
             {
+                { type<toy::GameShell>(), "init", member_address(&toy::GameShell::init), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).init(); }, {}, Var() },
+                { type<toy::GameShell>(), "load", member_address(&toy::GameShell::load), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).load(val<toy::GameModule>(args[0])); }, { { "module", Ref(type<toy::GameModule>()) } }, Var() },
+                { type<toy::GameShell>(), "load", member_address(&toy::GameShell::load), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).load(val<std::string>(args[0])); }, { { "module_path", var(std::string()) } }, Var() },
+                { type<toy::GameShell>(), "run", member_address(&toy::GameShell::run), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run(val<size_t>(args[0])); }, { { "iterations", var(size_t(0U)), Param::Default } }, Var() },
+                { type<toy::GameShell>(), "run_game", member_address(&toy::GameShell::run_game), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_game(val<toy::GameModule>(args[0]), val<size_t>(args[1])); }, { { "module", Ref(type<toy::GameModule>()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
+                { type<toy::GameShell>(), "run_editor", member_address(&toy::GameShell::run_editor), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_editor(val<toy::GameModule>(args[0]), val<size_t>(args[1])); }, { { "module", Ref(type<toy::GameModule>()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
+                { type<toy::GameShell>(), "run_game", member_address(&toy::GameShell::run_game), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_game(val<std::string>(args[0]), val<size_t>(args[1])); }, { { "module_path", var(std::string()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
+                { type<toy::GameShell>(), "run_editor", member_address(&toy::GameShell::run_editor), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_editor(val<std::string>(args[0]), val<size_t>(args[1])); }, { { "module_path", var(std::string()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
+                { type<toy::GameShell>(), "launch", member_address(&toy::GameShell::launch), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).launch(); }, {}, Var() },
+                { type<toy::GameShell>(), "save", member_address(&toy::GameShell::save), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).save(); }, {}, Var() },
+                { type<toy::GameShell>(), "reload", member_address(&toy::GameShell::reload), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).reload(); }, {}, Var() },
+                { type<toy::GameShell>(), "pump", member_address(&toy::GameShell::pump), [](Ref object, array<Var> args, Var& result) { UNUSED(args);val<bool>(result) = val<toy::GameShell>(object).pump(); }, {}, var(bool()) },
+                { type<toy::GameShell>(), "cleanup", member_address(&toy::GameShell::cleanup), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).cleanup(); }, {}, Var() }
             },
             // static members
             {
@@ -134,10 +148,14 @@ namespace mud
     
     
     
+    
+    
+    
+    
         
     // toy::GameScene
     {
-        static Meta meta = { type<toy::GameScene>(), &namspc({ "toy" }), "GameScene", sizeof(toy::GameScene), TypeClass::Struct };
+        static Meta meta = { type<toy::GameScene>(), &namspc({ "toy" }), "GameScene", sizeof(toy::GameScene), TypeClass::Object };
         static Class cls = { type<toy::GameScene>(),
             // bases
             { &type<toy::VisuScene>() },
@@ -147,7 +165,7 @@ namespace mud
             },
             // copy constructor
             {
-			},
+            },
             // members
             {
             },
@@ -176,7 +194,7 @@ namespace mud
             { base_offset<toy::GameModuleBind, toy::GameModule>() },
             // constructors
             {
-                { type<toy::GameModuleBind>(), [](Ref ref, array<Var> args) { new(&val<toy::GameModuleBind>(ref)) toy::GameModuleBind( val<mud::Module>(args[0]), val<mud::VirtualMethod>(args[1]) ); }, { { "module", Ref(type<mud::Module>()) }, { "call", var(mud::VirtualMethod()) } } }
+                { type<toy::GameModuleBind>(), [](Ref ref, array<Var> args) { new(&val<toy::GameModuleBind>(ref)) toy::GameModuleBind( val<mud::Module>(args[0]), val<toy::GameModuleBind::mud::VirtualMethod>(args[1]) ); }, { { "module", Ref(type<mud::Module>()) }, { "call", var(toy::GameModuleBind::mud::VirtualMethod()) } } }
             },
             // copy constructor
             {
@@ -204,6 +222,7 @@ namespace mud
         m.m_types.push_back(&type<toy::GameMode>());
         m.m_types.push_back(&type<toy::GameModule>());
         m.m_types.push_back(&type<toy::GameShell>());
+        m.m_types.push_back(&type<toy::GameModuleBind::mud::VirtualMethod>());
         m.m_types.push_back(&type<toy::GameScene>());
         m.m_types.push_back(&type<toy::GameModuleBind>());
     
