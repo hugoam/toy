@@ -21,7 +21,7 @@ dofile "toolchain.lua"
 
 dofile "toy.lua"
 group "bin"
-dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))
+--dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))
 dofile "editor.lua"
 dofile "example.lua"
 dofile "jams.lua"
