@@ -34,13 +34,15 @@ class Player {
     }
 }
 
-foreign class GameModule {
+foreign class MyGame {
 
-    static new(module) { __constructor.call(module) }
+    //foreign static new(constr, module)
+    //static new(module) { new(__constructor, module) }
+    static new(module) { __constructor.call(MyGame, module) }
     
-    static init() { __constructor = VirtualConstructor.ref("GameModuleBind") }
+    static bind() { __constructor = VirtualConstructor.ref("GameModuleBind") }
     
-    init(app, game) {}
+    init(app, game) { System.print("wren MyGame::init() !!! ") }
     
     start(app, game) {
         //_world = World.new(0, 'Example')
@@ -65,11 +67,6 @@ foreign class GameModule {
 
 Human.init()
 Crate.init()
-GameModule.init()
+MyGame.bind()
 
-var game = GameModule.new(module)
-app.run_game(game)
-
-while (true) {
-    System.print("one frame")
-}
+var game = MyGame.new(module)

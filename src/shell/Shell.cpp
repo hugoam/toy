@@ -167,6 +167,8 @@ using namespace mud; namespace toy
 		System::instance().load_module(*game_module.m_module);
 
 		m_lua->declare_types();
+		return;
+
 		m_wren->declare_types();
 
 
@@ -189,7 +191,7 @@ using namespace mud; namespace toy
 		wren.call("System.print(\"Colour.Green.g = %(Colour.Green.g)\")");
 	}
 
-	void GameShell::load(const string& module_name)
+	void GameShell::load_path(const string& module_name)
 	{
 		Module* module = system().open_module((m_exec_path + "/" + module_name).c_str());
 		if(module == nullptr)
@@ -236,17 +238,17 @@ using namespace mud; namespace toy
 		this->run(iterations);
 	}
 
-	void GameShell::run_game(const string& module_name, size_t iterations)
+	void GameShell::run_game_path(const string& module_name, size_t iterations)
 	{
-		this->load(module_name);
+		this->load_path(module_name);
 		//this->start_game();
 		m_pump = [&]() { this->pump_game(); };
 		this->run(iterations);
 	}
 
-	void GameShell::run_editor(const string& module_path, size_t iterations)
+	void GameShell::run_editor_path(const string& module_path, size_t iterations)
 	{
-		this->load(module_path);
+		this->load_path(module_path);
 		this->start_game();
 		m_pump = [&]() { this->pump_editor(); };
 		this->run(iterations);

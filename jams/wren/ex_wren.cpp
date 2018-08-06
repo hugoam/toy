@@ -24,6 +24,11 @@ int main(int argc, char *argv[])
 
 		Var args[2] = { Ref(&app), Ref((Module*)&_wren::m()) };
 		script({ args, 2 });
+
+		Ref game = app.m_wren->get("game", type<GameModuleBind>());
+		GameModuleBind& game_module = val<GameModuleBind>(game);
+
+		app.run_game(game_module);
 	}
 }
 #endif

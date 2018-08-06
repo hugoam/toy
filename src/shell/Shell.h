@@ -109,12 +109,12 @@ using namespace mud; namespace toy
 
 		meth_ void init();
 		meth_ void load(GameModule& module);
-		meth_ void load(const string& module_path);
+		meth_ void load_path(const string& module_path);
 		meth_ void run(size_t iterations = 0U);
 		meth_ void run_game(GameModule& module, size_t iterations = 0U);
 		meth_ void run_editor(GameModule& module, size_t iterations = 0U);
-		meth_ void run_game(const string& module_path, size_t iterations = 0U);
-		meth_ void run_editor(const string& module_path, size_t iterations = 0U);
+		meth_ void run_game_path(const string& module_path, size_t iterations = 0U);
+		meth_ void run_editor_path(const string& module_path, size_t iterations = 0U);
 		meth_ void launch();
 		meth_ void save();
 		meth_ void reload();
@@ -130,6 +130,18 @@ using namespace mud; namespace toy
 		World& load_world(Id id);
 		void destroy_world();
 
+		attr_ Core& core() { return *m_core; }
+		attr_ LuaInterpreter& lua() { return *m_lua; }
+		attr_ WrenInterpreter& wren() { return *m_wren; }
+		attr_ GfxSystem& gfx() { return *m_gfx_system; }
+#ifdef TOY_SOUND
+		attr_ SoundManager& sound() { return *m_sound_system; }
+#endif
+
+		attr_ Context& context() { return *m_context; }
+		attr_ Vg& vg() { return *m_vg; }
+		attr_ UiWindow& ui_window() { return *m_ui_window; }
+
 	public:
 		string m_exec_path;
 		string m_resource_path;
@@ -144,12 +156,13 @@ using namespace mud; namespace toy
 		object_ptr<SoundManager> m_sound_system;
 #endif
 
-		Editor m_editor;
+		attr_ Editor m_editor;
 
 		unique_ptr<Context> m_context;
 		unique_ptr<Vg> m_vg;
 		unique_ptr<UiWindow> m_ui_window;
-		Widget* m_ui = nullptr;
+
+		attr_ Widget* m_ui = nullptr;
 
 		unique_ptr<GameModule> m_game_module_alloc;
 
