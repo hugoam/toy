@@ -1,5 +1,5 @@
 import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Cube, Symbol, SymbolDetail, Ui, Gfx
-import "toy" for World, Entity, Movable, Solid, CollisionShape, GameShell
+import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, GameShell
 
 class Human {
 
@@ -62,21 +62,15 @@ foreign class MyGame {
     
     static bind() { __constructor = VirtualConstructor.ref("GameModuleBind") }
     
-    init(app, game) {
-        System.print("init !")
-        start(app, game)
-    }
+    init(app, game) { start(app, game) }
     
-    start(app, game) {
-        MainWorld = GameWorld.new(0)
-    }
+    start(app, game) { MainWorld = GameWorld.new(0) }
     
     pump(app, game) {
         var ui = app.ui.begin()
         var viewer = Ui.scene_viewer(ui, Vec2.new(0))
         
         var scene = viewer.scene.begin()
-        
     }
     
     scene(app, game) {}

@@ -12,12 +12,11 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT ObstacleBody : public Collider, public ColliderObject
+	class refl_ TOY_CORE_EXPORT ObstacleBody : public Collider
 	{
 	public:
 		ObstacleBody(Entity& entity, Medium& medium, const CollisionShape& shape, float throughput);
 
-		attr_ inline CollisionShape& collision_shape() { return m_collision_shape; }
 		attr_ float m_throughput;
 	};
 

@@ -71,20 +71,7 @@ using namespace mud; namespace toy
 	void WorldPage::update_geometry()
 	{
 		for(Geometry& geom : m_chunks)
-			m_solids.push_back(make_object<Solid>(m_entity, *this, geom, SolidMedium::me, CM_GROUND, true));
-	}
-
-	void WorldPage::add_contact(Collider& object)
-	{
-		UNUSED(object);
-		// these are contacts from the world geometry, so that's not the right place to switch worldpage of an entity
-		//object.m_entity.set_parent(m_entity);
-	}
-
-	void WorldPage::remove_contact(Collider& object)
-	{
-		UNUSED(object);
-		//object.m_entity.set_parent(*m_entity.m_parent);
+			m_solids.push_back(make_object<Solid>(m_entity, geom, SolidMedium::me, CM_GROUND, true));
 	}
 
 	void WorldPage::handle_add(Entity& entity)

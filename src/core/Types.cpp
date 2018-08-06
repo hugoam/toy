@@ -94,6 +94,6 @@ namespace mud
     template <> TOY_CORE_EXPORT Type& type<toy::ReceptorView>() { static Type ty("ReceptorView", type<toy::View>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::StoreView>() { static Type ty("StoreView", type<toy::View>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::OmniVision>() { static Type ty("OmniVision", type<toy::Vision>()); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Array<toy::Action>>() { static Type ty("Array<toy::Action>", type<toy::StoreBase<Array<T>, T>>()); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Array<toy::Entity>>() { static Type ty("Array<toy::Entity>", type<toy::StoreBase<Array<T>, T>>()); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Array<toy::Action>>() { static Type ty("Array<toy::Action>"); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Array<toy::Entity>>() { static Type ty("Array<toy::Entity>"); return ty; }
 }

@@ -34,7 +34,7 @@ using namespace mud; namespace toy
 		- adjacent worldpages
 	*/
 
-	class refl_ TOY_CORE_EXPORT WorldPage : public NonCopy, public ColliderObject, public Updatable, public StoreObserver<Entity>
+	class refl_ TOY_CORE_EXPORT WorldPage : public NonCopy, public Updatable, public StoreObserver<Entity>
     {
 	public:
 		constr_ WorldPage(Entity& entity, Emitter& emitter, bool open, const vec3& extents);
@@ -58,9 +58,6 @@ using namespace mud; namespace toy
 		std::vector<object_ptr<Solid>> m_solids;
 
 		virtual void next_frame(size_t tick, size_t delta) final;
-
-		virtual void add_contact(Collider& object);
-		virtual void remove_contact(Collider& object);
 
 		virtual void handle_add(Entity& entity);
 		virtual void handle_remove(Entity& entity);

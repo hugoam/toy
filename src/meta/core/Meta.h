@@ -1958,8 +1958,8 @@ namespace mud
         static Meta meta = { type<toy::WorldPage>(), &namspc({ "toy" }), "WorldPage", sizeof(toy::WorldPage), TypeClass::Object };
         static Class cls = { type<toy::WorldPage>(),
             // bases
-            { &type<toy::ColliderObject>() },
-            { base_offset<toy::WorldPage, toy::ColliderObject>() },
+            {  },
+            {  },
             // constructors
             {
                 { type<toy::WorldPage>(), [](Ref ref, array<Var> args) { new(&val<toy::WorldPage>(ref)) toy::WorldPage( val<toy::Entity>(args[0]), val<toy::Emitter>(args[1]), val<bool>(args[2]), val<mud::vec3>(args[3]) ); }, { { "entity", Ref(type<toy::Entity>()) }, { "emitter", Ref(type<toy::Emitter>()) }, { "open", var(bool()) }, { "extents", var(mud::vec3()) } } }
@@ -2036,8 +2036,8 @@ namespace mud
         static Meta meta = { type<toy::ObstacleBody>(), &namspc({ "toy" }), "ObstacleBody", sizeof(toy::ObstacleBody), TypeClass::Object };
         static Class cls = { type<toy::ObstacleBody>(),
             // bases
-            { &type<toy::Collider>(), &type<toy::ColliderObject>() },
-            { base_offset<toy::ObstacleBody, toy::Collider>(), base_offset<toy::ObstacleBody, toy::ColliderObject>() },
+            { &type<toy::Collider>() },
+            { base_offset<toy::ObstacleBody, toy::Collider>() },
             // constructors
             {
             },
@@ -2046,7 +2046,6 @@ namespace mud
             },
             // members
             {
-                { type<toy::ObstacleBody>(), member_address(&toy::ObstacleBody::collision_shape), type<toy::CollisionShape>(), "collision_shape", Ref(type<toy::CollisionShape>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::ObstacleBody>(object).collision_shape()); } },
                 { type<toy::ObstacleBody>(), member_address(&toy::ObstacleBody::m_throughput), type<float>(), "throughput", var(float()), Member::Value, nullptr }
             },
             // methods
@@ -2691,8 +2690,8 @@ namespace mud
         static Meta meta = { type<toy::Array<toy::Action>>(), &namspc({ "toy" }), "Array<toy::Action>", sizeof(toy::Array<toy::Action>), TypeClass::Object };
         static Class cls = { type<toy::Array<toy::Action>>(),
             // bases
-            { &type<toy::StoreBase<Array<T>, T>>() },
-            { base_offset<toy::Array<toy::Action>, toy::StoreBase<Array<T>, T>>() },
+            {},
+            {},
             // constructors
             {
             },
@@ -2723,8 +2722,8 @@ namespace mud
         static Meta meta = { type<toy::Array<toy::Entity>>(), &namspc({ "toy" }), "Array<toy::Entity>", sizeof(toy::Array<toy::Entity>), TypeClass::Object };
         static Class cls = { type<toy::Array<toy::Entity>>(),
             // bases
-            { &type<toy::StoreBase<Array<T>, T>>() },
-            { base_offset<toy::Array<toy::Entity>, toy::StoreBase<Array<T>, T>>() },
+			{},
+            {},
             // constructors
             {
             },
@@ -2766,14 +2765,12 @@ namespace mud
         m.m_types.push_back(&type<toy::ComponentPool>());
         m.m_types.push_back(&type<toy::Core>());
         m.m_types.push_back(&type<toy::DetourPath>());
-        m.m_types.push_back(&type<toy::Dispatch<toy::BulletShape>>());
         m.m_types.push_back(&type<toy::Effect>());
         m.m_types.push_back(&type<toy::Emitter>());
         m.m_types.push_back(&type<toy::EntityScript>());
         m.m_types.push_back(&type<toy::EventFilter>());
         m.m_types.push_back(&type<toy::EventRelay>());
         m.m_types.push_back(&type<toy::GroundMotion>());
-        m.m_types.push_back(&type<toy::LazyGlobal<toy::DispatchBulletShape>>());
         m.m_types.push_back(&type<toy::LightReflector>());
         m.m_types.push_back(&type<toy::LightSource>());
         m.m_types.push_back(&type<toy::Medium>());
@@ -2787,17 +2784,10 @@ namespace mud
         m.m_types.push_back(&type<toy::Receptor>());
         m.m_types.push_back(&type<toy::Selector>());
         m.m_types.push_back(&type<toy::State>());
-        m.m_types.push_back(&type<toy::Store<T_Element>>());
-        m.m_types.push_back(&type<toy::StoreBase<Array<T>, T>>());
-        m.m_types.push_back(&type<toy::StoreBase<CountStore<T>, T>>());
-        m.m_types.push_back(&type<toy::StoreObserver<T>>());
-        m.m_types.push_back(&type<toy::StoreObserver<T_Object>>());
-        m.m_types.push_back(&type<toy::StoreObserver<typename T_Array::T>>());
         m.m_types.push_back(&type<toy::SubBulletWorld>());
         m.m_types.push_back(&type<toy::Symbolic>());
         m.m_types.push_back(&type<toy::TaskSection>());
         m.m_types.push_back(&type<toy::User>());
-        m.m_types.push_back(&type<toy::VectorObserver<T_Content, T_Type>>());
         m.m_types.push_back(&type<toy::View>());
         m.m_types.push_back(&type<toy::Vision>());
         m.m_types.push_back(&type<toy::World>());
