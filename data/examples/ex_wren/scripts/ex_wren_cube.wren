@@ -14,6 +14,7 @@ foreign class MyGame {
     pump(app, game) {
         var ui = app.ui.begin()
         var viewer = Ui.scene_viewer(ui, Vec2.new(0))
+        var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
         
         var scene = viewer.scene.begin()
         
