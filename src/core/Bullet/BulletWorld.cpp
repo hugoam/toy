@@ -50,9 +50,12 @@ using namespace mud; namespace toy
 		if(&col0->m_entity == &col1->m_entity)
 			return;
 
-		//printf("DEBUG: Add contact %i : %i\n", int(col0->m_entity.m_id), int(col1->m_entity.m_id));
-		col0->m_object.add_contact(*col1);
-		col1->m_object.add_contact(*col0);
+		if (col0->m_object && col1->m_object)
+		{
+			//printf("DEBUG: Add contact %i : %i\n", int(col0->m_entity.m_id), int(col1->m_entity.m_id));
+			col0->m_object->add_contact(*col1);
+			col1->m_object->add_contact(*col0);
+		}
 	}
 
 #ifdef TRIGGER_COLLISIONS
@@ -64,9 +67,12 @@ using namespace mud; namespace toy
 		if(&col0->m_entity == &col1->m_entity)
 			return;
 
-		// printf << "Remove contact " << col0->m_entity.m_id << " : " << col1->m_entity.m_id << std::endl;
-		col0->m_object.remove_contact(*col1);
-		col1->m_object.remove_contact(*col0); // @todo : replace this with buffered action (set a flag on bullet object ?) to not loop infinitely from bullet code
+		if (col0->m_object && col1->m_object)
+		{
+			// printf << "Remove contact " << col0->m_entity.m_id << " : " << col1->m_entity.m_id << std::endl;
+			col0->m_object->remove_contact(*col1);
+			col1->m_object->remove_contact(*col0); // @todo : replace this with buffered action (set a flag on bullet object ?) to not loop infinitely from bullet code
+		}
 	}
 #endif
 
@@ -148,9 +154,11 @@ using namespace mud; namespace toy
 		Entity& entity1 = contact.m_col1->m_entity;
 		printf("DEBUG: %s remove contact %s %u : %s %u\n", m_medium.m_name.c_str(), entity0.m_complex.m_type.m_name, entity0.m_id, entity1.m_complex.m_type.m_name, entity1.m_id);
 #endif
-
-		contact.m_col0->m_object.remove_contact(*contact.m_col1);
-		contact.m_col1->m_object.remove_contact(*contact.m_col0);
+		if(contact.m_col0->m_object && contact.m_col1->m_object)
+		{
+			contact.m_col0->m_object->remove_contact(*contact.m_col1);
+			contact.m_col1->m_object->remove_contact(*contact.m_col0);
+		}
 
 		m_contacts.back()->m_index = index;
 		std::swap(m_contacts[index], m_contacts.back());

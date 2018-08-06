@@ -71,14 +71,15 @@ using namespace mud; namespace toy
     class refl_ TOY_CORE_EXPORT Collider : public NonCopy, public Updatable, public HookObserver
     {
 	public:
-		Collider(Entity& entity, ColliderObject& object, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init = true);
+		constr_ Collider(Entity& entity, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init = true);
         virtual ~Collider();
 
 		attr_ Entity& m_entity;
-		ColliderObject& m_object;
-		CollisionShape m_collision_shape;
+		attr_ CollisionShape m_collision_shape;
 		attr_ Medium& m_medium;
-		CollisionGroup m_group;
+		attr_ CollisionGroup m_group;
+
+		attr_ ColliderObject* m_object = nullptr;
 
 		PhysicMedium& m_world;
 		object_ptr<ColliderImpl> m_impl;
@@ -99,8 +100,8 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Solid : public Collider
 	{
 	public:
-		Solid(Entity& entity, ColliderObject& object, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass = 0.f);
-		Solid(Entity& entity, ColliderObject& object, const CollisionShape& collision_shape, bool isstatic, float mass = 0.f);
+		constr_ Solid(Entity& entity, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass = 0.f);
+		constr_ Solid(Entity& entity, const CollisionShape& collision_shape, bool isstatic, float mass = 0.f);
 		~Solid();
 
 		bool m_static;

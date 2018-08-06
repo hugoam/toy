@@ -11,12 +11,12 @@
 #include <core/Physic/Medium.h>
 #include <core/Physic/PhysicWorld.h>
 #include <core/Physic/CollisionShape.h>
+#include <core/Physic/Solid.h>
 
 using namespace mud; namespace toy
 {
-    Collider::Collider(Entity& entity, ColliderObject& object, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init)
+    Collider::Collider(Entity& entity, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init)
         : m_entity(entity)
-		, m_object(object)
 		, m_collision_shape(collision_shape)
 		, m_medium(medium)
 		, m_group(group)
@@ -68,8 +68,8 @@ using namespace mud; namespace toy
 		m_world.remove_collider(*this);
 	}
 
-	Solid::Solid(Entity& entity, ColliderObject& object, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass)
-		: Collider(entity, object, collision_shape, medium, group, false)
+	Solid::Solid(Entity& entity, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass)
+		: Collider(entity, collision_shape, medium, group, false)
 		, m_static(isstatic)
 		, m_mass(mass)
 	{
@@ -77,6 +77,10 @@ using namespace mud; namespace toy
 		this->init();
 	}
 
+	Solid::Solid(Entity& entity, const CollisionShape& collision_shape, bool isstatic, float mass)
+		: Solid(entity, collision_shape, SolidMedium::me, CM_SOLID, isstatic, mass)
+	{}
+	 
 	Solid::~Solid()
 	{}
 

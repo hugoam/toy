@@ -1,4 +1,4 @@
-import "mud" for Complex, Vec2, Vec3, Quat, Colour, Capsule, Cube, Symbol, SymbolDetail, Ui, Gfx
+import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Cube, Symbol, SymbolDetail, Ui, Gfx
 import "toy" for World, Entity, Movable, Solid, CollisionShape, GameShell
 
 class Human {
@@ -8,6 +8,7 @@ class Human {
         _entity = Entity.new(id, _complex, parent, position, quat.new(0,0,0,1))
         _movable = Movable.new(_entity)
         _solid = Solid.new(_entity, this, CollisionShape.new(Capsule.new(0.35, 1.1), vec3.new(0, 0.9, 0)), false, 1.0)
+        _complex.setup([_entity, _movable, _solid])
     }
     
     static bind() { __cls = ScriptClass.new("Human", [Entity.type, Movable.type, Solid.type]) }
@@ -17,10 +18,11 @@ class Crate {
 
 	construct new(id, parent, position, extents) {
         _complex = Complex.new(id, __cls.type)
-        _entity = Entity.new(id, this, parent, position, quat.new(0,0,0,1))
+        _entity = Entity.new(id, _complex, parent, position, quat.new(0,0,0,1))
         _movable = Movable.new(_entity)
         _solid = Solid.new(_entity, this, CollisionShape.new(Cube.new(extents)), false, 1.0)
         _extents = extents
+        _complex.setup([_entity, _movable, _solid])
     }
     
     static bind() { __cls = ScriptClass.new("Crate", [Entity.type, Movable.type, Solid.type]) }
@@ -38,7 +40,10 @@ class GameWorld {
 
     construct new(id) {
         _complex = Complex.new(id, __cls.type)
-        _world = World.new(id, "Example")
+        _world = World.new(id, _complex, "Example")
+        _bullet_world = BulletWorld.new(_world)
+        _complex.setup([_world, _bullet_world])
+        
         _player = Player.new(_world)
         _crates = []
         for (i in 0...50) {
@@ -46,7 +51,7 @@ class GameWorld {
         }
     }
     
-    static bind() { __cls = ScriptClass.new("GameWorld", [World.type]) }
+    static bind() { __cls = ScriptClass.new("GameWorld", [World.type, BulletWorld.type]) }
 }
 
 var MainWorld = null

@@ -7,7 +7,7 @@
 
 using namespace mud; namespace toy
 {
-	enum CollisionGroup : short int
+	enum refl_ CollisionGroup : short int
 	{
 		CM_NOMASK   = 0,
 		CM_OBJECT   = 1 << 0,

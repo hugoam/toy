@@ -14,8 +14,10 @@
 using namespace mud; namespace toy
 {
 	PhysicScope::PhysicScope(Entity& entity, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group)
-		: Collider(entity, *this, collision_shape, medium, group)
-	{}
+		: Collider(entity, collision_shape, medium, group)
+	{
+		Collider::m_object = this;
+	}
 
 	void PhysicScope::add_contact(Collider& collider)
 	{

@@ -15,7 +15,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT CollisionShape : public NonCopy
 	{
 	public:
-		CollisionShape(const Shape& shape, const vec3& center = Zero3, float margin = 0.f);
+		constr_ CollisionShape(const Shape& shape, const vec3& center = Zero3, float margin = 0.f);
 		~CollisionShape();
 
 		CollisionShape(const CollisionShape& shape);

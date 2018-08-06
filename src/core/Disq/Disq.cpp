@@ -236,14 +236,15 @@ using namespace mud; namespace toy
 	}
 
 	Disq::Disq(Entity& entity, float radius, float height, Medium& medium, CollisionGroup group)
-		: Collider(entity, *this, Capsule(radius, height), medium, group)
+		: Collider(entity, Capsule(radius, height), medium, group)
 		, m_entity(entity)
 		, m_radius(radius)
 		, m_height(height)
 	{
 		entity.m_world.add_task(this, short(Task::State));
-		
-		this->m_collision_shape.m_margin = -0.1f;
+
+		Collider::m_object = this;
+		Collider::m_collision_shape.m_margin = -0.1f;
 	}
 
 	Disq::~Disq()
