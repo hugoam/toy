@@ -644,7 +644,7 @@ void human_controller(HumanController& controller, Human& human, OrbitController
 
 static void human_velocity_controller(Viewer& viewer, HumanController& controller, Human& human, OrbitController& orbit, bool relative = true)
 {
-	const float speed = viewer.root_sheet().m_keyboard.m_shift ? 4.f : 15.f;
+	const float speed = viewer.ui().m_keyboard.m_shift ? 4.f : 15.f;
 	ui::velocity_controller(viewer, controller.m_force, controller.m_torque, speed);
 
 	if(viewer.key_event(KC_SPACE, EventType::Stroked))

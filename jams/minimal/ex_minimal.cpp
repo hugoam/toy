@@ -203,7 +203,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 			force -= move.force * speed;
 	};
 
-	bool shift = viewer.root_sheet().m_keyboard.m_shift;
+	bool shift = viewer.ui().m_keyboard.m_shift;
 
 	const KeyMove moves[8] =
 	{
@@ -213,7 +213,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 		{ KC_RIGHT,  X3 }, { KC_D,  X3 },
 	};
 
-	const float speed = viewer.root_sheet().m_keyboard.m_shift ? 4.f : 15.f;
+	const float speed = viewer.ui().m_keyboard.m_shift ? 4.f : 15.f;
 
 	for(const KeyMove& key_move : moves)
 		movement_key(viewer, controller.m_force, controller.m_torque, key_move, speed);

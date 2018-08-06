@@ -546,7 +546,7 @@ void tank_control_key(Widget& widget, vec3& force, vec3& torque, const KeyMove& 
 
 static void tank_velocity_controller(Widget& widget, Tank& tank)
 {
-	//bool shift = widget.root_sheet().m_keyboard.m_shift;
+	//bool shift = widget.ui().m_keyboard.m_shift;
 
 	const KeyMove moves[8] =
 	{
@@ -655,7 +655,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputModifier::Any))
 	{
 		viewer.take_focus();
-		player.m_tank.shoot(viewer.root_sheet().m_keyboard.m_shift);
+		player.m_tank.shoot(viewer.ui().m_keyboard.m_shift);
 	}
 
 	static vec3 destination = Zero3;

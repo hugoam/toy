@@ -1,5 +1,5 @@
-import "mud" for Complex, vec3, quat, Colour, Capsule, Cube, Symbol
-import "toy" for Entity, Movable, Solid, CollisionShape, GameShell
+import "mud" for Complex, Vec2, Vec3, Quat, Colour, Capsule, Cube, Symbol, SymbolDetail, Ui, Gfx
+import "toy" for World, Entity, Movable, Solid, CollisionShape, GameShell
 
 class Human {
 
@@ -10,7 +10,7 @@ class Human {
         _solid = Solid.new(_entity, this, CollisionShape.new(Capsule.new(0.35, 1.1), vec3.new(0, 0.9, 0)), false, 1.0)
     }
     
-    static init() { __type = Type.new("Human") }
+    static bind() { __type = Type.new("Human") }
 }
 
 class Crate {
@@ -23,7 +23,7 @@ class Crate {
         _extents = extents
     }
     
-    static init() { __type = Type.new("Crate") }
+    static bind() { __type = Type.new("Crate") }
 }
 
 class Player {
@@ -34,39 +34,52 @@ class Player {
     }
 }
 
+class GameWorld {
+
+    construct new(id) {
+        _complex = Complex.new(id, __type)
+        _world = World.new(id, "Example")
+        _player = Player.new(_world)
+        _crates = []
+        for (i in 0...50) {
+            _crates[i] = Crate.new(0, _world.origin, vec3.new(), vec3.new(1))
+        }
+    }
+    
+    static bind() { __type = Type.new("GameWorld") }
+}
+
+var MainWorld = null
+
 foreign class MyGame {
 
-    //foreign static new(constr, module)
-    //static new(module) { new(__constructor, module) }
     static new(module) { __constructor.call(MyGame, module) }
     
     static bind() { __constructor = VirtualConstructor.ref("GameModuleBind") }
     
-    init(app, game) { System.print("wren MyGame::init() !!! ") }
+    init(app, game) {
+        System.print("init !")
+        start(app, game)
+    }
     
     start(app, game) {
-        //_world = World.new(0, 'Example')
-        //_player = Player.new(_world)
-        //_crates = []
-        //for (i in 0...50)
-        //    _crates[i] = Crate.new(0, _world.origin, vec3.new(), vec3.new(1))
+        MainWorld = GameWorld.new(0)
     }
     
     pump(app, game) {
         var ui = app.ui.begin()
-        var viewer = ui.scene_viewer(ui)
+        var viewer = Ui.scene_viewer(ui, Vec2.new(0))
         
         var scene = viewer.scene.begin()
         
-        var node = gfx.node(scene, {}, vec3.new(0, 0, 0))
-        gfx.shape(node, Cube.new(), Symbol.new(Colour.Pink))
     }
     
     scene(app, game) {}
 }
 
-Human.init()
-Crate.init()
+Human.bind()
+Crate.bind()
+GameWorld.bind()
 MyGame.bind()
 
 var game = MyGame.new(module)

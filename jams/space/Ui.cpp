@@ -151,7 +151,7 @@ void jump_query(Widget& parent, Viewer& viewer, Fleet& fleet, uint32_t mode)
 	Widget& modal = ui::popup(self, styles().modal, ui::PopupFlags::None);
 	JumpQuery& query = self.state<JumpQuery>();
 
-	if(&modal == parent.root_sheet().m_hovered)
+	if(&modal == parent.ui().m_hovered)
 		query.m_hover = uvec2(UINT_MAX);
 
 	ui::label(modal, "Jump");

@@ -130,7 +130,7 @@ void human_control_key(Widget& widget, Human& human, vec3& speed, const KeyMove&
 
 static void human_velocity_controller(Widget& widget, Human& human)
 {
-	bool shift = widget.root_sheet().m_keyboard.m_shift;
+	bool shift = widget.ui().m_keyboard.m_shift;
 
 	const KeyMove moves[4] =
 	{

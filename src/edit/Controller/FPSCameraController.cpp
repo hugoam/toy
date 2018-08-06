@@ -30,9 +30,9 @@ using namespace mud; namespace toy
 		EventDispatch::process(viewer);
 
 		//if(active)
-		//m_inputWidget->root_sheet().m_cursor.hide();
+		//m_inputWidget->ui().m_cursor.hide();
 		//else
-		//m_inputWidget->root_sheet().m_cursor.show();
+		//m_inputWidget->ui().m_cursor.show();
 
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
 		{

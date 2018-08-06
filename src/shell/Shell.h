@@ -162,7 +162,7 @@ using namespace mud; namespace toy
 		unique_ptr<Vg> m_vg;
 		unique_ptr<UiWindow> m_ui_window;
 
-		attr_ Widget* m_ui = nullptr;
+		attr_ Ui* m_ui = nullptr;
 
 		unique_ptr<GameModule> m_game_module_alloc;
 

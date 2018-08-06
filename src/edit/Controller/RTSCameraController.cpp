@@ -38,9 +38,9 @@ using namespace mud; namespace toy
 		EventDispatch::process(viewer);
 
 		// activate
-		//mWidget->root_sheet().cursor()->bind(m_widget);
+		//mWidget->ui().cursor()->bind(m_widget);
 		// deactivate
-		//mWidget->root_sheet().cursor()->free();
+		//mWidget->ui().cursor()->free();
 
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Moved))
 		{
