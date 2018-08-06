@@ -10,10 +10,10 @@ int main(int argc, char *argv[])
 	if(argc > 1)
 	{
 		std::string game = argv[1];
-		app.run_editor(game);
+		app.run_editor_path(game);
 	}
 
-	//app.run_editor("ex_space");
-	//app.run_editor("ex_platform");
-	app.run_editor("ex_blocks");
+	//app.run_editor_path("ex_space");
+	//app.run_editor_path("ex_platform");
+	app.run_editor_path("ex_blocks");
 }
