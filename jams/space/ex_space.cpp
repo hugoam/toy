@@ -940,8 +940,8 @@ void ex_space_lua_check(GameShell& shell, Galaxy& galaxy)
 	lua.set("coord", var(vec2{ 45.f, 12.f }));
 	lua.call("coord = vec2(45, 12)");
 	lua.set("stance", var(FleetStance::PlanetaryAttack));
-	float x = lua.getx<float>(carray<cstring, 2>{ "coord", "x" });
-	printf("cpp -> coord.x = %f\n", x);
+	//float x = lua.getx<float>(carray<cstring, 2>{ "coord", "x" });
+	//printf("cpp -> coord.x = %f\n", x);
 	lua.call("print('coord = ' .. coord.x .. ', ' .. coord.y)");
 	lua.call("print('stance = ' .. tostring(stance))");
 	lua.call("fleet:order_jump(coord, stance)");

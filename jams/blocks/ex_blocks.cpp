@@ -75,7 +75,7 @@ Shield::Shield(Id id, Entity& parent, const vec3& position, Faction& faction, fl
 	, m_radius(radius)
 	, m_charge(1.f)
 	, m_discharge(0.f)
-	, m_solid(m_entity, *this, Sphere(radius), SolidMedium::me, CollisionGroup(CM_ENERGY), false, 0.f)
+	, m_solid(m_entity, Sphere(radius), SolidMedium::me, CollisionGroup(CM_ENERGY), false, 0.f)
 {
 	m_entity.m_world.add_task(this, short(Task::State)); // TASK_GAMEOBJECT
 }
@@ -104,7 +104,7 @@ Slug::Slug(Entity& parent, const vec3& source, const quat& rotation, const vec3&
 	, m_velocity(velocity)
 	, m_power(power)
 	//, m_solid(m_entity, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY), false, 1.f)
-	, m_collider(m_entity, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY))
+	, m_collider(m_entity, Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY))
 {}
 
 Slug::~Slug()
@@ -164,7 +164,7 @@ Tank::Tank(Id id, Entity& parent, const vec3& position, Faction& faction)
 	, m_emitter(m_entity)
 	, m_receptor(m_entity)
 	, m_faction(faction)
-	, m_solid(m_entity, *this, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), SolidMedium::me, CM_SOLID, false, 4.f)
+	, m_solid(m_entity, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), false, 4.f)
 {
 	m_entity.m_world.add_task(this, short(Task::State)); // TASK_GAMEOBJECT
 

@@ -5,9 +5,9 @@ class Human {
 
 	construct Human(id, parent, position) {
         _complex = Complex.new(id, __cls.type)
-        _entity = Entity.new(id, _complex, parent, position, quat.new(0,0,0,1))
+        _entity = Entity.new(id, _complex, parent, position, Quat.new(1,0,0,0))
         _movable = Movable.new(_entity)
-        _solid = Solid.new(_entity, CollisionShape.new(Capsule.new(0.35, 1.1), vec3.new(0, 0.9, 0)), false, 1.0)
+        _solid = Solid.new(_entity, CollisionShape.new(Capsule.new(0.35, 1.1), Vec3.new(0, 0.9, 0)), false, 1.0)
         _complex.setup([_entity, _movable, _solid])
     }
     
@@ -18,7 +18,7 @@ class Crate {
 
 	construct new(id, parent, position, extents) {
         _complex = Complex.new(id, __cls.type)
-        _entity = Entity.new(id, _complex, parent, position, quat.new(0,0,0,1))
+        _entity = Entity.new(id, _complex, parent, position, Quat.new(1,0,0,0))
         _movable = Movable.new(_entity)
         _solid = Solid.new(_entity, CollisionShape.new(Cube.new(extents)), false, 1.0)
         _extents = extents
@@ -32,7 +32,7 @@ class Player {
 
 	construct new(world) {
         _world = world
-        _human = Human.new(0, _world.origin, vec3.new(0))
+        _human = Human.new(0, _world.origin, Vec3.new(0))
     }
 }
 
@@ -47,7 +47,7 @@ class GameWorld {
         _player = Player.new(_world)
         _crates = []
         for (i in 0...50) {
-            _crates[i] = Crate.new(0, _world.origin, vec3.new(), vec3.new(1))
+            _crates[i] = Crate.new(0, _world.origin, Vec3.new(), Vec3.new(1))
         }
     }
     

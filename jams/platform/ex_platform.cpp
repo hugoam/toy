@@ -128,7 +128,7 @@ Bullet::Bullet(Entity& parent, const vec3& source, const quat& rotation, float v
 	, m_source(source)
 	, m_velocity(rotate(rotation, -Z3) * velocity)
 	//, m_solid(m_entity, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(energy), false, 1.f)
-	, m_collider(m_entity, *this, Sphere(0.1f), SolidMedium::me, CM_SOLID)
+	, m_collider(m_entity, Sphere(0.1f), SolidMedium::me, CM_SOLID)
 {}
 
 Bullet::~Bullet()
@@ -185,7 +185,7 @@ Human::Human(Id id, Entity& parent, const vec3& position, Faction faction)
 	, m_script(m_entity)
 	, m_faction(faction)
 	, m_walk(false)
-	, m_solid(m_entity, *this, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), SolidMedium::me, CM_SOLID, false, 1.f)
+	, m_solid(m_entity, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f)
 {
 	m_entity.m_world.add_task(this, short(Task::State)); // TASK_GAMEOBJECT
 
@@ -353,7 +353,7 @@ Crate::Crate(Id id, Entity& parent, const vec3& position, const vec3& extents)
 	, m_entity(id, *this, parent, position, ZeroQuat)
 	, m_movable(m_entity)
 	, m_extents(extents)
-	, m_solid(m_entity, *this, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f)
+	, m_solid(m_entity, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f)
 {}
 
 Player::Player(TileWorld& world)

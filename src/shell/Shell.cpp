@@ -105,8 +105,8 @@ using namespace mud; namespace toy
 		// @todo this should be automatically done by math module
 		register_math_conversions();
 
-		m_lua = make_object<LuaInterpreter>();
-		m_wren = make_object<WrenInterpreter>();
+		m_lua = make_object<LuaInterpreter>(false);
+		m_wren = make_object<WrenInterpreter>(false);
 		m_editor.m_script_editor.m_lua = m_lua.get();
 		m_editor.m_script_editor.m_wren = m_wren.get();
 
