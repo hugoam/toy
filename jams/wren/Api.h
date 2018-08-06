@@ -1,4 +1,4 @@
-#include <minimal/ex_minimal.h>
-#include <minimal/Forward.h>
-#include <minimal/Types.h>
+#include <wren/ex_wren.h>
+#include <wren/Forward.h>
+#include <wren/Types.h>
 

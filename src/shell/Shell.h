@@ -26,13 +26,14 @@ using namespace mud; namespace toy
 	
 	using Selection = std::vector<Ref>;
 
-	struct refl_ TOY_SHELL_EXPORT GameScene : public VisuScene
+	class refl_ TOY_SHELL_EXPORT GameScene : public VisuScene
 	{
-		Selection& m_selection;
-		Game& m_game;
-
+	public:
 		GameScene(User& user, GfxSystem& gfx_system, SoundManager* sound_system, Game& game, Ref player = {});
 		~GameScene();
+
+		Selection& m_selection;
+		Game& m_game;
 	};
 
 	enum class refl_ GameMode
@@ -42,8 +43,9 @@ using namespace mud; namespace toy
 		Pause,
 	};
 
-	struct refl_ TOY_SHELL_EXPORT Game : public NonCopy
+	class refl_ TOY_SHELL_EXPORT Game : public NonCopy
 	{
+	public:
 		Game(User& user, GfxSystem& gfx_system);
 		~Game();
 
@@ -68,7 +70,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_SHELL_EXPORT GameModule
 	{
 	public:
-		constr_ GameModule(Module& module)
+		GameModule(Module& module)
 			: m_module(&module)
 		{}
 
@@ -86,6 +88,7 @@ using namespace mud; namespace toy
 	public:
 		constr_ GameModuleBind(Module& module, const VirtualMethod& call)
 			: GameModule(module)
+			, m_call(call)
 		{}
 
 		virtual void init(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::init), Ref(this), { params, 2 }); }
@@ -104,19 +107,19 @@ using namespace mud; namespace toy
 		GameShell(array<cstring> resource_paths, int argc, char *argv[]);
 		~GameShell();
 
-		void init();
-		void load(GameModule& module);
-		void load(const string& module_path);
-		void run(size_t iterations = 0U);
-		void run_game(GameModule& module, size_t iterations = 0U);
-		void run_editor(GameModule& module, size_t iterations = 0U);
-		void run_game(const string& module_path, size_t iterations = 0U);
-		void run_editor(const string& module_path, size_t iterations = 0U);
-		void launch();
-		void save();
-		void reload();
-		bool pump();
-		void cleanup();
+		meth_ void init();
+		meth_ void load(GameModule& module);
+		meth_ void load(const string& module_path);
+		meth_ void run(size_t iterations = 0U);
+		meth_ void run_game(GameModule& module, size_t iterations = 0U);
+		meth_ void run_editor(GameModule& module, size_t iterations = 0U);
+		meth_ void run_game(const string& module_path, size_t iterations = 0U);
+		meth_ void run_editor(const string& module_path, size_t iterations = 0U);
+		meth_ void launch();
+		meth_ void save();
+		meth_ void reload();
+		meth_ bool pump();
+		meth_ void cleanup();
 
 		void start_game();
 		void pump_game();

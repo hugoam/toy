@@ -47,8 +47,7 @@ namespace mud
             },
             // copy constructor
             {
-                { type<toy::Game>(), [](Ref ref, Ref other) { new(&val<toy::Game>(ref)) toy::Game(val<toy::Game>(other)); } }
-            },
+			},
             // members
             {
             },
@@ -76,9 +75,7 @@ namespace mud
             {  },
             {  },
             // constructors
-            {
-                { type<toy::GameModule>(), [](Ref ref, array<Var> args) { new(&val<toy::GameModule>(ref)) toy::GameModule( val<mud::Module>(args[0]) ); }, { { "module", Ref(type<mud::Module>()) } } }
-            },
+            {},
             // copy constructor
             {
             },
@@ -87,10 +84,10 @@ namespace mud
             },
             // methods
             {
-                { type<toy::GameModule>(), "init", member_address(&toy::GameModule::init), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).init(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", var(toy::Game()) } }, Var() },
-                { type<toy::GameModule>(), "start", member_address(&toy::GameModule::start), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).start(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", var(toy::Game()) } }, Var() },
-                { type<toy::GameModule>(), "pump", member_address(&toy::GameModule::pump), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).pump(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", var(toy::Game()) } }, Var() },
-                { type<toy::GameModule>(), "scene", member_address(&toy::GameModule::scene), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).scene(val<toy::GameShell>(args[0]), val<toy::GameScene>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "scene", var(toy::GameScene()) } }, Var() }
+                { type<toy::GameModule>(), "init", member_address(&toy::GameModule::init), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).init(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", Ref(type<toy::Game>()) } }, Var() },
+                { type<toy::GameModule>(), "start", member_address(&toy::GameModule::start), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).start(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", Ref(type<toy::Game>()) } }, Var() },
+                { type<toy::GameModule>(), "pump", member_address(&toy::GameModule::pump), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).pump(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", Ref(type<toy::Game>()) } }, Var() },
+                { type<toy::GameModule>(), "scene", member_address(&toy::GameModule::scene), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).scene(val<toy::GameShell>(args[0]), val<toy::GameScene>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "scene", Ref(type<toy::GameScene>()) } }, Var() }
             },
             // static members
             {
@@ -150,8 +147,7 @@ namespace mud
             },
             // copy constructor
             {
-                { type<toy::GameScene>(), [](Ref ref, Ref other) { new(&val<toy::GameScene>(ref)) toy::GameScene(val<toy::GameScene>(other)); } }
-            },
+			},
             // members
             {
             },
@@ -180,7 +176,7 @@ namespace mud
             { base_offset<toy::GameModuleBind, toy::GameModule>() },
             // constructors
             {
-                { type<toy::GameModuleBind>(), [](Ref ref, array<Var> args) { new(&val<toy::GameModuleBind>(ref)) toy::GameModuleBind( val<mud::Module>(args[0]), val<toy::GameModuleBind::mud::VirtualMethod>(args[1]) ); }, { { "module", Ref(type<mud::Module>()) }, { "call", var(toy::GameModuleBind::mud::VirtualMethod()) } } }
+                { type<toy::GameModuleBind>(), [](Ref ref, array<Var> args) { new(&val<toy::GameModuleBind>(ref)) toy::GameModuleBind( val<mud::Module>(args[0]), val<mud::VirtualMethod>(args[1]) ); }, { { "module", Ref(type<mud::Module>()) }, { "call", var(mud::VirtualMethod()) } } }
             },
             // copy constructor
             {
@@ -208,7 +204,6 @@ namespace mud
         m.m_types.push_back(&type<toy::GameMode>());
         m.m_types.push_back(&type<toy::GameModule>());
         m.m_types.push_back(&type<toy::GameShell>());
-        m.m_types.push_back(&type<toy::GameModuleBind::mud::VirtualMethod>());
         m.m_types.push_back(&type<toy::GameScene>());
         m.m_types.push_back(&type<toy::GameModuleBind>());
     

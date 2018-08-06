@@ -102,8 +102,8 @@ namespace toy {
     enum class GameMode : int;
     
     
-    struct GameScene;
-    struct Game;
+    class GameScene;
+    class Game;
     class GameModule;
     class GameModuleBind;
     class GameShell;

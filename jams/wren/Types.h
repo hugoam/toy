@@ -1,6 +1,6 @@
 #pragma once
 
-#include <minimal/Forward.h>
+#include <wren/Forward.h>
 
 #if !defined MUD_MODULES || defined MUD_OBJ_LIB
 #include <obj/Type.h>
@@ -51,14 +51,4 @@
 namespace mud
 {
     // Exported types
-    
-    export_ template <> _MINIMAL_EXPORT Type& type<Player>();
-    export_ template <> _MINIMAL_EXPORT Type& type<Bullet>();
-    export_ template <> _MINIMAL_EXPORT Type& type<Crate>();
-    export_ template <> _MINIMAL_EXPORT Type& type<Human>();
-    
-	export_ template struct _MINIMAL_EXPORT Typed<std::vector<Player*>>;
-	export_ template struct _MINIMAL_EXPORT Typed<std::vector<Bullet*>>;
-	export_ template struct _MINIMAL_EXPORT Typed<std::vector<Crate*>>;
-	export_ template struct _MINIMAL_EXPORT Typed<std::vector<Human*>>;
 }

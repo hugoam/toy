@@ -887,7 +887,7 @@ public:
 
 		if(location.m_name != nullptr)
 		{
-			TextScript& script = app.m_editor.m_script_editor.create_script("enemy_ai");
+			TextScript& script = app.m_editor.m_script_editor.create_script("enemy_ai", Language::Lua);
 			script.m_script = read_text_file(std::string(location.m_location) + location.m_name);
 		}
 #endif

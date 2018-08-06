@@ -36,19 +36,11 @@
 #include <block/Forward.h>
 #include <shell/Forward.h>
 
-#ifndef _MINIMAL_EXPORT
-#define _MINIMAL_EXPORT MUD_IMPORT
+#ifndef _WREN_EXPORT
+#define _WREN_EXPORT MUD_IMPORT
 #endif
 
 
-    
-    
-    class Bullet;
-    struct Aim;
-    struct HumanController;
-    class Human;
-    class Crate;
-    class Player;
 
 namespace std {
 
