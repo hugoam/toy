@@ -20,7 +20,7 @@ enum CustomCollisionGroup : short int
 	CM_ENERGY = 1 << 10,
 };
 
-class refl_ _BLOCKS_EXPORT Well : public Complex, public Updatable, public ColliderObject
+class refl_ _BLOCKS_EXPORT Well : public Complex, public Updatable
 {
 public:
 	constr_ Well(Id id, Entity& parent, const vec3& position);
@@ -62,7 +62,7 @@ public:
 	attr_ Faction& m_faction;
 };
 
-class refl_ _BLOCKS_EXPORT Shield : public Complex, public Updatable, public ColliderObject
+class refl_ _BLOCKS_EXPORT Shield : public Complex, public Updatable
 {
 public:
 	constr_ Shield(Id id, Entity& parent, const vec3& position, Faction& faction, float radius);
@@ -81,7 +81,7 @@ public:
 	void next_frame(size_t tick, size_t delta);
 };
 
-class refl_ _BLOCKS_EXPORT Slug : public Complex, public ColliderObject
+class refl_ _BLOCKS_EXPORT Slug : public Complex
 {
 public:
 	Slug(Entity& parent, const vec3& source, const quat& rotation, const vec3& velocity, float power = 1.f);
@@ -103,7 +103,7 @@ public:
 	void update();
 };
 
-class refl_ _BLOCKS_EXPORT Tank : public Complex, public Updatable, public ColliderObject
+class refl_ _BLOCKS_EXPORT Tank : public Complex, public Updatable
 {
 public:
 	constr_ Tank(Id id, Entity& parent, const vec3& position, Faction& faction);

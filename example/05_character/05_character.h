@@ -11,7 +11,7 @@
 using namespace mud;
 using namespace toy;
 
-class refl_ Human : public Complex, public Updatable, public ColliderObject
+class refl_ Human : public Complex, public Updatable
 {
 public:
 	constr_ Human(Id id, Entity& parent, const vec3& position, float radius, float height, const std::string& first_name, const std::string& last_name);

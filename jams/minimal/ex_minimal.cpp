@@ -94,7 +94,7 @@ Crate::Crate(Id id, Entity& parent, const vec3& position, const vec3& extents)
 	, m_entity(id, *this, parent, position, ZeroQuat)
 	, m_movable(m_entity)
 	, m_extents(extents)
-	, m_solid(m_entity, *this, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f)
+	, m_solid(m_entity, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f)
 {}
 
 Player::Player(World& world)

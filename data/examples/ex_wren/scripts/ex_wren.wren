@@ -7,7 +7,7 @@ class Human {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, position, quat.new(0,0,0,1))
         _movable = Movable.new(_entity)
-        _solid = Solid.new(_entity, this, CollisionShape.new(Capsule.new(0.35, 1.1), vec3.new(0, 0.9, 0)), false, 1.0)
+        _solid = Solid.new(_entity, CollisionShape.new(Capsule.new(0.35, 1.1), vec3.new(0, 0.9, 0)), false, 1.0)
         _complex.setup([_entity, _movable, _solid])
     }
     
@@ -20,7 +20,7 @@ class Crate {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, position, quat.new(0,0,0,1))
         _movable = Movable.new(_entity)
-        _solid = Solid.new(_entity, this, CollisionShape.new(Cube.new(extents)), false, 1.0)
+        _solid = Solid.new(_entity, CollisionShape.new(Cube.new(extents)), false, 1.0)
         _extents = extents
         _complex.setup([_entity, _movable, _solid])
     }

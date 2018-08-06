@@ -15,7 +15,7 @@ extern "C"
 	//_MINIMAL_EXPORT void ex_minimal_game(GameShell& app, Game& game);
 }
 
-class refl_ _MINIMAL_EXPORT Bullet : public Complex, public ColliderObject
+class refl_ _MINIMAL_EXPORT Bullet : public Complex
 {
 public:
 	Bullet(Entity& parent, const vec3& source, const quat& rotation, float velocity);
@@ -48,7 +48,7 @@ struct HumanController
 	vec3 m_torque = Zero3;
 };
 
-class refl_ _MINIMAL_EXPORT Human : public Complex, public Updatable, public ColliderObject
+class refl_ _MINIMAL_EXPORT Human : public Complex, public Updatable
 {
 public:
 	constr_ Human(Id id, Entity& parent, const vec3& position);
@@ -79,7 +79,7 @@ public:
 	static float headlight_angle;
 };
 
-class refl_ _MINIMAL_EXPORT Crate : public Complex, public ColliderObject
+class refl_ _MINIMAL_EXPORT Crate : public Complex
 {
 public:
 	constr_ Crate(Id id, Entity& parent, const vec3& position, const vec3& extents);

@@ -64,8 +64,8 @@ namespace mud
         static Meta meta = { type<Human>(), &namspc({}), "Human", sizeof(Human), TypeClass::Complex };
         static Class cls = { type<Human>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Human, mud::Complex>(), base_offset<Human, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Human, mud::Complex>() },
             // constructors
             {
                 { type<Human>(), [](Ref ref, array<Var> args) { new(&val<Human>(ref)) Human( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<std::string>(args[5]), val<std::string>(args[6]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "radius", var(float()) }, { "height", var(float()) }, { "first_name", var(std::string()) }, { "last_name", var(std::string()) } } }

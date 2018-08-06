@@ -68,8 +68,8 @@ namespace mud
         static Meta meta = { type<Bullet>(), &namspc({}), "Bullet", sizeof(Bullet), TypeClass::Complex };
         static Class cls = { type<Bullet>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Bullet, mud::Complex>(), base_offset<Bullet, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Bullet, mud::Complex>() },
             // constructors
             {
             },
@@ -103,8 +103,8 @@ namespace mud
         static Meta meta = { type<Crate>(), &namspc({}), "Crate", sizeof(Crate), TypeClass::Complex };
         static Class cls = { type<Crate>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Crate, mud::Complex>(), base_offset<Crate, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Crate, mud::Complex>() },
             // constructors
             {
                 { type<Crate>(), [](Ref ref, array<Var> args) { new(&val<Crate>(ref)) Crate( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<mud::vec3>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "extents", var(mud::vec3()) } } }
@@ -139,8 +139,8 @@ namespace mud
         static Meta meta = { type<Human>(), &namspc({}), "Human", sizeof(Human), TypeClass::Complex };
         static Class cls = { type<Human>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Human, mud::Complex>(), base_offset<Human, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Human, mud::Complex>() },
             // constructors
             {
                 { type<Human>(), [](Ref ref, array<Var> args) { new(&val<Human>(ref)) Human( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) } } }

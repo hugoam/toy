@@ -38,7 +38,7 @@ public:
 	void open_blocks(GfxSystem& gfx_system, const vec3& position, const ivec2& radius);
 };
 
-class refl_ _PLATFORM_EXPORT Bullet : public Complex, public ColliderObject
+class refl_ _PLATFORM_EXPORT Bullet : public Complex
 {
 public:
 	Bullet(Entity& parent, const vec3& source, const quat& rotation, float velocity);
@@ -87,7 +87,7 @@ struct refl_ Stance
 	attr_ bool loop;
 };
 
-class refl_ _PLATFORM_EXPORT Human : public Complex, public Updatable, public ColliderObject
+class refl_ _PLATFORM_EXPORT Human : public Complex, public Updatable
 {
 public:
 	constr_ Human(Id id, Entity& parent, const vec3& position, Faction faction);
@@ -146,7 +146,7 @@ public:
 	comp_ attr_ Movable m_movable;
 };
 
-class refl_ _PLATFORM_EXPORT Crate : public Complex, public ColliderObject
+class refl_ _PLATFORM_EXPORT Crate : public Complex
 {
 public:
 	constr_ Crate(Id id, Entity& parent, const vec3& position, const vec3& extents);

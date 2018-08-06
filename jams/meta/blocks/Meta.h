@@ -180,8 +180,8 @@ namespace mud
         static Meta meta = { type<Shield>(), &namspc({}), "Shield", sizeof(Shield), TypeClass::Complex };
         static Class cls = { type<Shield>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Shield, mud::Complex>(), base_offset<Shield, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Shield, mud::Complex>() },
             // constructors
             {
                 { type<Shield>(), [](Ref ref, array<Var> args) { new(&val<Shield>(ref)) Shield( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<Faction>(args[3]), val<float>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "faction", Ref(type<Faction>()) }, { "radius", var(float()) } } }
@@ -219,8 +219,8 @@ namespace mud
         static Meta meta = { type<Slug>(), &namspc({}), "Slug", sizeof(Slug), TypeClass::Complex };
         static Class cls = { type<Slug>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Slug, mud::Complex>(), base_offset<Slug, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Slug, mud::Complex>() },
             // constructors
             {
             },
@@ -254,8 +254,8 @@ namespace mud
         static Meta meta = { type<Tank>(), &namspc({}), "Tank", sizeof(Tank), TypeClass::Complex };
         static Class cls = { type<Tank>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Tank, mud::Complex>(), base_offset<Tank, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Tank, mud::Complex>() },
             // constructors
             {
                 { type<Tank>(), [](Ref ref, array<Var> args) { new(&val<Tank>(ref)) Tank( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<Faction>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "faction", Ref(type<Faction>()) } } }
@@ -291,8 +291,8 @@ namespace mud
         static Meta meta = { type<Well>(), &namspc({}), "Well", sizeof(Well), TypeClass::Complex };
         static Class cls = { type<Well>(),
             // bases
-            { &type<mud::Complex>(), &type<toy::ColliderObject>() },
-            { base_offset<Well, mud::Complex>(), base_offset<Well, toy::ColliderObject>() },
+            { &type<mud::Complex>() },
+            { base_offset<Well, mud::Complex>() },
             // constructors
             {
                 { type<Well>(), [](Ref ref, array<Var> args) { new(&val<Well>(ref)) Well( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) } } }
