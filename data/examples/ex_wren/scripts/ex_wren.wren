@@ -1,5 +1,5 @@
 import "random" for Random
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Gfx, ItemFlag
+import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Key, EventType, Gfx, ItemFlag
 import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell
 import "ui" for OrbitMode
 
@@ -169,12 +169,19 @@ foreign class MyGame {
     
     scene(app, scene) {}
     
-    control_human(viewer, human) {
+    control_human(app, viewer, human) {
     
         Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, human.entity, human.aiming, human.angle)
         Ui.velocity_controller(viewer, human.force, human.torque, 1)
 
         human.update()
+        
+        if(viewer.key_event(Key.Escape, EventType.Stroked).valid()) {
+            app.editor.run_game = false
+            viewer.yield_modal()
+            //if(app.context.mouse_lock)
+            //    app.context.lock_mouse(false)
+        }
     }
     
     pbr_material(app, name, colour) {
