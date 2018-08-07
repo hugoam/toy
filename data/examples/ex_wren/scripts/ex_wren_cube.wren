@@ -23,7 +23,7 @@ foreign class MyGame {
         Gfx.shape(node, Cube.new(), symbol, 0, null, 0)
     }
     
-    scene(app, game) {}
+    scene(app, scene) {}
 }
 
 MyGame.bind()

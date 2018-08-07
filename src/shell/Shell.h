@@ -67,7 +67,7 @@ using namespace mud; namespace toy
 	using GameCallback = void(*)(GameModule& module, GameShell& shell, Game& game);
 	using SceneCallback = void(*)(GameModule& module, GameShell& shell, GameScene& scene);
 
-	class refl_ TOY_SHELL_EXPORT GameModule
+	class refl_ TOY_SHELL_EXPORT GameModule : public NonCopy
 	{
 	public:
 		GameModule(Module& module)
@@ -100,6 +100,8 @@ using namespace mud; namespace toy
 	};
 
 	TOY_SHELL_EXPORT Viewer& game_viewport(Widget& parent, GameScene& scene, Camera& camera);
+	TOY_SHELL_EXPORT func_ void paint_physics(Gnode& parent, World& world);
+	TOY_SHELL_EXPORT func_ void physic_painter(GameScene& scene);
 
 	class refl_ TOY_SHELL_EXPORT GameShell : public NonCopy
 	{
@@ -122,6 +124,8 @@ using namespace mud; namespace toy
 		meth_ void cleanup();
 
 		void run_script(Module& module, const string& file);
+
+		void reset_interpreters(bool reflect);
 
 		void start_game();
 		void pump_game();

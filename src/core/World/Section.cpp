@@ -21,6 +21,7 @@ using namespace mud; namespace toy
 		: m_id(id)
 		, m_clock()
 		, m_last_tick(0)
+		, m_destroy(false)
 	{}
 
 	TaskSection::~TaskSection()
@@ -48,9 +49,18 @@ using namespace mud; namespace toy
 #ifdef MUD_PLATFORM_EMSCRIPTEN
 		, m_thread(nullptr)
 #else
-		, m_thread(thread ? make_unique<std::thread>([this] { while(true) this->update(); }) : nullptr)
+		, m_thread(thread ? make_unique<std::thread>([this] { while(!m_destroy) this->update(); }) : nullptr)
 #endif
 	{}
+
+	MonoSection::~MonoSection()
+	{
+		if(m_thread)
+		{
+			m_destroy = true;
+			m_thread->join();
+		}
+	}
 
 	void MonoSection::add_task(Updatable* task)
 	{

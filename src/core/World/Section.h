@@ -16,6 +16,7 @@
 #include <mutex>
 #include <algorithm>
 #include <functional>
+#include <atomic>
 #endif
 
 using namespace mud; namespace toy
@@ -93,6 +94,7 @@ using namespace mud; namespace toy
 		short int m_id;
 		Clock m_clock;
 		size_t m_last_tick;
+		std::atomic<bool> m_destroy;
 	};
 
 	typedef std::function<void()> TaskFunc;
@@ -118,6 +120,7 @@ using namespace mud; namespace toy
 	{
 	public:
 		MonoSection(short int id, bool thread = false);
+		~MonoSection();
 
 		void update();
 

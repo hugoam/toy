@@ -558,17 +558,6 @@ void paint_viewer(Viewer& viewer)
 #endif
 }
 
-void physic_painter(GameScene& scene)
-{
-	static PhysicDebugDraw physic_draw = { *scene.m_scene.m_immediate };
-
-	scene.painter("PhysicsDebug", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
-		UNUSED(index); UNUSED(visu_scene);
-		//physic_draw.draw_physics(parent, *scene.m_game.m_world, VisualMedium::me);
-		physic_draw.draw_physics(parent, *scene.m_game.m_world, SolidMedium::me);
-	});
-}
-
 vec3 find_fitting_player_location(WfcBlock& tileblock)
 {
 	vec3 center = vec3(tileblock.m_size) * 0.5f;

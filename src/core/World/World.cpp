@@ -36,10 +36,16 @@ using namespace mud; namespace toy
 	}
 
     World::~World()
-    {}
+    {
+		this->destroy();
+	}
 
 	void World::destroy()
 	{
+		// stop threaded sections potentially iterating the entity tree
+		for(auto& section : m_sections)
+			if(section)
+				section->m_destroy = true;
 		m_origin = nullptr;
 		m_unworld = nullptr;
 	}

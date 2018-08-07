@@ -81,6 +81,21 @@ using namespace mud; namespace toy
 		return self;
 	}
 
+	void paint_physics(Gnode& parent, World& world)
+	{
+		static PhysicDebugDraw physic_draw = { *parent.m_scene->m_immediate };
+
+		//physic_draw.draw_physics(parent, world, VisualMedium::me);
+		physic_draw.draw_physics(parent, world, SolidMedium::me);
+	}
+
+	void physic_painter(GameScene& scene)
+	{
+		scene.painter("PhysicsDebug", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
+			UNUSED(index); UNUSED(visu_scene); paint_physics(parent, *scene.m_game.m_world);
+		});
+	}
+
 	GameShell::GameShell(array<cstring> resource_paths, int argc, char *argv[])
 		: m_exec_path(exec_path(argc, argv))
 		, m_resource_path(resource_paths[0])
@@ -105,14 +120,9 @@ using namespace mud; namespace toy
 		// @todo this should be automatically done by math module
 		register_math_conversions();
 
-		m_lua = make_object<LuaInterpreter>(false);
-		m_wren = make_object<WrenInterpreter>(false);
-		m_editor.m_script_editor.m_lua = m_lua.get();
-		m_editor.m_script_editor.m_wren = m_wren.get();
+		reset_interpreters(false);
 
 		m_game.m_shell = this;
-		m_game.m_editor.m_script_editor.m_lua = m_lua.get();
-		m_game.m_editor.m_script_editor.m_wren = m_wren.get();
 
 		this->init();
 	}
@@ -158,6 +168,21 @@ using namespace mud; namespace toy
 		m_ui = m_ui_window->m_root_sheet.get();
 	}
 
+	void GameShell::reset_interpreters(bool reflect)
+	{
+		m_lua = make_object<LuaInterpreter>(false);
+		m_wren = make_object<WrenInterpreter>(false);
+
+		m_editor.m_script_editor.reset_interpreters(*m_lua, *m_wren);
+		m_game.m_editor.m_script_editor.reset_interpreters(*m_lua, *m_wren);
+
+		if(reflect)
+		{
+			m_lua->declare_types();
+			m_wren->declare_types();
+		}
+	}
+
 	void GameShell::load(GameModule& game_module)
 	{
 		m_game.m_module = &game_module;
@@ -165,30 +190,6 @@ using namespace mud; namespace toy
 		m_game_module->init(*this, m_game);
 
 		System::instance().load_module(*game_module.m_module);
-
-		m_lua->declare_types();
-		return;
-
-		m_wren->declare_types();
-
-
-		WrenInterpreter& wren = *m_wren;
-
-		//wren.set("col", Ref(&Colour::Pink));
-
-		wren.call("import \"mud\" for Colour");
-		wren.call("import \"toy\"");
-		wren.call("var col = Colour.create(0.03, 0.4, 1, 1)");
-		wren.call("System.print(\"col.r = %(col.r)\")");
-		wren.call("System.print(\"col.g = %(col.g)\")");
-		wren.call("col.r = 5.93");
-		wren.call("System.print(\"col.r = %(col.r)\")");
-		wren.call("var p = Colour.Pink");
-		wren.call("System.print(\"p.g = %(p.g)\")");
-		wren.call("p.g = 5.93");
-		wren.call("Colour.Pink.g = 5.93");
-		wren.call("System.print(\"col.g = %(col.g)\")");
-		wren.call("System.print(\"Colour.Green.g = %(Colour.Green.g)\")");
 	}
 
 	void GameShell::load_path(const string& module_name)
@@ -232,26 +233,38 @@ using namespace mud; namespace toy
 
 	void GameShell::run_script(Module& module, const string& file)
 	{
-		m_wren->declare_types();
-
 		string path = "scripts/" + file;
 		LocatedFile location = m_gfx_system->locate_file(path.c_str());
 
-		if(location.m_name != nullptr)
+		if(location.m_name == nullptr)
+			return;
+
+		Signature signature = { { Param{ "app", Ref(type<GameShell>()) }, Param{ "module", Ref(type<Module>()) } } };
+
+		TextScript& script = m_editor.m_script_editor.create_script(file.c_str(), Language::Wren, signature);
+		script.m_script = read_text_file(std::string(location.m_location) + location.m_name);
+		script.m_dirty = true;
+
+		m_pump = [&]()
 		{
-			Signature signature = { { Param{ "app", Ref(type<GameShell>()) }, Param{ "module", Ref(type<Module>()) } } };
+			if(script.m_dirty)
+			{
+				this->reset_interpreters(true);
 
-			TextScript& script = m_editor.m_script_editor.create_script(file.c_str(), Language::Wren, signature);
-			script.m_script = read_text_file(std::string(location.m_location) + location.m_name);
+				Var args[2] = { Ref(this), Ref(&module) };
+				script({ args, 2 });
 
-			Var args[2] = { Ref(this), Ref(&module) };
-			script({ args, 2 });
+				GameModuleBind& game_module = m_wren->tget<GameModuleBind>("game");
+				this->load(game_module);
 
-			Ref game = m_wren->get("game", type<GameModuleBind>());
-			GameModuleBind& game_module = val<GameModuleBind>(game);
+				script.m_dirty = false;
+			}
 
-			this->run_game(game_module);
-		}
+			this->pump_editor();
+			//this->pump_game();
+		};
+
+		this->run(0);
 	}
 
 	void GameShell::run_editor(GameModule& module, size_t iterations)
@@ -309,11 +322,12 @@ using namespace mud; namespace toy
 
 	void GameShell::pump_editor()
 	{
+		m_editor.m_edited_world = m_game.m_world;
+
 		Widget& ui = m_ui->begin();
 		toy::editor(ui, m_editor);
 
 		m_game.m_screen = m_editor.m_screen;
-		m_editor.m_edited_world = m_game.m_world;
 
 		if(m_editor.m_run_game)
 		{
