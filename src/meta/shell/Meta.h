@@ -50,6 +50,13 @@ namespace mud
             },
             // members
             {
+                { type<toy::Game>(), member_address(&toy::Game::m_user), type<toy::User>(), "user", Ref(type<toy::User>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_mode), type<toy::GameMode>(), "mode", var(toy::GameMode()), Member::Value, nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_shell), type<toy::GameShell>(), "shell", Ref(type<toy::GameShell>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_module), type<toy::GameModule>(), "module", Ref(type<toy::GameModule>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_player), type<mud::Ref>(), "player", Ref(type<mud::Ref>()), Member::None, nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_screen), type<mud::Widget>(), "screen", Ref(type<mud::Widget>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
             },
             // methods
             {
@@ -119,11 +126,11 @@ namespace mud
             // members
             {
                 { type<toy::GameShell>(), member_address(&toy::GameShell::core), type<toy::Core>(), "core", Ref(type<toy::Core>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).core()); } },
-                //{ type<toy::GameShell>(), member_address(&toy::GameShell::lua), type<mud::LuaInterpreter>(), "lua", Ref(type<mud::LuaInterpreter>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).lua()); } },
-                //{ type<toy::GameShell>(), member_address(&toy::GameShell::wren), type<mud::WrenInterpreter>(), "wren", Ref(type<mud::WrenInterpreter>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).wren()); } },
+                { type<toy::GameShell>(), member_address(&toy::GameShell::lua), type<mud::LuaInterpreter>(), "lua", Ref(type<mud::LuaInterpreter>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).lua()); } },
+                { type<toy::GameShell>(), member_address(&toy::GameShell::wren), type<mud::WrenInterpreter>(), "wren", Ref(type<mud::WrenInterpreter>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).wren()); } },
                 { type<toy::GameShell>(), member_address(&toy::GameShell::gfx), type<mud::GfxSystem>(), "gfx", Ref(type<mud::GfxSystem>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).gfx()); } },
                 { type<toy::GameShell>(), member_address(&toy::GameShell::context), type<mud::Context>(), "context", Ref(type<mud::Context>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).context()); } },
-                //{ type<toy::GameShell>(), member_address(&toy::GameShell::vg), type<mud::Vg>(), "vg", Ref(type<mud::Vg>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).vg()); } },
+                { type<toy::GameShell>(), member_address(&toy::GameShell::vg), type<mud::Vg>(), "vg", Ref(type<mud::Vg>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).vg()); } },
                 { type<toy::GameShell>(), member_address(&toy::GameShell::ui_window), type<mud::UiWindow>(), "ui_window", Ref(type<mud::UiWindow>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).ui_window()); } },
                 { type<toy::GameShell>(), member_address(&toy::GameShell::m_editor), type<toy::Editor>(), "editor", Ref(type<toy::Editor>()), Member::None, nullptr },
                 { type<toy::GameShell>(), member_address(&toy::GameShell::m_ui), type<mud::Ui>(), "ui", Ref(type<mud::Ui>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
@@ -162,6 +169,39 @@ namespace mud
     
     
         
+    // toy::GameModuleBind
+    {
+        static Meta meta = { type<toy::GameModuleBind>(), &namspc({ "toy" }), "GameModuleBind", sizeof(toy::GameModuleBind), TypeClass::Object };
+        static Class cls = { type<toy::GameModuleBind>(),
+            // bases
+            { &type<toy::GameModule>() },
+            { base_offset<toy::GameModuleBind, toy::GameModule>() },
+            // constructors
+            {
+                { type<toy::GameModuleBind>(), [](Ref ref, array<Var> args) { new(&val<toy::GameModuleBind>(ref)) toy::GameModuleBind( val<mud::Module>(args[0]), val<toy::GameModuleBind::mud::VirtualMethod>(args[1]) ); }, { { "module", Ref(type<mud::Module>()) }, { "call", var(toy::GameModuleBind::mud::VirtualMethod()) } } }
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        init_pool<toy::GameModuleBind>(); 
+        
+        meta_class<toy::GameModuleBind>();
+    }
+    
+    
+        
     // toy::GameScene
     {
         static Meta meta = { type<toy::GameScene>(), &namspc({ "toy" }), "GameScene", sizeof(toy::GameScene), TypeClass::Object };
@@ -192,47 +232,15 @@ namespace mud
         meta_class<toy::GameScene>();
     }
     
-    
-        
-    // toy::GameModuleBind
-    {
-        static Meta meta = { type<toy::GameModuleBind>(), &namspc({ "toy" }), "GameModuleBind", sizeof(toy::GameModuleBind), TypeClass::Object };
-        static Class cls = { type<toy::GameModuleBind>(),
-            // bases
-            { &type<toy::GameModule>() },
-            { base_offset<toy::GameModuleBind, toy::GameModule>() },
-            // constructors
-            {
-                { type<toy::GameModuleBind>(), [](Ref ref, array<Var> args) { new(&val<toy::GameModuleBind>(ref)) toy::GameModuleBind( val<mud::Module>(args[0]), val<mud::VirtualMethod>(args[1]) ); }, { { "module", Ref(type<mud::Module>()) }, { "call", var(mud::VirtualMethod()) } } }
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        init_pool<toy::GameModuleBind>(); 
-        
-        meta_class<toy::GameModuleBind>();
-    }
-    
 
     
         m.m_types.push_back(&type<toy::Game>());
         m.m_types.push_back(&type<toy::GameMode>());
         m.m_types.push_back(&type<toy::GameModule>());
         m.m_types.push_back(&type<toy::GameShell>());
-        m.m_types.push_back(&type<toy::GameScene>());
+        m.m_types.push_back(&type<toy::GameModuleBind::mud::VirtualMethod>());
         m.m_types.push_back(&type<toy::GameModuleBind>());
+        m.m_types.push_back(&type<toy::GameScene>());
     
     }
 }
