@@ -44,12 +44,12 @@ using namespace mud; namespace toy
 		virtual void raycast(const vec3& position, std::vector<Collision>& collisions, short int mask) = 0;
 		virtual Collision raycast(const vec3& position, short int mask) = 0;
 
-		attr_ virtual vec3 linear_velocity() = 0;
-		attr_ virtual vec3 angular_velocity() = 0;
+		meth_ virtual vec3 linear_velocity() = 0;
+		meth_ virtual vec3 angular_velocity() = 0;
 
-		virtual void set_linear_velocity(const vec3& force) = 0;
-		virtual void set_angular_velocity(const vec3& torque) = 0;
-		virtual void set_angular_factor(const vec3& factor) = 0;
+		meth_ virtual void set_linear_velocity(const vec3& force) = 0;
+		meth_ virtual void set_angular_velocity(const vec3& torque) = 0;
+		meth_ virtual void set_angular_factor(const vec3& factor) = 0;
 
 		virtual void set_force(const vec3& force) = 0;
 		virtual void set_torque(const vec3& torque) = 0;

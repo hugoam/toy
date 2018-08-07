@@ -334,37 +334,45 @@ namespace mud
     }
     
     
-        
-    // toy::ColliderImpl
-    {
-        static Meta meta = { type<toy::ColliderImpl>(), &namspc({ "toy" }), "ColliderImpl", sizeof(toy::ColliderImpl), TypeClass::Object };
-        static Class cls = { type<toy::ColliderImpl>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::ColliderImpl>();
-    }
-    
+
+
+	// toy::ColliderImpl
+	{
+		static Meta meta = { type<toy::ColliderImpl>(), &namspc({ "toy" }), "ColliderImpl", sizeof(toy::ColliderImpl), TypeClass::Object };
+		static Class cls = { type<toy::ColliderImpl>(),
+			// bases
+		{},
+		{},
+			// constructors
+		{
+		},
+		// copy constructor
+		{
+		},
+		// members
+		{
+		},
+		// methods
+		{
+			{ type<toy::ColliderImpl>(), "linear_velocity", member_address(&toy::ColliderImpl::linear_velocity), [](Ref object, array<Var> args, Var& result) { UNUSED(args); val<mud::vec3>(result) = val<toy::ColliderImpl>(object).linear_velocity(); },{}, var(mud::vec3()) },
+			{ type<toy::ColliderImpl>(), "angular_velocity", member_address(&toy::ColliderImpl::angular_velocity), [](Ref object, array<Var> args, Var& result) { UNUSED(args); val<mud::vec3>(result) = val<toy::ColliderImpl>(object).angular_velocity(); },{}, var(mud::vec3()) },
+			{ type<toy::ColliderImpl>(), "set_linear_velocity", member_address(&toy::ColliderImpl::set_linear_velocity), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::ColliderImpl>(object).set_linear_velocity(val<mud::vec3>(args[0])); },{ { "force", var(mud::vec3()) } }, Var() },
+			{ type<toy::ColliderImpl>(), "set_angular_velocity", member_address(&toy::ColliderImpl::set_angular_velocity), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::ColliderImpl>(object).set_angular_velocity(val<mud::vec3>(args[0])); },{ { "torque", var(mud::vec3()) } }, Var() },
+			{ type<toy::ColliderImpl>(), "set_angular_factor", member_address(&toy::ColliderImpl::set_angular_factor), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::ColliderImpl>(object).set_angular_factor(val<mud::vec3>(args[0])); },{ { "factor", var(mud::vec3()) } }, Var() },
+			{ type<toy::ColliderImpl>(), "impulse", member_address(&toy::ColliderImpl::impulse), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::ColliderImpl>(object).impulse(val<mud::vec3>(args[0]), val<mud::vec3>(args[1])); },{ { "force", var(mud::vec3()) },{ "point", var(mud::vec3()) } }, Var() }
+		},
+			// static members
+		{
+		}
+		};
+
+
+
+
+		meta_class<toy::ColliderImpl>();
+	}
+
+
     
         
     // toy::ColliderObject

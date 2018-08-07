@@ -34,10 +34,10 @@ class Human {
             _state = State.new("Idle", true)
         }
         
-        var velocity = _solid.linear_velocity
+        var velocity = _solid.linear_velocity()
         var force = rotate(_entity.rotation, _force)
-        _solid.linear_velocity = Vec3.new(force.x, velocity.y - 1, force.z)
-        _solid.angular_velocity = _torque
+        _solid.set_linear_velocity(Vec3.new(force.x, velocity.y - 1, force.z))
+        _solid.set_angular_velocity(_torque)
     }
     
     entity { _entity }
@@ -139,21 +139,25 @@ foreign class MyGame {
     
     pump(app, game) {
     
+        var world = MainWorld
+        
         var ui = game.screen ? game.screen : app.ui.begin()
         var viewer = Ui.scene_viewer(ui, Vec2.new(0))
         var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
         
+        this.control_human(viewer, world.human)
+        
         var scene = viewer.scene.begin()
         
-        Toy.paint_physics(scene, MainWorld.world)
+        Toy.paint_physics(scene, world.world)
         
         this.paint_scene(app, scene)
         
-        this.paint_terrain(app, scene, MainWorld.terrain)
+        this.paint_terrain(app, scene, world.terrain)
         
-        this.paint_human(app, scene, MainWorld.player.human)
+        this.paint_human(app, scene, world.player.human)
         
-        for(crate in MainWorld.crates) {
+        for(crate in world.crates) {
             this.paint_crate(app, scene, crate)
         }
     }
