@@ -21,8 +21,8 @@ using namespace mud; namespace toy
 	FPSCameraController::FPSCameraController(Viewer& viewer, Camera& camera)
 		: CameraController(viewer, camera)
 	{
-		m_key_down_handlers[KC_Q] = [this] { this->rotate_left(); };
-		m_key_down_handlers[KC_E] = [this] { this->rotate_right(); }; 
+		m_key_down_handlers[Key::Q] = [this] { this->rotate_left(); };
+		m_key_down_handlers[Key::E] = [this] { this->rotate_right(); }; 
 	}
 
 	void FPSCameraController::process(Viewer& viewer)

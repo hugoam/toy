@@ -574,7 +574,7 @@ vec3 find_fitting_player_location(WfcBlock& tileblock)
 
 Style& menu_style()
 {
-	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { LEFT, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 300.f; l.m_spacing = vec2(30.f); } };
+	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 300.f; l.m_spacing = vec2(30.f); } };
 	return style;
 }
 
@@ -616,7 +616,7 @@ Style& left_panel_style(UiWindow& ui_window)
 {
 	//static ImageSkin skin = { *ui_window.find_image("graphic/blue_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "LeftPanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, WRAP, FIXED }; l.m_size = { 450.f, 0.f }; l.m_align = { LEFT, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+	static Style style = { "LeftPanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, WRAP, FIXED }; l.m_size = { 450.f, 0.f }; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
 													   //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
@@ -636,7 +636,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 	const float speed = viewer.ui().m_keyboard.m_shift ? 4.f : 15.f;
 	ui::velocity_controller(viewer, controller.m_force, controller.m_torque, speed);
 
-	if(viewer.key_event(KC_SPACE, EventType::Stroked))
+	if(viewer.key_event(Key::Space, EventType::Stroked))
 		human.m_solid->impulse(Y3 * 20.f, Zero3);
 
 	if(controller.m_force != Zero3 || controller.m_torque != Zero3)
@@ -688,10 +688,10 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 			human.shoot();
 		}
 
-		if(viewer.key_event(KC_LSHIFT, EventType::Pressed))
+		if(viewer.key_event(Key::LeftShift, EventType::Pressed))
 			human.m_headlight = !human.m_headlight;
 
-		if(viewer.key_event(KC_LCONTROL, EventType::Pressed))
+		if(viewer.key_event(Key::LeftControl, EventType::Pressed))
 			human.m_shield = !human.m_shield;
 
 		auto bar = [](Widget& parent, Style& style, cstring icon, float ratio)
@@ -702,7 +702,7 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 			//ui::fill_bar(row, ratio);
 		};
 
-		//ui::label(left_panel, "Press ARROWS to move, CTRL to activate shield, SHIFT to switch headlight, SPACE to jump, and LEFT CLICK to fire");
+		//ui::label(left_panel, "Press ARROWS to move, CTRL to activate shield, SHIFT to switch headlight, Space to jump, and Left CLICK to fire");
 		if(false)
 		{
 			bar(left_panel, health_bar_style(), "(health64)", human.m_life);
@@ -716,7 +716,7 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 		ui::title(modal, "You are DEAD");
 		ui::label(modal, "Press ENTER to try again");
 
-		if(viewer.key_event(KC_RETURN, EventType::Stroked))
+		if(viewer.key_event(Key::Return, EventType::Stroked))
 		{
 			human.m_life = 5.f;
 		}
@@ -740,7 +740,7 @@ void ex_platform_game_ui(Widget& parent, Game& game, GameScene& scene)
 	if(player.m_human)
 		ex_platform_game_hud(viewer, scene, *player.m_human);
 
-	if(viewer.key_event(KC_ESCAPE, EventType::Stroked))
+	if(viewer.key_event(Key::Escape, EventType::Stroked))
 	{
 		game.m_shell->m_editor.m_run_game = false;
 		viewer.yield_modal();

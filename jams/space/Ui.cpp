@@ -55,7 +55,7 @@ Style& sheet_style()
 
 Style& orders_panel_style()
 {
-	static Style style("OrdersPanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, SHRINK, WRAP }; l.m_align = { CENTER, RIGHT }; l.m_padding = vec4(15.f); l.m_spacing = vec2(10.f); },
+	static Style style("OrdersPanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, SHRINK, WRAP }; l.m_align = { CENTER, Right }; l.m_padding = vec4(15.f); l.m_spacing = vec2(10.f); },
 													  [](InkStyle& s) { s.m_empty = false; s.m_background_colour = dark_grey; s.m_border_colour = light_grey; s.m_border_width = vec4(1.f); });
 	return style;
 }

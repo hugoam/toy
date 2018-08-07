@@ -18,7 +18,7 @@ using namespace mud; namespace toy
 		CameraController(Viewer& viewer, Camera& camera);
 
 		void default_velocities();
-		void set_velocities(const std::map<KeyCode, vec3>& velocities);
+		void set_velocities(const std::map<Key, vec3>& velocities);
 
 		void rotate_left();
 		void rotate_right();

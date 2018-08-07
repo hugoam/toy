@@ -317,7 +317,8 @@ namespace mud
                 { type<toy::Collider>(), member_address(&toy::Collider::m_collision_shape), type<toy::CollisionShape>(), "collision_shape", Ref(type<toy::CollisionShape>()), Member::None, nullptr },
                 { type<toy::Collider>(), Address(), type<toy::Medium>(), "medium", Ref(type<toy::Medium>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Collider>(object).m_medium); } },
                 { type<toy::Collider>(), member_address(&toy::Collider::m_group), type<toy::CollisionGroup>(), "group", var(toy::CollisionGroup()), Member::Value, nullptr },
-                { type<toy::Collider>(), member_address(&toy::Collider::m_object), type<toy::ColliderObject>(), "object", Ref(type<toy::ColliderObject>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
+                { type<toy::Collider>(), member_address(&toy::Collider::m_object), type<toy::ColliderObject>(), "object", Ref(type<toy::ColliderObject>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
+				{ type<toy::Collider>(), Address(), type<toy::ColliderImpl>(), "impl", Ref(type<toy::ColliderImpl>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Collider>(object).impl()); } }
             },
             // methods
             {

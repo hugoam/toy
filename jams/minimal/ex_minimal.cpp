@@ -193,7 +193,7 @@ void human_controller(HumanController& controller, Human& human, OrbitController
 
 static void human_velocity_controller(Viewer& viewer, HumanController& controller, Human& human, OrbitController& orbit, bool relative = true)
 {
-	struct KeyMove { KeyCode key; vec3 force; };
+	struct KeyMove { Key key; vec3 force; };
 
 	auto movement_key = [](Widget& widget, vec3& force, vec3& torque, const KeyMove& move, float speed)
 	{
@@ -207,10 +207,10 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 
 	const KeyMove moves[8] =
 	{
-		{ KC_UP,    -Z3 }, { KC_W, -Z3 },
-		{ KC_DOWN,   Z3 }, { KC_S,  Z3 },
-		{ KC_LEFT,	-X3 }, { KC_A, -X3 },
-		{ KC_RIGHT,  X3 }, { KC_D,  X3 },
+		{ Key::Up,    -Z3 }, { Key::W, -Z3 },
+		{ Key::Down,   Z3 }, { Key::S,  Z3 },
+		{ Key::Left,	-X3 }, { Key::A, -X3 },
+		{ Key::Right,  X3 }, { Key::D,  X3 },
 	};
 
 	const float speed = viewer.ui().m_keyboard.m_shift ? 4.f : 15.f;
@@ -218,7 +218,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 	for(const KeyMove& key_move : moves)
 		movement_key(viewer, controller.m_force, controller.m_torque, key_move, speed);
 
-	if(viewer.key_event(KC_SPACE, EventType::Stroked))
+	if(viewer.key_event(Key::Space, EventType::Stroked))
 		human.m_solid->impulse(Y3 * 16.f, Zero3);
 
 	if(controller.m_force != Zero3 || controller.m_torque != Zero3)

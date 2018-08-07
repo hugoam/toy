@@ -22,15 +22,15 @@ using namespace mud; namespace toy
 	RTSCameraController::RTSCameraController(Viewer& viewer, Camera& camera)
 		: CameraController(viewer, camera)
 	{
-		m_key_down_handlers[KC_Q] = [this] { this->rotate_left(); };
-		m_key_down_handlers[KC_E] = [this] { this->rotate_right(); };
-		m_key_down_handlers[KC_O] = [this] { this->zoom_in(); };
-		m_key_down_handlers[KC_L] = [this] { this->zoom_out(); };
-		m_key_down_handlers[KC_I] = [this] { this->pitch_lens_up(); };
-		m_key_down_handlers[KC_K] = [this] { this->pitch_lens_down(); };
+		m_key_down_handlers[Key::Q] = [this] { this->rotate_left(); };
+		m_key_down_handlers[Key::E] = [this] { this->rotate_right(); };
+		m_key_down_handlers[Key::O] = [this] { this->zoom_in(); };
+		m_key_down_handlers[Key::L] = [this] { this->zoom_out(); };
+		m_key_down_handlers[Key::I] = [this] { this->pitch_lens_up(); };
+		m_key_down_handlers[Key::K] = [this] { this->pitch_lens_down(); };
 
-		m_key_up_handlers[KC_Q] = [this] { this->stop_rotate_left(); };
-		m_key_up_handlers[KC_E] = [this] { this->stop_rotate_right(); };
+		m_key_up_handlers[Key::Q] = [this] { this->stop_rotate_left(); };
+		m_key_up_handlers[Key::E] = [this] { this->stop_rotate_right(); };
 	}
 
 	void RTSCameraController::process(Viewer& viewer)
@@ -50,12 +50,12 @@ using namespace mud; namespace toy
 				m_camera.zoom(0.75f);
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputModifier::None, false))
+		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
 		{
 			viewer.take_focus();
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputModifier::Ctrl))
+		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputMod::Ctrl))
 		{
 #if DRAG_BY_GRAB
 			Plane horizontal_plane = { Y3, m_camera.m_entity.m_position.y };

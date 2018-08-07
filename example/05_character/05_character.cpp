@@ -108,7 +108,7 @@ Material& milky_white(GfxSystem& gfx_system, cstring name = "milky_white")
 
 struct KeyMove
 {
-	KeyCode key;
+	Key key;
 	vec3 velocity;
 	std::string action;
 	float action_speed;
@@ -134,14 +134,14 @@ static void human_velocity_controller(Widget& widget, Human& human)
 
 	const KeyMove moves[4] =
 	{
-		{ KC_UP,   -Z3 * 2.f, "Walk",  1.f }, { KC_W,  -Z3 * 2.f, "Walk",  1.f },
-		{ KC_DOWN,  Z3 * 2.f, "Walk", -1.f }, { KC_S,   Z3 * 2.f, "Walk", -1.f },
+		{ Key::Up,   -Z3 * 2.f, "Walk",  1.f }, { Key::W,  -Z3 * 2.f, "Walk",  1.f },
+		{ Key::Down,  Z3 * 2.f, "Walk", -1.f }, { Key::S,   Z3 * 2.f, "Walk", -1.f },
 	};
 
 	const KeyMove shift_moves[4] =
 	{
-		{ KC_UP,  -Z3 * 12.f, "Run",  1.f }, { KC_W, -Z3 * 12.f, "Run",  1.f },
-		{ KC_DOWN, Z3 * 12.f, "Run", -1.f }, { KC_S,  Z3 * 12.f, "Run", -1.f },
+		{ Key::Up,  -Z3 * 12.f, "Run",  1.f }, { Key::W, -Z3 * 12.f, "Run",  1.f },
+		{ Key::Down, Z3 * 12.f, "Run", -1.f }, { Key::S,  Z3 * 12.f, "Run", -1.f },
 	};
 
 	for(const KeyMove& key_move : (shift ? shift_moves : moves))
@@ -149,8 +149,8 @@ static void human_velocity_controller(Widget& widget, Human& human)
 
 	const KeyMove rotations[4] =
 	{
-		{ KC_RIGHT, -Y3 * 4.f, "Step",  1.f }, { KC_D, -Y3 * 4.f, "Step",  1.f },
-		{ KC_LEFT,   Y3 * 4.f, "Step", -1.f }, { KC_A,  Y3 * 4.f, "Step", -1.f },
+		{ Key::Right, -Y3 * 4.f, "Step",  1.f }, { Key::D, -Y3 * 4.f, "Step",  1.f },
+		{ Key::Left,   Y3 * 4.f, "Step", -1.f }, { Key::A,  Y3 * 4.f, "Step", -1.f },
 	};
 
 	for(const KeyMove& key_rotation: rotations)

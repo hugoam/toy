@@ -295,12 +295,12 @@ using namespace mud; namespace toy
 
 		if(editor.m_viewer)
 		{
-			if(MouseEvent mouse_event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputModifier::None, false))
+			if(MouseEvent mouse_event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
 				editor.m_viewer->take_focus();
 
 			viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection);
 
-			KeyEvent key_event = editor.m_viewer->key_event(KC_F, EventType::Pressed);
+			KeyEvent key_event = editor.m_viewer->key_event(Key::F, EventType::Pressed);
 			if(key_event)
 				editor.m_frame_view_tool.activate();
 		}

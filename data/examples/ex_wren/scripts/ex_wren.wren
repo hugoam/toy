@@ -1,6 +1,7 @@
 import "random" for Random
 import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Gfx, ItemFlag
 import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell
+import "ui" for OrbitMode
 
 class State {
 
@@ -22,27 +23,31 @@ class Human {
         _solid = Solid.new(_entity, CollisionShape.new(Capsule.new(0.35, 1.1, Axis.X), Vec3.new(0, 0.9, 0), 0), false, 1.0)
         _complex.setup([_entity, _movable, _solid])
         
+        _aiming = false
+        _angle = 0
         _force = Vec3.new(0)
         _torque = Vec3.new(0)
         _state = State.new("Idle", true)
     }
     
     update() {
-        if (length2(_force) != 0 || length2(_torque) != 0) {
+        if (Mud.length2(_force) != 0 || Mud.length2(_torque) != 0) {
             _state = State.new("RunAim", true)
         } else {
             _state = State.new("Idle", true)
         }
         
-        var velocity = _solid.linear_velocity()
-        var force = rotate(_entity.rotation, _force)
-        _solid.set_linear_velocity(Vec3.new(force.x, velocity.y - 1, force.z))
-        _solid.set_angular_velocity(_torque)
+        var velocity = _solid.impl.linear_velocity()
+        var force = Mud.rotate(_entity.rotation, _force)
+        _solid.impl.set_linear_velocity(Vec3.new(force.x, velocity.y - 1, force.z))
+        _solid.impl.set_angular_velocity(_torque)
     }
     
     entity { _entity }
     solid { _solid }
     state { _state }
+    aiming { _aiming }
+    angle { _angle }
     force { _force }
     torque { _torque }
     
@@ -143,9 +148,9 @@ foreign class MyGame {
         
         var ui = game.screen ? game.screen : app.ui.begin()
         var viewer = Ui.scene_viewer(ui, Vec2.new(0))
-        var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
+        //var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
         
-        this.control_human(viewer, world.human)
+        this.control_human(viewer, world.player.human)
         
         var scene = viewer.scene.begin()
         
@@ -165,7 +170,9 @@ foreign class MyGame {
     scene(app, scene) {}
     
     control_human(viewer, human) {
-        Ui.velocity_controller(viewer, human.force, human.torque)
+    
+        Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, human.entity, human.aiming, human.angle)
+        Ui.velocity_controller(viewer, human.force, human.torque, 1)
 
         human.update()
     }
@@ -181,6 +188,7 @@ foreign class MyGame {
     }
     
     paint_scene(app, parent) {
+    
         Gfx.sun_light(parent, 0, 0.37)
     }
     

@@ -525,7 +525,7 @@ void paint_viewer(Viewer& viewer)
 
 struct KeyMove
 {
-	KeyCode key;
+	Key key;
 	vec3 force;
 	vec3 torque;
 };
@@ -550,10 +550,10 @@ static void tank_velocity_controller(Widget& widget, Tank& tank)
 
 	const KeyMove moves[8] =
 	{
-		{ KC_UP,    -Z3, Zero3 }, { KC_W,  -Z3, Zero3 },
-		{ KC_DOWN,   Z3, Zero3 }, { KC_S,   Z3, Zero3 },
-		{ KC_LEFT,  Zero3,  Y3 }, { KC_A,  Zero3,  Y3 },
-		{ KC_RIGHT, Zero3, -Y3 }, { KC_D,  Zero3, -Y3 },
+		{ Key::Up,    -Z3, Zero3 }, { Key::W,  -Z3, Zero3 },
+		{ Key::Down,   Z3, Zero3 }, { Key::S,   Z3, Zero3 },
+		{ Key::Left,  Zero3,  Y3 }, { Key::A,  Zero3,  Y3 },
+		{ Key::Right, Zero3, -Y3 }, { Key::D,  Zero3, -Y3 },
 	};
 
 	for(const KeyMove& key_move : moves)
@@ -570,7 +570,7 @@ Style& right_panel_style(UiWindow& ui_window)
 {
 	static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { RIGHT, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); },
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Right, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); },
 													   [](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
@@ -588,14 +588,14 @@ Style& left_panel_style(UiWindow& ui_window)
 {
 	static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { LEFT, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); },
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); },
 													   [](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
 
 Style& menu_style()
 {
-	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { LEFT, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
+	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
 	return style;
 }
 
@@ -649,10 +649,10 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 
 	tank_velocity_controller(viewer, player.m_tank);
 
-	if(KeyEvent key_event = viewer.key_event(KC_LCONTROL))
+	if(KeyEvent key_event = viewer.key_event(Key::LeftControl))
 		player.m_tank.m_stealth = !player.m_tank.m_stealth;
 
-	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputModifier::Any))
+	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::Any))
 	{
 		viewer.take_focus();
 		player.m_tank.shoot(viewer.ui().m_keyboard.m_shift);

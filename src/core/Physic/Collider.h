@@ -84,6 +84,8 @@ using namespace mud; namespace toy
 		PhysicMedium& m_world;
 		object_ptr<ColliderImpl> m_impl;
 
+		attr_ ColliderImpl& impl() { return *m_impl; }
+
 		MotionState m_motion_state;
 
 		void init();

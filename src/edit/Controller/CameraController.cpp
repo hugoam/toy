@@ -26,19 +26,19 @@ using namespace mud; namespace toy
 
 	void CameraController::default_velocities()
 	{
-		std::map<KeyCode, vec3> velocities;
+		std::map<Key, vec3> velocities;
 
-		velocities[KC_W] = velocities[KC_UP] = to_vec3(Side::Front) * m_velocity;
-		velocities[KC_S] = velocities[KC_DOWN] = to_vec3(Side::Back) * m_velocity;
-		velocities[KC_D] = velocities[KC_RIGHT] = to_vec3(Side::Right) * m_velocity;
-		velocities[KC_A] = velocities[KC_LEFT] = to_vec3(Side::Left) * m_velocity;
-		velocities[KC_R] = to_vec3(Side::Up) * m_velocity;
-		velocities[KC_F] = to_vec3(Side::Down) * m_velocity;
+		velocities[Key::W] = velocities[Key::Up] = to_vec3(Side::Front) * m_velocity;
+		velocities[Key::S] = velocities[Key::Down] = to_vec3(Side::Back) * m_velocity;
+		velocities[Key::D] = velocities[Key::Right] = to_vec3(Side::Right) * m_velocity;
+		velocities[Key::A] = velocities[Key::Left] = to_vec3(Side::Left) * m_velocity;
+		velocities[Key::R] = to_vec3(Side::Up) * m_velocity;
+		velocities[Key::F] = to_vec3(Side::Down) * m_velocity;
 
 		set_velocities(velocities);
 	}
 
-	void CameraController::set_velocities(const std::map<KeyCode, vec3>& velocities)
+	void CameraController::set_velocities(const std::map<Key, vec3>& velocities)
 	{
 		for(auto& key_velocity : velocities)
 		{
