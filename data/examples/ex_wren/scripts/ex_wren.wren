@@ -53,7 +53,7 @@ class Terrain {
 	construct new(id, parent) {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, Vec3.new(0), Quat.new(1,0,0,0))
-        _solid = Solid.new(_entity, CollisionShape.new(Quad.new(Vec3.new(1,0,1), Vec3.new(1,0,-1), Vec3.new(-1,0,-1), Vec3.new(-1,0,1)), Vec3.new(0), 0), true, 1.0)
+        _solid = Solid.new(_entity, CollisionShape.new(Quad.new(Vec3.new(1,0,1), Vec3.new(1,0,-1), Vec3.new(-1,0,-1), Vec3.new(-1,0,1)), Vec3.new(0, -10, 0), 0), true, 1.0)
         _complex.setup([_entity, _solid])
     }
     
@@ -89,6 +89,7 @@ class GameWorld {
         }
     }
     
+    world { _world }
     player { _player }
     crates { _crates }
     
@@ -108,7 +109,10 @@ foreign class MyGame {
         start(app, game)
     }
     
-    start(app, game) { MainWorld = GameWorld.new(0) }
+    start(app, game) {
+        MainWorld = GameWorld.new(0)
+        game.world = MainWorld.world
+    }
     
     pump(app, game) {
     
