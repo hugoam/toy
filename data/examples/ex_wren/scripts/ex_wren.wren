@@ -1,4 +1,4 @@
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Symbol, SymbolDetail, Ui, Gfx
+import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Gfx, ItemFlag
 import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell
 
 class Human {
@@ -10,6 +10,8 @@ class Human {
         _solid = Solid.new(_entity, CollisionShape.new(Capsule.new(0.35, 1.1, Axis.X), Vec3.new(0, 0.9, 0), 0), false, 1.0)
         _complex.setup([_entity, _movable, _solid])
     }
+    
+    entity { _entity }
     
     static bind() { __cls = ScriptClass.new("Human", [Entity.type, Movable.type, Solid.type]) }
 }
@@ -35,7 +37,7 @@ class Terrain {
 	construct new(id, parent) {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, Vec3.new(0), Quat.new(1,0,0,0))
-        _solid = Solid.new(_entity, CollisionShape.new(Quad.new(1.f), Vec3.new(0), 0), true, 1.0)
+        _solid = Solid.new(_entity, CollisionShape.new(Quad.new(Vec3.new(1,0,1), Vec3.new(1,0,-1), Vec3.new(-1,0,-1), Vec3.new(-1,0,1)), Vec3.new(0), 0), true, 1.0)
         _complex.setup([_entity, _solid])
     }
     
@@ -82,7 +84,10 @@ foreign class MyGame {
     
     static bind() { __constructor = VirtualConstructor.ref("GameModuleBind") }
     
-    init(app, game) { start(app, game) }
+    init(app, game) {
+		app.gfx.add_resource_path("examples/05_character/")
+        start(app, game)
+    }
     
     start(app, game) { MainWorld = GameWorld.new(0) }
     
@@ -93,21 +98,21 @@ foreign class MyGame {
         
         var scene = viewer.scene.begin()
         
-        paint_human(scene, MainWorld.player.human)
+        paint_human(app, scene, MainWorld.player.human)
         
-        for(crate in MainWorld.crates)
+        for(crate in MainWorld.crates) {
             paint_crate(scene, crate)
+        }
     }
     
     scene(app, game) {}
     
-    paint_human(parent, human) {
+    paint_human(app, parent, human) {
     
-        //var model = app.gfx.models().file("human00")
+        var model = app.gfx.models.file("human00")
         
-        var self = Gfx.node(parent, human, human.entity.position, human.entity..rotation)
-        var item = Gfx.model(self, "human00", ItemFlags.ITEM_SELECTABLE)
-        //var item = Gfx.item(self, model, ItemFlags.ITEM_SELECTABLE)
+        var self = Gfx.node(parent, human, human.entity.position, human.entity.rotation, Vec3.new(1))
+        var item = Gfx.item(self, model, ItemFlag.ITEM_SELECTABLE, null, 0, [])
         var animated = Gfx.animated(self, item)
 
         //if(animated.playing.empty() || animated.playing() != human.m_state.name)
@@ -115,13 +120,14 @@ foreign class MyGame {
     }
     
     paint_crate(parent, crate) {
-        var symbol = Symbol.create(Colour.None, Colour.White, false, false, SymbolDetail.Medium)
-        Gfx.shape(parent, Cube.create(crate.extents), symbol, 0, null, 0)
+        var symbol = Symbol.new(Colour.None, Colour.White, false, false, SymbolDetail.Medium)
+        Gfx.shape(parent, Cube.new(crate.extents), symbol, 0, null, 0)
     }
 }
 
 Human.bind()
 Crate.bind()
+Terrain.bind()
 GameWorld.bind()
 MyGame.bind()
 

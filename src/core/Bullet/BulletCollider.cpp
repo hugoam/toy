@@ -10,6 +10,7 @@
 #include <geom/Shapes.h>
 #include <geom/ShapesComplex.h>
 #include <geom/Mesh.h>
+#include <geom/Geom.h>
 #include <geom/Primitive.h>
 #define TOY_PRIVATE
 #include <core/Bullet.h>
@@ -31,7 +32,7 @@
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>
 #include <BulletCollision/CollisionShapes/btSphereShape.h>
-#include <BulletCollision/CollisionShapes/btBoxShape.h>
+#include <BulletCollision/CollisionShapes/btStaticPlaneShape.h>
 #include <btBulletCollisionCommon.h>
 
 #if _MSC_VER
@@ -96,6 +97,8 @@ using namespace mud; namespace toy
 
 	DispatchBulletShape::DispatchBulletShape()
 	{
+		dispatch_branch<Plane>(*this, [](Plane& plane) -> BulletShape { return{ make_unique<btStaticPlaneShape>(to_btvec3(plane.m_normal), plane.m_distance) }; });
+		dispatch_branch<Quad>(*this, [](Quad& quad) -> BulletShape { Plane plane = { quad.m_vertices[0], quad.m_vertices[1], quad.m_vertices[2] }; return{ make_unique<btStaticPlaneShape>(to_btvec3(plane.m_normal), plane.m_distance) }; });
 		dispatch_branch<Sphere>(*this, [](Sphere& sphere) -> BulletShape { return{ make_unique<btSphereShape>(sphere.m_radius) }; });
 		dispatch_branch<Capsule>(*this, [](Capsule& capsule) -> BulletShape { return{ make_unique<btCapsuleShape>(capsule.m_radius, capsule.m_height) }; });
 		dispatch_branch<Cylinder>(*this, [](Cylinder& cylinder) -> BulletShape { return{ make_unique<btCylinderShape>(btVector3(cylinder.m_radius, cylinder.m_height / 2.f, cylinder.m_radius)) }; });
