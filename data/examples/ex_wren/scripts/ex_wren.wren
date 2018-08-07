@@ -1,5 +1,17 @@
+import "random" for Random
 import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Gfx, ItemFlag
 import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell
+
+class State {
+
+    construct new(name, loop) {
+        _name = name
+        _loop = loop
+    }
+    
+    name { _name }
+    loop { _loop }
+}
 
 class Human {
 
@@ -9,9 +21,12 @@ class Human {
         _movable = Movable.new(_entity)
         _solid = Solid.new(_entity, CollisionShape.new(Capsule.new(0.35, 1.1, Axis.X), Vec3.new(0, 0.9, 0), 0), false, 1.0)
         _complex.setup([_entity, _movable, _solid])
+        
+        _state = State.new("Idle", true)
     }
     
     entity { _entity }
+    state { _state }
     
     static bind() { __cls = ScriptClass.new("Human", [Entity.type, Movable.type, Solid.type]) }
 }
@@ -27,6 +42,7 @@ class Crate {
         _complex.setup([_entity, _movable, _solid])
     }
     
+    entity { _entity }
     extents { _extents }
     
     static bind() { __cls = ScriptClass.new("Crate", [Entity.type, Movable.type, Solid.type]) }
@@ -65,8 +81,11 @@ class GameWorld {
         _terrain = Terrain.new(0, _world.origin)
         _player = Player.new(_world)
         _crates = []
+        
+        var rand = Random.new()
         for (i in 0...50) {
-            _crates.add(Crate.new(0, _world.origin, Vec3.new(0), Vec3.new(1)))
+            var position = Vec3.new(rand.float(-50, 50), 0, rand.float(-50, 50))
+            _crates.add(Crate.new(0, _world.origin, position, Vec3.new(1)))
         }
     }
     
@@ -92,6 +111,7 @@ foreign class MyGame {
     start(app, game) { MainWorld = GameWorld.new(0) }
     
     pump(app, game) {
+    
         var ui = app.ui.begin()
         var viewer = Ui.scene_viewer(ui, Vec2.new(0))
         var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
@@ -115,13 +135,16 @@ foreign class MyGame {
         var item = Gfx.item(self, model, ItemFlag.ITEM_SELECTABLE, null, 0, [])
         var animated = Gfx.animated(self, item)
 
-        //if(animated.playing.empty() || animated.playing() != human.m_state.name)
-        //    animated.play(human.m_state.name.c_str(), human.m_state.loop, 0.f, human.m_walk ? 0.7f : 1.f)
+        if(animated.playing() != human.state.name) {
+            animated.play(human.state.name, human.state.loop, 0, 1, false)
+        }
     }
     
     paint_crate(parent, crate) {
+    
+        var self = Gfx.node(parent, crate, crate.entity.position, crate.entity.rotation, Vec3.new(1))
         var symbol = Symbol.new(Colour.None, Colour.White, false, false, SymbolDetail.Medium)
-        Gfx.shape(parent, Cube.new(crate.extents), symbol, 0, null, 0)
+        Gfx.shape(self, Cube.new(crate.extents), symbol, 0, null, 0)
     }
 }
 

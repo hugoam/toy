@@ -51,13 +51,13 @@ using namespace mud; namespace toy
 
 		GameScene& add_scene();
 
-		User* m_user = nullptr;
-		GameMode m_mode = GameMode::Play;
-		GameShell* m_shell = nullptr;
-		GameModule* m_module = nullptr;
-		Ref m_player = {};
-		World* m_world = nullptr;
-		Widget* m_screen = nullptr;
+		attr_ User* m_user = nullptr;
+		attr_ GameMode m_mode = GameMode::Play;
+		attr_ GameShell* m_shell = nullptr;
+		attr_ GameModule* m_module = nullptr;
+		attr_ Ref m_player = {};
+		attr_ World* m_world = nullptr;
+		attr_ Widget* m_screen = nullptr;
 
 		EditContext m_editor;
 
