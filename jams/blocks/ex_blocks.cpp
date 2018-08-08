@@ -649,7 +649,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 
 	tank_velocity_controller(viewer, player.m_tank);
 
-	if(KeyEvent key_event = viewer.key_event(Key::LeftControl))
+	if(KeyEvent key_event = viewer.key_stroke(Key::LeftControl))
 		player.m_tank.m_stealth = !player.m_tank.m_stealth;
 
 	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::Any))

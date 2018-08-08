@@ -1,5 +1,5 @@
 import "random" for Random
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Key, EventType, InputMod, Gfx, ItemFlag
+import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode
 import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell, GameMode
 import "ui" for OrbitMode
 
@@ -41,6 +41,7 @@ class Human {
         var force = Mud.rotate(_entity.rotation, _force)
         _solid.impl.set_linear_velocity(Vec3.new(force.x, velocity.y - 1, force.z))
         _solid.impl.set_angular_velocity(_torque)
+        _solid.impl.set_angular_factor(Vec3.new(0))
     }
     
     entity { _entity }
@@ -154,7 +155,7 @@ foreign class MyGame {
         
         var scene = viewer.scene.begin()
         
-        Toy.paint_physics(scene, world.world)
+        //Toy.paint_physics(scene, world.world)
         
         this.paint_scene(app, scene)
         
@@ -176,7 +177,7 @@ foreign class MyGame {
         }
         
         Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, human.entity, human.aiming, human.angle)
-        Ui.velocity_controller(viewer, human.force, human.torque, 1)
+        Ui.velocity_controller(viewer, human.force, human.torque, 10)
 
         human.update()
         
@@ -201,6 +202,7 @@ foreign class MyGame {
     
     paint_scene(app, parent) {
     
+        Gfx.radiance(parent, "radiance/tiber_1_1k.hdr", BackgroundMode.Radiance)
         Gfx.sun_light(parent, 0, 0.37)
     }
     

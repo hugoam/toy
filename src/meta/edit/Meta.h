@@ -273,8 +273,8 @@ namespace mud
         static Meta meta = { type<toy::Paste>(), &namspc({ "toy" }), "Paste", sizeof(toy::Paste), TypeClass::Object };
         static Class cls = { type<toy::Paste>(),
             // bases
-            { &type<toy::TypedProcedure<toy::Paste>>() },
-            { base_offset<toy::Paste, toy::TypedProcedure<toy::Paste>>() },
+            { },
+            { },
             // constructors
             {
             },
@@ -305,8 +305,8 @@ namespace mud
         static Meta meta = { type<toy::Clone>(), &namspc({ "toy" }), "Clone", sizeof(toy::Clone), TypeClass::Object };
         static Class cls = { type<toy::Clone>(),
             // bases
-            { &type<toy::TypedProcedure<toy::Clone>>() },
-            { base_offset<toy::Clone, toy::TypedProcedure<toy::Clone>>() },
+            {  },
+            {  },
             // constructors
             {
             },
@@ -337,8 +337,8 @@ namespace mud
         static Meta meta = { type<toy::Edit>(), &namspc({ "toy" }), "Edit", sizeof(toy::Edit), TypeClass::Object };
         static Class cls = { type<toy::Edit>(),
             // bases
-            { &type<toy::TypedProcedure<toy::Edit>>() },
-            { base_offset<toy::Edit, toy::TypedProcedure<toy::Edit>>() },
+            {  },
+            {  },
             // constructors
             {
             },
@@ -369,8 +369,8 @@ namespace mud
         static Meta meta = { type<toy::Cut>(), &namspc({ "toy" }), "Cut", sizeof(toy::Cut), TypeClass::Object };
         static Class cls = { type<toy::Cut>(),
             // bases
-            { &type<toy::TypedProcedure<toy::Cut>>() },
-            { base_offset<toy::Cut, toy::TypedProcedure<toy::Cut>>() },
+            {  },
+            {  },
             // constructors
             {
             },
@@ -400,10 +400,6 @@ namespace mud
         m.m_types.push_back(&type<toy::GraphicsDebug>());
         m.m_types.push_back(&type<toy::Toolbelt>());
         m.m_types.push_back(&type<toy::Toolbox>());
-        m.m_types.push_back(&type<toy::TypedProcedure<toy::Clone>>());
-        m.m_types.push_back(&type<toy::TypedProcedure<toy::Cut>>());
-        m.m_types.push_back(&type<toy::TypedProcedure<toy::Edit>>());
-        m.m_types.push_back(&type<toy::TypedProcedure<toy::Paste>>());
         m.m_types.push_back(&type<toy::DynamicToolbox>());
         m.m_types.push_back(&type<toy::PlayTool>());
         m.m_types.push_back(&type<toy::Editor>());
