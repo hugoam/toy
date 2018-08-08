@@ -29,10 +29,7 @@ using namespace mud; namespace toy
 
 	Editor::Editor(GfxSystem& gfx_system)
 		: EditContext(gfx_system)
-		, m_undo_tool(m_tool_context)
-		, m_redo_tool(m_tool_context)
 		, m_play_tool(m_tool_context, *this)
-		, m_view_tools(m_tool_context)
 		, m_frame_view_tool(m_tool_context)
 	{
 		vector_extend(m_toolbelt.toolbox("Action").m_tools, { &m_undo_tool, &m_redo_tool, &m_play_tool });

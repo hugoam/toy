@@ -56,102 +56,6 @@ namespace mud
     }
     
     
-        
-    // toy::Clone
-    {
-        static Meta meta = { type<toy::Clone>(), &namspc({ "toy" }), "Clone", sizeof(toy::Clone), TypeClass::Object };
-        static Class cls = { type<toy::Clone>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::Clone>();
-    }
-    
-    
-        
-    // toy::Cut
-    {
-        static Meta meta = { type<toy::Cut>(), &namspc({ "toy" }), "Cut", sizeof(toy::Cut), TypeClass::Object };
-        static Class cls = { type<toy::Cut>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::Cut>();
-    }
-    
-    
-        
-    // toy::Edit
-    {
-        static Meta meta = { type<toy::Edit>(), &namspc({ "toy" }), "Edit", sizeof(toy::Edit), TypeClass::Object };
-        static Class cls = { type<toy::Edit>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::Edit>();
-    }
-    
-    
     
         
     // toy::GraphicsDebug
@@ -183,38 +87,6 @@ namespace mud
         
         
         meta_class<toy::GraphicsDebug>();
-    }
-    
-    
-        
-    // toy::Paste
-    {
-        static Meta meta = { type<toy::Paste>(), &namspc({ "toy" }), "Paste", sizeof(toy::Paste), TypeClass::Object };
-        static Class cls = { type<toy::Paste>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::Paste>();
     }
     
     
@@ -295,13 +167,13 @@ namespace mud
     
     
         
-    // toy::Editor
+    // toy::DynamicToolbox
     {
-        static Meta meta = { type<toy::Editor>(), &namspc({ "toy" }), "Editor", sizeof(toy::Editor), TypeClass::Object };
-        static Class cls = { type<toy::Editor>(),
+        static Meta meta = { type<toy::DynamicToolbox>(), &namspc({ "toy" }), "DynamicToolbox", sizeof(toy::DynamicToolbox), TypeClass::Object };
+        static Class cls = { type<toy::DynamicToolbox>(),
             // bases
-            { &type<mud::EditContext>() },
-            { base_offset<toy::Editor, mud::EditContext>() },
+            { &type<toy::Toolbox>() },
+            { base_offset<toy::DynamicToolbox, toy::Toolbox>() },
             // constructors
             {
             },
@@ -322,8 +194,9 @@ namespace mud
         
         
         
-        meta_class<toy::Editor>();
+        meta_class<toy::DynamicToolbox>();
     }
+    
     
     
         
@@ -358,15 +231,50 @@ namespace mud
     }
     
     
+        
+    // toy::Editor
+    {
+        static Meta meta = { type<toy::Editor>(), &namspc({ "toy" }), "Editor", sizeof(toy::Editor), TypeClass::Object };
+        static Class cls = { type<toy::Editor>(),
+            // bases
+            { &type<mud::EditContext>() },
+            { base_offset<toy::Editor, mud::EditContext>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+                { type<toy::Editor>(), member_address(&toy::Editor::m_play_tool), type<toy::PlayTool>(), "play_tool", Ref(type<toy::PlayTool>()), Member::None, nullptr },
+                { type<toy::Editor>(), member_address(&toy::Editor::m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", Ref(type<mud::FrameViewTool>()), Member::None, nullptr },
+                { type<toy::Editor>(), member_address(&toy::Editor::m_edited_world), type<toy::World>(), "edited_world", Ref(type<toy::World>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
+                { type<toy::Editor>(), member_address(&toy::Editor::m_run_game), type<bool>(), "run_game", var(bool(false)), Member::Value, nullptr }
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::Editor>();
+    }
+    
     
         
-    // toy::DynamicToolbox
+    // toy::Paste
     {
-        static Meta meta = { type<toy::DynamicToolbox>(), &namspc({ "toy" }), "DynamicToolbox", sizeof(toy::DynamicToolbox), TypeClass::Object };
-        static Class cls = { type<toy::DynamicToolbox>(),
+        static Meta meta = { type<toy::Paste>(), &namspc({ "toy" }), "Paste", sizeof(toy::Paste), TypeClass::Object };
+        static Class cls = { type<toy::Paste>(),
             // bases
-            { &type<toy::Toolbox>() },
-            { base_offset<toy::DynamicToolbox, toy::Toolbox>() },
+            { &type<toy::TypedProcedure<toy::Paste>>() },
+            { base_offset<toy::Paste, toy::TypedProcedure<toy::Paste>>() },
             // constructors
             {
             },
@@ -387,22 +295,122 @@ namespace mud
         
         
         
-        meta_class<toy::DynamicToolbox>();
+        meta_class<toy::Paste>();
+    }
+    
+    
+        
+    // toy::Clone
+    {
+        static Meta meta = { type<toy::Clone>(), &namspc({ "toy" }), "Clone", sizeof(toy::Clone), TypeClass::Object };
+        static Class cls = { type<toy::Clone>(),
+            // bases
+            { &type<toy::TypedProcedure<toy::Clone>>() },
+            { base_offset<toy::Clone, toy::TypedProcedure<toy::Clone>>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::Clone>();
+    }
+    
+    
+        
+    // toy::Edit
+    {
+        static Meta meta = { type<toy::Edit>(), &namspc({ "toy" }), "Edit", sizeof(toy::Edit), TypeClass::Object };
+        static Class cls = { type<toy::Edit>(),
+            // bases
+            { &type<toy::TypedProcedure<toy::Edit>>() },
+            { base_offset<toy::Edit, toy::TypedProcedure<toy::Edit>>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::Edit>();
+    }
+    
+    
+        
+    // toy::Cut
+    {
+        static Meta meta = { type<toy::Cut>(), &namspc({ "toy" }), "Cut", sizeof(toy::Cut), TypeClass::Object };
+        static Class cls = { type<toy::Cut>(),
+            // bases
+            { &type<toy::TypedProcedure<toy::Cut>>() },
+            { base_offset<toy::Cut, toy::TypedProcedure<toy::Cut>>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        
+        
+        
+        
+        meta_class<toy::Cut>();
     }
     
 
     
         m.m_types.push_back(&type<toy::ActionGroup>());
-        m.m_types.push_back(&type<toy::Clone>());
-        m.m_types.push_back(&type<toy::Cut>());
-        m.m_types.push_back(&type<toy::Edit>());
         m.m_types.push_back(&type<toy::GraphicsDebug>());
-        m.m_types.push_back(&type<toy::Paste>());
         m.m_types.push_back(&type<toy::Toolbelt>());
         m.m_types.push_back(&type<toy::Toolbox>());
-        m.m_types.push_back(&type<toy::Editor>());
-        m.m_types.push_back(&type<toy::PlayTool>());
+        m.m_types.push_back(&type<toy::TypedProcedure<toy::Clone>>());
+        m.m_types.push_back(&type<toy::TypedProcedure<toy::Cut>>());
+        m.m_types.push_back(&type<toy::TypedProcedure<toy::Edit>>());
+        m.m_types.push_back(&type<toy::TypedProcedure<toy::Paste>>());
         m.m_types.push_back(&type<toy::DynamicToolbox>());
+        m.m_types.push_back(&type<toy::PlayTool>());
+        m.m_types.push_back(&type<toy::Editor>());
+        m.m_types.push_back(&type<toy::Paste>());
+        m.m_types.push_back(&type<toy::Clone>());
+        m.m_types.push_back(&type<toy::Edit>());
+        m.m_types.push_back(&type<toy::Cut>());
     
     }
 }
