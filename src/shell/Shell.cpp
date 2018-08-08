@@ -115,7 +115,7 @@ using namespace mud; namespace toy
 		static Class c = { type<VirtualMethod>(), {}, {}, {}, {}, {}, {}, {} };
 		meta_class<VirtualMethod>();
 
-		System::instance().load_modules({ &toy_util::m(), &toy_core::m(), &toy_visu::m(), &toy_block::m(), &toy_shell::m() });
+		System::instance().load_modules({ &toy_util::m(), &toy_core::m(), &toy_visu::m(), &toy_block::m(), &toy_edit::m(), &toy_shell::m() });
 
 		// @todo this should be automatically done by math module
 		register_math_conversions();

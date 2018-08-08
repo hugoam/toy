@@ -1,6 +1,6 @@
 import "random" for Random
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Key, EventType, Gfx, ItemFlag
-import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell
+import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Key, EventType, InputMod, Gfx, ItemFlag
+import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell, GameMode
 import "ui" for OrbitMode
 
 class State {
@@ -150,7 +150,7 @@ foreign class MyGame {
         var viewer = Ui.scene_viewer(ui, Vec2.new(0))
         //var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
         
-        this.control_human(viewer, world.player.human)
+        this.control_human(app, game, viewer, world.player.human)
         
         var scene = viewer.scene.begin()
         
@@ -169,18 +169,23 @@ foreign class MyGame {
     
     scene(app, scene) {}
     
-    control_human(app, viewer, human) {
+    control_human(app, game, viewer, human) {
     
+        if(game.mode == GameMode.Play && !viewer.modal()) {
+            viewer.take_modal(62)
+        }
+        
         Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, human.entity, human.aiming, human.angle)
         Ui.velocity_controller(viewer, human.force, human.torque, 1)
 
         human.update()
         
-        if(viewer.key_event(Key.Escape, EventType.Stroked).valid()) {
+        if(viewer.key_stroke(Key.Escape, InputMod.None).valid()) {
             app.editor.run_game = false
             viewer.yield_modal()
-            //if(app.context.mouse_lock)
-            //    app.context.lock_mouse(false)
+            if(app.context.mouse_lock) {
+                app.context.lock_mouse(false)
+            }
         }
     }
     
