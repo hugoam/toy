@@ -113,6 +113,7 @@ namespace mud
             },
             // methods
             {
+				{ type<toy::VisuScene>(), "next_frame", member_address(&toy::VisuScene::next_frame), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::VisuScene>(object).next_frame(); }, {}, Var() },
             },
             // static members
             {

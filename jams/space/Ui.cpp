@@ -709,9 +709,6 @@ void turn_report_sheet(Widget& parent, GameScene& scene, Player& player, Turn& t
 
 }
 
-template <class T>
-inline T* try_value(Ref object) { if(object && type(object).template is<T>()) return &val<T>(object); else return nullptr; }
-
 static void game_actions(Widget& parent, Player& player)
 {
 	Widget& self = sheet(parent, "Actions");
@@ -803,7 +800,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 	{
 		Ref selected = scene.m_selection.size() > 0 ? scene.m_selection[0] : Ref();
 
-		if(Star* star = try_value<Star>(selected))
+		if(Star* star = try_val<Star>(selected))
 		{
 			if(star->m_commander == player.m_commander)
 				star_sheet(divs.left, *star);
@@ -814,7 +811,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 			star_orders(orders, viewer, *star);
 		}
 
-		if(Fleet* fleet = try_value<Fleet>(selected))
+		if(Fleet* fleet = try_val<Fleet>(selected))
 		{
 			if(fleet->m_commander == player.m_commander)
 				fleet_sheet(divs.left, *fleet);

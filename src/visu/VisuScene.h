@@ -73,7 +73,7 @@ using namespace mud; namespace toy
 
 		std::vector<unique_ptr<VisuPainter>> m_painters;
 
-		void next_frame();
+		meth_ void next_frame();
 
 		Gnode& entity_node(Gnode& parent, Entity& entity, size_t painter);
 

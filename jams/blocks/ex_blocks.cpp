@@ -761,8 +761,6 @@ void ex_blocks_menu(Widget& parent, Game& game)
 void ex_blocks_pump_game(GameShell& app, Game& game, Widget& parent)
 {
 	static GameScene& scene = app.add_scene();
-	scene.next_frame();
-
 	ex_blocks_game_ui(parent, scene);
 }
 

@@ -191,6 +191,10 @@
     {
         "selector" : "Dockbar, Toolbar, Menubar, Header",
         "spacing" : [6]
+    },
+    {
+        "selector" : "Modal",
+        "padding" : [12]
     }
 ]
 }

@@ -81,6 +81,7 @@ using namespace mud; namespace toy
 		meth_ virtual void start(GameShell& shell, Game& game) = 0;
 		meth_ virtual void pump(GameShell& shell, Game& game) = 0;
 		meth_ virtual void scene(GameShell& shell, GameScene& scene) { UNUSED(shell); UNUSED(scene); }
+		meth_ virtual void paint(GameShell& shell, GameScene& scene) { UNUSED(shell); UNUSED(scene); }
 	};
 
 	class refl_ TOY_SHELL_EXPORT GameModuleBind : public GameModule
@@ -95,6 +96,7 @@ using namespace mud; namespace toy
 		virtual void start(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::start), Ref(this), { params, 2 }); }
 		virtual void pump(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::pump), Ref(this), { params, 2 }); }
 		virtual void scene(GameShell& app, GameScene& scene) { Var params[2] = { Ref(&app), Ref(&scene) }; m_call(method(&GameModule::scene), Ref(this), { params, 2 }); }
+		virtual void paint(GameShell& app, GameScene& scene) { Var params[2] = { Ref(&app), Ref(&scene) }; m_call(method(&GameModule::paint), Ref(this),{ params, 2 }); }
 
 		VirtualMethod m_call;
 	};
@@ -131,7 +133,9 @@ using namespace mud; namespace toy
 		void pump_game();
 		void pump_editor();
 
-		GameScene& add_scene();
+		meth_ GameScene& add_scene();
+		meth_ void remove_scene(GameScene& scene);
+		meth_ void clear_scenes();
 
 		World& load_world(Id id);
 		void destroy_world();

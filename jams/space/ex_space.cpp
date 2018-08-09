@@ -1118,7 +1118,6 @@ public:
 			else
 			{
 				static GameScene& scene = app.add_scene();
-				scene.next_frame();
 				ex_space_ui(parent, scene);
 			}
 		};

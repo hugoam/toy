@@ -122,6 +122,9 @@ class GameWorld {
     player { _player }
     crates { _crates }
     
+    scene { _scene }
+    scene=(value) { _scene = value }
+    
     static bind() { __cls = ScriptClass.new("GameWorld", [World.type, BulletWorld.type]) }
 }
 
@@ -139,8 +142,10 @@ foreign class MyGame {
     }
     
     start(app, game) {
-        MainWorld = GameWorld.new(0)
-        game.world = MainWorld.world
+        var world = GameWorld.new(0)
+        MainWorld = world
+        game.world = world.world
+		world.scene = app.add_scene()
     }
     
     pump(app, game) {
@@ -148,27 +153,32 @@ foreign class MyGame {
         var world = MainWorld
         
         var ui = game.screen ? game.screen : app.ui.begin()
-        var viewer = Ui.scene_viewer(ui, Vec2.new(0))
+        var viewer = Ui.viewer(ui, world.scene.scene)
         //var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
         
         this.control_human(app, game, viewer, world.player.human)
         
-        var scene = viewer.scene.begin()
-        
-        //Toy.paint_physics(scene, world.world)
-        
-        this.paint_scene(app, scene)
-        
-        this.paint_terrain(app, scene, world.terrain)
-        
-        this.paint_human(app, scene, world.player.human)
-        
-        for(crate in world.crates) {
-            this.paint_crate(app, scene, crate)
-        }
     }
     
     scene(app, scene) {}
+    
+    paint(app, scene) {
+    
+        var world = MainWorld
+        var root = scene.scene.graph
+        
+        //Toy.paint_physics(root, world.world)
+        
+        this.paint_scene(app, root)
+        
+        this.paint_terrain(app, root, world.terrain)
+        
+        this.paint_human(app, root, world.player.human)
+        
+        for(crate in world.crates) {
+            this.paint_crate(app, root, crate)
+        }
+    }
     
     control_human(app, game, viewer, human) {
     

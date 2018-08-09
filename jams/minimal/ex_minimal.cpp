@@ -285,8 +285,6 @@ public:
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
 			static GameScene& scene = app.add_scene();
-			scene.next_frame();
-
 			Viewer& viewer = ui::viewer(parent, scene.m_scene);
 			viewer.m_filters.m_glow.m_enabled = true;
 

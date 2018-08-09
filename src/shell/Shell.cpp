@@ -84,9 +84,8 @@ using namespace mud; namespace toy
 	void paint_physics(Gnode& parent, World& world)
 	{
 		static PhysicDebugDraw physic_draw = { *parent.m_scene->m_immediate };
-
-		//physic_draw.draw_physics(parent, world, VisualMedium::me);
 		physic_draw.draw_physics(parent, world, SolidMedium::me);
+		//physic_draw.draw_physics(parent, world, VisualMedium::me);
 	}
 
 	void physic_painter(GameScene& scene)
@@ -250,6 +249,12 @@ using namespace mud; namespace toy
 			if(script.m_dirty)
 			{
 				this->reset_interpreters(true);
+				this->clear_scenes();
+
+				// pump dry once to clear all game graphs
+				m_game.m_world = nullptr;
+				m_editor.m_viewer = nullptr;
+				this->pump_editor();
 
 				Var args[2] = { Ref(this), Ref(&module) };
 				script({ args, 2 });
@@ -317,7 +322,11 @@ using namespace mud; namespace toy
 	{
 		if(m_game.m_world)
 			m_game.m_world->next_frame();
+
 		m_game_module->pump(*this, m_game);
+
+		for(auto& scene : m_game.m_scenes)
+			scene->next_frame();
 	}
 
 	void GameShell::pump_editor()
@@ -331,9 +340,7 @@ using namespace mud; namespace toy
 
 		if(m_editor.m_run_game)
 		{
-			if(m_game.m_world)
-				m_game.m_world->next_frame();
-			m_game_module->pump(*this, m_game);
+			this->pump_game();
 			m_editor.m_viewer = nullptr;
 		}
 		else if(m_game.m_scenes.size() > 0 && m_game.m_screen)
@@ -354,7 +361,19 @@ using namespace mud; namespace toy
 		GameScene& scene = m_game.add_scene();
 		m_editor.m_scenes.push_back(&scene.m_scene);
 		m_game_module->scene(*this, scene);
+		scene.painter("Game", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
+			m_game_module->paint(*this, scene);
+		});
 		return scene;
+	}
+
+	void GameShell::remove_scene(GameScene& scene)
+	{}
+
+	void GameShell::clear_scenes()
+	{
+		m_game.m_scenes.clear();
+		m_editor.m_scenes.clear();
 	}
 
 	void GameShell::save()

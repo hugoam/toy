@@ -95,7 +95,8 @@ namespace mud
                 { type<toy::GameModule>(), "init", member_address(&toy::GameModule::init), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).init(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", Ref(type<toy::Game>()) } }, Var() },
                 { type<toy::GameModule>(), "start", member_address(&toy::GameModule::start), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).start(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", Ref(type<toy::Game>()) } }, Var() },
                 { type<toy::GameModule>(), "pump", member_address(&toy::GameModule::pump), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).pump(val<toy::GameShell>(args[0]), val<toy::Game>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "game", Ref(type<toy::Game>()) } }, Var() },
-                { type<toy::GameModule>(), "scene", member_address(&toy::GameModule::scene), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).scene(val<toy::GameShell>(args[0]), val<toy::GameScene>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "scene", Ref(type<toy::GameScene>()) } }, Var() }
+                { type<toy::GameModule>(), "scene", member_address(&toy::GameModule::scene), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).scene(val<toy::GameShell>(args[0]), val<toy::GameScene>(args[1])); }, { { "shell", Ref(type<toy::GameShell>()) }, { "scene", Ref(type<toy::GameScene>()) } }, Var() },
+				{ type<toy::GameModule>(), "paint", member_address(&toy::GameModule::paint), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameModule>(object).paint(val<toy::GameShell>(args[0]), val<toy::GameScene>(args[1])); },{ { "shell", Ref(type<toy::GameShell>()) },{ "scene", Ref(type<toy::GameScene>()) } }, Var() }
             },
             // static members
             {
@@ -149,7 +150,8 @@ namespace mud
                 { type<toy::GameShell>(), "save", member_address(&toy::GameShell::save), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).save(); }, {}, Var() },
                 { type<toy::GameShell>(), "reload", member_address(&toy::GameShell::reload), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).reload(); }, {}, Var() },
                 { type<toy::GameShell>(), "pump", member_address(&toy::GameShell::pump), [](Ref object, array<Var> args, Var& result) { UNUSED(args);val<bool>(result) = val<toy::GameShell>(object).pump(); }, {}, var(bool()) },
-                { type<toy::GameShell>(), "cleanup", member_address(&toy::GameShell::cleanup), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).cleanup(); }, {}, Var() }
+                { type<toy::GameShell>(), "cleanup", member_address(&toy::GameShell::cleanup), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::GameShell>(object).cleanup(); }, {}, Var() },
+				{ type<toy::GameShell>(), "add_scene", member_address(&toy::GameShell::add_scene), [](Ref object, array<Var> args, Var& result) { UNUSED(args); result = Ref(&val<toy::GameShell>(object).add_scene()); },{}, Ref(type<toy::GameScene>()) },
             },
             // static members
             {

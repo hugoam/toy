@@ -834,8 +834,6 @@ void ex_platform_pump_game(GameShell& app, Game& game, Widget& parent)
 	else
 	{
 		static GameScene& scene = app.add_scene();
-		scene.next_frame();
-
 		ex_platform_game_ui(self, game, scene);
 
 		vec3 position = player.m_human->m_entity.m_position;
