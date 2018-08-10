@@ -64,27 +64,15 @@ using namespace mud; namespace toy
 		return "(" + clean + ")";
 	}
 
-#if 0
-	void edit_toolbox(Widget& parent, Toolbox& toolbox)
-	{
-		Widget& self = ui::toolbar(parent);
-		for(auto& tool : toolbox.m_tools)
-			if(ui::button(self, tool->m_name.c_str()).activated())
-				tool->activate();
-	}
-
-	void edit_toolbelt(Widget& parent, Toolbelt& toolbelt)
-	{
-		Widget& self = ui::tooldock(parent);
-		for(auto& name_toolbox : toolbelt.m_toolboxes)
-			edit_toolbox(self, *name_toolbox.second);
-	}
-#else
 	void edit_toolbox(Widget& parent, Toolbox& toolbox)
 	{
 		for(auto& tool : toolbox.m_tools)
-			if(ui::button(parent, tool->m_name.c_str()).activated())
+		{
+			Widget& button = ui::button(parent, tool->m_name.c_str());
+			button.set_state(ACTIVE, tool->m_state == ToolState::Active);
+			if(button.activated())
 				tool->activate();
+		}
 	}
 
 	void edit_toolbelt(Widget& parent, Toolbelt& toolbelt)
@@ -93,7 +81,6 @@ using namespace mud; namespace toy
 		for(auto& name_toolbox : toolbelt.m_toolboxes)
 			edit_toolbox(self, *name_toolbox.second);
 	}
-#endif
 
 	void edit_selection(Widget& parent, Selection& selection)
 	{

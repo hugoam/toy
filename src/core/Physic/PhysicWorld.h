@@ -43,7 +43,7 @@ using namespace mud; namespace toy
     {
 	public:
         PhysicWorld(World& world);
-		~PhysicWorld();
+		virtual ~PhysicWorld();
 
 		attr_ World& m_world;
 

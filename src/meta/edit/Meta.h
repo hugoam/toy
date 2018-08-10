@@ -198,7 +198,37 @@ namespace mud
     }
     
     
-    
+
+	// toy::RunTool
+	{
+		static Meta meta = { type<toy::RunTool>(), &namspc({ "toy" }), "RunTool", sizeof(toy::RunTool), TypeClass::Object };
+		static Class cls = { type<toy::RunTool>(),
+			// bases
+		{ &type<mud::Tool>() },
+		{ base_offset<toy::RunTool, mud::Tool>() },
+			// constructors
+		{
+		},
+		// copy constructor
+		{
+		},
+		// members
+		{
+		},
+		// methods
+		{
+		},
+		// static members
+		{
+		}
+		};
+
+
+
+
+		meta_class<toy::RunTool>();
+	}
+
         
     // toy::PlayTool
     {
@@ -247,10 +277,12 @@ namespace mud
             },
             // members
             {
-                { type<toy::Editor>(), member_address(&toy::Editor::m_play_tool), type<toy::PlayTool>(), "play_tool", Ref(type<toy::PlayTool>()), Member::None, nullptr },
-                { type<toy::Editor>(), member_address(&toy::Editor::m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", Ref(type<mud::FrameViewTool>()), Member::None, nullptr },
+                { type<toy::Editor>(), member_address(&toy::Editor::m_run_tool), type<toy::RunTool>(), "run_tool", Ref(type<toy::RunTool>()), Member::None, nullptr },
+				{ type<toy::Editor>(), member_address(&toy::Editor::m_play_tool), type<toy::PlayTool>(), "play_tool", Ref(type<toy::PlayTool>()), Member::None, nullptr },
+				{ type<toy::Editor>(), member_address(&toy::Editor::m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", Ref(type<mud::FrameViewTool>()), Member::None, nullptr },
                 { type<toy::Editor>(), member_address(&toy::Editor::m_edited_world), type<toy::World>(), "edited_world", Ref(type<toy::World>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-                { type<toy::Editor>(), member_address(&toy::Editor::m_run_game), type<bool>(), "run_game", var(bool(false)), Member::Value, nullptr }
+                { type<toy::Editor>(), member_address(&toy::Editor::m_run_game), type<bool>(), "run_game", var(bool(false)), Member::Value, nullptr },
+				{ type<toy::Editor>(), member_address(&toy::Editor::m_play_game), type<bool>(), "play_game", var(bool(false)), Member::Value, nullptr }
             },
             // methods
             {
@@ -401,6 +433,7 @@ namespace mud
         m.m_types.push_back(&type<toy::Toolbelt>());
         m.m_types.push_back(&type<toy::Toolbox>());
         m.m_types.push_back(&type<toy::DynamicToolbox>());
+		m.m_types.push_back(&type<toy::RunTool>());
         m.m_types.push_back(&type<toy::PlayTool>());
         m.m_types.push_back(&type<toy::Editor>());
         m.m_types.push_back(&type<toy::Paste>());

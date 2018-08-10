@@ -27,6 +27,16 @@ using namespace mud; namespace toy
 		Editor& m_editor;
 	};
 
+	export_ class refl_ TOY_EDIT_EXPORT RunTool : public Tool
+	{
+	public:
+		RunTool(ToolContext& context, Editor& editor);
+
+		virtual void activate() final;
+
+		Editor& m_editor;
+	};
+
 	struct refl_ TOY_EDIT_EXPORT ActionGroup
 	{
 		string m_name;
@@ -45,6 +55,7 @@ using namespace mud; namespace toy
         
 		Toolbelt m_toolbelt;
 
+		attr_ RunTool m_run_tool;
 		attr_ PlayTool m_play_tool;
 		
 		attr_ FrameViewTool m_frame_view_tool;
@@ -53,6 +64,7 @@ using namespace mud; namespace toy
 
 		attr_ World* m_edited_world = nullptr;
 		attr_ bool m_run_game = false;
+		attr_ bool m_play_game = false;
 
 		std::vector<Scene*> m_scenes;
 

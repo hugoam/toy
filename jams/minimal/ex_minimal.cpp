@@ -71,7 +71,7 @@ void Human::next_frame(size_t tick, size_t delta)
 
 quat Human::sight(bool aiming)
 {
-	return aiming ? rotate(m_entity.m_rotation, X3, m_vangle) : m_entity.m_rotation;
+	return aiming ? rotate(m_entity.m_rotation, X3, m_angles.y) : m_entity.m_rotation;
 }
 
 Aim Human::aim()
@@ -237,7 +237,7 @@ void ex_minimal_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 {
 	ui::OrbitMode mode = ui::OrbitMode::ThirdPerson;
 
-	OrbitController& orbit = ui::hybrid_controller(viewer, ui::OrbitMode::ThirdPerson, human.m_entity, human.m_aiming, human.m_vangle);
+	OrbitController& orbit = ui::hybrid_controller(viewer, ui::OrbitMode::ThirdPerson, human.m_entity, human.m_aiming, human.m_angles);
 
 	static HumanController controller;
 

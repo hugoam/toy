@@ -59,7 +59,7 @@ public:
 
 	Solid m_solid;
 
-	float m_vangle = 0.f;
+	vec2 m_angles = Zero2;
 	bool m_aiming = false;
 
 	bool m_walk = true;

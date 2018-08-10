@@ -103,7 +103,7 @@ public:
 
 	attr_ Faction m_faction;
 
-	float m_vangle = 0.f;
+	vec2 m_angles = Zero2;
 	bool m_aiming = false;
 	Aim m_visor;
 

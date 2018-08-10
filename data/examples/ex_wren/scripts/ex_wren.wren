@@ -23,8 +23,8 @@ class Human {
         _solid = Solid.new(_entity, CollisionShape.new(Capsule.new(0.35, 1.1, Axis.X), Vec3.new(0, 0.9, 0), 0), false, 1.0)
         _complex.setup([_entity, _movable, _solid])
         
-        _aiming = false
-        _angle = 0
+        _aiming = true
+        _angles = Vec2.new(0)
         _force = Vec3.new(0)
         _torque = Vec3.new(0)
         _state = State.new("Idle", true)
@@ -48,7 +48,7 @@ class Human {
     solid { _solid }
     state { _state }
     aiming { _aiming }
-    angle { _angle }
+    angles { _angles }
     force { _force }
     torque { _torque }
     
@@ -186,13 +186,13 @@ foreign class MyGame {
             viewer.take_modal(62)
         }
         
-        Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, human.entity, human.aiming, human.angle)
+        Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, human.entity, human.aiming, human.angles)
         Ui.velocity_controller(viewer, human.force, human.torque, 10)
 
         human.update()
         
         if(viewer.key_stroke(Key.Escape, InputMod.None).valid()) {
-            app.editor.run_game = false
+            app.editor.play_game = false
             viewer.yield_modal()
             if(app.context.mouse_lock) {
                 app.context.lock_mouse(false)

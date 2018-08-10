@@ -93,6 +93,7 @@ namespace toy {
     class Toolbox;
     class DynamicToolbox;
     class Toolbelt;
+	class RunTool;
     class PlayTool;
     struct ActionGroup;
     struct GraphicsDebug;

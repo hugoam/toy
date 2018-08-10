@@ -20,6 +20,7 @@ namespace mud
     template <> TOY_EDIT_EXPORT Type& type<toy::Toolbelt>() { static Type ty("Toolbelt"); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Toolbox>() { static Type ty("Toolbox"); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::DynamicToolbox>() { static Type ty("DynamicToolbox", type<toy::Toolbox>()); return ty; }
+	template <> TOY_EDIT_EXPORT Type& type<toy::RunTool>() { static Type ty("RunTool", type<mud::Tool>()); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::PlayTool>() { static Type ty("PlayTool", type<mud::Tool>()); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Editor>() { static Type ty("Editor", type<mud::EditContext>()); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Paste>() { static Type ty("Paste"); return ty; }

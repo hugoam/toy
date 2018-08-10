@@ -70,9 +70,8 @@ using namespace mud; namespace toy
 	class refl_ TOY_SHELL_EXPORT GameModule : public NonCopy
 	{
 	public:
-		GameModule(Module& module)
-			: m_module(&module)
-		{}
+		GameModule(Module& module) : m_module(&module) {}
+		virtual ~GameModule() {}
 
 		string m_module_path = "";
 		Module* m_module = nullptr;
@@ -130,6 +129,7 @@ using namespace mud; namespace toy
 		void reset_interpreters(bool reflect);
 
 		void start_game();
+		void pump_world();
 		void pump_game();
 		void pump_editor();
 

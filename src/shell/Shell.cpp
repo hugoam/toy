@@ -77,7 +77,7 @@ using namespace mud; namespace toy
 	Viewer& editor_viewport(Widget& parent, GameScene& scene)
 	{
 		Viewer& self = ui::viewer(parent, scene.m_scene);
-		ui::free_orbit_controller(self);
+		FreeOrbitController& orbit = ui::free_orbit_controller(self);
 		return self;
 	}
 
@@ -251,10 +251,8 @@ using namespace mud; namespace toy
 				this->reset_interpreters(true);
 				this->clear_scenes();
 
-				// pump dry once to clear all game graphs
-				m_game.m_world = nullptr;
-				m_editor.m_viewer = nullptr;
-				this->pump_editor();
+				if(m_editor.m_viewer)
+					m_editor.m_viewer->m_viewport.m_active = false;
 
 				Var args[2] = { Ref(this), Ref(&module) };
 				script({ args, 2 });
@@ -267,6 +265,9 @@ using namespace mud; namespace toy
 
 			this->pump_editor();
 			//this->pump_game();
+
+			if(m_editor.m_viewer)
+				m_editor.m_viewer->m_viewport.m_active = true;
 		};
 
 		this->run(0);
@@ -318,11 +319,15 @@ using namespace mud; namespace toy
 		m_game_module->pump(*this, m_game);
 	}
 
-	void GameShell::pump_game()
+	void GameShell::pump_world()
 	{
 		if(m_game.m_world)
 			m_game.m_world->next_frame();
+	}
 
+	void GameShell::pump_game()
+	{
+		this->pump_world();
 		m_game_module->pump(*this, m_game);
 
 		for(auto& scene : m_game.m_scenes)
@@ -338,15 +343,18 @@ using namespace mud; namespace toy
 
 		m_game.m_screen = m_editor.m_screen;
 
-		if(m_editor.m_run_game)
-		{
+		if(m_editor.m_play_game)
 			this->pump_game();
+		else if(m_editor.m_run_game)
+			this->pump_world();
+
+		if(m_editor.m_play_game)
 			m_editor.m_viewer = nullptr;
-		}
 		else if(m_game.m_scenes.size() > 0 && m_game.m_screen)
 		{
 			m_game.m_scenes[0]->next_frame();
-			m_editor.m_viewer = &editor_viewport(*m_game.m_screen, *m_game.m_scenes[0]);
+			Widget& screen = ui::widget(*m_game.m_screen, styles().sheet, &m_editor);
+			m_editor.m_viewer = &editor_viewport(screen, *m_game.m_scenes[0]);
 		}
 
 		if(m_editor.m_viewer)

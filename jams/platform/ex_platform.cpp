@@ -303,7 +303,7 @@ void Human::next_frame(size_t tick, size_t delta)
 
 quat Human::sight(bool aiming)
 {
-	return aiming ? rotate(m_entity.m_rotation, X3, m_vangle) : m_entity.m_rotation;
+	return aiming ? rotate(m_entity.m_rotation, X3, m_angles.y) : m_entity.m_rotation;
 }
 
 void Human::stop()
@@ -660,7 +660,7 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	Widget& screen = ui::widget(viewer, style_screen);
 
 	ui::OrbitMode mode = val<Player>(scene.m_player).m_mode;
-	OrbitController& orbit = ui::hybrid_controller(viewer, mode, human.m_entity, human.m_aiming, human.m_vangle);
+	OrbitController& orbit = ui::hybrid_controller(viewer, mode, human.m_entity, human.m_aiming, human.m_angles);
 
 	Widget& board = ui::board(screen);
 	Widget& row = ui::row(screen);
@@ -742,7 +742,7 @@ void ex_platform_game_ui(Widget& parent, Game& game, GameScene& scene)
 
 	if(viewer.key_event(Key::Escape, EventType::Stroked))
 	{
-		game.m_shell->m_editor.m_run_game = false;
+		game.m_shell->m_editor.m_play_game = false;
 		viewer.yield_modal();
 		if(game.m_shell->m_context->m_mouse_lock)
 			game.m_shell->m_context->lock_mouse(false);
