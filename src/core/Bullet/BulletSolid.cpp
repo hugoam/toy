@@ -45,7 +45,7 @@ using namespace mud; namespace toy
 		m_collision_object->setWorldTransform(btTransform(to_btquat(m_collider.m_entity.absolute_rotation()), to_btvec3(m_collider.m_entity.absolute_position())));
 		
 		m_rigid_body = &static_cast<btRigidBody&>(*m_collision_object);
-		m_rigid_body->setFriction(0.6f);
+		//m_rigid_body->setFriction(0.6f);
 		//m_rigid_body->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
 		if(solid.m_static)
