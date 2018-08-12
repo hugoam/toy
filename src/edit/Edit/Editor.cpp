@@ -23,6 +23,7 @@
 #include <core/View/Vision.h>
 #include <core/Selector/Selector.h>
 
+#include <gfx/GfxSystem.h>
 #include <gfx-ui/GfxEdit.h>
 #include <gfx-ui/Viewport.h>
 
@@ -301,6 +302,17 @@ using namespace mud; namespace toy
 		Widget& layout = ui::screen(*editor.m_viewer);
 		Widget& toolbar = ui::row(layout);
 		tools_transform(toolbar, editor);
+
+		auto entry = [](Widget& parent, cstring name, int value)
+		{
+			Widget& row = ui::row(parent);
+			ui::label(row, name);
+			ui::label(row, to_string(value).c_str());
+		};
+
+		float eps = 0.0000001f;
+		entry(layout, "frame time", int(editor.m_gfx_system.m_frame_time * 1000.f));
+		entry(layout, "frame per second", int(1.f / max(editor.m_gfx_system.m_frame_time, eps)));
 	}
 
 	void editor(Widget& parent, Editor& editor)

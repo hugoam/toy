@@ -219,6 +219,7 @@ using namespace mud; namespace toy
 #else
 		size_t frame = 0;
 		while(pump() && (iterations == 0 || frame++ < iterations));
+			//std::this_thread::sleep_for(std::chrono::milliseconds(10));
 #endif
 	}
 

@@ -1,5 +1,5 @@
 import "random" for Random
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Quad, Symbol, SymbolDetail, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode
+import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Sphere, Quad, Symbol, SymbolDetail, DrawMode, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode
 import "toy" for World, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell, GameMode
 import "ui" for OrbitMode
 
@@ -55,21 +55,25 @@ class Human {
     static bind() { __cls = ScriptClass.new("Human", [Entity.type, Movable.type, Solid.type]) }
 }
 
-class Crate {
+class Body {
 
-	construct new(id, parent, position, extents) {
+	construct new(id, parent, position, shape, colour) {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, position, Quat.new(1,0,0,0))
         _movable = Movable.new(_entity)
-        _solid = Solid.new(_entity, CollisionShape.new(Cube.new(extents), Vec3.new(0), 0), false, 1.0)
-        _extents = extents
+        _solid = Solid.new(_entity, CollisionShape.new(shape, Vec3.new(0), 0), false, 1.0)
+        _shape = shape
+        _colour = colour
         _complex.setup([_entity, _movable, _solid])
     }
     
     entity { _entity }
-    extents { _extents }
+    shape { _shape }
+    colour { _colour }
+    model { _model }
+    model=(value) { _model = value }
     
-    static bind() { __cls = ScriptClass.new("Crate", [Entity.type, Movable.type, Solid.type]) }
+    static bind() { __cls = ScriptClass.new("Body", [Entity.type, Movable.type, Solid.type]) }
 }
 
 class Terrain {
@@ -108,19 +112,26 @@ class GameWorld {
         
         _terrain = Terrain.new(0, _world.origin, 100)
         _player = Player.new(_world)
-        _crates = []
+        _bodies = []
         
         var rand = Random.new()
         for (i in 0...50) {
-            var position = Vec3.new(rand.float(-50, 50), 0, rand.float(-50, 50))
-            _crates.add(Crate.new(0, _world.origin, position, Vec3.new(1)))
+            var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
+            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            _bodies.add(Body.new(0, _world.origin, position, Cube.new(Vec3.new(rand.float(1, 5))), colour)) // Colour.new(0.7, 1)
+        }
+        
+        for (i in 0...50) {
+            var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
+            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            _bodies.add(Body.new(0, _world.origin, position, Sphere.new(rand.float(1, 5)), colour)) // Colour.new(0.7, 1)
         }
     }
     
     world { _world }
     terrain { _terrain }
     player { _player }
-    crates { _crates }
+    bodies { _bodies }
     
     scene { _scene }
     scene=(value) { _scene = value }
@@ -143,9 +154,16 @@ foreign class MyGame {
     
     start(app, game) {
         var world = GameWorld.new(0)
-        MainWorld = world
+        
+        for(body in world.bodies) {
+            var symbol = Symbol.new(Colour.None, Colour.White, false, false, SymbolDetail.Medium)
+            body.model = app.gfx.fetch_symbol(symbol, body.shape, DrawMode.PLAIN)
+        }
+		var scene = app.add_scene() // if this is before creating the bodies meshes, wren crashes... WHY
+        world.scene = scene
         game.world = world.world
-		world.scene = app.add_scene()
+        
+        MainWorld = world
     }
     
     pump(app, game) {
@@ -154,10 +172,7 @@ foreign class MyGame {
         
         var ui = game.screen ? game.screen : app.ui.begin()
         var viewer = Ui.viewer(ui, world.scene.scene)
-        //var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
-        
         this.control_human(app, game, viewer, world.player.human)
-        
     }
     
     scene(app, scene) {}
@@ -170,13 +185,11 @@ foreign class MyGame {
         //Toy.paint_physics(root, world.world)
         
         this.paint_scene(app, root)
-        
         this.paint_terrain(app, root, world.terrain)
-        
         this.paint_human(app, root, world.player.human)
         
-        for(crate in world.crates) {
-            this.paint_crate(app, root, crate)
+        for(body in world.bodies) {
+            this.paint_body(app, root, body)
         }
     }
     
@@ -237,17 +250,16 @@ foreign class MyGame {
         }
     }
     
-    paint_crate(app, parent, crate) {
+    paint_body(app, parent, body) {
     
-        var self = Gfx.node(parent, crate, crate.entity.position, crate.entity.rotation, Vec3.new(1))
-        var symbol = Symbol.new(Colour.None, Colour.White, false, false, SymbolDetail.Medium)
-        var material = this.pbr_material(app, "crate", Colour.new(0.7, 1))
-        Gfx.shape(self, Cube.new(crate.extents), symbol, 0, material, 0)
+        var self = Gfx.node(parent, body, body.entity.position, body.entity.rotation, Vec3.new(1))
+        var material = this.pbr_material(app, "body %(body.entity.id)", body.colour)
+        Gfx.item(self, body.model, 0, material, 0, [])
     }
 }
 
 Human.bind()
-Crate.bind()
+Body.bind()
 Terrain.bind()
 GameWorld.bind()
 MyGame.bind()
