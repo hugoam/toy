@@ -227,9 +227,12 @@ using namespace mud; namespace toy
     {
 		m_last_tick = tick;
 
-		double timeStep = delta * c_tick_interval;
 		if(m_dynamicsWorld)
-			m_dynamicsWorld->stepSimulation(timeStep, 3); // min(timeStep, 0.08)
+#ifdef MUD_PLATFORM_EMSCRIPTEN
+			m_dynamicsWorld->stepSimulation(delta * c_tick_interval, 1);
+#else
+			m_dynamicsWorld->stepSimulation(delta * c_tick_interval, 3);
+#endif
 		else
 			m_bullet_world->performDiscreteCollisionDetection();
 

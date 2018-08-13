@@ -78,9 +78,9 @@ using namespace mud; namespace toy
 
 		meth_ virtual void init(GameShell& shell, Game& game) = 0;
 		meth_ virtual void start(GameShell& shell, Game& game) = 0;
-		meth_ virtual void pump(GameShell& shell, Game& game) = 0;
+		meth_ virtual void pump(GameShell& shell, Game& game, Widget& ui) = 0;
 		meth_ virtual void scene(GameShell& shell, GameScene& scene) { UNUSED(shell); UNUSED(scene); }
-		meth_ virtual void paint(GameShell& shell, GameScene& scene) { UNUSED(shell); UNUSED(scene); }
+		meth_ virtual void paint(GameShell& shell, GameScene& scene, Gnode& graph) { UNUSED(shell); UNUSED(scene); UNUSED(graph); }
 	};
 
 	class refl_ TOY_SHELL_EXPORT GameModuleBind : public GameModule
@@ -93,9 +93,9 @@ using namespace mud; namespace toy
 
 		virtual void init(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::init), Ref(this), { params, 2 }); }
 		virtual void start(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::start), Ref(this), { params, 2 }); }
-		virtual void pump(GameShell& app, Game& game) { Var params[2] = { Ref(&app), Ref(&game) }; m_call(method(&GameModule::pump), Ref(this), { params, 2 }); }
+		virtual void pump(GameShell& app, Game& game, Widget& ui) { Var params[3] = { Ref(&app), Ref(&game), Ref(&ui) }; m_call(method(&GameModule::pump), Ref(this), { params, 3 }); }
 		virtual void scene(GameShell& app, GameScene& scene) { Var params[2] = { Ref(&app), Ref(&scene) }; m_call(method(&GameModule::scene), Ref(this), { params, 2 }); }
-		virtual void paint(GameShell& app, GameScene& scene) { Var params[2] = { Ref(&app), Ref(&scene) }; m_call(method(&GameModule::paint), Ref(this),{ params, 2 }); }
+		virtual void paint(GameShell& app, GameScene& scene, Gnode& graph) { Var params[3] = { Ref(&app), Ref(&scene), Ref(&graph) }; m_call(method(&GameModule::paint), Ref(this), { params, 3 }); }
 
 		VirtualMethod m_call;
 	};
@@ -124,13 +124,14 @@ using namespace mud; namespace toy
 		meth_ bool pump();
 		meth_ void cleanup();
 
-		void run_script(Module& module, const string& file);
+		void run_script(Module& module, const string& file, bool run = false);
 
 		void reset_interpreters(bool reflect);
 
 		void start_game();
 		void pump_world();
 		void pump_game();
+		void pump_scenes();
 		void pump_editor();
 
 		meth_ GameScene& add_scene();
@@ -139,6 +140,8 @@ using namespace mud; namespace toy
 
 		World& load_world(Id id);
 		void destroy_world();
+
+		void time_entries(Widget& parent);
 
 		attr_ Core& core() { return *m_core; }
 		attr_ LuaInterpreter& lua() { return *m_lua; }
@@ -180,5 +183,8 @@ using namespace mud; namespace toy
 		Game m_game;
 
 		std::function<void()> m_pump;
+
+		enum class Step : unsigned int { Input = 0, Core, World, Game, Scene, UiRender, GfxRender };
+		float m_times[6] = {};
 	};
 }

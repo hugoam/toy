@@ -272,6 +272,8 @@ using namespace mud; namespace toy
 			script_editor(*dock, editor.m_script_editor);
 		//current_brush_edit(self, editor); // dockid { 0, 0 }
 		//ui_edit(self, editor.m_selection); // dockid { 0, 2 }
+		if (Widget* dock = ui::dockitem(dockspace, "Graphics", carray<uint16_t, 2>{ 0U, 2U }))
+			edit_gfx_system(*dock, editor.m_gfx_system);
 
 		editor.m_screen = ui::dockitem(dockspace, "Screen", carray<uint16_t, 2>{ 0U, 1U }, 4.f);
 		
@@ -297,7 +299,7 @@ using namespace mud; namespace toy
 			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection);
 	}
 
-	void editor_viewer_overlay(Viewer& viewer, Editor& editor)
+	Widget& editor_viewer_overlay(Viewer& viewer, Editor& editor)
 	{
 		Widget& layout = ui::screen(*editor.m_viewer);
 		Widget& toolbar = ui::row(layout);
@@ -313,6 +315,8 @@ using namespace mud; namespace toy
 		float eps = 0.0000001f;
 		entry(layout, "frame time", int(editor.m_gfx_system.m_frame_time * 1000.f));
 		entry(layout, "frame per second", int(1.f / max(editor.m_gfx_system.m_frame_time, eps)));
+
+		return layout;
 	}
 
 	void editor(Widget& parent, Editor& editor)

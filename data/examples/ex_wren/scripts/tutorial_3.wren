@@ -1,7 +1,6 @@
 import "random" for Random
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Colour, Capsule, Axis, Cube, Sphere, Quad, Symbol, SymbolDetail, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode
-import "toy" for DefaultWorld, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell, GameMode
-import "ui" for OrbitMode
+import "mud" for ScriptClass, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode
+import "toy" for DefaultWorld, Entity, Movable, Solid, CollisionShape
 
 class Body {
 	construct new(id, parent, position, shape, colour) {
@@ -48,7 +47,7 @@ foreign class MyGame {
     init(app, game) { start(app, game) }
     
     start(app, game) {
-        GWorld = DefaultWorld.new("")
+        GWorld = DefaultWorld.new("World")
         game.world = GWorld.world
         
         GTerrain = Terrain.new(0, GWorld.world.origin, 100)
@@ -57,50 +56,31 @@ foreign class MyGame {
         for (i in 0...50) {
             var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
             var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
-            GBodies.add(Body.new(0, GWorld.world.origin, position, Cube.new(Vec3.new(rand.float(1, 5))), colour)) // Colour.new(0.7, 1)
+            var size = Vec3.new(rand.float(1, 5))
+            GBodies.add(Body.new(0, GWorld.world.origin, position, Cube.new(size), colour))
         }
         
-        for (i in 0...50) {
-            var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
-            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
-            GBodies.add(Body.new(0, GWorld.world.origin, position, Sphere.new(rand.float(1, 5)), colour)) // Colour.new(0.7, 1)
-        }
-        
-		GScene = app.add_scene()
+        GScene = app.add_scene()
     }
     
     pump(app, game, ui) {
         var viewer = Ui.viewer(ui, GScene.scene)
-        var orbit = Ui.orbit_controller(viewer, 0, 0, 1)
+        var orbit = Ui.orbit_controller(viewer, 0, -0.37, 100.0)
     }
     
     scene(app, scene) {}
     
     paint(app, scene, graph) {
-        //Toy.paint_physics(graph, GWorld.world)
-        this.paint_scene(app, graph)
-        this.paint_terrain(app, graph, GTerrain)
+        Gfx.radiance(graph, "radiance/tiber_1_1k.hdr", BackgroundMode.Radiance)
+        Gfx.sun_light(graph, 0, 0.37)
+        
+        var terrain = Gfx.node(graph, GTerrain, GTerrain.entity.position, GTerrain.entity.rotation)
+        Gfx.shape(terrain, GTerrain.quad, Symbol.new(Colour.None, Colour.new(0.3, 1)))
         
         for(body in GBodies) {
-            this.paint_body(app, graph, body)
+            var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
+            Gfx.shape(node, body.shape, Symbol.new(Colour.None, body.colour))
         }
-    }
-    
-    paint_scene(app, parent) {
-        Gfx.radiance(parent, "radiance/tiber_1_1k.hdr", BackgroundMode.Radiance)
-        Gfx.sun_light(parent, 0, 0.37)
-    }
-    
-    paint_terrain(app, parent, terrain) {
-        var self = Gfx.node(parent, terrain, terrain.entity.position, terrain.entity.rotation)
-        var material = Gfx.pbr_material(app.gfx, "ground", Colour.new(0.3, 1))
-        Gfx.shape(self, terrain.quad, Symbol.new(Colour.None, Colour.White), 0, material)
-    }
-    
-    paint_body(app, parent, body) {
-        var self = Gfx.node(parent, body, body.entity.position, body.entity.rotation)
-        var material = Gfx.pbr_material(app.gfx, "body %(body.entity.id)", body.colour)
-        Gfx.shape(self, body.shape, Symbol.new(Colour.None, Colour.White), 0, material)
     }
 }
 

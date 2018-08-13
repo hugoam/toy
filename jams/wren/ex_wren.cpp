@@ -14,5 +14,6 @@ int main(int argc, char *argv[])
 	app.run_script(_wren::m(), "ex_wren.wren");
 	//app.run_script(_wren::m(), "ex_wren_cube.wren");
 	//app.run_script(_wren::m(), "ex_wren_shapes.wren");
+	//app.run_script(_wren::m(), "tutorial_4.wren", true);
 }
 #endif

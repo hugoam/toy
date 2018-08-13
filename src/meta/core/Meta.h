@@ -453,7 +453,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::CollisionShape>(), [](Ref ref, array<Var> args) { new(&val<toy::CollisionShape>(ref)) toy::CollisionShape( val<mud::Shape>(args[0]), val<mud::vec3>(args[1]), val<float>(args[2]) ); }, { { "shape", Ref(type<mud::Shape>()) }, { "center", var(mud::vec3()), Param::Default }, { "margin", var(float(0.f)), Param::Default } } }
+                { type<toy::CollisionShape>(), [](Ref ref, array<Var> args) { new(&val<toy::CollisionShape>(ref)) toy::CollisionShape( val<mud::Shape>(args[0]), val<mud::vec3>(args[1]), val<float>(args[2]) ); }, { { "shape", Ref(type<mud::Shape>()) }, { "center", var(Zero3), Param::Default }, { "margin", var(float(0.f)), Param::Default } } }
             },
             // copy constructor
             {
@@ -1621,7 +1621,7 @@ namespace mud
             { base_offset<toy::Entity, mud::Transform>() },
             // constructors
             {
-                { type<toy::Entity>(), [](Ref ref, array<Var> args) { new(&val<toy::Entity>(ref)) toy::Entity( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<toy::Entity>(args[2]), val<mud::vec3>(args[3]), val<mud::quat>(args[4]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Complex>()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "rotation", var(mud::quat()) } } },
+                { type<toy::Entity>(), [](Ref ref, array<Var> args) { new(&val<toy::Entity>(ref)) toy::Entity( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<toy::Entity>(args[2]), val<mud::vec3>(args[3]), val<mud::quat>(args[4]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Complex>()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(Zero3), Param::Default }, { "rotation", var(ZeroQuat), Param::Default } } },
                 { type<toy::Entity>(), [](Ref ref, array<Var> args) { new(&val<toy::Entity>(ref)) toy::Entity( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<toy::World>(args[2]), &val<toy::Entity>(args[3]), val<mud::vec3>(args[4]), val<mud::quat>(args[5]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Complex>()) }, { "world", Ref(type<toy::World>()) }, { "parent", Ref(type<toy::Entity>()), Param::Nullable }, { "position", var(mud::vec3()) }, { "rotation", var(mud::quat()) } } }
             },
             // copy constructor
