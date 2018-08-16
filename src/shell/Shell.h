@@ -134,6 +134,8 @@ using namespace mud; namespace toy
 		void pump_scenes();
 		void pump_editor();
 
+		void paste(const string& text);
+
 		meth_ GameScene& add_scene();
 		meth_ void remove_scene(GameScene& scene);
 		meth_ void clear_scenes();
@@ -170,6 +172,7 @@ using namespace mud; namespace toy
 #endif
 
 		attr_ Editor m_editor;
+		bool m_mini_editor = false;
 
 		unique_ptr<Context> m_context;
 		unique_ptr<Vg> m_vg;
@@ -184,7 +187,18 @@ using namespace mud; namespace toy
 
 		std::function<void()> m_pump;
 
-		enum class Step : unsigned int { Input = 0, Core, World, Game, Scene, UiRender, GfxRender };
-		float m_times[6] = {};
+		enum class Step : unsigned int { Input = 0, Core, World, Game, Scene, UiRender, GfxRender, Count };
+		float m_times[size_t(Step::Count)] = {};
 	};
+
+#if MUD_PLATFORM_EMSCRIPTEN
+	static GameShell* g_app = nullptr;
+#endif
 }
+
+#if MUD_PLATFORM_EMSCRIPTEN
+extern "C"
+{
+	void paste(const char* text);
+}
+#endif

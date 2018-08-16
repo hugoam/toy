@@ -70,6 +70,8 @@ using namespace mud; namespace toy
 
 		GraphicsDebug m_graphics_debug;
 
+		void update();
+
 		void create_scripted_brush();
 
 		ActionGroup& action_group(const string& name);

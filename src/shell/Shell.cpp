@@ -22,7 +22,6 @@ class WrenVM;
 using namespace mud; namespace toy
 {
 #if MUD_PLATFORM_EMSCRIPTEN
-	static GameShell* g_app = nullptr;
 	static void iterate()
 	{
 		g_app->pump();
@@ -40,6 +39,28 @@ using namespace mud; namespace toy
 		string exec_dir = "./";
 #endif
 		return exec_dir;
+	}
+
+	struct SmoothTimer : public TimerBx
+	{
+		SmoothTimer(size_t num_frames) : m_num_frames(num_frames) {}
+
+		size_t m_num_frames;
+		std::deque<float> m_times;
+
+		float read()
+		{
+			if(m_times.size() == m_num_frames)
+				m_times.pop_front();
+			m_times.push_back(this->end());
+			return std::accumulate(m_times.begin(), m_times.end(), 0.f) / m_times.size();
+		}
+	};
+
+	template <class T_Func>
+	auto time(float* times, GameShell::Step step, cstring name, T_Func f)
+	{
+		UNUSED(name); static SmoothTimer timer = { 10 }; timer.begin(); f(); times[size_t(step)] = timer.read();
 	}
 
 	Game::Game(User& user, GfxSystem& gfx_system)
@@ -75,13 +96,6 @@ using namespace mud; namespace toy
 	Viewer& game_viewport(Widget& parent, GameScene& scene, Camera& camera)
 	{
 		return scene_viewport(parent, scene, camera, scene.m_selection);
-	}
-
-	Viewer& editor_viewport(Widget& parent, GameScene& scene)
-	{
-		Viewer& self = ui::viewer(parent, scene.m_scene);
-		FreeOrbitController& orbit = ui::free_orbit_controller(self);
-		return self;
 	}
 
 	void paint_physics(Gnode& parent, World& world)
@@ -254,6 +268,7 @@ using namespace mud; namespace toy
 			{
 				this->reset_interpreters(true);
 				this->clear_scenes();
+				m_game.m_world = nullptr;
 
 				if(m_editor.m_viewer)
 					m_editor.m_viewer->m_viewport.m_active = false;
@@ -279,6 +294,7 @@ using namespace mud; namespace toy
 
 		//m_editor.m_run_game = run;
 		m_editor.m_play_game = run;
+		m_mini_editor = true;
 
 		this->run(0);
 	}
@@ -313,30 +329,11 @@ using namespace mud; namespace toy
 		system().launch_process(shell_path.c_str(), m_game_module->m_module_path.c_str());
 	}
 
-	struct SmoothTimer : public TimerBx
-	{
-		SmoothTimer(size_t num_frames) : m_num_frames(num_frames) {}
-
-		size_t m_num_frames;
-		std::deque<float> m_times;
-
-		float read()
-		{
-			if(m_times.size() == m_num_frames)
-				m_times.pop_front();
-			m_times.push_back(this->end());
-			return std::accumulate(m_times.begin(), m_times.end(), 0.f) / m_times.size();
-		}
-	};
-
-	template <class T_Func>
-	auto time(float* times, GameShell::Step step, cstring name, T_Func f)
-	{
-		UNUSED(name); static SmoothTimer timer = { 10 }; timer.begin(); f(); times[size_t(step)] = timer.read();
-	}
-
 	bool GameShell::pump()
 	{
+		static SmoothTimer timer = { 10 };
+		timer.begin();
+
 		bool pursue = true;
 		for(float& time : m_times)
 			time = 0.f;
@@ -345,6 +342,9 @@ using namespace mud; namespace toy
 		m_pump();
 		time(m_times, Step::UiRender,	"ui render",	[&] { m_ui_window->render_frame(); });
 		time(m_times, Step::GfxRender,	"gfx",			[&] { pursue &= m_gfx_system->next_frame(); });
+
+		timer.end();
+
 		return pursue;
 	}
 
@@ -376,10 +376,13 @@ using namespace mud; namespace toy
 	{
 		m_editor.m_edited_world = m_game.m_world;
 
-		Widget& ui = m_ui->begin();
-		toy::editor(ui, m_editor);
+		//Widget& ui = m_ui->begin();
+		Widget& ui = *m_ui;
 
-		m_game.m_screen = m_editor.m_screen;
+		if(m_mini_editor)
+			toy::mini_editor(ui, m_editor, m_game.m_screen);
+		else
+			toy::editor(ui, m_editor, m_game.m_screen);
 
 		if(m_editor.m_run_game || m_editor.m_play_game)
 			time(m_times, Step::World, "world", [&] { this->pump_world(); });
@@ -388,25 +391,7 @@ using namespace mud; namespace toy
 
 		time(m_times, Step::Scene, "scenes", [&] { this->pump_scenes(); });
 
-		if(m_editor.m_play_game)
-			m_editor.m_viewer = nullptr;
-		else if(m_game.m_scenes.size() > 0 && m_game.m_screen)
-		{
-			Widget& screen = ui::widget(*m_game.m_screen, styles().sheet, &m_editor);
-			m_editor.m_viewer = &editor_viewport(screen, *m_game.m_scenes[0]);
-		}
-
-		if(m_editor.m_viewer)
-		{
-			paint_selection(m_editor.m_viewer->m_scene->m_graph, m_editor.m_selection, m_editor.m_viewer->m_hovered);
-			Widget& layout = toy::editor_viewer_overlay(*m_editor.m_viewer, m_editor);
-			time_entries(layout);
-		}
-		else
-		{
-			Widget& layout = ui::screen(*m_game.m_screen);
-			time_entries(layout);
-		}
+		m_ui->begin(); // well maybe we should call it end() then
 	}
 
 	GameScene& GameShell::add_scene()
@@ -481,4 +466,19 @@ using namespace mud; namespace toy
 		entry(parent, "ui render",	int(1000.f * m_times[size_t(Step::UiRender)]));
 		entry(parent, "gfx",		int(1000.f * m_times[size_t(Step::GfxRender)]));
 	}
+
+	void GameShell::paste(const string& text)
+	{
+		m_ui_window->m_clipboard.m_pasted.push_back(text);
+	}
 }
+
+#if MUD_PLATFORM_EMSCRIPTEN
+extern "C"
+{
+	void paste(const char* text)
+	{
+		toy::g_app->paste(text);
+	}
+}
+#endif

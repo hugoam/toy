@@ -34,6 +34,7 @@
 #include <uio/Edit/Inspector.h>
 #include <uio/Object.h>
 
+#include <ui/Style/Layout.h>
 #include <ui/Structs/Container.h>
 #include <ui/Structs/Dock.h>
 
@@ -65,15 +66,18 @@ using namespace mud; namespace toy
 		return "(" + clean + ")";
 	}
 
+	void tool_button(Widget& parent, Tool& tool)
+	{
+		Widget& button = ui::button(parent, to_icon(tool.m_name).c_str());
+		button.set_state(ACTIVE, tool.m_state == ToolState::Active);
+		if (button.activated())
+			tool.activate();
+	}
+
 	void edit_toolbox(Widget& parent, Toolbox& toolbox)
 	{
 		for(auto& tool : toolbox.m_tools)
-		{
-			Widget& button = ui::button(parent, tool->m_name.c_str());
-			button.set_state(ACTIVE, tool->m_state == ToolState::Active);
-			if(button.activated())
-				tool->activate();
-		}
+			tool_button(parent, *tool);
 	}
 
 	void edit_toolbelt(Widget& parent, Toolbelt& toolbelt)
@@ -319,11 +323,16 @@ using namespace mud; namespace toy
 		return layout;
 	}
 
-	void editor(Widget& parent, Editor& editor)
+	Viewer& editor_viewport(Widget& parent, Scene& scene)
 	{
-		editor.m_tool_context.m_action_stack = &editor.m_action_stack;
-		editor.m_tool_context.m_work_plane = &editor.m_work_plane;
-		editor.m_tool_context.m_selection = &editor.m_selection;
+		Viewer& self = ui::viewer(parent, scene);
+		FreeOrbitController& orbit = ui::free_orbit_controller(self);
+		return self;
+	}
+
+	void editor(Widget& parent, Editor& editor, Widget*& screen)
+	{
+		editor.update();
 
 		if(editor.m_viewer)
 		{
@@ -336,6 +345,53 @@ using namespace mud; namespace toy
 		edit_toolbelt(self, editor.m_toolbelt);
 		editor_components(self, editor);
 
+		screen = editor.m_screen;
+
+		if(editor.m_play_game)
+			editor.m_viewer = nullptr;
+		else if(editor.m_scenes.size() > 0 && screen)
+		{
+			Widget& sheet = ui::widget(*screen, styles().sheet, &editor);
+			editor.m_viewer = &editor_viewport(sheet, *editor.m_scenes[0]);
+		}
+
+		if(editor.m_viewer)
+		{
+			paint_selection(editor.m_viewer->m_scene->m_graph, editor.m_selection, editor.m_viewer->m_hovered);
+			//Widget& layout = toy::editor_viewer_overlay(*editor.m_viewer, editor);
+			//time_entries(layout);
+		}
+		else
+		{
+			//Widget& layout = ui::screen(*screen);
+			//time_entries(layout);
+		}
+
 		//m_scriptEditor.m_actions.emplace<Response>("Create Scripted Brush", [this] { this->createScriptedBrush(); });
+	}
+
+	void mini_editor(Widget& parent, Editor& editor, Widget*& screen)
+	{
+		editor.update();
+
+		Widget& board = ui::board(parent);
+
+		Widget& left = ui::sheet(board);
+		Section& right = section(board, "Game Editor");
+
+		tool_button(*right.m_toolbar, editor.m_run_tool);
+		tool_button(*right.m_toolbar, editor.m_play_tool);
+		
+		TextScript& script = as<TextScript>(*editor.m_script_editor.m_scripts[0]);
+
+		Tabber& tabber = ui::tabber(*right.m_body);
+		if(Widget* tab = ui::tab(tabber, "Script"))
+			script_edit(*tab, as<TextScript>(*editor.m_script_editor.m_scripts[0]));
+		if(Widget* tab = ui::tab(tabber, "Outliner"))
+			editor_graph(*tab, editor, editor.m_selection);
+		if(Widget* tab = ui::tab(tabber, "Inspector"))
+			object_editor(*tab, editor.m_selection);
+
+		screen = &left;
 	}
 }

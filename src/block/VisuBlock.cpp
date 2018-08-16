@@ -94,8 +94,8 @@ using namespace mud; namespace toy
 		quad.m_center = block.chunk_position(chunk) + to_vec3(side) * block.chunk_size() / 2.f;
 
 		quads.push_back(quad);
-		shapes.push_back({ Symbol(Colour::White), &quads.back(), OUTLINE });
-		shapes.push_back({ Symbol(Colour::None, element->m_colour), &quads.back(), PLAIN });
+		shapes.push_back({ Symbol(), &quads.back(), OUTLINE });
+		shapes.push_back({ Symbol(element->m_colour), &quads.back(), PLAIN });
 	}
 
 	void update_block_geometry(GfxSystem& gfx_system, Block& block, BlockState& state)

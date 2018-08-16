@@ -1106,7 +1106,7 @@ public:
 			commander->update_scans();
 	}
 
-	virtual void pump(GameShell& app, Game& game) final
+	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
@@ -1123,10 +1123,10 @@ public:
 		};
 
 #ifdef _SPACE_TOOLS
-		edit_context(app.m_ui->begin(), app.m_editor, true);
-		pump(*app.m_editor.m_screen, *app.m_editor.m_dockbar);
+		edit_context(ui, app.m_editor, true);
+		pump(*app.m_editor.m_screen, app.m_editor.m_dockbar);
 #else
-		pump(game.m_screen ? *game.m_screen : app.m_ui->begin());
+		pump(ui);
 #endif
 	}
 };

@@ -34,7 +34,7 @@ void generate_avatar(Colour& colour, Image256& avatar)
 	const uint16_t side = 6;
 	avatar.resize(side, side);
 
-	colour = hsl_to_rgb(random_scalar(0.f, 1.f), 1.f, random_scalar(0.5f, 0.6f));
+	colour = Colour::hsl(random_scalar(0.f, 1.f), 1.f, random_scalar(0.5f, 0.6f));
 
 	Palette palette = { { Colour::None, colour } };
 	avatar.m_palette = palette;

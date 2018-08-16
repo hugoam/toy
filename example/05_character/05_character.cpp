@@ -178,7 +178,7 @@ public:
 		game.m_world = &global_pool<DefaultWorld>().construct("Arcadia").m_world;
 	}
 
-	virtual void pump(GameShell& app, Game& game) final
+	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
 		if(!game.m_world)
 			this->start(app, game);
@@ -196,7 +196,7 @@ public:
 
 			Material& material = milky_white(viewer.m_gfx_system);
 
-			gfx::shape(groot, Rect(vec2{ -50.f, -50.f }, vec2{ 100.f }), Symbol(Colour::None, Colour::White), 0U, &material);
+			gfx::shape(groot, Rect(vec2{ -50.f, -50.f }, vec2{ 100.f }), Symbol(), 0U, &material);
 
 			gfx::directional_light_node(groot);
 			gfx::radiance(groot, "radiance/tiber_1_1k.hdr", BackgroundMode::None);
@@ -208,7 +208,7 @@ public:
 			//orbit.set_target(character.m_entity.m_position);
 		};
 		//edit_context(app.m_ui->begin(), app.m_editor, true);
-		pump(*app.m_editor.m_screen, app.m_editor.m_dockbar);
+		pump(ui, app.m_editor.m_dockbar);
 	}
 
 };

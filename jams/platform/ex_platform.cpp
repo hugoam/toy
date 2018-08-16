@@ -384,7 +384,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 	if(!bullet.m_impacted)
 	{
 		Gnode& projectile = gfx::node(parent, {}, bullet.m_entity.m_position, bullet.m_entity.m_rotation);
-		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour::None, Colour(2.f, 0.3f, 0.3f) * 4.f));
+		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour(2.f, 0.3f, 0.3f) * 4.f));
 	}
 
 	if(bullet.m_impacted)
@@ -398,7 +398,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 
 void paint_lamp(Gnode& parent, Lamp& lamp)
 {
-	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::None, Colour::Red), ITEM_SELECTABLE);
+	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::Red), ITEM_SELECTABLE);
 	gfx::light(parent, LightType::Point, false, Colour(1.f, 0.3f, 0.2f), 10.f);
 }
 
@@ -490,7 +490,7 @@ void paint_human(Gnode& parent, Human& human)
 		shield.m_fresnel_block.m_value.m_value = shield_colour * shield_intensity;
 
 		Gnode& center = gfx::node(parent.subx(Shield), Ref(&human), human.m_entity.m_position + rotate(human.m_entity.m_rotation, Y3), human.m_entity.m_rotation);
-		gfx::shape(center, Sphere(1.f), Symbol(Colour::None, shield_colour), 0U, &shield);
+		gfx::shape(center, Sphere(1.f), Symbol(shield_colour), 0U, &shield);
 		gfx::light(center, LightType::Point, false, Colour(0.3f, 0.4f, 1.f) * light_intensity, 10.f);
 	
 		toy::sound(center, "electricfield", false, 0.3f);
@@ -537,7 +537,7 @@ Material& plain_material(GfxSystem& gfx_system, cstring name, const Colour& colo
 void paint_crate(Gnode& parent, Crate& crate)
 {
 	static Material& material = plain_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
-	gfx::shape(parent, Cube(crate.m_extents), Symbol(Colour::None, Colour::White), ITEM_SELECTABLE, &material);
+	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ITEM_SELECTABLE, &material);
 }
 
 void paint_scene(Gnode& parent)
@@ -938,7 +938,7 @@ public:
 		//physic_painter(scene);
 	}
 
-	virtual void pump(GameShell& app, Game& game) final
+	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
@@ -949,10 +949,10 @@ public:
 		};
 
 #ifdef _PLATFORM_TOOLS
-		edit_context(app.m_ui->begin(), app.m_editor, true);
+		edit_context(ui, app.m_editor, true);
 		pump(*app.m_editor.m_screen, app.m_editor.m_dockbar);
 #else
-		pump(game.m_screen ? *game.m_screen : app.m_ui->begin());
+		pump(ui);
 #endif
 	}
 };

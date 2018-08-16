@@ -25,7 +25,7 @@ using namespace mud; namespace toy
 	{
 	public:
 		ProcedureType(Type& type);
-		~ProcedureType();
+		virtual ~ProcedureType();
 
 		attr_ Type& m_type;
 		attr_ uint32_t m_index;

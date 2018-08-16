@@ -229,7 +229,7 @@ using namespace mud; namespace toy
 
 		if(m_dynamicsWorld)
 #ifdef MUD_PLATFORM_EMSCRIPTEN
-			m_dynamicsWorld->stepSimulation(delta * c_tick_interval, 1);
+			m_dynamicsWorld->stepSimulation(delta * c_tick_interval, 3, 0.032f);
 #else
 			m_dynamicsWorld->stepSimulation(delta * c_tick_interval, 3);
 #endif

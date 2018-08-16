@@ -3,7 +3,7 @@ import "mud" for ScriptClass, Vec3, Complex, Colour, Cube, Symbol, Ui, Gfx, Back
 import "toy" for DefaultWorld, Entity, Movable
 
 class Body {
-	construct new(id, parent, position, shape, colour) {
+    construct new(id, parent, position, shape, colour) {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, position)
         _movable = Movable.new(_entity)
@@ -36,7 +36,7 @@ foreign class MyGame {
         var rand = Random.new()
         for (i in 0...50) {
             var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
-            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            var colour = Colour.hsl(rand.float(0, 1), 1, 0.5)
             var size = Vec3.new(rand.float(1, 5))
             
             GBodies.add(Body.new(0, GWorld.world.origin, position, Cube.new(size), colour))
@@ -57,8 +57,8 @@ foreign class MyGame {
         Gfx.sun_light(graph, 0, 0.37)
         
         for(body in GBodies) {
-            var self = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
-            Gfx.shape(self, body.shape, Symbol.new(Colour.None, body.colour))
+            var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
+            Gfx.shape(node, body.shape, Symbol.new(body.colour))
         }
     }
 }

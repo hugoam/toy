@@ -344,12 +344,12 @@ void paint_shield(Gnode& parent, Shield& shield)
 	{
 		fresnel_material(material, colour);
 		material.m_fresnel_block.m_fresnel_bias = bias;
-		gfx::shape(parent, Sphere(shield.m_radius), Symbol(Colour::None, colour), 0U, &material);
+		gfx::shape(parent, Sphere(shield.m_radius), Symbol(colour), 0U, &material);
 	};
 
 	if(shield.m_discharge > 0.f)
 	{
-		paint(*discharge, shield.m_discharge, hsl_to_rgb(random_scalar(0.f, 1.f), 1.f, 0.5f) * shield.m_discharge * 10.f);
+		paint(*discharge, shield.m_discharge, Colour::hsl(random_scalar(0.f, 1.f), 1.f, 0.5f) * shield.m_discharge * 10.f);
 	}
 	else
 	{
@@ -375,7 +375,7 @@ void paint_shell(Gnode& parent, Slug& shell)
 	if(!shell.m_impacted)
 	{
 		Gnode& projectile = gfx::node(parent.subx(Fly), Ref(&shell), shell.m_entity.m_position, shell.m_entity.m_rotation);
-		gfx::shape(projectile, Cube(vec3(0.4f, 0.4f, 1.f)), Symbol(Colour::None, Colour(1.f, 2.f, 1.5f)));
+		gfx::shape(projectile, Cube(vec3(0.4f, 0.4f, 1.f)), Symbol(Colour(1.f, 2.f, 1.5f)));
 		gfx::particles(projectile, *trail);
 	}
 
@@ -411,7 +411,7 @@ void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float perc
 	static const vec2 size = { 4.f, 0.2f };
 	vec2 fill_offset = { size.x * -(1.f - percentage) / 2.f, 0.f };
 	gfx::shape(parent, Quad(position, offset, vec2(4.f, 0.2f)), Symbol(Colour::White, Colour::None, true), ITEM_BILLBOARD);
-	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(Colour::None, colour, true, true), ITEM_BILLBOARD);
+	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(colour, true, true), ITEM_BILLBOARD);
 }
 
 void paint_tank(Gnode& parent, Tank& tank)
@@ -467,7 +467,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 		{
 			Gnode& alive = parent.subx(Alive);
 			Gnode& symbol = gfx::node(alive, {}, parent.m_attach->m_position, parent.m_attach->m_rotation);
-			gfx::shape(alive, Torus(4.f, 0.1f), Symbol(Colour::None, tank.m_faction.m_colour * 2.f));
+			gfx::shape(alive, Torus(4.f, 0.1f), Symbol(tank.m_faction.m_colour * 2.f));
 
 			if(false)
 			{
@@ -664,7 +664,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	{
 		viewer.take_focus();
 
-		Ray pick_ray = viewer.m_viewport.ray(mouse_event.m_relative);
+		Ray pick_ray = viewer.ray(mouse_event.m_relative);
 		destination = player.m_world->m_bullet_world.ground_point(pick_ray);
 	}
 
@@ -828,7 +828,7 @@ public:
 		});
 	}
 
-	virtual void pump(GameShell& app, Game& game) final
+	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
@@ -839,10 +839,10 @@ public:
 		};
 
 #ifdef _BLOCKS_TOOLS
-		edit_context(app.m_ui->begin(), app.m_editor, true);
+		edit_context(ui, app.m_editor, true);
 		pump(*app.m_editor.m_screen, app.m_editor.m_dockbar);
 #else
-		pump(game.m_screen ? *game.m_screen : app.m_ui->begin());
+		pump(ui);
 #endif
 	}
 };

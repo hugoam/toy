@@ -131,18 +131,18 @@ foreign class MyGame {
         var rand = Random.new()
         for (i in 0...50) {
             var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
-            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            var colour = Colour.hsl(rand.float(0, 1), 1, 0.5)
             GBodies.add(Body.new(0, GWorld.world.origin, position, Cube.new(Vec3.new(rand.float(1, 5))), colour)) // Colour.new(0.7, 1)
         }
         
         for (i in 0...50) {
             var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
-            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            var colour = Colour.hsl(rand.float(0, 1), 1, 0.5)
             GBodies.add(Body.new(0, GWorld.world.origin, position, Sphere.new(rand.float(1, 5)), colour)) // Colour.new(0.7, 1)
         }
         
         for(body in GBodies) {
-            body.model = app.gfx.fetch_symbol(Symbol.new(Colour.None, Colour.White), body.shape, DrawMode.PLAIN)
+            body.model = app.gfx.fetch_symbol(Symbol.new(Colour.White), body.shape, DrawMode.PLAIN)
             body.material = Gfx.pbr_material(app.gfx, "body %(body.entity.id)", body.colour)
         }
         
@@ -194,7 +194,7 @@ foreign class MyGame {
     
     paint_terrain(app, parent, terrain) {
         var self = Gfx.node(parent, terrain, terrain.entity.position, terrain.entity.rotation)
-        Gfx.shape(self, terrain.quad, Symbol.new(Colour.None, Colour.White), 0, terrain.material)
+        Gfx.shape(self, terrain.quad, Symbol.new(Colour.White), 0, terrain.material)
     }
     
     paint_human(app, parent, human) {

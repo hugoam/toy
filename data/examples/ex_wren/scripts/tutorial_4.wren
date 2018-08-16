@@ -1,9 +1,10 @@
 import "random" for Random
-import "mud" for ScriptClass, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode
-import "toy" for DefaultWorld, Entity, Movable, Solid, CollisionShape
+import "mud" for ScriptClass, Vec2, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode
+import "toy" for DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode
+import "ui" for OrbitMode
 
 class Body {
-	construct new(id, parent, position, shape, colour) {
+    construct new(id, parent, position, shape, colour) {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, position)
         _movable = Movable.new(_entity)
@@ -14,14 +15,38 @@ class Body {
     }
     
     entity { _entity }
+    solid { _solid }
     shape { _shape }
     colour { _colour }
     
     static bind() { __cls = ScriptClass.new("Body", [Entity.type, Movable.type, Solid.type]) }
 }
 
+class Agent is Body {
+    construct new(id, parent, position, shape, colour) {
+        super(id, parent, position, shape, colour)
+        _aiming = true
+        _angles = Vec2.new(0)
+        _force = Vec3.new(0)
+        _torque = Vec3.new(0)
+    }
+    
+    update() {
+        var velocity = this.solid.impl.linear_velocity()
+        var force = Mud.rotate(this.entity.rotation, _force)
+        this.solid.impl.set_linear_velocity(Vec3.new(force.x, velocity.y - 1, force.z))
+        this.solid.impl.set_angular_velocity(_torque)
+        this.solid.impl.set_angular_factor(Vec3.new(0))
+    }
+    
+    aiming { _aiming }
+    angles { _angles }
+    force { _force }
+    torque { _torque }
+}
+
 class Terrain {
-	construct new(id, parent, size) {
+    construct new(id, parent, size) {
         _quad = Quad.new(Vec3.new(size,0,size), Vec3.new(size,0,-size), Vec3.new(-size,0,-size), Vec3.new(-size,0,size))
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, Vec3.new(0, -10, 0))
@@ -39,6 +64,7 @@ var GWorld = null
 var GScene = null
 var GTerrain = null
 var GBodies = []
+var GAgent = null
 
 foreign class MyGame {
     static new(module) { __constructor.call(MyGame, module) }
@@ -51,11 +77,12 @@ foreign class MyGame {
         game.world = GWorld.world
         
         GTerrain = Terrain.new(0, GWorld.world.origin, 100)
+        GAgent = Agent.new(0, GWorld.world.origin, Vec3.new(0), Cube.new(), Colour.White)
         
         var rand = Random.new()
         for (i in 0...50) {
             var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
-            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            var colour = Colour.hsl(rand.float(0, 1), 1, 0.5)
             var size = Vec3.new(rand.float(1, 5))
             GBodies.add(Body.new(0, GWorld.world.origin, position, Cube.new(size), colour))
         }
@@ -65,7 +92,15 @@ foreign class MyGame {
     
     pump(app, game, ui) {
         var viewer = Ui.viewer(ui, GScene.scene)
-        var orbit = Ui.orbit_controller(viewer, 0, -0.37, 100.0)
+
+        if(game.mode == GameMode.Play && !viewer.modal()) {
+            viewer.take_modal(62)
+        }
+        
+        Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, GAgent.entity, GAgent.aiming, GAgent.angles)
+        Ui.velocity_controller(viewer, GAgent.force, GAgent.torque, 20)
+
+        GAgent.update()
     }
     
     scene(app, scene) {}
@@ -76,13 +111,19 @@ foreign class MyGame {
         
         var terrain = Gfx.node(graph, GTerrain, GTerrain.entity.position, GTerrain.entity.rotation)
         var material = Gfx.pbr_material(app.gfx, "ground", Colour.new(0.3, 1))
-        Gfx.shape(terrain, GTerrain.quad, Symbol.new(Colour.None, Colour.White), 0, material)
+        Gfx.shape(terrain, GTerrain.quad, Symbol.new(Colour.White), 0, material)
+        
+        paint_body(app, graph, GAgent)
         
         for(body in GBodies) {
-            var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
-            var material = Gfx.pbr_material(app.gfx, "body %(body.entity.id)", body.colour)
-            Gfx.shape(node, body.shape, Symbol.new(Colour.None, Colour.White), 0, material)
+            paint_body(app, graph, body)
         }
+    }
+    
+    paint_body(app, graph, body) {
+        var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
+        var material = Gfx.pbr_material(app.gfx, "body %(body.entity.id)", body.colour)
+        Gfx.shape(node, body.shape, Symbol.new(Colour.White), 0, material)
     }
 }
 

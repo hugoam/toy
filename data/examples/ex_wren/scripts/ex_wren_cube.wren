@@ -15,8 +15,8 @@ foreign class MyGame {
         var graph = viewer.scene.begin()
         
         var node = Gfx.node(graph)
-        Gfx.shape(node, Cube.new(Vec3.new(1)), Symbol.new(Colour.None, Colour.White))
-        Gfx.shape(node, Cube.new(Vec3.new(2)), Symbol.new(Colour.White, Colour.None))
+        Gfx.shape(node, Cube.new(Vec3.new(1)), Symbol.new(Colour.White))
+        Gfx.shape(node, Cube.new(Vec3.new(2)), Symbol.new(Colour.None, Colour.White))
     }
     
     scene(app, scene) {}

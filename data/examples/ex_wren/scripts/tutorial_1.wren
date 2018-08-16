@@ -16,16 +16,16 @@ foreign class MyGame {
         var graph = viewer.scene.begin()
         
         var node = Gfx.node(graph)
-        Gfx.shape(node, Cube.new(), Symbol.new(Colour.None, Colour.White))
+        Gfx.shape(node, Cube.new(), Symbol.new(Colour.White))
         
         var rand = Random.new()
         for (i in 0...50) {
             var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
             var extents = Vec3.new(rand.float(1, 5))
-            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            var colour = Colour.hsl(rand.float(0, 1), 1, 0.5)
                 
             var node = Gfx.node(graph, null, position)
-            Gfx.draw(node, Cube.new(extents), Symbol.new(Colour.None, colour))
+            Gfx.draw(node, Cube.new(extents), Symbol.new(colour))
         }
     }
     

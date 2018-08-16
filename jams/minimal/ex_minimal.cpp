@@ -117,7 +117,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 	if(!bullet.m_impacted)
 	{
 		Gnode& projectile = gfx::node(parent, {}, bullet.m_entity.m_position, bullet.m_entity.m_rotation);
-		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour::None, Colour(2.f, 0.3f, 0.3f) * 4.f));
+		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour(2.f, 0.3f, 0.3f) * 4.f));
 	}
 
 	if(bullet.m_impacted)
@@ -159,7 +159,7 @@ Material& plain_material(GfxSystem& gfx_system, cstring name, const Colour& colo
 void paint_crate(Gnode& parent, Crate& crate)
 {
 	static Material& material = plain_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
-	gfx::shape(parent, Cube(crate.m_extents), Symbol(Colour::None, Colour::White), 0U, &material);
+	gfx::shape(parent, Cube(crate.m_extents), Symbol(), 0U, &material);
 }
 
 void paint_scene(Gnode& parent)
@@ -277,7 +277,7 @@ public:
 		game.m_player = Ref(&player);
 	}
 
-	virtual void pump(GameShell& app, Game& game) final
+	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
 		if(!game.m_world)
 			this->start(app, game);
@@ -292,7 +292,7 @@ public:
 			ex_minimal_game_hud(viewer, scene, *player.m_human);
 		};
 
-		pump(game.m_screen ? *game.m_screen : app.m_ui->begin());
+		pump(ui);
 	}
 };
 

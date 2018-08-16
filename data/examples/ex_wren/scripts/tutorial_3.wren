@@ -3,7 +3,7 @@ import "mud" for ScriptClass, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol,
 import "toy" for DefaultWorld, Entity, Movable, Solid, CollisionShape
 
 class Body {
-	construct new(id, parent, position, shape, colour) {
+    construct new(id, parent, position, shape, colour) {
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, position)
         _movable = Movable.new(_entity)
@@ -21,7 +21,7 @@ class Body {
 }
 
 class Terrain {
-	construct new(id, parent, size) {
+    construct new(id, parent, size) {
         _quad = Quad.new(Vec3.new(size,0,size), Vec3.new(size,0,-size), Vec3.new(-size,0,-size), Vec3.new(-size,0,size))
         _complex = Complex.new(id, __cls.type)
         _entity = Entity.new(id, _complex, parent, Vec3.new(0, -10, 0))
@@ -55,7 +55,7 @@ foreign class MyGame {
         var rand = Random.new()
         for (i in 0...50) {
             var position = Vec3.new(rand.float(-50, 50), rand.float(0, 20), rand.float(-50, 50))
-            var colour = Colour.copy(Mud.hsl_to_rgb(rand.float(0, 1), 1, 0.5))
+            var colour = Colour.hsl(rand.float(0, 1), 1, 0.5)
             var size = Vec3.new(rand.float(1, 5))
             GBodies.add(Body.new(0, GWorld.world.origin, position, Cube.new(size), colour))
         }
@@ -75,11 +75,11 @@ foreign class MyGame {
         Gfx.sun_light(graph, 0, 0.37)
         
         var terrain = Gfx.node(graph, GTerrain, GTerrain.entity.position, GTerrain.entity.rotation)
-        Gfx.shape(terrain, GTerrain.quad, Symbol.new(Colour.None, Colour.new(0.3, 1)))
+        Gfx.shape(terrain, GTerrain.quad, Symbol.new(Colour.new(0.3, 1)))
         
         for(body in GBodies) {
             var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
-            Gfx.shape(node, body.shape, Symbol.new(Colour.None, body.colour))
+            Gfx.shape(node, body.shape, Symbol.new(body.colour))
         }
     }
 }

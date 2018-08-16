@@ -37,7 +37,9 @@ using namespace mud; namespace toy
 	TOY_EDIT_EXPORT void editor_graph(Widget& parent, Editor& editor, Selection& selection);
 
 	TOY_EDIT_EXPORT void editor_components(Widget& parent, Editor& editor);
-	TOY_EDIT_EXPORT void editor(Widget& parent, Editor& editor);
+
+	TOY_EDIT_EXPORT void editor(Widget& parent, Editor& editor, Widget*& screen);
+	TOY_EDIT_EXPORT void mini_editor(Widget& parent, Editor& editor, Widget*& screen);
 
 	TOY_EDIT_EXPORT Widget& editor_viewer_overlay(Viewer& viewer, Editor& editor);
 }

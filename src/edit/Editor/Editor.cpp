@@ -54,6 +54,16 @@ using namespace mud; namespace toy
 		//m_toolbox->updateTools();
 	}
 
+	void Editor::update()
+	{
+		m_tool_context.m_action_stack = &m_action_stack;
+		m_tool_context.m_work_plane = &m_work_plane;
+		m_tool_context.m_selection = &m_selection;
+
+		m_run_tool.m_state = m_run_game ? ToolState::Active : ToolState::Inactive;
+		m_play_tool.m_state = m_play_game ? ToolState::Active : ToolState::Inactive;
+	}
+
 	void Editor::create_scripted_brush()
 	{
 #if 0

@@ -50,7 +50,7 @@ void paint_star_planets(Gnode& parent, Star& star)
 		visu.m_updated = 1;
 	}
 
-	Item& item = gfx::shape(parent, Sphere(0.005f), Symbol(Colour::None, Colour::White), 0, nullptr, visu.m_planets.size());
+	Item& item = gfx::shape(parent, Sphere(0.005f), Symbol(), 0, nullptr, visu.m_planets.size());
 	mat4 transform = parent.m_attach->transform();
 
 	for(size_t i = 0; i < visu.m_planets.size(); ++i)
@@ -98,8 +98,8 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 
 void paint_scan_star(Gnode& parent, Star& star, Player& player)
 {
-	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol(Colour::None, Colour::Invisible), ITEM_SELECTABLE);
-	gfx::shape(parent, Sphere(0.01f), Symbol(Colour::None, Colour::White * 4.f), ITEM_SELECTABLE);
+	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol(Colour::Invisible), ITEM_SELECTABLE);
+	gfx::shape(parent, Sphere(0.01f), Symbol(Colour::White * 4.f), ITEM_SELECTABLE);
 
 	bool hovered = player.m_hovered_item == Ref(&star);
 	bool selected = player.m_selected_item == Ref(&star);
@@ -245,7 +245,7 @@ void paint_fleet_stationary(Gnode& parent, Fleet& fleet, VisuFleet& visu, const 
 	float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
 	vec2 triangle = { 0.4f * size, 0.6f * size };
 	gfx::shape(parent, Triangle(triangle), Symbol(colour), ITEM_BILLBOARD);
-	gfx::shape(parent, Triangle(triangle * 1.2f), Symbol(Colour::None, Colour::Invisible), ITEM_BILLBOARD | ITEM_SELECTABLE);
+	gfx::shape(parent, Triangle(triangle * 1.2f), Symbol(Colour::Invisible), ITEM_BILLBOARD | ITEM_SELECTABLE);
 	paint_fleet_ships(parent, visu, 0.4f * size * 2.f, 0.01f);
 }
 
@@ -313,11 +313,11 @@ static float s_weapon_value[6] = { 0.f, 0.7f,  0.6f,  0.6f,   0.8f,  0.8f };
 static Colour s_weapon_colour[6] =
 {
 	Colour(),
-	hsl_to_rgb(0.55f, 1.f, 0.7f),
-	hsl_to_rgb(1.f, 1.f, 0.6f),
-	hsl_to_rgb(0.305f, 1.f, 0.6f),
-	hsl_to_rgb(0.f, 0.f, 0.8f),
-	hsl_to_rgb(0.f, 0.f, 0.8f)
+	Colour::hsl(0.55f, 1.f, 0.7f),
+	Colour::hsl(1.f, 1.f, 0.6f),
+	Colour::hsl(0.305f, 1.f, 0.6f),
+	Colour::hsl(0.f, 0.f, 0.8f),
+	Colour::hsl(0.f, 0.f, 0.8f)
 };
 
 static Cube s_weapon_shape[6] =
@@ -372,7 +372,7 @@ bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
 
 	if(ray.m_d < ray.m_length)
 	{
-		gfx::shape(projectile, s_weapon_shape[size_t(weapon)], Symbol(Colour::None, colour));
+		gfx::shape(projectile, s_weapon_shape[size_t(weapon)], Symbol(colour));
 		//gfx::particles(projectile, trail);
 		return false;
 	}
