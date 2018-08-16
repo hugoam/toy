@@ -664,7 +664,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	{
 		viewer.take_focus();
 
-		Ray pick_ray = viewer.ray(mouse_event.m_relative);
+		Ray pick_ray = viewer.m_viewport.ray(mouse_event.m_relative);
 		destination = player.m_world->m_bullet_world.ground_point(pick_ray);
 	}
 
