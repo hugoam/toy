@@ -20,5 +20,6 @@ int main(int argc, char *argv[])
 	//app.run_script(_wren::m(), "tutorial_2.wren", true);
 	//app.run_script(_wren::m(), "tutorial_3.wren", true);
 	//app.run_script(_wren::m(), "tutorial_4.wren", true);
+	//app.run_script(_wren::m(), "tutorial_test.wren", true);
 }
 #endif

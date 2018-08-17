@@ -1,4 +1,5 @@
-import "mud"
+import "random" for Random
+import "toy" for ScriptClass, Vec2, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
 
 foreign class MyGame {
     static new(module) { __constructor.call(MyGame, module) }
@@ -6,9 +7,9 @@ foreign class MyGame {
     
     init(app, game) { start(app, game) }
     
-    start(app, game) { System.print("MyGame - start !") }
+    start(app, game) {}
     
-    pump(app, game, ui) { System.print("MyGame - pump !") }
+    pump(app, game, ui) {}
     
     scene(app, scene) {}
     
