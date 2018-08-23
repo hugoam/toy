@@ -1,7 +1,5 @@
 import "random" for Random
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Quat, Colour, Capsule, Axis, Cube, Sphere, Quad, Symbol, SymbolDetail, DrawMode, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode
-import "toy" for DefaultWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell, GameMode
-import "ui" for OrbitMode
+import "toy" for ScriptClass, Complex, Vec2, Vec3, Colour, Capsule, Axis, Cube, Sphere, Quad, Symbol, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
 
 class State {
     construct new(name, loop) {
@@ -141,7 +139,7 @@ foreign class MyGame {
             GBodies.add(Body.new(0, GWorld.world.origin, position, Sphere.new(rand.float(1, 5)), colour)) // Colour.new(0.7, 1)
         }
         
-        for(body in GBodies) {
+        for (body in GBodies) {
             body.model = app.gfx.fetch_symbol(Symbol.new(Colour.White), body.shape, DrawMode.PLAIN)
             body.material = Gfx.pbr_material(app.gfx, "body %(body.entity.id)", body.colour)
         }
@@ -163,7 +161,7 @@ foreign class MyGame {
         this.paint_terrain(app, graph, GTerrain)
         this.paint_human(app, graph, GPlayer.human)
         
-        for(body in GBodies) {
+        for (body in GBodies) {
             this.paint_body(app, graph, body)
         }
     }

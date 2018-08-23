@@ -285,6 +285,7 @@ using namespace mud; namespace toy
 				script.m_dirty = false;
 			}
 
+			//printf("\nframe\n\n");
 			this->pump_editor();
 			//this->pump_game();
 
@@ -354,22 +355,29 @@ using namespace mud; namespace toy
 		this->pump_game();
 	}
 
-	void GameShell::pump_world()
+	void GameShell::frame_world()
 	{
 		if(m_game.m_world)
 			m_game.m_world->next_frame();
 	}
 
-	void GameShell::pump_game()
+	void GameShell::frame_game()
 	{
 		if(m_game_module)
 			m_game_module->pump(*this, m_game, m_game.m_screen ? *m_game.m_screen : m_ui->begin());
 	}
 
-	void GameShell::pump_scenes()
+	void GameShell::frame_scenes()
 	{
 		for(auto& scene : m_game.m_scenes)
 			scene->next_frame();
+	}
+
+	void GameShell::pump_game()
+	{
+		time(m_times, Step::World, "world", [&] { this->frame_world(); });
+		time(m_times, Step::Game, "game", [&] { this->frame_game(); });
+		time(m_times, Step::Scene, "scenes", [&] { this->frame_scenes(); });
 	}
 
 	void GameShell::pump_editor()
@@ -385,11 +393,11 @@ using namespace mud; namespace toy
 			toy::editor(ui, m_editor, m_game.m_screen);
 
 		if(m_editor.m_run_game || m_editor.m_play_game)
-			time(m_times, Step::World, "world", [&] { this->pump_world(); });
+			time(m_times, Step::World, "world", [&] { this->frame_world(); });
 		if(m_editor.m_play_game)
-			time(m_times, Step::Game, "game", [&] { this->pump_game(); });
+			time(m_times, Step::Game, "game", [&] { this->frame_game(); });
 
-		time(m_times, Step::Scene, "scenes", [&] { this->pump_scenes(); });
+		time(m_times, Step::Scene, "scenes", [&] { this->frame_scenes(); });
 
 		m_ui->begin(); // well maybe we should call it end() then
 	}
@@ -467,6 +475,11 @@ using namespace mud; namespace toy
 		entry(parent, "gfx",		int(1000.f * m_times[size_t(Step::GfxRender)]));
 	}
 
+	void GameShell::copy(const string& text)
+	{
+		m_ui_window->m_clipboard = { text, false };
+	}
+
 	void GameShell::paste(const string& text)
 	{
 		m_ui_window->m_clipboard.m_pasted.push_back(text);
@@ -476,6 +489,11 @@ using namespace mud; namespace toy
 #if MUD_PLATFORM_EMSCRIPTEN
 extern "C"
 {
+	void copy(const char* text)
+	{
+		toy::g_app->copy(text);
+	}
+
 	void paste(const char* text)
 	{
 		toy::g_app->paste(text);

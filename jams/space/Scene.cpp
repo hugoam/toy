@@ -31,7 +31,7 @@ mat4 planet_transform(VisuPlanet& planet, const mat4& transform)
 void paint_planet_ellipsis(Gnode& parent, VisuPlanet& planet)
 {
 	gfx::node(parent, {}, rotate(planet.m_rotation, parent.m_attach->m_position), planet.m_rotation);
-	gfx::shape(parent, Ellipsis(planet.m_ellipsis), Symbol(Colour::AlphaGrey, Colour::None), ITEM_SELECTABLE);
+	gfx::shape(parent, Ellipsis(planet.m_ellipsis), Symbol::wire(Colour::AlphaGrey), ITEM_SELECTABLE);
 }
 
 void paint_star_ellipses(Gnode& parent, VisuStar& visu)
@@ -70,7 +70,7 @@ void paint_range_grid(Gnode& parent, const Colour& colour, int range)
 {
 	float side = float(range * 2 + 1);
 	Gnode& projected = gfx::node(parent, {}, { parent.m_attach->m_position.x, 0.5f, parent.m_attach->m_position.z });
-	gfx::shape(projected, Grid2(vec2(side), vec2(2.5f)), Symbol(colour));
+	gfx::shape(projected, Grid2(vec2(side), vec2(2.5f)), Symbol::wire(colour));
 }
 
 void paint_range(Gnode& parent, const Colour& colour, int range)
@@ -78,7 +78,7 @@ void paint_range(Gnode& parent, const Colour& colour, int range)
 	if(range == 0) return;
 	float side = float(range * 2 + 1);
 	Gnode& projected = gfx::node(parent, {}, { parent.m_attach->m_position.x, 0.5f, parent.m_attach->m_position.z });
-	gfx::shape(projected, Quad(side, X3, Z3), Symbol(colour));
+	gfx::shape(projected, Quad(side, X3, Z3), Symbol::wire(colour));
 }
 
 inline float sec(float a) { return 1.f / cos(a); }
@@ -93,7 +93,7 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 	vec3 end = rotate(X3 * length, angle, Y3);
 
 	Gnode& projected = gfx::node(parent, {}, { parent.m_attach->m_position.x, 0.5f, parent.m_attach->m_position.z });
-	gfx::draw(projected, Line(Zero3, end), Symbol(colour));
+	gfx::draw(projected, Line(Zero3, end), Symbol::wire(colour));
 }
 
 void paint_scan_star(Gnode& parent, Star& star, Player& player)
@@ -110,7 +110,7 @@ void paint_scan_star(Gnode& parent, Star& star, Player& player)
 	if(hovered)
 		colour = colour * 1.5f;
 
-	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol(colour));
+	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol::wire(colour));
 	//gfx::shape(parent, Circle(0.4f, Axis::Z), Symbol(colour), ITEM_BILLBOARD);
 
 	//if(star.m_commander)
@@ -119,13 +119,13 @@ void paint_scan_star(Gnode& parent, Star& star, Player& player)
 	if(star.m_commander == player.m_commander)
 	{
 		if(star.m_commander->m_capital == &star)
-			gfx::shape(parent, Circle(0.5f, Axis::Y), Symbol(colour));
+			gfx::shape(parent, Circle(0.5f, Axis::Y), Symbol::wire(colour));
 
 		if(!star.m_constructions.empty())
-			gfx::shape(parent, Quad(0.5f, X3, Z3), Symbol(colour));
+			gfx::shape(parent, Quad(0.5f, X3, Z3), Symbol::wire(colour));
 
 		if(star.m_revolt)
-			gfx::shape(parent, Circle(0.3f, Axis::Y), Symbol(Colour::Red));
+			gfx::shape(parent, Circle(0.3f, Axis::Y), Symbol::wire(Colour::Red));
 	}
 
 	if((selected || hovered) && star.m_commander == player.m_commander)
@@ -225,14 +225,14 @@ void paint_fleet_orders(Gnode& parent, Fleet& fleet, const Colour& colour)
 		vec3 start = fleet.m_jump.m_start_pos;
 		vec3 end = to_xz(vec2(fleet.m_jump.m_dest)) + 0.5f + Y3;
 		vec3 middle = (end + start) / 2.f + Y3 * 0.2f * length(end - start);
-		gfx::shape(parent, ArcLine(-start, start, middle, end), Symbol(colour));
+		gfx::shape(parent, ArcLine(-start, start, middle, end), Symbol::wire(colour));
 	}
 }
 
 void paint_fleet_jumping(Gnode& parent, Fleet& fleet, const Colour& colour)
 {
 	float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
-	gfx::shape(parent, Circle(0.4f * size, Axis::Z), Symbol(colour, Colour::Invisible), ITEM_BILLBOARD);
+	gfx::shape(parent, Circle(0.4f * size, Axis::Z), Symbol::wire(colour), ITEM_BILLBOARD);
 }
 
 void paint_fleet_warp(Gnode& parent, VisuFleet& visu)
@@ -244,7 +244,7 @@ void paint_fleet_stationary(Gnode& parent, Fleet& fleet, VisuFleet& visu, const 
 {
 	float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
 	vec2 triangle = { 0.4f * size, 0.6f * size };
-	gfx::shape(parent, Triangle(triangle), Symbol(colour), ITEM_BILLBOARD);
+	gfx::shape(parent, Triangle(triangle), Symbol::wire(colour), ITEM_BILLBOARD);
 	gfx::shape(parent, Triangle(triangle * 1.2f), Symbol(Colour::Invisible), ITEM_BILLBOARD | ITEM_SELECTABLE);
 	paint_fleet_ships(parent, visu, 0.4f * size * 2.f, 0.01f);
 }
@@ -372,7 +372,7 @@ bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
 
 	if(ray.m_d < ray.m_length)
 	{
-		gfx::shape(projectile, s_weapon_shape[size_t(weapon)], Symbol(colour));
+		gfx::shape(projectile, s_weapon_shape[size_t(weapon)], Symbol::wire(colour));
 		//gfx::particles(projectile, trail);
 		return false;
 	}
@@ -505,13 +505,13 @@ void galaxy_grid(Gnode& parent, Galaxy& galaxy)
 {
 	Colour colour = Colour::White * 3.f;
 	Gnode& self = gfx::node(parent, {}, Y3 * 0.5f);
-	gfx::shape(self, Grid2(galaxy.m_size), Symbol(colour));
+	gfx::shape(self, Grid2(galaxy.m_size), Symbol::wire(colour));
 }
 
 void highlighted_sector(Gnode& parent, const vec2& coord)
 {
 	Gnode& self = gfx::node(parent, {}, vec3{ coord.x, 0.f, coord.y } + 0.5f);
-	gfx::shape(self, Quad(1.f, X3, Z3), Symbol(Colour::White));
+	gfx::shape(self, Quad(1.f, X3, Z3), Symbol::wire(Colour::White));
 }
 
 void paint_galaxy(Gnode& parent, Galaxy& galaxy)

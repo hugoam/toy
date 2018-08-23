@@ -1,7 +1,5 @@
 import "random" for Random
-import "mud" for ScriptClass, Complex, Vec2, Vec3, Colour, Capsule, Axis, Cube, Sphere, Quad, Symbol, SymbolDetail, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode
-import "toy" for DefaultWorld, BulletWorld, Entity, Movable, Solid, CollisionShape, CollisionGroup, GameShell, GameMode
-import "ui" for OrbitMode
+import "toy" for ScriptClass, Complex, Vec2, Vec3, Colour, Capsule, Axis, Cube, Sphere, Quad, Symbol, Ui, Key, EventType, InputMod, Gfx, ItemFlag, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
 
 class Body {
 	construct new(id, parent, position, shape, colour) {
@@ -81,7 +79,7 @@ foreign class MyGame {
         this.paint_scene(app, graph)
         this.paint_terrain(app, graph, GTerrain)
         
-        for(body in GBodies) {
+        for (body in GBodies) {
             this.paint_body(app, graph, body)
         }
     }

@@ -514,7 +514,7 @@ void paint_human(Gnode& parent, Human& human)
 	{
 		Gnode& visor = gfx::node(parent.subx(Visor), Ref(&human), human.m_entity.m_position + rotate(human.m_entity.m_rotation, Human::muzzle_offset), human.sight(human.m_aiming));
 		//gfx::shape(visor, Line(-Z3 * 4.f, -Z3 * 8.f), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
-		gfx::shape(visor, Circle(-Z3 * 8.f, 0.2f, Axis::Z), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
+		gfx::shape(visor, Circle(-Z3 * 8.f, 0.2f, Axis::Z), Symbol::wire(Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
 	}
 }
 
@@ -660,7 +660,7 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	Widget& screen = ui::widget(viewer, style_screen);
 
 	ui::OrbitMode mode = val<Player>(scene.m_player).m_mode;
-	OrbitController& orbit = ui::hybrid_controller(viewer, mode, human.m_entity, human.m_aiming, human.m_angles);
+	OrbitController& orbit = ui::hybrid_controller(viewer, mode, human.m_entity, human.m_aiming, human.m_angles, scene.m_game.m_mode == GameMode::Play);
 
 	Widget& board = ui::board(screen);
 	Widget& row = ui::row(screen);
@@ -729,24 +729,11 @@ void ex_platform_game_ui(Widget& parent, Game& game, GameScene& scene)
 
 	Viewer& viewer = ui::viewer(self, scene.m_scene);
 
-	if(game.m_mode == GameMode::Play && !viewer.modal())
-		viewer.take_modal();
-	else if(game.m_mode == GameMode::PlayEditor && viewer.modal())
-		viewer.yield_modal();
-
 	paint_viewer(viewer);
 	
 	Player& player = val<Player>(game.m_player);
 	if(player.m_human)
 		ex_platform_game_hud(viewer, scene, *player.m_human);
-
-	if(viewer.key_event(Key::Escape, EventType::Stroked))
-	{
-		game.m_shell->m_editor.m_play_game = false;
-		viewer.yield_modal();
-		if(game.m_shell->m_context->m_mouse_lock)
-			game.m_shell->m_context->lock_mouse(false);
-	}
 }
 
 Viewer& ex_platform_menu_viewport(Widget& parent, GameShell& app)
@@ -763,6 +750,8 @@ Viewer& ex_platform_menu_viewport(Widget& parent, GameShell& app)
 	
 	static Model& human = human_model_glow(viewer.m_scene->m_gfx_system);
 	static Clock clock;
+
+	viewer.m_camera.m_eye = Z3 * 2.f;
 
 	Gnode& node = gfx::node(scene, {}, -Y3 * 0.5f + X3 * 0.6f, angle_axis(fmod(clock.read(), 2.f * c_pi), Y3), Unit3 * 0.5f);
 	Item& item = gfx::item(node, human);

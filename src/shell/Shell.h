@@ -129,11 +129,14 @@ using namespace mud; namespace toy
 		void reset_interpreters(bool reflect);
 
 		void start_game();
-		void pump_world();
-		void pump_game();
-		void pump_scenes();
-		void pump_editor();
+		void frame_world();
+		void frame_game();
+		void frame_scenes();
 
+		void pump_editor();
+		void pump_game();
+
+		void copy(const string& text);
 		void paste(const string& text);
 
 		meth_ GameScene& add_scene();
@@ -199,6 +202,7 @@ using namespace mud; namespace toy
 #if MUD_PLATFORM_EMSCRIPTEN
 extern "C"
 {
+	void copy(const char* text);
 	void paste(const char* text);
 }
 #endif

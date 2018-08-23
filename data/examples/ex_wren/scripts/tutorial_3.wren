@@ -1,5 +1,5 @@
 import "random" for Random
-import "toy" for ScriptClass, Vec2, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
+import "toy" for ScriptClass, Complex, Vec2, Vec3, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
 
 class Body {
     construct new(id, parent, position, shape, colour) {
@@ -76,7 +76,7 @@ foreign class MyGame {
         var terrain = Gfx.node(graph, GTerrain, GTerrain.entity.position, GTerrain.entity.rotation)
         Gfx.shape(terrain, GTerrain.quad, Symbol.new(Colour.new(0.3, 1)))
         
-        for(body in GBodies) {
+        for (body in GBodies) {
             var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
             Gfx.shape(node, body.shape, Symbol.new(body.colour))
         }

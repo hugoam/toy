@@ -141,8 +141,8 @@ void draw_jump_hover(Gnode& parent, const vec3& start, const uvec2& dest, const 
 {
 	vec3 end = to_xz(vec2(dest)) + 0.5f + Y3;
 	vec3 middle = (end + start) / 2.f + Y3 * 0.2f * length(end - start);
-	gfx::shape(parent, ArcLine(start, middle, end), Symbol(colour));
-	gfx::shape(parent, Quad(to_xz(vec2(dest)) + 0.5f, vec2(1.f), X3, Z3), Symbol(colour));
+	gfx::shape(parent, ArcLine(start, middle, end), Symbol::wire(colour));
+	gfx::shape(parent, Quad(to_xz(vec2(dest)) + 0.5f, vec2(1.f), X3, Z3), Symbol::wire(colour));
 }
 
 void jump_query(Widget& parent, Viewer& viewer, Fleet& fleet, uint32_t mode)
@@ -847,6 +847,7 @@ void ex_space_ui(Widget& parent, GameScene& scene)
 	Widget& self = ui::widget(parent, styles().board, &scene);
 
 	Viewer& viewer = game_viewport(self, scene, *player.m_camera);
+	viewer.m_camera.m_near = 0.001f;
 	paint_viewer(viewer);
 
 	game_viewer_ui(viewer, scene, player);

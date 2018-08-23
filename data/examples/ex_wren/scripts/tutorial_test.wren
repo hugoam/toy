@@ -1,5 +1,5 @@
 import "random" for Random
-import "toy" for ScriptClass, Vec2, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
+import "toy" for ScriptClass, Complex, Vec2, Vec3, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
 
 class Body {
     construct new(id, parent, position, shape, colour) {
@@ -113,7 +113,7 @@ foreign class MyGame {
         
         paint_body(app, graph, GAgent)
         
-        for(body in GBodies) {
+        for (body in GBodies) {
             paint_body(app, graph, body)
         }
     }

@@ -1,5 +1,5 @@
 import "random" for Random
-import "toy" for ScriptClass, Vec2, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
+import "toy" for ScriptClass, Complex, Vec2, Vec3, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
 
 class Body {
     construct new(id, parent, position, shape, colour) {
@@ -55,7 +55,7 @@ foreign class MyGame {
         Gfx.radiance(graph, "radiance/tiber_1_1k.hdr", BackgroundMode.Radiance)
         Gfx.sun_light(graph, 0, 0.37)
         
-        for(body in GBodies) {
+        for (body in GBodies) {
             var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
             Gfx.shape(node, body.shape, Symbol.new(body.colour))
         }

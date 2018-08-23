@@ -1,5 +1,5 @@
 import "random" for Random
-import "toy" for ScriptClass, Vec2, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
+import "toy" for ScriptClass, Vec2, Vec3, Complex, Colour, Cube, Sphere, Quad, Symbol, Ui, Key, Gfx, BackgroundMode, DefaultWorld, Entity, Movable, Solid, CollisionShape, GameMode, OrbitMode
 
 class Body {
     construct new(id, parent, position, shape, colour) {
@@ -76,6 +76,7 @@ foreign class MyGame {
         
         GTerrain = Terrain.new(0, GWorld.world.origin, 100)
         GAgent = Agent.new(0, GWorld.world.origin, Vec3.new(0), Cube.new(), Colour.White)
+        GBodies.add(GAgent)
         
         var rand = Random.new()
         for (i in 0...50) {
@@ -91,11 +92,7 @@ foreign class MyGame {
     pump(app, game, ui) {
         var viewer = Ui.viewer(ui, GScene.scene)
 
-        if(game.mode == GameMode.Play && !viewer.modal()) {
-            viewer.take_modal(62)
-        }
-        
-        Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, GAgent.entity, GAgent.aiming, GAgent.angles)
+        Ui.hybrid_controller(viewer, OrbitMode.ThirdPerson, GAgent.entity, GAgent.aiming, GAgent.angles, true)
         Ui.velocity_controller(viewer, GAgent.force, GAgent.torque, 20)
 
         GAgent.update()
@@ -111,17 +108,11 @@ foreign class MyGame {
         var material = Gfx.pbr_material(app.gfx, "ground", Colour.new(0.3, 1))
         Gfx.shape(terrain, GTerrain.quad, Symbol.new(Colour.White), 0, material)
         
-        paint_body(app, graph, GAgent)
-        
-        for(body in GBodies) {
-            paint_body(app, graph, body)
+        for (body in GBodies) {
+            var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
+            var material = Gfx.pbr_material(app.gfx, "body %(body.entity.id)", body.colour)
+            Gfx.shape(node, body.shape, Symbol.new(Colour.White), 0, material)
         }
-    }
-    
-    paint_body(app, graph, body) {
-        var node = Gfx.node(graph, body, body.entity.position, body.entity.rotation)
-        var material = Gfx.pbr_material(app.gfx, "body %(body.entity.id)", body.colour)
-        Gfx.shape(node, body.shape, Symbol.new(Colour.White), 0, material)
     }
 }
 
