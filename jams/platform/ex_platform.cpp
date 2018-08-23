@@ -514,7 +514,7 @@ void paint_human(Gnode& parent, Human& human)
 	{
 		Gnode& visor = gfx::node(parent.subx(Visor), Ref(&human), human.m_entity.m_position + rotate(human.m_entity.m_rotation, Human::muzzle_offset), human.sight(human.m_aiming));
 		//gfx::shape(visor, Line(-Z3 * 4.f, -Z3 * 8.f), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
-		gfx::shape(visor, Circle(-Z3 * 8.f, 0.2f, Axis::Z), Symbol::wire(Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
+		gfx::shape(visor, Circle(-Z3 * 8.f, 0.2f, Axis::Z), Symbol(Colour::None, Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
 	}
 }
 
@@ -952,7 +952,7 @@ int main(int argc, char *argv[])
 	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
 	
 	PlatformModule module = { _platform::m() };
-	app.run_game(module);
-	//app.run_editor(module);
+	//app.run_game(module);
+	app.run_editor(module);
 }
 #endif
