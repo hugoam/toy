@@ -92,6 +92,7 @@ toy couldn't exist without:
 - [glm](https://github.com/g-truc/glm) math library
 - [json](https://github.com/nlohmann/json) header
 
+### sponsors
 Creating toy has been a huge time investment over the course of a few years: the only way I can pursue that effort and make it thrive into the game programming ecosystem of our dreams, is through funding and sponsorship: you are welcome to have a look at our [patreon](https://www.patreon.com/toyengine).
 
 Iron supports:
