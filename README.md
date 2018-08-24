@@ -99,3 +99,6 @@ Iron supports:
 
 Stone supports:
 - Etienne Balit, Le Bach, Manos Agelidis, Nebo Milic, Omar Cornut, Stefan Hagen, Sunder Iyer
+
+### license
+mud is licensed under the [GPLv3 license](LICENSE.txt)
