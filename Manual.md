@@ -417,7 +417,7 @@ Each Asset Store holds the specific operations to do in order to load a given ty
 
 ```cpp
 Texture* texture = gfx_system.textures().file("my_texture.png");
-Model* model = gfx_system.textures().file("my_model.gltf");
+Model* model = gfx_system.models().file("my_model.gltf");
 ```
 
 Resources lifetimes are managed by the user explicitly: to free a resource, simply call
