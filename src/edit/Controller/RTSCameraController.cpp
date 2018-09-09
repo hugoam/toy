@@ -36,7 +36,11 @@ using namespace mud; namespace toy
 	void RTSCameraController::process(Viewer& viewer)
 	{
 		EventDispatch::process(viewer);
+		this->process(viewer, m_camera.m_entity, m_camera);
+	}
 
+	void RTSCameraController::process(Viewer& viewer, Entity& entity, Camera& camera)
+	{
 		// activate
 		//mWidget->ui().cursor()->bind(m_widget);
 		// deactivate
@@ -45,9 +49,9 @@ using namespace mud; namespace toy
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Moved))
 		{
 			if(mouse_event.m_deltaZ > 0)
-				m_camera.zoom(1.3f);
+				camera.zoom(1.3f);
 			else
-				m_camera.zoom(0.75f);
+				camera.zoom(0.75f);
 		}
 
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
@@ -58,23 +62,23 @@ using namespace mud; namespace toy
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputMod::Ctrl))
 		{
 #if DRAG_BY_GRAB
-			Plane horizontal_plane = { Y3, m_camera.m_entity.m_position.y };
+			Plane horizontal_plane = { Y3, entity.m_position.y };
 			vec3 from = m_viewer.m_viewport.raycast(horizontal_plane, mouse_event.m_relative);
 			vec3 to = m_viewer.m_viewport.raycast(horizontal_plane, mouse_event.m_relative - mouse_event.m_delta);
 
-			//m_camera.m_entity.translate(to - from);
-			m_camera.m_entity.set_position(m_camera.m_entity.m_position + (to - from));
+			//entity.translate(to - from);
+			entity.set_position(entity.m_position + (to - from));
 #else
-			m_camera.m_entity.translate(to_vec3(Side::Right) * 0.02f * m_camera.m_lensDistance * -mouse_event.m_delta.x);
-			m_camera.m_entity.translate(to_vec3(Side::Front) * 0.02f * m_camera.m_lensDistance * mouse_event.m_delta.y);
+			entity.translate(to_vec3(Side::Right) * 0.02f * m_camera.m_lensDistance * -mouse_event.m_delta.x);
+			entity.translate(to_vec3(Side::Front) * 0.02f * m_camera.m_lensDistance * mouse_event.m_delta.y);
 #endif
 		}
 
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged))
 		{
-			m_camera.m_entity.rotate(to_vec3(Side::Down), 0.02f * mouse_event.m_delta.x);
-			//m_camera.m_entity.rotateRelative(to_vec3(Side::Left), 0.02f * mouse_event.m_delta.y);
-			m_camera.set_lens_angle(m_camera.m_lens_angle + 0.02f * mouse_event.m_delta.y);
+			entity.rotate(to_vec3(Side::Down), 0.02f * mouse_event.m_delta.x);
+			//entity.rotateRelative(to_vec3(Side::Left), 0.02f * mouse_event.m_delta.y);
+			camera.set_lens_angle(m_camera.m_lens_angle + 0.02f * mouse_event.m_delta.y);
 		}
 
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Heartbeat))

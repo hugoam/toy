@@ -13,21 +13,13 @@
 
 using namespace mud; namespace toy
 {
-	ObstacleBody::ObstacleBody(Entity& entity, Medium& medium, const CollisionShape& shape, float throughput)
+	Obstacle::Obstacle(Entity& entity, Medium& medium, const CollisionShape& shape, float throughput)
 		: Collider(entity, shape, medium, CM_OBSTACLE)
-		, m_throughput(throughput)
-	{}
-
-	Obstacle::Obstacle(Entity& entity, const CollisionShape& shape)
-		: m_entity(entity)
+		, m_entity(entity)
 		, m_shape(shape)
+		, m_throughput(throughput)
 	{}
 
 	Obstacle::~Obstacle()
 	{}
-
-	void Obstacle::addBody(Medium& medium, const CollisionShape& shape, float throughput)
-	{
-		m_bodies.push_back(make_object<ObstacleBody>(m_entity, medium, shape, throughput));
-	}
 }

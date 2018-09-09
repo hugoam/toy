@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <infra/Job.h>
 #include <tree/Node.h>
 #include <refl/System.h>
 #include <refl/Class.h>
@@ -166,6 +167,7 @@ using namespace mud; namespace toy
 
 		User m_user;
 
+		object_ptr<JobSystem> m_job_system;
 		object_ptr<Core> m_core;
 		object_ptr<LuaInterpreter> m_lua;
 		object_ptr<WrenInterpreter> m_wren;

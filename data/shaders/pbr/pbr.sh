@@ -50,6 +50,7 @@ uniform vec4 u_pbr_params_2;
 
 struct Fragment
 {
+    vec4 coord;
     vec3 position;
     float depth;
     vec3 view;

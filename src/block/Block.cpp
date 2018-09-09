@@ -88,16 +88,16 @@ using namespace mud; namespace toy
 		return m_parentblock ? m_parentblock->depth() + 1 : 0;
 	}
 
-	vec3 Block::min()
+	vec3 Block::min(Entity& self)
 	{
 		vec3 half_size = m_size / 2.f;
-		return m_entity.absolute_position() - half_size;
+		return self.absolute_position() - half_size;
 	}
 
-	vec3 Block::max()
+	vec3 Block::max(Entity& self)
 	{
 		vec3 half_size = m_size / 2.f;
-		return m_entity.absolute_position() + half_size;
+		return self.absolute_position() + half_size;
 	}
 
 	vec3 Block::coordinates()

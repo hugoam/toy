@@ -167,5 +167,6 @@ public:
 	
 	TileWorld* m_world;
 	Human* m_human = nullptr;
+	Viewer* m_viewer = nullptr;
 	ui::OrbitMode m_mode = ui::OrbitMode::ThirdPerson;
 };

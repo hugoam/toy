@@ -12,27 +12,14 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT ObstacleBody : public Collider
+	class refl_ TOY_CORE_EXPORT Obstacle : public Collider
 	{
 	public:
-		ObstacleBody(Entity& entity, Medium& medium, const CollisionShape& shape, float throughput);
-
-		attr_ float m_throughput;
-	};
-
-	class refl_ TOY_CORE_EXPORT Obstacle : public NonCopy
-	{
-	public:
-		constr_ Obstacle(Entity& entity, const CollisionShape& shape);
+		constr_ Obstacle(Entity& entity, Medium& medium, const CollisionShape& shape, float throughput);
 		~Obstacle();
 
 		attr_ Entity& m_entity;
 		attr_ CollisionShape m_shape;
-
-		void addBody(Medium& medium, float throughput);
-		void addBody(Medium& medium, const CollisionShape& shape, float throughput);
-
-	protected:
-		std::vector<object_ptr<ObstacleBody>> m_bodies;
+		attr_ float m_throughput;
 	};
 }

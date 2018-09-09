@@ -17,6 +17,8 @@
 #include <numeric>
 #include <deque>
 
+//#define MUD_THREADED 1
+
 class WrenVM;
 
 using namespace mud; namespace toy
@@ -115,6 +117,7 @@ using namespace mud; namespace toy
 	GameShell::GameShell(array<cstring> resource_paths, int argc, char *argv[])
 		: m_exec_path(exec_path(argc, argv))
 		, m_resource_path(resource_paths[0])
+		, m_job_system(make_object<JobSystem>())
 		, m_core(make_object<toy::Core>())
 		, m_gfx_system(make_object<GfxSystem>(resource_paths))
 #ifdef TOY_SOUND
@@ -139,12 +142,17 @@ using namespace mud; namespace toy
 		reset_interpreters(false);
 
 		m_game.m_shell = this;
+		m_gfx_system->m_job_system = m_job_system.get();
+
+		m_job_system->adopt();
 
 		this->init();
 	}
 
 	GameShell::~GameShell()
-    {}
+    {
+		m_job_system->emancipate();
+	}
 
 	void GameShell::init()
 	{
@@ -168,7 +176,8 @@ using namespace mud; namespace toy
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
-		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
+		//pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
+		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
 		m_gfx_system->init_pipeline();
 
 		static ImporterOBJ obj_importer(*m_gfx_system);
@@ -233,6 +242,8 @@ using namespace mud; namespace toy
 		g_app = this;
 		//g_iterations = iterations;
 		emscripten_set_main_loop(iterate, 0, 1);
+#elif MUD_THREADED
+		m_job_system->Run(25, [](ftl::TaskScheduler* scheduler, void* arg) { while(((GameShell*)arg)->pump()); }, this, 4, ftl::EmptyQueueBehavior::Sleep);
 #else
 		size_t frame = 0;
 		while(pump() && (iterations == 0 || frame++ < iterations));

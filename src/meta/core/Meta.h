@@ -1025,7 +1025,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::Obstacle>(), [](Ref ref, array<Var> args) { new(&val<toy::Obstacle>(ref)) toy::Obstacle( val<toy::Entity>(args[0]), val<toy::CollisionShape>(args[1]) ); }, { { "entity", Ref(type<toy::Entity>()) }, { "shape", Ref(type<toy::CollisionShape>()) } } }
+                { type<toy::Obstacle>(), [](Ref ref, array<Var> args) { new(&val<toy::Obstacle>(ref)) toy::Obstacle( val<toy::Entity>(args[0]), val<toy::Medium>(args[1]), val<toy::CollisionShape>(args[2]), val<float>(args[3])); }, { { "entity", Ref(type<toy::Entity>()) }, { "medium", Ref(type<toy::Medium>()) }, { "shape", Ref(type<toy::CollisionShape>()) }, { "throughput", var(float()) } } }
             },
             // copy constructor
             {
@@ -1033,7 +1033,8 @@ namespace mud
             // members
             {
                 { type<toy::Obstacle>(), Address(), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Obstacle>(object).m_entity); } },
-                { type<toy::Obstacle>(), member_address(&toy::Obstacle::m_shape), type<toy::CollisionShape>(), "shape", Ref(type<toy::CollisionShape>()), Member::None, nullptr }
+                { type<toy::Obstacle>(), member_address(&toy::Obstacle::m_shape), type<toy::CollisionShape>(), "shape", Ref(type<toy::CollisionShape>()), Member::None, nullptr },
+				{ type<toy::Obstacle>(), member_address(&toy::Obstacle::m_throughput), type<float>(), "throughput", var(float()), Member::Value, nullptr }
             },
             // methods
             {
@@ -2038,40 +2039,7 @@ namespace mud
     }
     
     
-    
-        
-    // toy::ObstacleBody
-    {
-        static Meta meta = { type<toy::ObstacleBody>(), &namspc({ "toy" }), "ObstacleBody", sizeof(toy::ObstacleBody), TypeClass::Object };
-        static Class cls = { type<toy::ObstacleBody>(),
-            // bases
-            { &type<toy::Collider>() },
-            { base_offset<toy::ObstacleBody, toy::Collider>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-                { type<toy::ObstacleBody>(), member_address(&toy::ObstacleBody::m_throughput), type<float>(), "throughput", var(float()), Member::Value, nullptr }
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::ObstacleBody>();
-    }
-    
-    
+
         
     // toy::PhysicScope
     {
@@ -2815,7 +2783,7 @@ namespace mud
         m.m_types.push_back(&type<toy::Area>());
         m.m_types.push_back(&type<toy::WorldPage>());
         m.m_types.push_back(&type<toy::Solid>());
-        m.m_types.push_back(&type<toy::ObstacleBody>());
+        m.m_types.push_back(&type<toy::Obstacle>());
         m.m_types.push_back(&type<toy::PhysicScope>());
         m.m_types.push_back(&type<toy::MonoSection>());
         m.m_types.push_back(&type<toy::ParallelSection>());

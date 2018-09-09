@@ -16,5 +16,7 @@ using namespace mud; namespace toy
 
 		virtual void process(Widget& widget) { UNUSED(widget); }
 		virtual void process(Viewer& viewer);
+
+		void process(Viewer& viewer, Entity& entity, Camera& camera);
 	};
 }

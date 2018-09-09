@@ -33,6 +33,6 @@ using namespace mud; namespace toy
 
 		short int mask(CollisionGroup group);
 
-		virtual float throughput(EmitterScope& emitter, ReceptorScope& receptor, std::vector<ObstacleBody*>& occluding);
+		virtual float throughput(EmitterScope& emitter, ReceptorScope& receptor, std::vector<Obstacle*>& occluding);
 	};
 }

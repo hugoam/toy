@@ -107,9 +107,9 @@ using namespace mud; namespace toy
 	public:
 		float span(Disq& other);
 		float angle_to(const vec3& pos);
-		float angle_to(Disq& other);
-		float angle_to_safe(Disq& other);
-		float angle_to(Disq& m0, Disq& m1);
+		float angle_to(Entity& other);
+		float angle_to_safe(Entity& self, Entity& other);
+		float angle_to(Entity& self, Entity& m0, Entity& m1);
 		float randomAngle();
 		vec3 randomDir();
 		vec3 attract(const vec3& from, const vec3& to, float range);

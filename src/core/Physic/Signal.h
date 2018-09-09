@@ -29,6 +29,6 @@ using namespace mud; namespace toy
 		void off();
 
 	private:
-		std::vector<ObstacleBody*> m_occluding;
+		std::vector<Obstacle*> m_occluding;
 	};
 }

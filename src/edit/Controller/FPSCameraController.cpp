@@ -28,7 +28,11 @@ using namespace mud; namespace toy
 	void FPSCameraController::process(Viewer& viewer)
 	{
 		EventDispatch::process(viewer);
+		this->process(viewer, m_camera.m_entity, m_camera);
+	}
 
+	void FPSCameraController::process(Viewer& viewer, Entity& entity, Camera& camera)
+	{
 		//if(active)
 		//m_inputWidget->ui().m_cursor.hide();
 		//else
@@ -37,8 +41,8 @@ using namespace mud; namespace toy
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
 		{
 			vec2 angle = mouse_event.m_delta / viewer.m_frame.m_size;
-			m_camera.m_entity.pitch(-angle.x * 4);
-			m_camera.m_entity.yaw_fixed(-angle.y * 4);
+			entity.pitch(-angle.x * 4);
+			entity.yaw_fixed(-angle.y * 4);
 		}
 	}
 }

@@ -552,6 +552,13 @@ void paint_scene(Gnode& parent)
 
 void paint_viewer(Viewer& viewer)
 {
+	if(viewer.m_viewport.m_rect != uvec4(0) && !viewer.m_camera.m_clusters)
+	{
+		viewer.m_camera.m_clustered = true;
+		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
+		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
+	}
+
 	viewer.m_filters.m_glow.m_enabled = true;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
 	viewer.m_filters.m_glow.m_bicubic_filter = true;
@@ -728,10 +735,13 @@ void ex_platform_game_ui(Widget& parent, Game& game, GameScene& scene)
 	Widget& self = ui::widget(parent, styles().board, &scene);//ui::board(parent);
 
 	Viewer& viewer = ui::viewer(self, scene.m_scene);
-
 	paint_viewer(viewer);
-	
+
+	//Viewer& debug_viewer = ui::viewer(self, scene.m_scene);
+	//ui::orbit_controller(debug_viewer);
+
 	Player& player = val<Player>(game.m_player);
+	player.m_viewer = &viewer;
 	if(player.m_human)
 		ex_platform_game_hud(viewer, scene, *player.m_human);
 }
@@ -889,15 +899,17 @@ public:
 	virtual void scene(GameShell& app, GameScene& scene) final
 	{
 		static OmniVision vision = { *scene.m_game.m_world };
-		//scene.m_camera.m_entity.set_position(Zero3);
 
 		//scene_painters(scene, vision.m_store);
-		scene.painter("World", [&](size_t index, VisuScene& scene, Gnode& parent) {
-			UNUSED(scene); paint_scene(parent.subi((void*)index));
-		});
-
 		Player& player = val<Player>(scene.m_player);
 		Entity& reference = player.m_human->m_entity;
+
+		scene.painter("World", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
+			UNUSED(visu_scene);
+			Gnode& self = parent.subi((void*)index);
+			paint_scene(self);
+			//debug_draw_light_clusters(self, player.m_viewer->m_camera);
+		});
 
 		auto paint_hole_block = [&](Gnode& parent, TileBlock& block)
 		{
@@ -952,7 +964,7 @@ int main(int argc, char *argv[])
 	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
 	
 	PlatformModule module = { _platform::m() };
-	//app.run_game(module);
-	app.run_editor(module);
+	app.run_game(module);
+	//app.run_editor(module);
 }
 #endif

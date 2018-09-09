@@ -45,7 +45,7 @@ using namespace mud; namespace toy
 			m_occluding.clear();
 
 			for(const Collision& coll : occluding)
-				m_occluding.push_back(static_cast<ObstacleBody*>(coll.m_second));
+				m_occluding.push_back(static_cast<Obstacle*>(coll.m_second));
 
 			m_strength = m_emitter->m_medium.throughput(*m_emitter, *m_receptor, m_occluding);
 

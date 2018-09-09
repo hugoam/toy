@@ -71,8 +71,8 @@ using namespace mud; namespace toy
 
 		size_t depth();
 
-		vec3 min();
-		vec3 max();
+		vec3 min(Entity& self);
+		vec3 max(Entity& self);
 		vec3 coordinates();
 
 		size_t subdiv();

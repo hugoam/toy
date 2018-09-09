@@ -169,7 +169,7 @@ namespace toy {
     class OWaypoint;
     class DetourPath;
     class Pathfinder;
-    class ObstacleBody;
+    class Obstacle;
     class Obstacle;
     class AreaMedium;
     class Physic;

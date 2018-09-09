@@ -2,14 +2,15 @@
 #define MUD_SHADER_LIGHT
 
 #include <common.sh>
+#include <convert.sh>
 #include <pbr/pbr.sh>
 
 uniform vec4 u_light_position_range[MAX_LIGHTS];
 uniform vec4 u_light_energy_specular[MAX_LIGHTS];
 uniform vec4 u_light_direction_attenuation[MAX_LIGHTS];
-uniform vec4 u_light_shadow[MAX_LIGHTS];
-uniform mat4 u_light_shadow_matrix[MAX_LIGHTS];
 uniform vec4 u_light_spot_params[MAX_LIGHTS];
+uniform vec4 u_light_shadow[MAX_SHADOWS];
+uniform mat4 u_light_shadow_matrix[MAX_SHADOWS];
 
 #ifdef DIRECTIONAL_LIGHT
 uniform mat4 u_csm_matrix[4];
@@ -95,7 +96,7 @@ Light read_infinite_light(int index, Fragment fragment)
     return light;
 }
 
-Light read_placed_light(int index, Fragment fragment)
+Light read_punctual_light(int index, Fragment fragment)
 {
     Light light = preread_light(index, fragment);
     light.ray = light.position - fragment.position;
@@ -129,21 +130,50 @@ vec3 spot_attenuation(Light light)
 }
 
 #include "light_brdf.sh"
+#include "light_cluster.sh"
 #include "shadow.sh"
 
 void apply_lights(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
 {
 	for(int i = 0; i < int(u_light_counts[LIGHT_TYPE_OMNI]); i++)
 	{
-        Light light = read_placed_light(int(u_light_indices[i][LIGHT_TYPE_OMNI]), fragment);
+        Light light = read_punctual_light(int(u_light_indices[i][LIGHT_TYPE_OMNI]), fragment);
         light_brdf(light, fragment, material, omni_attenuation(light), diffuse, specular);
 	}
 
 	for(int j = 0; j < int(u_light_counts[LIGHT_TYPE_SPOT]); j++)
 	{
-        Light light = read_placed_light(int(u_light_indices[j][LIGHT_TYPE_SPOT]), fragment);
+        Light light = read_punctual_light(int(u_light_indices[j][LIGHT_TYPE_SPOT]), fragment);
         light_brdf(light, fragment, material, spot_attenuation(light), diffuse, specular);
 	}
+}
+
+Light read_cluster_light(uint index, Fragment fragment)
+{
+    ivec2 uv = record_uv(index);
+    //uint light_index = texelFetch(s_light_records, uv, 0).r;
+    uint light_index = uint(texelFetch(s_light_records, uv, 0).r * 255.0);
+    return read_punctual_light(int(light_index), fragment);
+}
+
+void apply_cluster_lights(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
+{
+    uint cluster_index = fragment_cluster_index(fragment.coord.xyz);
+    LightCluster cluster = get_light_cluster(cluster_index);
+
+    uint index = cluster.record_offset;
+
+    for(uint last_point = index + cluster.point_count; index < last_point; index++)
+    {
+        Light light = read_cluster_light(index, fragment);
+        light_brdf(light, fragment, material, omni_attenuation(light), diffuse, specular);
+    }
+
+    for(uint last_spot = index + cluster.spot_count; index < last_spot; index++)
+    {
+        Light light = read_cluster_light(index, fragment);
+        light_brdf(light, fragment, material, spot_attenuation(light), diffuse, specular);
+    }
 }
 
 #ifdef DIRECTIONAL_LIGHT

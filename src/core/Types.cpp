@@ -47,7 +47,6 @@ namespace mud
     template <> TOY_CORE_EXPORT Type& type<toy::Movable>() { static Type ty("Movable"); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Navblock>() { static Type ty("Navblock"); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Navmesh>() { static Type ty("Navmesh"); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>() { static Type ty("Obstacle"); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Pathfinder>() { static Type ty("Pathfinder"); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::PhysicWorld>() { static Type ty("PhysicWorld"); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Reactive>() { static Type ty("Reactive"); return ty; }
@@ -74,7 +73,7 @@ namespace mud
     template <> TOY_CORE_EXPORT Type& type<toy::Area>() { static Type ty("Area", type<toy::ColliderObject>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::WorldPage>() { static Type ty("WorldPage", type<toy::ColliderObject>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Solid>() { static Type ty("Solid", type<toy::Collider>()); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::ObstacleBody>() { static Type ty("ObstacleBody", type<toy::Collider>()); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>() { static Type ty("Obstacle", type<toy::Collider>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>() { static Type ty("PhysicScope", type<toy::Collider>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::MonoSection>() { static Type ty("MonoSection", type<toy::TaskSection>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::ParallelSection>() { static Type ty("ParallelSection", type<toy::TaskSection>()); return ty; }

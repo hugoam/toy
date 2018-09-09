@@ -277,24 +277,24 @@ using namespace mud; namespace toy
 		return angle(p1, p2);
 	}
 
-	float Disq::angle_to(Disq& m0, Disq& m1)
+	float Disq::angle_to(Entity& self, Entity& m0, Entity& m1)
 	{
-		vec3 a0 = this->m_entity.m_position - m0.m_entity.m_position;
-		vec3 a1 = this->m_entity.m_position - m1.m_entity.m_position;
+		vec3 a0 = self.m_position - m0.m_position;
+		vec3 a1 = self.m_position - m1.m_position;
 		return glm::angle(a0, a1);
 	}
 
-	float Disq::angle_to(Disq& disq)
+	float Disq::angle_to(Entity& other)
 	{
-		return this->angle_to(disq.m_entity.m_position);
+		return this->angle_to(other.m_position);
 	}
 
-	float Disq::angle_to_safe(Disq& disq)
+	float Disq::angle_to_safe(Entity& self, Entity& other)
 	{
-		if(m_entity.m_position == disq.m_entity.m_position)
+		if(self.m_position == other.m_position)
 			return randomAngle();
 		else
-			return this->angle_to(disq);
+			return this->angle_to(other);
 	}
 	
 	float Disq::angle_to(const vec3& pos)

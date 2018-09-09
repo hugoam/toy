@@ -59,7 +59,6 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Movable>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Navblock>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Navmesh>();
-    export_ template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Pathfinder>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::PhysicWorld>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Reactive>();
@@ -86,7 +85,7 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Area>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::WorldPage>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Solid>();
-    export_ template <> TOY_CORE_EXPORT Type& type<toy::ObstacleBody>();
+    export_ template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::MonoSection>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::ParallelSection>();
@@ -136,7 +135,6 @@ namespace mud
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Movable*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Navblock*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Navmesh*>>;
-	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Obstacle*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Pathfinder*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::PhysicWorld*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Reactive*>>;
@@ -163,7 +161,7 @@ namespace mud
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Area*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::WorldPage*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Solid*>>;
-	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::ObstacleBody*>>;
+	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Obstacle*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::PhysicScope*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::MonoSection*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::ParallelSection*>>;
