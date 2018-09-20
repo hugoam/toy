@@ -81,3 +81,25 @@ after that, when toy is a robust, stable and fully documented game engine founda
   - `make config=debug64 -j8` for gmake/linux 64bit
   - open `toy.sln` and build for Visual Studio
 - run the examples: `ex_platform`, `ex_space`, `ex_blocks`
+
+### credits
+toy couldn't exist without:
+- [GENie](https://github.com/bkaradzic/GENie) build system
+- [bgfx](https://github.com/bkaradzic/bgfx) rendering library
+- [vg-renderer](https://github.com/jdryg/vg-renderer) and [NanoVG](https://github.com/memononen/nanovg) vector drawing libraries
+- [lua](https://github.com/lua/lua) scripting language
+- [stb](https://github.com/nothings/stb) headers
+- [glm](https://github.com/g-truc/glm) math library
+- [json](https://github.com/nlohmann/json) header
+
+### sponsors
+Creating toy has been a huge time investment over the course of a few years: the only way I can pursue that effort and make it thrive into the game programming ecosystem of our dreams, is through funding and sponsorship: you are welcome to have a look at our [patreon](https://www.patreon.com/toyengine).
+
+Iron supports:
+- Mike King
+
+Stone supports:
+- Etienne Balit, Le Bach, Manos Agelidis, Nebo Milic, Omar Cornut, Stefan Hagen, Sunder Iyer
+
+### license
+mud is licensed under the [GPLv3 license](LICENSE.txt)
