@@ -9,5 +9,5 @@
 
 using namespace mud; namespace toy
 {
-	TOY_EDIT_EXPORT void edit_reactive(Widget& parent, Reactive& reactive);
+	//TOY_EDIT_EXPORT void edit_reactive(Widget& parent, Reactive& reactive);
 }

@@ -13,9 +13,9 @@
 
 using namespace mud; namespace toy
 {
-	Obstacle::Obstacle(Entity& entity, Medium& medium, const CollisionShape& shape, float throughput)
-		: Collider(entity, shape, medium, CM_OBSTACLE)
-		, m_entity(entity)
+	Obstacle::Obstacle(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& shape, float throughput)
+		: Collider(spatial, movable, shape, medium, CM_OBSTACLE)
+		, m_spatial(spatial)
 		, m_shape(shape)
 		, m_throughput(throughput)
 	{}

@@ -238,7 +238,7 @@ void gather_allies(Fleet& fleet, CombatType combat_type, std::vector<CombatFleet
 
 void spatial_combat(Turn& turn, Fleet& fleet)
 {
-	SpatialCombat combat = { fleet.m_coord, fleet.m_entity.m_last_tick };
+	SpatialCombat combat = { fleet.m_coord, fleet.m_spatial->m_last_tick };
 
 	gather_allies(fleet, CombatType::Spatial, combat.m_attack, combat.m_defense);
 
@@ -254,7 +254,7 @@ void planetary_combat(Turn& turn, Fleet& fleet)
 	Star* star = turn.m_galaxy->m_grid.m_stars[fleet.m_coord];
 	if(!star) return;
 
-	PlanetaryCombat combat = { *star, fleet.m_coord, fleet.m_entity.m_last_tick };
+	PlanetaryCombat combat = { *star, fleet.m_coord, fleet.m_spatial->m_last_tick };
 	
 	gather_allies(fleet, CombatType::Spatial, combat.m_attack);
 
@@ -543,8 +543,8 @@ void GalaxyGrid::update_slots(uvec2 coord)
 		{
 			float size = c_fleet_visu_sizes[size_t(fleet->estimated_size())];
 			fleet->m_slot = slot;
-			//fleet->m_entity.set_position(slot);
-			animate(Ref(&as<Transform>(fleet->m_entity)), member(&Entity::m_position), var(slot), 0.25f);
+			//fleet->m_spatial.set_position(slot);
+			animate(Ref(&as<Transform>(fleet->m_spatial)), member(&Spatial::m_position), var(slot), 0.25f);
 			slot += Y3 * -size;
 		}
 		angle += theta;
@@ -566,12 +566,18 @@ void GalaxyGrid::move_fleet(Fleet& fleet, uvec2 start, uvec2 dest)
 }
 
 
-Galaxy::Galaxy(Id id, Entity& parent, const vec3& position, const uvec2& size)
-	: Complex(id, type<Galaxy>(), *this)
-	, m_entity(id, *this, parent, position, ZeroQuat)
+Galaxy::Galaxy(HSpatial parent, const vec3& position, const uvec2& size)
+	: m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_size(size)
 {
-	mud::as<Universe>(m_entity.m_world.m_complex).m_galaxies.push_back(this);
+	s_registry.AddPointer<Galaxy>(m_handle, this);
+
+	as<Universe>(m_spatial->m_world->m_complex).m_galaxies.push_back(this);
+}
+
+Galaxy::~Galaxy()
+{
+	s_registry.RemoveComponent<Galaxy>(m_handle);
 }
 
 uvec2 Galaxy::intersect_coord(Ray ray)
@@ -582,40 +588,41 @@ uvec2 Galaxy::intersect_coord(Ray ray)
 	return { coord.x, coord.z };
 }
 
-Quadrant::Quadrant(Id id, Entity& parent, const vec3& position, const uvec2& coord, float size)
-	: Complex(id, type<Quadrant>(), *this)
-	, m_entity(id, *this, parent, position, ZeroQuat)
+Quadrant::Quadrant(HSpatial parent, const vec3& position, const uvec2& coord, float size)
+	: m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_coord(coord)
 	, m_size(size)
 {
-	mud::as<Galaxy>(m_entity.m_parent->m_complex).m_quadrants.push_back(this);
+	as<Galaxy>(*m_spatial->m_parent->m_entity).m_quadrants.push_back(this);
 }
 
 static size_t star_count = 0;
 
-Star::Star(Id id, Entity& parent, const vec3& position, const uvec2& coord, const std::string& name)
-	: Complex(id, type<Star>(), *this)
-	, m_entity(id, *this, parent, position, ZeroQuat)
+Star::Star(HSpatial parent, const vec3& position, const uvec2& coord, const std::string& name)
+	: m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_coord(coord)
 	, m_name(name)
 	, m_resources{}
 {
-	m_entity.m_world.add_task(this, short(Task::GameObject));
-
+	s_registry.AddPointer<Star>(m_handle, this);
+	
+	Spatial& s = m_spatial;
+	Spatial& p = s.m_parent;
+	Galaxy& g = this->galaxy();
 	this->galaxy().m_stars.push_back(this);
 	this->galaxy().m_grid.m_stars[coord] = this;
 }
 
 Star::~Star()
 {
-	m_entity.m_world.remove_task(this, short(Task::GameObject));
+	s_registry.RemoveComponent<Star>(m_handle);
 }
 
-Galaxy& Star::galaxy() { return m_entity.m_parent->as<Galaxy>(); } // as<Galaxy>(*m_entity.m_parent->m_construct)
+Galaxy& Star::galaxy() { return as<Galaxy>(*m_spatial->m_parent->m_entity); }
 
-void Star::next_frame(size_t tick, size_t delta)
+void Star::next_frame(Spatial& spatial, size_t tick, size_t delta)
 {
-	UNUSED(tick); UNUSED(delta);
+	UNUSED(spatial); UNUSED(tick); UNUSED(delta);
 	float speed = 0.001f;
 	m_visu.m_period = fmod(m_visu.m_period + delta * speed, 2 * c_pi);
 
@@ -658,14 +665,13 @@ void Star::add_buildings(const std::string& code, int number)
 
 static size_t fleet_count = 0;
 
-Fleet::Fleet(Id id, Entity& parent, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name)
-	: Complex(id, type<Fleet>(), *this)
-	, m_entity(id, *this, parent, position, ZeroQuat)
+Fleet::Fleet(HSpatial parent, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name)
+	: m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_commander(&commander)
 	, m_coord(coord)
 	, m_name(name)
 {
-	m_entity.m_world.add_task(this, 3); // TASK_GAMEOBJECT
+	s_registry.AddPointer<Fleet>(m_handle, this);
 
 	m_commander->m_fleets.push_back(this);
 
@@ -675,12 +681,12 @@ Fleet::Fleet(Id id, Entity& parent, const vec3& position, Commander& commander, 
 
 Fleet::~Fleet()
 {
-	m_entity.m_world.remove_task(this, 3);
+	s_registry.RemoveComponent<Fleet>(m_handle);
 
 	vector_remove(m_commander->m_fleets, this);
 }
 
-Galaxy& Fleet::galaxy() { return m_entity.m_parent->as<Galaxy>(); } // as<Galaxy>(*m_entity.m_parent->m_construct)
+Galaxy& Fleet::galaxy() { return as<Galaxy>(*m_spatial->m_parent->m_entity); }
 
 void update_visu_fleet(VisuFleet& visu, size_t tick, size_t delta)
 {
@@ -690,8 +696,9 @@ void update_visu_fleet(VisuFleet& visu, size_t tick, size_t delta)
 	visu.m_dilate.z = remap_trig(visu.m_offset, 0.7f, 1.f);
 }
 
-void Fleet::next_frame(size_t tick, size_t delta)
+void Fleet::next_frame(Spatial& spatial, size_t tick, size_t delta)
 {
+	UNUSED(spatial);
 	update_visu_fleet(m_visu, tick, delta);
 }
 
@@ -727,7 +734,7 @@ void Fleet::add_ships(const std::string& code, int number)
 
 void Fleet::update_ships()
 {
-	m_ships_updated = m_entity.m_last_tick + 1;
+	m_ships_updated = m_spatial->m_last_tick + 1;
 
 	m_spatial_power = {};
 	m_planetary_power = 0.f;
@@ -759,7 +766,7 @@ static constexpr StateFunc s_fleet_states[5] = { jump_none, jump_ordered, jump_s
 
 Jump::Jump(Fleet& fleet, uvec2 start, uvec2 dest, FleetStance stance, size_t tick)
 	: m_fleet(&fleet), m_start(start), m_dest(dest), m_stance(stance), m_state(Ordered), m_state_updated(tick)
-	, m_start_pos(fleet.m_entity.m_position)
+	, m_start_pos(fleet.m_spatial->m_position)
 	, m_dest_pos(to_xz(vec2(dest)) + 0.5f + Y3)
 {}
 
@@ -774,7 +781,7 @@ void Jump::update(Fleet& fleet, size_t tick)
 void Fleet::order_jump(vec2 coord, FleetStance stance)
 {
 	printf("Fleet %s from commander %s : jump to [%i,%i] in directive %s\n", m_name.c_str(), m_commander->m_name.c_str(), int(coord.x), int(coord.y), to_string(stance).c_str());
-	m_jump = { *this, m_coord, coord, stance, m_entity.m_last_tick };
+	m_jump = { *this, m_coord, coord, stance, m_spatial->m_last_tick };
 }
 
 void Split::update(Fleet& fleet, size_t tick)
@@ -786,8 +793,8 @@ void Split::update(Fleet& fleet, size_t tick)
 void Fleet::order_split(cstring code, FleetStance stance, std::map<ShipSchema*, size_t> ships)
 {
 	printf("Fleet %s from commander %s : split fleet %s in directive %s\n", m_name.c_str(), m_commander->m_name.c_str(), code, to_string(stance).c_str());
-	Fleet& divided = this->galaxy().m_entity.construct<Fleet>(m_entity.m_position, *m_commander, m_coord, code);
-	m_split = { *this, divided, code, stance, ships, m_entity.m_last_tick };
+	Fleet& divided = construct<Fleet>(this->galaxy().m_spatial, m_spatial->m_position, *m_commander, m_coord, code);
+	m_split = { *this, divided, code, stance, ships, m_spatial->m_last_tick };
 
 	// precalculate speed so that we can give jump orders during the same turn
 	divided.m_speed = UINT8_MAX;
@@ -907,7 +914,7 @@ void CommanderBrush::update(const vec3& position)
 
 	Galaxy& galaxy = m_commander->m_stars[0]->galaxy();
 	for(Star* star : galaxy.m_stars)
-		if(distance(star->m_entity.m_position, position) <= m_radius)
+		if(distance(star->m_spatial->m_position, position) <= m_radius)
 			m_commander->take_star(*star);
 }
 
@@ -918,8 +925,8 @@ Turn::Turn(Galaxy& galaxy)
 Player::Player(Galaxy* galaxy, Commander* commander)
 	: m_galaxy(galaxy), m_commander(commander), m_last_turn(*galaxy), m_turn_replay(*galaxy)
 {
-	m_camera = &galaxy->m_entity.m_world.origin().construct<OCamera>(vec3(10.f, 0.f, 10.f), 25.f, 0.1f, 300.f).m_camera;
-	m_camera->set_lens_angle(c_pi / 4.f);
+	m_camera = &construct<OCamera>(galaxy->m_spatial->m_world->origin(), vec3(10.f, 0.f, 10.f), 25.f, 0.1f, 300.f);
+	m_camera->m_camera->set_lens_angle(c_pi / 4.f);
 }
 
 void ex_space_lua_check(GameShell& shell, Galaxy& galaxy)
@@ -1073,7 +1080,7 @@ public:
 			//	paint_combat(parent, *player.m_turn_replay.planetary_combat());
 		});
 
-		player.m_camera->m_entity.m_position = player.m_commander->m_capital->m_entity.m_position;
+		player.m_camera->m_spatial->m_position = player.m_commander->m_capital->m_spatial->m_position;
 	}
 
 	virtual void init(GameShell& app, Game& game) final
@@ -1084,6 +1091,13 @@ public:
 
 	virtual void start(GameShell& app, Game& game) final
 	{
+		app.m_core->add_loop<Star, Spatial>(Task::GameObject);
+		app.m_core->add_loop<Fleet, Spatial>(Task::GameObject);
+
+		s_registry.AddBuffer<Galaxy>();
+		s_registry.AddBuffer<Star>();
+		s_registry.AddBuffer<Fleet>();
+
 		global_pool<Universe>();
 		global_pool<Galaxy>();
 		global_pool<Star>();
@@ -1094,8 +1108,10 @@ public:
 		Universe& universe = global_pool<Universe>().construct("Arcadia");
 		game.m_world = &universe.m_world;
 
-		VisualScript& generator = space_generator(app);
-		generator(carray<Var, 2>{ Ref(game.m_world), Ref(&game.m_world->origin()) });
+		//VisualScript& generator = space_generator(app);
+		//generator(carray<Var, 2>{ Ref(game.m_world), Ref(&game.m_world->origin()) });
+
+		space_generate(game.m_world->origin());
 
 		Galaxy& galaxy = *universe.m_galaxies[0];
 

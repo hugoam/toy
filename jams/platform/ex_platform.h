@@ -15,6 +15,16 @@ extern "C"
 	//_PLATFORM_EXPORT void ex_platform_game(GameShell& app, Game& game);
 }
 
+#ifdef TOY_ECS
+namespace mud
+{
+	template <> struct TypedBuffer<Bullet> { using type = ComponentBufferDense<Bullet*>; static size_t index() { return 12; } };
+	template <> struct TypedBuffer<Human> { using type = ComponentBufferDense<Human*>; static size_t index() { return 13; } };
+	template <> struct TypedBuffer<Lamp> { using type = ComponentBufferDense<Lamp*>; static size_t index() { return 14; } };
+	template <> struct TypedBuffer<Crate> { using type = ComponentBufferDense<Crate*>; static size_t index() { return 15; } };
+}
+#endif
+
 class refl_ _PLATFORM_EXPORT TileWorld : public Complex
 {
 public:
@@ -38,13 +48,13 @@ public:
 	void open_blocks(GfxSystem& gfx_system, const vec3& position, const ivec2& radius);
 };
 
-class refl_ _PLATFORM_EXPORT Bullet : public Complex
+class refl_ _PLATFORM_EXPORT Bullet : public Entity
 {
 public:
-	Bullet(Entity& parent, const vec3& source, const quat& rotation, float velocity);
+	Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
 	~Bullet();
 
-	comp_ attr_ Entity m_entity;
+	comp_ attr_ CSpatial m_spatial;
 
 	attr_ vec3 m_source;
 	attr_ vec3 m_velocity;
@@ -53,8 +63,8 @@ public:
 	bool m_destroy = false;
 	vec3 m_impact = Zero3;
 
-	//Solid m_solid;
-	Collider m_collider;
+	//OSolid m_solid;
+	OCollider m_collider;
 
 	void update();
 };
@@ -70,7 +80,7 @@ struct refl_ Aim
 	attr_ quat rotation;
 	attr_ vec3 start;
 	attr_ vec3 end;
-	attr_ Entity* hit;
+	attr_ Spatial* hit;
 };
 
 struct HumanController
@@ -87,19 +97,19 @@ struct refl_ Stance
 	attr_ bool loop;
 };
 
-class refl_ _PLATFORM_EXPORT Human : public Complex, public Updatable
+class refl_ _PLATFORM_EXPORT Human : public Entity, public NonCopy
 {
 public:
-	constr_ Human(Id id, Entity& parent, const vec3& position, Faction faction);
+	constr_ Human(HSpatial parent, const vec3& position, Faction faction);
 	~Human();
 
-	comp_ attr_ Entity m_entity;
-	comp_ attr_ Movable m_movable;
-	comp_ attr_ Emitter m_emitter;
-	comp_ attr_ Receptor m_receptor;
-	comp_ attr_ EntityScript m_script; // @todo ---->> ECS
+	comp_ attr_ CSpatial m_spatial;
+	comp_ attr_ CMovable m_movable;
+	comp_ attr_ CEmitter m_emitter;
+	comp_ attr_ CReceptor m_receptor;
+	comp_ attr_ CEntityScript m_script; // @todo ---->> ECS
 
-	Solid m_solid;
+	OSolid m_solid;
 
 	attr_ Faction m_faction;
 
@@ -125,7 +135,7 @@ public:
 
 	std::vector<unique_ptr<Bullet>> m_bullets;
 
-	void next_frame(size_t tick, size_t delta);
+	void next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta);
 
 	meth_ quat sight(bool aiming = true);
 	meth_ Aim aim();
@@ -137,25 +147,25 @@ public:
 	static float headlight_angle;
 };
 
-class refl_ _PLATFORM_EXPORT Lamp : public Complex
+class refl_ _PLATFORM_EXPORT Lamp : public Entity
 {
 public:
-	constr_ Lamp(Id id, Entity& parent, const vec3& position);
+	constr_ Lamp(HSpatial parent, const vec3& position);
 
-	comp_ attr_ Entity m_entity;
-	comp_ attr_ Movable m_movable;
+	comp_ attr_ CSpatial m_spatial;
+	comp_ attr_ CMovable m_movable;
 };
 
-class refl_ _PLATFORM_EXPORT Crate : public Complex
+class refl_ _PLATFORM_EXPORT Crate : public Entity
 {
 public:
-	constr_ Crate(Id id, Entity& parent, const vec3& position, const vec3& extents);
+	constr_ Crate(HSpatial parent, const vec3& position, const vec3& extents);
 
-	comp_ attr_ Entity m_entity;
-	comp_ attr_ Movable m_movable;
+	comp_ attr_ CSpatial m_spatial;
+	comp_ attr_ CMovable m_movable;
 
 	attr_ vec3 m_extents;
-	Solid m_solid;
+	OSolid m_solid;
 };
 
 class refl_ _PLATFORM_EXPORT Player

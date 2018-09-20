@@ -5,32 +5,21 @@
 
 #pragma once
 
+#include <obj/Ref.h>
+#include <obj/Indexer.h>
 #include <core/Forward.h>
 
 #ifndef MUD_CPP_20
-#include <functional>
+#include <vector>
 #endif
 
 using namespace mud; namespace toy
 {
-	class EventHandler_
+	using string = std::string;
+
+	class refl_ TOY_CORE_EXPORT User
 	{
 	public:
-		virtual void handleEvent(Event& event) = 0;
-	};
-
-	template <class T_Event>
-	class TEventHandler : public EventHandler_
-	{
-	public:
-		typedef std::function<void (T_Event&)> Handler;
-
-	public:
-		TEventHandler(const Handler& handler) : m_handler(handler) {}
-
-		void handleEvent(Event& event) { m_handler(static_cast<T_Event&>(event)); }
-
-	private:
-		Handler m_handler;
+		std::vector<Ref> m_selection;
 	};
 }

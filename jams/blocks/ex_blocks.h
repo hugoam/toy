@@ -15,19 +15,30 @@ extern "C"
 	//_BLOCKS_EXPORT void ex_blocks_game(GameShell& app, Game& game);
 }
 
+#ifdef TOY_ECS
+namespace mud
+{
+	template <> struct TypedBuffer<Well> { using type = ComponentBufferDense<Well*>; static size_t index() { return 12; } };
+	template <> struct TypedBuffer<Camp> { using type = ComponentBufferDense<Camp*>; static size_t index() { return 13; } };
+	template <> struct TypedBuffer<Shield> { using type = ComponentBufferDense<Shield*>; static size_t index() { return 14; } };
+	template <> struct TypedBuffer<Slug> { using type = ComponentBufferDense<Slug*>; static size_t index() { return 15; } };
+	template <> struct TypedBuffer<Tank> { using type = ComponentBufferDense<Tank*>; static size_t index() { return 16; } };
+}
+#endif
+
 enum CustomCollisionGroup : short int
 {
 	CM_ENERGY = 1 << 10,
 };
 
-class refl_ _BLOCKS_EXPORT Well : public Complex, public Updatable
+class refl_ _BLOCKS_EXPORT Well : public Entity
 {
 public:
-	constr_ Well(Id id, Entity& parent, const vec3& position);
+	constr_ Well(HSpatial parent, const vec3& position);
 	~Well();
 
-	comp_ attr_ Entity m_entity;
-	comp_ attr_ Emitter m_emitter;
+	comp_ attr_ CSpatial m_spatial;
+	comp_ attr_ CEmitter m_emitter;
 
 	void next_frame(size_t tick, size_t delta);
 };
@@ -51,43 +62,43 @@ public:
 
 export_ extern _BLOCKS_EXPORT std::vector<Faction> g_factions;
 
-class refl_ _BLOCKS_EXPORT Camp : public Complex
+class refl_ _BLOCKS_EXPORT Camp : public Entity
 {
 public:
-	constr_ Camp(Id id, Entity& parent, const vec3& position, Faction& faction);
+	constr_ Camp(HSpatial parent, const vec3& position, Faction& faction);
 
-	comp_ attr_ Entity m_entity;
+	comp_ attr_ CSpatial m_spatial;
 
 	attr_ vec3 m_position;
 	attr_ Faction& m_faction;
 };
 
-class refl_ _BLOCKS_EXPORT Shield : public Complex, public Updatable
+class refl_ _BLOCKS_EXPORT Shield : public Entity
 {
 public:
-	constr_ Shield(Id id, Entity& parent, const vec3& position, Faction& faction, float radius);
+	constr_ Shield(HSpatial parent, const vec3& position, Faction& faction, float radius);
 	~Shield();
 
-	comp_ attr_ Entity m_entity;
-	comp_ attr_ Emitter m_emitter;
+	comp_ attr_ CSpatial m_spatial;
+	comp_ attr_ CEmitter m_emitter;
 
 	attr_ Faction& m_faction;
 	attr_ float m_radius;
 	attr_ float m_charge;
 	attr_ float m_discharge;
 
-	Solid m_solid;
+	OCollider m_collider;
 
 	void next_frame(size_t tick, size_t delta);
 };
 
-class refl_ _BLOCKS_EXPORT Slug : public Complex
+class refl_ _BLOCKS_EXPORT Slug : public Entity
 {
 public:
-	Slug(Entity& parent, const vec3& source, const quat& rotation, const vec3& velocity, float power = 1.f);
+	Slug(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power = 1.f);
 	~Slug();
 
-	comp_ attr_ Entity m_entity;
+	comp_ attr_ CSpatial m_spatial;
 
 	attr_ vec3 m_source;
 	attr_ vec3 m_velocity;
@@ -97,26 +108,26 @@ public:
 	bool m_destroy = false;
 	vec3 m_impact = Zero3;
 
-	//Solid m_solid;
-	Collider m_collider;
+	//OSolid m_solid;
+	OCollider m_collider;
 
-	void update();
+	void update(Spatial& spatial);
 };
 
-class refl_ _BLOCKS_EXPORT Tank : public Complex, public Updatable
+class refl_ _BLOCKS_EXPORT Tank : public Entity
 {
 public:
-	constr_ Tank(Id id, Entity& parent, const vec3& position, Faction& faction);
+	constr_ Tank(HSpatial parent, const vec3& position, Faction& faction);
 	~Tank();
 
-	comp_ attr_ Entity m_entity;
-	comp_ attr_ Movable m_movable;
-	comp_ attr_ Emitter m_emitter;
-	comp_ attr_ Receptor m_receptor;
+	comp_ attr_ CSpatial m_spatial;
+	comp_ attr_ CMovable m_movable;
+	comp_ attr_ CEmitter m_emitter;
+	comp_ attr_ CReceptor m_receptor;
 
 	Faction& m_faction;
 
-	Solid m_solid;
+	OSolid m_solid;
 
 	vec3 m_force = Zero3;
 	vec3 m_torque = Zero3;
@@ -138,7 +149,7 @@ public:
 
 	std::vector<object_ptr<Slug>> m_slugs;
 
-	void next_frame(size_t tick, size_t delta);
+	void next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta);
 
 	void shoot(bool critical = false);
 

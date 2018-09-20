@@ -17,18 +17,19 @@
 
 using namespace mud; namespace toy
 {
-	Sector::Sector(Id id, Entity& parent, const vec3& position, const uvec3& coordinate, const vec3& size)
-		: Complex(id, type<Sector>(), m_emitter, m_world_page, m_bufferPage, m_navblock, *this)
-		, m_entity(id, *this, parent, position, ZeroQuat)
-		, m_emitter(m_entity)
-		, m_world_page(m_entity, m_emitter, true, size)
-		, m_bufferPage(m_entity, m_world_page, true)
-		, m_navblock(m_entity.m_world.as<Navmesh>(), m_entity, m_world_page)
+	Sector::Sector(HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
+		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		//, m_emitter(*this, m_spatial, m_movable)
+		, m_world_page(*this, m_spatial, true, size)
+		//, m_buffer_page(m_spatial, m_world_page, true)
+		, m_navblock(*this, m_spatial, m_world_page, as<Navmesh>(m_spatial->m_world->m_complex))
 		, m_coordinate(coordinate)
 		, m_size(size)
 		, m_block(nullptr)
 		, m_heaps()
-	{}
+	{
+		s_registry.AddPointer<Sector>(m_handle, this);
+	}
 
 	struct BlockGrid
 	{
@@ -65,8 +66,8 @@ using namespace mud; namespace toy
 		{
 			vec3 position = grid_center(coord, grid.m_sector_size) - grid.m_center_offset;
 
-			Sector& sector = world.origin().construct<Sector>(position, coord, grid.m_sector_size);
-			Block& block = sector.m_entity.construct<Block>(Zero3, nullptr, 0, grid.m_sector_size);
+			Sector& sector = construct<Sector>(world.origin(), position, coord, grid.m_sector_size);
+			Block& block = construct<Block>(sector.m_spatial, Zero3, nullptr, 0, grid.m_sector_size);
 
 			grid.m_sectors.push_back(&sector);
 			blocks.push_back(&block);
@@ -76,27 +77,30 @@ using namespace mud; namespace toy
 		index_blocks(grid_subdiv, grid.m_blocks, blocks, grid.m_sectors);
 	}
 
-	TileBlock::TileBlock(Id id, Entity& parent, const vec3& position, const uvec3& size, const vec3& period, WaveTileset& tileset)
-		: Complex(id, type<TileBlock>(), *this, m_emitter, m_world_page, m_navblock)
-		, m_entity(id, *this, parent, position, ZeroQuat)
-		, m_emitter(m_entity)
-		, m_world_page(m_entity, m_emitter, true, vec3(size) * 0.5f)
-		, m_navblock(m_entity.m_world.as<Navmesh>(), m_entity, m_world_page)
+	TileBlock::TileBlock(HSpatial parent, const vec3& position, const uvec3& size, const vec3& period, WaveTileset& tileset)
+		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		//, m_emitter(*this, m_spatial, m_movable)
+		, m_world_page(*this, m_spatial, true, size)
+		, m_navblock(*this, m_spatial, m_world_page, as<Navmesh>(m_spatial->m_world->m_complex))
 		, m_wfc_block(position, size, period, tileset)
 	{
-		m_entity.m_world.add_task(this, short(Task::Background));
+		s_registry.AddPointer<TileBlock>(m_handle, this);
+		//m_spatial.m_world.add_task(this, short(Task::Background));
+
+		Spatial& test = s_registry.GetComponent<Spatial>(m_handle);
+		int i = 0;
 	}
 
 	TileBlock::~TileBlock()
 	{
-		m_entity.m_world.remove_task(this, short(Task::Background));
+		//m_spatial.m_world.remove_task(this, short(Task::Background));
 	}
 
-	void TileBlock::next_frame(size_t frame, size_t delta)
+	void TileBlock::next_frame(WorldPage& world_page, size_t frame, size_t delta)
 	{
 		m_wfc_block.next_frame(frame, delta);
 
-		m_world_page.m_updated = m_wfc_block.m_wave_solved;
+		world_page.m_updated = m_wfc_block.m_wave_solved;
 
 		if(m_wfc_block.m_wave.m_solved && !m_setup)
 			m_setup = true;
@@ -108,10 +112,10 @@ using namespace mud; namespace toy
 		return !outside;
 	}
 
-	TileBlock& generate_block(GfxSystem& gfx_system, WaveTileset& tileset, Entity& origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
+	TileBlock& generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
 	{
 		vec3 position = vec3(to_xz(coord)) * vec3(block_subdiv) * tile_scale;
-		TileBlock& block = global_pool<TileBlock>().construct(0U, origin, position, block_subdiv, tile_scale, tileset);
+		TileBlock& block = global_pool<TileBlock>().construct(origin, position, block_subdiv, tile_scale, tileset);
 
 		if(block.m_wfc_block.m_tile_models.empty())
 			block.m_wfc_block.load_models(gfx_system, from_file);

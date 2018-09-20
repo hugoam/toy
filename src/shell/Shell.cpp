@@ -95,9 +95,9 @@ using namespace mud; namespace toy
 	GameScene::~GameScene()
 	{}
 
-	Viewer& game_viewport(Widget& parent, GameScene& scene, Camera& camera)
+	Viewer& game_viewport(Widget& parent, GameScene& scene, HCamera camera, HMovable movable)
 	{
-		return scene_viewport(parent, scene, camera, scene.m_selection);
+		return scene_viewport(parent, scene, camera, movable, scene.m_selection);
 	}
 
 	void paint_physics(Gnode& parent, World& world)
@@ -142,8 +142,8 @@ using namespace mud; namespace toy
 		reset_interpreters(false);
 
 		m_game.m_shell = this;
-		m_gfx_system->m_job_system = m_job_system.get();
 
+		m_gfx_system->m_job_system = m_job_system.get();
 		m_job_system->adopt();
 
 		this->init();
@@ -176,8 +176,8 @@ using namespace mud; namespace toy
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
-		//pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
-		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
+		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
+		//pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
 		m_gfx_system->init_pipeline();
 
 		static ImporterOBJ obj_importer(*m_gfx_system);
@@ -242,8 +242,6 @@ using namespace mud; namespace toy
 		g_app = this;
 		//g_iterations = iterations;
 		emscripten_set_main_loop(iterate, 0, 1);
-#elif MUD_THREADED
-		m_job_system->Run(25, [](ftl::TaskScheduler* scheduler, void* arg) { while(((GameShell*)arg)->pump()); }, this, 4, ftl::EmptyQueueBehavior::Sleep);
 #else
 		size_t frame = 0;
 		while(pump() && (iterations == 0 || frame++ < iterations));
@@ -448,8 +446,11 @@ using namespace mud; namespace toy
 
 	void GameShell::destroy_world()
 	{
-		Complex& complex = m_game.m_world->m_complex;
+#ifdef TOY_ECS
+#else
+		Entity& entity = m_game.m_world->m_entity;
 		g_pools[complex.m_prototype.m_type.m_id]->destroy(Ref(&complex));
+#endif
 		m_game.m_world = nullptr;
 	}
 

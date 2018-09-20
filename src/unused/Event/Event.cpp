@@ -19,7 +19,7 @@ using namespace mud; namespace toy
 		m_attributes["EventType"] = var(eventType);
 	}
 
-	EventSubscriber::EventSubscriber(Type& eventType, object_ptr<EventHandler_> handler)
+	EventSubscriber::EventSubscriber(Type& eventType, object_ptr<EventHandler> handler)
 		: m_eventType(eventType)
 		, m_handler(std::move(handler))
 		, m_filters()

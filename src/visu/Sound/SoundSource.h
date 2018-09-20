@@ -3,11 +3,10 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#if 0
 #pragma once
 
-#include <proto/Complex.h>
-#include <core/Store/StoreObserver.h>
-#include <core/Entity/EntityObserver.h>
+#include <proto/Entity.h>
 #include <visu/Forward.h>
 
 #ifdef TOY_SOUND
@@ -24,12 +23,12 @@ using namespace mud; namespace toy
 	{
 	public:
 #ifdef TOY_SOUND
-		SoundSource(Entity& entity, SoundManager& soundManager);
+		SoundSource(HSpatial spatial, SoundManager& soundManager);
 #else
-		SoundSource(Entity& entity);
+		SoundSource(HSpatial spatial);
 #endif
 
-		attr_ Entity& m_entity;
+		attr_ HSpatial m_spatial;
 
 #ifdef TOY_SOUND
 		void soundDestroyed(Sound& sound);
@@ -49,3 +48,4 @@ using namespace mud; namespace toy
 		size_t m_updated;
 	};
 }
+#endif

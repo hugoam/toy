@@ -10,6 +10,9 @@
 
 using namespace mud; namespace toy
 {
+	CollisionShape::CollisionShape()
+	{}
+
 	CollisionShape::CollisionShape(const Shape& shape, const vec3& center, float margin)
 		: m_shape(shape.clone())
 		, m_center(center)
@@ -20,7 +23,9 @@ using namespace mud; namespace toy
 	{}
 
 	CollisionShape::CollisionShape(const CollisionShape& other)
-		: CollisionShape(*other.m_shape, other.m_center, other.m_margin)
+		: m_shape(other.m_shape ? other.m_shape->clone() : nullptr)
+		, m_center(other.m_center)
+		, m_margin(other.m_margin)
 	{}
 
 	CollisionShape& CollisionShape::operator=(const CollisionShape& other)

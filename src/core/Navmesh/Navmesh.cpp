@@ -3,6 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#include <core/Types.h>
 #include <core/Navmesh/Navmesh.h>
 
 #include <infra/StringConvert.h>
@@ -163,26 +164,23 @@ using namespace mud; namespace toy
 		}
 	};
 
-	Navblock::Navblock(Navmesh& navmesh, Entity& entity, WorldPage& world_page)
-		: m_entity(entity)
+	Navblock::Navblock(HSpatial spatial, HWorldPage world_page, Navmesh& navmesh)
+		: m_spatial(spatial)
 		, m_world_page(world_page)
-		, m_navmesh(navmesh)
-	{
-		m_entity.m_world.add_task(this, short(Task::Physics));
-	}
+		, m_navmesh(&navmesh)
+	{}
 
 	Navblock::~Navblock()
-	{
-		m_entity.m_world.remove_task(this, short(Task::Physics));
-	}
+	{}
 
-	void Navblock::next_frame(size_t tick, size_t delta)
+	void Navblock::next_frame(Spatial& spatial, WorldPage& world_page, size_t tick, size_t delta)
 	{
 		UNUSED(tick); UNUSED(delta);
-		if(m_auto_update && m_updated < m_world_page.m_last_rebuilt)
+		
+		if(m_auto_update && m_updated < world_page.m_last_rebuilt)
 		{
-			m_navmesh.update_block(*this);
-			m_updated = m_entity.m_last_tick;
+			m_navmesh->update_block(*this);
+			m_updated = spatial.m_last_tick;
 		}
 	}
 
@@ -193,20 +191,19 @@ using namespace mud; namespace toy
 		static NavmeshShapeDeclaration decl;
 
 		m_navgeom = make_unique<NavGeom>(m_geometry, m_world.m_name.c_str());
-
-		m_world.add_task(this, short(Task::Physics));
 	}
 
 	Navmesh::~Navmesh()
-	{
-		m_world.remove_task(this, short(Task::Physics));
-	}
+	{}
 
 	void Navmesh::update_block(Navblock& navblock)
 	{
 		// @todo we are just appending here, should clear and update
 
-		for(Geometry& geom : navblock.m_world_page.m_chunks)
+		Spatial& spatial = navblock.m_spatial;
+		WorldPage& world_page = navblock.m_world_page;
+
+		for(Geometry& geom : world_page.m_chunks)
 		{
 			if(geom.m_vertices.empty())
 				return;
@@ -216,7 +213,7 @@ using namespace mud; namespace toy
 			ShapeIndex offset = ShapeIndex(m_geometry.m_vertices.size());
 
 			for(Vertex& vertex : geom.m_vertices)
-				m_geometry.m_vertices.emplace_back(Vertex{ navblock.m_entity.m_position + vertex.m_position });
+				m_geometry.m_vertices.emplace_back(Vertex{ spatial.m_position + vertex.m_position });
 
 			for(Tri& tri : geom.m_triangles)
 				m_geometry.m_triangles.push_back(Tri{ ShapeIndex(offset + tri.a), ShapeIndex(offset + tri.b), ShapeIndex(offset + tri.c) });

@@ -5,18 +5,12 @@
 
 #pragma once
 
-#include <obj/Util/LocklessQueue.h>
-#include <obj/Unique.h>
-#include <math/Timer.h>
 #include <core/Forward.h>
+#include <math/Timer.h>
 
 #ifndef MUD_CPP_20
 #include <vector>
-#include <thread>
-#include <mutex>
-#include <algorithm>
 #include <functional>
-#include <atomic>
 #endif
 
 using namespace mud; namespace toy
@@ -24,7 +18,7 @@ using namespace mud; namespace toy
 	enum class Task : unsigned int
 	{
 		World = 0,
-		Entity = 1,
+		Spatial = 1,
 		State = 2,
 		Physics = 3,
 		PhysicsWorld = 4,
@@ -55,14 +49,14 @@ using namespace mud; namespace toy
 				Camera next_frame
 					Observer cameraUpdated
 
-				Entity next_frame
+				Spatial next_frame
 					Observer transformUpdated
 
 				Movable
 					Manipulator update
 					Observer movementUpdated
 								accelerationUpdated
-					Entity updatePosition
+					Spatial updatePosition
 							updateRotation
 
 				Agent next_frame (lock : position)
@@ -80,74 +74,22 @@ using namespace mud; namespace toy
 				Human next_frame
 	*/
 
-	class refl_ TOY_CORE_EXPORT TaskSection
+	class TOY_CORE_EXPORT JobPump
 	{
 	public:
-		TaskSection(short int id);
-		virtual ~TaskSection();
+		JobPump();
 
-		virtual void update() = 0;
+		void pump();
 		
-		virtual void add_task(Updatable* task) = 0;
-		virtual void remove_task(Updatable* task) = 0;
+		struct Entry
+		{
+			Task m_task;
+			std::function<void(size_t tick, size_t delta)> m_handler;
+		};
 
-		short int m_id;
+		void add_step(Entry entry);
+
+		std::vector<Entry> m_steps;
 		Clock m_clock;
-		size_t m_last_tick;
-		std::atomic<bool> m_destroy;
-	};
-
-	typedef std::function<void()> TaskFunc;
-
-	class refl_ TOY_CORE_EXPORT QueueSection : public TaskSection
-	{
-	public:
-		QueueSection(short int id);
-
-		void update();
-
-		void add_task(Updatable* task) { UNUSED(task); }
-		void remove_task(Updatable* task) { UNUSED(task); }
-
-		void add_task(TaskFunc task) { m_task_queue.push(task); }
-
-	private:
-		unique_ptr<std::thread> m_thread;
-		LocklessQueue<TaskFunc> m_task_queue;
-	};
-
-	class refl_ TOY_CORE_EXPORT MonoSection : public TaskSection
-	{
-	public:
-		MonoSection(short int id, bool thread = false);
-		~MonoSection();
-
-		void update();
-
-		void add_task(Updatable* task);
-		void remove_task(Updatable* task);
-
-	private:
-		std::vector<Updatable*> m_tasks;
-		std::vector<Updatable*> m_tasks_buffer;
-		std::mutex m_mutex;
-		unique_ptr<std::thread> m_thread;
-	};
-
-	class refl_ TOY_CORE_EXPORT ParallelSection  : public TaskSection
-	{
-	public:
-		ParallelSection(short int id);
-
-		void update();
-		void worker_update();
-
-	private:
-		unique_ptr<std::thread> m_thread;
-		std::vector<unique_ptr<std::thread>> m_workers;
-
-		int m_task_cursor;
-		int m_task_queue_size;
-		LocklessQueue<Updatable*> m_task_queue;
 	};
 }

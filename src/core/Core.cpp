@@ -6,7 +6,8 @@
 #include <core/Types.h>
 #include <core/Core.h>
 
-#include <core/Player/Player.h>
+#include <core/Api.h>
+
 #include <core/World/Section.h>
 #include <math/Anim/Anim.h>
 
@@ -24,13 +25,32 @@ using namespace mud; namespace toy
 {
 	Core::Core()
 	{
-		size_t size = size_t(Task::Background) + 1;
-		m_sections.resize(size);
+		s_registry.AddBuffer<Spatial>();
+		s_registry.AddBuffer<Movable>();
+		s_registry.AddBuffer<Camera>();
+		s_registry.AddBuffer<Emitter>();
+		s_registry.AddBuffer<Receptor>();
+		s_registry.AddBuffer<EntityScript>();
+		s_registry.AddBuffer<WorldPage>();
+		s_registry.AddBuffer<Navblock>();
 
-		for(Task task = Task(0); task < Task::Count; task = Task(uint(task) + 1))
-			m_sections[size_t(task)] = make_object<MonoSection>(short(task));
+		auto debug_loop = [](size_t tick, size_t delta)
+		{
+			s_registry.Loop<Spatial>([=](uint32_t entity, Spatial& spatial)
+			{
+				vec3 pos = spatial.absolute_position();
+				printf("spatial %i is at position %.2f, %.2f, %.2f\n", int(entity), pos.x, pos.y, pos.z);
+			});
+		};
 
-		//m_sections[size_t(Task::Background)] = make_object<MonoSection>(short(Task::Background), true);
+		//m_pump.m_steps.push_back({ Task::Spatial, debug_loop });
+		
+		add_loop<Spatial>(Task::Spatial);
+		add_loop<Movable, Spatial>(Task::Spatial);
+		add_loop<Camera, Spatial>(Task::Spatial);
+		add_loop<EntityScript>(Task::Spatial);
+		add_loop<WorldPage, Spatial>(Task::Spatial);
+		add_loop<Navblock, Spatial, WorldPage>(Task::Spatial);
 	}
 
 	Core::~Core()
@@ -40,13 +60,7 @@ using namespace mud; namespace toy
 	{
 		Animator::me.next_frame(0, 0);
 
-		for(Task task = Task(0); task < Task::Count; task = Task(uint(task) + 1))
-			m_sections[size_t(task)]->update();
-
-		Indexer& scripts = indexer(type<EntityScript>());
-		for(Ref object : scripts.m_objects)
-			if(object)
-				val<EntityScript>(object).run_logic();
+		m_pump.pump();
 	}
 
 	DefaultWorld::DefaultWorld(const string& name)

@@ -3,6 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#include <core/Types.h>
 #include <core/Camera/Camera.h>
 
 #include <refl/Class.h>
@@ -11,26 +12,22 @@
 
 #include <core/Entity/Entity.h>
 #include <core/World/World.h>
-#include <core/WorldPage/WorldPage.h>
 
 #include <core/World/Section.h>
 
 using namespace mud; namespace toy
 {
-    Camera::Camera(Entity& entity, float lens_distance, float near, float far)
-        : m_entity(entity)
+    Camera::Camera(HSpatial spatial, float lens_distance, float near, float far)
+        : m_spatial(spatial)
 		, m_lens_distance(lens_distance)
 		, m_near(near)
         , m_far(far)
     {
-		entity.m_world.add_task(this, short(Task::Entity));
-		calc_lens_position();
+		calc_lens_position(spatial);
 	}
 
 	Camera::~Camera()
-	{
-		m_entity.m_world.remove_task(this, short(Task::Entity));
-	}
+	{}
 	
 	void Camera::set_lens_distance(float distance)
 	{
@@ -56,54 +53,53 @@ using namespace mud; namespace toy
 		m_lens_updated = true;
 	}
 
-	vec3 Camera::lens_direction()
+	vec3 Camera::lens_direction(Spatial& spatial)
 	{
-		return rotate(m_entity.front(), -m_lens_angle, m_entity.right());
+		return rotate(spatial.front(), -m_lens_angle, spatial.right());
 	}
 
-	void Camera::calc_lens_position()
+	void Camera::calc_lens_position(Spatial& spatial)
 	{
-		m_lens_position = -this->lens_direction() * m_lens_distance;
-		m_lens_position += m_entity.absolute_position();
+		m_lens_position = -this->lens_direction(spatial) * m_lens_distance;
+		m_lens_position += spatial.absolute_position();
 	}
 
-	void Camera::calc_lens_rotation()
+	void Camera::calc_lens_rotation(Spatial& spatial)
 	{
-		m_lens_rotation = m_entity.absolute_rotation() * angleAxis(-m_lens_angle, to_vec3(Side::Right));
+		m_lens_rotation = spatial.absolute_rotation() * angleAxis(-m_lens_angle, to_vec3(Side::Right));
 	}
 
-	void Camera::next_frame(size_t tick, size_t delta)
+	void Camera::next_frame(Spatial& spatial, size_t tick, size_t delta)
 	{
 		UNUSED(delta);
 
-		//if(m_entity.m_last_updated > m_last_updated || m_lensUpdated)
+		//if(m_spatial.m_last_updated > m_last_updated || m_lensUpdated)
 		{
-			calc_lens_position();
-			calc_lens_rotation();
+			calc_lens_position(spatial);
+			calc_lens_rotation(spatial);
 		}
 		m_last_updated = tick;
 		m_lens_updated = false;
 	}
 
-	OCamera::OCamera(Id id, Entity& parent, const vec3& position, float lensDistance, float nearClipDistance, float farClipDistance)
-		: Complex(id, type<OCamera>(), m_movable, m_receptor, m_camera)
-		, m_entity(id, *this, parent, position, ZeroQuat)
-		, m_movable(m_entity)
-		, m_receptor(m_entity)
-		, m_camera(m_entity, lensDistance, nearClipDistance, farClipDistance)
+	OCamera::OCamera(HSpatial parent, const vec3& position, float lensDistance, float nearClipDistance, float farClipDistance)
+		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		, m_movable(*this, m_spatial)
+		, m_camera(*this, m_spatial, lensDistance, nearClipDistance, farClipDistance)
+		//, m_receptor(*this, m_spatial)
 	{
-		m_receptor.add_sphere(WorldMedium::me, 0.1f, CM_RECEPTOR);
+		//m_receptor.add_sphere(WorldMedium::me, 0.1f, CM_RECEPTOR);
 	}
 
-	void jump_camera_to(Camera& camera, const vec3& target, float distance, float rotation)
+	void jump_camera_to(Spatial& spatial, Camera& camera, const vec3& target, float distance, float rotation)
 	{
 		animate(Ref(&camera), member(&Camera::m_lens_distance), var(distance), 1.f);
-		animate(Ref(&as<Transform>(camera.m_entity)), member(&Transform::m_position), var(target), 1.f);
-		animate(Ref(&as<Transform>(camera.m_entity)), member(&Transform::m_rotation), var(rotate(camera.m_entity.m_rotation, rotation, Y3)), 1.f);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotate(spatial.m_rotation, rotation, Y3)), 1.f);
 	}
 
-	void move_camera_to(Camera& camera, const vec3& target)
+	void move_camera_to(Spatial& spatial, Camera& camera, const vec3& target)
 	{
-		animate(Ref(&as<Transform>(camera.m_entity)), member(&Transform::m_position), var(target), 1.f);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
 	}
 }

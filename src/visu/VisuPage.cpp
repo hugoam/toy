@@ -43,6 +43,8 @@ using namespace mud; namespace toy
 
 	void build_world_page_geometry(Scene& scene, WorldPage& page)
 	{
+		Spatial& spatial = page.m_spatial;
+
 		std::vector<Item*> items;
 
 		scene.m_pool->iterate_objects<Item>([&](Item& item)
@@ -57,7 +59,8 @@ using namespace mud; namespace toy
 				if(add)
 				{
 					Entity& entity = val<Entity>(item.m_node.m_object);
-					if((entity.is_child_of(page.m_entity) || &entity == &page.m_entity) && entity.m_hooked && !entity.isa<Movable>())
+					Spatial& object = as<Spatial>(entity);
+					if((object.is_child_of(page.m_spatial) || &object == &spatial) && object.m_hooked && !is<Movable>(*object.m_entity))
 						items.push_back(&item);
 				}
 			}

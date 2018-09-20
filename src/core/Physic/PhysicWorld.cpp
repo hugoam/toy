@@ -17,14 +17,10 @@ using namespace mud; namespace toy
 
     PhysicWorld::PhysicWorld(World& world)
 		: m_world(world)
-	{
-		world.add_task(this, short(Task::PhysicsWorld));
-	}
+	{}
 
     PhysicWorld::~PhysicWorld()
-	{
-		m_world.remove_task(this, short(Task::PhysicsWorld));
-	}
+	{}
 
 	void PhysicWorld::next_frame(size_t tick, size_t delta)
 	{

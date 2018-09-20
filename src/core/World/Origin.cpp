@@ -8,8 +8,7 @@
 
 using namespace mud; namespace toy
 {
-	Origin::Origin(Id id, World& world)
-		: Complex(id, type<Origin>())
-		, m_entity(id, *this, world, nullptr, Zero3, ZeroQuat)
+	Origin::Origin(World& world)
+		: m_spatial(*this, *this, world, HSpatial(), Zero3, ZeroQuat)
 	{}
 }

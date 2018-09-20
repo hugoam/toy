@@ -11,11 +11,11 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT Origin : public Complex
+	class refl_ TOY_CORE_EXPORT Origin : public Entity
 	{
 	public:
-		constr_ Origin(Id id, World& world);
+		constr_ Origin(World& world);
 
-		comp_ attr_ Entity m_entity;
+		comp_ attr_ CSpatial m_spatial;
 	};
 }

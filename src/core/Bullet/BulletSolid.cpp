@@ -31,20 +31,30 @@
 
 using namespace mud; namespace toy
 {
-    BulletSolid::BulletSolid(SubBulletWorld& bullet_world, Solid& solid)
-        : BulletCollider(bullet_world, solid)
-		, m_rigid_body(nullptr)
-        , m_motion_state(make_unique<BulletMotionState>(solid.m_motion_state))
+    BulletSolid::BulletSolid(BulletMedium& bullet_world, BulletCollider& bullet_collider, HSpatial spatial, HCollider collider, HSolid solid)
+		: m_rigid_body(nullptr)
+		, m_motion_state(make_unique<BulletMotionState>(spatial, collider))
     {
+		collider->m_motion_state.m_transform_source = this;
+		collider->m_motion_state.m_motion_source = this;
+
+		this->setup(bullet_collider, spatial, solid);
+    }
+
+	BulletSolid::~BulletSolid()
+    {}
+
+	void BulletSolid::setup(BulletCollider& collider, Spatial& spatial, Solid& solid)
+	{
 		btVector3 inertia;
 		if(!solid.m_static)
-			m_collision_shape.shape->calculateLocalInertia(solid.m_mass, inertia);
+			collider.m_collision_shape.shape->calculateLocalInertia(solid.m_mass, inertia);
 
-		this->setup_object(make_unique<btRigidBody>(solid.m_mass, m_motion_state.get(), m_collision_shape.shape.get(), inertia));
+		collider.m_collision_object = make_unique<btRigidBody>(solid.m_mass, m_motion_state.get(), collider.m_collision_shape.shape.get(), inertia);
+		m_rigid_body = &static_cast<btRigidBody&>(*collider.m_collision_object);
 
-		m_collision_object->setWorldTransform(btTransform(to_btquat(m_collider.m_entity.absolute_rotation()), to_btvec3(m_collider.m_entity.absolute_position())));
-		
-		m_rigid_body = &static_cast<btRigidBody&>(*m_collision_object);
+		collider.setup(spatial, *collider.m_collision_object);
+
 		//m_rigid_body->setFriction(0.6f);
 		//m_rigid_body->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
 
@@ -53,10 +63,7 @@ using namespace mud; namespace toy
 			m_rigid_body->setContactProcessingThreshold(0.02f);
 			m_rigid_body->setCollisionFlags(btCollisionObject::CF_STATIC_OBJECT);
 		}
-    }
-
-	BulletSolid::~BulletSolid()
-    {}
+	}
 
 	vec3 BulletSolid::linear_velocity()
 	{
@@ -120,7 +127,7 @@ using namespace mud; namespace toy
 	void BulletSolid::update_transform(const vec3& position, const quat& rotation)
 	{
 		m_rigid_body->activate();
-		m_collision_object->setWorldTransform(btTransform(to_btquat(rotation), to_btvec3(position)));
+		m_rigid_body->setWorldTransform(btTransform(to_btquat(rotation), to_btvec3(position)));
 	}
 
 	void BulletSolid::update_motion(const vec3& linear_velocity, const vec3& angular_velocity)

@@ -74,6 +74,6 @@ using namespace mud; namespace toy
 	/*void OgreViewport::cameraUpdated(const vec3& position, const quat& rotation, const vec3& target, float nearClipDist, float farClipDist)
 	{
 		//for(auto it = mFocusObjects.begin(); it != mFocusObjects.end(); ++it)
-		//	focusUpdate((*it), (*it)->m_entity->position());
+		//	focusUpdate((*it), (*it)->m_spatial->position());
 	}*/
 }

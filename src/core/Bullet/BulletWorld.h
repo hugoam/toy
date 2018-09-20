@@ -8,6 +8,7 @@
 #include <obj/Unique.h>
 #include <core/Forward.h>
 #include <core/Physic/PhysicWorld.h>
+#include <core/Physic/Collider.h>
 
 #ifndef MUD_CPP_20
 #include <unordered_map>
@@ -35,26 +36,26 @@ using namespace mud; namespace toy
 	static void collisionEnded(btPersistentManifold* manifold);
 #endif
 
-	class refl_ TOY_CORE_EXPORT SubBulletWorld : public PhysicMedium
+	class refl_ TOY_CORE_EXPORT BulletMedium : public PhysicMedium
 	{
 	public:
-        SubBulletWorld(World& world, Medium& medium);
-        ~SubBulletWorld();
+        BulletMedium(World& world, Medium& medium);
+        ~BulletMedium();
 
 		void update_contacts();
 
         void next_frame(size_t tick, size_t delta);
 
-		virtual object_ptr<ColliderImpl> make_collider(Collider& collider);
-		virtual object_ptr<ColliderImpl> make_solid(Solid& solid);
+		virtual object_ptr<ColliderImpl> make_collider(HCollider collider) final;
+		virtual object_ptr<SolidImpl> make_solid(HSolid solid) final;
 
-		void add_solid(Solid& solid);
-		void remove_solid(Solid& solid);
+		virtual void add_solid(HCollider collider, HSolid solid) override final;
+		virtual void remove_solid(HCollider collider, HSolid solid) override final;
 
-		void add_collider(Collider& collider);
-		void remove_collider(Collider& collider);
+		virtual void add_collider(HCollider collider) override final;
+		virtual void remove_collider(HCollider collider) override final;
 
-		void remove_contacts(Collider& collider);
+		void remove_contacts(uint32_t collider);
 
     public:
 		size_t m_last_tick;
@@ -66,8 +67,6 @@ using namespace mud; namespace toy
         unique_ptr<btConstraintSolver> m_constraintSolver;
 
 		btDynamicsWorld* m_dynamicsWorld = nullptr;
-
-		std::vector<Solid*> m_solids;
 
 #ifndef TRIGGER_COLLISIONS
 		struct pairhash
@@ -82,19 +81,19 @@ using namespace mud; namespace toy
 		{
 			Contact() : m_tick(0) {}
 
-			Collider* m_col0;
-			Collider* m_col1;
+			uint32_t m_col0;
+			uint32_t m_col1;
 			size_t m_tick;
 			size_t m_index;
 		};
 
-		std::unordered_map<size_t, Contact> m_hashContacts;
+		std::unordered_map<size_t, Contact> m_hash_contacts;
 		std::vector<Contact*> m_contacts;
 
 		void remove_contact(Contact& contact, size_t index);
 
-		void remove_contact(Collider& col0, Collider& col1);
-		Contact& findContact(Collider& col0, Collider& col1);
+		void remove_contact(uint32_t col0, uint32_t col1);
+		Contact& find_contact(uint32_t col0, uint32_t col1);
 #endif
 	};
 

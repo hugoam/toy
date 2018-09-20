@@ -3,12 +3,12 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
+#if 0
 #include <visu/Sound/SoundSource.h>
 
 #include <core/Entity/Entity.h>
-#include <core/Active/Effect.h>
-#include <core/Active/Active.h>
+//#include <core/Active/Effect.h>
+//#include <core/Active/Active.h>
 
 #ifdef TOY_SOUND
 #include <snd/SoundManager.h>
@@ -18,17 +18,17 @@
 using namespace mud; namespace toy
 {
 #ifdef TOY_SOUND
-	SoundSource::SoundSource(Entity& entity, SoundManager& soundManager)
+	SoundSource::SoundSource(HSpatial spatial, SoundManager& soundManager)
 #else
-	SoundSource::SoundSource(Entity& entity)
+	SoundSource::SoundSource(HSpatial spatial)
 #endif
-		: m_entity(entity)
+		: m_spatial(spatial)
 		, m_active(entity.as<Active>())
 #ifdef TOY_SOUND
 		, m_soundManager(soundManager)
 #endif
 	{
-		//m_entity.addTransformObserver(*this);
+		//m_spatial.addTransformObserver(*this);
 
 		//m_active.effects().observe(*this);
 		//m_active.states().observe(*this);
@@ -46,7 +46,7 @@ using namespace mud; namespace toy
 	}
 #endif
 
-	/*void SoundSource::transformUpdated(Entity& entity, const vec3& pos, const quat& rot, size_t tick, bool key)
+	/*void SoundSource::transformUpdated(Spatial& spatial, const vec3& pos, const quat& rot, size_t tick, bool key)
 	{
 		for(auto& kv : m_sounds)
 		{
@@ -84,3 +84,4 @@ using namespace mud; namespace toy
 #endif
 	}
 }
+#endif

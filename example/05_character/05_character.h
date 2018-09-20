@@ -11,19 +11,19 @@
 using namespace mud;
 using namespace toy;
 
-class refl_ Human : public Complex, public Updatable
+class refl_ Human : public Entity, public Updatable
 {
 public:
-	constr_ Human(Id id, Entity& parent, const vec3& position, float radius, float height, const std::string& first_name, const std::string& last_name);
+	constr_ Human(HSpatial parent, const vec3& position, float radius, float height, const std::string& first_name, const std::string& last_name);
 	~Human();
 
-	comp_ attr_ Entity m_entity;
-	comp_ attr_ Movable m_movable = { m_entity };
-	comp_ attr_ Agent m_agent;
-	comp_ attr_ Emitter m_emitter = { m_entity };
-	comp_ attr_ Receptor m_receptor = { m_entity };
-	comp_ attr_ Actor m_actor = { m_entity };
-	comp_ attr_ Reactive m_reactive = { m_entity };
+	comp_ attr_ CSpatial m_spatial;
+	comp_ attr_ CMovable m_movable;
+	//comp_ attr_ CAgent m_agent;
+	comp_ attr_ CEmitter m_emitter;
+	comp_ attr_ CReceptor m_receptor;
+	//comp_ attr_ CActor m_actor = { m_spatial };
+	//comp_ attr_ CReactive m_reactive = { m_spatial };
 
 	attr_ std::string m_first_name;
 	attr_ std::string m_last_name;

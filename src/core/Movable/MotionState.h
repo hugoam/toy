@@ -11,59 +11,81 @@
 
 using namespace mud; namespace toy
 {
-	class TOY_CORE_EXPORT MotionSource
+	class TOY_CORE_EXPORT TransformSource
 	{
 	public:
 		virtual void update_transform(const vec3& position, const quat& rotation) = 0;
+	};
+
+	class TOY_CORE_EXPORT MotionSource
+	{
+	public:
 		virtual void update_motion(const vec3& linear_velocity, const vec3& angular_velocity) = 0;
 	};
 
     class TOY_CORE_EXPORT MotionState
     {
     public:
-		MotionState(Entity& entity, const vec3& offset)
-			: m_entity(entity), m_movable(entity.isa<Movable>() ? &entity.as<Movable>() : nullptr)
-			, m_offset(offset), m_last_updated(0)
+		MotionState(const vec3& offset = Zero3)
+			: m_offset(offset), m_last_updated(0)
 		{
-			if(m_movable)
-				m_movable->m_motion_state = this;
+			//if(m_movable)
+			//	m_movable->m_motion_state = this;
 		}
 
-		Entity& m_entity;
-		Movable* m_movable;
-		MotionSource* m_source;
+		TransformSource* m_transform_source;
+		MotionSource* m_motion_source;
 		vec3 m_offset;
 		size_t m_last_updated;
 
 		struct Transform { vec3 m_position; quat m_rotation; };
 
-		Transform transform()
+		Transform transform(const Spatial& spatial) const
 		{
-			quat rotation = m_entity.absolute_rotation();
-			vec3 position = m_entity.absolute_position() + rotate(rotation, m_offset);
+			quat rotation = spatial.absolute_rotation();
+			vec3 position = spatial.absolute_position() + rotate(rotation, m_offset);
 			return { position, rotation };
 		}
 
-		void sync_transform(const vec3& position, const quat& rotation)
+		void sync_transform(Spatial& spatial, const vec3& position, const quat& rotation)
 		{
-			quat inv_rotation = inverse(m_entity.m_parent->absolute_rotation());
-			m_entity.set_position(position - m_entity.m_parent->absolute_position() - rotate(inv_rotation, m_offset));
-			m_entity.set_rotation(rotation * inv_rotation);
+			quat inv_rotation = inverse(spatial.m_parent->absolute_rotation());
+			spatial.set_position(position - spatial.m_parent->absolute_position() - rotate(inv_rotation, m_offset));
+			spatial.set_rotation(rotation * inv_rotation);
 		}
 
-		void update(size_t tick)
+		void update_transform(Spatial& spatial)
 		{
-			quat rotation = m_entity.absolute_rotation();
-			if(m_entity.m_last_modified > m_last_updated)
+			quat rotation = spatial.absolute_rotation();
+			vec3 position = spatial.absolute_position() + rotate(rotation, m_offset);
+			m_transform_source->update_transform(position, rotation);
+		}
+
+		void update(Spatial& spatial, const quat& rotation)
+		{
+			if(spatial.m_last_modified > m_last_updated)
 			{
-				vec3 position = m_entity.absolute_position() + rotate(rotation, m_offset);
-				m_source->update_transform(position, rotation);
+				vec3 position = spatial.absolute_position() + rotate(rotation, m_offset);
+				m_transform_source->update_transform(position, rotation);
 			}
-			if(m_movable && m_movable->m_updated > m_last_updated)
+		}
+
+		void update(Spatial& spatial, size_t tick)
+		{
+			quat rotation = spatial.absolute_rotation();
+			this->update(spatial, rotation);
+			m_last_updated = tick;
+		}
+
+		void update(Spatial& spatial, Movable& movable, size_t tick)
+		{
+			quat rotation = spatial.absolute_rotation();
+			this->update(spatial, rotation);
+			if(movable.m_updated > m_last_updated)
 			{
-				vec3 linear_velocity = rotate(rotation, m_movable->m_linear_velocity);
-				vec3 angular_velocity = rotate(rotation, m_movable->m_angular_velocity);
-				m_source->update_motion(linear_velocity, angular_velocity);
+				vec3 linear_velocity = rotate(rotation, movable.m_linear_velocity);
+				vec3 angular_velocity = rotate(rotation, movable.m_angular_velocity);
+				m_motion_source->update_motion(linear_velocity, angular_velocity);
 			}
 			m_last_updated = tick;
 		}

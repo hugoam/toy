@@ -18,8 +18,8 @@
 
 using namespace mud; namespace toy
 {
-	FPSCameraController::FPSCameraController(Viewer& viewer, Camera& camera)
-		: CameraController(viewer, camera)
+	FPSCameraController::FPSCameraController(Viewer& viewer, HCamera camera, HMovable movable)
+		: CameraController(viewer, camera, movable)
 	{
 		m_key_down_handlers[Key::Q] = [this] { this->rotate_left(); };
 		m_key_down_handlers[Key::E] = [this] { this->rotate_right(); }; 
@@ -28,10 +28,10 @@ using namespace mud; namespace toy
 	void FPSCameraController::process(Viewer& viewer)
 	{
 		EventDispatch::process(viewer);
-		this->process(viewer, m_camera.m_entity, m_camera);
+		this->process(viewer, m_camera->m_spatial, m_camera);
 	}
 
-	void FPSCameraController::process(Viewer& viewer, Entity& entity, Camera& camera)
+	void FPSCameraController::process(Viewer& viewer, Spatial& spatial, Camera& camera)
 	{
 		//if(active)
 		//m_inputWidget->ui().m_cursor.hide();
@@ -41,8 +41,8 @@ using namespace mud; namespace toy
 		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
 		{
 			vec2 angle = mouse_event.m_delta / viewer.m_frame.m_size;
-			entity.pitch(-angle.x * 4);
-			entity.yaw_fixed(-angle.y * 4);
+			spatial.pitch(-angle.x * 4);
+			spatial.yaw_fixed(-angle.y * 4);
 		}
 	}
 }

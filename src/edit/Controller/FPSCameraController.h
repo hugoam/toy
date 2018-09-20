@@ -12,11 +12,11 @@ using namespace mud; namespace toy
 	class TOY_EDIT_EXPORT FPSCameraController : public CameraController
 	{
 	public:
-		FPSCameraController(Viewer& viewer, Camera& camera);
+		FPSCameraController(Viewer& viewer, HCamera camera, HMovable movable);
 
 		virtual void process(Widget& widget) { UNUSED(widget); }
 		virtual void process(Viewer& viewer);
 
-		void process(Viewer& viewer, Entity& entity, Camera& camera);
+		void process(Viewer& viewer, Spatial& spatial, Camera& camera);
 	};
 }

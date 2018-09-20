@@ -16,5 +16,5 @@ namespace mud
     // Exported types
     
     template <> _05_CHARACTER_EXPORT Type& type<Walk>() { static Type ty("Walk"); return ty; }
-    template <> _05_CHARACTER_EXPORT Type& type<Human>() { static Type ty("Human", type<mud::Complex>()); return ty; }
+    template <> _05_CHARACTER_EXPORT Type& type<Human>() { static Type ty("Human", type<mud::Entity>()); return ty; }
 }

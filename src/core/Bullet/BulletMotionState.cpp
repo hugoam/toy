@@ -7,24 +7,26 @@
 #include <core/Bullet/BulletMotionState.h>
 
 #include <core/Entity/Entity.h>
+#include <core/Physic/Collider.h>
 #include <core/Bullet.h>
 
 using namespace mud; namespace toy
 {
-    BulletMotionState::BulletMotionState(MotionState& motion_state)
+    BulletMotionState::BulletMotionState(HSpatial spatial, HCollider collider)
         : btMotionState()
-		, m_motion_state(motion_state)
+		, m_spatial(spatial)
+		, m_collider(collider)
     {}
 
 	void BulletMotionState::getWorldTransform(btTransform& transform) const
 	{
-		MotionState::Transform t = m_motion_state.transform();
+		MotionState::Transform t = m_collider->m_motion_state.transform(m_spatial);
 		transform.setOrigin(to_btvec3(t.m_position));
 		transform.setRotation(to_btquat(t.m_rotation));
 	}
 
     void BulletMotionState::setWorldTransform(const btTransform& transform)
     {
-		m_motion_state.sync_transform(to_vec3(transform.getOrigin()), to_quat(transform.getRotation()));
+		m_collider->m_motion_state.sync_transform(m_spatial, to_vec3(transform.getOrigin()), to_quat(transform.getRotation()));
     }
 }

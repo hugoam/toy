@@ -5,9 +5,7 @@
 
 #pragma once
 
-#include <proto/Complex.h>
-#include <core/Store/Array.h>
-#include <infra/Updatable.h>
+#include <proto/Entity.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Physic/Medium.h>
@@ -15,7 +13,7 @@
 
 #ifndef MUD_CPP_20
 #include <memory>
-#include <atomic>
+//#include <atomic>
 #endif
 
 using namespace mud; namespace toy
@@ -34,35 +32,39 @@ using namespace mud; namespace toy
 		- adjacent worldpages
 	*/
 
-	class refl_ TOY_CORE_EXPORT WorldPage : public NonCopy, public Updatable, public StoreObserver<Entity>
+	class refl_ TOY_CORE_EXPORT WorldPage : public Movabl
     {
 	public:
-		constr_ WorldPage(Entity& entity, Emitter& emitter, bool open, const vec3& extents);
+#ifdef TOY_ECS
+		constr_ WorldPage() {}
+#endif
+		constr_ WorldPage(HSpatial spatial, bool open, const vec3& extents);
         ~WorldPage();
 
-		attr_ Entity& m_entity;
-		attr_ Emitter& m_emitter;
-		attr_ bool m_open;
-		attr_ vec3 m_extents;
-		attr_ World& m_world;
+		WorldPage(WorldPage&& other) = default;
+		WorldPage& operator=(WorldPage&& other) = default;
+
+		attr_ HSpatial m_spatial;
+		attr_ bool m_open = true;
+		attr_ vec3 m_extents = Zero3;
+		attr_ World* m_world = nullptr;
 		attr_ size_t m_last_rebuilt = 0;
-		std::atomic<size_t> m_updated = { 0 };
+
+		size_t m_updated = 0;
+		//std::atomic<size_t> m_updated = 0;
 
 		std::vector<string> m_geometry_filter;
 
 		std::function<void(WorldPage&)> m_build_geometry;
 
-		EmitterScope& m_scope;
+		//EmitterScope& m_scope;
 
 		std::vector<Geometry> m_chunks;
-		std::vector<object_ptr<Solid>> m_solids;
+		std::vector<OSolid> m_solids;
 
-		virtual void next_frame(size_t tick, size_t delta) final;
+		void next_frame(Spatial& spatial, size_t tick, size_t delta);
 
-		virtual void handle_add(Entity& entity);
-		virtual void handle_remove(Entity& entity);
-
-		meth_ void build_geometry();
+		meth_ void build_geometry(Spatial& spatial);
 		meth_ void update_geometry();
 
 		meth_ void ground_point(const vec3& position, bool relative, vec3& outputPoint);

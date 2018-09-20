@@ -15,7 +15,6 @@
 #include <core/Medium/SoundMedium.h>
 #include <core/WorldPage/WorldPage.h>
 
-#include <core/Player/Player.h>
 #include <core/World/World.h>
 
 #include <core/Core.h>
@@ -39,13 +38,13 @@ using namespace mud; namespace toy
 		view.store().observe(m_entities);
 	}
 
-	void Vision::handle_add(Entity& owned)
+	void Vision::handle_add(Spatial& owned)
 	{
 		if(owned.isa<Camera>())
 			m_cameras.add(owned.as<Camera>());
 	}
 
-	void Vision::handle_remove(Entity& owned)
+	void Vision::handle_remove(Spatial& owned)
 	{
 		if(owned.isa<Camera>())
 			m_cameras.remove(owned.as<Camera>());
@@ -54,8 +53,8 @@ using namespace mud; namespace toy
 	Camera& Vision::addCamera(const vec3& position, float lensDistance, bool planar)
 	{
 		UNUSED(planar);
-		Camera& camera = m_world.origin().construct<OCamera>(position, lensDistance, 0.1f, 300.f).m_camera;
-		//m_owneds.add(camera.m_entity);
+		Camera& camera = m_world.origin()->construct<OCamera>(m_world.origin(), position, lensDistance, 0.1f, 300.f).m_camera;
+		//m_owneds.add(camera.m_spatial);
 		//m_cameras.add(camera);
 		return camera;
 	}

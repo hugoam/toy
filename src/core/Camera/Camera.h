@@ -8,12 +8,10 @@
 #include <proto/Proto.h>
 #include <math/Math.h>
 #include <math/Vec.h>
-#include <infra/Updatable.h>
 #include <core/Forward.h>
 #include <core/Entity/Entity.h>
 #include <core/Movable/Movable.h>
 #include <core/Physic/Scope.h>
-#include <core/Entity/EntityObserver.h>
 
 #ifndef MUD_CPP_20
 #include <functional>
@@ -22,13 +20,16 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT Camera : public Updatable
+	class refl_ TOY_CORE_EXPORT Camera
 	{
 	public:
-		constr_ Camera(Entity& entity, float lensDistance = 1.f, float near = 0.001f, float far = 1000.f);
+#ifdef TOY_ECS
+		constr_ Camera() {}
+#endif
+		constr_ Camera(HSpatial spatial, float lensDistance = 1.f, float near = 0.001f, float far = 1000.f);
 		~Camera();
 
-		attr_ Entity& m_entity;
+		attr_ HSpatial m_spatial;
 
 		attr_ float m_lens_distance = 1.f;
 		attr_ float m_lens_angle = 0.f;
@@ -45,10 +46,10 @@ using namespace mud; namespace toy
 
 		size_t m_last_updated = 0;
 
-		void next_frame(size_t tick, size_t delta);
+		void next_frame(Spatial& spatial, size_t tick, size_t delta);
 
-		void calc_lens_position();
-		void calc_lens_rotation();
+		void calc_lens_position(Spatial& spatial);
+		void calc_lens_rotation(Spatial& spatial);
 
 		void set_lens_distance(float distance);
 		void zoom(float amount);
@@ -59,7 +60,7 @@ using namespace mud; namespace toy
 		//void viewportRay(float tx, float ty, vec3& from, vec3& to);
 		//void planarRay(float tx, float ty, vec3& from, vec3& to);
 
-		vec3 lens_direction();
+		vec3 lens_direction(Spatial& spatial);
 
 	private:
 		bool m_planar;
@@ -71,17 +72,16 @@ using namespace mud; namespace toy
 #endif
 	};
 
-	class refl_ TOY_CORE_EXPORT OCamera : public Complex
+	class refl_ TOY_CORE_EXPORT OCamera : public Entity
 	{
 	public:
-		constr_ OCamera(Id id, Entity& parent, const vec3& position, float lensDistance, float nearClipDistance = 0.001f, float farClipDistance = 1000.f);
+		constr_ OCamera(HSpatial parent, const vec3& position, float lensDistance, float nearClipDistance = 0.001f, float farClipDistance = 1000.f);
 		
-		comp_ attr_ Entity m_entity;
-		comp_ attr_ Movable m_movable;
-		comp_ attr_ Receptor m_receptor;
-		comp_ attr_ Camera m_camera;
+		comp_ attr_ CSpatial m_spatial;
+		comp_ attr_ CMovable m_movable;
+		comp_ attr_ CCamera m_camera;
 	};
 
-	export_ TOY_CORE_EXPORT void jump_camera_to(Camera& camera, const vec3& position, float distance = 1.f, float rotation = 0.f);
-	export_ TOY_CORE_EXPORT void move_camera_to(Camera& camera, const vec3& position);
+	export_ TOY_CORE_EXPORT void jump_camera_to(Spatial& spatial, Camera& camera, const vec3& position, float distance = 1.f, float rotation = 0.f);
+	export_ TOY_CORE_EXPORT void move_camera_to(Spatial& spatial, Camera& camera, const vec3& position);
 }

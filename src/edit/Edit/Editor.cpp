@@ -20,8 +20,7 @@
 
 #include <core/Entity/Entity.h>
 #include <core/World/World.h>
-#include <core/View/Vision.h>
-#include <core/Selector/Selector.h>
+//#include <core/Selector/Selector.h>
 
 #include <gfx/GfxSystem.h>
 #include <gfx-ui/GfxEdit.h>
@@ -42,23 +41,25 @@
 
 using namespace mud; namespace toy
 {
+#if 0
 	void context_menu(Widget& parent, Selector& selector, Ref object)
 	{
 		UNUSED(parent); UNUSED(selector); UNUSED(object);
-		//popup(parent, [&] { parent.destroy(); }, nullptr);
+		popup(parent, [&] { parent.destroy(); }, nullptr);
 
-		//if(selector.m_selection.has(val<IdObject>(object)))
-		//	for(auto& method : selector.m_methods.store())
-		//		if(ui::button(parent, method->m_name).activated())
-		//			selector.execute(*method);
-		//else
-		//	for(auto& action : selector.m_actions.store())
-		//		if(ui::button(parent, action->m_name).activated())
-		//			selector.execute(*action);
+		if(selector.m_selection.has(val<IdObject>(object)))
+			for(auto& method : selector.m_methods.store())
+				if(ui::button(parent, method->m_name).activated())
+					selector.execute(*method);
+		else
+			for(auto& action : selector.m_actions.store())
+				if(ui::button(parent, action->m_name).activated())
+					selector.execute(*action);
 
-		//for(auto& action : m_echobject.m_methods)
-		//this->emplace<Deck>().maker(&make_device<CarbonMethod, DMethod>).tstore<CarbonMethod>();
+		for(auto& action : m_echobject.m_methods)
+		this->emplace<Deck>().maker(&make_device<CarbonMethod, DMethod>).tstore<CarbonMethod>();
 	}
+#endif
 
 	string to_icon(const string& name)
 	{
@@ -95,6 +96,7 @@ using namespace mud; namespace toy
 			object_item(self, object);
 	}
 
+#if 0
 	void edit_selector(Widget& parent, Selector& selector)
 	{
 		Widget& self = section(parent, "Selector");
@@ -103,6 +105,7 @@ using namespace mud; namespace toy
 		edit_selection(tabber, selector.m_selection); // "Selection"
 		edit_selection(tabber, selector.m_targets); // "Targets"
 	}
+#endif
 
 	void scene_edit(Widget& parent, World& world)
 	{
@@ -123,7 +126,7 @@ using namespace mud; namespace toy
 		for(Type* type : system().m_types)
 			if(g_class[type->m_id])
 			{
-				if(has_component(cls(*type), mud::type<Entity>()))
+				if(has_component(cls(*type), mud::type<Spatial>()))
 					types.push_back(type);
 			}
 		return types;
@@ -183,39 +186,47 @@ using namespace mud; namespace toy
 			editor_menu(self, name_group.second);
 	}
 
-	string entity_name(Entity& entity)
+	string entity_name(HSpatial spatial)
 	{
-		return string(entity.m_complex.m_type.m_name) + ":" + to_string(entity.m_id);
+#ifdef TOY_ECS
+		return to_string(spatial.m_handle);
+#else
+		return string(spatial.m_entity.m_type.m_name) + ":" + to_string(spatial.m_id);
+#endif
 	}
 
-	string entity_icon(Entity& entity)
+	string entity_icon(Spatial& spatial)
 	{
-		return "(" + string(entity.m_complex.m_type.m_name) + ")";
+#ifdef TOY_ECS
+		return "";
+#else
+		return "(" + string(spatial.m_entity.m_type.m_name) + ")";
+#endif
 	}
 
-	void outliner_node(Widget& parent, Entity& entity, std::vector<Ref>& selection)
+	void outliner_node(Widget& parent, HSpatial spatial, std::vector<Ref>& selection)
 	{
-		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
+		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(spatial).c_str(), entity_name(spatial).c_str() }, false, false);
 
-		self.m_header->set_state(SELECTED, vector_has(selection, Ref(&entity.m_complex)));
+		self.m_header->set_state(SELECTED, vector_has(selection, Ref(spatial->m_entity)));
 
 		if(self.m_header->activated())
-			vector_select(selection, Ref(&entity.m_complex));
+			vector_select(selection, Ref(spatial->m_entity));
 
 		//object_item(self, object);
 
 		if(self.m_body)
-			for(Entity* child : entity.m_contents.store())
+			for(HSpatial child : spatial->m_contents)
 			{
-				outliner_node(*self.m_body, *child, selection);
+				outliner_node(*self.m_body, child, selection);
 			}
 	}
 
-	void outliner_graph(Widget& parent, Entity& entity, std::vector<Ref>& selection)
+	void outliner_graph(Widget& parent, HSpatial spatial, std::vector<Ref>& selection)
 	{
 		ScrollSheet& sheet = ui::scroll_sheet(parent);
 		Widget& tree = ui::tree(*sheet.m_body);
-		outliner_node(tree, entity, selection);
+		outliner_node(tree, spatial, selection);
 	}
 
 	void editor_graph(Widget& parent, Editor& editor, Selection& selection)
@@ -225,7 +236,7 @@ using namespace mud; namespace toy
 		if(!editor.m_edited_world)
 			return;
 
-		Entity& origin = editor.m_edited_world->origin();
+		HSpatial origin = editor.m_edited_world->origin();
 		//structure_view(*self.m_body, Ref(&origin), selection);
 		outliner_graph(*self.m_body, origin, selection);
 	}
@@ -264,7 +275,7 @@ using namespace mud; namespace toy
 		static Docksystem& docksystem = editor_docksystem();
 		Dockspace& dockspace = ui::dockspace(parent, docksystem);
 
-		std::vector<Type*> library_types = { &type<Entity>(), &type<World>() };
+		std::vector<Type*> library_types = { &type<Spatial>(), &type<World>() };
 		if(Widget* dock = ui::dockitem(dockspace, "Outliner", carray<uint16_t, 2>{ 0U, 0U }))
 			editor_graph(*dock, editor, editor.m_selection);
 		if(Widget* dock = ui::dockitem(dockspace, "Library", carray<uint16_t, 2>{ 0U, 0U }))

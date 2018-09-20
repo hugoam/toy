@@ -5,12 +5,11 @@
 
 #pragma once
 
-#include <infra/Updatable.h>
 #include <math/Vec.h>
+#include <pool/Pool.h>
 #include <core/Forward.h>
 #include <core/Physic/CollisionGroup.h>
 #include <core/Physic/CollisionShape.h>
-#include <core/Entity/EntityObserver.h>
 #include <core/Movable/MotionState.h>
 
 #ifndef MUD_CPP_20
@@ -22,27 +21,78 @@ using namespace mud; namespace toy
 	struct refl_ TOY_CORE_EXPORT Collision
 	{
 		Collision() {}
-		Collision(Collider* first, Collider* second, const vec3& hit_point) : m_first(first), m_second(second), m_hit_point(hit_point) {}
-		attr_ Collider* m_first = nullptr;
-		attr_ Collider* m_second = nullptr;
+		Collision(uint32_t first, uint32_t second, const vec3& hit_point) : m_first(first), m_second(second), m_hit_point(hit_point) {}
+		attr_ uint32_t m_first = {};
+		attr_ uint32_t m_second = {};
 		attr_ vec3 m_hit_point = Zero3;
 	};
 
-	class refl_ TOY_CORE_EXPORT ColliderImpl : public MotionSource
+	class refl_ TOY_CORE_EXPORT ColliderImpl : public TransformSource
 	{
 	public:
 		virtual ~ColliderImpl() {}
 
-        //virtual void update() = 0;
-		virtual void force_update() = 0;
-
 		virtual void update_transform(const vec3& position, const quat& rotation) = 0;
-		virtual void update_motion(const vec3& linear_velocity, const vec3& angular_velocity) = 0;
 		virtual void update_transform() = 0;
 
 		virtual void project(const vec3& position, std::vector<Collision>& collisions, short int mask) = 0;
 		virtual void raycast(const vec3& position, std::vector<Collision>& collisions, short int mask) = 0;
 		virtual Collision raycast(const vec3& position, short int mask) = 0;
+	};
+
+	class refl_ TOY_CORE_EXPORT ColliderObject
+	{
+	public:
+		virtual ~ColliderObject() {}
+		virtual void add_contact(Collider& object) { UNUSED(object); }
+		virtual void remove_contact(Collider& object) { UNUSED(object); }
+	};
+
+    class refl_ TOY_CORE_EXPORT Collider
+    {
+	public:
+		constr_ Collider() {}
+		constr_ Collider(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init = true);
+        virtual ~Collider();
+
+		Collider(Collider&& other) = default;
+		Collider& operator=(Collider&& other) = default;
+
+		attr_ HSpatial m_spatial;
+		attr_ HMovable m_movable;
+		attr_ CollisionShape m_collision_shape;
+		attr_ Medium* m_medium = nullptr;
+		attr_ CollisionGroup m_group;
+
+		attr_ ColliderObject* m_object = nullptr;
+
+		PhysicMedium* m_world;
+		object_ptr<ColliderImpl> m_impl;
+
+		attr_ ColliderImpl& impl() { return *m_impl; }
+
+		MotionState m_motion_state;
+
+		void init(object_ptr<ColliderImpl> impl);
+
+		void next_frame(size_t tick, size_t delta);
+		void next_frame(Spatial& spatial, size_t tick, size_t delta);
+		void next_frame(Spatial& spatial, Movable& movable, size_t tick, size_t delta);
+
+		ColliderImpl* operator->() { return m_impl.get(); }
+		const ColliderImpl* operator->() const { return m_impl.get(); }
+
+		static OCollider create(SparsePool<Collider>& pool, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group);
+		static void destroy(HCollider solid);
+    };
+
+	class refl_ TOY_CORE_EXPORT SolidImpl : public TransformSource, public MotionSource
+	{
+	public:
+		virtual ~SolidImpl() {}
+
+		virtual void update_transform(const vec3& position, const quat& rotation) = 0;
+		virtual void update_motion(const vec3& linear_velocity, const vec3& angular_velocity) = 0;
 
 		meth_ virtual vec3 linear_velocity() = 0;
 		meth_ virtual vec3 angular_velocity() = 0;
@@ -60,56 +110,45 @@ using namespace mud; namespace toy
 		virtual void impulse_torque(const vec3& torque) = 0;
 	};
 
-	class refl_ TOY_CORE_EXPORT ColliderObject
+	class refl_ TOY_CORE_EXPORT Solid
 	{
 	public:
-		virtual ~ColliderObject() {}
-		virtual void add_contact(Collider& object) { UNUSED(object); }
-		virtual void remove_contact(Collider& object) { UNUSED(object); }
+		constr_ Solid() {}
+		constr_ Solid(HSpatial spatial, HMovable movable, OCollider collider, bool isstatic, float mass = 0.f);
+		virtual ~Solid();
+
+		Solid(Solid&& other) = default;
+		Solid& operator=(Solid&& other) = default;
+
+		attr_ HSpatial m_spatial;
+		attr_ OCollider m_collider;
+		attr_ bool m_static = false;
+		attr_ float m_mass = 0.f;
+
+		void init(object_ptr<SolidImpl> impl);
+
+		object_ptr<SolidImpl> m_impl;
+
+		SolidImpl* operator->() { return m_impl.get(); }
+		const SolidImpl* operator->() const { return m_impl.get(); }
+
+		static OSolid create(SparsePool<Collider>& colliders, SparsePool<Solid>& solids, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass = 0.f);
+		static OSolid create(SparsePool<Collider>& colliders, SparsePool<Solid>& solids, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, bool isstatic, float mass = 0.f);
+		static void destroy(HSolid solid);
+	};
+}
+
+namespace mud
+{
+	template <>
+	struct DestroyHandle<toy::Collider>
+	{
+		static void destroy(const OwnedHandle<toy::Collider>& handle) { toy::Collider::destroy(handle); }
 	};
 
-    class refl_ TOY_CORE_EXPORT Collider : public NonCopy, public Updatable, public HookObserver
-    {
-	public:
-		constr_ Collider(Entity& entity, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init = true);
-        virtual ~Collider();
-
-		attr_ Entity& m_entity;
-		attr_ CollisionShape m_collision_shape;
-		attr_ Medium& m_medium;
-		attr_ CollisionGroup m_group;
-
-		attr_ ColliderObject* m_object = nullptr;
-
-		PhysicMedium& m_world;
-		object_ptr<ColliderImpl> m_impl;
-
-		attr_ ColliderImpl& impl() { return *m_impl; }
-
-		MotionState m_motion_state;
-
-		void init();
-
-		void next_frame(size_t tick, size_t delta);
-
-		virtual void unhooked();
-		virtual void hooked();
-
-		ColliderImpl* operator->() { return m_impl.get(); }
-		const ColliderImpl* operator->() const { return m_impl.get(); }
-    };
-
-	class refl_ TOY_CORE_EXPORT Solid : public Collider
+	template <>
+	struct DestroyHandle<toy::Solid>
 	{
-	public:
-		constr_ Solid(Entity& entity, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass = 0.f);
-		constr_ Solid(Entity& entity, const CollisionShape& collision_shape, bool isstatic, float mass = 0.f);
-		~Solid();
-
-		bool m_static;
-		float m_mass;
-
-		virtual void unhooked();
-		virtual void hooked();
+		static void destroy(const OwnedHandle<toy::Solid>& handle) { toy::Solid::destroy(handle); }
 	};
 }

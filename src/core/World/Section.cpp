@@ -5,149 +5,27 @@
 
 #include <core/World/Section.h>
 
-#include <infra/Updatable.h>
-#include <infra/Vector.h>
+#include <math/Timer.h>
 
-#ifndef MUD_CPP_20
-#include <memory>
-#include <thread>
-#endif
-
-#define NUM_THREADS 2
+#include <algorithm>
 
 using namespace mud; namespace toy
 {
-	TaskSection::TaskSection(short int id)
-		: m_id(id)
-		, m_clock()
-		, m_last_tick(0)
-		, m_destroy(false)
+	JobPump::JobPump()
 	{}
 
-	TaskSection::~TaskSection()
-	{}
-
-	QueueSection::QueueSection(short int id)
-		: TaskSection(id)
-		, m_thread(make_unique<std::thread>([this] { this->update(); }))
-		, m_task_queue(50)
-	{}
-
-	void QueueSection::update()
-	{
-		if(!m_task_queue.empty())
-		{
-			TaskFunc task;
-			m_task_queue.pop(task);
-			task();
-		}
-	}
-
-	MonoSection::MonoSection(short int id, bool thread)
-		: TaskSection(id)
-		, m_tasks()
-#ifdef MUD_PLATFORM_EMSCRIPTEN
-		, m_thread(nullptr)
-#else
-		, m_thread(thread ? make_unique<std::thread>([this] { while(!m_destroy) this->update(); }) : nullptr)
-#endif
-	{}
-
-	MonoSection::~MonoSection()
-	{
-		if(m_thread)
-		{
-			m_destroy = true;
-			m_thread->join();
-		}
-	}
-
-	void MonoSection::add_task(Updatable* task)
-	{
-#ifdef MUD_PLATFORM_EMSCRIPTEN
-		m_tasks.push_back(task);
-#else
-		m_mutex.lock();
-		m_tasks.push_back(task);
-		m_mutex.unlock();
-#endif
-	}
-
-	void MonoSection::remove_task(Updatable* task)
-	{
-#ifdef MUD_PLATFORM_EMSCRIPTEN
-		vector_remove(m_tasks, task);
-#else
-		m_mutex.lock();
-		vector_remove(m_tasks, task);
-		m_mutex.unlock();
-#endif
-	}
-
-	void MonoSection::update()
+	void JobPump::pump()
 	{
 		size_t tick = m_clock.readTick();
 		size_t delta = m_clock.stepTick();
 
-		m_last_tick = tick;
-
-		size_t i = 0;
-
-		m_tasks_buffer.clear();
-
-#ifdef MUD_PLATFORM_EMSCRIPTEN
-		m_tasks_buffer.assign(m_tasks.begin(), m_tasks.end());
-#else
-		m_mutex.lock();
-		m_tasks_buffer.assign(m_tasks.begin(), m_tasks.end());
-		m_mutex.unlock();
-#endif
-
-		for(Updatable* task : m_tasks_buffer)
-		{
-			task->next_frame(tick, delta);
-			++i;
-		}
+		for(auto& step : m_steps)
+			step.m_handler(tick, delta);
 	}
 
-	ParallelSection::ParallelSection(short int id)
-		: TaskSection(id)
-		, m_thread(make_unique<std::thread>([this] { this->update(); }))
-		, m_workers()
-		, m_task_cursor(0)
-		, m_task_queue_size(50)
-		, m_task_queue(50)
+	void JobPump::add_step(Entry entry)
 	{
-		for(int i = 0; i != NUM_THREADS; ++i)
-			m_workers.emplace_back(make_unique<std::thread>([this] { this->worker_update(); }));
+		m_steps.push_back(entry);
+		std::sort(m_steps.begin(), m_steps.end(), [&](const Entry& a, const Entry& b) { return a.m_task < b.m_task; });
 	}
-
-	void ParallelSection::update()
-	{
-		if(!m_task_queue.empty())
-			return;
-
-		//int numTasks = 0;
-		//for(; numTasks != m_task_queue_size && m_task_cursor != m_world->getTasks(m_id).size(); ++numTasks, ++mTaskCursor)
-		//	m_task_queue.push(m_world->getTasks(m_id)[mTaskCursor]);
-		
-		m_task_cursor += m_task_queue_size;
-	}
-
-	void ParallelSection::worker_update()
-	{
-		if(m_task_queue.empty())
-			return;
-
-		// Symbolic time : double timeStep = m_world->stepClock(m_clock->step());
-		size_t tick = m_clock.readTick();
-		size_t delta = m_clock.stepTick();
-
-		m_last_tick = tick;
-
-		Updatable* task;
-		m_task_queue.pop(task);
-		task->next_frame(tick, delta);
-	}
-
 }

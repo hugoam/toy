@@ -74,7 +74,7 @@ using namespace mud; namespace toy
 						observer.handle_remove(*pair.first);
 		}
 
-		void resize(T& object) { if(object.m_id >= m_store.size()) m_store.resize(object.m_id * 2); }
+		void resize(T& object) { if(object.m_id >= m_store.size()) m_store.resize((object.m_id + 1) * 2); }
 
 		inline size_t count(T& object) const { return m_store.at(object.m_id).second; }
 		inline size_t& countref(T& object) { return m_store.at(object.m_id).second; }

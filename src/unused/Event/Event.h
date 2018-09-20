@@ -40,13 +40,13 @@ using namespace mud; namespace toy
 	class TOY_CORE_EXPORT EventSubscriber
 	{
 	public:
-		EventSubscriber(Type& eventType, object_ptr<EventHandler_> handler);
+		EventSubscriber(Type& eventType, object_ptr<EventHandler> handler);
 
 		void call(Event& event);
 
 	public:
 		Type& m_eventType;
-		object_ptr<EventHandler_> m_handler;
+		object_ptr<EventHandler> m_handler;
 
 		VarDict m_filters;
 	};

@@ -12,9 +12,10 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT CollisionShape : public NonCopy
+	class refl_ TOY_CORE_EXPORT CollisionShape
 	{
 	public:
+		constr_ CollisionShape();
 		constr_ CollisionShape(const Shape& shape, const vec3& center = Zero3, float margin = 0.f);
 		~CollisionShape();
 
@@ -22,8 +23,8 @@ using namespace mud; namespace toy
 		CollisionShape& operator=(const CollisionShape& shape);
 
 		object_ptr<Shape> m_shape;
-		vec3 m_center;
-		float m_margin;
+		vec3 m_center = Zero3;
+		float m_margin = 0.f;
 
 		bool checkInside(const vec3& position) { UNUSED(position); return true; }
 	};

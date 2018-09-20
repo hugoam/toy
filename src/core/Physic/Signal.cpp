@@ -22,7 +22,7 @@ using namespace mud; namespace toy
 		, m_on(false)
 		, m_occluding()
 	{
-		if(!m_emitter->m_medium.m_occlusions)
+		if(!m_emitter->m_medium->m_occlusions)
 			this->on();
 
 		update();
@@ -36,18 +36,18 @@ using namespace mud; namespace toy
 
 	void Signal::update()
 	{
-		if(m_emitter->m_medium.m_occlusions)
+		if(m_emitter->m_medium->m_occlusions)
 		{
 			std::vector<Collision> occluding;
 
-			m_emitter->m_impl->raycast(m_receptor->m_entity.m_position, occluding, CM_OBSTACLE);
+			Spatial& receptor = m_receptor->m_spatial;
+			m_emitter->m_impl->raycast(receptor.m_position, occluding, CM_OBSTACLE);
 
 			m_occluding.clear();
+			//for(const Collision& coll : occluding)
+			//	m_occluding.push_back(static_cast<Obstacle*>(coll.m_second));
 
-			for(const Collision& coll : occluding)
-				m_occluding.push_back(static_cast<Obstacle*>(coll.m_second));
-
-			m_strength = m_emitter->m_medium.throughput(*m_emitter, *m_receptor, m_occluding);
+			m_strength = m_emitter->m_medium->throughput(*m_emitter, *m_receptor, m_occluding);
 
 			if(m_strength > 0.f && !m_on)
 				this->on();
@@ -59,14 +59,14 @@ using namespace mud; namespace toy
 	void Signal::on()
 	{
 		m_on = true;
-		m_receptor->m_scope.add(m_emitter->m_entity);
-		m_emitter->m_scope.add(m_receptor->m_entity);
+		m_receptor->add_scope(m_emitter->m_spatial);
+		m_emitter->add_scope(m_receptor->m_spatial);
 	}
 
 	void Signal::off()
 	{
 		m_on = false;
-		m_receptor->m_scope.remove(m_emitter->m_entity);
-		m_emitter->m_scope.remove(m_receptor->m_entity);
+		m_receptor->remove_scope(m_emitter->m_spatial);
+		m_emitter->remove_scope(m_receptor->m_spatial);
 	}
 }

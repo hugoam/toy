@@ -6,7 +6,7 @@
 #include <refl/System.h>
 #include <refl/Class.h>
 #include <shell/Forward.h>
-#include <core/Player/Player.h>
+#include <core/User.h>
 
 #include <edit/Editor/Editor.h>
 #include <lang/Lua.h>
@@ -101,7 +101,7 @@ using namespace mud; namespace toy
 		VirtualMethod m_call;
 	};
 
-	TOY_SHELL_EXPORT Viewer& game_viewport(Widget& parent, GameScene& scene, Camera& camera);
+	TOY_SHELL_EXPORT Viewer& game_viewport(Widget& parent, GameScene& scene, HCamera camera, HMovable movable);
 	TOY_SHELL_EXPORT func_ void paint_physics(Gnode& parent, World& world);
 	TOY_SHELL_EXPORT func_ void physic_painter(GameScene& scene);
 

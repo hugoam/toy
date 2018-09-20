@@ -12,14 +12,12 @@
 
 using namespace mud; namespace toy
 {
-	OWaypoint::OWaypoint(Id id, Entity& parent, const vec3& position)
-		: Complex(id, type<OWaypoint>())
-		, m_entity(id, *this, parent, position, ZeroQuat)
+	Waypoint::Waypoint(HSpatial parent, const vec3& position)
+		: m_spatial(*this, *this, parent, position, ZeroQuat)
 	{}
 
-	DetourPath::DetourPath(Entity& entity, Pathfinder& pathfinder, const vec3& origin, const vec3& destination)
-		: m_entity(entity)
-		, m_pathfinder(pathfinder)
+	DetourPath::DetourPath(Pathfinder& pathfinder, const vec3& origin, const vec3& destination)
+		: m_pathfinder(pathfinder)
 		, m_origin(origin)
 		, m_destination(destination)
 	{}

@@ -101,8 +101,8 @@ void paint_scan_star(Gnode& parent, Star& star, Player& player)
 	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol(Colour::Invisible), ITEM_SELECTABLE);
 	gfx::shape(parent, Sphere(0.01f), Symbol(Colour::White * 4.f), ITEM_SELECTABLE);
 
-	bool hovered = player.m_hovered_item == Ref(&star);
-	bool selected = player.m_selected_item == Ref(&star);
+	bool hovered = player.m_hovered_item == &star;
+	bool selected = player.m_selected_item == &star;
 
 	Colour colour = star.m_commander ? star.m_commander->m_colour * 3.f : Colour{ 0.3f, 0.3f, 0.3f, 0.1f };
 	if(player.m_mode == GameStage::Empire && star.m_commander != player.m_commander)
@@ -261,8 +261,8 @@ void paint_scan_fleet(Gnode& parent, Fleet& fleet, Player& player)
 		visu.m_updated = fleet.m_ships_updated;
 	}
 
-	bool hovered = player.m_hovered_item == Ref(&fleet);
-	bool selected = player.m_selected_item == Ref(&fleet);
+	bool hovered = player.m_hovered_item == &fleet;
+	bool selected = player.m_selected_item == &fleet;
 
 	Colour colour = fleet.m_commander->m_colour * 2.5f;
 	if(player.m_mode == GameStage::Empire && fleet.m_commander != player.m_commander)
@@ -404,7 +404,7 @@ void paint_combat_fleet(Gnode& parent, const std::vector<CombatFleet>& flotilla,
 		for(uint8_t i = 0; i < 8; ++i)
 			for(VisuShip& ship : fleet->m_visu.m_ships[i])
 			{
-				Gnode& node = gfx::node(parent, Ref(&ship), fleet->m_entity.m_position + ship.m_position);
+				Gnode& node = gfx::node(parent, Ref(&ship), fleet->m_spatial->m_position + ship.m_position);
 
 				if(ship.m_destroyed)
 				{
@@ -426,8 +426,8 @@ void paint_combat_fleet(Gnode& parent, const std::vector<CombatFleet>& flotilla,
 				{
 					if(ship.m_ray.m_end == Zero3)
 					{
-						vec3 source = fleet->m_entity.m_position + ship.m_position;
-						vec3 target = target_fleet->m_entity.m_position + random_element(target_fleet->m_visu.m_points.m_points);
+						vec3 source = fleet->m_spatial->m_position + ship.m_position;
+						vec3 target = target_fleet->m_spatial->m_position + random_element(target_fleet->m_visu.m_points.m_points);
 						quat angle = look_at(source, target);
 						ship.m_ray = { source, target, normalize(target - source), length(target - source), angle, 0.f };
 					}
@@ -451,9 +451,9 @@ void paint_combat(Gnode& parent, SpatialCombat& combat)
 	if(combat.m_state == SpatialCombat::APPROACH)
 	{
 		//for(CombatFleet& combat_fleet : combat.m_attack)
-		//	combat_fleet.m_fleet->m_entity.m_position = combat_fleet.m_fleet->base_position() - offset;
+		//	combat_fleet.m_fleet->m_spatial.m_position = combat_fleet.m_fleet->base_position() - offset;
 		//for(CombatFleet& combat_fleet : combat.m_defense)
-		//	combat_fleet.m_fleet->m_entity.m_position = combat_fleet.m_fleet->base_position() + offset;
+		//	combat_fleet.m_fleet->m_spatial.m_position = combat_fleet.m_fleet->base_position() + offset;
 
 		combat.m_state = SpatialCombat::ENGAGE;
 	}
@@ -493,9 +493,9 @@ void paint_combat(Gnode& parent, SpatialCombat& combat)
 		destroy_ships(*fleet.m_fleet, fleet.m_hull_losses.data());
 
 	for(CombatFleet& fleet : combat.m_attack)
-		fleet.m_fleet->m_entity.m_position = lerp(fleet.m_fleet->m_slot, center, combat.m_t_position);
+		fleet.m_fleet->m_spatial->m_position = lerp(fleet.m_fleet->m_slot, center, combat.m_t_position);
 	for(CombatFleet& fleet : combat.m_defense)
-		fleet.m_fleet->m_entity.m_position = lerp(fleet.m_fleet->m_slot, center, combat.m_t_position);
+		fleet.m_fleet->m_spatial->m_position = lerp(fleet.m_fleet->m_slot, center, combat.m_t_position);
 
 	paint_combat_fleet(parent, combat.m_attack, combat.m_defense, delta, combat.m_dt_intensity);
 	paint_combat_fleet(parent, combat.m_defense, combat.m_attack, delta, combat.m_dt_intensity);

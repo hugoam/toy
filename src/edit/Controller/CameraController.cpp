@@ -12,16 +12,16 @@
 
 using namespace mud; namespace toy
 {
-	CameraController::CameraController(Viewer& viewer, Camera& camera)
+	CameraController::CameraController(Viewer& viewer, HCamera camera, HMovable movable)
 		: m_viewer(viewer)
 		, m_camera(camera)
-		, m_movable(camera.m_entity.as<Movable>())
+		, m_movable(movable)
 		, m_velocity(50.f)
 		, m_angular_velocity(2.f)
 	{
 		default_velocities();
 
-		m_movable.set_acceleration(vec3(0.f), vec3(0.f, 0.f, m_velocity));
+		m_movable->set_acceleration(vec3(0.f), vec3(0.f, 0.f, m_velocity));
 	}
 
 	void CameraController::default_velocities()
@@ -43,54 +43,54 @@ using namespace mud; namespace toy
 		for(auto& key_velocity : velocities)
 		{
 			vec3 velocity = key_velocity.second;
-			m_key_down_handlers[key_velocity.first] = [this, velocity] { m_movable.modify_linear_velocity(velocity); };
-			m_key_up_handlers[key_velocity.first] = [this, velocity] { m_movable.modify_linear_velocity(-velocity); };
+			m_key_down_handlers[key_velocity.first] = [this, velocity] { m_movable->modify_linear_velocity(velocity); };
+			m_key_up_handlers[key_velocity.first] = [this, velocity] { m_movable->modify_linear_velocity(-velocity); };
 		}
 	}
 
 	void CameraController::stop()
 	{
-		m_movable.set_linear_velocity(Zero3);
-		m_movable.set_angular_velocity(Zero3);
+		m_movable->set_linear_velocity(Zero3);
+		m_movable->set_angular_velocity(Zero3);
 	}
 
 	void CameraController::rotate_left()
 	{
-		m_movable.modify_angular_velocity(Y3 * -m_angular_velocity);
+		m_movable->modify_angular_velocity(Y3 * -m_angular_velocity);
 	}
 
 	void CameraController::rotate_right()
 	{
-		m_movable.modify_angular_velocity(Y3 * m_angular_velocity);
+		m_movable->modify_angular_velocity(Y3 * m_angular_velocity);
 	}
 
 	void CameraController::stop_rotate_left()
 	{
-		m_movable.modify_angular_velocity(Y3 * m_angular_velocity);
+		m_movable->modify_angular_velocity(Y3 * m_angular_velocity);
 	}
 
 	void CameraController::stop_rotate_right()
 	{
-		m_movable.modify_angular_velocity(Y3 * -m_angular_velocity);
+		m_movable->modify_angular_velocity(Y3 * -m_angular_velocity);
 
 	}
 	void CameraController::zoom_in()
 	{
-		m_camera.zoom(1.2f);//mCamera->zoom(3.f);
+		m_camera->zoom(1.2f);//mCamera->zoom(3.f);
 	}
 
 	void CameraController::zoom_out()
 	{
-		m_camera.zoom(0.8f);//mCamera->zoom(-3.f);
+		m_camera->zoom(0.8f);//mCamera->zoom(-3.f);
 	}
 
 	void CameraController::pitch_lens_up()
 	{
-		m_camera.pitch_lens(c_pi / 12.f);
+		m_camera->pitch_lens(c_pi / 12.f);
 	}
 
 	void CameraController::pitch_lens_down()
 	{
-		m_camera.pitch_lens(-c_pi / 12.f);
+		m_camera->pitch_lens(-c_pi / 12.f);
 	}
 }

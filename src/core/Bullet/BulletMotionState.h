@@ -10,8 +10,8 @@
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Movable/MotionState.h>
+#include <core/Structs.h>
 
-/* bullet */
 class TOY_CORE_EXPORT btMotionState;
 #include <LinearMath/btMotionState.h>
 
@@ -20,9 +20,10 @@ using namespace mud; namespace toy
     class TOY_CORE_EXPORT BulletMotionState : public btMotionState
     {
     public:
-        BulletMotionState(MotionState& motionState);
+        BulletMotionState(HSpatial spatial, HCollider collider);
 
-		MotionState& m_motion_state;
+		HSpatial m_spatial;
+		HCollider m_collider;
 
 		virtual void getWorldTransform(btTransform& worldTransform) const;
 		virtual void setWorldTransform(const btTransform& worldTransform);

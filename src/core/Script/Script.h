@@ -7,6 +7,7 @@
 
 #include <infra/NonCopy.h>
 #include <core/Forward.h>
+#include <core/Entity/Entity.h>
 
 #include <string>
 
@@ -19,14 +20,17 @@ using namespace mud; namespace toy
 
 	};
 
-	class refl_ TOY_CORE_EXPORT EntityScript : public NonCopy
+	class refl_ TOY_CORE_EXPORT EntityScript
 	{
 	public:
-		constr_ EntityScript(Entity& entity);
+		constr_ EntityScript() {}
+		constr_ EntityScript(HSpatial spatial);
 		
-		attr_ Entity& m_entity;
+		attr_ HSpatial m_spatial;
 		attr_ Script* m_logic_script = nullptr;
 		attr_ Script* m_render_script = nullptr;
+
+		void next_frame(size_t tick, size_t delta);
 
 		void run_logic();
 		void run_render(); // Gnode& parent

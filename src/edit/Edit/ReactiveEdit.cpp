@@ -3,7 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
+#if 0
 #include <edit/Types.h>
 #include <edit/Edit/ReactiveEdit.h>
 
@@ -20,3 +20,4 @@ using namespace mud; namespace toy
 			object_item(parent, Ref(behavior.get()));
 	}
 }
+#endif

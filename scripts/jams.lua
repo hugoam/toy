@@ -39,5 +39,5 @@ end
 jam_project("minimal",  { minimal })
 jam_project("space",    { space })
 jam_project("platform", { platform }, { "05_character", "17_wfc" })
-jam_project("blocks",   { blocks, _G["05_character"] })
+jam_project("blocks",   { blocks })
 jam_project("wren",     { script })

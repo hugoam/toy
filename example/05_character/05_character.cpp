@@ -2,26 +2,21 @@
 #include <05_character/05_character.h>
 #include <meta/05_character/Module.h>
 
-Human::Human(Id id, Entity& parent, const vec3& position, float radius, float height, const std::string& first_name, const std::string& last_name)
-	: Complex(id, type<Human>(), m_movable, m_agent, m_emitter, m_receptor, m_actor, m_reactive, *this)
-	, m_entity(id, *this, parent, position, ZeroQuat)
-	, m_agent(m_entity, radius, height)
+Human::Human(HSpatial parent, const vec3& position, float radius, float height, const std::string& first_name, const std::string& last_name)
+	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	, m_agent(*this, m_spatial, radius, height)
 	, m_first_name(first_name)
 	, m_last_name(last_name)
 	, m_next_change(5.f)
-	//, m_solid(make_unique<Solid>(m_entity, *this, CollisionShape(Cylinder(0.35f, 2.f), Y3 * 1.f), SolidMedium::me, CM_SOLID, false, 1.f))
+	//, m_solid(make_unique<Solid>(m_spatial, *this, CollisionShape(Cylinder(0.35f, 2.f), Y3 * 1.f), SolidMedium::me, CM_SOLID, false, 1.f))
 {
-	m_entity.m_world.add_task(this, 3); // TASK_GAMEOBJECT
-
-	//m_entity.as<Active>().addState("idle", 1, 0.5f);
+	//m_spatial.as<Active>().addState("idle", 1, 0.5f);
 
 	m_states.push_back({ "Idle", 1.f });
 }
 
 Human::~Human()
-{
-	m_entity.m_world.remove_task(this, 3);
-}
+{}
 
 inline const std::vector<Ref>& indexed_objects(Type& type) { return indexer(type).m_objects; }
 
@@ -86,7 +81,7 @@ void Walk::abort()
 
 void paint_human(Gnode& parent, Human& human)
 {
-	Gnode& self = gfx::node(parent, Ref(&human), human.m_entity.m_position, human.m_entity.m_rotation);
+	Gnode& self = gfx::node(parent, Ref(&human), human.m_spatial.m_position, human.m_spatial.m_rotation);
 	gfx::shape(self, Circle(0.35f), Symbol(), ITEM_SELECTABLE);
 	Item* item = gfx::model(self, "human00", ITEM_SELECTABLE);
 	Animated& animated = gfx::animated(self, *item);
@@ -201,11 +196,11 @@ public:
 			gfx::directional_light_node(groot);
 			gfx::radiance(groot, "radiance/tiber_1_1k.hdr", BackgroundMode::None);
 
-			static Human& character = game.m_world->origin().construct<Human>(Zero3, 0.35f, 2.f, "Robert", "Citrus");
+			static Human& character = construct<Human>(game.m_world->origin(), Zero3, 0.35f, 2.f, "Robert", "Citrus");
 			paint_human(groot, character);
 
 			human_controller_3rdperson(viewer, character);
-			//orbit.set_target(character.m_entity.m_position);
+			//orbit.set_target(character.m_spatial.m_position);
 		};
 		//edit_context(app.m_ui->begin(), app.m_editor, true);
 		pump(ui, app.m_editor.m_dockbar);

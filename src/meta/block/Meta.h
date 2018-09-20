@@ -139,22 +139,22 @@ namespace mud
         
     // toy::Block
     {
-        static Meta meta = { type<toy::Block>(), &namspc({ "toy" }), "Block", sizeof(toy::Block), TypeClass::Complex };
+        static Meta meta = { type<toy::Block>(), &namspc({ "toy" }), "Block", sizeof(toy::Block), TypeClass::Entity };
         static Class cls = { type<toy::Block>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<toy::Block, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<toy::Block, mud::Entity>() },
             // constructors
             {
-                { type<toy::Block>(), [](Ref ref, array<Var> args) { new(&val<toy::Block>(ref)) toy::Block( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), &val<toy::Block>(args[3]), val<size_t>(args[4]), val<mud::vec3>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "parentblock", Ref(type<toy::Block>()), Param::Nullable }, { "index", var(size_t()) }, { "size", var(mud::vec3()) } } }
+                { type<toy::Block>(), [](Ref ref, array<Var> args) { new(&val<toy::Block>(ref)) toy::Block( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), &val<toy::Block>(args[3]), val<size_t>(args[4]), val<mud::vec3>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "parentblock", Ref(type<toy::Block>()), Param::Nullable }, { "index", var(size_t()) }, { "size", var(mud::vec3()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<toy::Block>(), member_address(&toy::Block::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
-                { type<toy::Block>(), member_address(&toy::Block::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
+                { type<toy::Block>(), member_address(&toy::Block::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr },
+                //{ type<toy::Block>(), member_address(&toy::Block::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
                 { type<toy::Block>(), member_address(&toy::Block::m_parentblock), type<toy::Block>(), "parentblock", Ref(type<toy::Block>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Block>(), member_address(&toy::Block::m_index), type<size_t>(), "index", var(size_t()), Member::Value, nullptr },
                 { type<toy::Block>(), member_address(&toy::Block::m_size), type<mud::vec3>(), "size", var(mud::vec3()), Member::Value, nullptr },
@@ -162,7 +162,7 @@ namespace mud
             },
             // methods
             {
-                { type<toy::Block>(), "subdivide", member_address(&toy::Block::subdivide), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::Block>(object).subdivide(); }, {}, Var() },
+                //{ type<toy::Block>(), "subdivide", member_address(&toy::Block::subdivide), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::Block>(object).subdivide(); }, {}, Var() },
                 { type<toy::Block>(), "reset", member_address(&toy::Block::reset), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::Block>(object).reset(); }, {}, Var() },
                 { type<toy::Block>(), "chunk", member_address(&toy::Block::chunk), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::Block>(object).chunk(val<size_t>(args[0]), val<size_t>(args[1]), val<size_t>(args[2]), val<toy::Element>(args[3])); }, { { "x", var(size_t()) }, { "y", var(size_t()) }, { "z", var(size_t()) }, { "element", Ref(type<toy::Element>()) } }, Var() },
                 { type<toy::Block>(), "commit", member_address(&toy::Block::commit), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args);val<toy::Block>(object).commit(); }, {}, Var() }
@@ -182,21 +182,21 @@ namespace mud
         
     // toy::Chunk
     {
-        static Meta meta = { type<toy::Chunk>(), &namspc({ "toy" }), "Chunk", sizeof(toy::Chunk), TypeClass::Complex };
+        static Meta meta = { type<toy::Chunk>(), &namspc({ "toy" }), "Chunk", sizeof(toy::Chunk), TypeClass::Entity };
         static Class cls = { type<toy::Chunk>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<toy::Chunk, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<toy::Chunk, mud::Entity>() },
             // constructors
             {
-                { type<toy::Chunk>(), [](Ref ref, array<Var> args) { new(&val<toy::Chunk>(ref)) toy::Chunk( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<size_t>(args[3]), val<toy::Element>(args[4]), val<float>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "index", var(size_t()) }, { "element", Ref(type<toy::Element>()) }, { "size", var(float()) } } }
+                { type<toy::Chunk>(), [](Ref ref, array<Var> args) { new(&val<toy::Chunk>(ref)) toy::Chunk( val<toy::HSpatial>(args[1]), val<toy::Block>(args[1]), val<mud::vec3>(args[2]), val<size_t>(args[3]), val<toy::Element>(args[4]), val<float>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "index", var(size_t()) }, { "element", Ref(type<toy::Element>()) }, { "size", var(float()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<toy::Chunk>(), member_address(&toy::Chunk::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
+                { type<toy::Chunk>(), member_address(&toy::Chunk::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr },
                 { type<toy::Chunk>(), member_address(&toy::Chunk::m_index), type<size_t>(), "index", var(size_t()), Member::Value, nullptr },
                 { type<toy::Chunk>(), Address(), type<toy::Block>(), "block", Ref(type<toy::Block>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Chunk>(object).m_block); } },
                 { type<toy::Chunk>(), Address(), type<toy::Element>(), "element", Ref(type<toy::Element>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Chunk>(object).m_element); } },
@@ -220,21 +220,21 @@ namespace mud
         
     // toy::Heap
     {
-        static Meta meta = { type<toy::Heap>(), &namspc({ "toy" }), "Heap", sizeof(toy::Heap), TypeClass::Complex };
+        static Meta meta = { type<toy::Heap>(), &namspc({ "toy" }), "Heap", sizeof(toy::Heap), TypeClass::Entity };
         static Class cls = { type<toy::Heap>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<toy::Heap, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<toy::Heap, mud::Entity>() },
             // constructors
             {
-                { type<toy::Heap>(), [](Ref ref, array<Var> args) { new(&val<toy::Heap>(ref)) toy::Heap( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<toy::Element>(args[3]), val<float>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "element", Ref(type<toy::Element>()) }, { "radius", var(float()) } } }
+                { type<toy::Heap>(), [](Ref ref, array<Var> args) { new(&val<toy::Heap>(ref)) toy::Heap( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<toy::Element>(args[3]), val<float>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "element", Ref(type<toy::Element>()) }, { "radius", var(float()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<toy::Heap>(), member_address(&toy::Heap::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
+                { type<toy::Heap>(), member_address(&toy::Heap::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr },
                 { type<toy::Heap>(), Address(), type<toy::Element>(), "element", Ref(type<toy::Element>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Heap>(object).m_element); } },
                 { type<toy::Heap>(), member_address(&toy::Heap::m_radius), type<float>(), "radius", var(float()), Member::Value, nullptr }
             },
@@ -256,24 +256,24 @@ namespace mud
         
     // toy::Sector
     {
-        static Meta meta = { type<toy::Sector>(), &namspc({ "toy" }), "Sector", sizeof(toy::Sector), TypeClass::Complex };
+        static Meta meta = { type<toy::Sector>(), &namspc({ "toy" }), "Sector", sizeof(toy::Sector), TypeClass::Entity };
         static Class cls = { type<toy::Sector>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<toy::Sector, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<toy::Sector, mud::Entity>() },
             // constructors
             {
-                { type<toy::Sector>(), [](Ref ref, array<Var> args) { new(&val<toy::Sector>(ref)) toy::Sector( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec3>(args[3]), val<mud::vec3>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "coordinate", var(mud::uvec3()) }, { "size", var(mud::vec3()) } } }
+                { type<toy::Sector>(), [](Ref ref, array<Var> args) { new(&val<toy::Sector>(ref)) toy::Sector( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec3>(args[3]), val<mud::vec3>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "coordinate", var(mud::uvec3()) }, { "size", var(mud::vec3()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<toy::Sector>(), member_address(&toy::Sector::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
-                { type<toy::Sector>(), member_address(&toy::Sector::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
+                { type<toy::Sector>(), member_address(&toy::Sector::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr },
+                //{ type<toy::Sector>(), member_address(&toy::Sector::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
                 { type<toy::Sector>(), member_address(&toy::Sector::m_world_page), type<toy::WorldPage>(), "world_page", Ref(type<toy::WorldPage>()), Member::Component, nullptr },
-                { type<toy::Sector>(), member_address(&toy::Sector::m_bufferPage), type<toy::BufferPage>(), "bufferPage", Ref(type<toy::BufferPage>()), Member::Component, nullptr },
+                //{ type<toy::Sector>(), member_address(&toy::Sector::m_buffer_page), type<toy::BufferPage>(), "bufferPage", Ref(type<toy::BufferPage>()), Member::Component, nullptr },
                 { type<toy::Sector>(), member_address(&toy::Sector::m_navblock), type<toy::Navblock>(), "navblock", Ref(type<toy::Navblock>()), Member::Component, nullptr },
                 { type<toy::Sector>(), member_address(&toy::Sector::m_coordinate), type<mud::uvec3>(), "coordinate", var(mud::uvec3()), Member::Value, nullptr },
                 { type<toy::Sector>(), member_address(&toy::Sector::m_size), type<mud::vec3>(), "size", var(mud::vec3()), Member::Value, nullptr },
@@ -297,22 +297,22 @@ namespace mud
         
     // toy::TileBlock
     {
-        static Meta meta = { type<toy::TileBlock>(), &namspc({ "toy" }), "TileBlock", sizeof(toy::TileBlock), TypeClass::Complex };
+        static Meta meta = { type<toy::TileBlock>(), &namspc({ "toy" }), "TileBlock", sizeof(toy::TileBlock), TypeClass::Entity };
         static Class cls = { type<toy::TileBlock>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<toy::TileBlock, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<toy::TileBlock, mud::Entity>() },
             // constructors
             {
-                { type<toy::TileBlock>(), [](Ref ref, array<Var> args) { new(&val<toy::TileBlock>(ref)) toy::TileBlock( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec3>(args[3]), val<mud::vec3>(args[4]), val<mud::WaveTileset>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "size", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "tileset", var(mud::WaveTileset()) } } }
+                { type<toy::TileBlock>(), [](Ref ref, array<Var> args) { new(&val<toy::TileBlock>(ref)) toy::TileBlock( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec3>(args[3]), val<mud::vec3>(args[4]), val<mud::WaveTileset>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "size", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "tileset", var(mud::WaveTileset()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<toy::TileBlock>(), member_address(&toy::TileBlock::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
-                { type<toy::TileBlock>(), member_address(&toy::TileBlock::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
+                { type<toy::TileBlock>(), member_address(&toy::TileBlock::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr },
+                //{ type<toy::TileBlock>(), member_address(&toy::TileBlock::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
                 { type<toy::TileBlock>(), member_address(&toy::TileBlock::m_world_page), type<toy::WorldPage>(), "world_page", Ref(type<toy::WorldPage>()), Member::Component, nullptr },
                 { type<toy::TileBlock>(), member_address(&toy::TileBlock::m_navblock), type<toy::Navblock>(), "navblock", Ref(type<toy::Navblock>()), Member::Component, nullptr },
                 { type<toy::TileBlock>(), member_address(&toy::TileBlock::m_wfc_block), type<mud::WfcBlock>(), "wfc_block", Ref(type<mud::WfcBlock>()), Member::None, nullptr },
@@ -402,9 +402,9 @@ namespace mud
             m.m_functions.push_back(&f);
         }
         {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(&toy::generate_block(val<mud::GfxSystem>(args[0]), val<mud::WaveTileset>(args[1]), val<toy::Entity>(args[2]), val<mud::ivec2>(args[3]), val<mud::uvec3>(args[4]), val<mud::vec3>(args[5]), val<bool>(args[6]))); };
-            std::vector<Param> params = { { "gfx_system", Ref(type<mud::GfxSystem>()) }, { "tileset", var(mud::WaveTileset()) }, { "origin", Ref(type<toy::Entity>()) }, { "coord", var(mud::ivec2()) }, { "block_subdiv", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "from_file", var(bool(true)), Param::Default } };
-            static Function f = { &namspc({ "toy" }), "generate_block", function_id<toy::TileBlock&(*)(mud::GfxSystem&, mud::WaveTileset&, toy::Entity&, const mud::ivec2&, const mud::uvec3&, const mud::vec3&, bool)>(&toy::generate_block), func, params, Ref(type<toy::TileBlock>()) };
+            auto func = [](array<Var> args, Var& result) {  result = Ref(&toy::generate_block(val<mud::GfxSystem>(args[0]), val<mud::WaveTileset>(args[1]), val<toy::HSpatial>(args[2]), val<mud::ivec2>(args[3]), val<mud::uvec3>(args[4]), val<mud::vec3>(args[5]), val<bool>(args[6]))); };
+            std::vector<Param> params = { { "gfx_system", Ref(type<mud::GfxSystem>()) }, { "tileset", var(mud::WaveTileset()) }, { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::ivec2()) }, { "block_subdiv", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "from_file", var(bool(true)), Param::Default } };
+            static Function f = { &namspc({ "toy" }), "generate_block", function_id<toy::TileBlock&(*)(mud::GfxSystem&, mud::WaveTileset&, toy::HSpatial, const mud::ivec2&, const mud::uvec3&, const mud::vec3&, bool)>(&toy::generate_block), func, params, Ref(type<toy::TileBlock>()) };
             m.m_functions.push_back(&f);
         }
         {

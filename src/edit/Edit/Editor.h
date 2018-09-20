@@ -17,13 +17,13 @@ using namespace mud; namespace toy
 {
 	using Selection = std::vector<Ref>;
 
-	TOY_EDIT_EXPORT void context_menu(Widget& parent, Selector& selector, Ref object);
+	//TOY_EDIT_EXPORT void context_menu(Widget& parent, Selector& selector, Ref object);
 
 	TOY_EDIT_EXPORT void edit_toolbox(Widget& parent, Toolbox& toolbox);
 	TOY_EDIT_EXPORT void edit_toolbelt(Widget& parent, Toolbelt& toolbelt);
 
 	TOY_EDIT_EXPORT void edit_selection(Widget& parent, Selection& selection);
-	TOY_EDIT_EXPORT void edit_selector(Widget& parent, Selector& selector);
+	//TOY_EDIT_EXPORT void edit_selector(Widget& parent, Selector& selector);
 
 	TOY_EDIT_EXPORT void scene_edit(Widget& parent, World& world);
 

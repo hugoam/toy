@@ -61,21 +61,21 @@ namespace mud
         
     // Human
     {
-        static Meta meta = { type<Human>(), &namspc({}), "Human", sizeof(Human), TypeClass::Complex };
+        static Meta meta = { type<Human>(), &namspc({}), "Human", sizeof(Human), TypeClass::Entity };
         static Class cls = { type<Human>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<Human, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<Human, mud::Entity>() },
             // constructors
             {
-                { type<Human>(), [](Ref ref, array<Var> args) { new(&val<Human>(ref)) Human( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<std::string>(args[5]), val<std::string>(args[6]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "radius", var(float()) }, { "height", var(float()) }, { "first_name", var(std::string()) }, { "last_name", var(std::string()) } } }
+                { type<Human>(), [](Ref ref, array<Var> args) { new(&val<Human>(ref)) Human( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<std::string>(args[5]), val<std::string>(args[6]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "radius", var(float()) }, { "height", var(float()) }, { "first_name", var(std::string()) }, { "last_name", var(std::string()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<Human>(), member_address(&Human::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
+                { type<Human>(), member_address(&Human::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Human>(), member_address(&Human::m_movable), type<toy::Movable>(), "movable", Ref(type<toy::Movable>()), Member::Component, nullptr },
                 { type<Human>(), member_address(&Human::m_agent), type<toy::Agent>(), "agent", Ref(type<toy::Agent>()), Member::Component, nullptr },
                 { type<Human>(), member_address(&Human::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },

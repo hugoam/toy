@@ -7,6 +7,7 @@
 #include <visu/VisuScene.h>
 #include <visu/VisuPage.h>
 
+#include <infra/Reverse.h>
 #include <refl/Member.h>
 #include <geom/Shapes.h>
 #include <geom/ShapesComplex.h>
@@ -15,15 +16,12 @@
 #include <core/World/World.h>
 #include <core/Entity/Entity.h>
 #include <core/Physic/Obstacle.h>
-#include <core/Disq/Disq.h>
 #include <core/WorldPage/WorldPage.h>
-#include <core/Symbolic/Symbolic.h>
-#include <core/Light/Light.h>
-#include <core/Active/Active.h>
-#include <core/Active/Effect.h>
+//#include <core/Symbolic/Symbolic.h>
+//#include <core/Light/Light.h>
+//#include <core/Active/Active.h>
+//#include <core/Active/Effect.h>
 
-#include <core/View/View.h>
-#include <core/View/Vision.h>
 #include <core/Selector/Selection.h>
 
 //#include <core/Buffer/BufferView.h>
@@ -132,10 +130,10 @@ using namespace mud; namespace toy
 
 	void PhysicDebugDraw::draw_physics(Gnode& parent, World& world, Medium& medium)
 	{
-		SubBulletWorld& bullet_world = as<SubBulletWorld>(world.as<BulletWorld>().sub_world(medium));
+		BulletMedium& bullet_world = as<BulletMedium>(as<BulletWorld>(world.m_complex).sub_world(medium));
 
 		if(!bullet_world.m_bullet_world->getDebugDrawer())
-		bullet_world.m_bullet_world->setDebugDrawer(m_impl.get());
+			bullet_world.m_bullet_world->setDebugDrawer(m_impl.get());
 
 		bullet_world.m_bullet_world->debugDrawWorld();
 	}
@@ -155,13 +153,14 @@ using namespace mud; namespace toy
 	VisuScene::~VisuScene()
     {}
 
-	Gnode& VisuScene::entity_node(Gnode& parent, Entity& entity, size_t painter)
+	Gnode& VisuScene::entity_node(Gnode& parent, Spatial& spatial, size_t painter)
 	{
-		if(m_entities.size() <= entity.m_id)
-			m_entities.resize(entity.m_id * 2);
-		if(m_entities[entity.m_id] == nullptr)
-			m_entities[entity.m_id] = &gfx::node(parent.subx(entity.m_id), Ref(&entity.m_complex), entity.absolute_position(), entity.absolute_rotation());
-		return m_entities[entity.m_id]->subx(uint16_t(painter));
+		uint32_t index = spatial.m_entity->m_handle;
+		if(m_entities.size() <= index)
+			m_entities.resize((index + 1) * 2);
+		if(m_entities[index] == nullptr)
+			m_entities[index] = &gfx::node(parent.subx(index), Ref(spatial.m_entity), spatial.absolute_position(), spatial.absolute_rotation());
+		return m_entities[index]->subx(uint16_t(painter));
 	}
 
 	void VisuScene::next_frame()
@@ -186,9 +185,9 @@ using namespace mud; namespace toy
 			m_painters[i]->m_paint(i, *this, root.subx(i));
 	}
 
-	void scene_painters(VisuScene& scene, Array<Entity>& store)
+	void scene_painters(VisuScene& scene, World& world)
 	{
-		scene.entity_painter<WorldPage>("WorldPage", store, paint_world_page);
+		scene.entity_painter<WorldPage>("WorldPage", world, paint_world_page);
 	}
 
 	void paint_selection(Gnode& parent, Selection& selection, Ref hovered)
@@ -212,7 +211,7 @@ using namespace mud; namespace toy
 
 	void update_camera(Camera& camera, mud::Camera& gfx_camera)
 	{
-		gfx_camera.set_look_at(camera.m_lens_position, camera.m_entity.absolute_position());
+		gfx_camera.set_look_at(camera.m_lens_position, camera.m_spatial->absolute_position());
 
 		gfx_camera.m_near = camera.m_near;
 		gfx_camera.m_far = camera.m_far;
@@ -230,6 +229,7 @@ using namespace mud; namespace toy
 		//gfx::shape(parent, Spheroid(1.f), Symbol(Colour::White));
 	}
 
+#if 0
 	void paint_light(Gnode& parent, LightSource& light)
 	{
 		gfx::light(parent, LightType::Point, light.m_shadows, light.m_colour, light.m_range);
@@ -246,6 +246,7 @@ using namespace mud; namespace toy
 		//for(auto& symbol : symbolic.m_symbols)
 		//	gfx::shape(parent, symbol.m_shape, symbol);
 	}
+#endif
 
 	void paint_obstacle(Gnode& parent, Obstacle& obstacle)
 	{
@@ -254,6 +255,7 @@ using namespace mud; namespace toy
 		gfx::shape(parent, Box(/*(colShape.points())*/), Symbol(Colour::Pink));
 	}
 
+#if 0
 	void paint_disq(Gnode& parent, Disq& disq)
 	{
 		gfx::shape(parent, Circle(disq.m_radius, Axis::X), Symbol(Colour::Pink));
@@ -265,10 +267,11 @@ using namespace mud; namespace toy
 		float size = 0.f; // receptor.sphere.radius
 		gfx::shape(parent, Spheroid(size), Symbol(Colour(1.f, 0.f, 1.f, 0.2f)));
 	}
+#endif
 
-	void paint_entity(Gnode& parent, Entity& entity)
+	void paint_entity(Gnode& parent, Spatial& spatial)
 	{
-		UNUSED(parent); UNUSED(entity);
+		UNUSED(parent); UNUSED(spatial);
 		// if obstructed
 	}
 
@@ -281,6 +284,7 @@ using namespace mud; namespace toy
 		// todo
 	}
 
+#if 0
 	void paint_active(Gnode& parent, Active& active)
 	{
 		UNUSED(parent);
@@ -291,6 +295,7 @@ using namespace mud; namespace toy
 		for(State& state : active.m_states)
 			advance_animation(state.m_name, true, 1.f);
 	}
+#endif
 
 #ifdef TOY_SOUND
 	bool sound(Gnode& parent, const string& sound, bool loop, float volume)

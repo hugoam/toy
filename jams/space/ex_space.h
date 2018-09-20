@@ -19,6 +19,15 @@ extern "C"
 	//_SPACE_EXPORT void ex_space_game(GameShell& app, Game& game);
 }
 
+#ifdef TOY_ECS
+namespace mud
+{
+	template <> struct TypedBuffer<Galaxy> { using type = ComponentBufferDense<Galaxy*>; static size_t index() { return 12; } };
+	template <> struct TypedBuffer<Star> { using type = ComponentBufferDense<Star*>; static size_t index() { return 13; } };
+	template <> struct TypedBuffer<Fleet> { using type = ComponentBufferDense<Fleet*>; static size_t index() { return 14; } };
+}
+#endif
+
 struct Turn;
 _SPACE_EXPORT void next_turn(Turn& turn);
 
@@ -451,12 +460,12 @@ public:
 	Galaxy* m_galaxy;
 	Commander* m_commander;
 
-	toy::Camera* m_camera;
+	OCamera* m_camera = nullptr;
 
 	GameStage m_mode = GameStage::Empire;
 	
-	Ref m_selected_item = {};
-	Ref m_hovered_item = {};
+	Entity* m_selected_item = nullptr;
+	Entity* m_hovered_item = nullptr;
 
 	Turn m_last_turn;
 	Turn m_turn_replay;
@@ -495,13 +504,13 @@ struct refl_ _SPACE_EXPORT Construction
 	int m_turns;
 };
 
-class refl_ _SPACE_EXPORT Star : public Complex, public Updatable
+class refl_ _SPACE_EXPORT Star : public Entity
 {
 public:
-	constr_ Star(Id id, Entity& parent, const vec3& position, const uvec2& coord, const std::string& name);
+	constr_ Star(HSpatial parent, const vec3& position, const uvec2& coord, const std::string& name);
 	~Star();
 
-	comp_ attr_ Entity m_entity;
+	comp_ attr_ CSpatial m_spatial;
 
 	attr_ uvec2 m_coord;
 	attr_ std::string m_name;
@@ -540,7 +549,7 @@ public:
 
 	Galaxy& galaxy();
 
-	void next_frame(size_t tick, size_t delta);
+	void next_frame(Spatial& spatial, size_t tick, size_t delta);
 
 	void add_construction(Schema& schema, int number, Fleet* destination = nullptr);
 
@@ -608,13 +617,13 @@ struct refl_ _SPACE_EXPORT Split
 	size_t m_state_updated = 0;
 };
 
-class refl_ _SPACE_EXPORT Fleet : public Complex, public Updatable
+class refl_ _SPACE_EXPORT Fleet : public Entity
 {
 public:
-	constr_ Fleet(Id id, Entity& parent, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name);
+	constr_ Fleet(HSpatial parent, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name);
 	~Fleet();
 
-	comp_ attr_ Entity m_entity;
+	comp_ attr_ CSpatial m_spatial;
 
 	attr_ Commander* m_commander;
 	attr_ uvec2 m_coord;
@@ -661,7 +670,7 @@ public:
 	/*meth_*/ void order_split(cstring name, FleetStance stance, std::map<ShipSchema*, size_t> ships);
 	meth_ void order_attack(Star& star);
 
-	void next_frame(size_t tick, size_t delta);
+	void next_frame(Spatial& spatial, size_t tick, size_t delta);
 };
 
 struct refl_ _SPACE_EXPORT Schema
@@ -796,13 +805,13 @@ struct refl_ _SPACE_EXPORT TechDomain
 	float m_budget = 0.f;
 };
 
-class refl_ _SPACE_EXPORT Commander : public Updatable
+class refl_ _SPACE_EXPORT Commander
 {
 public:
 	constr_ Commander(Id id, const std::string& name, Race race, int command, int commerce, int diplomacy);
 	~Commander();
 
-	//comp_ attr_ Entity m_entity;
+	//comp_ attr_ Entity m_spatial;
 
 	attr_ Id m_id;
 	attr_ std::string m_name;
@@ -843,12 +852,12 @@ public:
 	bool allied(Commander& commander) { return &commander == this; }
 };
 
-class refl_ _SPACE_EXPORT Quadrant : public Complex
+class refl_ _SPACE_EXPORT Quadrant : public Entity
 {
 public:
-	constr_ Quadrant(Id id, Entity& parent, const vec3& position, const uvec2& coord, float size);
+	constr_ Quadrant(HSpatial parent, const vec3& position, const uvec2& coord, float size);
 
-	comp_ attr_ Entity m_entity;
+	comp_ attr_ CSpatial m_spatial;
 
 	attr_ uvec2 m_coord;
 	attr_ float m_size;
@@ -954,12 +963,13 @@ struct refl_ _SPACE_EXPORT SpatialCombat : public Combat
 	void apply_losses();
 };
 
-class refl_ _SPACE_EXPORT Galaxy : public Complex
+class refl_ _SPACE_EXPORT Galaxy : public Entity
 {
 public:
-	constr_ Galaxy(Id id, Entity& parent, const vec3& position, const uvec2& size);
+	constr_ Galaxy(HSpatial parent, const vec3& position, const uvec2& size);
+	~Galaxy();
 
-	comp_ attr_ Entity m_entity;
+	comp_ attr_ CSpatial m_spatial;
 
 	attr_ std::vector<Quadrant*> m_quadrants;
 	attr_ std::vector<Star*> m_stars;

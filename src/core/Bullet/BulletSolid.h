@@ -5,19 +5,22 @@
 
 #pragma once
 
-#include <proto/Complex.h>
+#include <proto/Entity.h>
 #include <core/Forward.h>
 #include <core/Bullet/BulletCollider.h>
+#include <core/Entity/Entity.h>
 
 using namespace mud; namespace toy
 {
 	class BulletMotionState;
 
-	class refl_ TOY_CORE_EXPORT BulletSolid : public BulletCollider
+	class refl_ TOY_CORE_EXPORT BulletSolid : public NonCopy, public SolidImpl
     {
     public:
-		BulletSolid(SubBulletWorld& bullet_world, Solid& solid);
+		BulletSolid(BulletMedium& bullet_world, BulletCollider& bullet_collider, HSpatial spatial, HCollider collider, HSolid solid);
         ~BulletSolid();
+
+		void setup(BulletCollider& collider, Spatial& spatial, Solid& solid);
 
 		btRigidBody* m_rigid_body;
 

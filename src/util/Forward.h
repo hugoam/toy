@@ -82,18 +82,6 @@ namespace toy {
     
     class ProcedureType;
     class Procedure;
-    class DataSource;
-    class DataLoader;
-    class GlobalLoader;
-    class Loader;
-    class ObjectLoader;
-    class PartLoader;
-    class MemberLoader;
-    class TypeLoader;
-    class LinkedLoader;
-    class OwnedLoader;
-    class SequenceLoader;
-    class StructureLoader;
     class Scheduler;
 }
 

@@ -71,16 +71,15 @@ using namespace mud; namespace toy
 				}
 	}
 
-	Block::Block(Id id, Entity& parent, const vec3& position, Block* parentblock, size_t index, const vec3& size)
-		: Complex(id, type<Block>(), m_emitter, *this)
-		, m_entity(id, *this, parent, position, ZeroQuat)
-		, m_emitter(m_entity)
+	Block::Block(HSpatial parent, const vec3& position, Block* parentblock, size_t index, const vec3& size)
+		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		//, m_emitter(*this, m_spatial, m_movable)
 		, m_parentblock(parentblock)
 		, m_index(index)
 		, m_size(size)
 		, m_chunks(BLOCK_SUBDIV)
 		, m_subblocks(2)
-		, m_scope(m_emitter.add_scope(WorldMedium::me, Cube(m_size), CM_SOURCE))
+		//, m_scope(m_emitter.add_scope(WorldMedium::me, Cube(m_size), CM_SOURCE))
 	{}
 
 	size_t Block::depth()
@@ -88,13 +87,13 @@ using namespace mud; namespace toy
 		return m_parentblock ? m_parentblock->depth() + 1 : 0;
 	}
 
-	vec3 Block::min(Entity& self)
+	vec3 Block::min(Spatial& self)
 	{
 		vec3 half_size = m_size / 2.f;
 		return self.absolute_position() - half_size;
 	}
 
-	vec3 Block::max(Entity& self)
+	vec3 Block::max(Spatial& self)
 	{
 		vec3 half_size = m_size / 2.f;
 		return self.absolute_position() + half_size;
@@ -129,7 +128,8 @@ using namespace mud; namespace toy
 	void Block::commit()
 	{
 		m_updated++;
-		this->sector().m_world_page.m_updated++; // = m_entity.m_last_tick;
+		WorldPage& page = this->world_page();
+		page.m_updated++;
 	}
 
 	vec3 Block::local_block_coord(Block& child)
@@ -181,20 +181,22 @@ using namespace mud; namespace toy
 
 	void Block::subdivide()
 	{
+		Spatial& spatial = m_spatial;
+
 		for(size_t index = 0; index < 8; ++index)
 		{
 			vec3 half_size = m_size / 2.f;
 			vec3 half_subdiv_size = half_size / 2.f;
 			vec3 position = this->local_block_coord(index) * half_size - half_size + half_subdiv_size;
 
-			Block& block = m_entity.construct<Block>(position, this, index, m_size / 2.f);
+			Block& block = construct<Block>(m_spatial, position, this, index, m_size / 2.f);
 
 			m_subblocks.push_back(&block);
 		}
 
 		m_subdived = true;
 		// "update" trick
-		m_entity.set_position(m_entity.m_position);
+		spatial.set_position(spatial.m_position);
 	}
 
 	void Block::subdivide_to(size_t depth)
@@ -230,12 +232,24 @@ using namespace mud; namespace toy
 		return this->neighbour(hunk.index, side);
 	}
 
+	WorldPage& Block::world_page()
+	{
+		Spatial& spatial = m_spatial;
+		HSpatial parent = spatial.m_parent;
+		while(!is<WorldPage>(*parent->m_entity))
+			parent = parent->m_parent;
+		return as<WorldPage>(*parent->m_entity);
+	}
+
+#if 0
 	Sector& Block::sector()
 	{
-		Entity* parent = m_entity.m_parent;
+		Spatial& spatial = m_spatial;
+		Spatial* parent = spatial.m_parent;
 		for(size_t depth = 1; !parent->isa<Sector>(); parent = parent->m_parent)
 			++depth;
 
 		return parent->as<Sector>();
 	}
+#endif
 }

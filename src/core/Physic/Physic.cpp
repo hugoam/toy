@@ -21,20 +21,20 @@ using namespace mud; namespace toy
 		m_masks[CM_AREA] = CM_OBJECT;
 	}
 
-	Physic::Physic(Entity& entity)
+	Physic::Physic(Spatial& spatial)
 		//: m_areaStore()
 	{
-		UNUSED(entity);
-		//entity.as<Emitter>().addEmitter(AreaMedium::me, make_object<SphereShape>(0.1f), CM_OBJECT);
+		UNUSED(spatial);
+		//as<Emitter>(spatial).addEmitter(AreaMedium::me, make_object<SphereShape>(0.1f), CM_OBJECT);
 	}
 
     /*void Physic::handle_add(Collider& object)
     {
-		m_areaStore.add(object->m_entity.as<Area>());
+		m_areaStore.add(as<Area>(object->m_spatial));
 	}
 
     void Physic::handle_remove(Collider& object)
     {
-		m_areaStore.add(object->m_entity.as<Area>());
+		m_areaStore.add(as<Area>(object->m_spatial));
     }*/
 }

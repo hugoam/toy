@@ -16,7 +16,7 @@
 #include <refl/Injector.h>
 #include <refl/Class.h>
 
-#include <proto/Complex.h>
+#include <proto/Entity.h>
 
 #include <set>
 
@@ -156,7 +156,7 @@ using namespace mud; namespace toy
 				m_subloaders.emplace_back(make_object<LinkedLoader>(*this, member, param.m_index));
 			else if(is_struct(*member.m_type))
 				m_subloaders.emplace_back(make_object<OwnedLoader>(*this, member, param.m_index));
-			else if(typeClass <= TypeClass::Complex)
+			else if(typeClass <= TypeClass::Entity)
 				m_subloaders.emplace_back(make_object<LinkedLoader>(*this, member, param.m_index));
 			else if(is_sequence(*member.m_type))
 				m_subloaders.emplace_back(make_object<SequenceLoader>(*this, member, param.m_index));
@@ -388,7 +388,7 @@ using namespace mud; namespace toy
 			++depth;
 		for(size_t i = 0; i < depth; ++i)
 			printf("  ");
-		string prototype = meta(m_type).m_type_class == TypeClass::Complex ? val<Complex>(object).m_prototype.m_type.m_name : "";
+		string prototype = meta(m_type).m_type_class == TypeClass::Entity ? val<Entity>(object).m_prototype.m_type.m_name : "";
 		printf("%s %s : %s\n", message, m_type.m_name, prototype.c_str());
 	}
 
@@ -412,7 +412,7 @@ using namespace mud; namespace toy
 
 	void PartLoader::queue(Ref object, size_t depth)
 	{
-		Complex& modular = val<Complex>(object);
+		Entity& modular = val<Entity>(object);
 		if(modular.has_part(m_type))
 			ObjectLoader::queue(modular.part(m_type), depth);
 	}

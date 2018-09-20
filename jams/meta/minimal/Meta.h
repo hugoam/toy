@@ -65,11 +65,11 @@ namespace mud
         
     // Bullet
     {
-        static Meta meta = { type<Bullet>(), &namspc({}), "Bullet", sizeof(Bullet), TypeClass::Complex };
+        static Meta meta = { type<Bullet>(), &namspc({}), "Bullet", sizeof(Bullet), TypeClass::Entity };
         static Class cls = { type<Bullet>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<Bullet, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<Bullet, mud::Entity>() },
             // constructors
             {
             },
@@ -78,7 +78,7 @@ namespace mud
             },
             // members
             {
-                { type<Bullet>(), member_address(&Bullet::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
+                { type<Bullet>(), member_address(&Bullet::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Bullet>(), member_address(&Bullet::m_source), type<mud::vec3>(), "source", var(mud::vec3()), Member::Value, nullptr },
                 { type<Bullet>(), member_address(&Bullet::m_velocity), type<mud::vec3>(), "velocity", var(mud::vec3()), Member::Value, nullptr }
             },
@@ -100,21 +100,21 @@ namespace mud
         
     // Crate
     {
-        static Meta meta = { type<Crate>(), &namspc({}), "Crate", sizeof(Crate), TypeClass::Complex };
+        static Meta meta = { type<Crate>(), &namspc({}), "Crate", sizeof(Crate), TypeClass::Entity };
         static Class cls = { type<Crate>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<Crate, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<Crate, mud::Entity>() },
             // constructors
             {
-                { type<Crate>(), [](Ref ref, array<Var> args) { new(&val<Crate>(ref)) Crate( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]), val<mud::vec3>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) }, { "extents", var(mud::vec3()) } } }
+                { type<Crate>(), [](Ref ref, array<Var> args) { new(&val<Crate>(ref)) Crate( val<toy::Spatial>(args[1]), val<mud::vec3>(args[2]), val<mud::vec3>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "extents", var(mud::vec3()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<Crate>(), member_address(&Crate::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
+                { type<Crate>(), member_address(&Crate::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Crate>(), member_address(&Crate::m_movable), type<toy::Movable>(), "movable", Ref(type<toy::Movable>()), Member::Component, nullptr },
                 { type<Crate>(), member_address(&Crate::m_extents), type<mud::vec3>(), "extents", var(mud::vec3()), Member::Value, nullptr }
             },
@@ -136,21 +136,21 @@ namespace mud
         
     // Human
     {
-        static Meta meta = { type<Human>(), &namspc({}), "Human", sizeof(Human), TypeClass::Complex };
+        static Meta meta = { type<Human>(), &namspc({}), "Human", sizeof(Human), TypeClass::Entity };
         static Class cls = { type<Human>(),
             // bases
-            { &type<mud::Complex>() },
-            { base_offset<Human, mud::Complex>() },
+            { &type<mud::Entity>() },
+            { base_offset<Human, mud::Entity>() },
             // constructors
             {
-                { type<Human>(), [](Ref ref, array<Var> args) { new(&val<Human>(ref)) Human( val<mud::Id>(args[0]), val<toy::Entity>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Entity>()) }, { "position", var(mud::vec3()) } } }
+                { type<Human>(), [](Ref ref, array<Var> args) { new(&val<Human>(ref)) Human( val<toy::Spatial>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<Human>(), member_address(&Human::m_entity), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Component, nullptr },
+                { type<Human>(), member_address(&Human::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Human>(), member_address(&Human::m_movable), type<toy::Movable>(), "movable", Ref(type<toy::Movable>()), Member::Component, nullptr }
             },
             // methods

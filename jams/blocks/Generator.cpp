@@ -2,7 +2,6 @@
 #include <blocks/Types.h>
 #include <blocks/Generator.h>
 #include <blocks/ex_blocks.h>
-#include <05_character/05_character.h>
 
 #include <toy/toy.h>
 
@@ -361,13 +360,13 @@ void generate_camps(BlockWorld& world)
 		vec3 camp_position = offset + to_xz(vec2(corners[i])) * world.m_world_size + to_xz(margins[i]) * camp_radius;
 		Colour colour = Colour::hsl(random_scalar(0.f, 1.f), 1.f, random_scalar(0.5f, 0.7f));
 
-		world.m_world.origin().construct<Camp>(camp_position, faction);
-		world.m_world.origin().construct<Shield>(camp_position, faction, camp_radius);
+		construct<Camp>(world.m_world.origin(), camp_position, faction);
+		construct<Shield>(world.m_world.origin(), camp_position, faction, camp_radius);
 		
 		std::vector<vec3> tank_positions = distribute_poisson(vec2(camp_radius), 15.f);
 		for(const vec3& tank_position : tank_positions)
 		{
-			world.m_world.origin().construct<Tank>(camp_position + tank_position + Y3 * 10.f, faction);
+			construct<Tank>(world.m_world.origin(), camp_position + tank_position + Y3 * 10.f, faction);
 		}
 	}
 }

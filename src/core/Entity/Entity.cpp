@@ -11,7 +11,6 @@
 
 #include <core/World/World.h>
 
-#include <core/Entity/EntityObserver.h>
 #include <core/World/Section.h>
 
 #include <proto/Proto.h>
@@ -20,59 +19,41 @@
 
 using namespace mud; namespace toy
 {
-	Entity::Entity(Id id, Complex& complex, World& world, Entity* parent, const vec3& position, const quat& rotation)
+	Spatial::Spatial(Entity& entity, World& world, HSpatial parent, const vec3& position, const quat& rotation)
         : Transform(position, rotation, Unit3)
-		, m_id(index(type<Entity>(), id, Ref(this)))
-		, m_complex(complex)
-		, m_world(world)
+		, m_entity(&entity)
+		, m_world(&world)
 		, m_parent(parent)
 		, m_hooked(true)
-	{
-		world.add_task(this, short(Task::Entity)); // @todo in the long term this should be moved out of the entity's responsibility
-
-		if(parent)
-			parent->m_contents.add(this);
-	}
-
-	Entity::Entity(Id id, Complex& complex, Entity& parent, const vec3& position, const quat& rotation)
-		: Entity(id, complex, parent.m_world, &parent, position, rotation)
 	{}
 
-    Entity::~Entity()
-    {
-		unindex(type<Entity>(), m_id);
+	Spatial::Spatial(Entity& entity, HSpatial parent, const vec3& position, const quat& rotation)
+		: Spatial(entity, *parent->m_world, parent, position, rotation)
+	{}
 
-		m_world.remove_task(this, short(Task::Entity));
+    Spatial::~Spatial()
+    {}
 
-		if(m_parent)
-			m_parent->m_contents.remove(*this);
-
-		m_parent = nullptr;
-		
-		for(Entity* entity : m_contents.store())
-			entity->m_parent = nullptr;
+	Spatial& Spatial::origin()
+	{
+		return m_world->origin();
 	}
 
-	Entity& Entity::origin()
+	void Spatial::debug_contents(size_t depth)
 	{
-		return m_world.origin();
-	}
-
-	void Entity::debug_contents(size_t depth)
-	{
-		if(m_contents.store().size() > 1)
+		if(m_contents.size() > 1)
 		{
 			for(size_t o = 0; o < depth; ++o)
 				printf("    ");
 
-			printf("Entity %u : %zu leafs\n", m_id, m_contents.store().size());
+			printf("Spatial %u : %zu leafs\n", 0U, m_contents.size());
 		}
 
-		for(auto& child : m_contents.store())
+		for(HSpatial child : m_contents)
 			child->debug_contents(depth + 1);
 	}
 
-	vec3 Entity::absolute_position()
+	vec3 Spatial::absolute_position() const
 	{
 		if(m_parent)
 			return m_position + m_parent->absolute_position();
@@ -80,7 +61,7 @@ using namespace mud; namespace toy
 			return m_position;
 	}
 
-	quat Entity::absolute_rotation()
+	quat Spatial::absolute_rotation() const
 	{
 		if(m_parent)
 			return m_rotation * m_parent->absolute_rotation();
@@ -88,42 +69,42 @@ using namespace mud; namespace toy
 			return m_rotation;
 	}
 
-	void Entity::translate(const vec3& vec)
+	void Spatial::translate(const vec3& vec)
 	{
 		set_position(mud::rotate(m_rotation, vec) + m_position);
 	}
 
-	void Entity::rotate(const vec3& axis, float angle)
+	void Spatial::rotate(const vec3& axis, float angle)
 	{
 		quat rot = angle_axis(angle, mud::rotate(m_rotation, axis));
 		set_rotation(rot * m_rotation);
 		normalize(m_rotation);
 	}
 
-	void Entity::yaw(float value)
+	void Spatial::yaw(float value)
 	{
 		vec3 axis(glm::rotate(m_rotation, Y3));			
 		rotate(axis, value);
 	}
 
-	void Entity::yaw_fixed(float value)
+	void Spatial::yaw_fixed(float value)
 	{			
 		rotate(Y3, value);
 	}
 
-	void Entity::pitch(float value)
+	void Spatial::pitch(float value)
 	{
 		vec3 axis(glm::rotate(m_rotation, X3));
 		rotate(axis, value);
 	}
 
-	void Entity::roll(float value)
+	void Spatial::roll(float value)
 	{
 		vec3 axis(glm::rotate(m_rotation, Z3));
 		rotate(axis, value);
 	}
 
-    void Entity::next_frame(size_t tick, size_t delta)
+    void Spatial::next_frame(size_t tick, size_t delta)
     {
 		UNUSED(delta);
 
@@ -131,50 +112,27 @@ using namespace mud; namespace toy
 		m_last_tick = tick;
 	}
 
-	void Entity::observe_hook(HookObserver& obs)
-	{
-		m_hook_observers.push_back(&obs);
-		if(m_hooked)
-			obs.hooked();
-	}
-
-	void Entity::unobserve_hook(HookObserver& observer)
-	{
-		vector_remove(m_hook_observers, &observer);
-	}
-
-	void Entity::hook()
+	void Spatial::hook()
 	{
 		m_hooked = true;
-
-		for(HookObserver* obs : m_hook_observers)
-			obs->hooked();
 	}
 
-	void Entity::unhook()
+	void Spatial::unhook()
 	{
-		for(HookObserver* obs : m_hook_observers)
-			obs->unhooked();
-
 		m_hooked = false;
 	}
 
-	void Entity::set_parent(Entity* parent)
+	bool Spatial::is_child_of(Spatial& spatial)
 	{
-		this->detach_to(*parent);
-	}
-
-	bool Entity::is_child_of(Entity& entity)
-	{
-		if(m_parent == &entity)
+		if(&(*m_parent) == &spatial)
 			return true;
 		else if(m_parent)
-			return m_parent->is_child_of(entity);
+			return m_parent->is_child_of(spatial);
 		else
 			return false;
 	}
 
-	Entity* Entity::spatial_root()
+	Spatial* Spatial::spatial_root()
 	{
 		if(m_parent)
 			return m_parent->spatial_root();
@@ -182,37 +140,33 @@ using namespace mud; namespace toy
 			return this;
 	}
 
-	Entity* Entity::find_parent(Type& part_type)
-	{
-		if(m_parent && m_parent->m_complex.has_part(part_type))
-			return m_parent;
-		else if(m_parent)
-			return m_parent->find_parent(part_type);
-		else
-			return nullptr;
-	}
-
-	void Entity::detach_to(Entity& moveto)
-	{
-		Entity& movefrom = *m_parent; 
-		m_parent = &moveto;
-		movefrom.m_contents.remove(*this);
-		moveto.m_contents.add(*this);
-		this->set_dirty(false);
-	}
-
-	void Entity::detach(Entity& child)
+	void Spatial::detach(Spatial& child)
 	{
 		child.m_parent = 0;
-		m_contents.remove(child);
+		//vector_remove(m_contents, child);
 	}
 
-	void Entity::visit(const Visitor& visitor)
+	void Spatial::visit(const Visitor& visitor)
 	{
 		if(!visitor(*this))
 			return;
 
-		for(Entity* entity : m_contents.store())
-			entity->visit(visitor);
+		for(HSpatial spatial : m_contents)
+			spatial->visit(visitor);
+	}
+
+	void detach_to(HSpatial self, HSpatial target)
+	{
+		Spatial& spatial = self;
+		Spatial& movefrom = spatial.m_parent;
+		spatial.m_parent = target;
+		vector_remove(movefrom.m_contents, self);
+		target->m_contents.push_back(self);
+		spatial.set_dirty(false);
+	}
+
+	void set_parent(HSpatial self, HSpatial target)
+	{
+		detach_to(self, target);
 	}
 }

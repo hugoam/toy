@@ -40,3 +40,4 @@ class btPersistentManifold;
 class btCollisionConfiguration;
 class btCollisionDispatcher;
 
+#include <core/Components.h>

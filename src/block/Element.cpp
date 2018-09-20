@@ -27,9 +27,8 @@ using namespace mud; namespace toy
 		, m_colour(colour)
 	{}
 
-	Heap::Heap(Id id, Entity& parent, const vec3& position, Element& element, float radius)
-		: Complex(id, type<Heap>(), *this)
-		, m_entity(id, *this, parent, position, ZeroQuat)
+	Heap::Heap(HSpatial parent, const vec3& position, Element& element, float radius)
+		: m_spatial(*this, *this, parent, position, ZeroQuat)
 		, m_element(element)
 		, m_radius(radius)
 	{}

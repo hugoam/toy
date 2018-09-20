@@ -55,39 +55,6 @@ namespace mud
     }
     
     
-        
-    // toy::SoundSource
-    {
-        static Meta meta = { type<toy::SoundSource>(), &namspc({ "toy" }), "SoundSource", sizeof(toy::SoundSource), TypeClass::Object };
-        static Class cls = { type<toy::SoundSource>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-                { type<toy::SoundSource>(), Address(), type<toy::Entity>(), "entity", Ref(type<toy::Entity>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::SoundSource>(object).m_entity); } }
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        
-        
-        meta_class<toy::SoundSource>();
-    }
-    
-    
     
     
     

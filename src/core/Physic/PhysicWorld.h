@@ -10,6 +10,7 @@
 #include <infra/Updatable.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
+#include <core/Structs.h>
 
 #ifndef MUD_CPP_20
 #include <map>
@@ -29,17 +30,17 @@ using namespace mud; namespace toy
 		virtual void update_contacts() = 0;
 		virtual void next_frame(size_t tick, size_t delta) = 0;
 
-		virtual object_ptr<ColliderImpl> make_collider(Collider& collider) = 0;
-		virtual object_ptr<ColliderImpl> make_solid(Solid& solid) = 0;
+		virtual object_ptr<ColliderImpl> make_collider(HCollider collider) = 0;
+		virtual object_ptr<SolidImpl> make_solid(HSolid solid) = 0;
 
-		virtual void add_solid(Solid& solid) = 0;
-		virtual void remove_solid(Solid& solid) = 0;
+		virtual void add_solid(HCollider collider, HSolid solid) = 0;
+		virtual void remove_solid(HCollider collider, HSolid solid) = 0;
 
-		virtual void add_collider(Collider& collider) = 0;
-		virtual void remove_collider(Collider& collider) = 0;
+		virtual void add_collider(HCollider collider) = 0;
+		virtual void remove_collider(HCollider collider) = 0;
 	};
 
-	class refl_ TOY_CORE_EXPORT PhysicWorld : public NonCopy, public Updatable
+	class refl_ TOY_CORE_EXPORT PhysicWorld : public NonCopy
     {
 	public:
         PhysicWorld(World& world);

@@ -5,9 +5,10 @@
 
 #pragma once
 
-#include <proto/Complex.h>
+#include <proto/Entity.h>
 #include <core/Forward.h>
 #include <core/World/Origin.h>
+#include <core/World/Section.h>
 
 #ifndef MUD_CPP_20
 #include <vector>
@@ -27,33 +28,32 @@ using namespace mud; namespace toy
 		attr_ Id m_id;
 		attr_ Complex& m_complex;
 		attr_ string m_name;
-		attr_ graph_ Entity& origin() { return m_origin->m_entity; }
-		attr_ graph_ Entity& unworld() { return m_unworld->m_entity; }
-
-		void destroy();
+		attr_ graph_ HSpatial origin() { return m_origin->m_spatial; }
+		attr_ graph_ HSpatial unworld() { return m_unworld->m_spatial; }
 
 		WorldClock& clock() { return *m_clock; }
 
-		TaskSection* section(short int section);
+		void destroy();
 
-    public:
 		void next_frame();
 
-		void add_task(Updatable* task, short int section);
-		void remove_task(Updatable* task, short int section);
-		void updateTasks(short int section);
-
 	public:
-		template <class T>
-		inline bool isa() { return m_complex.isa<T>(); }
+		std::vector<unique_ptr<HandlePool>> m_pools;
 
 		template <class T>
-		inline T& as() { return m_complex.as<T>(); }
+		inline SparsePool<T>& pool()
+		{
+			if(!m_pools[type<T>().m_id])
+				m_pools[type<T>().m_id] = make_unique<SparsePool<T>>();
+			return as<SparsePool<T>>(*m_pools[type<T>().m_id].get());
+		}
 
     private:
-		std::vector<object_ptr<TaskSection>> m_sections;
 		object_ptr<WorldClock> m_clock;
 		object_ptr<Origin> m_origin;
 		object_ptr<Origin> m_unworld;
+
+	public:
+		JobPump m_pump;
     };
 }

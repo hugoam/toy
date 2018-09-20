@@ -15,10 +15,10 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Obstacle : public Collider
 	{
 	public:
-		constr_ Obstacle(Entity& entity, Medium& medium, const CollisionShape& shape, float throughput);
+		constr_ Obstacle(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& shape, float throughput);
 		~Obstacle();
 
-		attr_ Entity& m_entity;
+		attr_ HSpatial m_spatial;
 		attr_ CollisionShape m_shape;
 		attr_ float m_throughput;
 	};

@@ -21,20 +21,19 @@ using namespace mud; namespace toy
 {
 	typedef unsigned int dtPolyRef;
 
-	class refl_ TOY_CORE_EXPORT OWaypoint : public Complex
+	class refl_ TOY_CORE_EXPORT Waypoint : public Entity
 	{
 	public:
-		constr_ OWaypoint(Id id, Entity& parent, const vec3& position);
+		constr_ Waypoint(HSpatial parent, const vec3& position);
 
-		comp_ attr_ Entity m_entity;
+		comp_ attr_ CSpatial m_spatial;
 	};
 
     class refl_ TOY_CORE_EXPORT DetourPath
     {
 	public:
-		DetourPath(Entity& entity, Pathfinder& pathfinder, const vec3& origin, const vec3& destination);
+		DetourPath(Pathfinder& pathfinder, const vec3& origin, const vec3& destination);
 
-		Entity& m_entity;
 		Pathfinder& m_pathfinder;
 
 		vec3 m_origin;

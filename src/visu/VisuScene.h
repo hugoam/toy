@@ -75,21 +75,23 @@ using namespace mud; namespace toy
 
 		meth_ void next_frame();
 
-		Gnode& entity_node(Gnode& parent, Entity& entity, size_t painter);
+		Gnode& entity_node(Gnode& parent, Spatial& spatial, size_t painter);
 
 		inline void painter(cstring name, std::function<void(size_t, VisuScene&, Gnode&)> paint)
 		{
 			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 		}
 
-		template <class T, class T_Store>
-		inline void entity_painter(cstring name, T_Store& entities, void (*paint_func)(Gnode&, T&))
+		template <class T>
+		inline void entity_painter(cstring name, World& world, void (*paint_func)(Gnode&, T&))
 		{
-			auto paint = [this, &entities, paint_func](size_t index, VisuScene&, Gnode& parent)
+			UNUSED(world);
+			auto paint = [this, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
-				for(Entity* entity : entities.store())
-					if(entity->isa<T>())
-						paint_func(this->entity_node(parent, *entity, index), entity->as<T>());
+				s_registry.Loop<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+				{
+					paint_func(this->entity_node(parent, spatial, index), component);
+				});
 			};
 			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 		}
@@ -100,7 +102,7 @@ using namespace mud; namespace toy
 			auto paint = [this, &objects, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
 				for(T* object : objects)
-					paint_func(this->entity_node(parent, object->m_entity, index), *object);
+					paint_func(this->entity_node(parent, object->m_spatial, index), *object);
 			};
 			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 		}
@@ -114,15 +116,15 @@ using namespace mud; namespace toy
 	export_ TOY_VISU_EXPORT void paint_selection(Gnode& parent, Selection& selection, Ref hovered);
 
 	export_ TOY_VISU_EXPORT void paint_camera(Gnode& parent, Camera& camera);
-	export_ TOY_VISU_EXPORT void paint_light(Gnode& parent, LightSource& light);
-	export_ TOY_VISU_EXPORT void paint_symbolic(Gnode& parent, Symbolic& symbolic);
+	//export_ TOY_VISU_EXPORT void paint_light(Gnode& parent, LightSource& light);
+	//export_ TOY_VISU_EXPORT void paint_symbolic(Gnode& parent, Symbolic& symbolic);
 	export_ TOY_VISU_EXPORT void paint_obstacle(Gnode& parent, Obstacle& obstacle);
-	export_ TOY_VISU_EXPORT void paint_disq(Gnode& parent, Disq& disq);
-	export_ TOY_VISU_EXPORT void paint_event_sphere(Gnode& parent, EventReceptor& receptor);
-	export_ TOY_VISU_EXPORT void paint_entity(Gnode& parent, Entity& entity);
-	export_ TOY_VISU_EXPORT void paint_active(Gnode& parent, Active& active);
+	//export_ TOY_VISU_EXPORT void paint_disq(Gnode& parent, Disq& disq);
+	//export_ TOY_VISU_EXPORT void paint_event_sphere(Gnode& parent, EventReceptor& receptor);
+	export_ TOY_VISU_EXPORT void paint_entity(Gnode& parent, Spatial& spatial);
+	//export_ TOY_VISU_EXPORT void paint_active(Gnode& parent, Active& active);
 
-	export_ TOY_VISU_EXPORT void scene_painters(VisuScene& scene, Array<Entity>& store);
+	export_ TOY_VISU_EXPORT void scene_painters(VisuScene& scene, World& world);
 
 	export_ TOY_VISU_EXPORT bool sound(Gnode& parent, const string& sound, bool loop = false, float volume = 1.f);
 }

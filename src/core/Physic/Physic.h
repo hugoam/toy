@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Complex.h>
+#include <proto/Entity.h>
 #include <infra/Global.h>
 #include <core/Forward.h>
 #include <core/Physic/Medium.h>
@@ -23,9 +23,6 @@ using namespace mud; namespace toy
 	class TOY_CORE_EXPORT Physic
 	{
 	public:
-		Physic(Entity& entity);
-
-	protected:
-		//Array<Area> m_areaStore;
+		Physic(Spatial& spatial);
 	};
 }

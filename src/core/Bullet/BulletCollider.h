@@ -7,7 +7,6 @@
 #pragma once
 
 #include <infra/NonCopy.h>
-#include <core/Store/Array.h>
 #include <obj/Dispatch.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
@@ -40,38 +39,22 @@ using namespace mud; namespace toy
     class refl_ TOY_CORE_EXPORT BulletCollider : public NonCopy, public ColliderImpl
     {
 	public:
-        BulletCollider(SubBulletWorld& bulletWorld, Collider& collider, bool create = true);
+        BulletCollider(BulletMedium& bulletWorld, HSpatial spatial, HCollider collider, CollisionShape& collision_shape, bool create = true);
         ~BulletCollider();
 
-		void setup_object(unique_ptr<btCollisionObject> collisionObject);
+		void setup(Spatial& spatial, btCollisionObject& collisionObject);
 
 		virtual void update_transform(const vec3& position, const quat& rotation) override;
-		virtual void update_motion(const vec3& linear_velocity, const vec3& angular_velocity) override { UNUSED(linear_velocity); UNUSED(angular_velocity); }
 		virtual void update_transform() override;
-		virtual void force_update() override;
 
 		virtual void project(const vec3& position, std::vector<Collision>& collisions, short int mask) override;
 		virtual void raycast(const vec3& position, std::vector<Collision>& collisions, short int mask) override;
 		virtual Collision raycast(const vec3& position, short int mask) override;
 
-		virtual vec3 linear_velocity() override { return Zero3; }
-		virtual vec3 angular_velocity() override { return Zero3; }
-
-		virtual void set_linear_velocity(const vec3& force) override { UNUSED(force); }
-		virtual void set_angular_velocity(const vec3& torque) override { UNUSED(torque); }
-		virtual void set_angular_factor(const vec3& factor) override { UNUSED(factor); }
-
-		virtual void set_force(const vec3& force) override { UNUSED(force); }
-		virtual void set_torque(const vec3& torque) override { UNUSED(torque); }
-
-		virtual void impulse(const vec3& force, const vec3& point) override { UNUSED(force); UNUSED(point); }
-
-		virtual void impulse_force(const vec3& force) override { UNUSED(force); }
-		virtual void impulse_torque(const vec3& torque) override { UNUSED(torque); }
-
 	public:
-		SubBulletWorld& m_bullet_world;
-		Collider& m_collider;
+		BulletMedium& m_bullet_world;
+		HSpatial m_spatial;
+		HCollider m_collider;
 		BulletShape m_collision_shape;
 		unique_ptr<btCollisionObject> m_collision_object;
     };

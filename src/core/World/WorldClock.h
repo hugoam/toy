@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Complex.h>
+#include <proto/Entity.h>
 #include <math/Timer.h>
 #include <core/Forward.h>
 

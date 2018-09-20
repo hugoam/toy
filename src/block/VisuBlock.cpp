@@ -100,6 +100,9 @@ using namespace mud; namespace toy
 
 	void update_block_geometry(GfxSystem& gfx_system, Block& block, BlockState& state)
 	{
+		Spatial& spatial = block.m_spatial;
+		WorldPage& world_page = block.world_page();
+
 		if(block.m_subdived)
 			return;
 
@@ -138,7 +141,7 @@ using namespace mud; namespace toy
 		for(Element* element : elements)
 			if(!bodies[element].empty())
 			{
-				string identifier = "sector_" + to_string(block.m_entity.m_id) + "_" + element->m_name;
+				string identifier = "sector_" + to_string(block.m_handle) + "_" + element->m_name;
 
 				printf("INFO: Creating geometry for Block %s, %zu quads\n", identifier.c_str(), bodies[element].size());
 
@@ -153,9 +156,9 @@ using namespace mud; namespace toy
 				state.m_models[element]->m_meshes[1]->m_material = &wireframe;
 				*/
 
-				block.sector().m_world_page.m_geometry_filter.push_back(identifier); // @kludge : find out a more intelligent way to filter world geometry
+				world_page.m_geometry_filter.push_back(identifier); // @kludge : find out a more intelligent way to filter world geometry
 			}
 
-		//block.sector().m_entity.as<WorldPage>().update_geometry();
+		//as<WorldPage>(block.sector()).update_geometry();
 	}
 }

@@ -28,11 +28,22 @@ using namespace mud; namespace toy
 		~Core();
 
 		void next_frame();
+		
+		template <class T_Component, class... T_Args>
+		void add_loop(Task task)
+		{
+			auto loop = [](size_t tick, size_t delta)
+			{
+				s_registry.Loop<T_Component, T_Args...>([=](uint32_t entity, T_Component& component, T_Args&... args)
+				{
+					UNUSED(entity); component.next_frame(args..., tick, delta);
+				});
+			};
 
-		TaskSection& section(short int index) { return *m_sections[index]; }
+			m_pump.add_step({ task, loop });
+		}
 
-	private:
-		std::vector<object_ptr<TaskSection>> m_sections;
+		JobPump m_pump;
 	};
 
 	class refl_ TOY_CORE_EXPORT DefaultWorld : public Complex

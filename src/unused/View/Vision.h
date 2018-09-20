@@ -13,7 +13,7 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT Vision : public StoreObserver<Entity>
+	class refl_ TOY_CORE_EXPORT Vision : public StoreObserver<Spatial>
 	{
 	public:
 		constr_ Vision(World& world);
@@ -22,12 +22,12 @@ using namespace mud; namespace toy
 		attr_ World& m_world;
 		attr_ Ref m_player;
 
-		Chained<CountStore<Entity>> m_entities;
+		Chained<CountStore<Spatial>> m_entities;
 		Array<Camera> m_cameras;
 		Array<View> m_views;
 
-		void handle_add(Entity& owned);
-		void handle_remove(Entity& owned);
+		void handle_add(Spatial& owned);
+		void handle_remove(Spatial& owned);
 
 		void addView(View& view);
 
@@ -54,7 +54,7 @@ using namespace mud; namespace toy
 		OmniVision(World& world);
 		~OmniVision();
 
-		Array<Entity> m_origin;
+		Array<Spatial> m_origin;
 		RecursiveStore m_store;
 		StoreView m_view;
 	};

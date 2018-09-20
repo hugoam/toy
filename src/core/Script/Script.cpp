@@ -16,24 +16,29 @@
 
 using namespace mud; namespace toy
 {
-	EntityScript::EntityScript(Entity& entity)
-		: m_entity(entity)
+	EntityScript::EntityScript(HSpatial spatial)
+		: m_spatial(spatial)
+	{}
+
+	void EntityScript::next_frame(size_t tick, size_t delta)
 	{
-		indexer(type<EntityScript>()).index(entity.m_id, Ref(this));
+		this->run_logic();
 	}
 
 	void EntityScript::run_logic()
 	{
 		if(m_logic_script)
 		{
+			Spatial& spatial = m_spatial;
 			// @hack @kludge add proper way to define a script signature
 			if(m_logic_script->m_signature.m_params.empty())
 			{
-				m_logic_script->m_signature.m_params.push_back({ "self", Ref(m_entity.m_complex.m_type) });
-				m_logic_script->m_signature.m_params.push_back({ "entity", Ref(type<Entity>()) });
+				//m_logic_script->m_signature.m_params.push_back({ "self", Ref(spatial.m_entity->m_type) });
+				m_logic_script->m_signature.m_params.push_back({ "self", Ref(type<Entity>()) });
+				m_logic_script->m_signature.m_params.push_back({ "entity", Ref(type<Spatial>()) });
 			}
 
-			std::vector<Var> args = { Ref(&m_entity.m_complex), Ref(&m_entity) };
+			std::vector<Var> args = { Ref(spatial.m_entity), Ref(&spatial) };
 			(*m_logic_script)(args);
 		}
 	}
@@ -42,7 +47,8 @@ using namespace mud; namespace toy
 	{
 		if(m_render_script)
 		{
-			std::vector<Var> args = { Ref(&m_entity) };
+			Spatial& spatial = m_spatial;
+			std::vector<Var> args = { Ref(&spatial) };
 			(*m_render_script)(args);
 		}
 	}

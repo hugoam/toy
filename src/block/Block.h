@@ -39,13 +39,13 @@ using namespace mud; namespace toy
 	TOY_BLOCK_EXPORT func_ void paint_block_height(Block& block, Image256& image, Element& element);
 	TOY_BLOCK_EXPORT func_ void paint_block_elements(Block& block, Image256& image, array<Element*> elements);
 
-	class refl_ TOY_BLOCK_EXPORT Block : public Complex
+	class refl_ TOY_BLOCK_EXPORT Block : public Entity
 	{
 	public:
-		constr_ Block(Id id, Entity& parent, const vec3& position, Block* parentblock, size_t index, const vec3& size);
+		constr_ Block(HSpatial parent, const vec3& position, Block* parentblock, size_t index, const vec3& size);
 
-		comp_ attr_ Entity m_entity;
-		comp_ attr_ Emitter m_emitter;
+		comp_ attr_ CSpatial m_spatial;
+		//comp_ attr_ CEmitter m_emitter;
 
 		attr_ link_ Block* m_parentblock;
 		attr_ size_t m_index;
@@ -71,13 +71,14 @@ using namespace mud; namespace toy
 
 		size_t depth();
 
-		vec3 min(Entity& self);
-		vec3 max(Entity& self);
+		vec3 min(Spatial& self);
+		vec3 max(Spatial& self);
 		vec3 coordinates();
 
 		size_t subdiv();
 		vec3 chunk_size();
 
+		WorldPage& world_page();
 		Sector& sector();
 
 		vec3 local_block_coord(size_t index);
@@ -95,6 +96,6 @@ using namespace mud; namespace toy
 		Hunk neighbour(Hunk& hunk, Side side);
 
 	protected:
-		EmitterScope& m_scope;
+		//EmitterScope& m_scope;
 	};
 }

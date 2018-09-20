@@ -3,7 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
+#include <edit/Types.h>
 #include <edit/Edit/Viewport.h>
 
 #include <gfx-ui/Viewport.h>
@@ -11,8 +11,7 @@
 #include <gfx/Item.h>
 
 #include <core/Camera/Camera.h>
-#include <core/View/Vision.h>
-#include <core/Selector/Selector.h>
+#include <core/Selector/Selection.h>
 #include <core/World/World.h>
 #include <core/Physic/PhysicWorld.h>
 
@@ -26,16 +25,16 @@ using namespace mud; namespace toy
 	vec3 pick_terrain(Viewer& viewer, World& world, vec2 position)
 	{
 		Ray ray = viewer.m_camera.ray(position);
-		return world.as<PhysicWorld>().ground_point(ray);
+		return as<PhysicWorld>(world.m_complex).ground_point(ray);
 	}
 
-	Viewer& scene_viewport(Widget& parent, VisuScene& scene, Camera& camera, Selection& selection)
+	Viewer& scene_viewport(Widget& parent, VisuScene& scene, HCamera camera, HMovable movable, Selection& selection)
 	{
 		Widget& board = ui::widget(parent, styles().sheet, &scene);
 		Viewer& viewer = board.suba<Viewer, Scene&>(scene.m_scene);
 		if(viewer.once())
 		{
-			viewer.m_controller = make_unique<RTSCameraController>(viewer, camera);
+			viewer.m_controller = make_unique<RTSCameraController>(viewer, camera, movable);
 		}
 
 		update_camera(camera, viewer.m_camera);

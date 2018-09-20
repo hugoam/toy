@@ -173,7 +173,7 @@ void jump_query(Widget& parent, Viewer& viewer, Fleet& fleet, uint32_t mode)
 	if(query.m_hover != uvec2(UINT_MAX))
 	{
 		uint16_t magic = 16; // @kludge: we probably have less than 16 painters, so safe
-		draw_jump_hover(viewer.m_scene->m_graph.subx(magic), fleet.m_entity.m_position, query.m_hover, fleet.m_commander->m_colour);
+		draw_jump_hover(viewer.m_scene->m_graph.subx(magic), fleet.m_spatial->m_position, query.m_hover, fleet.m_commander->m_colour);
 	}
 }
 
@@ -497,7 +497,7 @@ void turn_report_divisions(Widget& parent, Turn& turn)
 
 	if(split)
 	{
-		split->update(*split->m_source, split->m_source->m_entity.m_last_tick);
+		split->update(*split->m_source, split->m_source->m_spatial->m_last_tick);
 		turn.m_split++;
 	}
 
@@ -505,12 +505,12 @@ void turn_report_divisions(Widget& parent, Turn& turn)
 		turn.next_stage();
 }
 
-void jump_camera_to(toy::Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration = 1.f)
+void jump_camera_to(Spatial& spatial, toy::Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration = 1.f)
 {
 	animate(Ref(&camera), member(&toy::Camera::m_lens_distance), var(distance), duration);
 	animate(Ref(&camera), member(&toy::Camera::m_lens_angle), var(angle), duration);
-	animate(Ref(&as<Transform>(camera.m_entity)), member(&Transform::m_position), var(target), duration);
-	animate(Ref(&as<Transform>(camera.m_entity)), member(&Transform::m_rotation), var(rotation), duration);
+	animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), duration);
+	animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotation), duration);
 }
 
 void turn_report_movements(Widget& parent, GameScene& scene, Turn& turn)
@@ -520,17 +520,17 @@ void turn_report_movements(Widget& parent, GameScene& scene, Turn& turn)
 
 	auto do_jump = [&](Fleet& fleet, Jump& jump)
 	{
-		jump.update(fleet, fleet.m_entity.m_last_tick);
-		if(jump.m_state_updated == fleet.m_entity.m_last_tick)
+		jump.update(fleet, fleet.m_spatial->m_last_tick);
+		if(jump.m_state_updated == fleet.m_spatial->m_last_tick)
 		{
 			quat rotation = look_at(jump.m_start_pos, jump.m_dest_pos);
 
 			float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
 
 			if(jump.m_state == Jump::Start)
-				jump_camera_to(*player.m_camera, jump.m_start_pos, rotation, 2.f * size, c_pi / 8.f, 3.f);
+				jump_camera_to(player.m_camera->m_spatial, player.m_camera->m_camera, jump.m_start_pos, rotation, 2.f * size, c_pi / 8.f, 3.f);
 			else if(jump.m_state == Jump::Warp)
-				jump_camera_to(*player.m_camera, jump.m_dest_pos, 2.f * size);
+				jump_camera_to(player.m_camera->m_spatial, player.m_camera->m_camera, jump.m_dest_pos, 2.f * size);
 		}
 		if(jump.m_state == Jump::None)
 			turn.m_jump++;
@@ -782,9 +782,9 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 			technology_sheet(sheet, *player.m_commander);
 		}
 
-		player.m_selected_item = {};
+		player.m_selected_item = nullptr;
 
-		static Ref hovered = player.m_hovered_item;
+		static Entity* hovered = player.m_hovered_item;
 		static Clock clock;
 		if(hovered != player.m_hovered_item)
 		{
@@ -798,9 +798,9 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 	}
 	else if(player.m_mode == GameStage::Tactics)
 	{
-		Ref selected = scene.m_selection.size() > 0 ? scene.m_selection[0] : Ref();
+		Entity* selected = scene.m_selection.size() > 0 ? try_val<Entity>(scene.m_selection[0]) : nullptr;
 
-		if(Star* star = try_val<Star>(selected))
+		if(Star* star = try_as<Star>(selected))
 		{
 			if(star->m_commander == player.m_commander)
 				star_sheet(divs.left, *star);
@@ -811,7 +811,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 			star_orders(orders, viewer, *star);
 		}
 
-		if(Fleet* fleet = try_val<Fleet>(selected))
+		if(Fleet* fleet = try_as<Fleet>(selected))
 		{
 			if(fleet->m_commander == player.m_commander)
 				fleet_sheet(divs.left, *fleet);
@@ -826,13 +826,16 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 
 		if(player.m_selected_item != selected)
 		{
-			Entity& entity = type(selected).is<Fleet>() ? val<Fleet>(selected).m_entity : val<Star>(selected).m_entity;
-			jump_camera_to(*player.m_camera, entity.m_position, random_scalar(1.f, 2.f), random_scalar(float(-c_pi / 8.f), float(c_pi / 8.f)));
+			if(selected)
+			{
+				Spatial& spatial = as<Spatial>(*selected);
+				jump_camera_to(player.m_camera->m_spatial, player.m_camera->m_camera, spatial.m_position, random_scalar(1.f, 2.f), random_scalar(float(-c_pi / 8.f), float(c_pi / 8.f)));
+			}
 			player.m_selected_item = selected;
 		}
 
 		static Clock clock;
-		player.m_camera->m_entity.rotate(Y3, CAMERA_ROTATION_SPEED * float(clock.step()));
+		player.m_camera->m_spatial->rotate(Y3, CAMERA_ROTATION_SPEED * float(clock.step()));
 	}
 	else if(player.m_mode == GameStage::TurnReport)
 	{
@@ -846,11 +849,11 @@ void ex_space_ui(Widget& parent, GameScene& scene)
 
 	Widget& self = ui::widget(parent, styles().board, &scene);
 
-	Viewer& viewer = game_viewport(self, scene, *player.m_camera);
+	Viewer& viewer = game_viewport(self, scene, player.m_camera->m_camera, player.m_camera->m_movable);
 	viewer.m_camera.m_near = 0.001f;
 	paint_viewer(viewer);
 
 	game_viewer_ui(viewer, scene, player);
 
-	player.m_hovered_item = viewer.m_hovered;
+	player.m_hovered_item = try_val<Entity>(viewer.m_hovered);
 }

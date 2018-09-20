@@ -15,23 +15,13 @@
 
 using namespace mud; namespace toy
 {
-	Chunk::Chunk(Id id, Entity& parent, const vec3& position, size_t index, Element& element, float size)
-		: Complex(id, type<Chunk>(), *this)
-		, m_entity(id, *this, parent, position, ZeroQuat)
+	Chunk::Chunk(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
+		: m_spatial(*this, *this, parent, position, ZeroQuat)
 		, m_index(index)
-		, m_block(*sector().m_block)
+		, m_block(block)
 		, m_element(element)
 		, m_size(size)
 	{}
-
-	Sector& Chunk::sector()
-	{
-		Entity* parent = m_entity.m_parent;
-		for(size_t depth = 1; !parent->isa<WorldPage>(); parent = parent->m_parent)
-			++depth;
-
-		return parent->as<Sector>();
-	}
 
 	Chunk* Chunk::neighbour(Side side)
 	{

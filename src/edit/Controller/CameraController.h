@@ -15,7 +15,7 @@ using namespace mud; namespace toy
 	class TOY_EDIT_EXPORT CameraController : public ViewerController, public EventDispatch
 	{
 	public:
-		CameraController(Viewer& viewer, Camera& camera);
+		CameraController(Viewer& viewer, HCamera camera, HMovable movable);
 
 		void default_velocities();
 		void set_velocities(const std::map<Key, vec3>& velocities);
@@ -36,8 +36,8 @@ using namespace mud; namespace toy
 
 	protected:
 		Viewer& m_viewer;
-		Camera& m_camera;
-		Movable& m_movable;
+		HCamera m_camera;
+		HMovable m_movable;
 		float m_velocity;
 		float m_angular_velocity;
 	};
