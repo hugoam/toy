@@ -34,7 +34,7 @@ using namespace mud; namespace toy
 		{
 			auto loop = [](size_t tick, size_t delta)
 			{
-				s_registry.Loop<T_Component, T_Args...>([=](uint32_t entity, T_Component& component, T_Args&... args)
+				s_registry.LoopFast<T_Component, T_Args...>([=](uint32_t entity, T_Component& component, T_Args&... args)
 				{
 					UNUSED(entity); component.next_frame(args..., tick, delta);
 				});

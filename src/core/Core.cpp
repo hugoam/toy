@@ -58,6 +58,8 @@ using namespace mud; namespace toy
 
 	void Core::next_frame()
 	{
+		s_registry.SortComponents();
+
 		Animator::me.next_frame(0, 0);
 
 		m_pump.pump();
