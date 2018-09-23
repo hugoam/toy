@@ -67,11 +67,9 @@ using namespace mud; namespace toy
 
 	void WorldPage::update_geometry()
 	{
-		SparsePool<Collider>& colliders = m_world->pool<Collider>();
-		SparsePool<Solid>& solids = m_world->pool<Solid>();
 		for(Geometry& geom : m_chunks)
 		{
-			m_solids.emplace_back(Solid::create(colliders, solids, m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
+			m_solids.emplace_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}
 	}
 

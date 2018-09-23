@@ -82,7 +82,7 @@ using namespace mud; namespace toy
 		ColliderImpl* operator->() { return m_impl.get(); }
 		const ColliderImpl* operator->() const { return m_impl.get(); }
 
-		static OCollider create(SparsePool<Collider>& pool, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group);
+		static OCollider create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group);
 		static void destroy(HCollider solid);
     };
 
@@ -132,8 +132,8 @@ using namespace mud; namespace toy
 		SolidImpl* operator->() { return m_impl.get(); }
 		const SolidImpl* operator->() const { return m_impl.get(); }
 
-		static OSolid create(SparsePool<Collider>& colliders, SparsePool<Solid>& solids, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass = 0.f);
-		static OSolid create(SparsePool<Collider>& colliders, SparsePool<Solid>& solids, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, bool isstatic, float mass = 0.f);
+		static OSolid create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass = 0.f);
+		static OSolid create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, bool isstatic, float mass = 0.f);
 		static void destroy(HSolid solid);
 	};
 }

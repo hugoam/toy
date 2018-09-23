@@ -7,7 +7,6 @@
 
 #include <tree/Node.h>
 #include <math/Timer.h>
-#include <infra/Updatable.h>
 #include <visu/Forward.h>
 
 #include <core/Entity/Entity.h>

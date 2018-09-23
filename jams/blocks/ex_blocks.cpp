@@ -72,7 +72,7 @@ Shield::Shield(HSpatial parent, const vec3& position, Faction& faction, float ra
 	, m_radius(radius)
 	, m_charge(1.f)
 	, m_discharge(0.f)
-	, m_collider(Collider::create(parent->m_world->pool<Collider>(), m_spatial, HMovable(), Sphere(radius), SolidMedium::me, CollisionGroup(CM_ENERGY)))
+	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(radius), SolidMedium::me, CollisionGroup(CM_ENERGY)))
 {
 	s_registry.AddPointer<Shield>(m_handle, this);
 }
@@ -99,8 +99,8 @@ Slug::Slug(HSpatial parent, const vec3& source, const quat& rotation, const vec3
 	, m_source(source)
 	, m_velocity(velocity)
 	, m_power(power)
-	//, m_solid(m_spatial, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY), false, 1.f)
-	, m_collider(Collider::create(parent->m_world->pool<Collider>(), m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY)))
+	//, m_solid(Solid::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY), false, 1.f))
+	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY)))
 {
 	s_registry.AddPointer<Slug>(m_handle, this);
 }
@@ -164,7 +164,7 @@ Tank::Tank(HSpatial parent, const vec3& position, Faction& faction)
 	, m_emitter(*this, m_spatial, m_movable)
 	, m_receptor(*this, m_spatial, m_movable)
 	, m_faction(faction)
-	, m_solid(Solid::create(parent->m_world->pool<Collider>(), parent->m_world->pool<Solid>(), m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), false, 4.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), false, 4.f))
 {
 	s_registry.AddPointer<Tank>(m_handle, this);
 

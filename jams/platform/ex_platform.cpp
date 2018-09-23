@@ -122,8 +122,8 @@ Bullet::Bullet(HSpatial parent, const vec3& source, const quat& rotation, float 
 	: m_spatial(*this, *this, parent, source, rotation)
 	, m_source(source)
 	, m_velocity(rotate(rotation, -Z3) * velocity)
-	//, m_solid(Solid::create(parent->m_world->pool<Collider>(), parent->m_world->pool<Solid>(), m_spatial, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(energy), false, 1.f))
-	, m_collider(Collider::create(parent->m_world->pool<Collider>(), m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
+	//, m_solid(Solid::create(m_spatial, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(energy), false, 1.f))
+	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
 {
 	s_registry.AddPointer<Bullet>(m_handle, this);
 }
@@ -189,7 +189,7 @@ Human::Human(HSpatial parent, const vec3& position, Faction faction)
 	, m_script(*this, m_spatial)
 	, m_faction(faction)
 	, m_walk(false)
-	, m_solid(Solid::create(parent->m_world->pool<Collider>(), parent->m_world->pool<Solid>(), m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f))
 {
 	s_registry.AddPointer<Human>(m_handle, this);
 
@@ -367,7 +367,7 @@ Crate::Crate(HSpatial parent, const vec3& position, const vec3& extents)
 	: m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 	, m_extents(extents)
-	, m_solid(Solid::create(parent->m_world->pool<Collider>(), parent->m_world->pool<Solid>(), m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))
+	, m_solid(Solid::create(m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))
 {
 	s_registry.AddPointer<Crate>(m_handle, this);
 }

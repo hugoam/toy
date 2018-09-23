@@ -7,7 +7,6 @@
 
 #include <infra/NonCopy.h>
 #include <obj/Unique.h>
-#include <infra/Updatable.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Structs.h>

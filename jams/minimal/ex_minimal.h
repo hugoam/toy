@@ -15,10 +15,19 @@ extern "C"
 	//_MINIMAL_EXPORT void ex_minimal_game(GameShell& app, Game& game);
 }
 
+#ifdef TOY_ECS
+namespace mud
+{
+	template <> struct TypedBuffer<Bullet> { using type = ComponentBuffer<Bullet*>; static size_t index() { return 12; } };
+	template <> struct TypedBuffer<Human> { using type = ComponentBuffer<Human*>; static size_t index() { return 13; } };
+	template <> struct TypedBuffer<Crate> { using type = ComponentBuffer<Crate*>; static size_t index() { return 14; } };
+}
+#endif
+
 class refl_ _MINIMAL_EXPORT Bullet : public Entity
 {
 public:
-	Bullet(Entity& parent, const vec3& source, const quat& rotation, float velocity);
+	Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
 	~Bullet();
 
 	comp_ attr_ CSpatial m_spatial;
@@ -48,7 +57,7 @@ struct HumanController
 	vec3 m_torque = Zero3;
 };
 
-class refl_ _MINIMAL_EXPORT Human : public Entity, public Updatable
+class refl_ _MINIMAL_EXPORT Human : public Entity
 {
 public:
 	constr_ Human(HSpatial parent, const vec3& position);
@@ -69,7 +78,7 @@ public:
 	struct State { std::string name; bool loop; };
 	State m_state = { "IdleAim", true };
 
-	void next_frame(size_t tick, size_t delta);
+	void next_frame(Spatial& spatial, size_t tick, size_t delta);
 
 	quat sight(bool aiming = true);
 	Aim aim();

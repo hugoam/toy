@@ -5,11 +5,11 @@
 #include <minimal/Api.h>
 #include <meta/minimal/Module.h>
 
-Bullet::Bullet(Entity& parent, const vec3& source, const quat& rotation, float velocity)
+Bullet::Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 	: m_spatial(*this, *this, parent, source, rotation)
 	, m_source(source)
 	, m_velocity(rotate(rotation, -Z3) * velocity)
-	, m_collider(Collider::create(m_spatial, Sphere(0.1f), SolidMedium::me, CM_SOLID))
+	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
 {}
 
 Bullet::~Bullet()
@@ -43,16 +43,16 @@ Human::Human(HSpatial parent, const vec3& position)
 	: m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 	, m_walk(false)
-	, m_solid(Solid::create(m_spatial, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), SolidMedium::me, CM_SOLID, false, 1.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), SolidMedium::me, CM_SOLID, false, 1.f))
 {}
 
 Human::~Human()
 {}
 
-void Human::next_frame(size_t tick, size_t delta)
+void Human::next_frame(Spatial& spatial, size_t tick, size_t delta)
 {
 	UNUSED(tick);
-	m_solid->set_angular_factor(Zero3);
+	(*m_solid)->set_angular_factor(Zero3);
 
 	for(auto& bullet : reverse_adapt(m_bullets))
 	{
@@ -64,13 +64,15 @@ void Human::next_frame(size_t tick, size_t delta)
 
 quat Human::sight(bool aiming)
 {
-	return aiming ? rotate(m_spatial.m_rotation, X3, m_angles.y) : m_spatial.m_rotation;
+	Spatial& spatial = m_spatial;
+	return aiming ? rotate(spatial.m_rotation, X3, m_angles.y) : spatial.m_rotation;
 }
 
 Aim Human::aim()
 {
+	Spatial& spatial = m_spatial;
 	quat rotation = this->sight(m_aiming);
-	vec3 source = m_spatial.m_position + rotate(m_spatial.m_rotation, Human::muzzle_offset);
+	vec3 source = spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset);
 	return { source, rotation };
 }
 
@@ -83,11 +85,10 @@ void Human::shoot()
 }
 
 Crate::Crate(HSpatial parent, const vec3& position, const vec3& extents)
-	: Entity(id, type<Crate>(), m_movable, *this)
-	, m_spatial(id, *this, parent, position, ZeroQuat)
-	, m_movable(m_spatial)
+	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	, m_movable(*this, m_spatial)
 	, m_extents(extents)
-	, m_solid(m_spatial, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f)
+	, m_solid(Solid::create(m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))
 {}
 
 Player::Player(World& world)
@@ -99,23 +100,25 @@ Player::Player(World& world)
 
 void paint_bullet(Gnode& parent, Bullet& bullet)
 {
+	Spatial& spatial = bullet.m_spatial;
+
 	static ParticleGenerator* flash = parent.m_scene->m_gfx_system.particles().file("flash");
 	static ParticleGenerator* impact = parent.m_scene->m_gfx_system.particles().file("impact");
 
-	Gnode& source = gfx::node(parent, {}, bullet.m_source, bullet.m_spatial.m_rotation);
+	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
 	gfx::particles(source, *flash);
 
 	toy::sound(source, "rifle2", false, 0.4f);
 
 	if(!bullet.m_impacted)
 	{
-		Gnode& projectile = gfx::node(parent, {}, bullet.m_spatial.m_position, bullet.m_spatial.m_rotation);
+		Gnode& projectile = gfx::node(parent, {}, spatial.m_position, spatial.m_rotation);
 		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour(2.f, 0.3f, 0.3f) * 4.f));
 	}
 
 	if(bullet.m_impacted)
 	{
-		Gnode& hit = gfx::node(parent, {}, bullet.m_impact, bullet.m_spatial.m_rotation);
+		Gnode& hit = gfx::node(parent, {}, bullet.m_impact, spatial.m_rotation);
 		toy::sound(source, "impact2", false, 0.4f);
 		if(gfx::particles(hit, *impact).m_ended)
 			bullet.m_destroy = true;
@@ -126,7 +129,9 @@ void paint_human(Gnode& parent, Human& human)
 {
 	static Model& model = *parent.m_scene->m_gfx_system.models().file("human00");
 
-	Gnode& self = gfx::node(parent, Ref(&human), human.m_spatial.m_position, human.m_spatial.m_rotation);
+	Spatial& spatial = human.m_spatial;
+
+	Gnode& self = gfx::node(parent, Ref(&human), spatial.m_position, spatial.m_rotation);
 	
 	Item& item = gfx::item(self, model);
 	Animated& animated = gfx::animated(self, item);
@@ -136,8 +141,8 @@ void paint_human(Gnode& parent, Human& human)
 
 	Bone* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
 
-	mat4 pose = bxrotation(human.m_spatial.m_rotation) * fix_bone_pose(*bone);
-	Gnode& arm = gfx::node(self, {}, human.m_spatial.m_position + vec3(pose * vec4(Zero3, 1.f)), human.m_spatial.m_rotation);
+	mat4 pose = bxrotation(spatial.m_rotation) * fix_bone_pose(*bone);
+	Gnode& arm = gfx::node(self, {}, spatial.m_position + vec3(pose * vec4(Zero3, 1.f)), spatial.m_rotation);
 	gfx::model(arm, "rifle");
 }
 
@@ -163,25 +168,25 @@ void paint_scene(Gnode& parent)
 
 void ex_minimal_scene(GameShell& app, GameScene& scene)
 {
-	static OmniVision vision = { *scene.m_game.m_world };
-
 	scene.painter("World", [&](size_t index, VisuScene& scene, Gnode& parent) {
 		UNUSED(scene); paint_scene(parent.subi((void*)index));
 	});
-	
-	scene.entity_painter<Human>("Humans", vision.m_store, paint_human);
-	scene.entity_painter<Crate>("Crates", vision.m_store, paint_crate);
-	scene.entity_painter<Bullet>("Bullets", vision.m_store, paint_bullet);
+
+	World& world = *scene.m_game.m_world;
+	scene.entity_painter<Human>("Humans", world, paint_human);
+	scene.entity_painter<Crate>("Crates", world, paint_crate);
+	scene.entity_painter<Bullet>("Bullets", world, paint_bullet);
 }
 
 void human_controller(HumanController& controller, Human& human, OrbitController& orbit, bool relative = true)
 {
-	vec3 velocity = human.m_solid->linear_velocity();
-	vec3 force = relative ? rotate(human.m_spatial.m_rotation, controller.m_force)
+	Solid& solid = human.m_solid;
+	vec3 velocity = solid->linear_velocity();
+	vec3 force = relative ? rotate(human.m_spatial->m_rotation, controller.m_force)
 						  : rotate(quat(vec3(orbit.m_pitch, orbit.m_yaw, 0.f)), controller.m_force);
 
-	human.m_solid->set_linear_velocity({ force.x, velocity.y - 1.f, force.z });
-	human.m_solid->set_angular_velocity(controller.m_torque);
+	solid->set_linear_velocity({ force.x, velocity.y - 1.f, force.z });
+	solid->set_angular_velocity(controller.m_torque);
 }
 
 static void human_velocity_controller(Viewer& viewer, HumanController& controller, Human& human, OrbitController& orbit, bool relative = true)
@@ -212,7 +217,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 		movement_key(viewer, controller.m_force, controller.m_torque, key_move, speed);
 
 	if(viewer.key_event(Key::Space, EventType::Stroked))
-		human.m_solid->impulse(Y3 * 16.f, Zero3);
+		(*human.m_solid)->impulse(Y3 * 16.f, Zero3);
 
 	if(controller.m_force != Zero3 || controller.m_torque != Zero3)
 	{
@@ -237,7 +242,7 @@ void ex_minimal_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	human_velocity_controller(viewer, controller, human, orbit, mode != ui::OrbitMode::Isometric);
 
 	if(mode == ui::OrbitMode::Isometric && controller.m_force != Zero3)
-		human.m_spatial.set_rotation(look_at(Zero3, rotate(quat(vec3(0.f, orbit.m_yaw, 0.f)), controller.m_force)));
+		human.m_spatial->set_rotation(look_at(Zero3, rotate(quat(vec3(0.f, orbit.m_yaw, 0.f)), controller.m_force)));
 
 	if(viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
 	{

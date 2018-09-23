@@ -7,7 +7,6 @@
 
 #include <obj/Ref.h>
 #include <obj/Indexer.h>
-#include <infra/Updatable.h>
 #include <util/Forward.h>
 #include <util/Executable.h>
 #include <refl/Meta.h>

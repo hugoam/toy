@@ -16,8 +16,10 @@
 
 using namespace mud; namespace toy
 {
-	OCollider Collider::create(SparsePool<Collider>& pool, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group)
+	OCollider Collider::create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group)
 	{
+		SparsePool<Collider>& pool = spatial->m_world->pool<Collider>();
+
 		OCollider collider = pool.construct(spatial, movable, collision_shape, medium, group);
 		collider->m_impl = collider->m_world->make_collider(collider);
 		collider->m_world->add_collider(collider);
@@ -75,8 +77,11 @@ using namespace mud; namespace toy
 		m_motion_state.update(spatial, movable, tick);
 	}
 
-	OSolid Solid::create(SparsePool<Collider>& colliders, SparsePool<Solid>& solids, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass)
+	OSolid Solid::create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool isstatic, float mass)
 	{
+		SparsePool<Collider>& colliders = spatial->m_world->pool<Collider>();
+		SparsePool<Solid>& solids = spatial->m_world->pool<Solid>();
+
 		OCollider collider = colliders.construct(spatial, movable, collision_shape, medium, group);
 		OSolid solid = solids.construct(spatial, movable, std::move(collider), isstatic, mass);
 		{
@@ -88,9 +93,9 @@ using namespace mud; namespace toy
 		return solid;
 	}
 
-	OSolid Solid::create(SparsePool<Collider>& colliders, SparsePool<Solid>& solids, HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, bool isstatic, float mass)
+	OSolid Solid::create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, bool isstatic, float mass)
 	{
-		return create(colliders, solids, spatial, movable, collision_shape, SolidMedium::me, CM_SOLID, isstatic, mass);
+		return create(spatial, movable, collision_shape, SolidMedium::me, CM_SOLID, isstatic, mass);
 	}
 
 	void Solid::destroy(HSolid solid)
