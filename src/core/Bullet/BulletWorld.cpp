@@ -183,8 +183,8 @@ using namespace mud; namespace toy
 
 				if(pt.getDistance() < 0.f)
 				{
-					uint32_t col0 = (uint32_t)((btCollisionObject*)manifold->getBody0())->getUserPointer();
-					uint32_t col1 = (uint32_t)((btCollisionObject*)manifold->getBody1())->getUserPointer();
+					uint32_t col0 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody0())->getUserPointer());
+					uint32_t col1 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody1())->getUserPointer());
 
 					Contact& contact = this->find_contact(col0, col1);
 
@@ -271,7 +271,7 @@ using namespace mud; namespace toy
 		subWorld.m_bullet_world->rayTest(to_btvec3(ray.m_start), to_btvec3(ray.m_end), callback);
 
 		if(callback.hasHit())
-			return { UINT32_MAX, (uint32_t)(callback.m_collisionObject->getUserPointer()), to_vec3(callback.m_hitPointWorld) };
+			return { UINT32_MAX, uint32_t((uintptr_t)callback.m_collisionObject->getUserPointer()), to_vec3(callback.m_hitPointWorld) };
 		return {};
 	}
 }

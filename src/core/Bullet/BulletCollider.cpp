@@ -133,8 +133,8 @@ using namespace mud; namespace toy
 		{
 			UNUSED(index0); UNUSED(index1); UNUSED(partId0); UNUSED(partId1);
 			if(cp.getDistance() < m_margin)
-				m_collisions.push_back({ (uint32_t)colObj0->m_collisionObject->getUserPointer(), 
-										 (uint32_t)colObj1->m_collisionObject->getUserPointer(),
+				m_collisions.push_back({ uint32_t((uintptr_t)colObj0->m_collisionObject->getUserPointer()),
+										 uint32_t((uintptr_t)colObj1->m_collisionObject->getUserPointer()),
 										 Zero3 });
 
 			return 0.f;
@@ -219,7 +219,7 @@ using namespace mud; namespace toy
 		
 		for(int i = 0; i != callback.m_collisionObjects.size(); ++i)
 		{
-			uint32_t collider = (uint32_t)(callback.m_collisionObjects[i]->getUserPointer());
+			uint32_t collider = uint32_t((uintptr_t)callback.m_collisionObjects[i]->getUserPointer());
 			collisions.push_back({ m_collider.m_handle, collider, to_vec3(callback.m_hitPointWorld[i]) });
 		}
 	}
@@ -240,7 +240,7 @@ using namespace mud; namespace toy
 		//printf("raycast from %f, %f, %f to %f, %f, %f\n", from.x(), from.y(), from.z(), to.x(), to.y(), to.z());
 
 		if(callback.m_collisionObject)
-			return { UINT32_MAX, (uint32_t)(callback.m_collisionObject->getUserPointer()), to_vec3(callback.m_hitPointWorld) };
+			return { UINT32_MAX, uint32_t((uintptr_t)callback.m_collisionObject->getUserPointer()), to_vec3(callback.m_hitPointWorld) };
 		return {};
 	}
 }
