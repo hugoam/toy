@@ -64,6 +64,8 @@ using namespace mud; namespace toy
 	quat Spatial::absolute_rotation() const
 	{
 		if(m_parent)
+			assert(&(*m_parent) != this);
+		if(m_parent)
 			return m_rotation * m_parent->absolute_rotation();
 		else
 			return m_rotation;

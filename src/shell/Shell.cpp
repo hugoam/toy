@@ -341,6 +341,15 @@ using namespace mud; namespace toy
 
 	bool GameShell::pump()
 	{
+		if(s_registry.m_entities.size() > 0)
+		{
+			auto& b = s_registry.buffer<Spatial>();
+			if(b.m_data[0].m_parent.m_handle == 0)
+				int i = 0;
+			if(s_registry.GetComponent<Spatial>(0).m_parent.m_handle == 0)
+				int i = 0;
+		}
+
 		static SmoothTimer timer = { 10 };
 		timer.begin();
 

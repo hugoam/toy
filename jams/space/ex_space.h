@@ -22,9 +22,9 @@ extern "C"
 #ifdef TOY_ECS
 namespace mud
 {
-	template <> struct TypedBuffer<Galaxy> { using type = ComponentBufferDense<Galaxy*>; static size_t index() { return 12; } };
-	template <> struct TypedBuffer<Star> { using type = ComponentBufferDense<Star*>; static size_t index() { return 13; } };
-	template <> struct TypedBuffer<Fleet> { using type = ComponentBufferDense<Fleet*>; static size_t index() { return 14; } };
+	template <> struct TypedBuffer<Galaxy> { using type = ComponentBuffer<Galaxy*>; static size_t index() { return 12; } };
+	template <> struct TypedBuffer<Star> { using type = ComponentBuffer<Star*>; static size_t index() { return 13; } };
+	template <> struct TypedBuffer<Fleet> { using type = ComponentBuffer<Fleet*>; static size_t index() { return 14; } };
 }
 #endif
 

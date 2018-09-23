@@ -34,17 +34,6 @@ using namespace mud; namespace toy
 		s_registry.AddBuffer<WorldPage>();
 		s_registry.AddBuffer<Navblock>();
 
-		auto debug_loop = [](size_t tick, size_t delta)
-		{
-			s_registry.Loop<Spatial>([=](uint32_t entity, Spatial& spatial)
-			{
-				vec3 pos = spatial.absolute_position();
-				printf("spatial %i is at position %.2f, %.2f, %.2f\n", int(entity), pos.x, pos.y, pos.z);
-			});
-		};
-
-		//m_pump.m_steps.push_back({ Task::Spatial, debug_loop });
-		
 		add_loop<Spatial>(Task::Spatial);
 		add_loop<Movable, Spatial>(Task::Spatial);
 		add_loop<Camera, Spatial>(Task::Spatial);

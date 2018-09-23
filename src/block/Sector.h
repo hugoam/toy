@@ -20,8 +20,8 @@
 #ifdef TOY_ECS
 namespace mud
 {
-	template <> struct TypedBuffer<toy::Sector> { using type = ComponentBufferDense<toy::Sector*>; static size_t index() { return 10; } };
-	template <> struct TypedBuffer<toy::TileBlock> { using type = ComponentBufferDense<toy::TileBlock*>; static size_t index() { return 11; } };
+	template <> struct TypedBuffer<toy::Sector> { using type = ComponentBuffer<toy::Sector*>; static size_t index() { return 10; } };
+	template <> struct TypedBuffer<toy::TileBlock> { using type = ComponentBuffer<toy::TileBlock*>; static size_t index() { return 11; } };
 }
 #endif
 

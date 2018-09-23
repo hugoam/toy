@@ -18,10 +18,10 @@ extern "C"
 #ifdef TOY_ECS
 namespace mud
 {
-	template <> struct TypedBuffer<Bullet> { using type = ComponentBufferDense<Bullet*>; static size_t index() { return 12; } };
-	template <> struct TypedBuffer<Human> { using type = ComponentBufferDense<Human*>; static size_t index() { return 13; } };
-	template <> struct TypedBuffer<Lamp> { using type = ComponentBufferDense<Lamp*>; static size_t index() { return 14; } };
-	template <> struct TypedBuffer<Crate> { using type = ComponentBufferDense<Crate*>; static size_t index() { return 15; } };
+	template <> struct TypedBuffer<Bullet> { using type = ComponentBuffer<Bullet*>; static size_t index() { return 12; } };
+	template <> struct TypedBuffer<Human> { using type = ComponentBuffer<Human*>; static size_t index() { return 13; } };
+	template <> struct TypedBuffer<Lamp> { using type = ComponentBuffer<Lamp*>; static size_t index() { return 14; } };
+	template <> struct TypedBuffer<Crate> { using type = ComponentBuffer<Crate*>; static size_t index() { return 15; } };
 }
 #endif
 
