@@ -7,7 +7,7 @@ function toy_example(name, deps)
     toy_shell("_" .. name, table.union({ _G[name] }, deps))
 end
 
-toy_example("05_character", { _G["03_materials"] })
+--toy_example("05_character", { _G["03_materials"] })
 --toy_example("15_script", { "01_shapes", "03_materials" })
 --toy_example("16_visual_script", { "01_shapes", "03_materials" })
 --toy_example("17_proc_gen")
