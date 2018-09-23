@@ -874,7 +874,7 @@ template <class T, class T_PaintFunc>
 inline void range_entity_painter(VisuScene& scene, HSpatial reference, float range, cstring name, World& world, T_PaintFunc paint_func)
 {
 	float range2 = range*range;
-	auto paint = [&scene, &reference, range2, paint_func](size_t index, VisuScene&, Gnode& parent)
+	auto paint = [&scene, reference, range2, paint_func](size_t index, VisuScene&, Gnode& parent)
 	{
 		vec3 position = reference->m_position;
 		s_registry.Loop<Spatial, T>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T& component)
