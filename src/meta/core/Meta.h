@@ -965,8 +965,8 @@ namespace mud
                 { type<toy::World>(), member_address(&toy::World::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
                 { type<toy::World>(), Address(), type<mud::Complex>(), "complex", Ref(type<mud::Complex>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::World>(object).m_complex); } },
                 { type<toy::World>(), member_address(&toy::World::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
-                { type<toy::World>(), member_address(&toy::World::origin), type<toy::Spatial>(), "origin", Ref(type<toy::Spatial>()), Member::Flags(Member::NonMutable|Member::Structure|Member::Link), [](Ref object) { return var(val<toy::World>(object).origin()); } },
-                { type<toy::World>(), member_address(&toy::World::unworld), type<toy::Spatial>(), "unworld", Ref(type<toy::Spatial>()), Member::Flags(Member::NonMutable|Member::Structure|Member::Link), [](Ref object) { return var(val<toy::World>(object).unworld()); } }
+                { type<toy::World>(), member_address(&toy::World::origin), type<toy::Spatial>(), "origin", Ref(type<toy::Spatial>()), Member::Flags(Member::NonMutable|Member::Structure|Member::Link), [](Ref object) { return Ref(&val<toy::World>(object).origin()); } },
+                { type<toy::World>(), member_address(&toy::World::unworld), type<toy::Spatial>(), "unworld", Ref(type<toy::Spatial>()), Member::Flags(Member::NonMutable|Member::Structure|Member::Link), [](Ref object) { return Ref(&val<toy::World>(object).unworld()); } }
             },
             // methods
             {

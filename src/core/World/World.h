@@ -28,8 +28,8 @@ using namespace mud; namespace toy
 		attr_ Id m_id;
 		attr_ Complex& m_complex;
 		attr_ string m_name;
-		attr_ graph_ HSpatial origin() { return m_origin->m_spatial; }
-		attr_ graph_ HSpatial unworld() { return m_unworld->m_spatial; }
+		attr_ graph_ CSpatial& origin() { return m_origin->m_spatial; }
+		attr_ graph_ CSpatial& unworld() { return m_unworld->m_spatial; }
 
 		WorldClock& clock() { return *m_clock; }
 
