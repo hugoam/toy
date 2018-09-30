@@ -16,7 +16,8 @@
 using namespace mud; namespace toy
 {
 	Chunk::Chunk(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
-		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		: Entity(Tags<Spatial>{})
+		, m_spatial(*this, *this, parent, position, ZeroQuat)
 		, m_index(index)
 		, m_block(block)
 		, m_element(element)

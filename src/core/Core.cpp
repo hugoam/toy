@@ -25,14 +25,8 @@ using namespace mud; namespace toy
 {
 	Core::Core()
 	{
-		s_registry.AddBuffer<Spatial>();
-		s_registry.AddBuffer<Movable>();
-		s_registry.AddBuffer<Camera>();
-		s_registry.AddBuffer<Emitter>();
-		s_registry.AddBuffer<Receptor>();
-		s_registry.AddBuffer<EntityScript>();
-		s_registry.AddBuffer<WorldPage>();
-		s_registry.AddBuffer<Navblock>();
+		s_registry.AddBuffers<Spatial>();
+		s_registry.AddBuffers<Spatial, Movable, Camera>();
 
 		add_loop<Spatial>(Task::Spatial);
 		add_loop<Movable, Spatial>(Task::Spatial);
@@ -47,7 +41,7 @@ using namespace mud; namespace toy
 
 	void Core::next_frame()
 	{
-		s_registry.SortComponents();
+		//s_registry.SortComponents();
 
 		Animator::me.next_frame(0, 0);
 

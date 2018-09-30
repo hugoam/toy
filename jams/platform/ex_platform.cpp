@@ -119,18 +119,19 @@ void TileWorld::open_blocks(GfxSystem& gfx_system, const vec3& position, const i
 
 
 Bullet::Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
-	: m_spatial(*this, *this, parent, source, rotation)
+	: Entity(Tags<Spatial, Bullet*>{})
+	, m_spatial(*this, *this, parent, source, rotation)
 	, m_source(source)
 	, m_velocity(rotate(rotation, -Z3) * velocity)
 	//, m_solid(Solid::create(m_spatial, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(energy), false, 1.f))
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
 {
-	s_registry.AddPointer<Bullet>(m_handle, this);
+	s_registry.SetComponent<Bullet*>(m_handle, this);
 }
 
 Bullet::~Bullet()
 {
-	s_registry.RemoveComponent<Bullet>(m_handle);
+	//s_registry.RemoveComponent<Bullet>(m_handle);
 }
 
 void Bullet::update()
@@ -146,7 +147,7 @@ void Bullet::update()
 
 	if(hit != nullptr)
 	{
-		if(Human* shot = try_as<Human>(hit->m_entity))
+		if(Human* shot = nullptr)//try_as<Human>(hit->m_entity))
 		{
 			Spatial& shot_spatial = shot->m_spatial;
 			if(shot->m_shield && shot->m_energy > 0.f)
@@ -182,7 +183,8 @@ float Human::headlight_angle = 40.f;
 //float Human::headlight_angle = 20.f;
 
 Human::Human(HSpatial parent, const vec3& position, Faction faction)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Movable, Emitter, Receptor, EntityScript, Human*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 	, m_emitter(*this, m_spatial, m_movable)
 	, m_receptor(*this, m_spatial, m_movable)
@@ -191,7 +193,7 @@ Human::Human(HSpatial parent, const vec3& position, Faction faction)
 	, m_walk(false)
 	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f))
 {
-	s_registry.AddPointer<Human>(m_handle, this);
+	s_registry.SetComponent<Human*>(m_handle, this);
 
 	//m_emitter.add_sphere(VisualMedium::me, 0.1f);
 	//m_receptor.add_sphere(VisualMedium::me, 30.f);
@@ -202,7 +204,7 @@ Human::Human(HSpatial parent, const vec3& position, Faction faction)
 
 Human::~Human()
 {
-	s_registry.RemoveComponent<Human>(m_handle);
+	//s_registry.RemoveComponent<Human>(m_handle);
 }
 
 void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta)
@@ -357,19 +359,21 @@ void Human::damage(float amount)
 }
 
 Lamp::Lamp(HSpatial parent, const vec3& position)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Movable, Lamp*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 {
-	s_registry.AddPointer<Lamp>(m_handle, this);
+	s_registry.SetComponent<Lamp*>(m_handle, this);
 }
 
 Crate::Crate(HSpatial parent, const vec3& position, const vec3& extents)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Movable, Crate*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 	, m_extents(extents)
 	, m_solid(Solid::create(m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))
 {
-	s_registry.AddPointer<Crate>(m_handle, this);
+	s_registry.SetComponent<Crate*>(m_handle, this);
 }
 
 Player::Player(TileWorld& world)
@@ -582,7 +586,7 @@ void paint_viewer(Viewer& viewer)
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
 
-	viewer.m_filters.m_glow.m_enabled = true;
+	//viewer.m_filters.m_glow.m_enabled = true;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
 	viewer.m_filters.m_glow.m_bicubic_filter = true;
 #endif
@@ -877,11 +881,11 @@ inline void range_entity_painter(VisuScene& scene, HSpatial reference, float ran
 	auto paint = [&scene, reference, range2, paint_func](size_t index, VisuScene&, Gnode& parent)
 	{
 		vec3 position = reference->m_position;
-		s_registry.Loop<Spatial, T>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T& component)
+		s_registry.Loop<Spatial, T*>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T*& component)
 		{
 			float dist2 = distance2(spatial.m_position, position);
 			if(dist2 < range2)
-				paint_func(scene.entity_node(parent, spatial, index), component);
+				paint_func(scene.entity_node(parent, spatial, index), *component);
 		});
 	};
 	scene.m_painters.emplace_back(make_unique<VisuPainter>(name, scene.m_painters.size(), paint));
@@ -912,16 +916,16 @@ public:
 
 	virtual void start(GameShell& app, Game& game) final
 	{
-		app.m_core->add_loop<TileBlock, WorldPage>(Task::Spatial);
-		app.m_core->add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);
+		app.m_core->add_loop<TileBlock*, WorldPage>(Task::Spatial);
+		app.m_core->add_loop<Human*, Spatial, Movable, Receptor>(Task::GameObject);
 
-		s_registry.AddBuffer<Sector>();
-		s_registry.AddBuffer<TileBlock>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector*>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, TileBlock*>();
 
-		s_registry.AddBuffer<Bullet>();
-		s_registry.AddBuffer<Human>();
-		s_registry.AddBuffer<Crate>();
-		s_registry.AddBuffer<Lamp>();
+		s_registry.AddBuffers<Spatial, Bullet*>();
+		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human*>();
+		s_registry.AddBuffers<Spatial, Movable, Crate*>();
+		s_registry.AddBuffers<Spatial, Movable, Lamp*>();
 
 		global_pool<TileBlock>();
 		global_pool<TileWorld>();

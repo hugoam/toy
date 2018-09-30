@@ -72,7 +72,8 @@ using namespace mud; namespace toy
 	}
 
 	Block::Block(HSpatial parent, const vec3& position, Block* parentblock, size_t index, const vec3& size)
-		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		: Entity(Tags<Spatial>{})
+		, m_spatial(*this, *this, parent, position, ZeroQuat)
 		//, m_emitter(*this, m_spatial, m_movable)
 		, m_parentblock(parentblock)
 		, m_index(index)

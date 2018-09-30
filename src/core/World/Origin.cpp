@@ -9,6 +9,7 @@
 using namespace mud; namespace toy
 {
 	Origin::Origin(World& world)
-		: m_spatial(*this, *this, world, HSpatial(), Zero3, ZeroQuat)
+		: Entity(Tags<Spatial>{})
+		, m_spatial(*this, *this, world, HSpatial(), Zero3, ZeroQuat)
 	{}
 }

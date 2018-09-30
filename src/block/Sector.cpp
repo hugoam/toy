@@ -18,7 +18,8 @@
 using namespace mud; namespace toy
 {
 	Sector::Sector(HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
-		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		: Entity(Tags<Spatial, WorldPage, Navblock, Sector*>{})
+		, m_spatial(*this, *this, parent, position, ZeroQuat)
 		//, m_emitter(*this, m_spatial, m_movable)
 		, m_world_page(*this, m_spatial, true, size)
 		//, m_buffer_page(m_spatial, m_world_page, true)
@@ -28,7 +29,7 @@ using namespace mud; namespace toy
 		, m_block(nullptr)
 		, m_heaps()
 	{
-		s_registry.AddPointer<Sector>(m_handle, this);
+		s_registry.SetComponent<Sector*>(m_handle, this);
 	}
 
 	struct BlockGrid
@@ -78,13 +79,14 @@ using namespace mud; namespace toy
 	}
 
 	TileBlock::TileBlock(HSpatial parent, const vec3& position, const uvec3& size, const vec3& period, WaveTileset& tileset)
-		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		: Entity(Tags<Spatial, WorldPage, Navblock, TileBlock*>{})
+		, m_spatial(*this, *this, parent, position, ZeroQuat)
 		//, m_emitter(*this, m_spatial, m_movable)
 		, m_world_page(*this, m_spatial, true, size)
 		, m_navblock(*this, m_spatial, m_world_page, as<Navmesh>(m_spatial->m_world->m_complex))
 		, m_wfc_block(position, size, period, tileset)
 	{
-		s_registry.AddPointer<TileBlock>(m_handle, this);
+		s_registry.SetComponent<TileBlock*>(m_handle, this);
 		//m_spatial.m_world.add_task(this, short(Task::Background));
 
 		Spatial& test = s_registry.GetComponent<Spatial>(m_handle);

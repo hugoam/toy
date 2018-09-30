@@ -59,6 +59,12 @@ function uses_toy_visu()
     end
 end
 
+function toy_shell()
+    includedirs {
+        path.join(MUD_3RDPARTY_DIR, "tracy"),
+    }
+end
+
 toy = {}
 
 --                           base   name        root path    sub path   decl        self decl       decl transitive     dependencies
@@ -71,7 +77,7 @@ else
 end
 toy.edit        = mud_module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,        nil,            nil,                { mud.obj, mud.ui, mud.tool, toy.util, toy.core, toy.visu }) -- table.merge(mud.all, 
 toy.block       = mud_module("toy", "block",    TOY_SRC_DIR, "block",   nil,        nil,            nil,                { mud.obj, mud.math, mud.procgen.gfx, toy.core, toy.visu, toy.edit })
-toy.shell       = mud_module("toy", "shell",    TOY_SRC_DIR, "shell",   nil,        nil,            nil,                table.merge(mud.mud, { toy.core, toy.visu, toy.edit, toy.block }))
+toy.shell       = mud_module("toy", "shell",    TOY_SRC_DIR, "shell",   nil,        toy_shell,      nil,                table.merge(mud.mud, { toy.core, toy.visu, toy.edit, toy.block }))
 
 toy.core.aliases = { ['toy::string'] = 'std::string' }
 

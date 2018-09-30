@@ -37,9 +37,6 @@ void generate_npcs(TileBlock& block)
 	{
 		construct<Human>(origin, block.m_spatial->m_position + position + Y3 * 10.f, Faction::Enemy);
 	}
-
-	Spatial& test = s_registry.GetComponent<Spatial>(6);
-	int i = 0;
 }
 
 void generate_lamps(TileBlock& block)
@@ -57,9 +54,6 @@ void generate_lamps(TileBlock& block)
 						construct<Lamp>(origin, block.m_wfc_block.to_position(uvec3(x, y, z)) + Y3 * 1.5f * block.m_wfc_block.m_scale);
 					}
 			}
-
-	Spatial& test = s_registry.GetComponent<Spatial>(6);
-	int i = 0;
 }
 
 void platform_generator(GameShell& shell, VisualScript& script)

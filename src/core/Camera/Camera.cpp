@@ -83,7 +83,8 @@ using namespace mud; namespace toy
 	}
 
 	OCamera::OCamera(HSpatial parent, const vec3& position, float lensDistance, float nearClipDistance, float farClipDistance)
-		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		: Entity(Tags<Spatial, Movable, Camera>{})
+		, m_spatial(*this, *this, parent, position, ZeroQuat)
 		, m_movable(*this, m_spatial)
 		, m_camera(*this, m_spatial, lensDistance, nearClipDistance, farClipDistance)
 		//, m_receptor(*this, m_spatial)

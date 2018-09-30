@@ -18,11 +18,11 @@ extern "C"
 #ifdef TOY_ECS
 namespace mud
 {
-	template <> struct TypedBuffer<Well> { using type = ComponentBuffer<Well*>; static size_t index() { return 12; } };
-	template <> struct TypedBuffer<Camp> { using type = ComponentBuffer<Camp*>; static size_t index() { return 13; } };
-	template <> struct TypedBuffer<Shield> { using type = ComponentBuffer<Shield*>; static size_t index() { return 14; } };
-	template <> struct TypedBuffer<Slug> { using type = ComponentBuffer<Slug*>; static size_t index() { return 15; } };
-	template <> struct TypedBuffer<Tank> { using type = ComponentBuffer<Tank*>; static size_t index() { return 16; } };
+	template <> struct TypedBuffer<Well*>	{ static size_t index() { return 12; } };
+	template <> struct TypedBuffer<Camp*>	{ static size_t index() { return 13; } };
+	template <> struct TypedBuffer<Shield*>	{ static size_t index() { return 14; } };
+	template <> struct TypedBuffer<Slug*>	{ static size_t index() { return 15; } };
+	template <> struct TypedBuffer<Tank*>	{ static size_t index() { return 16; } };
 }
 #endif
 

@@ -12,16 +12,16 @@
 #ifdef TOY_ECS
 namespace mud
 {
-	template <> struct TypedBuffer<toy::Spatial> { using type = ComponentBuffer<toy::Spatial>; static size_t index() { return 0; } };
-	template <> struct TypedBuffer<toy::Movable> { using type = ComponentBuffer<toy::Movable>; static size_t index() { return 1; } };
-	template <> struct TypedBuffer<toy::Camera> { using type = ComponentBuffer<toy::Camera>; static size_t index() { return 2; } };
-	template <> struct TypedBuffer<toy::Emitter> { using type = ComponentBuffer<toy::Emitter>; static size_t index() { return 3; } };
-	template <> struct TypedBuffer<toy::Receptor> { using type = ComponentBuffer<toy::Receptor>; static size_t index() { return 4; } };
-	template <> struct TypedBuffer<toy::EntityScript> { using type = ComponentBuffer<toy::EntityScript>; static size_t index() { return 5; } };
-	template <> struct TypedBuffer<toy::WorldPage> { using type = ComponentBuffer<toy::WorldPage>; static size_t index() { return 6; } };
-	template <> struct TypedBuffer<toy::Navblock> { using type = ComponentBuffer<toy::Navblock>; static size_t index() { return 7; } };
-	template <> struct TypedBuffer<toy::Collider> { using type = ComponentBuffer<toy::Collider>; static size_t index() { return 8; } };
-	template <> struct TypedBuffer<toy::Solid> { using type = ComponentBuffer<toy::Solid>; static size_t index() { return 9; } };
+	template <> struct TypedBuffer<toy::Spatial>		{ static size_t index() { return 0; } };
+	template <> struct TypedBuffer<toy::Movable>		{ static size_t index() { return 1; } };
+	template <> struct TypedBuffer<toy::Camera>			{ static size_t index() { return 2; } };
+	template <> struct TypedBuffer<toy::Emitter>		{ static size_t index() { return 3; } };
+	template <> struct TypedBuffer<toy::Receptor>		{ static size_t index() { return 4; } };
+	template <> struct TypedBuffer<toy::EntityScript>	{ static size_t index() { return 5; } };
+	template <> struct TypedBuffer<toy::WorldPage>		{ static size_t index() { return 6; } };
+	template <> struct TypedBuffer<toy::Navblock>		{ static size_t index() { return 7; } };
+	template <> struct TypedBuffer<toy::Collider>		{ static size_t index() { return 8; } };
+	template <> struct TypedBuffer<toy::Solid>			{ static size_t index() { return 9; } };
 }
 #endif
 

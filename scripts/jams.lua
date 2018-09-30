@@ -5,12 +5,20 @@ function uses_jam()
     includedirs {
         path.join(TOY_DIR, "example"),
         path.join(MUD_DIR, "example"),
+        path.join(MUD_3RDPARTY_DIR, "tracy"),
     }
+    
+    files {
+        path.join(MUD_3RDPARTY_DIR, "tracy", "TracyClientDLL.cpp"),
+    }
+    
+    defines { "TRACY_ENABLE" }
 end
 
 toy.all = table.union(mud.mud, toy.toy)
 
 minimal     = mud_module(nil, "_minimal",   path.join(TOY_DIR, "jams"), "minimal",  nil, nil, uses_jam, toy.all)
+boids       = mud_module(nil, "_boids",     path.join(TOY_DIR, "jams"), "boids",    nil, nil, uses_jam, toy.all)
 space       = mud_module(nil, "_space",     path.join(TOY_DIR, "jams"), "space",    nil, nil, uses_jam, toy.all)
 platform    = mud_module(nil, "_platform",  path.join(TOY_DIR, "jams"), "platform", nil, nil, uses_jam, toy.all)
 blocks      = mud_module(nil, "_blocks",    path.join(TOY_DIR, "jams"), "blocks",   nil, nil, uses_jam, toy.all)
@@ -37,7 +45,13 @@ function jam_project(name, modules, folders)
 end
 
 jam_project("minimal",  { minimal })
+jam_project("boids",    { boids })
 jam_project("space",    { space })
 jam_project("platform", { platform }, { "05_character", "17_wfc" })
 jam_project("blocks",   { blocks })
 jam_project("wren",     { script })
+
+project "ex_boids"
+    includedirs {
+        path.join(TOY_3RDPARTY_DIR, "hashmap"),
+    }

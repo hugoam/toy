@@ -28,7 +28,8 @@ using namespace mud; namespace toy
 	{}
 
 	Heap::Heap(HSpatial parent, const vec3& position, Element& element, float radius)
-		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		: Entity(Tags<Spatial>{})
+		, m_spatial(*this, *this, parent, position, ZeroQuat)
 		, m_element(element)
 		, m_radius(radius)
 	{}

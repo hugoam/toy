@@ -13,7 +13,8 @@
 using namespace mud; namespace toy
 {
 	Waypoint::Waypoint(HSpatial parent, const vec3& position)
-		: m_spatial(*this, *this, parent, position, ZeroQuat)
+		: Entity(Tags<Spatial>{})
+		, m_spatial(*this, *this, parent, position, ZeroQuat)
 	{}
 
 	DetourPath::DetourPath(Pathfinder& pathfinder, const vec3& origin, const vec3& destination)

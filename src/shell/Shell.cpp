@@ -14,6 +14,9 @@
 
 #include <lang/Wren.h>
 
+#define TRACY_ENABLE
+#include <Tracy.hpp>
+
 #include <numeric>
 #include <deque>
 
@@ -176,8 +179,8 @@ using namespace mud; namespace toy
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
-		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
-		//pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
+		//pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
+		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
 		m_gfx_system->init_pipeline();
 
 		static ImporterOBJ obj_importer(*m_gfx_system);
@@ -341,27 +344,19 @@ using namespace mud; namespace toy
 
 	bool GameShell::pump()
 	{
-		if(s_registry.m_entities.size() > 0)
-		{
-			auto& b = s_registry.buffer<Spatial>();
-			if(b.m_data[0].m_parent.m_handle == 0)
-				int i = 0;
-			if(s_registry.GetComponent<Spatial>(0).m_parent.m_handle == 0)
-				int i = 0;
-		}
-
 		static SmoothTimer timer = { 10 };
 		timer.begin();
 
 		bool pursue = true;
 		for(float& time : m_times)
 			time = 0.f;
-		time(m_times, Step::Input,		"ui input",		[&] { pursue &= m_ui_window->input_frame(); });
-		time(m_times, Step::Core,		"core",			[&] { m_core->next_frame(); });
+		time(m_times, Step::Input,		"ui input",		[&] { ZoneScopedNC("ui input",  tracy::Color::Salmon);    pursue &= m_ui_window->input_frame(); });
+		time(m_times, Step::Core,		"core",			[&] { ZoneScopedNC("core",      tracy::Color::Red);       m_core->next_frame(); });
 		m_pump();
-		time(m_times, Step::UiRender,	"ui render",	[&] { m_ui_window->render_frame(); });
-		time(m_times, Step::GfxRender,	"gfx",			[&] { pursue &= m_gfx_system->next_frame(); });
+		time(m_times, Step::UiRender,	"ui render",	[&] { ZoneScopedNC("ui render", tracy::Color::LightBlue); m_ui_window->render_frame(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     pursue &= m_gfx_system->next_frame(); });
 
+		FrameMark;
 		timer.end();
 
 		return pursue;
@@ -393,9 +388,9 @@ using namespace mud; namespace toy
 
 	void GameShell::pump_game()
 	{
-		time(m_times, Step::World, "world", [&] { this->frame_world(); });
-		time(m_times, Step::Game, "game", [&] { this->frame_game(); });
-		time(m_times, Step::Scene, "scenes", [&] { this->frame_scenes(); });
+		time(m_times, Step::World, "world",  [&] { ZoneScopedNC("world",  tracy::Color::AliceBlue); this->frame_world(); });
+		time(m_times, Step::Game,  "game",   [&] { ZoneScopedNC("game",   tracy::Color::Violet);    this->frame_game(); });
+		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange);    this->frame_scenes(); });
 	}
 
 	void GameShell::pump_editor()
@@ -411,11 +406,11 @@ using namespace mud; namespace toy
 			toy::editor(ui, m_editor, m_game.m_screen);
 
 		if(m_editor.m_run_game || m_editor.m_play_game)
-			time(m_times, Step::World, "world", [&] { this->frame_world(); });
+			time(m_times, Step::World, "world", [&] { ZoneScopedNC("world", tracy::Color::AliceBlue); this->frame_world(); });
 		if(m_editor.m_play_game)
-			time(m_times, Step::Game, "game", [&] { this->frame_game(); });
+			time(m_times, Step::Game,  "game",  [&] { ZoneScopedNC("game", tracy::Color::Violet); this->frame_game(); });
 
-		time(m_times, Step::Scene, "scenes", [&] { this->frame_scenes(); });
+		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange); this->frame_scenes(); });
 
 		m_ui->begin(); // well maybe we should call it end() then
 	}
