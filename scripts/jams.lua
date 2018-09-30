@@ -8,11 +8,13 @@ function uses_jam()
         path.join(MUD_3RDPARTY_DIR, "tracy"),
     }
     
-    files {
-        path.join(MUD_3RDPARTY_DIR, "tracy", "TracyClientDLL.cpp"),
-    }
-    
-    defines { "TRACY_ENABLE" }
+    if _OPTIONS["profile"] then
+        files {
+            path.join(MUD_3RDPARTY_DIR, "tracy", "TracyClientDLL.cpp"),
+        }
+        
+        defines { "TRACY_ENABLE" }
+    end
 end
 
 toy.all = table.union(mud.mud, toy.toy)

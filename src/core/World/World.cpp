@@ -9,9 +9,9 @@
 #include <core/World/Origin.h>
 #include <core/Physic/Collider.h>
 
-#include <obj/Indexer.h>
+#include <type/Indexer.h>
 #include <math/Timer.h>
-#include <proto/Proto.h>
+#include <ecs/Proto.h>
 #include <math/Vec.h>
 #include <core/Entity/Entity.h>
 #include <core/World/WorldClock.h>
@@ -26,6 +26,7 @@ using namespace mud; namespace toy
 		, m_clock(make_object<WorldClock>(*this))
 		, m_pools(c_max_types)
     {
+		UNUSED(id);
 		m_origin = make_object<Origin>(*this);
 		m_unworld = make_object<Origin>(*this);
 

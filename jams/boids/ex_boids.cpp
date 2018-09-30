@@ -12,9 +12,8 @@
 
 #include <boids/Api.h>
 #include <meta/boids/Module.h>
-#include <infra/JobLoop.h>
+#include <jobs/JobLoop.h>
 
-//#define TRACY_ENABLE
 #include <Tracy.hpp>
 
 namespace boids
@@ -136,7 +135,6 @@ namespace boids
 	struct BoidsData
 	{
 		BoidsData() {}
-		BoidsData(size_t num_threads, size_t num_cells, size_t num_targets, size_t num_obstacles) : cells(num_cells), targets(num_targets), obstacles(num_obstacles) {}
 		Cells					cells;
 		CellMap					cell_hashes[c_max_threads];
 		std::vector<Position>   targets;
@@ -188,11 +186,11 @@ namespace boids
 		vec3 position = cells.separation[index] / vec3(float(cells.count[index]));
 
 		Result obstacle = nearest(obstacles, position);
-		cells.obstacle[index] = obstacle.index;
+		cells.obstacle[index] = int(obstacle.index);
 		cells.obstacle_distance[index] = obstacle.distance;
 
 		Result target = nearest(targets, position);
-		cells.target[index] = target.index;
+		cells.target[index] = int(target.index);
 
 		cells.indices[index] = index;
 	}
@@ -255,6 +253,7 @@ namespace boids
 		vec3 realup = cross(view, right);
 		fillmat(result, eye, view, right, realup, -dot(right, eye), -dot(up, eye), -dot(view, eye));
 #else
+		UNUSED(view); UNUSED(up);
 		float3 pos = eye;
 		result[3] = { pos[0], pos[1], pos[2], 1.f };
 #endif
@@ -270,20 +269,6 @@ namespace boids
 	inline vec3 steer(const BoidParams4& params, float delta, const vec3& forward, const vec3& position, int count, const vec3& alignment, const vec3& separation,
 					  const vec3& obstacle_position, float obstacle_distance, const vec3& target_position)
 	{
-#if 0
-		vec3 countf3 = vec3(float(count));
-		vec3 target_heading = params.target_weight * normalize_safe(target_position - position);
-		vec3 align = params.alignment_weight * normalize_safe((alignment / countf3) - forward);
-		vec3 separate = params.separation_weight * normalize_safe((position * countf3) - separation);
-		vec3 heading = normalize_safe(align + separate + target_heading);
-
-		vec3 avoid = position - obstacle_position;
-		vec3 avoid_heading = (obstacle_position + normalize_safe(avoid) * params.obstacle_aversion_distance) - position;
-		float near_obstacle = obstacle_distance - params.obstacle_aversion_distance;
-		vec3 desired = near_obstacle < 0.f ? heading : avoid_heading;
-
-		return normalize_safe(forward + delta * (desired - forward));
-#else
 		vec3 countf3 = vec3(float(count));
 		vec3 target_heading = params.target_weight * normalize(target_position - position);
 		vec3 align = params.alignment_weight * normalize_safe((alignment / countf3) - forward);
@@ -296,21 +281,20 @@ namespace boids
 		vec3 desired = near_obstacle < 0.f ? heading : avoid_heading;
 
 		return normalize(forward + delta * (desired - forward));
-#endif
 	}
 
 	struct Steer
 	{
-		const BoidParams4&				params;
-		const Cells&					cells;
-		const std::vector<Position>&	targets;
-		const std::vector<Position>&	obstacles;
-		const std::vector<Position>&	positions;
-		std::vector<Heading>&			headings;
-		float                           dt;
+		const BoidParams4&				m_params;
+		const Cells&					m_cells;
+		const std::vector<Position>&	m_targets;
+		const std::vector<Position>&	m_obstacles;
+		const std::vector<Position>&	m_positions;
+		std::vector<Heading>&			m_headings;
+		float                           m_dt;
 
-		size_t start;
-		size_t count;
+		uint32_t m_start;
+		uint32_t m_count;
 
 		inline void operator()(JobSystem& js, Job* job, uint32_t start, uint32_t count) const
 		{
@@ -320,19 +304,19 @@ namespace boids
 
 			for(uint32_t index = start; index < start + count; ++index)
 			{
-				const int cell = cells.indices[index];
-				const int obstacle = cells.obstacle[cell];
-				const int target = cells.target[cell];
+				const int cell = m_cells.indices[index];
+				const int obstacle = m_cells.obstacle[cell];
+				const int target = m_cells.target[cell];
 
-				headings[index] = steer(params, dt, headings[index], positions[index], cells.count[cell], cells.alignment[cell], cells.separation[cell],
-										obstacles[obstacle], cells.obstacle_distance[cell], targets[target]);
+				m_headings[index] = steer(m_params, m_dt, m_headings[index], m_positions[index], m_cells.count[cell], m_cells.alignment[cell], m_cells.separation[cell],
+										  m_obstacles[obstacle], m_cells.obstacle_distance[cell], m_targets[target]);
 			}
 
 		}
 
 		inline void execute(JobSystem& js, Job* job)
 		{
-			(*this)(js, job, start, count);
+			(*this)(js, job, m_start, m_count);
 		}
 	};
 
@@ -586,19 +570,21 @@ namespace boids
 
 				s_registry.Loop<Position, BoidObstacle>([&](uint32_t entity, Position& position, BoidObstacle& obstacle)
 				{
+					UNUSED(entity); UNUSED(obstacle);
 					Gnode& node = gfx::node(parent, {}, position.m_value);
 					gfx::item(node, model, 0U, &obstacle_material);
 				});
 
-				s_registry.Loop<Position, BoidTarget>([&](uint32_t entity, Position& position, BoidTarget& obstacle)
+				s_registry.Loop<Position, BoidTarget>([&](uint32_t entity, Position& position, BoidTarget& target)
 				{
+					UNUSED(entity); UNUSED(target);
 					Gnode& node = gfx::node(parent, {}, position.m_value);
 					gfx::item(node, model, 0U, &target_material);
 				});
 			};
 		
-			//scene.m_painters.emplace_back(make_unique<VisuPainter>("boids", scene.m_painters.size(), paint_boids));
-			//scene.m_painters.emplace_back(make_unique<VisuPainter>("targets", scene.m_painters.size(), paint_targets));
+			scene.m_painters.emplace_back(make_unique<VisuPainter>("boids", scene.m_painters.size(), paint_boids));
+			scene.m_painters.emplace_back(make_unique<VisuPainter>("targets", scene.m_painters.size(), paint_targets));
 		}
 
 		virtual void pump(GameShell& app, Game& game, Widget& ui) final

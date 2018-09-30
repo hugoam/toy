@@ -32,10 +32,14 @@ using namespace mud; namespace toy
 	}
 
 	void PhysicScope::add_scope(HSpatial object)
-	{}
+	{
+		UNUSED(object);
+	}
 
 	void PhysicScope::remove_scope(HSpatial object)
-	{}
+	{
+		UNUSED(object);
+	}
 
 	EmitterScope::EmitterScope(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group)
 		: PhysicScope(spatial, movable, medium, collision_shape, group)
@@ -70,6 +74,7 @@ using namespace mud; namespace toy
 
 	Emitter::Emitter(HSpatial spatial, HMovable movable)
 		: m_spatial(spatial)
+		, m_movable(movable)
 	{}
 
 	Emitter::~Emitter()
@@ -89,6 +94,7 @@ using namespace mud; namespace toy
 
 	Receptor::Receptor(HSpatial spatial, HMovable movable)
 		: m_spatial(spatial)
+		, m_movable(movable)
 	{}
 
 	Receptor::~Receptor()

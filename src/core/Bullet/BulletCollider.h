@@ -7,7 +7,7 @@
 #pragma once
 
 #include <infra/NonCopy.h>
-#include <obj/Dispatch.h>
+#include <type/Dispatch.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
 #include <core/Physic/Collider.h>

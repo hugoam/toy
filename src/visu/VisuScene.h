@@ -89,6 +89,7 @@ using namespace mud; namespace toy
 			{
 				s_registry.Loop<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
 				{
+					UNUSED(entity);
 					paint_func(this->entity_node(parent, spatial, index), component);
 				});
 			};

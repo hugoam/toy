@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <infra/Job.h>
+#include <jobs/Job.h>
 #include <tree/Node.h>
 #include <refl/System.h>
 #include <refl/Class.h>

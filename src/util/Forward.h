@@ -4,7 +4,7 @@
 
 #include <infra/Config.h>
 
-#include <obj/Forward.h>
+#include <type/Forward.h>
 #include <math/Forward.h>
 
 #ifndef TOY_UTIL_EXPORT

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Entity.h>
+#include <ecs/Entity.h>
 #include <geom/Shape/ProcShape.h>
 #include <core/Forward.h>
 #include <core/Entity/Entity.h>

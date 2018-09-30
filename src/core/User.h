@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <obj/Ref.h>
-#include <obj/Indexer.h>
+#include <type/Ref.h>
+#include <type/Indexer.h>
 #include <core/Forward.h>
 
 #ifndef MUD_CPP_20

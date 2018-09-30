@@ -8,7 +8,7 @@
 #include <visu/Forward.h>
 #include <edit/Forward.h>
 #include <block/Forward.h>
-#include <proto/Forward.h>
+#include <ecs/Forward.h>
 #include <tree/Forward.h>
 #include <srlz/Forward.h>
 #include <math/Forward.h>

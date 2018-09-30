@@ -32,10 +32,15 @@ using namespace mud; namespace toy
 	bool NavGeom::build()
 	{
 		const float* verts = &m_geometry.m_vertices[0].m_position.x;
-		rcCalcBounds(verts, m_geometry.m_vertices.size(), value_ptr(m_geometry.m_bounds_min), value_ptr(m_geometry.m_bounds_max));
+		const uint32_t* tris = &m_geometry.m_triangles[0].a;
+
+		const int num_verts = int(m_geometry.m_vertices.size());
+		const int num_tris = int(m_geometry.m_triangles.size());
+
+		rcCalcBounds(verts, num_verts, value_ptr(m_geometry.m_bounds_min), value_ptr(m_geometry.m_bounds_max));
 
 		m_chunkyMesh = make_unique<rcChunkyTriMesh>();
-		if(!rcCreateChunkyTriMesh(verts, &m_geometry.m_triangles[0].a, m_geometry.m_triangles.size(), 256, m_chunkyMesh.get()))
+		if(!rcCreateChunkyTriMesh(verts, tris, num_tris, 256, m_chunkyMesh.get()))
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildTiledNavigation: Failed to build chunky mesh.");
 			return false;

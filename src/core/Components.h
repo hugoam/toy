@@ -7,7 +7,7 @@
 
 #include <core/Forward.h>
 #include <pool/Pool.h>
-#include <proto/ECS/Registry.h>
+#include <ecs/Registry.h>
 
 #ifdef TOY_ECS
 namespace mud

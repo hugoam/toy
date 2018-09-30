@@ -101,6 +101,7 @@ using namespace mud; namespace toy
 
 	void move_camera_to(Spatial& spatial, Camera& camera, const vec3& target)
 	{
+		UNUSED(camera);
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
 	}
 }

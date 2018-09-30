@@ -18,7 +18,7 @@ namespace toy
 		: Module("toy::core")
 	{
         // ensure dependencies are instantiated
-        mud_obj::m();
+        mud_type::m();
         mud_proto::m();
         mud_math::m();
         mud_geom::m();

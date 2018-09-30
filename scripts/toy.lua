@@ -68,15 +68,15 @@ end
 toy = {}
 
 --                           base   name        root path    sub path   decl        self decl       decl transitive     dependencies
-toy.util        = mud_module("toy", "util",     TOY_SRC_DIR, "util",    nil,        nil,            nil,                { mud.obj, mud.math })
-toy.core        = mud_module("toy", "core",     TOY_SRC_DIR, "core",    nil,        toy_core,       uses_toy_core,      { mud.obj, mud.proto, mud.math, mud.geom, mud.lang, toy.util })
+toy.util        = mud_module("toy", "util",     TOY_SRC_DIR, "util",    nil,        nil,            nil,                { mud.type, mud.math })
+toy.core        = mud_module("toy", "core",     TOY_SRC_DIR, "core",    nil,        toy_core,       uses_toy_core,      { mud.type, mud.ecs, mud.math, mud.geom, mud.lang, toy.util })
 if _OPTIONS["sound"] then
-    toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    nil,        toy_visu,       uses_toy_visu,      { mud.obj, mud.snd, mud.gfx, toy.util, toy.core })
+    toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    nil,        toy_visu,       uses_toy_visu,      { mud.type, mud.snd, mud.gfx, toy.util, toy.core })
 else
-    toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    nil,        toy_visu,       uses_toy_visu,      { mud.obj, mud.gfx, toy.util, toy.core })
+    toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    nil,        toy_visu,       uses_toy_visu,      { mud.type, mud.gfx, toy.util, toy.core })
 end
-toy.edit        = mud_module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,        nil,            nil,                { mud.obj, mud.ui, mud.tool, toy.util, toy.core, toy.visu }) -- table.merge(mud.all, 
-toy.block       = mud_module("toy", "block",    TOY_SRC_DIR, "block",   nil,        nil,            nil,                { mud.obj, mud.math, mud.procgen.gfx, toy.core, toy.visu, toy.edit })
+toy.edit        = mud_module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,        nil,            nil,                { mud.type, mud.ui, mud.tool, toy.util, toy.core, toy.visu }) -- table.merge(mud.all, 
+toy.block       = mud_module("toy", "block",    TOY_SRC_DIR, "block",   nil,        nil,            nil,                { mud.type, mud.math, mud.procgen.gfx, toy.core, toy.visu, toy.edit })
 toy.shell       = mud_module("toy", "shell",    TOY_SRC_DIR, "shell",   nil,        toy_shell,      nil,                table.merge(mud.mud, { toy.core, toy.visu, toy.edit, toy.block }))
 
 toy.core.aliases = { ['toy::string'] = 'std::string' }

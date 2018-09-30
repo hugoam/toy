@@ -46,22 +46,22 @@ using namespace mud; namespace toy
 	{
 		block.reset();
 
-		size_t subdiv = block.subdiv();
-		for(size_t y = 0; y < subdiv; ++y)
-			for(size_t x = 0; x < subdiv; ++x)
+		uint16_t subdiv = block.subdiv();
+		for(uint16_t y = 0; y < subdiv; ++y)
+			for(uint16_t x = 0; x < subdiv; ++x)
 			{
-				size_t height = image.at(x, y);
-				for(size_t z = 0; z <= height; ++z)
+				uint32_t height = image.at(x, y);
+				for(uint32_t z = 0; z <= height; ++z)
 					block.chunk(x, z, y, element);
 			}
 	}
 
 	void paint_block_elements(Block& block, Image256& image, array<Element*> elements)
 	{
-		size_t subdiv = block.subdiv();
-		for(size_t y = 0; y < subdiv; ++y)
-			for(size_t x = 0; x < subdiv; ++x)
-				for(size_t z = 0; z < subdiv; ++z)
+		uint16_t subdiv = block.subdiv();
+		for(uint16_t y = 0; y < subdiv; ++y)
+			for(uint16_t x = 0; x < subdiv; ++x)
+				for(uint16_t z = 0; z < subdiv; ++z)
 				{
 					size_t colour = image.at(x, y);
 					Element* element = block.m_chunks.at(x, z, y);
@@ -83,7 +83,7 @@ using namespace mud; namespace toy
 		//, m_scope(m_emitter.add_scope(WorldMedium::me, Cube(m_size), CM_SOURCE))
 	{}
 
-	size_t Block::depth()
+	uint16_t Block::depth()
 	{
 		return m_parentblock ? m_parentblock->depth() + 1 : 0;
 	}
@@ -105,7 +105,7 @@ using namespace mud; namespace toy
 		return m_parentblock ? m_parentblock->block_coord(*this) : vec3(0, 0, 0);
 	}
 
-	size_t Block::subdiv()
+	uint16_t Block::subdiv()
 	{
 		return BLOCK_SUBDIV;
 	}
@@ -200,7 +200,7 @@ using namespace mud; namespace toy
 		spatial.set_position(spatial.m_position);
 	}
 
-	void Block::subdivide_to(size_t depth)
+	void Block::subdivide_to(uint16_t depth)
 	{
 		this->subdivide();
 

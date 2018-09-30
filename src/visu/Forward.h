@@ -4,7 +4,7 @@
 
 #include <infra/Config.h>
 
-#include <obj/Forward.h>
+#include <type/Forward.h>
 #include <gfx/Forward.h>
 #include <util/Forward.h>
 #include <core/Forward.h>

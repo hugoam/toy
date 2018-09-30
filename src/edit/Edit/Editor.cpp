@@ -10,7 +10,7 @@
 #include <edit/Editor/Editor.h>
 
 #include <infra/StringConvert.h>
-#include <obj/Indexer.h>
+#include <type/Indexer.h>
 #include <refl/System.h>
 #include <refl/Class.h>
 #include <refl/Meta.h>
@@ -198,6 +198,7 @@ using namespace mud; namespace toy
 	string entity_icon(Spatial& spatial)
 	{
 #ifdef TOY_ECS
+		UNUSED(spatial);
 		return "";
 #else
 		return "(" + string(spatial.m_entity.m_type.m_name) + ")";
@@ -243,12 +244,13 @@ using namespace mud; namespace toy
 
 	void graphics_debug_section(Widget& parent, Dockspace& dockspace, Editor& editor)
 	{
+		UNUSED(dockspace);
 		for(Scene* scene : editor.m_scenes)
 		{
 			editor.m_graphics_debug.m_debug_draw_csm = true;
 			if(editor.m_graphics_debug.m_debug_draw_csm)
 			{
-				Widget* dock = ui::dockitem(dockspace, "Screen", carray<uint16_t, 2>{ 0U, 1U });
+				//Widget* dock = ui::dockitem(dockspace, "Screen", carray<uint16_t, 2>{ 0U, 1U });
 				//if(dock)
 				{
 					//Viewer& viewer = ui::viewer(*dock, *scene);
@@ -316,6 +318,7 @@ using namespace mud; namespace toy
 
 	Widget& editor_viewer_overlay(Viewer& viewer, Editor& editor)
 	{
+		UNUSED(viewer);
 		Widget& layout = ui::screen(*editor.m_viewer);
 		Widget& toolbar = ui::row(layout);
 		tools_transform(toolbar, editor);
@@ -337,7 +340,7 @@ using namespace mud; namespace toy
 	Viewer& editor_viewport(Widget& parent, Scene& scene)
 	{
 		Viewer& self = ui::viewer(parent, scene);
-		FreeOrbitController& orbit = ui::free_orbit_controller(self);
+		ui::free_orbit_controller(self);
 		return self;
 	}
 
@@ -397,7 +400,7 @@ using namespace mud; namespace toy
 
 		Tabber& tabber = ui::tabber(*right.m_body);
 		if(Widget* tab = ui::tab(tabber, "Script"))
-			script_edit(*tab, as<TextScript>(*editor.m_script_editor.m_scripts[0]));
+			script_edit(*tab, script);
 		if(Widget* tab = ui::tab(tabber, "Outliner"))
 			editor_graph(*tab, editor, editor.m_selection);
 		if(Widget* tab = ui::tab(tabber, "Inspector"))

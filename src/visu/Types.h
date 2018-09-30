@@ -2,13 +2,13 @@
 
 #include <visu/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
-#include <obj/Type.h>
-#include <obj/Vector.h>
+#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#include <type/Type.h>
+#include <type/Vector.h>
 #endif
 
 #ifndef MUD_MODULES
-#include <obj/Types.h>
+#include <type/Types.h>
 #include <gfx/Types.h>
 #include <util/Types.h>
 #include <core/Types.h>

@@ -14,7 +14,7 @@
 
 namespace mud
 {
-	class MUD_OBJ_EXPORT Executable
+	class MUD_TYPE_EXPORT Executable
 	{
 	public:
 		Executable() : m_done(false), m_doneFlag(0) {}

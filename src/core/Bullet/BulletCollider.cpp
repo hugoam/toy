@@ -6,7 +6,7 @@
 #include <core/Types.h>
 #include <core/Bullet/BulletCollider.h>
 
-#include <obj/DispatchDecl.h>
+#include <type/DispatchDecl.h>
 
 #include <geom/Shapes.h>
 #include <geom/ShapesComplex.h>

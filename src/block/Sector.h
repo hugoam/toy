@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Proto.h>
+#include <ecs/Proto.h>
 #include <procgen-gfx/Wfc/Tileblock.h>
 #include <core/WorldPage/WorldPage.h>
 //#include <core/WorldPage/BufferPage.h>

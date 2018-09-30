@@ -5,10 +5,10 @@
 #include <infra/Config.h>
 
 #include <infra/Forward.h>
-#include <obj/Forward.h>
+#include <type/Forward.h>
 #include <pool/Forward.h>
 #include <refl/Forward.h>
-#include <proto/Forward.h>
+#include <ecs/Forward.h>
 #include <tree/Forward.h>
 #include <srlz/Forward.h>
 #include <math/Forward.h>

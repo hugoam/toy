@@ -7,8 +7,8 @@ module ._space;
 #else
 #include <space/Types.h>
 #include <space/Api.h>
-#include <obj/Vector.h>
-//#include <proto/Proto.h>
+#include <type/Vector.h>
+//#include <ecs/Proto.h>
 #endif
 
 namespace mud

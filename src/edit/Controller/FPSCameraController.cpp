@@ -33,6 +33,7 @@ using namespace mud; namespace toy
 
 	void FPSCameraController::process(Viewer& viewer, Spatial& spatial, Camera& camera)
 	{
+		UNUSED(camera);
 		//if(active)
 		//m_inputWidget->ui().m_cursor.hide();
 		//else

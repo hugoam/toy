@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Entity.h>
+#include <ecs/Entity.h>
 #include <pool/ObjectPool.h>
 #include <math/VecOps.h>
 #include <math/Axes.h>

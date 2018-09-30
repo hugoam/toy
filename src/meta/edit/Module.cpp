@@ -18,7 +18,7 @@ namespace toy
 		: Module("toy::edit")
 	{
         // ensure dependencies are instantiated
-        mud_obj::m();
+        mud_type::m();
         mud_ui::m();
         mud_tool::m();
         toy_util::m();

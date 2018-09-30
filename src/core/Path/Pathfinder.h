@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Entity.h>
+#include <ecs/Entity.h>
 #include <math/Math.h>
 #include <core/Forward.h>
 #include <core/Path/DetourPath.h>

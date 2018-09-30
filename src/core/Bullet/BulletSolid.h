@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Entity.h>
+#include <ecs/Entity.h>
 #include <core/Forward.h>
 #include <core/Bullet/BulletCollider.h>
 #include <core/Entity/Entity.h>

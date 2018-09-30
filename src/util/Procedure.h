@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <obj/Ref.h>
-#include <obj/Indexer.h>
+#include <type/Ref.h>
+#include <type/Indexer.h>
 #include <util/Forward.h>
 #include <util/Executable.h>
 #include <refl/Meta.h>

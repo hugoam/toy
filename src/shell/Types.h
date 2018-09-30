@@ -2,9 +2,9 @@
 
 #include <shell/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
-#include <obj/Type.h>
-#include <obj/Vector.h>
+#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#include <type/Type.h>
+#include <type/Vector.h>
 #endif
 
 #ifndef MUD_MODULES
@@ -12,7 +12,7 @@
 #include <visu/Types.h>
 #include <edit/Types.h>
 #include <block/Types.h>
-#include <proto/Types.h>
+#include <ecs/Types.h>
 #include <tree/Types.h>
 #include <srlz/Types.h>
 #include <math/Types.h>

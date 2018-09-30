@@ -34,7 +34,9 @@ using namespace mud; namespace toy
 
 	struct BlockGrid
 	{
-		BlockGrid(const uvec3& grid_subdiv, const uvec3& block_subdiv, const vec3& cell_size) {}
+		BlockGrid(const uvec3& grid_subdiv, const uvec3& block_subdiv, const vec3& cell_size)
+			: m_subdiv(grid_subdiv), m_block_subdiv(block_subdiv), m_cell_size(cell_size)
+		{}
 
 		attr_ uvec3 m_subdiv;
 		attr_ uvec3 m_block_subdiv;
@@ -88,9 +90,6 @@ using namespace mud; namespace toy
 	{
 		s_registry.SetComponent<TileBlock*>(m_handle, this);
 		//m_spatial.m_world.add_task(this, short(Task::Background));
-
-		Spatial& test = s_registry.GetComponent<Spatial>(m_handle);
-		int i = 0;
 	}
 
 	TileBlock::~TileBlock()
@@ -127,6 +126,8 @@ using namespace mud; namespace toy
 
 	void build_block_geometry(Scene& scene, WorldPage& page, TileBlock& block)
 	{
+		UNUSED(scene);
+
 		WfcBlock& tileblock = block.m_wfc_block;
 
 		std::vector<Cube> cubes;

@@ -335,8 +335,8 @@ using namespace mud; namespace toy
 		cleanup();
 	
 		const float* verts = &m_geometry.m_vertices[0].m_position.x;
-		const int nverts = m_geometry.m_vertices.size();
-		const int ntris = m_geometry.m_triangles.size();
+		const int nverts = int(m_geometry.m_vertices.size());
+		const int ntris = int(m_geometry.m_triangles.size());
 		const rcChunkyTriMesh* chunkyMesh = m_navgeom->m_chunkyMesh.get();
 		
 		// Init build configuration from GUI

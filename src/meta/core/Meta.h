@@ -5,8 +5,8 @@
 #ifndef MUD_MODULES
 #include <meta/core/Module.h>
 
-#include <obj/Any.h>
-#include <obj/Vector.h>
+#include <type/Any.h>
+#include <type/Vector.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
 #endif
@@ -131,7 +131,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::Collider>(), [](Ref ref, array<Var> args) { new(&val<toy::Collider>(ref)) toy::Collider( val<toy::HSpatial>(args[0]), val<toy::HMovable>(args[1]), val<toy::CollisionShape>(args[1]), val<toy::Medium>(args[2]), val<toy::CollisionGroup>(args[3]), val<bool>(args[4]) ); }, { { "entity", Ref(type<toy::HSpatial>()) }, { "collision_shape", Ref(type<toy::CollisionShape>()) }, { "medium", Ref(type<toy::Medium>()) }, { "group", var(toy::CollisionGroup()) }, { "init", var(bool(true)), Param::Default } } }
+                { type<toy::Collider>(), [](Ref ref, array<Var> args) { new(&val<toy::Collider>(ref)) toy::Collider( val<toy::HSpatial>(args[0]), val<toy::HMovable>(args[1]), val<toy::CollisionShape>(args[1]), val<toy::Medium>(args[2]), val<toy::CollisionGroup>(args[3]) ); }, { { "entity", Ref(type<toy::HSpatial>()) }, { "collision_shape", Ref(type<toy::CollisionShape>()) }, { "medium", Ref(type<toy::Medium>()) }, { "group", var(toy::CollisionGroup()) } } }
             },
             // copy constructor
             {

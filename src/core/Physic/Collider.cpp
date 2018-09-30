@@ -31,7 +31,7 @@ using namespace mud; namespace toy
 		collider->m_world->remove_collider(collider);
 	}
 
-    Collider::Collider(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init)
+    Collider::Collider(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group)
         : m_spatial(spatial)
 		, m_movable(movable)
 		, m_collision_shape(collision_shape)
@@ -84,12 +84,12 @@ using namespace mud; namespace toy
 
 		OCollider collider = colliders.construct(spatial, movable, collision_shape, medium, group);
 		OSolid solid = solids.construct(spatial, movable, std::move(collider), isstatic, mass);
-		{
-			HCollider collider = solid->m_collider;
-			collider->m_impl = collider->m_world->make_collider(collider);
-			solid->m_impl = collider->m_world->make_solid(solid);
-			collider->m_world->add_solid(collider, solid);
-		}
+
+		HCollider hcollider = solid->m_collider;
+		hcollider->m_impl = hcollider->m_world->make_collider(hcollider);
+		solid->m_impl = hcollider->m_world->make_solid(solid);
+		hcollider->m_world->add_solid(hcollider, solid);
+
 		return solid;
 	}
 
@@ -108,7 +108,9 @@ using namespace mud; namespace toy
 		, m_collider(std::move(collider))
 		, m_static(isstatic)
 		, m_mass(mass)
-	{}
+	{
+		UNUSED(movable);
+	}
 
 	Solid::~Solid()
 	{}

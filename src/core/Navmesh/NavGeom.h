@@ -6,7 +6,7 @@
 #pragma once
 
 #include <infra/NonCopy.h>
-#include <obj/Unique.h>
+#include <type/Unique.h>
 #include <core/Forward.h>
 #include <geom/Primitive.h>
 

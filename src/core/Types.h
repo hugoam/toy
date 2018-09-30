@@ -2,14 +2,14 @@
 
 #include <core/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
-#include <obj/Type.h>
-#include <obj/Vector.h>
+#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#include <type/Type.h>
+#include <type/Vector.h>
 #endif
 
 #ifndef MUD_MODULES
-#include <obj/Types.h>
-#include <proto/Types.h>
+#include <type/Types.h>
+#include <ecs/Types.h>
 #include <math/Types.h>
 #include <geom/Types.h>
 #include <lang/Types.h>

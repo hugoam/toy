@@ -4,8 +4,8 @@
 
 #include <infra/Config.h>
 
-#include <obj/Forward.h>
-#include <proto/Forward.h>
+#include <type/Forward.h>
+#include <ecs/Forward.h>
 #include <math/Forward.h>
 #include <geom/Forward.h>
 #include <lang/Forward.h>

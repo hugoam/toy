@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Proto.h>
+#include <ecs/Proto.h>
 #include <math/Math.h>
 #include <math/Vec.h>
 #include <core/Forward.h>

@@ -82,7 +82,7 @@ using namespace mud; namespace toy
         : PhysicMedium(world, medium)
         , m_collisionConfiguration(make_unique<btDefaultCollisionConfiguration>())
         , m_collisionDispatcher(make_unique<btCollisionDispatcher>(m_collisionConfiguration.get()))
-		, m_broadphaseInterface(make_unique<btAxisSweep3>(btVector3/*worldAabbMin*/(-1.f,-1.f,-1.f) * -BULLET_WORLD_SCALE, btVector3/*worldAabbMax*/(1.f, 1.f, 1.f) * BULLET_WORLD_SCALE, /*maxProxies*/32000)) // @crash btAssert(m_firstFreeHandle) is limited by this setting
+		, m_broadphaseInterface(make_unique<btAxisSweep3>(btVector3/*worldAabbMin*/(-1.f,-1.f,-1.f) * -BULLET_WORLD_SCALE, btVector3/*worldAabbMax*/(1.f, 1.f, 1.f) * BULLET_WORLD_SCALE, /*maxProxies*/uint16_t(32000))) // @crash btAssert(m_firstFreeHandle) is limited by this setting
 		//, m_broadphaseInterface(make_unique<btDbvtBroadphase>()) // @crash btAssert(m_firstFreeHandle) is limited by this setting
 		
 	{
@@ -108,7 +108,6 @@ using namespace mud; namespace toy
 
 	object_ptr<SolidImpl> BulletMedium::make_solid(HSolid solid)
 	{
-		Solid& test = solid;
 		return make_object<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
 	}
 
@@ -138,7 +137,7 @@ using namespace mud; namespace toy
 
 	void BulletMedium::remove_contacts(uint32_t collider)
 	{
-		for(int i = m_contacts.size() - 1; i >= 0; --i)
+		for(int i = int(m_contacts.size()) - 1; i >= 0; --i)
 		{
 			Contact& contact = *m_contacts[i];
 			if(contact.m_col0 == collider || contact.m_col1 == collider)
@@ -202,7 +201,7 @@ using namespace mud; namespace toy
 			}
 		}
 
-		for(int i = m_contacts.size() - 1; i >= 0; --i)
+		for(int i = int(m_contacts.size()) - 1; i >= 0; --i)
 		{
 			Contact& contact = *m_contacts[i];
 			if(contact.m_tick < m_last_tick)
@@ -228,9 +227,9 @@ using namespace mud; namespace toy
 
 		if(m_dynamicsWorld)
 #ifdef MUD_PLATFORM_EMSCRIPTEN
-			m_dynamicsWorld->stepSimulation(delta * c_tick_interval, 3, 0.032f);
+			m_dynamicsWorld->stepSimulation(float(delta * c_tick_interval), 3, 0.032f);
 #else
-			m_dynamicsWorld->stepSimulation(delta * c_tick_interval, 3);
+			m_dynamicsWorld->stepSimulation(float(delta * c_tick_interval), 3);
 #endif
 		else
 			m_bullet_world->performDiscreteCollisionDetection();

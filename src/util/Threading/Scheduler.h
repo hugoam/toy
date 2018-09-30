@@ -6,7 +6,7 @@
 #pragma once
 
 #include <util/Forward.h>
-#include <obj/Util/LocklessQueue.h>
+#include <type/Util/LocklessQueue.h>
 
 #ifndef MUD_CPP_20
 #include <functional>

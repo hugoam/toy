@@ -19,7 +19,7 @@
 #define RECASTSAMPLETILEMESH_H
 
 #include <infra/NonCopy.h>
-#include <obj/Unique.h>
+#include <type/Unique.h>
 #include <geom/Mesh.h>
 #include <core/Navmesh/NavGeom.h>
 

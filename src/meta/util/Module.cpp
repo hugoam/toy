@@ -18,7 +18,7 @@ namespace toy
 		: Module("toy::util")
 	{
         // ensure dependencies are instantiated
-        mud_obj::m();
+        mud_type::m();
         mud_math::m();
 
         // setup reflection meta data

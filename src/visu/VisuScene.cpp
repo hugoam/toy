@@ -130,6 +130,7 @@ using namespace mud; namespace toy
 
 	void PhysicDebugDraw::draw_physics(Gnode& parent, World& world, Medium& medium)
 	{
+		UNUSED(parent);
 		BulletMedium& bullet_world = as<BulletMedium>(as<BulletWorld>(world.m_complex).sub_world(medium));
 
 		if(!bullet_world.m_bullet_world->getDebugDrawer())
@@ -159,7 +160,7 @@ using namespace mud; namespace toy
 		if(m_entities.size() <= index)
 			m_entities.resize((index + 1) * 2);
 		if(m_entities[index] == nullptr)
-			m_entities[index] = &gfx::node(parent.subx(index), Ref(spatial.m_entity), spatial.absolute_position(), spatial.absolute_rotation());
+			m_entities[index] = &gfx::node(parent.subx(uint16_t(index)), Ref(spatial.m_entity), spatial.absolute_position(), spatial.absolute_rotation());
 		return m_entities[index]->subx(uint16_t(painter));
 	}
 
@@ -182,7 +183,7 @@ using namespace mud; namespace toy
 		Gnode& root = m_scene.begin();
 
 		for(size_t i = 0; i < m_painters.size(); ++i)
-			m_painters[i]->m_paint(i, *this, root.subx(i));
+			m_painters[i]->m_paint(i, *this, root.subx(uint16_t(i)));
 	}
 
 	void scene_painters(VisuScene& scene, World& world)
@@ -279,7 +280,7 @@ using namespace mud; namespace toy
 	{
 		UNUSED(loop); UNUSED(speed);
 		string capname = name;
-		capname[0] = toupper(capname[0]);
+		capname[0] = char(toupper(capname[0]));
 
 		// todo
 	}

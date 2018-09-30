@@ -7,7 +7,7 @@
 #include <edit/Types.h>
 #include <edit/Editor/Editor.h>
 
-#include <obj/DispatchDecl.h>
+#include <type/DispatchDecl.h>
 
 #include <core/User.h>
 

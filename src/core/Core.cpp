@@ -18,7 +18,7 @@
 #include <refl/Injector.h>
 #include <refl/System.h>
 
-#include <obj/Indexer.h>
+#include <type/Indexer.h>
 #include <core/Script/Script.h>
 
 using namespace mud; namespace toy

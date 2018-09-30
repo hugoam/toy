@@ -52,7 +52,7 @@ using namespace mud; namespace toy
     {
 	public:
 		constr_ Collider() {}
-		constr_ Collider(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group, bool init = true);
+		constr_ Collider(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group);
         virtual ~Collider();
 
 		Collider(Collider&& other) = default;

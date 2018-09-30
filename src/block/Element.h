@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Proto.h>
+#include <ecs/Proto.h>
 #include <infra/Global.h>
 #include <math/Colour.h>
 #include <math/Grid.h>

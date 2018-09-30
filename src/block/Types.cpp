@@ -7,8 +7,8 @@ module toy.block;
 #else
 #include <block/Types.h>
 #include <block/Api.h>
-#include <obj/Vector.h>
-//#include <proto/Proto.h>
+#include <type/Vector.h>
+//#include <ecs/Proto.h>
 #endif
 
 namespace mud

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Entity.h>
+#include <ecs/Entity.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Physic/Medium.h>

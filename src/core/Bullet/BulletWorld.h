@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <obj/Unique.h>
+#include <type/Unique.h>
 #include <core/Forward.h>
 #include <core/Physic/PhysicWorld.h>
 #include <core/Physic/Collider.h>

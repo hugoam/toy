@@ -18,7 +18,7 @@ namespace toy
 		: Module("toy::visu")
 	{
         // ensure dependencies are instantiated
-        mud_obj::m();
+        mud_type::m();
         mud_gfx::m();
         toy_util::m();
         toy_core::m();

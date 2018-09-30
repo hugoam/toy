@@ -1,12 +1,12 @@
 
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
+#if !defined MUD_MODULES || defined MUD_TYPE_LIB
 #include <refl/Module.h>
 #endif
 
 #ifndef MUD_MODULES
-#include <meta/obj/Module.h>
+#include <meta/type/Module.h>
 #include <meta/gfx/Module.h>
 #include <meta/util/Module.h>
 #include <meta/core/Module.h>

@@ -5,7 +5,7 @@
 
 #include <core/Entity/Entity.h>
 
-#include <obj/Indexer.h>
+#include <type/Indexer.h>
 #include <math/Timer.h>
 #include <math/Math.h>
 
@@ -13,7 +13,7 @@
 
 #include <core/World/Section.h>
 
-#include <proto/Proto.h>
+#include <ecs/Proto.h>
 
 #include <refl/Meta.h>
 

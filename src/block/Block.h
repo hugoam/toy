@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Proto.h>
+#include <ecs/Proto.h>
 #include <math/Vec.h>
 #include <math/Grid.h>
 #include <core/Entity/Entity.h>
@@ -52,7 +52,7 @@ using namespace mud; namespace toy
 		attr_ vec3 m_size;
 		attr_ size_t m_updated = 0;
 
-		size_t m_depth = 0;
+		uint16_t m_depth = 0;
 
 		bool m_subdived = false;
 
@@ -67,15 +67,15 @@ using namespace mud; namespace toy
 		meth_ void chunk(size_t x, size_t y, size_t z, Element& element);
 		meth_ void commit();
 
-		void subdivide_to(size_t depth);
+		void subdivide_to(uint16_t depth);
 
-		size_t depth();
+		uint16_t depth();
 
 		vec3 min(Spatial& self);
 		vec3 max(Spatial& self);
 		vec3 coordinates();
 
-		size_t subdiv();
+		uint16_t subdiv();
 		vec3 chunk_size();
 
 		WorldPage& world_page();

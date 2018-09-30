@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Entity.h>
+#include <ecs/Entity.h>
 #include <core/Forward.h>
 #include <core/World/Origin.h>
 #include <core/World/Section.h>

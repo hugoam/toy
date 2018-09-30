@@ -52,7 +52,7 @@ using namespace mud; namespace toy
 		std::vector<dtPolyRef> poly_path(m_pathfinder.m_max_polys);
 		int polyCount = 0;
 
-		if(!query.findPath(start_poly, end_poly, &start_pos[0], &end_pos[0], &filter, poly_path.data(), &polyCount, m_pathfinder.m_max_polys))
+		if(!query.findPath(start_poly, end_poly, &start_pos[0], &end_pos[0], &filter, poly_path.data(), &polyCount, int(m_pathfinder.m_max_polys)))
 			return false;
 
 		std::vector<vec3> point_path(m_pathfinder.m_max_waypoints);
@@ -60,7 +60,7 @@ using namespace mud; namespace toy
 
 		int count;
 
-		if(!query.findStraightPath(&start_pos[0], &end_pos[0], poly_path.data(), polyCount, value_ptr(point_path[0]), 0, poly_refs.data(), &count, m_pathfinder.m_max_waypoints))
+		if(!query.findStraightPath(&start_pos[0], &end_pos[0], poly_path.data(), polyCount, value_ptr(point_path[0]), 0, poly_refs.data(), &count, int(m_pathfinder.m_max_waypoints)))
 			return false;
 
 		for(int i = count - 1; i >= 0; i--)

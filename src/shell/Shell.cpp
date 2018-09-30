@@ -14,7 +14,6 @@
 
 #include <lang/Wren.h>
 
-#define TRACY_ENABLE
 #include <Tracy.hpp>
 
 #include <numeric>
@@ -129,7 +128,7 @@ using namespace mud; namespace toy
 		, m_editor(*m_gfx_system)
 		, m_game(m_user, *m_gfx_system)
 	{
-		System::instance().load_modules({ &mud_infra::m(), &mud_obj::m(), &mud_pool::m(), &mud_refl::m(), &mud_proto::m(), &mud_tree::m() });
+		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_proto::m(), &mud_tree::m() });
 		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_procgen::m(), &mud_lang::m() });
 		System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
 
@@ -427,7 +426,9 @@ using namespace mud; namespace toy
 	}
 
 	void GameShell::remove_scene(GameScene& scene)
-	{}
+	{
+		UNUSED(scene);
+	}
 
 	void GameShell::clear_scenes()
 	{
@@ -442,6 +443,7 @@ using namespace mud; namespace toy
 
 	World& GameShell::load_world(Id id)
 	{
+		UNUSED(id);
 		Ref world;
 		unpack_json_file(world, "");
 		m_game.m_world = &val<World>(world);

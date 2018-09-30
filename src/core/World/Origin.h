@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <proto/Proto.h>
+#include <ecs/Proto.h>
 #include <core/Forward.h>
 #include <core/Entity/Entity.h>
 

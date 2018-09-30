@@ -1,7 +1,7 @@
 
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
+#if !defined MUD_MODULES || defined MUD_TYPE_LIB
 #include <refl/Module.h>
 #endif
 
@@ -10,7 +10,7 @@
 #include <meta/visu/Module.h>
 #include <meta/edit/Module.h>
 #include <meta/block/Module.h>
-#include <meta/proto/Module.h>
+#include <meta/ecs/Module.h>
 #include <meta/tree/Module.h>
 #include <meta/srlz/Module.h>
 #include <meta/math/Module.h>

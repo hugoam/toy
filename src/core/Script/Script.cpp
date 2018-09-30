@@ -6,7 +6,7 @@
 #include <core/Types.h>
 #include <core/Script/Script.h>
 
-#include <obj/Indexer.h>
+#include <type/Indexer.h>
 #include <refl/Class.h>
 #include <lang/Script.h>
 
@@ -22,6 +22,7 @@ using namespace mud; namespace toy
 
 	void EntityScript::next_frame(size_t tick, size_t delta)
 	{
+		UNUSED(tick); UNUSED(delta);
 		this->run_logic();
 	}
 

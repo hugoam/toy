@@ -100,7 +100,9 @@ using namespace mud; namespace toy
 
 	void update_block_geometry(GfxSystem& gfx_system, Block& block, BlockState& state)
 	{
-		Spatial& spatial = block.m_spatial;
+		UNUSED(gfx_system);
+
+		//Spatial& spatial = block.m_spatial;
 		WorldPage& world_page = block.world_page();
 
 		if(block.m_subdived)

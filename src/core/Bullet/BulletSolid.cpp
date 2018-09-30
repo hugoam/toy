@@ -35,6 +35,7 @@ using namespace mud; namespace toy
 		: m_rigid_body(nullptr)
 		, m_motion_state(make_unique<BulletMotionState>(spatial, collider))
     {
+		UNUSED(bullet_world);
 		collider->m_motion_state.m_transform_source = this;
 		collider->m_motion_state.m_motion_source = this;
 
