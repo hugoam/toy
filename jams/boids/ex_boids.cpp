@@ -33,14 +33,17 @@ namespace boids
 		{
 			std::tuple<ComponentBuffer<Ts>&...> buffers = std::make_tuple(std::ref(stream->Buffer<Ts>())...);
 
-			auto process = [action, stream, buffers](JobSystem& js, Job* job, size_t index)
+			auto process = [action, stream, buffers](JobSystem& js, Job* job, uint32_t start, uint32_t count)
 			{
 				UNUSED(js); UNUSED(job);
-				uint32_t handle = stream->m_handles[index];
-				action(handle, std::get<Is>(buffers).m_data[index]...);
+				for(uint32_t index = start; index < start + count; ++index)
+				{
+					uint32_t handle = stream->m_handles[index];
+					action(handle, std::get<Is>(buffers).m_data[index]...);
+				}
 			};
 
-			Job* stream_job = parallel_jobs<64>(job_system, job, 0, stream->m_handles.size(), process);
+			Job* stream_job = split_jobs<64>(job_system, job, 0, stream->m_handles.size(), process);
 			job_system.run(stream_job);
 		}
 
