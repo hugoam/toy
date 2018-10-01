@@ -57,3 +57,10 @@ project "ex_boids"
     includedirs {
         path.join(TOY_3RDPARTY_DIR, "hashmap"),
     }
+    
+    configuration { "asmjs" }
+        buildoptions { "-msse3" }
+        linkoptions { "-msse3" }
+    
+    configuration {}
+    
