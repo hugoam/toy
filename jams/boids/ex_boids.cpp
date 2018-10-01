@@ -507,8 +507,13 @@ namespace boids
 			const float extents = 10.f;
 			const size_t num_obstacles = 1;
 			const size_t num_targets = 1;
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
+			const size_t num_entities = 10'000;
+#else
 			const size_t num_entities = 25'000;
 			//const size_t num_entities = 250'000;
+#endif
 
 			for(size_t i = 0; i < num_obstacles; ++i)
 			{
@@ -557,7 +562,13 @@ namespace boids
 					const ComponentBuffer<Transform4>& components = stream->Buffer<Transform4>();
 					std::vector<mat4>& transforms = (std::vector<mat4>&) components.m_data;
 
-					const size_t size = std::min(size_t(4096U * 4), transforms.size());
+#ifdef MUD_PLATFORM_EMSCRIPTEN
+					const size_t num_boids = 4096U * 4;
+#else
+					const size_t num_boids = 4096U * 2;
+#endif
+
+					const size_t size = std::min(num_boids, transforms.size());
 					for(size_t i = 0; i < size; i += 4096)
 					{
 						const size_t count = std::min(size - i, size_t(4096U));
