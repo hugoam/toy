@@ -31,10 +31,10 @@ namespace boids
 		std::vector<ParallelBuffers*> matches = s_registry.Match(prototype);
 		for(ParallelBuffers* stream : matches)
 		{
+			std::tuple<ComponentBuffer<Ts>&...> buffers = std::make_tuple(std::ref(stream->Buffer<Ts>())...);
+
 			auto process = [action, stream, buffers](JobSystem& js, Job* job, uint32_t start, uint32_t count)
 			{
-				std::tuple<ComponentBuffer<Ts>&...> buffers = std::make_tuple(std::ref(stream->Buffer<Ts>())...);
-
 				UNUSED(js); UNUSED(job);
 				for(uint32_t index = start; index < start + count; ++index)
 				{
