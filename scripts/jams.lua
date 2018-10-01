@@ -58,9 +58,13 @@ project "ex_boids"
         path.join(TOY_3RDPARTY_DIR, "hashmap"),
     }
     
+    configuration { "not asmjs" }
+        defines { "BOIDS_SIMD" }
+        
     configuration { "asmjs" }
-        buildoptions { "-msse4.1" }
-        linkoptions { "-msse4.1" }
+        --defines { "BOIDS_SIMD" }
+        --buildoptions { "-msse4.1" }
+        --linkoptions { "-msse4.1" }
     
     configuration {}
     

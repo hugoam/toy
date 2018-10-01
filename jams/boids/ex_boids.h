@@ -7,8 +7,6 @@
 #include <boids/Forward.h>
 #include <toy/toy.h>
 
-#define BOIDS_SIMD
-
 #ifdef BOIDS_SIMD
 #include <immintrin.h>
 #endif
