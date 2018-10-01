@@ -503,8 +503,8 @@ namespace boids
 			const float extents = 10.f;
 			const size_t num_obstacles = 1;
 			const size_t num_targets = 1;
-			//const size_t num_entities = 25'000;
-			const size_t num_entities = 250'000;
+			const size_t num_entities = 25'000;
+			//const size_t num_entities = 250'000;
 
 			for(size_t i = 0; i < num_obstacles; ++i)
 			{
