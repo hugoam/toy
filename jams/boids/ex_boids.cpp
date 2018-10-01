@@ -1,5 +1,6 @@
-//#define STD_HASHMAP
-#define FLAT_HASHMAP
+#if !defined STD_HASHMAP && !defined FLAT_HASHMAP
+#define STD_HASHMAP
+#endif
 
 #ifdef STD_HASHMAP
 #include <unordered_map>

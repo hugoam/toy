@@ -60,6 +60,7 @@ project "ex_boids"
     
     configuration { "not asmjs" }
         defines { "BOIDS_SIMD" }
+        defines { "FLAT_HASHMAP" }
         
     configuration { "asmjs" }
         --defines { "BOIDS_SIMD" }
