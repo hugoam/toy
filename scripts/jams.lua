@@ -59,8 +59,8 @@ project "ex_boids"
     }
     
     configuration { "asmjs" }
-        buildoptions { "-msse3" }
-        linkoptions { "-msse3" }
+        buildoptions { "-msse4.1" }
+        linkoptions { "-msse4.1" }
     
     configuration {}
     
