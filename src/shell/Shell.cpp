@@ -354,7 +354,8 @@ using namespace mud; namespace toy
 			time = 0.f;
 		time(m_times, Step::Input,		"ui input",		[&] { ZoneScopedNC("ui input",  tracy::Color::Salmon);    pursue &= m_ui_window->input_frame(); });
 		time(m_times, Step::Core,		"core",			[&] { ZoneScopedNC("core",      tracy::Color::Red);       m_core->next_frame(); });
-		m_pump();
+		m_pump();	
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",		tracy::Color::Green);	  m_gfx_system->begin_frame(); });
 		time(m_times, Step::UiRender,	"ui render",	[&] { ZoneScopedNC("ui render", tracy::Color::LightBlue); m_ui_window->render_frame(); });
 		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     pursue &= m_gfx_system->next_frame(); });
 
