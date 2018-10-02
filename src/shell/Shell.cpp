@@ -178,8 +178,11 @@ using namespace mud; namespace toy
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
-		//pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
+#ifdef MUD_GFX_DEFERRED
 		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
+#else
+		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
+#endif
 		m_gfx_system->init_pipeline();
 
 		static ImporterOBJ obj_importer(*m_gfx_system);
