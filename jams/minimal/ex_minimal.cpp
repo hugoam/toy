@@ -6,7 +6,8 @@
 #include <meta/minimal/Module.h>
 
 Bullet::Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
-	: m_spatial(*this, *this, parent, source, rotation)
+	: Entity(Tags<Spatial, Bullet*>{})
+	, m_spatial(*this, *this, parent, source, rotation)
 	, m_source(source)
 	, m_velocity(rotate(rotation, -Z3) * velocity)
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
@@ -23,7 +24,7 @@ void Bullet::update()
 	Collision collision = (*m_collider)->raycast(m_spatial->m_position + m_velocity, CM_SOLID | CM_GROUND);
 	Entity* hit = nullptr;//collision.m_second ? &collision.m_second->m_spatial : nullptr;
 
-	if(Human* shot = try_as<Human>(hit))
+	if(Human* shot = nullptr)//try_as<Human>(hit))
 	{
 		m_impacted = true;
 		m_impact = collision.m_hit_point;
@@ -40,7 +41,8 @@ const vec3 Human::muzzle_offset = { 0.f, 1.6f, -1.f };
 float Human::headlight_angle = 40.f;
 
 Human::Human(HSpatial parent, const vec3& position)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Movable, Human*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 	, m_walk(false)
 	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), SolidMedium::me, CM_SOLID, false, 1.f))
@@ -85,7 +87,8 @@ void Human::shoot()
 }
 
 Crate::Crate(HSpatial parent, const vec3& position, const vec3& extents)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Movable, Crate*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 	, m_extents(extents)
 	, m_solid(Solid::create(m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))

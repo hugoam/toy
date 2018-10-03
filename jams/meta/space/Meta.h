@@ -703,7 +703,7 @@ namespace mud
             { base_offset<Fleet, mud::Entity>() },
             // constructors
             {
-                { type<Fleet>(), [](Ref ref, array<Var> args) { new(&val<Fleet>(ref)) Fleet( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Commander>(args[3]), val<mud::uvec2>(args[4]), val<std::string>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "commander", Ref(type<Commander>()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
+                //{ type<Fleet>(), [](Ref ref, array<Var> args) { new(&val<Fleet>(ref)) Fleet( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Commander>(args[3]), val<mud::uvec2>(args[4]), val<std::string>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "commander", Ref(type<Commander>()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
             },
             // copy constructor
             {
@@ -784,42 +784,6 @@ namespace mud
     
     
         
-    // Quadrant
-    {
-        static Meta meta = { type<Quadrant>(), &namspc({}), "Quadrant", sizeof(Quadrant), TypeClass::Entity };
-        static Class cls = { type<Quadrant>(),
-            // bases
-            { &type<mud::Entity>() },
-            { base_offset<Quadrant, mud::Entity>() },
-            // constructors
-            {
-                { type<Quadrant>(), [](Ref ref, array<Var> args) { new(&val<Quadrant>(ref)) Quadrant( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec2>(args[3]), val<float>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "coord", var(mud::uvec2()) }, { "size", var(float()) } } }
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-                { type<Quadrant>(), member_address(&Quadrant::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
-                { type<Quadrant>(), member_address(&Quadrant::m_coord), type<mud::uvec2>(), "coord", var(mud::uvec2()), Member::Value, nullptr },
-                { type<Quadrant>(), member_address(&Quadrant::m_size), type<float>(), "size", var(float()), Member::Value, nullptr },
-                { type<Quadrant>(), member_address(&Quadrant::m_stars), type<std::vector<Star*>>(), "stars", var(std::vector<Star*>()), Member::Value, nullptr }
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        init_pool<Quadrant>(); 
-        
-        meta_class<Quadrant>();
-    }
-    
-    
         
     // Star
     {
@@ -830,7 +794,7 @@ namespace mud
             { base_offset<Star, mud::Entity>() },
             // constructors
             {
-                { type<Star>(), [](Ref ref, array<Var> args) { new(&val<Star>(ref)) Star( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec2>(args[3]), val<std::string>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
+                //{ type<Star>(), [](Ref ref, array<Var> args) { new(&val<Star>(ref)) Star( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec2>(args[3]), val<std::string>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
             },
             // copy constructor
             {
@@ -1225,27 +1189,27 @@ namespace mud
         m.m_types.push_back(&type<SpatialCombat>());
     
         {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_system(val<toy::HSpatial>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
+            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_system(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
             std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
-            static Function f = { &namspc({}), "generate_system", function_id<Star*(*)(toy::HSpatial, const mud::uvec3&, const mud::vec3&)>(&::generate_system), func, params, Ref(type<Star>()) };
+            static Function f = { &namspc({}), "generate_system", function_id<Star*(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&::generate_system), func, params, Ref(type<Star>()) };
             m.m_functions.push_back(&f);
         }
         {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_fleet(val<toy::HSpatial>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
+            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_fleet(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
             std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
-            static Function f = { &namspc({}), "generate_fleet", function_id<Fleet*(*)(toy::HSpatial, const mud::uvec3&, const mud::vec3&)>(&::generate_fleet), func, params, Ref(type<Fleet>()) };
+            static Function f = { &namspc({}), "generate_fleet", function_id<Fleet*(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&::generate_fleet), func, params, Ref(type<Fleet>()) };
             m.m_functions.push_back(&f);
         }
         {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_commander(val<toy::HSpatial>(args[0]), val<Star>(args[1]))); };
+            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_commander(val<Galaxy>(args[0]), val<Star>(args[1]))); };
             std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "star", Ref(type<Star>()) } };
-            static Function f = { &namspc({}), "generate_commander", function_id<Commander*(*)(toy::HSpatial, Star&)>(&::generate_commander), func, params, Ref(type<Commander>()) };
+            static Function f = { &namspc({}), "generate_commander", function_id<Commander*(*)(Galaxy&, Star&)>(&::generate_commander), func, params, Ref(type<Commander>()) };
             m.m_functions.push_back(&f);
         }
         {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::assign_system(val<toy::HSpatial>(args[0]), val<Star>(args[1]), val<std::vector<Commander*>>(args[2]))); };
+            auto func = [](array<Var> args, Var& result) {  result = Ref(::assign_system(val<Galaxy>(args[0]), val<Star>(args[1]), val<std::vector<Commander*>>(args[2]))); };
             std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "star", Ref(type<Star>()) }, { "commanders", var(std::vector<Commander*>()) } };
-            static Function f = { &namspc({}), "assign_system", function_id<Star*(*)(toy::HSpatial, Star&, std::vector<Commander*>)>(&::assign_system), func, params, Ref(type<Star>()) };
+            static Function f = { &namspc({}), "assign_system", function_id<Star*(*)(Galaxy&, Star&, std::vector<Commander*>)>(&::assign_system), func, params, Ref(type<Star>()) };
             m.m_functions.push_back(&f);
         }
     }

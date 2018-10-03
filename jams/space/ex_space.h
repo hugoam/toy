@@ -51,7 +51,7 @@ inline bool intersects(const uvec2& coord, const uvec2& lo, const uvec2& hi)
 		&& coord.y >= lo.y && coord.y <= hi.y;
 }
 
-enum class refl_ GameStage : size_t
+enum class refl_ GameStage : uint32_t
 {
 	Empire = 0,
 	Tactics = 1,
@@ -507,11 +507,12 @@ struct refl_ _SPACE_EXPORT Construction
 class refl_ _SPACE_EXPORT Star : public Entity
 {
 public:
-	constr_ Star(HSpatial parent, const vec3& position, const uvec2& coord, const std::string& name);
+	constr_ Star(HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const std::string& name);
 	~Star();
 
 	comp_ attr_ CSpatial m_spatial;
 
+	attr_ Galaxy* m_galaxy;
 	attr_ uvec2 m_coord;
 	attr_ std::string m_name;
 	
@@ -620,11 +621,12 @@ struct refl_ _SPACE_EXPORT Split
 class refl_ _SPACE_EXPORT Fleet : public Entity
 {
 public:
-	constr_ Fleet(HSpatial parent, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name);
+	constr_ Fleet(HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name);
 	~Fleet();
 
 	comp_ attr_ CSpatial m_spatial;
 
+	attr_ Galaxy* m_galaxy;
 	attr_ Commander* m_commander;
 	attr_ uvec2 m_coord;
 	attr_ vec3 m_slot;
@@ -852,6 +854,7 @@ public:
 	bool allied(Commander& commander) { return &commander == this; }
 };
 
+#if 0
 class refl_ _SPACE_EXPORT Quadrant : public Entity
 {
 public:
@@ -864,6 +867,7 @@ public:
 
 	attr_ std::vector<Star*> m_stars;
 };
+#endif
 
 struct GalaxyGrid
 {

@@ -197,15 +197,10 @@ Human::Human(HSpatial parent, const vec3& position, Faction faction)
 
 	//m_emitter.add_sphere(VisualMedium::me, 0.1f);
 	//m_receptor.add_sphere(VisualMedium::me, 30.f);
-
-	Spatial& spatial = m_spatial;
-	int i = 0;
 }
 
 Human::~Human()
-{
-	//s_registry.RemoveComponent<Human>(m_handle);
-}
+{}
 
 void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta)
 {
@@ -927,10 +922,7 @@ public:
 		s_registry.AddBuffers<Spatial, Movable, Crate*>();
 		s_registry.AddBuffers<Spatial, Movable, Lamp*>();
 
-		global_pool<TileBlock>();
 		global_pool<TileWorld>();
-		global_pool<Human>();
-		global_pool<Crate>();
 		global_pool<OCamera>();
 
 		TileWorld& tileworld = global_pool<TileWorld>().construct("Arcadia");

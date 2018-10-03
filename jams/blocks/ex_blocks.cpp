@@ -41,16 +41,15 @@ Faction::~Faction()
 std::vector<Faction> g_factions;
 
 Well::Well(HSpatial parent, const vec3& position)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Emitter, Well*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_emitter(*this, m_spatial, HMovable())
 {
-	s_registry.AddPointer<Well>(m_handle, this);
+	s_registry.SetComponent<Well*>(m_handle, this);
 }
 
 Well::~Well()
-{
-	s_registry.RemoveComponent<Well>(m_handle);
-}
+{}
 
 void Well::next_frame(size_t tick, size_t delta)
 {
@@ -58,15 +57,17 @@ void Well::next_frame(size_t tick, size_t delta)
 }
 
 Camp::Camp(HSpatial parent, const vec3& position, Faction& faction)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Camp*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_faction(faction)
 	, m_position(position)
 {
-	s_registry.AddPointer<Camp>(m_handle, this);
+	s_registry.SetComponent<Camp*>(m_handle, this);
 }
 
 Shield::Shield(HSpatial parent, const vec3& position, Faction& faction, float radius)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Emitter, Shield*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_emitter(*this, m_spatial, HMovable())
 	, m_faction(faction)
 	, m_radius(radius)
@@ -74,13 +75,11 @@ Shield::Shield(HSpatial parent, const vec3& position, Faction& faction, float ra
 	, m_discharge(0.f)
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(radius), SolidMedium::me, CollisionGroup(CM_ENERGY)))
 {
-	s_registry.AddPointer<Shield>(m_handle, this);
+	s_registry.SetComponent<Shield*>(m_handle, this);
 }
 
 Shield::~Shield()
-{
-	s_registry.RemoveComponent<Shield>(m_handle);
-}
+{}
 
 void Shield::next_frame(size_t tick, size_t delta)
 {
@@ -95,20 +94,19 @@ void Shield::next_frame(size_t tick, size_t delta)
 }
 
 Slug::Slug(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
-	: m_spatial(*this, *this, parent, source, rotation)
+	: Entity(Tags<Spatial, Slug*>{})
+	, m_spatial(*this, *this, parent, source, rotation)
 	, m_source(source)
 	, m_velocity(velocity)
 	, m_power(power)
 	//, m_solid(Solid::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY), false, 1.f))
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY)))
 {
-	s_registry.AddPointer<Slug>(m_handle, this);
+	s_registry.SetComponent<Slug*>(m_handle, this);
 }
 
 Slug::~Slug()
-{
-	s_registry.RemoveComponent<Slug>(m_handle);
-}
+{}
 
 void Slug::update(Spatial& spatial)
 {
@@ -123,7 +121,7 @@ void Slug::update(Spatial& spatial)
 
 	if(hit != nullptr)
 	{
-		if(Tank* tank = try_as<Tank>(*hit))
+		if(Tank* tank = nullptr)//try_as<Tank>(*hit))
 		{
 			m_impacted = true;
 			m_impact = collision.m_hit_point;
@@ -140,7 +138,7 @@ void Slug::update(Spatial& spatial)
 				solid->impulse((m_velocity + Y3 * 10.f) * m_power, location);
 		}
 
-		if(Shield* shield = try_as<Shield>(*hit))
+		if(Shield* shield = nullptr)//try_as<Shield>(*hit))
 		{
 			auto reflect = [](const vec3& I, const vec3& N) { return I - 2.f * dot(N, I) * N; };
 
@@ -159,14 +157,15 @@ void Slug::update(Spatial& spatial)
 }
 
 Tank::Tank(HSpatial parent, const vec3& position, Faction& faction)
-	: m_spatial(*this, *this, parent, position, ZeroQuat)
+	: Entity(Tags<Spatial, Movable, Emitter, Receptor, Tank*>{})
+	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_movable(*this, m_spatial)
 	, m_emitter(*this, m_spatial, m_movable)
 	, m_receptor(*this, m_spatial, m_movable)
 	, m_faction(faction)
 	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), false, 4.f))
 {
-	s_registry.AddPointer<Tank>(m_handle, this);
+	s_registry.SetComponent<Tank*>(m_handle, this);
 
 	m_emitter->add_sphere(VisualMedium::me, 0.1f);
 	m_receptor->add_sphere(VisualMedium::me, 100.f);
@@ -175,9 +174,7 @@ Tank::Tank(HSpatial parent, const vec3& position, Faction& faction)
 }
 
 Tank::~Tank()
-{
-	s_registry.RemoveComponent<Tank>(m_handle);
-}
+{}
 
 void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta)
 {
@@ -204,7 +201,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 
 		ReceptorScope* vision = receptor.scope(VisualMedium::me);
 		for(HSpatial spatial : vision->m_scope)
-			if(Tank* tank = try_as<Tank>(spatial->m_entity))
+			if(Tank* tank = nullptr)//try_as<Tank>(spatial->m_entity))
 				if(&tank->m_faction != &m_faction && !tank->m_stealth)
 				{
 					m_target = tank;
@@ -783,30 +780,24 @@ public:
 		g_factions.emplace_back(0, Colour::Pink);
 		g_factions.emplace_back(0, Colour::Cyan);
 
-		s_registry.AddBuffer<Sector>();
-		s_registry.AddBuffer<TileBlock>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector*>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, TileBlock*>();
 
-		s_registry.AddBuffer<Well>();
-		s_registry.AddBuffer<Camp>();
-		s_registry.AddBuffer<Shield>();
-		s_registry.AddBuffer<Slug>();
-		s_registry.AddBuffer<Tank>();
+		s_registry.AddBuffers<Spatial, Emitter, Well*>();
+		s_registry.AddBuffers<Spatial, Camp*>();
+		s_registry.AddBuffers<Spatial, Emitter, Shield*>();
+		s_registry.AddBuffers<Spatial, Slug*>();
+		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank*>();
 	}
 
 	virtual void start(GameShell& app, Game& game) final
 	{
-		app.m_core->add_loop<TileBlock, WorldPage>(Task::Spatial);
-		app.m_core->add_loop<Shield>(Task::GameObject);
-		app.m_core->add_loop<Tank, Spatial, Movable, Receptor>(Task::GameObject);
+		app.m_core->add_loop<TileBlock*, WorldPage>(Task::Spatial);
+		app.m_core->add_loop<Shield*>(Task::GameObject);
+		app.m_core->add_loop<Tank*, Spatial, Movable, Receptor>(Task::GameObject);
 
 		global_pool<BlockWorld>();
-		global_pool<Well>();
-		global_pool<Camp>();
-		global_pool<Shield>();
-		global_pool<Tank>();
-		global_pool<Fract>();
-		global_pool<Sector>();
-		global_pool<Block>();
+		//global_pool<Block>();
 		global_pool<OCamera>();
 
 		SolidMedium::me.m_masks[CollisionGroup(CM_ENERGY)] = CM_SOLID | CM_GROUND | CM_ENERGY;

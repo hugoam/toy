@@ -44,18 +44,20 @@ using namespace mud; namespace toy
 {
 	static void collisionStarted(btPersistentManifold* manifold)
 	{
-		Collider* col0 = (Collider*)((btCollisionObject*)manifold->getBody0())->getUserPointer();
-		Collider* col1 = (Collider*)((btCollisionObject*)manifold->getBody1())->getUserPointer();
+		uint32_t col0 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody0())->getUserPointer());
+		uint32_t col1 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody1())->getUserPointer());
 
+#if 0
 		if(&col0->m_spatial == &col1->m_spatial)
 			return;
 
 		if (col0->m_object && col1->m_object)
 		{
 			//printf("DEBUG: Add contact %i : %i\n", int(col0->m_spatial.m_id), int(col1->m_spatial.m_id));
-			//col0->m_object->add_contact(*col1);
-			//col1->m_object->add_contact(*col0);
+			col0->m_object->add_contact(*col1);
+			col1->m_object->add_contact(*col0);
 		}
+#endif
 	}
 
 #ifdef TRIGGER_COLLISIONS

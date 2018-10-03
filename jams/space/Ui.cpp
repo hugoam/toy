@@ -732,7 +732,7 @@ Widget& division(Widget& parent, float span)
 	return self;
 }
 
-void shrink_switch(Widget& parent, array<cstring> labels, size_t& value)
+void shrink_switch(Widget& parent, array<cstring> labels, uint32_t& value)
 {
 	static Style style("ShrinkSwitch", styles().wedge, [](Layout& l) { l.m_space = { READING, SHRINK, SHRINK }; l.m_align = { CENTER, CENTER }; });
 
@@ -746,7 +746,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 
 	Widget& header = ui::header(self);
 	GameStage mode = player.m_mode;
-	shrink_switch(header, carray<cstring, 3>{ "Empire", "Tactics", "Turn Report" }, (size_t&) player.m_mode);
+	shrink_switch(header, carray<cstring, 3>{ "Empire", "Tactics", "Turn Report" }, (uint32_t&) player.m_mode);
 	
 	if(mode == GameStage::TurnReport || (player.m_mode == GameStage::TurnReport && mode != player.m_mode))
 		player.m_mode = mode;
@@ -766,9 +766,9 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 
 	if(player.m_mode == GameStage::Empire)
 	{
-		enum Modes : size_t { Overview, Technology };
+		enum Modes : uint32_t { Overview, Technology };
 		static Modes mode = Overview;
-		shrink_switch(divs.left, carray<cstring, 2>{ "Overview", "Technology" }, (size_t&) mode);
+		shrink_switch(divs.left, carray<cstring, 2>{ "Overview", "Technology" }, (uint32_t&) mode);
 
 		if(mode == Overview)
 		{
@@ -800,7 +800,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 	{
 		Entity* selected = scene.m_selection.size() > 0 ? try_val<Entity>(scene.m_selection[0]) : nullptr;
 
-		if(Star* star = try_as<Star>(selected))
+		if(Star* star = nullptr)//try_as<Star>(selected))
 		{
 			if(star->m_commander == player.m_commander)
 				star_sheet(divs.left, *star);
@@ -811,7 +811,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 			star_orders(orders, viewer, *star);
 		}
 
-		if(Fleet* fleet = try_as<Fleet>(selected))
+		if(Fleet* fleet = nullptr)//try_as<Fleet>(selected))
 		{
 			if(fleet->m_commander == player.m_commander)
 				fleet_sheet(divs.left, *fleet);

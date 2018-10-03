@@ -188,7 +188,8 @@ using namespace mud; namespace toy
 
 	void scene_painters(VisuScene& scene, World& world)
 	{
-		scene.entity_painter<WorldPage>("WorldPage", world, paint_world_page);
+		UNUSED(scene); UNUSED(world);
+		//scene.entity_painter<WorldPage>("WorldPage", world, paint_world_page);
 	}
 
 	void paint_selection(Gnode& parent, Selection& selection, Ref hovered)

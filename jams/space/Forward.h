@@ -40,9 +40,9 @@
 #define _SPACE_EXPORT MUD_IMPORT
 #endif
 
-#include <cstddef>
+#include <cstdint>
 
-    enum class GameStage : size_t;
+    enum class GameStage : uint32_t;
     enum class Race : unsigned int;
     enum class Regime : unsigned int;
     enum class Politic : unsigned int;

@@ -87,10 +87,10 @@ using namespace mud; namespace toy
 			UNUSED(world);
 			auto paint = [this, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
-				s_registry.Loop<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+				s_registry.Loop<Spatial, T*>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T*& component)
 				{
 					UNUSED(entity);
-					paint_func(this->entity_node(parent, spatial, index), component);
+					paint_func(this->entity_node(parent, spatial, index), *component);
 				});
 			};
 			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
