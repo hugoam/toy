@@ -153,7 +153,7 @@ namespace boids
 			}
 			if(index != 0)
 				int d = 0;
-			return { index, sqrt(distance) };
+			return { index, bx::sqrt(distance) };
 		};
 
 		vec3 position = cells.separation[index] / vec3(float(cells.count[index]));
