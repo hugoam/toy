@@ -23,17 +23,20 @@
 
 using namespace mud; namespace toy
 {
-	Core::Core()
+	Core::Core(JobSystem& job_system)
+		: m_job_system(job_system)
 	{
 		s_registry.AddBuffers<Spatial>();
 		s_registry.AddBuffers<Spatial, Movable, Camera>();
 
-		add_loop<Spatial>(Task::Spatial);
-		add_loop<Movable, Spatial>(Task::Spatial);
-		add_loop<Camera, Spatial>(Task::Spatial);
+		add_parallel_loop<Spatial>(Task::Spatial);
+		add_parallel_loop<Movable, Spatial>(Task::Spatial);
+		add_parallel_loop<Camera, Spatial>(Task::Spatial);
+		add_parallel_loop<WorldPage, Spatial>(Task::Spatial);
+		add_parallel_loop<Navblock, Spatial, WorldPage>(Task::Spatial);
+
+		// not parallel because we don't know what the script might do
 		add_loop<EntityScript>(Task::Spatial);
-		add_loop<WorldPage, Spatial>(Task::Spatial);
-		add_loop<Navblock, Spatial, WorldPage>(Task::Spatial);
 	}
 
 	Core::~Core()
@@ -41,8 +44,6 @@ using namespace mud; namespace toy
 
 	void Core::next_frame()
 	{
-		//s_registry.SortComponents();
-
 		Animator::me.next_frame(0, 0);
 
 		m_pump.pump();

@@ -53,23 +53,23 @@ using namespace mud; namespace toy
 		m_lens_updated = true;
 	}
 
-	vec3 Camera::lens_direction(Spatial& spatial)
+	vec3 Camera::lens_direction(const Spatial& spatial)
 	{
 		return rotate(spatial.front(), -m_lens_angle, spatial.right());
 	}
 
-	void Camera::calc_lens_position(Spatial& spatial)
+	void Camera::calc_lens_position(const Spatial& spatial)
 	{
 		m_lens_position = -this->lens_direction(spatial) * m_lens_distance;
 		m_lens_position += spatial.absolute_position();
 	}
 
-	void Camera::calc_lens_rotation(Spatial& spatial)
+	void Camera::calc_lens_rotation(const Spatial& spatial)
 	{
 		m_lens_rotation = spatial.absolute_rotation() * angleAxis(-m_lens_angle, to_vec3(Side::Right));
 	}
 
-	void Camera::next_frame(Spatial& spatial, size_t tick, size_t delta)
+	void Camera::next_frame(const Spatial& spatial, size_t tick, size_t delta)
 	{
 		UNUSED(delta);
 

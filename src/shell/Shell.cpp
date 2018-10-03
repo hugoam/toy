@@ -120,7 +120,7 @@ using namespace mud; namespace toy
 		: m_exec_path(exec_path(argc, argv))
 		, m_resource_path(resource_paths[0])
 		, m_job_system(make_object<JobSystem>())
-		, m_core(make_object<toy::Core>())
+		, m_core(make_object<toy::Core>(*m_job_system))
 		, m_gfx_system(make_object<GfxSystem>(resource_paths))
 #ifdef TOY_SOUND
 		, m_sound_system(make_object<SoundManager>(resource_paths[0]))
@@ -178,6 +178,7 @@ using namespace mud; namespace toy
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
+//#define MUD_GFX_DEFERRED
 #ifdef MUD_GFX_DEFERRED
 		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
 #else

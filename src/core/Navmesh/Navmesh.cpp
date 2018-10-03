@@ -173,7 +173,7 @@ using namespace mud; namespace toy
 	Navblock::~Navblock()
 	{}
 
-	void Navblock::next_frame(Spatial& spatial, WorldPage& world_page, size_t tick, size_t delta)
+	void Navblock::next_frame(const Spatial& spatial, const WorldPage& world_page, size_t tick, size_t delta)
 	{
 		UNUSED(tick); UNUSED(delta);
 		
@@ -200,10 +200,10 @@ using namespace mud; namespace toy
 	{
 		// @todo we are just appending here, should clear and update
 
-		Spatial& spatial = navblock.m_spatial;
-		WorldPage& world_page = navblock.m_world_page;
+		const Spatial& spatial = navblock.m_spatial;
+		const WorldPage& world_page = navblock.m_world_page;
 
-		for(Geometry& geom : world_page.m_chunks)
+		for(const Geometry& geom : world_page.m_chunks)
 		{
 			if(geom.m_vertices.empty())
 				return;
@@ -212,10 +212,10 @@ using namespace mud; namespace toy
 
 			ShapeIndex offset = ShapeIndex(m_geometry.m_vertices.size());
 
-			for(Vertex& vertex : geom.m_vertices)
+			for(const Vertex& vertex : geom.m_vertices)
 				m_geometry.m_vertices.emplace_back(Vertex{ spatial.m_position + vertex.m_position });
 
-			for(Tri& tri : geom.m_triangles)
+			for(const Tri& tri : geom.m_triangles)
 				m_geometry.m_triangles.push_back(Tri{ ShapeIndex(offset + tri.a), ShapeIndex(offset + tri.b), ShapeIndex(offset + tri.c) });
 
 			m_dirty = true;

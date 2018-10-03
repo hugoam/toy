@@ -46,10 +46,10 @@ using namespace mud; namespace toy
 
 		size_t m_last_updated = 0;
 
-		void next_frame(Spatial& spatial, size_t tick, size_t delta);
+		void next_frame(const Spatial& spatial, size_t tick, size_t delta);
 
-		void calc_lens_position(Spatial& spatial);
-		void calc_lens_rotation(Spatial& spatial);
+		void calc_lens_position(const Spatial& spatial);
+		void calc_lens_rotation(const Spatial& spatial);
 
 		void set_lens_distance(float distance);
 		void zoom(float amount);
@@ -60,7 +60,7 @@ using namespace mud; namespace toy
 		//void viewportRay(float tx, float ty, vec3& from, vec3& to);
 		//void planarRay(float tx, float ty, vec3& from, vec3& to);
 
-		vec3 lens_direction(Spatial& spatial);
+		vec3 lens_direction(const Spatial& spatial);
 
 	private:
 		bool m_planar;

@@ -64,7 +64,7 @@ using namespace mud; namespace toy
 		attr_ bool m_auto_update = false;
 		attr_ size_t m_updated = 0;
 
-		void next_frame(Spatial& spatial, WorldPage& world_page, size_t tick, size_t delta);
+		void next_frame(const Spatial& spatial, const WorldPage& world_page, size_t tick, size_t delta);
 	};
 
 	class refl_ TOY_CORE_EXPORT NavmeshShape : public Shape

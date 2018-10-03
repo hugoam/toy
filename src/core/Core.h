@@ -13,6 +13,8 @@
 #include <core/Bullet/BulletWorld.h>
 #include <core/Navmesh/Navmesh.h>
 
+#include <ecs/Loop.h>
+
 #ifndef MUD_CPP_20
 #include <map>
 #endif
@@ -33,7 +35,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Core : public NonCopy
 	{
 	public:
-		Core();
+		Core(JobSystem& job_system);
 		~Core();
 
 		void next_frame();
@@ -43,7 +45,7 @@ using namespace mud; namespace toy
 		{
 			auto loop = [](size_t tick, size_t delta)
 			{
-				s_registry.Loop<T_Component, T_Args...>([=](uint32_t entity, T_Component& component, T_Args&... args)
+				s_registry.Loop<T_Component, T_Args...>([tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
 				{
 					UNUSED(entity); helper::deref(component).next_frame(args..., tick, delta);
 				});
@@ -52,6 +54,24 @@ using namespace mud; namespace toy
 			m_pump.add_step({ task, loop });
 		}
 
+		template <class T_Component, class... T_Args>
+		void add_parallel_loop(Task task)
+		{
+			auto loop = [&](size_t tick, size_t delta)
+			{
+				auto process = [tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
+				{
+					UNUSED(entity); helper::deref(component).next_frame(args..., tick, delta);
+				};
+
+				Job* job = for_components<T_Component, T_Args...>(m_job_system, nullptr, process);
+				m_job_system.complete(job);
+			};
+
+			m_pump.add_step({ task, loop });
+		}
+
+		JobSystem& m_job_system;
 		JobPump m_pump;
 	};
 

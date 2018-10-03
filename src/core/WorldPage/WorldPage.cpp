@@ -44,14 +44,14 @@ using namespace mud; namespace toy
 		//m_spatial.m_contents.unobserve(*this);
 	}
 
-	void WorldPage::next_frame(Spatial& spatial, size_t tick, size_t delta)
+	void WorldPage::next_frame(const Spatial& spatial, size_t tick, size_t delta)
 	{
 		UNUSED(tick); UNUSED(delta);
 		if(m_updated > m_last_rebuilt)
 			this->build_geometry(spatial);
 	}
 
-	void WorldPage::build_geometry(Spatial& spatial)
+	void WorldPage::build_geometry(const Spatial& spatial)
 	{
 		if(m_build_geometry)
 		{

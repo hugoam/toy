@@ -62,9 +62,9 @@ using namespace mud; namespace toy
 		std::vector<Geometry> m_chunks;
 		std::vector<OSolid> m_solids;
 
-		void next_frame(Spatial& spatial, size_t tick, size_t delta);
+		void next_frame(const Spatial& spatial, size_t tick, size_t delta);
 
-		meth_ void build_geometry(Spatial& spatial);
+		meth_ void build_geometry(const Spatial& spatial);
 		meth_ void update_geometry();
 
 		meth_ void ground_point(const vec3& position, bool relative, vec3& outputPoint);
