@@ -24,7 +24,7 @@ function bullet_warnings()
         
     configuration { "osx" }
         buildoptions {
-            "-Wignored-qualifiers",
+            "-Wno-ignored-qualifiers",
         }
         
     configuration { "*-gcc*" }
