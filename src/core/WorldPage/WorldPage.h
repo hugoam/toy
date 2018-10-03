@@ -18,7 +18,7 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT WorldMedium : public Medium
+	class refl_ TOY_CORE_EXPORT WorldMedium final : public Medium
 	{
 	public:
 		constr_ WorldMedium();

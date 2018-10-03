@@ -13,7 +13,7 @@
 
 using namespace mud; namespace toy
 {
-	class TOY_CORE_EXPORT AreaMedium : public Medium
+	class TOY_CORE_EXPORT AreaMedium final : public Medium
 	{
 	public:
 		constr_ AreaMedium();

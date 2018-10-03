@@ -42,12 +42,12 @@ using namespace mud; namespace toy
         BulletMedium(World& world, Medium& medium);
         ~BulletMedium();
 
-		void update_contacts();
+		virtual void update_contacts() override final;
 
-        void next_frame(size_t tick, size_t delta);
+        virtual void next_frame(size_t tick, size_t delta) override final;
 
-		virtual object_ptr<ColliderImpl> make_collider(HCollider collider) final;
-		virtual object_ptr<SolidImpl> make_solid(HSolid solid) final;
+		virtual object_ptr<ColliderImpl> make_collider(HCollider collider) override final;
+		virtual object_ptr<SolidImpl> make_solid(HSolid solid) override final;
 
 		virtual void add_solid(HCollider collider, HSolid solid) override final;
 		virtual void remove_solid(HCollider collider, HSolid solid) override final;

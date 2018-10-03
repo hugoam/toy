@@ -11,7 +11,7 @@
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT SoundMedium : public Medium
+	class refl_ TOY_CORE_EXPORT SoundMedium final : public Medium
 	{
 	public:
 		constr_ SoundMedium();

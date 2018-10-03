@@ -20,7 +20,7 @@
 
 #include <math/Timer.h>
 
-#if _MSC_VER
+#ifdef _MSC_VER
 #	pragma warning (push)
 #	pragma warning (disable : 4127) // members are private, so there's no risk them being accessed by the user
 #endif
@@ -31,7 +31,7 @@
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <btBulletCollisionCommon.h>
 
-#if _MSC_VER
+#ifdef _MSC_VER
 #	pragma warning (pop)
 #endif
 

@@ -11,13 +11,14 @@ dofile(path.join(MUD_DIR, "scripts/toolchain.lua"))
 function toy_binary_config()
     mud_binary_config()
     
-    configuration { "not linux", "not osx", "not asmjs" }
+    configuration { "not osx", "not asmjs" }
         defines {
             "TOY_RESOURCE_PATH=\"" .. path.join(TOY_DIR, "data") .. "/\"",
         }
 
-    configuration { "linux or osx", "not asmjs" }
+    configuration { "osx", "not asmjs" }
         defines {
+            -- might need to update GENie to remove that special case
             "TOY_RESOURCE_PATH=\\\"" .. path.join(TOY_DIR, "data") .. "/\\\"",
         }
 
