@@ -24,8 +24,6 @@ float spot_attenuation(vec3 ray, vec3 light, float range, float attenuation_fact
 
 void populate_block(TileBlock& block)
 {
-	Spatial& test = s_registry.GetComponent<Spatial>(block.m_spatial.m_handle);
-
 	generate_crates(block);
 	generate_npcs(block);
 	generate_lamps(block);
@@ -147,7 +145,9 @@ void Bullet::update()
 
 	if(hit != nullptr)
 	{
-		if(Human* shot = nullptr)//try_as<Human>(hit->m_entity))
+		//if(Human* shot = as<Human*>(*hit->m_entity))
+		//if(Human* shot = try_as<Human*>(*hit->m_entity))
+		if(Human* shot = nullptr)
 		{
 			Spatial& shot_spatial = shot->m_spatial;
 			if(shot->m_shield && shot->m_energy > 0.f)
@@ -245,10 +245,9 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 
 		if(m_target == nullptr)
 		{
-#if 0
 			ReceptorScope* vision = receptor.scope(VisualMedium::me);
 			for(HSpatial seen : vision->m_scope)
-				if(Human* human = seen->try_as<Human>())
+				if(Human* human = nullptr)// seen->try_as<Human>())
 				{
 					if(human->m_faction != m_faction)
 					{
@@ -262,7 +261,6 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 						}
 					}
 				}
-#endif
 		}
 
 		m_cooldown = max(0.f, m_cooldown - float(delta) * 0.05f);
@@ -416,6 +414,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 
 void paint_lamp(Gnode& parent, Lamp& lamp)
 {
+	UNUSED(lamp);
 	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::Red), ITEM_SELECTABLE);
 	gfx::light(parent, LightType::Point, false, Colour(1.f, 0.3f, 0.2f), 10.f);
 }
@@ -504,8 +503,8 @@ void paint_human(Gnode& parent, Human& human)
 		static Material& shield = shield_material(shield_colour, 0.04f);
 
 		static Clock clock;
-		float shield_intensity = remap_trig(sin(clock.read() * 2.f), 0.3f, 1.4f) * (human.m_energy + human.m_discharge * 10.f);
-		float light_intensity = remap_trig(sin(clock.read() * 2.f), 0.8f, 1.4f) * (human.m_energy + human.m_discharge * 5.f);
+		float shield_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.3f, 1.4f) * (human.m_energy + human.m_discharge * 10.f);
+		float light_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.8f, 1.4f) * (human.m_energy + human.m_discharge * 5.f);
 		
 		shield.m_fresnel_block.m_value.m_value = shield_colour * shield_intensity;
 
@@ -609,7 +608,7 @@ Style& menu_style()
 
 Style& button_style()
 {
-	static Style style = { "GameButton", styles().button, [](Layout& l) {},
+	static Style style = { "GameButton", styles().button, [](Layout& l) { UNUSED(l); },
 														  [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::AlphaWhite; s.m_text_size = 24.f; },
 														  [](Style& s) { s.decline_skin(HOVERED).m_text_colour = Colour::White; } };
 	return style;
@@ -643,6 +642,7 @@ Style& screen_style()
 
 Style& left_panel_style(UiWindow& ui_window)
 {
+	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/blue_on"), 46, 28, 38, 30 };
 	
 	static Style style = { "LeftPanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, WRAP, FIXED }; l.m_size = { 450.f, 0.f }; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
@@ -697,7 +697,7 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	//OrbitController& orbit = ui::orbit_controller(viewer);
 	OrbitController& orbit = ui::hybrid_controller(viewer, mode, human.m_spatial, human.m_aiming, human.m_angles, scene.m_game.m_mode == GameMode::Play);
 
-	Widget& board = ui::board(screen);
+	Widget& board = ui::board(screen); UNUSED(board);
 	Widget& row = ui::row(screen);
 	Widget& left_panel = ui::widget(row, style_left_panel);
 
@@ -731,6 +731,7 @@ void ex_platform_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 		auto bar = [](Widget& parent, Style& style, cstring icon, float ratio)
 		{
+			UNUSED(ratio);
 			Widget& row = ui::widget(parent, row_bar_style());// row(parent);
 			ui::icon(row, icon);
 			ui::widget(row, style);
@@ -791,7 +792,7 @@ Viewer& ex_platform_menu_viewport(Widget& parent, GameShell& app)
 
 	viewer.m_camera.m_eye = Z3 * 2.f;
 
-	Gnode& node = gfx::node(scene, {}, -Y3 * 0.5f + X3 * 0.6f, angle_axis(fmod(clock.read(), 2.f * c_pi), Y3), Unit3 * 0.5f);
+	Gnode& node = gfx::node(scene, {}, -Y3 * 0.5f + X3 * 0.6f, angle_axis(fmod(float(clock.read()), 2.f * c_pi), Y3), Unit3 * 0.5f);
 	Item& item = gfx::item(node, human);
 	Animated& animated = gfx::animated(node, item);
 	 
@@ -872,12 +873,14 @@ void ex_platform_pump_game(GameShell& app, Game& game, Widget& parent)
 template <class T, class T_PaintFunc>
 inline void range_entity_painter(VisuScene& scene, HSpatial reference, float range, cstring name, World& world, T_PaintFunc paint_func)
 {
+	UNUSED(world);
 	float range2 = range*range;
 	auto paint = [&scene, reference, range2, paint_func](size_t index, VisuScene&, Gnode& parent)
 	{
 		vec3 position = reference->m_position;
 		s_registry.Loop<Spatial, T*>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T*& component)
 		{
+			UNUSED(entity);
 			float dist2 = distance2(spatial.m_position, position);
 			if(dist2 < range2)
 				paint_func(scene.entity_node(parent, spatial, index), *component);
@@ -936,6 +939,7 @@ public:
 
 	virtual void scene(GameShell& app, GameScene& scene) final
 	{
+		UNUSED(app);
 		//scene_painters(scene, vision.m_store);
 		Player& player = val<Player>(scene.m_player);
 		HSpatial reference = player.m_human->m_spatial;
@@ -980,6 +984,7 @@ public:
 	{
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
+			UNUSED(dockbar);
 			if(!game.m_player)
 				ex_platform_menu(parent, game);
 			else
