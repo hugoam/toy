@@ -22,6 +22,11 @@ function bullet_warnings()
             "-Wno-undef",
         }
         
+    configuration { "osx" }
+        buildoptions {
+            "-Wignored-qualifiers",
+        }
+        
     configuration { "*-gcc*" }
         buildoptions {
             "-Wno-maybe-uninitialized",

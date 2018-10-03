@@ -60,6 +60,8 @@ project "ex_boids"
     
     configuration { "not asmjs" }
         defines { "BOIDS_SIMD" }
+        
+    configuration { "vs*" }
         defines { "FLAT_HASHMAP" }
         
 	configuration { "mingw* or linux or osx" }
@@ -68,7 +70,6 @@ project "ex_boids"
     configuration { "asmjs" }
         --defines { "BOIDS_SIMD" }
         --buildoptions { "-msse4.1" }
-        --linkoptions { "-msse4.1" }
     
     configuration {}
     
