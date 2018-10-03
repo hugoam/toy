@@ -151,8 +151,6 @@ namespace boids
 				distance = nearest ? d : distance;
 				index = nearest ? i : index;
 			}
-			if(index != 0)
-				int d = 0;
 			return { index, bx::sqrt(distance) };
 		};
 
