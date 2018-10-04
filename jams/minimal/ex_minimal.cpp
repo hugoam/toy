@@ -62,7 +62,7 @@ Human::Human(HSpatial spatial, HMovable movable)
 
 void Human::next_frame(Spatial& spatial, size_t tick, size_t delta)
 {
-	UNUSED(tick);
+	UNUSED(spatial); UNUSED(tick); UNUSED(delta);
 	(*m_solid)->set_angular_factor(Zero3);
 
 	for(auto& bullet : reverse_adapt(m_bullets))
@@ -114,7 +114,7 @@ Crate::Crate(HSpatial spatial, HMovable movable, const vec3& extents)
 Player::Player(World& world)
 	: m_world(&world)
 {
-	m_human = &construct<Human>(m_world->origin(), vec3(0.f));
+	m_human = construct<Human>(m_world->origin(), vec3(0.f));
 	m_human->m_walk = false;
 }
 
@@ -166,17 +166,9 @@ void paint_human(Gnode& parent, Human& human)
 	gfx::model(arm, "rifle");
 }
 
-Material& plain_material(GfxSystem& gfx_system, cstring name, const Colour& colour)
-{
-	Material& material = gfx_system.fetch_material("crate", "pbr/pbr");
-	material.m_pbr_block.m_enabled = true;
-	material.m_pbr_block.m_albedo.m_value = colour;
-	return material;
-}
-
 void paint_crate(Gnode& parent, Crate& crate)
 {
-	static Material& material = plain_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
+	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
 	gfx::shape(parent, Cube(crate.m_extents), Symbol(), 0U, &material);
 }
 
@@ -188,6 +180,7 @@ void paint_scene(Gnode& parent)
 
 void ex_minimal_scene(GameShell& app, GameScene& scene)
 {
+	UNUSED(app);
 	scene.painter("World", [&](size_t index, VisuScene& scene, Gnode& parent) {
 		UNUSED(scene); paint_scene(parent.subi((void*)index));
 	});
@@ -215,13 +208,12 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 
 	auto movement_key = [](Widget& widget, vec3& force, vec3& torque, const KeyMove& move, float speed)
 	{
+		UNUSED(torque);
 		if(widget.key_event(move.key, EventType::Pressed))
 			force += move.force * speed;
 		if(widget.key_event(move.key, EventType::Released))
 			force -= move.force * speed;
 	};
-
-	bool shift = viewer.ui().m_keyboard.m_shift;
 
 	const KeyMove moves[8] =
 	{
@@ -253,6 +245,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 
 void ex_minimal_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 {
+	UNUSED(scene);
 	ui::OrbitMode mode = ui::OrbitMode::ThirdPerson;
 
 	OrbitController& orbit = ui::hybrid_controller(viewer, ui::OrbitMode::ThirdPerson, human.m_spatial, human.m_aiming, human.m_angles);
@@ -289,6 +282,7 @@ public:
 
 	virtual void start(GameShell& app, Game& game) final
 	{
+		UNUSED(app);
 		DefaultWorld& world = global_pool<DefaultWorld>().construct("Arcadia");
 		game.m_world = &world.m_world;
 
@@ -303,6 +297,7 @@ public:
 
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
+			UNUSED(dockbar);
 			static GameScene& scene = app.add_scene();
 			Viewer& viewer = ui::viewer(parent, scene.m_scene);
 			viewer.m_filters.m_glow.m_enabled = true;

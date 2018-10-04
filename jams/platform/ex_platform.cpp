@@ -560,17 +560,9 @@ void paint_world_block(Gnode& parent, Tileblock& block, const uvec3* exclude = n
 		world_page.m_build_geometry = [&](WorldPage& page) { build_block_geometry(*parent.m_scene, page, block); };
 }
 
-Material& plain_material(GfxSystem& gfx_system, cstring name, const Colour& colour)
-{
-	Material& material = gfx_system.fetch_material(name, "pbr/pbr");
-	material.m_pbr_block.m_enabled = true;
-	material.m_pbr_block.m_albedo.m_value = colour;
-	return material;
-}
-
 void paint_crate(Gnode& parent, Crate& crate)
 {
-	static Material& material = plain_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
+	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
 	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ITEM_SELECTABLE, &material);
 }
 

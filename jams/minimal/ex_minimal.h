@@ -115,5 +115,5 @@ public:
 	Player(World& world);
 	
 	World* m_world;
-	Human* m_human = nullptr;
+	HHuman m_human = {};
 };
