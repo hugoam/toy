@@ -6,7 +6,7 @@
 #define TOY_PRIVATE
 #include <core/Bullet/BulletMotionState.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Physic/Collider.h>
 #include <core/Bullet.h>
 

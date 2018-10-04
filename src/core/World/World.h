@@ -28,12 +28,10 @@ using namespace mud; namespace toy
 		attr_ Id m_id;
 		attr_ Complex& m_complex;
 		attr_ string m_name;
-		attr_ graph_ CSpatial& origin() { return m_origin->m_spatial; }
-		attr_ graph_ CSpatial& unworld() { return m_unworld->m_spatial; }
+		attr_ graph_ HSpatial origin() { return m_origin->m_spatial; }
+		attr_ graph_ HSpatial unworld() { return m_unworld->m_spatial; }
 
 		WorldClock& clock() { return *m_clock; }
-
-		void destroy();
 
 		void next_frame();
 
@@ -50,8 +48,8 @@ using namespace mud; namespace toy
 
     private:
 		object_ptr<WorldClock> m_clock;
-		object_ptr<Origin> m_origin;
-		object_ptr<Origin> m_unworld;
+		EntityHandle<Origin> m_origin;
+		EntityHandle<Origin> m_unworld;
 
 	public:
 		JobPump m_pump;

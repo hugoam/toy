@@ -6,7 +6,7 @@
 #pragma once
 
 #include <math/Math.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 
 using namespace mud; namespace toy
@@ -27,16 +27,16 @@ using namespace mud; namespace toy
     {
     public:
 		MotionState(const vec3& offset = Zero3)
-			: m_offset(offset), m_last_updated(0)
+			: m_offset(offset)
 		{
 			//if(m_movable)
 			//	m_movable->m_motion_state = this;
 		}
 
-		TransformSource* m_transform_source;
-		MotionSource* m_motion_source;
-		vec3 m_offset;
-		size_t m_last_updated;
+		TransformSource* m_transform_source = nullptr;
+		MotionSource* m_motion_source = nullptr;
+		vec3 m_offset = Zero3;
+		size_t m_last_updated = 0;
 
 		struct Transform { vec3 m_position; quat m_rotation; };
 

@@ -7,7 +7,7 @@
 #include <block/Types.h>
 #include <block/Element.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/WorldPage/WorldPage.h>
 
 #include <block/Sector.h>
@@ -17,8 +17,8 @@ using namespace mud; namespace toy
 {
 	bool GroundChunk::filter(Chunk& chunk)
 	{
-		return (chunk.m_element.m_state == MatterState::Gas
-			 && chunk.neighbour(Side::Down)->m_element.m_state == MatterState::Solid);
+		return (chunk.m_element->m_state == MatterState::Gas
+			 && chunk.neighbour(Side::Down)->m_element->m_state == MatterState::Solid);
 	}
 
 	Element::Element(cstring name, MatterState state, Colour colour)
@@ -27,10 +27,17 @@ using namespace mud; namespace toy
 		, m_colour(colour)
 	{}
 
-	Heap::Heap(HSpatial parent, const vec3& position, Element& element, float radius)
-		: Entity(Tags<Spatial>{})
-		, m_spatial(*this, *this, parent, position, ZeroQuat)
-		, m_element(element)
+	uint32_t Heap::create(HSpatial parent, const vec3& position, Element& element, float radius)
+	{
+		uint32_t entity = s_registry.CreateEntity<Spatial, Heap>();
+		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		s_registry.SetComponent(entity, Heap(entity, element, radius));
+		return entity;
+	}
+
+	Heap::Heap(HSpatial spatial, Element& element, float radius)
+		: m_spatial(spatial)
+		, m_element(&element)
 		, m_radius(radius)
 	{}
 }

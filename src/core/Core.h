@@ -23,15 +23,6 @@ using namespace mud; namespace toy
 {
 	using string = std::string;
 
-	namespace helper
-	{
-		template <class T>
-		T& deref(T& val) { return val; }
-
-		template <class T>
-		T& deref(T*& val) { return *val; }
-	}
-
 	class refl_ TOY_CORE_EXPORT Core : public NonCopy
 	{
 	public:
@@ -47,7 +38,7 @@ using namespace mud; namespace toy
 			{
 				s_registry.Loop<T_Component, T_Args...>([tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
 				{
-					UNUSED(entity); helper::deref(component).next_frame(args..., tick, delta);
+					UNUSED(entity); component.next_frame(args..., tick, delta);
 				});
 			};
 
@@ -61,7 +52,7 @@ using namespace mud; namespace toy
 			{
 				auto process = [tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
 				{
-					UNUSED(entity); helper::deref(component).next_frame(args..., tick, delta);
+					UNUSED(entity); component.next_frame(args..., tick, delta);
 				};
 
 				Job* job = for_components<T_Component, T_Args...>(m_job_system, nullptr, process);
@@ -81,8 +72,8 @@ using namespace mud; namespace toy
 		constr_ DefaultWorld(const string& name);
 		~DefaultWorld();
 
-		comp_ attr_ World m_world;
-		comp_ attr_ BulletWorld m_bullet_world;
-		comp_ attr_ Navmesh m_navmesh;
+		attr_ World m_world;
+		attr_ BulletWorld m_bullet_world;
+		attr_ Navmesh m_navmesh;
 	};
 }

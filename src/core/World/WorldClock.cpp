@@ -5,7 +5,7 @@
 
 #include <core/World/WorldClock.h>
 
-#include <core/Entity/Entity.h> // @kludge
+#include <core/Spatial/Spatial.h> // @kludge
 #include <core/World/World.h>
 #include <math/Timer.h>
 

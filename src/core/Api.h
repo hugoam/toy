@@ -9,7 +9,7 @@
 #include <core/Bullet/BulletSolid.h>
 #include <core/Bullet/BulletWorld.h>
 #include <core/Camera/Camera.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Medium/SoundMedium.h>
 #include <core/Medium/VisualMedium.h>
 #include <core/Movable/MotionState.h>

@@ -14,7 +14,7 @@
 
 #include <core/World/Section.h>
 #include <core/World/World.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Physic/Obstacle.h>
 #include <core/WorldPage/WorldPage.h>
 //#include <core/Symbolic/Symbolic.h>
@@ -133,10 +133,10 @@ using namespace mud; namespace toy
 		UNUSED(parent);
 		BulletMedium& bullet_world = as<BulletMedium>(as<BulletWorld>(world.m_complex).sub_world(medium));
 
-		if(!bullet_world.m_bullet_world->getDebugDrawer())
-			bullet_world.m_bullet_world->setDebugDrawer(m_impl.get());
+		if(!bullet_world.m_collision_world->getDebugDrawer())
+			bullet_world.m_collision_world->setDebugDrawer(m_impl.get());
 
-		bullet_world.m_bullet_world->debugDrawWorld();
+		bullet_world.m_collision_world->debugDrawWorld();
 	}
 
 	VisuScene::VisuScene(GfxSystem& gfx_system, SoundManager* sound_system)
@@ -154,14 +154,13 @@ using namespace mud; namespace toy
 	VisuScene::~VisuScene()
     {}
 
-	Gnode& VisuScene::entity_node(Gnode& parent, Spatial& spatial, size_t painter)
+	Gnode& VisuScene::entity_node(Gnode& parent, uint32_t entity, Spatial& spatial, size_t painter)
 	{
-		uint32_t index = spatial.m_entity->m_handle;
-		if(m_entities.size() <= index)
-			m_entities.resize((index + 1) * 2);
-		if(m_entities[index] == nullptr)
-			m_entities[index] = &gfx::node(parent.subx(uint16_t(index)), Ref(spatial.m_entity), spatial.absolute_position(), spatial.absolute_rotation());
-		return m_entities[index]->subx(uint16_t(painter));
+		if(m_entities.size() <= entity)
+			m_entities.resize((entity + 1) * 2);
+		if(m_entities[entity] == nullptr)
+			m_entities[entity] = &gfx::node(parent.subx(uint16_t(entity)), Ref(&entity), spatial.absolute_position(), spatial.absolute_rotation());
+		return m_entities[entity]->subx(uint16_t(painter));
 	}
 
 	void VisuScene::next_frame()

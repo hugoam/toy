@@ -27,7 +27,7 @@
 #include <geom/Shape/Quad.h>
 #include <geom/Shape/Cube.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #define DEBUG_BLOCK 0
 #define BLOCK_WIREFRAME 1
@@ -36,7 +36,7 @@ using namespace mud; namespace toy
 {
 	void paint_heap(Gnode& parent, Heap& heap)
 	{
-		gfx::light(parent, LightType::Point, false, heap.m_element.m_colour, heap.m_radius * 2.f);
+		gfx::light(parent, LightType::Point, false, heap.m_element->m_colour, heap.m_radius * 2.f);
 		//gfx::shape(parent, Circle(heap.m_radius), Symbol(heap.m_element.m_colour));
 		//gfx::shape(parent, Spheroid(heap.radius(), Symbol(heap.m_element.m_colour));
 	}
@@ -103,7 +103,7 @@ using namespace mud; namespace toy
 		UNUSED(gfx_system);
 
 		//Spatial& spatial = block.m_spatial;
-		WorldPage& world_page = block.world_page();
+		WorldPage& world_page = block.m_world_page;
 
 		if(block.m_subdived)
 			return;
@@ -143,7 +143,7 @@ using namespace mud; namespace toy
 		for(Element* element : elements)
 			if(!bodies[element].empty())
 			{
-				string identifier = "sector_" + to_string(block.m_handle) + "_" + element->m_name;
+				string identifier = "sector_" + to_string(block.m_index) + "_" + element->m_name;
 
 				printf("INFO: Creating geometry for Block %s, %zu quads\n", identifier.c_str(), bodies[element].size());
 

@@ -39,7 +39,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT BulletMedium : public PhysicMedium
 	{
 	public:
-        BulletMedium(World& world, Medium& medium);
+        BulletMedium(World& world, BulletWorld& bullet_world, Medium& medium);
         ~BulletMedium();
 
 		virtual void update_contacts() override final;
@@ -55,27 +55,27 @@ using namespace mud; namespace toy
 		virtual void add_collider(HCollider collider) override final;
 		virtual void remove_collider(HCollider collider) override final;
 
+		virtual void project(HCollider collider, const vec3& position, const quat& rotation, std::vector<Collision>& collisions, short int mask) override final;
+		virtual void raycast(HCollider collider, const vec3& start, const vec3& end, std::vector<Collision>& collisions, short int mask) override final;
+		virtual Collision raycast(HCollider collider, const vec3& start, const vec3& end, short int mask) override final;
+
 		void remove_contacts(uint32_t collider);
 
     public:
+		BulletWorld& m_bullet_world;
+
 		size_t m_last_tick;
-		unique_ptr<btCollisionConfiguration> m_collisionConfiguration;
-        unique_ptr<btCollisionDispatcher> m_collisionDispatcher;
-        unique_ptr<btBroadphaseInterface> m_broadphaseInterface;
+        unique_ptr<btCollisionDispatcher> m_collision_dispatcher;
+        unique_ptr<btBroadphaseInterface> m_broadphase_interface;
 
-		unique_ptr<btCollisionWorld> m_bullet_world;
-        unique_ptr<btConstraintSolver> m_constraintSolver;
+		unique_ptr<btCollisionWorld> m_collision_world;
+        unique_ptr<btConstraintSolver> m_constraint_solver;
 
-		btDynamicsWorld* m_dynamicsWorld = nullptr;
+		btDynamicsWorld* m_dynamics_world = nullptr;
 
 #ifndef TRIGGER_COLLISIONS
-		struct pairhash
-		{
-			template <class T, class U>
-			size_t operator()(const T& first, const U& second) const { return std::hash<T>()(first) ^ std::hash<U>()(second); }
-		};
-
-		pairhash m_hash;
+		uint64_t hash(uint32_t a, uint32_t b) { return uint64_t(a) | (uint64_t(b) << 32); }
+		uint64_t pair_hash(uint32_t a, uint32_t b) { return a < b ? hash(a, b) : hash(b, a); }
 
 		struct Contact
 		{
@@ -87,7 +87,7 @@ using namespace mud; namespace toy
 			size_t m_index;
 		};
 
-		std::unordered_map<size_t, Contact> m_hash_contacts;
+		std::unordered_map<uint64_t, Contact> m_hash_contacts;
 		std::vector<Contact*> m_contacts;
 
 		void remove_contact(Contact& contact, size_t index);

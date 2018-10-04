@@ -101,8 +101,8 @@ void paint_scan_star(Gnode& parent, Star& star, Player& player)
 	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol(Colour::Invisible), ITEM_SELECTABLE);
 	gfx::shape(parent, Sphere(0.01f), Symbol(Colour::White * 4.f), ITEM_SELECTABLE);
 
-	bool hovered = player.m_hovered_item == &star;
-	bool selected = player.m_selected_item == &star;
+	bool hovered = player.m_hovered_item == star.m_spatial;
+	bool selected = player.m_selected_item == star.m_spatial;
 
 	Colour colour = star.m_commander ? star.m_commander->m_colour * 3.f : Colour{ 0.3f, 0.3f, 0.3f, 0.1f };
 	if(player.m_mode == GameStage::Empire && star.m_commander != player.m_commander)
@@ -143,7 +143,7 @@ void paint_scan_star(Gnode& parent, Star& star)
 
 static float spaceship_sizes[8] = { 0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.08f, 0.1f };
 
-void fill_fleet(VisuFleet& visu, const std::map<ShipSchema*, size_t>& ships)
+void fill_fleet(VisuFleet& visu, const std::map<ShipSchema*, uint32_t>& ships)
 {
 	for(size_t i = 0; i < 8; ++i)
 		visu.m_ships[i].clear();
@@ -261,8 +261,8 @@ void paint_scan_fleet(Gnode& parent, Fleet& fleet, Player& player)
 		visu.m_updated = fleet.m_ships_updated;
 	}
 
-	bool hovered = player.m_hovered_item == &fleet;
-	bool selected = player.m_selected_item == &fleet;
+	bool hovered = player.m_hovered_item == fleet.m_spatial;
+	bool selected = player.m_selected_item == fleet.m_spatial;
 
 	Colour colour = fleet.m_commander->m_colour * 2.5f;
 	if(player.m_mode == GameStage::Empire && fleet.m_commander != player.m_commander)

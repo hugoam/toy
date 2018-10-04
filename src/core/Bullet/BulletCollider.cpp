@@ -17,7 +17,7 @@
 #include <core/Bullet.h>
 
 #include <core/World/World.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Bullet/BulletWorld.h>
 #include <core/Physic/PhysicWorld.h>
 #include <core/Physic/Medium.h>
@@ -114,37 +114,6 @@ using namespace mud; namespace toy
 		return Dispatch::dispatch(shape); 
 	}
 
-	class ContactCheck : public btCollisionWorld::ContactResultCallback
-	{
-	public:
-		ContactCheck(std::vector<Collision>& collisions, float margin = 0.f)
-			: m_collisions(collisions)
-			, m_margin(margin)
-		{}
-
-		ContactCheck& operator=(const ContactCheck&) = delete;
-
-		virtual bool needsCollision(btBroadphaseProxy* proxy) const
-		{
-			return btCollisionWorld::ContactResultCallback::needsCollision(proxy);
-		}
-
-		btScalar addSingleResult(btManifoldPoint &cp, const btCollisionObjectWrapper *colObj0, int partId0, int index0, const btCollisionObjectWrapper *colObj1, int partId1, int index1)
-		{
-			UNUSED(index0); UNUSED(index1); UNUSED(partId0); UNUSED(partId1);
-			if(cp.getDistance() < m_margin)
-				m_collisions.push_back({ uint32_t((uintptr_t)colObj0->m_collisionObject->getUserPointer()),
-										 uint32_t((uintptr_t)colObj1->m_collisionObject->getUserPointer()),
-										 Zero3 });
-
-			return 0.f;
-		}
-
-	private:
-		std::vector<Collision>& m_collisions;
-		float m_margin;
-	};
-
 	BulletCollider::BulletCollider(BulletMedium& bullet_world, HSpatial spatial, HCollider collider, CollisionShape& collision_shape, bool create)
 		: m_bullet_world(bullet_world)
 		, m_spatial(spatial)
@@ -188,59 +157,18 @@ using namespace mud; namespace toy
 	void BulletCollider::project(const vec3& position, std::vector<Collision>& collisions, short int mask)
 	{
 		Spatial& spatial = m_spatial;
-		btTransform transform(m_collision_object->getWorldTransform());
-		m_collision_object->setWorldTransform(btTransform(to_btquat(spatial.m_rotation), to_btvec3(position)));
-
-		ContactCheck callback(collisions);
-		callback.m_collisionFilterGroup = mask;
-		callback.m_collisionFilterMask = mask;
-		//m_collision_object->checkCollideWith();
-		
-		m_bullet_world.m_bullet_world->updateSingleAabb(m_collision_object.get());
-		m_bullet_world.m_bullet_world->contactTest(m_collision_object.get(), callback);
-
-		m_collision_object->setWorldTransform(transform);
+		m_bullet_world.project(m_collider, position, spatial.m_rotation, collisions, mask);
 	}
 
 	void BulletCollider::raycast(const vec3& target, std::vector<Collision>& collisions, short int mask)
 	{
 		Spatial& spatial = m_spatial;
-		btVector3 from = to_btvec3(spatial.m_position);
-		btVector3 to = to_btvec3(target);
-
-		if(from == to)
-			return;
-
-		btCollisionWorld::AllHitsRayResultCallback callback(from, to);
-		callback.m_collisionFilterMask = mask;
-		callback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
-		m_bullet_world.m_bullet_world->rayTest(from, to, callback);
-		//printf("raycast from %f, %f, %f to %f, %f, %f\n", from.x(), from.y(), from.z(), to.x(), to.y(), to.z());
-		
-		for(int i = 0; i != callback.m_collisionObjects.size(); ++i)
-		{
-			uint32_t collider = uint32_t((uintptr_t)callback.m_collisionObjects[i]->getUserPointer());
-			collisions.push_back({ m_collider.m_handle, collider, to_vec3(callback.m_hitPointWorld[i]) });
-		}
+		m_bullet_world.raycast(m_collider, spatial.m_position, target, mask);
 	}
 
 	Collision BulletCollider::raycast(const vec3& target, short int mask)
 	{
 		Spatial& spatial = m_spatial;
-		btVector3 from = to_btvec3(spatial.m_position);
-		btVector3 to = to_btvec3(target);
-
-		if(from == to)
-			return {};
-
-		btCollisionWorld::ClosestRayResultCallback callback(from, to);
-		callback.m_collisionFilterMask = mask;
-		callback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
-		m_bullet_world.m_bullet_world->rayTest(from, to, callback);
-		//printf("raycast from %f, %f, %f to %f, %f, %f\n", from.x(), from.y(), from.z(), to.x(), to.y(), to.z());
-
-		if(callback.m_collisionObject)
-			return { UINT32_MAX, uint32_t((uintptr_t)callback.m_collisionObject->getUserPointer()), to_vec3(callback.m_hitPointWorld) };
-		return {};
+		return m_bullet_world.raycast(m_collider, spatial.m_position, target, mask);
 	}
 }

@@ -10,17 +10,24 @@
 #include <block/Block.h>
 #include <block/Sector.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/WorldPage/WorldPage.h>
 
 using namespace mud; namespace toy
 {
-	Chunk::Chunk(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
-		: Entity(Tags<Spatial>{})
-		, m_spatial(*this, *this, parent, position, ZeroQuat)
+	uint32_t Chunk::create(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
+	{
+		uint32_t entity = s_registry.CreateEntity<Spatial, Chunk>();
+		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		s_registry.SetComponent(entity, Chunk(entity, block, index, element, size));
+		return entity;
+	}
+
+	Chunk::Chunk(HSpatial spatial, Block& block, size_t index, Element& element, float size)
+		: m_spatial(spatial)
 		, m_index(index)
-		, m_block(block)
-		, m_element(element)
+		, m_block(&block)
+		, m_element(&element)
 		, m_size(size)
 	{}
 
@@ -34,6 +41,6 @@ using namespace mud; namespace toy
 	bool Chunk::boundary(Side side)
 	{
 		Chunk* neighbour = this->neighbour(side);
-		return (!neighbour || neighbour->m_element.m_state != this->m_element.m_state);
+		return (!neighbour || neighbour->m_element->m_state != this->m_element->m_state);
 	}
 }

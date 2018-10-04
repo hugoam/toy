@@ -138,7 +138,9 @@ void space_generate(HSpatial origin)
 {
 	uint galaxy_size = 40;
 
-	Galaxy& galaxy = construct<Galaxy>(origin, Zero3, uvec2(galaxy_size));
+	HGalaxy galaxy = construct<Galaxy>(origin, Zero3, uvec2(galaxy_size));
+
+	as<Universe>(origin->m_world->m_complex).m_galaxies.push_back(galaxy);
 
 	std::vector<uvec3> coords;
 	grid(uvec3(galaxy_size, 1, galaxy_size), coords);

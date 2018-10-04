@@ -8,9 +8,10 @@
 #include <ecs/Proto.h>
 #include <math/Vec.h>
 #include <math/Grid.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Physic/Scope.h>
 #include <block/Forward.h>
+#include <block/Components.h>
 
 #ifndef MUD_CPP_20
 #include <vector>
@@ -39,15 +40,19 @@ using namespace mud; namespace toy
 	TOY_BLOCK_EXPORT func_ void paint_block_height(Block& block, Image256& image, Element& element);
 	TOY_BLOCK_EXPORT func_ void paint_block_elements(Block& block, Image256& image, array<Element*> elements);
 
-	class refl_ TOY_BLOCK_EXPORT Block : public Entity
+	class refl_ TOY_BLOCK_EXPORT Block
 	{
 	public:
-		constr_ Block(HSpatial parent, const vec3& position, Block* parentblock, size_t index, const vec3& size);
+		constr_ Block() {}
+		constr_ Block(HSpatial spatial, HWorldPage world_page, Block* parentblock, size_t index, const vec3& size);
 
-		comp_ attr_ CSpatial m_spatial;
-		//comp_ attr_ CEmitter m_emitter;
+		static uint32_t create(HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size);
 
-		attr_ link_ Block* m_parentblock;
+		attr_ HSpatial m_spatial;
+		//attr_ HEmitter m_emitter;
+
+		attr_ HWorldPage m_world_page;
+		attr_ link_ Block* m_parentblock = nullptr;
 		attr_ size_t m_index;
 		attr_ vec3 m_size;
 		attr_ size_t m_updated = 0;
@@ -57,7 +62,7 @@ using namespace mud; namespace toy
 		bool m_subdived = false;
 
 		Grid<Element*> m_chunks;
-		Grid<Block*> m_subblocks;
+		Grid<HBlock> m_subblocks;
 
 		Block* m_neighbours[6] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 
@@ -77,9 +82,6 @@ using namespace mud; namespace toy
 
 		uint16_t subdiv();
 		vec3 chunk_size();
-
-		WorldPage& world_page();
-		Sector& sector();
 
 		vec3 local_block_coord(size_t index);
 		vec3 local_block_coord(Block& child);

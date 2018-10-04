@@ -8,20 +8,25 @@
 #include <ecs/Entity.h>
 #include <math/Math.h>
 #include <block/Forward.h>
-#include <core/Entity/Entity.h>
+#include <block/Components.h>
+#include <core/Spatial/Spatial.h>
+#include <ecs/ECS.h>
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_BLOCK_EXPORT Chunk : public Entity
+	class refl_ TOY_BLOCK_EXPORT Chunk
 	{
 	public:
-		constr_ Chunk(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size);
+		constr_ Chunk() {}
+		constr_ Chunk(HSpatial parent, Block& block, size_t index, Element& element, float size);
 
-		comp_ attr_ CSpatial m_spatial;
+		static uint32_t create(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size);
+
+		attr_ HSpatial m_spatial;
 
 		attr_ size_t m_index;
-		attr_ Block& m_block;
-		attr_ Element& m_element;
+		attr_ Block* m_block;
+		attr_ Element* m_element;
 		attr_ float m_size;
 
 		Chunk* neighbour(Side side);

@@ -129,7 +129,6 @@ namespace toy {
     class Emitter;
     class Receptor;
     class Camera;
-    class OCamera;
     class Medium;
     class SoundMedium;
     class VisualMedium;

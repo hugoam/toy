@@ -5,7 +5,7 @@
 
 #include <core/Physic/Obstacle.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #include <core/Physic/CollisionShape.h>
 #include <core/Physic/Collider.h>

@@ -44,11 +44,11 @@ namespace mud
     template <> _SPACE_EXPORT Type& type<Split>() { static Type ty("Split"); return ty; }
     template <> _SPACE_EXPORT Type& type<TechDomain>() { static Type ty("TechDomain"); return ty; }
     template <> _SPACE_EXPORT Type& type<Turn>() { static Type ty("Turn"); return ty; }
-    template <> _SPACE_EXPORT Type& type<Fleet>() { static Type ty("Fleet", type<mud::Entity>()); return ty; }
-    template <> _SPACE_EXPORT Type& type<Galaxy>() { static Type ty("Galaxy", type<mud::Entity>()); return ty; }
-    template <> _SPACE_EXPORT Type& type<Quadrant>() { static Type ty("Quadrant", type<mud::Entity>()); return ty; }
-    template <> _SPACE_EXPORT Type& type<Star>() { static Type ty("Star", type<mud::Entity>()); return ty; }
-    template <> _SPACE_EXPORT Type& type<Universe>() { static Type ty("Universe", type<mud::Entity>()); return ty; }
+    template <> _SPACE_EXPORT Type& type<Fleet>() { static Type ty("Fleet"); return ty; }
+    template <> _SPACE_EXPORT Type& type<Galaxy>() { static Type ty("Galaxy"); return ty; }
+    template <> _SPACE_EXPORT Type& type<Quadrant>() { static Type ty("Quadrant"); return ty; }
+    template <> _SPACE_EXPORT Type& type<Star>() { static Type ty("Star"); return ty; }
+    template <> _SPACE_EXPORT Type& type<Universe>() { static Type ty("Universe"); return ty; }
     template <> _SPACE_EXPORT Type& type<CommanderBrush>() { static Type ty("CommanderBrush", type<mud::Brush>()); return ty; }
     template <> _SPACE_EXPORT Type& type<BuildingSchema>() { static Type ty("BuildingSchema", type<Schema>()); return ty; }
     template <> _SPACE_EXPORT Type& type<ShipComponent>() { static Type ty("ShipComponent", type<Schema>()); return ty; }

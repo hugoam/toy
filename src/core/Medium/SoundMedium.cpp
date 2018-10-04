@@ -5,7 +5,7 @@
 
 #include <core/Medium/SoundMedium.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Physic/Collider.h>
 
 using namespace mud; namespace toy

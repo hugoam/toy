@@ -6,7 +6,7 @@
 #if 0
 #include <visu/Sound/SoundSource.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 //#include <core/Active/Effect.h>
 //#include <core/Active/Active.h>
 

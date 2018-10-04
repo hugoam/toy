@@ -6,7 +6,7 @@
 
 #include <edit/Controller/RTSCameraController.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #include <ui/Frame/Frame.h>
 #include <ui/Widget.h>

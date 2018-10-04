@@ -14,7 +14,7 @@
 #include <core/World/World.h>
 #include <core/World/Section.h>
 #include <core/WorldPage/WorldPage.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #define _USE_MATH_DEFINES
 #include <math.h>

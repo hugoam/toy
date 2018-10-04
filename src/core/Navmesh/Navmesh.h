@@ -8,7 +8,7 @@
 #include <ecs/Entity.h>
 #include <geom/Shape/ProcShape.h>
 #include <core/Forward.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/WorldPage/WorldPage.h>
 #include <core/Navmesh/rcTileMesh.h>
 #include <core/Navmesh/NavGeom.h>
@@ -51,9 +51,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Navblock
 	{
 	public:
-#ifdef TOY_ECS
 		constr_ Navblock() {}
-#endif
 		constr_ Navblock(HSpatial spatial, HWorldPage world_page, Navmesh& navmesh);
 		~Navblock();
 

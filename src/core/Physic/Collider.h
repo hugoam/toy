@@ -21,9 +21,9 @@ using namespace mud; namespace toy
 	struct refl_ TOY_CORE_EXPORT Collision
 	{
 		Collision() {}
-		Collision(uint32_t first, uint32_t second, const vec3& hit_point) : m_first(first), m_second(second), m_hit_point(hit_point) {}
-		attr_ uint32_t m_first = {};
-		attr_ uint32_t m_second = {};
+		Collision(HCollider first, HCollider second, const vec3& hit_point) : m_first(first), m_second(second), m_hit_point(hit_point) {}
+		attr_ HCollider m_first = {};
+		attr_ HCollider m_second = {};
 		attr_ vec3 m_hit_point = Zero3;
 	};
 
@@ -44,8 +44,8 @@ using namespace mud; namespace toy
 	{
 	public:
 		virtual ~ColliderObject() {}
-		virtual void add_contact(Collider& object) { UNUSED(object); }
-		virtual void remove_contact(Collider& object) { UNUSED(object); }
+		virtual void add_contact(Collider& collider, ColliderObject& object) { UNUSED(collider); UNUSED(object); }
+		virtual void remove_contact(Collider& collider, ColliderObject& object) { UNUSED(collider); UNUSED(object); }
 	};
 
     class refl_ TOY_CORE_EXPORT Collider

@@ -5,16 +5,23 @@
 
 #include <core/Path/DetourPath.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Path/Pathfinder.h>
 
 #include <DetourNavMeshQuery.h>
 
 using namespace mud; namespace toy
 {
-	Waypoint::Waypoint(HSpatial parent, const vec3& position)
-		: Entity(Tags<Spatial>{})
-		, m_spatial(*this, *this, parent, position, ZeroQuat)
+	uint32_t Waypoint::create(HSpatial parent, const vec3& position)
+	{
+		uint32_t entity = s_registry.CreateEntity<Spatial, Origin>();
+		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		s_registry.SetComponent(entity, Waypoint(HSpatial(entity)));
+		return entity;
+	}
+
+	Waypoint::Waypoint(HSpatial spatial)
+		: m_spatial(spatial)
 	{}
 
 	DetourPath::DetourPath(Pathfinder& pathfinder, const vec3& origin, const vec3& destination)

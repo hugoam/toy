@@ -15,7 +15,7 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 	return tileset;
 }
 
-void generate_crates(TileBlock& block)
+void generate_crates(Tileblock& block)
 {
 	HSpatial origin = block.m_spatial->m_world->origin();
 
@@ -27,7 +27,7 @@ void generate_crates(TileBlock& block)
 	}
 }
 
-void generate_npcs(TileBlock& block)
+void generate_npcs(Tileblock& block)
 {
 	HSpatial origin = block.m_spatial->m_world->origin();
 
@@ -39,7 +39,7 @@ void generate_npcs(TileBlock& block)
 	}
 }
 
-void generate_lamps(TileBlock& block)
+void generate_lamps(Tileblock& block)
 {
 	HSpatial origin = block.m_spatial->m_world->origin();
 
@@ -47,7 +47,7 @@ void generate_lamps(TileBlock& block)
 		for(size_t y = 0; y < block.m_wfc_block.m_tiles.m_y; ++y)
 			for(size_t z = 0; z < block.m_wfc_block.m_tiles.m_z; ++z)
 			{
-				Tile& tile = block.m_wfc_block.m_tileset.m_tiles_flip[block.m_wfc_block.m_tiles.at(x, y, z)];
+				Tile& tile = block.m_wfc_block.m_tileset->m_tiles_flip[block.m_wfc_block.m_tiles.at(x, y, z)];
 				if(tile.m_name == "cube_covered_side")
 					if(random_integer(0, 9) > 8)
 					{
@@ -78,8 +78,8 @@ void platform_generator(GameShell& shell, VisualScript& script)
 	//Valve& wave = empty_wave;
 
 	Valve& scale = script.value(vec3(4.f));
-	Valve& empty_world = script.create<TileBlock>({ &script.value(0U), &script.input("origin"), &script.value(Zero3), &gridSize, &scale, tileset });
-	//Valve& world = script.method(&TileBlock::update, { &empty_world, &wave });
+	Valve& empty_world = script.create<Tileblock>({ &script.value(0U), &script.input("origin"), &script.value(Zero3), &gridSize, &scale, tileset });
+	//Valve& world = script.method(&Tileblock::update, { &empty_world, &wave });
 
 #if 0
 	// Create crates

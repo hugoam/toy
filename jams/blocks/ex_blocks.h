@@ -15,30 +15,36 @@ extern "C"
 	//_BLOCKS_EXPORT void ex_blocks_game(GameShell& app, Game& game);
 }
 
-#ifdef TOY_ECS
 namespace mud
 {
-	template <> struct TypedBuffer<Well*>	{ static size_t index() { return 12; } };
-	template <> struct TypedBuffer<Camp*>	{ static size_t index() { return 13; } };
-	template <> struct TypedBuffer<Shield*>	{ static size_t index() { return 14; } };
-	template <> struct TypedBuffer<Slug*>	{ static size_t index() { return 15; } };
-	template <> struct TypedBuffer<Tank*>	{ static size_t index() { return 16; } };
+	template <> struct TypedBuffer<Well>	{ static size_t index() { return 20; } };
+	template <> struct TypedBuffer<Camp>	{ static size_t index() { return 21; } };
+	template <> struct TypedBuffer<Shield>	{ static size_t index() { return 22; } };
+	template <> struct TypedBuffer<Slug>	{ static size_t index() { return 23; } };
+	template <> struct TypedBuffer<Tank>	{ static size_t index() { return 24; } };
 }
-#endif
+
+using HWell = ComponentHandle<Well>;
+using HCamp = ComponentHandle<Camp>;
+using HShield = ComponentHandle<Shield>;
+using HSlug = ComponentHandle<Slug>;
+using HTank = ComponentHandle<Tank>;
 
 enum CustomCollisionGroup : short int
 {
 	CM_ENERGY = 1 << 10,
 };
 
-class refl_ _BLOCKS_EXPORT Well : public Entity
+class refl_ _BLOCKS_EXPORT Well
 {
 public:
-	constr_ Well(HSpatial parent, const vec3& position);
-	~Well();
+	constr_ Well() {}
+	constr_ Well(HSpatial spatial, HEmitter emitter);
 
-	comp_ attr_ CSpatial m_spatial;
-	comp_ attr_ CEmitter m_emitter;
+	static uint32_t create(HSpatial parent, const vec3& position);
+
+	attr_ HSpatial m_spatial;
+	attr_ HEmitter m_emitter;
 
 	void next_frame(size_t tick, size_t delta);
 };
@@ -52,7 +58,7 @@ public:
 	attr_ uint32_t m_id;
 	attr_ Colour m_colour;
 
-	Tank* m_leader = nullptr;
+	HTank m_leader = {};
 
 	Material* m_highlight2;
 	Material* m_highlight11;
@@ -62,27 +68,32 @@ public:
 
 export_ extern _BLOCKS_EXPORT std::vector<Faction> g_factions;
 
-class refl_ _BLOCKS_EXPORT Camp : public Entity
+class refl_ _BLOCKS_EXPORT Camp
 {
 public:
-	constr_ Camp(HSpatial parent, const vec3& position, Faction& faction);
+	constr_ Camp() {}
+	constr_ Camp(HSpatial spatial, const vec3& position, Faction& faction);
 
-	comp_ attr_ CSpatial m_spatial;
+	static uint32_t create(HSpatial parent, const vec3& position, Faction& faction);
+
+	attr_ HSpatial m_spatial;
 
 	attr_ vec3 m_position;
-	attr_ Faction& m_faction;
+	attr_ Faction* m_faction;
 };
 
-class refl_ _BLOCKS_EXPORT Shield : public Entity
+class refl_ _BLOCKS_EXPORT Shield
 {
 public:
-	constr_ Shield(HSpatial parent, const vec3& position, Faction& faction, float radius);
-	~Shield();
+	constr_ Shield() {}
+	constr_ Shield(HSpatial spatial, HEmitter emitter, Faction& faction, float radius);
 
-	comp_ attr_ CSpatial m_spatial;
-	comp_ attr_ CEmitter m_emitter;
+	static uint32_t create(HSpatial parent, const vec3& position, Faction& faction, float radius);
 
-	attr_ Faction& m_faction;
+	attr_ HSpatial m_spatial;
+	attr_ HEmitter m_emitter;
+
+	attr_ Faction* m_faction;
 	attr_ float m_radius;
 	attr_ float m_charge;
 	attr_ float m_discharge;
@@ -92,13 +103,15 @@ public:
 	void next_frame(size_t tick, size_t delta);
 };
 
-class refl_ _BLOCKS_EXPORT Slug : public Entity
+class refl_ _BLOCKS_EXPORT Slug
 {
 public:
-	Slug(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power = 1.f);
-	~Slug();
+	Slug() {}
+	Slug(HSpatial spatial, const vec3& source, const vec3& velocity, float power = 1.f);
 
-	comp_ attr_ CSpatial m_spatial;
+	static uint32_t create(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power = 1.f);
+
+	attr_ HSpatial m_spatial;
 
 	attr_ vec3 m_source;
 	attr_ vec3 m_velocity;
@@ -114,18 +127,20 @@ public:
 	void update(Spatial& spatial);
 };
 
-class refl_ _BLOCKS_EXPORT Tank : public Entity
+class refl_ _BLOCKS_EXPORT Tank
 {
 public:
-	constr_ Tank(HSpatial parent, const vec3& position, Faction& faction);
-	~Tank();
+	constr_ Tank() {}
+	constr_ Tank(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor receptor, Faction& faction);
 
-	comp_ attr_ CSpatial m_spatial;
-	comp_ attr_ CMovable m_movable;
-	comp_ attr_ CEmitter m_emitter;
-	comp_ attr_ CReceptor m_receptor;
+	static uint32_t create(HSpatial parent, const vec3& position, Faction& faction);
 
-	Faction& m_faction;
+	attr_ HSpatial m_spatial;
+	attr_ HMovable m_movable;
+	attr_ HEmitter m_emitter;
+	attr_ HReceptor m_receptor;
+
+	Faction* m_faction;
 
 	OSolid m_solid;
 
@@ -147,7 +162,7 @@ public:
 
 	bool m_ia = true;
 
-	std::vector<object_ptr<Slug>> m_slugs;
+	std::vector<EntityHandle<Slug>> m_slugs;
 
 	void next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta);
 
@@ -163,9 +178,9 @@ public:
 	constr_ BlockWorld(const std::string& name);
 	~BlockWorld();
 
-	comp_ attr_ World m_world;
-	comp_ attr_ BulletWorld m_bullet_world;
-	comp_ attr_ Navmesh m_navmesh;
+	attr_ World m_world;
+	attr_ BulletWorld m_bullet_world;
+	attr_ Navmesh m_navmesh;
 
 	attr_ uvec3 m_block_subdiv = uvec3(20, 4, 20);
 	attr_ vec3 m_tile_scale = vec3(4.f);
@@ -173,8 +188,8 @@ public:
 
 	attr_ vec3 m_world_size;
 	
-	std::map<ivec2, TileBlock*> m_blocks;
-	TileBlock* m_center_block = nullptr;
+	std::map<ivec2, Tileblock*> m_blocks;
+	Tileblock* m_center_block = nullptr;
 
 	void generate_block(GfxSystem& gfx_system, const ivec2& coord);
 };
@@ -184,7 +199,7 @@ class refl_ _BLOCKS_EXPORT Player
 public:
 	Player(BlockWorld& world);
 	BlockWorld* m_world;
-	Tank m_tank;
+	HTank m_tank;
 };
 
 _BLOCKS_EXPORT void paint_tank(Gnode& parent, Tank& tank);

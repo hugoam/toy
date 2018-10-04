@@ -5,20 +5,5 @@
 
 #pragma once
 
-#include <ecs/Proto.h>
-#include <core/Forward.h>
-#include <core/Spatial/Spatial.h>
-
-using namespace mud; namespace toy
-{
-	class refl_ TOY_CORE_EXPORT Origin
-	{
-	public:
-		constr_ Origin() {}
-		constr_ Origin(HSpatial spatial);
-
-		static uint32_t create(World& world);
-
-		attr_ HSpatial m_spatial;
-	};
-}
+#include <block/Forward.h>
+#include <block/Components.h>

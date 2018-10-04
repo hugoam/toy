@@ -42,25 +42,11 @@ extern CollisionEndedCallback gCollisionEndedCallback;
 
 using namespace mud; namespace toy
 {
+#ifdef TRIGGER_COLLISIONS
 	static void collisionStarted(btPersistentManifold* manifold)
 	{
-		uint32_t col0 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody0())->getUserPointer());
-		uint32_t col1 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody1())->getUserPointer());
-
-#if 0
-		if(&col0->m_spatial == &col1->m_spatial)
-			return;
-
-		if (col0->m_object && col1->m_object)
-		{
-			//printf("DEBUG: Add contact %i : %i\n", int(col0->m_spatial.m_id), int(col1->m_spatial.m_id));
-			col0->m_object->add_contact(*col1);
-			col1->m_object->add_contact(*col0);
-		}
-#endif
 	}
 
-#ifdef TRIGGER_COLLISIONS
 	static void collisionEnded(btPersistentManifold* manifold)
 	{
 		Collider* col0 = (Collider*)((btCollisionObject*)manifold->getBody0())->getUserPointer();
@@ -78,25 +64,34 @@ using namespace mud; namespace toy
 	}
 #endif
 
+	HCollider object_collider(BulletWorld& bullet_world, const btCollisionObject& object)
+	{
+		SparsePool<Collider>& pool = bullet_world.m_world.pool<Collider>();
+		uint32_t handle = uint32_t((uintptr_t)object.getUserPointer());
+		return { pool, handle };
+	}
+
 #define BULLET_WORLD_SCALE 10000.f
 
-    BulletMedium::BulletMedium(World& world, Medium& medium)
+    BulletMedium::BulletMedium(World& world, BulletWorld& bullet_world, Medium& medium)
         : PhysicMedium(world, medium)
-        , m_collisionConfiguration(make_unique<btDefaultCollisionConfiguration>())
-        , m_collisionDispatcher(make_unique<btCollisionDispatcher>(m_collisionConfiguration.get()))
-		, m_broadphaseInterface(make_unique<btAxisSweep3>(btVector3/*worldAabbMin*/(-1.f,-1.f,-1.f) * -BULLET_WORLD_SCALE, btVector3/*worldAabbMax*/(1.f, 1.f, 1.f) * BULLET_WORLD_SCALE, /*maxProxies*/uint16_t(32000))) // @crash btAssert(m_firstFreeHandle) is limited by this setting
-		//, m_broadphaseInterface(make_unique<btDbvtBroadphase>()) // @crash btAssert(m_firstFreeHandle) is limited by this setting
-		
+		, m_bullet_world(bullet_world)
 	{
+		static btDefaultCollisionConfiguration configuration;
+
+		m_collision_dispatcher = make_unique<btCollisionDispatcher>(&configuration);
+		m_broadphase_interface = make_unique<btAxisSweep3>(btVector3(-1.f, -1.f, -1.f) * BULLET_WORLD_SCALE, btVector3(1.f, 1.f, 1.f) * BULLET_WORLD_SCALE, uint16_t(32000)); // @crash btAssert(m_firstFreeHandle) is limited by this setting
+		//, m_broadphaseInterface(make_unique<btDbvtBroadphase>()) // @crash btAssert(m_firstFreeHandle) is limited by this setting
+
 		if(medium.m_solid)
 		{
-			m_constraintSolver = make_unique<btSequentialImpulseConstraintSolver>();
-			m_bullet_world = make_unique<btDiscreteDynamicsWorld>(m_collisionDispatcher.get(), m_broadphaseInterface.get(), m_constraintSolver.get(), m_collisionConfiguration.get());
-			m_dynamicsWorld = static_cast<btDiscreteDynamicsWorld*>(m_bullet_world.get());
+			m_constraint_solver = make_unique<btSequentialImpulseConstraintSolver>();
+			m_collision_world = make_unique<btDiscreteDynamicsWorld>(m_collision_dispatcher.get(), m_broadphase_interface.get(), m_constraint_solver.get(), &configuration);
+			m_dynamics_world = static_cast<btDiscreteDynamicsWorld*>(m_collision_world.get());
 		}
 		else
 		{
-			m_bullet_world = make_unique<btCollisionWorld>(m_collisionDispatcher.get(), m_broadphaseInterface.get(), m_collisionConfiguration.get());
+			m_collision_world = make_unique<btCollisionWorld>(m_collision_dispatcher.get(), m_broadphase_interface.get(), &configuration);
 		}
 	}
 
@@ -115,26 +110,115 @@ using namespace mud; namespace toy
 
 	void BulletMedium::add_solid(HCollider collider, HSolid solid)
 	{
-		//printf("DEBUG: Add solid to medium %s\n", m_medium.m_name.c_str());
-		m_dynamicsWorld->addRigidBody(as<BulletSolid>(*solid->m_impl).m_rigid_body, collider->m_group, m_medium.mask(collider->m_group));
+		collider->m_impl = this->make_collider(collider);
+		solid->m_impl = this->make_solid(solid);
+		m_dynamics_world->addRigidBody(as<BulletSolid>(*solid->m_impl).m_rigid_body, collider->m_group, m_medium.mask(collider->m_group));
 	}
 
 	void BulletMedium::remove_solid(HCollider collider, HSolid solid)
 	{
-		m_dynamicsWorld->removeRigidBody(as<BulletSolid>(*solid->m_impl).m_rigid_body);
+		m_dynamics_world->removeRigidBody(as<BulletSolid>(*solid->m_impl).m_rigid_body);
 		this->remove_contacts(collider.m_handle);
+		solid->m_impl = nullptr;
+		collider->m_impl = nullptr;
 	}
 
 	void BulletMedium::add_collider(HCollider collider)
 	{
-		//printf("DEBUG: Add collision object to medium %s\n", m_medium.m_name.c_str());
-		m_bullet_world->addCollisionObject(as<BulletCollider>(*collider->m_impl).m_collision_object.get(), collider->m_group, m_medium.mask(collider->m_group));
+		collider->m_impl = this->make_collider(collider);
+		m_collision_world->addCollisionObject(as<BulletCollider>(*collider->m_impl).m_collision_object.get(), collider->m_group, m_medium.mask(collider->m_group));
 	}
 
 	void BulletMedium::remove_collider(HCollider collider)
 	{
-		m_bullet_world->removeCollisionObject(as<BulletCollider>(*collider->m_impl).m_collision_object.get());
+		m_collision_world->removeCollisionObject(as<BulletCollider>(*collider->m_impl).m_collision_object.get());
 		this->remove_contacts(collider.m_handle);
+		collider->m_impl = nullptr;
+	}
+
+	class ContactCheck : public btCollisionWorld::ContactResultCallback
+	{
+	public:
+		struct Contact { const btCollisionObject* first; const btCollisionObject* second; btVector3 position; };
+
+		ContactCheck(float margin = 0.f)
+			: m_margin(margin)
+		{}
+
+		ContactCheck& operator=(const ContactCheck&) = delete;
+
+		btScalar addSingleResult(btManifoldPoint &cp, const btCollisionObjectWrapper *colObj0, int partId0, int index0, const btCollisionObjectWrapper *colObj1, int partId1, int index1)
+		{
+			UNUSED(index0); UNUSED(index1); UNUSED(partId0); UNUSED(partId1);
+			if(cp.getDistance() < m_margin)
+				m_contacts.push_back({ colObj0->m_collisionObject, colObj1->m_collisionObject, btVector3(0.f, 0.f, 0.f) });
+
+			return 0.f;
+		}
+
+		std::vector<Contact> m_contacts;
+		float m_margin;
+	};
+
+	void project_test(btCollisionWorld& collision_world, btCollisionObject& collision_object, ContactCheck& callback, const vec3& position, const quat& rotation, short int mask)
+	{
+		btTransform transform = collision_object.getWorldTransform();
+		collision_object.setWorldTransform(btTransform(to_btquat(rotation), to_btvec3(position)));
+
+		callback.m_collisionFilterGroup = mask;
+		callback.m_collisionFilterMask = mask;
+
+		collision_world.updateSingleAabb(&collision_object);
+		collision_world.contactTest(&collision_object, callback);
+
+		collision_object.setWorldTransform(transform);
+	}
+
+	void ray_test(btCollisionWorld& collision_world, btCollisionWorld::RayResultCallback& callback, const vec3& start, const vec3& end, short int mask)
+	{
+		callback.m_collisionFilterMask = mask;
+		callback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
+		collision_world.rayTest(to_btvec3(start), to_btvec3(end), callback);
+	}
+
+	void BulletMedium::project(HCollider collider, const vec3& position, const quat& rotation, std::vector<Collision>& collisions, short int mask)
+	{
+		ContactCheck callback;
+		BulletCollider& bullet_collider = as<BulletCollider>(*collider->m_impl);
+		project_test(*m_collision_world, *bullet_collider.m_collision_object, callback, position, rotation, mask);
+
+		SparsePool<Collider>& pool = m_bullet_world.m_world.pool<Collider>();
+
+		for(ContactCheck::Contact& contact : callback.m_contacts)
+		{
+			HCollider first = { pool, uint32_t((uintptr_t)contact.first->getUserPointer()) };
+			HCollider second = { pool, uint32_t((uintptr_t)contact.second->getUserPointer()) };
+			collisions.push_back({ collider, second.m_handle == collider.m_handle ? first : second, to_vec3(contact.position) });
+		}
+	}
+	
+	void BulletMedium::raycast(HCollider collider, const vec3& start, const vec3& end, std::vector<Collision>& collisions, short int mask)
+	{
+		btCollisionWorld::AllHitsRayResultCallback callback(to_btvec3(start), to_btvec3(end));
+		ray_test(*m_collision_world, callback, start, end, mask);
+
+		SparsePool<Collider>& pool = m_bullet_world.m_world.pool<Collider>();
+
+		for(size_t i = 0; i < callback.m_collisionObjects.size(); ++i)
+		{
+			HCollider collision = { pool, uint32_t((uintptr_t)callback.m_collisionObjects[i]->getUserPointer()) };
+			collisions.push_back({ collider, collision, to_vec3(callback.m_hitPointWorld[i]) });
+		}
+	}
+
+	Collision BulletMedium::raycast(HCollider collider, const vec3& start, const vec3& end, short int mask)
+	{
+		btCollisionWorld::ClosestRayResultCallback callback(to_btvec3(start), to_btvec3(end));
+		ray_test(*m_collision_world, callback, start, end, mask);
+
+		if(callback.m_collisionObject)
+			return { collider, object_collider(m_bullet_world, *callback.m_collisionObject), to_vec3(callback.m_hitPointWorld) };
+		return {};
 	}
 
 	void BulletMedium::remove_contacts(uint32_t collider)
@@ -149,15 +233,15 @@ using namespace mud; namespace toy
 
 	void BulletMedium::remove_contact(Contact& contact, size_t index)
 	{
-#if 0 // DEBUG
-		Spatial& entity0 = contact.m_col0->m_spatial;
-		Spatial& entity1 = contact.m_col1->m_spatial;
-		printf("DEBUG: %s remove contact %s %u : %s %u\n", m_medium.m_name.c_str(), entity0.m_entity.m_type.m_name, entity0.m_id, entity1.m_entity.m_type.m_name, entity1.m_id);
-#endif
-		//if(contact.m_col0->m_object && contact.m_col1->m_object)
+		SparsePool<Collider>& pool = m_bullet_world.m_world.pool<Collider>();
+
+		Collider& first = pool.get(contact.m_col0);
+		Collider& second = pool.get(contact.m_col1);
+
+		if(first.m_object && second.m_object)
 		{
-			//contact.m_col0->m_object->remove_contact(*contact.m_col1);
-			//contact.m_col1->m_object->remove_contact(*contact.m_col0);
+			first.m_object->remove_contact(second, *second.m_object);
+			second.m_object->remove_contact(first, *first.m_object);
 		}
 
 		m_contacts.back()->m_index = index;
@@ -172,10 +256,21 @@ using namespace mud; namespace toy
 #ifndef TRIGGER_COLLISIONS
 		btManifoldArray manifoldArray;
 
-		int numManifolds = m_bullet_world->getDispatcher()->getNumManifolds();
+		SparsePool<Collider>& pool = m_bullet_world.m_world.pool<Collider>();
+
+		int numManifolds = m_collision_world->getDispatcher()->getNumManifolds();
 		for(int i = 0; i<numManifolds; i++)
 		{
-			btPersistentManifold* manifold = m_bullet_world->getDispatcher()->getManifoldByIndexInternal(i);
+			btPersistentManifold* manifold = m_collision_world->getDispatcher()->getManifoldByIndexInternal(i);
+
+			uint32_t col0 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody0())->getUserPointer());
+			uint32_t col1 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody1())->getUserPointer());
+
+			Collider& first = pool.get(col0);
+			Collider& second = pool.get(col1);
+
+			if(col0 == col1 || first.m_object == second.m_object)
+				continue;
 
 			int numContacts = manifold->getNumContacts();
 			for(int j = 0; j<numContacts; j++)
@@ -184,14 +279,16 @@ using namespace mud; namespace toy
 
 				if(pt.getDistance() < 0.f)
 				{
-					uint32_t col0 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody0())->getUserPointer());
-					uint32_t col1 = uint32_t((uintptr_t)((btCollisionObject*)manifold->getBody1())->getUserPointer());
-
 					Contact& contact = this->find_contact(col0, col1);
 
 					if(contact.m_tick == 0)
 					{
-						collisionStarted(manifold);
+						if(first.m_object && second.m_object)
+						{
+							first.m_object->add_contact(second, *second.m_object);
+							second.m_object->add_contact(first, *first.m_object);
+						}
+
 						contact.m_col0 = col0;
 						contact.m_col1 = col1;
 						contact.m_index = m_contacts.size();
@@ -214,12 +311,12 @@ using namespace mud; namespace toy
 
 	void BulletMedium::remove_contact(uint32_t col0, uint32_t col1)
 	{
-		m_hash_contacts.erase(&col0 < &col1 ? m_hash(&col0, &col1) : m_hash(&col1, &col0));
+		m_hash_contacts.erase(pair_hash(col0, col1));
 	}
 
 	BulletMedium::Contact& BulletMedium::find_contact(uint32_t col0, uint32_t col1)
 	{
-		return m_hash_contacts[&col0 < &col1 ? m_hash(&col0, &col1) : m_hash(&col1, &col0)];
+		return m_hash_contacts[pair_hash(col0, col1)];
 	}
 
     // @note : this assume that we cap the framerate at 120fps, and that it shouldn't go lower than 12fps
@@ -227,14 +324,14 @@ using namespace mud; namespace toy
     {
 		m_last_tick = tick;
 
-		if(m_dynamicsWorld)
+		if(m_dynamics_world)
 #ifdef MUD_PLATFORM_EMSCRIPTEN
-			m_dynamicsWorld->stepSimulation(float(delta * c_tick_interval), 3, 0.032f);
+			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3, 0.032f);
 #else
-			m_dynamicsWorld->stepSimulation(float(delta * c_tick_interval), 3);
+			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3);
 #endif
 		else
-			m_bullet_world->performDiscreteCollisionDetection();
+			m_collision_world->performDiscreteCollisionDetection();
 
 		this->update_contacts();
     }
@@ -253,7 +350,7 @@ using namespace mud; namespace toy
 
 	object_ptr<PhysicMedium> BulletWorld::create_sub_world(Medium& medium)
 	{
-		return make_object<BulletMedium>(m_world, medium);
+		return make_object<BulletMedium>(m_world, *this, medium);
 	}
 
 	vec3 BulletWorld::ground_point(const Ray& ray)
@@ -264,15 +361,7 @@ using namespace mud; namespace toy
 
 	Collision BulletWorld::raycast(const Ray& ray, short int mask)
 	{
-		btCollisionWorld::ClosestRayResultCallback callback(to_btvec3(ray.m_start), to_btvec3(ray.m_end));
-		callback.m_collisionFilterMask = mask;
-		callback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
-
-		BulletMedium& subWorld = as<BulletMedium>(this->sub_world(SolidMedium::me));
-		subWorld.m_bullet_world->rayTest(to_btvec3(ray.m_start), to_btvec3(ray.m_end), callback);
-
-		if(callback.hasHit())
-			return { UINT32_MAX, uint32_t((uintptr_t)callback.m_collisionObject->getUserPointer()), to_vec3(callback.m_hitPointWorld) };
-		return {};
+		BulletMedium& bullet_medium = as<BulletMedium>(this->sub_world(SolidMedium::me));
+		return bullet_medium.raycast(HCollider(), ray.m_start, ray.m_end, mask);
 	}
 }

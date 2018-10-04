@@ -10,7 +10,7 @@
 #include <geom/Shapes.h>
 #include <math/Image256.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #include <core/Physic/Scope.h>
 #include <core/Physic/CollisionShape.h>
@@ -71,10 +71,18 @@ using namespace mud; namespace toy
 				}
 	}
 
-	Block::Block(HSpatial parent, const vec3& position, Block* parentblock, size_t index, const vec3& size)
-		: Entity(Tags<Spatial>{})
-		, m_spatial(*this, *this, parent, position, ZeroQuat)
+	uint32_t Block::create(HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size)
+	{
+		uint32_t entity = s_registry.CreateEntity<Spatial, Block>();
+		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		s_registry.SetComponent(entity, Block(HSpatial(entity), world_page, parentblock, index, size));
 		//, m_emitter(*this, m_spatial, m_movable)
+		return entity;
+	}
+
+	Block::Block(HSpatial spatial, HWorldPage world_page, Block* parentblock, size_t index, const vec3& size)
+		: m_spatial(spatial)
+		, m_world_page(world_page)
 		, m_parentblock(parentblock)
 		, m_index(index)
 		, m_size(size)
@@ -129,7 +137,7 @@ using namespace mud; namespace toy
 	void Block::commit()
 	{
 		m_updated++;
-		WorldPage& page = this->world_page();
+		WorldPage& page = m_world_page;
 		page.m_updated++;
 	}
 
@@ -190,9 +198,9 @@ using namespace mud; namespace toy
 			vec3 half_subdiv_size = half_size / 2.f;
 			vec3 position = this->local_block_coord(index) * half_size - half_size + half_subdiv_size;
 
-			Block& block = construct<Block>(m_spatial, position, this, index, m_size / 2.f);
+			HBlock block = construct<Block>(m_spatial, m_world_page, position, this, index, m_size / 2.f);
 
-			m_subblocks.push_back(&block);
+			m_subblocks.push_back(block);
 		}
 
 		m_subdived = true;
@@ -206,7 +214,7 @@ using namespace mud; namespace toy
 
 		if(depth - 1 > 0)
 		{
-			for(Block* block : m_subblocks)
+			for(HBlock& block : m_subblocks)
 				block->subdivide_to(depth - 1);
 		}
 	}
@@ -232,25 +240,4 @@ using namespace mud; namespace toy
 	{
 		return this->neighbour(hunk.index, side);
 	}
-
-	WorldPage& Block::world_page()
-	{
-		Spatial& spatial = m_spatial;
-		HSpatial parent = spatial.m_parent;
-		while(!is<WorldPage>(*parent->m_entity))
-			parent = parent->m_parent;
-		return as<WorldPage>(*parent->m_entity);
-	}
-
-#if 0
-	Sector& Block::sector()
-	{
-		Spatial& spatial = m_spatial;
-		Spatial* parent = spatial.m_parent;
-		for(size_t depth = 1; !parent->isa<Sector>(); parent = parent->m_parent)
-			++depth;
-
-		return parent->as<Sector>();
-	}
-#endif
 }

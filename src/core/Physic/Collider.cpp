@@ -6,7 +6,7 @@
 #include <core/Types.h>
 #include <core/Physic/Collider.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/World/Section.h>
 #include <core/World/World.h>
 #include <core/Physic/Medium.h>
@@ -21,7 +21,6 @@ using namespace mud; namespace toy
 		SparsePool<Collider>& pool = spatial->m_world->pool<Collider>();
 
 		OCollider collider = pool.construct(spatial, movable, collision_shape, medium, group);
-		collider->m_impl = collider->m_world->make_collider(collider);
 		collider->m_world->add_collider(collider);
 		return collider;
 	}
@@ -43,14 +42,7 @@ using namespace mud; namespace toy
     {}
 
     Collider::~Collider()
-    {
-		if(m_spatial && m_impl)
-		{
-			Spatial& spatial = m_spatial;
-			if(spatial.m_hooked)
-				;//m_world->remove_collider(*this);
-		}
-	}
+    {}
 
 	void Collider::init(object_ptr<ColliderImpl> impl)
 	{
@@ -86,8 +78,6 @@ using namespace mud; namespace toy
 		OSolid solid = solids.construct(spatial, movable, std::move(collider), isstatic, mass);
 
 		HCollider hcollider = solid->m_collider;
-		hcollider->m_impl = hcollider->m_world->make_collider(hcollider);
-		solid->m_impl = hcollider->m_world->make_solid(solid);
 		hcollider->m_world->add_solid(hcollider, solid);
 
 		return solid;

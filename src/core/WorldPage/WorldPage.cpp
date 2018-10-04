@@ -10,7 +10,7 @@
 #include <geom/Mesh.h>
 #include <geom/Geom.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 #include <core/Physic/Scope.h>
 

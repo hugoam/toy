@@ -18,7 +18,7 @@
 #include <edit/Editor/Editor.h>
 #include <edit/Editor/Toolbox.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
 //#include <core/Selector/Selector.h>
 
@@ -139,7 +139,6 @@ using namespace mud; namespace toy
 		Section& self = section(parent, (string(indexer.m_type.m_name) + " Registry").c_str());
 		complex_indexer(*self.m_body, indexer, &selection);
 
-		//for(Type* type : cls(indexer.m_type).m_complexes)
 		if(ui::modal_button(self, *self.m_toolbar, "Create", CREATE))
 		{
 			static std::vector<Type*> types = entity_types();
@@ -186,40 +185,31 @@ using namespace mud; namespace toy
 			editor_menu(self, name_group.second);
 	}
 
-	string entity_name(HSpatial spatial)
+	string entity_name(uint32_t entity)
 	{
-#ifdef TOY_ECS
-		return to_string(spatial.m_handle);
-#else
-		return string(spatial.m_entity.m_type.m_name) + ":" + to_string(spatial.m_id);
-#endif
+		return string(entity_prototype(entity)) + ":" + to_string(entity);
 	}
 
-	string entity_icon(Spatial& spatial)
+	string entity_icon(uint32_t entity)
 	{
-#ifdef TOY_ECS
-		UNUSED(spatial);
-		return "";
-#else
-		return "(" + string(spatial.m_entity.m_type.m_name) + ")";
-#endif
+		return "(" + string(entity_prototype(entity)) + ")";
 	}
 
-	void outliner_node(Widget& parent, HSpatial spatial, std::vector<Ref>& selection)
+	void outliner_node(Widget& parent, uint32_t entity, HSpatial spatial, std::vector<Ref>& selection)
 	{
-		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(spatial).c_str(), entity_name(spatial).c_str() }, false, false);
+		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
 
-		self.m_header->set_state(SELECTED, vector_has(selection, Ref(spatial->m_entity)));
+		self.m_header->set_state(SELECTED, vector_has(selection, Ref(&entity)));
 
 		if(self.m_header->activated())
-			vector_select(selection, Ref(spatial->m_entity));
+			vector_select(selection, Ref(&entity));
 
 		//object_item(self, object);
 
 		if(self.m_body)
 			for(HSpatial child : spatial->m_contents)
 			{
-				outliner_node(*self.m_body, child, selection);
+				outliner_node(*self.m_body, child.m_handle, child, selection);
 			}
 	}
 
@@ -227,7 +217,7 @@ using namespace mud; namespace toy
 	{
 		ScrollSheet& sheet = ui::scroll_sheet(parent);
 		Widget& tree = ui::tree(*sheet.m_body);
-		outliner_node(tree, spatial, selection);
+		outliner_node(tree, spatial.m_handle, spatial, selection);
 	}
 
 	void editor_graph(Widget& parent, Editor& editor, Selection& selection)

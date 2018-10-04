@@ -58,9 +58,9 @@ using namespace mud; namespace toy
 				bool add = vector_has(page.m_geometry_filter, string(item.m_model->m_name)) && item.m_node.m_object;
 				if(add)
 				{
-					Entity& entity = val<Entity>(item.m_node.m_object);
-					Spatial& object = as<Spatial>(entity);
-					if((object.is_child_of(page.m_spatial) || &object == &spatial) && object.m_hooked && !is<Movable>(*object.m_entity))
+					Entity entity = { val<uint32_t>(item.m_node.m_object) };
+					Spatial& object = asa<Spatial>(entity);
+					if((object.is_child_of(page.m_spatial) || &object == &spatial) && object.m_hooked && !isa<Movable>(entity))
 						items.push_back(&item);
 				}
 			}

@@ -441,7 +441,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::Emitter>(), [](Ref ref, array<Var> args) { new(&val<toy::Emitter>(ref)) toy::Emitter( val<toy::HSpatial>(args[0]), val<toy::HMovable>(args[1]) ); }, { { "spatial", Ref(type<toy::HSpatial>()) } } }
+                { type<toy::Emitter>(), [](Ref ref, array<Var> args) { new(&val<toy::Emitter>(ref)) toy::Emitter( val<toy::HSpatial>(args[0]) ); }, { { "spatial", Ref(type<toy::HSpatial>()) } } }
             },
             // copy constructor
             {
@@ -776,7 +776,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::Receptor>(), [](Ref ref, array<Var> args) { new(&val<toy::Receptor>(ref)) toy::Receptor( val<toy::HSpatial>(args[0]), val<toy::HMovable>(args[1]) ); }, { { "spatial", Ref(type<toy::HSpatial>()) } } }
+                { type<toy::Receptor>(), [](Ref ref, array<Var> args) { new(&val<toy::Receptor>(ref)) toy::Receptor( val<toy::HSpatial>(args[0]) ); }, { { "spatial", Ref(type<toy::HSpatial>()) } } }
             },
             // copy constructor
             {
@@ -1029,8 +1029,8 @@ namespace mud
             { base_offset<toy::Spatial, mud::Transform>() },
             // constructors
             {
-                { type<toy::Spatial>(), [](Ref ref, array<Var> args) { new(&val<toy::Spatial>(ref)) toy::Spatial( val<mud::Entity>(args[1]), val<toy::HSpatial>(args[2]), val<mud::vec3>(args[3]), val<mud::quat>(args[4]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Entity>()) }, { "parent", Ref(type<toy::HSpatial>()) }, { "position", var(Zero3), Param::Default }, { "rotation", var(ZeroQuat), Param::Default } } },
-                { type<toy::Spatial>(), [](Ref ref, array<Var> args) { new(&val<toy::Spatial>(ref)) toy::Spatial( val<mud::Entity>(args[1]), val<toy::World>(args[2]), val<toy::HSpatial>(args[3]), val<mud::vec3>(args[4]), val<mud::quat>(args[5]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Entity>()) }, { "world", Ref(type<toy::World>()) }, { "parent", Ref(type<toy::HSpatial>()), Param::Nullable }, { "position", var(mud::vec3()) }, { "rotation", var(mud::quat()) } } }
+                { type<toy::Spatial>(), [](Ref ref, array<Var> args) { new(&val<toy::Spatial>(ref)) toy::Spatial( val<toy::HSpatial>(args[2]), val<mud::vec3>(args[3]), val<mud::quat>(args[4]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Entity>()) }, { "parent", Ref(type<toy::HSpatial>()) }, { "position", var(Zero3), Param::Default }, { "rotation", var(ZeroQuat), Param::Default } } },
+                { type<toy::Spatial>(), [](Ref ref, array<Var> args) { new(&val<toy::Spatial>(ref)) toy::Spatial( val<toy::World>(args[2]), val<toy::HSpatial>(args[3]), val<mud::vec3>(args[4]), val<mud::quat>(args[5]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Entity>()) }, { "world", Ref(type<toy::World>()) }, { "parent", Ref(type<toy::HSpatial>()), Param::Nullable }, { "position", var(mud::vec3()) }, { "rotation", var(mud::quat()) } } }
             },
             // copy constructor
             {
@@ -1038,7 +1038,7 @@ namespace mud
             // members
             {
                 //{ type<toy::Spatial>(), member_address(&toy::Spatial::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
-                //{ type<toy::Spatial>(), Address(), type<mud::Entity>(), "complex", Ref(type<mud::Entity>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Spatial>(object).m_entity); } },
+                //{ type<toy::Spatial>(), Address(), "complex", Ref(type<mud::Entity>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Spatial>(object).m_entity); } },
                 { type<toy::Spatial>(), Address(), type<toy::World>(), "world", Ref(type<toy::World>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(val<toy::Spatial>(object).m_world); } },
                 { type<toy::Spatial>(), member_address(&toy::Spatial::m_parent), type<toy::Spatial>(), "parent", Ref(type<toy::Spatial>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 //{ type<toy::Spatial>(), member_address(&toy::Spatial::m_contents), type<std::vector<toy::HSpatial>>(), "contents", Ref(type<std::vector<toy::HSpatial>>()), Member::Structure, nullptr }
@@ -1096,7 +1096,7 @@ namespace mud
         
     // toy::DefaultWorld
     {
-        static Meta meta = { type<toy::DefaultWorld>(), &namspc({ "toy" }), "DefaultWorld", sizeof(toy::DefaultWorld), TypeClass::Entity };
+        static Meta meta = { type<toy::DefaultWorld>(), &namspc({ "toy" }), "DefaultWorld", sizeof(toy::DefaultWorld), TypeClass::Object };
         static Class cls = { type<toy::DefaultWorld>(),
             // bases
             { &type<mud::Complex>() },
@@ -1130,53 +1130,20 @@ namespace mud
     
     
         
-    // toy::OCamera
-    {
-        static Meta meta = { type<toy::OCamera>(), &namspc({ "toy" }), "OCamera", sizeof(toy::OCamera), TypeClass::Entity };
-        static Class cls = { type<toy::OCamera>(),
-            // bases
-            { &type<mud::Entity>() },
-            { base_offset<toy::OCamera, mud::Entity>() },
-            // constructors
-            {
-                { type<toy::OCamera>(), [](Ref ref, array<Var> args) { new(&val<toy::OCamera>(ref)) toy::OCamera( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<float>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::HSpatial>()) }, { "position", var(mud::vec3()) }, { "lensDistance", var(float()) }, { "nearClipDistance", var(float(0.001f)), Param::Default }, { "farClipDistance", var(float(1000.f)), Param::Default } } }
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-                { type<toy::OCamera>(), member_address(&toy::OCamera::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr },
-                { type<toy::OCamera>(), member_address(&toy::OCamera::m_movable), type<toy::Movable>(), "movable", Ref(type<toy::Movable>()), Member::Component, nullptr },
-                { type<toy::OCamera>(), member_address(&toy::OCamera::m_camera), type<toy::Camera>(), "camera", Ref(type<toy::Camera>()), Member::Component, nullptr }
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        
-        
-        init_pool<toy::OCamera>(); 
-        
-        meta_class<toy::OCamera>();
-    }
     
     
     
         
     // toy::Waypoint
     {
-        static Meta meta = { type<toy::Waypoint>(), &namspc({ "toy" }), "Waypoint", sizeof(toy::Waypoint), TypeClass::Entity };
+        static Meta meta = { type<toy::Waypoint>(), &namspc({ "toy" }), "Waypoint", sizeof(toy::Waypoint), TypeClass::Object };
         static Class cls = { type<toy::Waypoint>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<toy::Waypoint, mud::Entity>() },
+            { },
+            { },
             // constructors
             {
-                { type<toy::Waypoint>(), [](Ref ref, array<Var> args) { new(&val<toy::Waypoint>(ref)) toy::Waypoint( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::HSpatial>()) }, { "position", var(mud::vec3()) } } }
+                //{ type<toy::Waypoint>(), [](Ref ref, array<Var> args) { new(&val<toy::Waypoint>(ref)) toy::Waypoint( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::HSpatial>()) }, { "position", var(mud::vec3()) } } }
             },
             // copy constructor
             {
@@ -1203,14 +1170,14 @@ namespace mud
         
     // toy::Origin
     {
-        static Meta meta = { type<toy::Origin>(), &namspc({ "toy" }), "Origin", sizeof(toy::Origin), TypeClass::Entity };
+        static Meta meta = { type<toy::Origin>(), &namspc({ "toy" }), "Origin", sizeof(toy::Origin), TypeClass::Object };
         static Class cls = { type<toy::Origin>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<toy::Origin, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
-                { type<toy::Origin>(), [](Ref ref, array<Var> args) { new(&val<toy::Origin>(ref)) toy::Origin( val<toy::World>(args[1]) ); }, { { "id", var(mud::Id()) }, { "world", Ref(type<toy::World>()) } } }
+                //{ type<toy::Origin>(), [](Ref ref, array<Var> args) { new(&val<toy::Origin>(ref)) toy::Origin( val<toy::World>(args[1]) ); }, { { "id", var(mud::Id()) }, { "world", Ref(type<toy::World>()) } } }
             },
             // copy constructor
             {
@@ -1351,8 +1318,8 @@ namespace mud
         static Meta meta = { type<toy::PhysicScope>(), &namspc({ "toy" }), "PhysicScope", sizeof(toy::PhysicScope), TypeClass::Object };
         static Class cls = { type<toy::PhysicScope>(),
             // bases
-            { &type<toy::Collider>(), &type<toy::ColliderObject>() },
-            { base_offset<toy::PhysicScope, toy::Collider>(), base_offset<toy::PhysicScope, toy::ColliderObject>() },
+            { &type<toy::ColliderObject>() },
+            { base_offset<toy::PhysicScope, toy::ColliderObject>() },
             // constructors
             {
             },
@@ -1679,7 +1646,6 @@ namespace mud
         m.m_types.push_back(&type<toy::Spatial>());
         m.m_types.push_back(&type<toy::NavmeshShape>());
         m.m_types.push_back(&type<toy::DefaultWorld>());
-        m.m_types.push_back(&type<toy::OCamera>());
         m.m_types.push_back(&type<toy::Waypoint>());
         m.m_types.push_back(&type<toy::Origin>());
         m.m_types.push_back(&type<toy::BulletCollider>());

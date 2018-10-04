@@ -15,22 +15,26 @@ extern "C"
 	//_MINIMAL_EXPORT void ex_minimal_game(GameShell& app, Game& game);
 }
 
-#ifdef TOY_ECS
 namespace mud
 {
-	template <> struct TypedBuffer<Bullet*> { static size_t index() { return 12; } };
-	template <> struct TypedBuffer<Human*>  { static size_t index() { return 13; } };
-	template <> struct TypedBuffer<Crate*>  { static size_t index() { return 14; } };
+	template <> struct TypedBuffer<Bullet> { static size_t index() { return 20; } };
+	template <> struct TypedBuffer<Human>  { static size_t index() { return 21; } };
+	template <> struct TypedBuffer<Crate>  { static size_t index() { return 22; } };
 }
-#endif
 
-class refl_ _MINIMAL_EXPORT Bullet : public Entity
+using HBullet = ComponentHandle<Bullet>;
+using HHuman = ComponentHandle<Human>;
+using HCrate = ComponentHandle<Crate>;
+
+class refl_ _MINIMAL_EXPORT Bullet
 {
 public:
-	Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
-	~Bullet();
+	Bullet() {}
+	Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity);
 
-	comp_ attr_ CSpatial m_spatial;
+	static uint32_t create(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
+
+	attr_ HSpatial m_spatial;
 
 	attr_ vec3 m_source;
 	attr_ vec3 m_velocity;
@@ -57,14 +61,16 @@ struct HumanController
 	vec3 m_torque = Zero3;
 };
 
-class refl_ _MINIMAL_EXPORT Human : public Entity
+class refl_ _MINIMAL_EXPORT Human
 {
 public:
-	constr_ Human(HSpatial parent, const vec3& position);
-	~Human();
+	constr_ Human() {}
+	constr_ Human(HSpatial spatial, HMovable movable);
 
-	comp_ attr_ CSpatial m_spatial;
-	comp_ attr_ CMovable m_movable;
+	static uint32_t create(HSpatial parent, const vec3& position);
+
+	attr_ HSpatial m_spatial;
+	attr_ HMovable m_movable;
 
 	OSolid m_solid;
 
@@ -88,13 +94,16 @@ public:
 	static float headlight_angle;
 };
 
-class refl_ _MINIMAL_EXPORT Crate : public Entity
+class refl_ _MINIMAL_EXPORT Crate
 {
 public:
-	constr_ Crate(HSpatial parent, const vec3& position, const vec3& extents);
+	constr_ Crate() {}
+	constr_ Crate(HSpatial parent, HMovable movable, const vec3& extents);
 
-	comp_ attr_ CSpatial m_spatial;
-	comp_ attr_ CMovable m_movable;
+	static uint32_t create(HSpatial parent, const vec3& position, const vec3& extents);
+
+	attr_ HSpatial m_spatial;
+	attr_ HMovable m_movable;
 
 	attr_ vec3 m_extents;
 	OSolid m_solid;

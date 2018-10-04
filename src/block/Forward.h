@@ -100,7 +100,7 @@ namespace toy {
     class Fungus;
     class Water;
     class Sector;
-    class TileBlock;
+    class Tileblock;
     struct BlockState;
 }
 

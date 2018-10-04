@@ -13,7 +13,7 @@
 #include <math/Timer.h>
 #include <ecs/Proto.h>
 #include <math/Vec.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/World/WorldClock.h>
 #include <core/World/Section.h>
 
@@ -27,8 +27,8 @@ using namespace mud; namespace toy
 		, m_pools(c_max_types)
     {
 		UNUSED(id);
-		m_origin = make_object<Origin>(*this);
-		m_unworld = make_object<Origin>(*this);
+		m_origin = Origin::create(*this);
+		m_unworld = Origin::create(*this);
 
 		auto update_colliders = [&](size_t tick, size_t delta)
 		{
@@ -40,15 +40,7 @@ using namespace mud; namespace toy
 	}
 
     World::~World()
-    {
-		this->destroy();
-	}
-
-	void World::destroy()
-	{
-		m_origin = nullptr;
-		m_unworld = nullptr;
-	}
+    {}
 
     void World::next_frame()
     {

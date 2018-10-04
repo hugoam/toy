@@ -10,7 +10,7 @@
 #include <math/Colour.h>
 #include <math/Grid.h>
 #include <math/Math.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Physic/Scope.h>
 #include <block/Forward.h>
 
@@ -41,14 +41,17 @@ using namespace mud; namespace toy
 		attr_ Colour m_colour;
 	};
 
-	class refl_ TOY_BLOCK_EXPORT Heap : public Entity
+	class refl_ TOY_BLOCK_EXPORT Heap
 	{
 	public:
-		constr_ Heap(HSpatial parent, const vec3& position, Element& element, float radius);
+		constr_ Heap() {}
+		constr_ Heap(HSpatial parent, Element& element, float radius);
 
-		comp_ attr_ CSpatial m_spatial;
+		static uint32_t create(HSpatial parent, const vec3& position, Element& element, float radius);
 
-		attr_ link_  Element& m_element;
+		attr_ HSpatial m_spatial;
+
+		attr_ link_ Element* m_element;
 		attr_ float m_radius;
 	};
 

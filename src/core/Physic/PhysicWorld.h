@@ -10,6 +10,7 @@
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
+#include <core/Physic/Collider.h>
 
 #ifndef MUD_CPP_20
 #include <map>
@@ -37,6 +38,10 @@ using namespace mud; namespace toy
 
 		virtual void add_collider(HCollider collider) = 0;
 		virtual void remove_collider(HCollider collider) = 0;
+
+		virtual void project(HCollider collider, const vec3& position, const quat& rotation, std::vector<Collision>& collisions, short int mask) = 0;
+		virtual void raycast(HCollider collider, const vec3& start, const vec3& end, std::vector<Collision>& collisions, short int mask) = 0;
+		virtual Collision raycast(HCollider collider, const vec3& target, const vec3& end, short int mask) = 0;
 	};
 
 	class refl_ TOY_CORE_EXPORT PhysicWorld : public NonCopy

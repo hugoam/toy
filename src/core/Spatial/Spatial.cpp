@@ -3,7 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #include <type/Indexer.h>
 #include <math/Timer.h>
@@ -19,16 +19,15 @@
 
 using namespace mud; namespace toy
 {
-	Spatial::Spatial(Entity& entity, World& world, HSpatial parent, const vec3& position, const quat& rotation)
+	Spatial::Spatial(World& world, HSpatial parent, const vec3& position, const quat& rotation)
         : Transform(position, rotation, Unit3)
-		, m_entity(&entity)
 		, m_world(&world)
 		, m_parent(parent)
 		, m_hooked(true)
 	{}
 
-	Spatial::Spatial(Entity& entity, HSpatial parent, const vec3& position, const quat& rotation)
-		: Spatial(entity, *parent->m_world, parent, position, rotation)
+	Spatial::Spatial(HSpatial parent, const vec3& position, const quat& rotation)
+		: Spatial(*parent->m_world, parent, position, rotation)
 	{}
 
     Spatial::~Spatial()

@@ -22,7 +22,7 @@ float spot_attenuation(vec3 ray, vec3 light, float range, float attenuation_fact
 	return attenuation * (1.f - pow(max(spot_rim, 0.001f), spot_attenuation));
 }
 
-void populate_block(TileBlock& block)
+void populate_block(Tileblock& block)
 {
 	generate_crates(block);
 	generate_npcs(block);
@@ -42,9 +42,7 @@ TileWorld::TileWorld(const std::string& name)
 }
 
 TileWorld::~TileWorld()
-{
-	m_world.destroy();
-}
+{}
 
 void TileWorld::next_frame()
 {
@@ -60,7 +58,7 @@ void TileWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 {
 	static WaveTileset& tileset = generator_tileset(gfx_system);
 
-	TileBlock& block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale);
+	Tileblock& block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale);
 	WorldPage& world_page = block.m_world_page;
 
 	world_page.m_geometry_filter = { "platform/cube_covered", "platform/cube_covered_side", "platform/cube_covered_angle", "platform/corner_covered", "platform/empty_covered" };
@@ -86,7 +84,7 @@ void TileWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 	}
 
 	bool positive = m_blocks[coord + ivec2(0, 1)] == nullptr;
-	TileBlock& neighbour = positive ? *m_blocks[coord + ivec2(0, -1)] : *m_blocks[coord + ivec2(0, 1)];
+	Tileblock& neighbour = positive ? *m_blocks[coord + ivec2(0, -1)] : *m_blocks[coord + ivec2(0, 1)];
 
 	for(size_t x = 0; x < block.m_wfc_block.m_tiles.m_x; ++x)
 	for(size_t y = 0; y < block.m_wfc_block.m_tiles.m_y; ++y)
@@ -115,22 +113,21 @@ void TileWorld::open_blocks(GfxSystem& gfx_system, const vec3& position, const i
 	}
 }
 
+uint32_t Bullet::create(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Bullet>();
+	s_registry.SetComponent(entity, Spatial(parent, source, rotation));
+	s_registry.SetComponent(entity, Bullet(HSpatial(entity), source, rotation, velocity));
+	return entity;
+}
 
-Bullet::Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
-	: Entity(Tags<Spatial, Bullet*>{})
-	, m_spatial(*this, *this, parent, source, rotation)
+Bullet::Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity)
+	: m_spatial(spatial)
 	, m_source(source)
 	, m_velocity(rotate(rotation, -Z3) * velocity)
 	//, m_solid(Solid::create(m_spatial, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(energy), false, 1.f))
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
-{
-	s_registry.SetComponent<Bullet*>(m_handle, this);
-}
-
-Bullet::~Bullet()
-{
-	//s_registry.RemoveComponent<Bullet>(m_handle);
-}
+{}
 
 void Bullet::update()
 {
@@ -141,13 +138,11 @@ void Bullet::update()
 	Collider& collider = *m_collider;
 
 	Collision collision = collider->raycast(spatial.m_position + m_velocity, CM_SOLID | CM_GROUND);
-	Spatial* hit = nullptr;//collision.m_second ? &((Spatial&)collision.m_second->m_spatial) : nullptr;
+	HSpatial hit = collision.m_second ? collision.m_second->m_spatial : HSpatial();
 
-	if(hit != nullptr)
+	if(hit)
 	{
-		//if(Human* shot = as<Human*>(*hit->m_entity))
-		//if(Human* shot = try_as<Human*>(*hit->m_entity))
-		if(Human* shot = nullptr)
+		if(Human* shot = try_asa<Human>(hit))
 		{
 			Spatial& shot_spatial = shot->m_spatial;
 			if(shot->m_shield && shot->m_energy > 0.f)
@@ -182,25 +177,31 @@ float Human::headlight_angle = 40.f;
 //float Human::headlight_angle = 30.f;
 //float Human::headlight_angle = 20.f;
 
-Human::Human(HSpatial parent, const vec3& position, Faction faction)
-	: Entity(Tags<Spatial, Movable, Emitter, Receptor, EntityScript, Human*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_movable(*this, m_spatial)
-	, m_emitter(*this, m_spatial, m_movable)
-	, m_receptor(*this, m_spatial, m_movable)
-	, m_script(*this, m_spatial)
+uint32_t Human::create(HSpatial parent, const vec3& position, Faction faction)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Emitter, Receptor, EntityScript, Human>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
+	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
+	s_registry.SetComponent(entity, Receptor(HSpatial(entity)));
+	s_registry.SetComponent(entity, EntityScript(entity));
+	s_registry.SetComponent(entity, Human(entity, entity, entity, entity, entity, faction));
+	return entity;
+}
+
+Human::Human(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor receptor, HEntityScript script, Faction faction)
+	: m_spatial(spatial)
+	, m_movable(movable)
+	, m_emitter(emitter)
+	, m_receptor(receptor)
+	, m_script(script)
 	, m_faction(faction)
 	, m_walk(false)
 	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f))
 {
-	s_registry.SetComponent<Human*>(m_handle, this);
-
-	//m_emitter.add_sphere(VisualMedium::me, 0.1f);
-	//m_receptor.add_sphere(VisualMedium::me, 30.f);
+	emitter->add_sphere(VisualMedium::me, 0.1f);
+	receptor->add_sphere(VisualMedium::me, 30.f);
 }
-
-Human::~Human()
-{}
 
 void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta)
 {
@@ -212,8 +213,8 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 	for(auto& bullet : reverse_adapt(m_bullets))
 	{
 		bullet->update();
-		if(bullet->m_destroy)
-			vector_remove_pt(m_bullets, *bullet);
+		//if(bullet->m_destroy)
+		//	vector_remove_pt(m_bullets, *bullet);
 	}
 
 	m_energy = min(1.f, m_energy + delta * 0.01f);
@@ -247,7 +248,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 		{
 			ReceptorScope* vision = receptor.scope(VisualMedium::me);
 			for(HSpatial seen : vision->m_scope)
-				if(Human* human = nullptr)// seen->try_as<Human>())
+				if(Human* human = try_asa<Human>(seen))
 				{
 					if(human->m_faction != m_faction)
 					{
@@ -336,7 +337,7 @@ void Human::shoot()
 	Aim aim = this->aim();
 	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, random_scalar(-0.05f, 0.05f)); };
 	quat rotation = fuzz(fuzz(aim.rotation, X3), Y3);
-	m_bullets.emplace_back(make_object<Bullet>(m_spatial, aim.start, rotation, 2.f));
+	m_bullets.emplace_back(construct_owned<Bullet>(m_spatial, aim.start, rotation, 2.f));
 	//m_solid->impulse(rotate(m_spatial.m_rotation, Z3 * 4.f), Zero3);
 }
 
@@ -351,23 +352,35 @@ void Human::damage(float amount)
 	}
 }
 
-Lamp::Lamp(HSpatial parent, const vec3& position)
-	: Entity(Tags<Spatial, Movable, Lamp*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_movable(*this, m_spatial)
+uint32_t Lamp::create(HSpatial parent, const vec3& position)
 {
-	s_registry.SetComponent<Lamp*>(m_handle, this);
+	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Lamp>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
+	s_registry.SetComponent(entity, Lamp(HSpatial(entity), HMovable(entity)));
+	return entity;
 }
 
-Crate::Crate(HSpatial parent, const vec3& position, const vec3& extents)
-	: Entity(Tags<Spatial, Movable, Crate*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_movable(*this, m_spatial)
+Lamp::Lamp(HSpatial spatial, HMovable movable)
+	: m_spatial(spatial)
+	, m_movable(movable)
+{}
+
+uint32_t Crate::create(HSpatial parent, const vec3& position, const vec3& extents)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Crate>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
+	s_registry.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
+	return entity;
+}
+
+Crate::Crate(HSpatial spatial, HMovable movable, const vec3& extents)
+	: m_spatial(spatial)
+	, m_movable(movable)
 	, m_extents(extents)
 	, m_solid(Solid::create(m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))
-{
-	s_registry.SetComponent<Crate*>(m_handle, this);
-}
+{}
 
 Player::Player(TileWorld& world)
 	: m_world(&world)
@@ -377,7 +390,7 @@ void Player::spawn(const vec3& start_position)
 {
 	HSpatial origin = m_world->m_world.origin();
 	vec3 position = start_position + Y3 * 2.f * m_world->m_center_block->m_wfc_block.m_scale.y;
-	m_human = &construct<Human>(origin, position, Faction::Ally);
+	m_human = construct<Human>(origin, position, Faction::Ally);
 	//m_human->m_headlight = false;
 	m_human->m_stealth = true;
 	m_human->m_walk = false;
@@ -537,7 +550,7 @@ void paint_human(Gnode& parent, Human& human)
 	}
 }
 
-void paint_world_block(Gnode& parent, TileBlock& block, const uvec3* exclude = nullptr)
+void paint_world_block(Gnode& parent, Tileblock& block, const uvec3* exclude = nullptr)
 {
 	Spatial& spatial = block.m_spatial;
 	if(!block.m_wfc_block.m_wave.m_solved) return;
@@ -591,7 +604,7 @@ vec3 find_fitting_player_location(WfcBlock& tileblock)
 	vec3 center = vec3(tileblock.m_size) * 0.5f;
 	vec3 start_coord = {};
 	for(size_t i = 0; i < tileblock.m_tiles.size(); ++i)
-		if(tileblock.m_tileset.m_tiles_flip[tileblock.m_tiles[i]].m_name == "empty_covered")
+		if(tileblock.m_tileset->m_tiles_flip[tileblock.m_tiles[i]].m_name == "empty_covered")
 		{
 			vec3 coord = { tileblock.m_tiles.x(i), tileblock.m_tiles.y(i), tileblock.m_tiles.z(i) };
 			if(distance2(coord, center) < distance2(start_coord, center))
@@ -839,13 +852,13 @@ void ex_platform_pump_game(GameShell& app, Game& game, Widget& parent)
 {
 	Player& player = val<Player>(game.m_player);
 	TileWorld& world = as<TileWorld>(game.m_world->m_complex);
-	TileBlock& block = *world.m_center_block;
+	Tileblock& block = *world.m_center_block;
 
 	world.next_frame();
 
 	Widget& self = ui::widget(parent, styles().board, &game);
 
-	if(player.m_human == nullptr)
+	if(!player.m_human)
 	{
 		Viewer& viewer = ex_platform_menu_viewport(self, *game.m_shell);
 		Widget& overlay = ui::screen(viewer);
@@ -878,12 +891,12 @@ inline void range_entity_painter(VisuScene& scene, HSpatial reference, float ran
 	auto paint = [&scene, reference, range2, paint_func](size_t index, VisuScene&, Gnode& parent)
 	{
 		vec3 position = reference->m_position;
-		s_registry.Loop<Spatial, T*>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T*& component)
+		s_registry.Loop<Spatial, T>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T& component)
 		{
 			UNUSED(entity);
 			float dist2 = distance2(spatial.m_position, position);
 			if(dist2 < range2)
-				paint_func(scene.entity_node(parent, spatial, index), *component);
+				paint_func(scene.entity_node(parent, entity, spatial, index), component);
 		});
 	};
 	scene.m_painters.emplace_back(make_unique<VisuPainter>(name, scene.m_painters.size(), paint));
@@ -914,19 +927,18 @@ public:
 
 	virtual void start(GameShell& app, Game& game) final
 	{
-		app.m_core->add_loop<TileBlock*, WorldPage>(Task::Spatial);
-		app.m_core->add_loop<Human*, Spatial, Movable, Receptor>(Task::GameObject);
+		app.m_core->add_loop<Tileblock, WorldPage>(Task::Spatial);
+		app.m_core->add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);
 
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector*>();
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, TileBlock*>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>();
 
-		s_registry.AddBuffers<Spatial, Bullet*>();
-		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human*>();
-		s_registry.AddBuffers<Spatial, Movable, Crate*>();
-		s_registry.AddBuffers<Spatial, Movable, Lamp*>();
+		s_registry.AddBuffers<Spatial, Bullet>();
+		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human>();
+		s_registry.AddBuffers<Spatial, Movable, Crate>();
+		s_registry.AddBuffers<Spatial, Movable, Lamp>();
 
 		global_pool<TileWorld>();
-		global_pool<OCamera>();
 
 		TileWorld& tileworld = global_pool<TileWorld>().construct("Arcadia");
 		game.m_world = &tileworld.m_world;
@@ -951,7 +963,7 @@ public:
 			//debug_draw_light_clusters(self, player.m_viewer->m_camera);
 		});
 
-		auto paint_hole_block = [&](Gnode& parent, TileBlock& block)
+		auto paint_hole_block = [&](Gnode& parent, Tileblock& block)
 		{
 #if 0 //ndef MUD_PLATFORM_EMSCRIPTEN
 			if(block.contains(player.m_human->m_spatial.m_position))
@@ -974,7 +986,7 @@ public:
 		range_entity_painter<Lamp>(scene, reference, 100.f, "Lamps", world, paint_lamp);
 		range_entity_painter<Human>(scene, reference, 100.f, "Humans", world, paint_human);
 		range_entity_painter<Crate>(scene, reference, 100.f, "Crates", world, paint_crate);
-		range_entity_painter<TileBlock>(scene, reference, 200.f, "Tileblocks", world, paint_hole_block);
+		range_entity_painter<Tileblock>(scene, reference, 200.f, "Tileblocks", world, paint_hole_block);
 		range_entity_painter<Bullet>(scene, reference, 100.f, "Bullets", world, paint_bullet);
 
 		//physic_painter(scene);

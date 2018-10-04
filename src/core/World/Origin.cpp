@@ -8,8 +8,15 @@
 
 using namespace mud; namespace toy
 {
-	Origin::Origin(World& world)
-		: Entity(Tags<Spatial>{})
-		, m_spatial(*this, *this, world, HSpatial(), Zero3, ZeroQuat)
+	uint32_t Origin::create(World& world)
+	{
+		uint32_t entity = s_registry.CreateEntity<Spatial, Origin>();
+		s_registry.SetComponent(entity, Spatial(world, HSpatial(), Zero3, ZeroQuat));
+		s_registry.SetComponent(entity, Origin(HSpatial(entity)));
+		return entity;
+	}
+
+	Origin::Origin(HSpatial spatial)
+		: m_spatial(spatial)
 	{}
 }

@@ -8,7 +8,7 @@
 #include <infra/NonCopy.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #ifndef MUD_CPP_20
 #include <atomic>
@@ -29,9 +29,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Movable
 	{
 	public:
-#ifdef TOY_ECS
 		constr_ Movable() {}
-#endif
 		constr_ Movable(HSpatial spatial);
 		~Movable();
 

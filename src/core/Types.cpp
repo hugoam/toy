@@ -44,10 +44,9 @@ namespace mud
     template <> TOY_CORE_EXPORT Type& type<toy::WorldClock>() { static Type ty("WorldClock"); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Spatial>() { static Type ty("Spatial", type<mud::Transform>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>() { static Type ty("NavmeshShape", type<mud::Shape>()); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>() { static Type ty("DefaultWorld", type<mud::Entity>()); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::OCamera>() { static Type ty("OCamera", type<mud::Entity>()); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Waypoint>() { static Type ty("Waypoint", type<mud::Entity>()); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Origin>() { static Type ty("Origin", type<mud::Entity>()); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>() { static Type ty("DefaultWorld"); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Waypoint>() { static Type ty("Waypoint"); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Origin>() { static Type ty("Origin"); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::BulletCollider>() { static Type ty("BulletCollider", type<toy::ColliderImpl>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::WorldPage>() { static Type ty("WorldPage", type<toy::ColliderObject>()); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Solid>() { static Type ty("Solid"); return ty; }

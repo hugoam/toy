@@ -5,8 +5,8 @@
 
 #include <core/Physic/Signal.h>
 
-#include <core/Entity/Entity.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
+#include <core/Spatial/Spatial.h>
 
 #include <core/Physic/Scope.h>
 #include <core/Physic/Medium.h>
@@ -22,7 +22,7 @@ using namespace mud; namespace toy
 		, m_on(false)
 		, m_occluding()
 	{
-		if(!m_emitter->m_medium->m_occlusions)
+		if(!m_emitter->m_collider->m_medium->m_occlusions)
 			this->on();
 
 		update();
@@ -36,18 +36,18 @@ using namespace mud; namespace toy
 
 	void Signal::update()
 	{
-		if(m_emitter->m_medium->m_occlusions)
+		if(m_emitter->m_collider->m_medium->m_occlusions)
 		{
 			std::vector<Collision> occluding;
 
 			Spatial& receptor = m_receptor->m_spatial;
-			m_emitter->m_impl->raycast(receptor.m_position, occluding, CM_OBSTACLE);
+			m_emitter->m_collider->m_impl->raycast(receptor.m_position, occluding, CM_OBSTACLE);
 
 			m_occluding.clear();
 			//for(const Collision& coll : occluding)
 			//	m_occluding.push_back(static_cast<Obstacle*>(coll.m_second));
 
-			m_strength = m_emitter->m_medium->throughput(*m_emitter, *m_receptor, m_occluding);
+			m_strength = m_emitter->m_collider->m_medium->throughput(*m_emitter, *m_receptor, m_occluding);
 
 			if(m_strength > 0.f && !m_on)
 				this->on();

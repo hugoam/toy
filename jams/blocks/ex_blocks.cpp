@@ -40,15 +40,17 @@ Faction::~Faction()
 
 std::vector<Faction> g_factions;
 
-Well::Well(HSpatial parent, const vec3& position)
-	: Entity(Tags<Spatial, Emitter, Well*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_emitter(*this, m_spatial, HMovable())
+uint32_t Well::create(HSpatial parent, const vec3& position)
 {
-	s_registry.SetComponent<Well*>(m_handle, this);
+	uint32_t entity = s_registry.CreateEntity<Spatial, Emitter, Well>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
+	return entity;
 }
 
-Well::~Well()
+Well::Well(HSpatial spatial, HEmitter emitter)
+	: m_spatial(spatial)
+	, m_emitter(emitter)
 {}
 
 void Well::next_frame(size_t tick, size_t delta)
@@ -56,29 +58,37 @@ void Well::next_frame(size_t tick, size_t delta)
 	UNUSED(tick); UNUSED(delta);
 }
 
-Camp::Camp(HSpatial parent, const vec3& position, Faction& faction)
-	: Entity(Tags<Spatial, Camp*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_faction(faction)
-	, m_position(position)
+uint32_t Camp::create(HSpatial parent, const vec3& position, Faction& faction)
 {
-	s_registry.SetComponent<Camp*>(m_handle, this);
+	uint32_t entity = s_registry.CreateEntity<Spatial, Camp>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Camp(HSpatial(entity), position, faction));
+	return entity;
 }
 
-Shield::Shield(HSpatial parent, const vec3& position, Faction& faction, float radius)
-	: Entity(Tags<Spatial, Emitter, Shield*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_emitter(*this, m_spatial, HMovable())
-	, m_faction(faction)
+Camp::Camp(HSpatial spatial, const vec3& position, Faction& faction)
+	: m_spatial(spatial)
+	, m_faction(&faction)
+	, m_position(position)
+{}
+
+uint32_t Shield::create(HSpatial parent, const vec3& position, Faction& faction, float radius)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Emitter, Shield>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
+	s_registry.SetComponent(entity, Shield(HSpatial(entity), HEmitter(entity), faction, radius));
+	return entity;
+}
+
+Shield::Shield(HSpatial spatial, HEmitter emitter, Faction& faction, float radius)
+	: m_spatial(spatial)
+	, m_emitter(emitter)
+	, m_faction(&faction)
 	, m_radius(radius)
 	, m_charge(1.f)
 	, m_discharge(0.f)
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(radius), SolidMedium::me, CollisionGroup(CM_ENERGY)))
-{
-	s_registry.SetComponent<Shield*>(m_handle, this);
-}
-
-Shield::~Shield()
 {}
 
 void Shield::next_frame(size_t tick, size_t delta)
@@ -93,19 +103,21 @@ void Shield::next_frame(size_t tick, size_t delta)
 	m_charge = min(1.f, m_charge + 0.01f);
 }
 
-Slug::Slug(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
-	: Entity(Tags<Spatial, Slug*>{})
-	, m_spatial(*this, *this, parent, source, rotation)
+uint32_t Slug::create(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Slug>();
+	s_registry.SetComponent(entity, Spatial(parent, source, rotation));
+	s_registry.SetComponent(entity, Slug(HSpatial(entity), source, velocity, power));
+	return entity;
+}
+
+Slug::Slug(HSpatial spatial, const vec3& source, const vec3& velocity, float power)
+	: m_spatial(spatial)
 	, m_source(source)
 	, m_velocity(velocity)
 	, m_power(power)
 	//, m_solid(Solid::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY), false, 1.f))
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CollisionGroup(CM_ENERGY)))
-{
-	s_registry.SetComponent<Slug*>(m_handle, this);
-}
-
-Slug::~Slug()
 {}
 
 void Slug::update(Spatial& spatial)
@@ -117,11 +129,11 @@ void Slug::update(Spatial& spatial)
 
 	//Collision collision = (*m_solid)->raycast(m_spatial.m_position + m_velocity, mask);
 	Collision collision = (*m_collider)->raycast(spatial.m_position + m_velocity, mask);
-	Entity* hit = nullptr;//collision.m_second ? &collision.m_second->m_spatial : nullptr;
+	HSpatial hit = collision.m_second ? collision.m_second->m_spatial : HSpatial();
 
-	if(hit != nullptr)
+	if(hit)
 	{
-		if(Tank* tank = nullptr)//try_as<Tank>(*hit))
+		if(Tank* tank = try_asa<Tank>(hit))
 		{
 			m_impacted = true;
 			m_impact = collision.m_hit_point;
@@ -138,7 +150,7 @@ void Slug::update(Spatial& spatial)
 				solid->impulse((m_velocity + Y3 * 10.f) * m_power, location);
 		}
 
-		if(Shield* shield = nullptr)//try_as<Shield>(*hit))
+		if(Shield* shield = try_asa<Shield>(hit))
 		{
 			auto reflect = [](const vec3& I, const vec3& N) { return I - 2.f * dot(N, I) * N; };
 
@@ -156,25 +168,30 @@ void Slug::update(Spatial& spatial)
 	//m_collider.update_transform();
 }
 
-Tank::Tank(HSpatial parent, const vec3& position, Faction& faction)
-	: Entity(Tags<Spatial, Movable, Emitter, Receptor, Tank*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_movable(*this, m_spatial)
-	, m_emitter(*this, m_spatial, m_movable)
-	, m_receptor(*this, m_spatial, m_movable)
-	, m_faction(faction)
+uint32_t Tank::create(HSpatial parent, const vec3& position, Faction& faction)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Emitter, Receptor, Tank>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
+	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
+	s_registry.SetComponent(entity, Receptor(HSpatial(entity)));
+	s_registry.SetComponent(entity, Tank(HSpatial(entity), HMovable(entity), HEmitter(entity), HReceptor(entity), faction));
+	return entity;
+}
+
+Tank::Tank(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor receptor, Faction& faction)
+	: m_spatial(spatial)
+	, m_movable(movable)
+	, m_emitter(emitter)
+	, m_receptor(receptor)
+	, m_faction(&faction)
 	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), false, 4.f))
 {
-	s_registry.SetComponent<Tank*>(m_handle, this);
-
 	m_emitter->add_sphere(VisualMedium::me, 0.1f);
 	m_receptor->add_sphere(VisualMedium::me, 100.f);
 	
 	m_shock = 1.f;
 }
-
-Tank::~Tank()
-{}
 
 void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta)
 {
@@ -188,8 +205,8 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 	for(auto& slug : reverse_adapt(m_slugs))
 	{
 		slug->update(slug->m_spatial);
-		if(slug->m_destroy)
-			vector_remove_pt(m_slugs, *slug);
+		//if(slug->m_destroy)
+		//	vector_remove(m_slugs, *slug);
 	}
 
 	if(!m_ia)
@@ -200,8 +217,8 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 		m_target = nullptr;
 
 		ReceptorScope* vision = receptor.scope(VisualMedium::me);
-		for(HSpatial spatial : vision->m_scope)
-			if(Tank* tank = nullptr)//try_as<Tank>(spatial->m_entity))
+		for(HSpatial seen : vision->m_scope)
+			if(Tank* tank = try_asa<Tank>(seen))
 				if(&tank->m_faction != &m_faction && !tank->m_stealth)
 				{
 					m_target = tank;
@@ -225,7 +242,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 			}
 		}
 
-		Tank* leader = m_faction.m_leader;
+		HTank leader = m_faction->m_leader;
 		if(leader && !m_target && distance(leader->m_spatial->m_position, spatial.m_position) > 50.f)
 			m_dest = leader->m_spatial->m_position;
 		
@@ -257,7 +274,7 @@ void Tank::shoot(bool critical)
 	quat rotation = this->turret_rotation();
 
 	Spatial& spatial = m_spatial;
-	m_slugs.emplace_back(make_object<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
+	m_slugs.emplace_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
 }
 
 BlockWorld::BlockWorld(const std::string& name)
@@ -277,15 +294,13 @@ BlockWorld::BlockWorld(const std::string& name)
 }
 
 BlockWorld::~BlockWorld()
-{
-	m_world.destroy();
-}
+{}
 
 void BlockWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 {
 	static WaveTileset& tileset = generator_tileset(gfx_system);
 
-	TileBlock& block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale, false);
+	Tileblock& block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale, false);
 
 	block.m_world_page->m_geometry_filter = { "flat_low", "flat_high", "cliff_side_0_0", "cliff_corner_in_0_0", "cliff_corner_out_0_0" };
 
@@ -298,10 +313,10 @@ void BlockWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 
 Player::Player(BlockWorld& world)
 	: m_world(&world)
-	, m_tank(world.m_world.origin(), Y3 * 20.f, g_factions[0])
+	, m_tank(Tank::create(world.m_world.origin(), Y3 * 20.f, g_factions[0]))
 {
-	m_tank.m_faction.m_leader = &m_tank;
-	m_tank.m_ia = false;
+	m_tank->m_faction->m_leader = m_tank;
+	m_tank->m_ia = false;
 }
 
 void paint_well(Gnode& parent, Well& well)
@@ -324,6 +339,8 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 	static std::vector<Material*> power = std::vector<Material*>(4);
 
+	Faction& faction = *shield.m_faction;
+
 	auto fresnel_material = [&](Material& material, const Colour& colour)
 	{
 		material.m_fresnel_block.m_enabled = true;
@@ -331,16 +348,16 @@ void paint_shield(Gnode& parent, Shield& shield)
 		material.m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
 	};
 
-	if(power[shield.m_faction.m_id] == nullptr)
+	if(power[faction.m_id] == nullptr)
 	{
-		Material* material = &parent.m_scene->m_gfx_system.fetch_material(("shield_faction_" + to_string(shield.m_faction.m_id)).c_str(), "fresnel");
-		fresnel_material(*material, shield.m_faction.m_colour * 4.f);
-		power[shield.m_faction.m_id] = material;
+		Material* material = &parent.m_scene->m_gfx_system.fetch_material(("shield_faction_" + to_string(faction.m_id)).c_str(), "fresnel");
+		fresnel_material(*material, faction.m_colour * 4.f);
+		power[faction.m_id] = material;
 	}
 
 	static Clock clock;
 
-	float period = remap_trig(sin(clock.read() * 2.f), 0.f, 0.05f);
+	float period = remap_trig(sin(float(clock.read()) * 2.f), 0.f, 0.05f);
 
 	auto paint = [&](Material& material, float bias, const Colour& colour)
 	{
@@ -355,7 +372,7 @@ void paint_shield(Gnode& parent, Shield& shield)
 	}
 	else
 	{
-		paint(*power[shield.m_faction.m_id], period, shield.m_faction.m_colour * 4.f * shield.m_charge);
+		paint(*power[faction.m_id], period, faction.m_colour * 4.f * shield.m_charge);
 	}
 
 	if(shield.m_discharge > 0.f)
@@ -434,10 +451,12 @@ void paint_tank(Gnode& parent, Tank& tank)
 	static Model& tank_base_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_base"));
 	static Model& tank_turret_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_turret"));
 
-	if(tank_base_models[tank.m_faction.m_id] == nullptr)
+	Faction& faction = *tank.m_faction;
+
+	if(tank_base_models[faction.m_id] == nullptr)
 	{
-		tank_base_models[tank.m_faction.m_id] = &faction_model_variant(gfx_system, tank.m_faction, *gfx_system.models().file("scifi_tank_base"));
-		tank_turret_models[tank.m_faction.m_id] = &faction_model_variant(gfx_system, tank.m_faction, *gfx_system.models().file("scifi_tank_turret"));
+		tank_base_models[faction.m_id] = &faction_model_variant(gfx_system, faction, *gfx_system.models().file("scifi_tank_base"));
+		tank_turret_models[faction.m_id] = &faction_model_variant(gfx_system, faction, *gfx_system.models().file("scifi_tank_turret"));
 	}
 
 	Gnode& turret = gfx::node(parent, {}, parent.m_attach->m_position, tank.turret_rotation());
@@ -451,8 +470,8 @@ void paint_tank(Gnode& parent, Tank& tank)
 		}
 		else
 		{
-			gfx::item(parent, *tank_base_models[tank.m_faction.m_id]);
-			gfx::item(turret, *tank_turret_models[tank.m_faction.m_id]);
+			gfx::item(parent, *tank_base_models[faction.m_id]);
+			gfx::item(turret, *tank_turret_models[faction.m_id]);
 		}
 	}
 	else
@@ -469,7 +488,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 		{
 			Gnode& alive = parent.subx(Alive);
 			Gnode& symbol = gfx::node(alive, {}, parent.m_attach->m_position, parent.m_attach->m_rotation);
-			gfx::shape(alive, Torus(4.f, 0.1f), Symbol(tank.m_faction.m_colour * 2.f));
+			gfx::shape(symbol, Torus(4.f, 0.1f), Symbol(faction.m_colour * 2.f));
 
 			if(false)
 			{
@@ -497,10 +516,11 @@ void paint_block_wire(Gnode& parent, Block& block)
 	paint_block_wireframe(parent, block, Colour(1.f, 2.f, 1.5f));
 }
 
-void paint_block(Gnode& parent, TileBlock& block)
+void paint_block(Gnode& parent, Tileblock& block)
 {
 	if(block.m_wfc_block.m_wave.m_solved)
-		paint_tiles(parent, Ref(block.m_spatial->m_entity), block.m_wfc_block);
+		paint_tiles(parent, {}, block.m_wfc_block);
+		//paint_tiles(parent, Ref(block.m_spatial), block.m_wfc_block);
 }
 
 void paint_scene(Gnode& parent, bool radiance)
@@ -604,7 +624,8 @@ Style& menu_style()
 #if 1
 Style& button_style(UiWindow& ui_window)
 {
-	static Style style = { "GameButton", styles().button, [](Layout& l) {},
+	UNUSED(ui_window);
+	static Style style = { "GameButton", styles().button, [](Layout& l) { UNUSED(l); },
 														  [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::AlphaWhite; s.m_text_size = 24.f; },
 														  [](Style& s) { s.decline_skin(HOVERED).m_text_colour = Colour::White; } };
 	return style;
@@ -624,7 +645,7 @@ Style& button_style(UiWindow& ui_window)
 
 Style& label_style()
 {
-	static Style style = { "GameLabel", styles().button, [](Layout& l) {},
+	static Style style = { "GameLabel", styles().button, [](Layout& l) { UNUSED(l); },
 														 [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::White; s.m_text_font = "veramono"; s.m_text_size = 14.f;  } };
 	return style;
 }
@@ -637,27 +658,30 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 
 	Viewer& viewer = ui::viewer(self, scene.m_scene);
 
+	Tank& tank = player.m_tank;
+	Spatial& spatial = tank.m_spatial;
+
 	OrbitController& orbit = ui::orbit_controller(viewer, 0.f, -c_pi / 4.f, 200.f);
-	orbit.set_target(player.m_tank.m_spatial->m_position);
+	orbit.set_target(spatial.m_position);
 
 #ifdef TOY_SOUND
 	scene.m_snd_manager.m_listener.setTransform(viewer.m_camera.m_eye, look_at(viewer.m_camera.m_eye, viewer.m_camera.m_target));
 #endif
 
 	Ray ray = viewer.mouse_ray();
-	vec3 target = plane_segment_intersection(Plane(Y3, player.m_tank.m_spatial->m_position.y), to_segment(ray));
+	vec3 target = plane_segment_intersection(Plane(Y3, spatial.m_position.y), to_segment(ray));
 
-	player.m_tank.m_turret_angle = look_at(player.m_tank.m_spatial->m_position, target);
+	tank.m_turret_angle = look_at(spatial.m_position, target);
 
 	tank_velocity_controller(viewer, player.m_tank);
 
 	if(KeyEvent key_event = viewer.key_stroke(Key::LeftControl))
-		player.m_tank.m_stealth = !player.m_tank.m_stealth;
+		tank.m_stealth = !tank.m_stealth;
 
 	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::Any))
 	{
 		viewer.take_focus();
-		player.m_tank.shoot(viewer.ui().m_keyboard.m_shift);
+		tank.shoot(viewer.ui().m_keyboard.m_shift);
 	}
 
 	static vec3 destination = Zero3;
@@ -673,7 +697,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	if(destination != Zero3)
 	{
 		static Clock clock;
-		if(steer_2d(player.m_tank.m_spatial, player.m_tank.m_movable, destination, 15.f, float(clock.step()), 0.1f))
+		if(steer_2d(spatial, tank.m_movable, destination, 15.f, float(clock.step()), 0.1f))
 			destination = Zero3;
 	}
 
@@ -686,7 +710,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	static Style& style_label = label_style();
 
 	Widget& screen = ui::widget(viewer, style_screen);
-	Widget& board = ui::board(screen);
+	Widget& board = ui::board(screen); UNUSED(board);
 	Widget& row = ui::row(screen);
 	Widget& left_panel = ui::widget(row, style_left_panel);
 	Widget& center_panel = ui::widget(row, style_center_panel);
@@ -714,18 +738,18 @@ Viewer& ex_blocks_menu_viewport(Widget& parent, GameShell& app)
 	viewer.m_camera.m_eye = viewer.m_camera.m_target + vec3(-1.5f, 1.0f, -0.5f) * (10.f + sinf(float(clock.read()) * 0.1f));
 
 	static DefaultWorld world = { "" };
-	static Origin root = { world.m_world };
+	static EntityHandle<Origin> root = Origin::create(world.m_world);
 
-	static Tank tank0 = { root.m_spatial, Zero3, g_factions[0] };
-	static Tank tank1 = { root.m_spatial, X3 * 10.f, g_factions[1] };
-	static Tank tank2 = { root.m_spatial, Z3 * 10.f, g_factions[2] };
+	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root->m_spatial, Zero3, g_factions[0]);
+	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root->m_spatial, X3 * 10.f, g_factions[1]);
+	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root->m_spatial, Z3 * 10.f, g_factions[2]);
 
 	static bool once = false;
 	if(!once)
 	{
-		tank0.m_spatial->rotate(Y3, c_pi * 0.25f);
-		tank1.m_spatial->rotate(Y3, c_pi * 0.25f);
-		tank2.m_spatial->rotate(Y3, c_pi * 0.25f);
+		tank0->m_spatial->rotate(Y3, c_pi * 0.25f);
+		tank1->m_spatial->rotate(Y3, c_pi * 0.25f);
+		tank2->m_spatial->rotate(Y3, c_pi * 0.25f);
 		once = true;
 	}
 
@@ -762,6 +786,7 @@ void ex_blocks_menu(Widget& parent, Game& game)
 
 void ex_blocks_pump_game(GameShell& app, Game& game, Widget& parent)
 {
+	UNUSED(game);
 	static GameScene& scene = app.add_scene();
 	ex_blocks_game_ui(parent, scene);
 }
@@ -780,25 +805,24 @@ public:
 		g_factions.emplace_back(0, Colour::Pink);
 		g_factions.emplace_back(0, Colour::Cyan);
 
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector*>();
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, TileBlock*>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>();
 
-		s_registry.AddBuffers<Spatial, Emitter, Well*>();
-		s_registry.AddBuffers<Spatial, Camp*>();
-		s_registry.AddBuffers<Spatial, Emitter, Shield*>();
-		s_registry.AddBuffers<Spatial, Slug*>();
-		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank*>();
+		s_registry.AddBuffers<Spatial, Emitter, Well>();
+		s_registry.AddBuffers<Spatial, Camp>();
+		s_registry.AddBuffers<Spatial, Emitter, Shield>();
+		s_registry.AddBuffers<Spatial, Slug>();
+		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank>();
 	}
 
 	virtual void start(GameShell& app, Game& game) final
 	{
-		app.m_core->add_loop<TileBlock*, WorldPage>(Task::Spatial);
-		app.m_core->add_loop<Shield*>(Task::GameObject);
-		app.m_core->add_loop<Tank*, Spatial, Movable, Receptor>(Task::GameObject);
+		app.m_core->add_loop<Tileblock, WorldPage>(Task::Spatial);
+		app.m_core->add_loop<Shield>(Task::GameObject);
+		app.m_core->add_loop<Tank, Spatial, Movable, Receptor>(Task::GameObject);
 
 		global_pool<BlockWorld>();
 		//global_pool<Block>();
-		global_pool<OCamera>();
 
 		SolidMedium::me.m_masks[CollisionGroup(CM_ENERGY)] = CM_SOLID | CM_GROUND | CM_ENERGY;
 
@@ -814,6 +838,7 @@ public:
 
 	virtual void scene(GameShell& app, GameScene& scene) final
 	{
+		UNUSED(app);
 		scene.painter("World", [&](size_t index, VisuScene& scene, Gnode& parent) {
 			UNUSED(scene); paint_scene(parent.subi((void*)index), true);
 		});
@@ -823,12 +848,13 @@ public:
 		scene.entity_painter<Well>("Well", world, paint_well);
 		scene.entity_painter<Tank>("Tanks", world, paint_tank);
 		scene.entity_painter<Slug>("Slugs", world, paint_shell);
-		scene.entity_painter<TileBlock>("Tileblocks", world, paint_block);
+		scene.entity_painter<Tileblock>("Tileblocks", world, paint_block);
 		scene_painters(scene, world);
 
 		static PhysicDebugDraw physic_draw = { *scene.m_scene.m_immediate };
 
 		scene.painter("PhysicsDebug", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
+			UNUSED(index); UNUSED(visu_scene); UNUSED(parent);
 			//physic_draw.draw_physics(parent, *scene.m_game.m_world, SolidMedium::me);
 		});
 	}
@@ -837,6 +863,7 @@ public:
 	{
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
+			UNUSED(dockbar);
 			if(!game.m_player)
 				ex_blocks_menu(parent, game);
 			else

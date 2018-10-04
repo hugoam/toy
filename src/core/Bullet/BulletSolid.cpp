@@ -9,7 +9,7 @@
 #define TOY_PRIVATE
 #include <core/Bullet.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 #include <core/Bullet/BulletWorld.h>
 #include <core/Bullet/BulletMotionState.h>

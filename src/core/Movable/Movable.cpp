@@ -12,7 +12,7 @@
 #include <core/Bullet.h>
 
 #include <core/World/World.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Movable/MotionState.h>
 
 #include <core/World/Section.h>

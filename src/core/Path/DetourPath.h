@@ -10,7 +10,7 @@
 #include <math/Vec.h>
 #include <infra/NonCopy.h>
 #include <core/Forward.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #ifndef MUD_CPP_20
 #include <vector>
@@ -21,12 +21,15 @@ using namespace mud; namespace toy
 {
 	typedef unsigned int dtPolyRef;
 
-	class refl_ TOY_CORE_EXPORT Waypoint : public Entity
+	class refl_ TOY_CORE_EXPORT Waypoint
 	{
 	public:
-		constr_ Waypoint(HSpatial parent, const vec3& position);
+		constr_ Waypoint() {}
+		constr_ Waypoint(HSpatial parent);
 
-		comp_ attr_ CSpatial m_spatial;
+		static uint32_t create(HSpatial parent, const vec3& position);
+
+		attr_ HSpatial m_spatial;
 	};
 
     class refl_ TOY_CORE_EXPORT DetourPath

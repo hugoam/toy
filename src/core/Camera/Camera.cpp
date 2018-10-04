@@ -10,13 +10,22 @@
 #include <math/Anim/Anim.h>
 #include <math/Random.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
 
 #include <core/World/Section.h>
 
 using namespace mud; namespace toy
 {
+	uint32_t Camera::create(HSpatial parent, const vec3& position, float lens_distance, float near, float far)
+	{
+		uint32_t entity = s_registry.CreateEntity<Spatial, Movable, toy::Camera>();
+		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		s_registry.SetComponent(entity, Movable(HSpatial(entity)));
+		s_registry.SetComponent(entity, toy::Camera(HSpatial(entity), lens_distance, near, far));
+		return entity;
+	}
+
     Camera::Camera(HSpatial spatial, float lens_distance, float near, float far)
         : m_spatial(spatial)
 		, m_lens_distance(lens_distance)
@@ -80,16 +89,6 @@ using namespace mud; namespace toy
 		}
 		m_last_updated = tick;
 		m_lens_updated = false;
-	}
-
-	OCamera::OCamera(HSpatial parent, const vec3& position, float lensDistance, float nearClipDistance, float farClipDistance)
-		: Entity(Tags<Spatial, Movable, Camera>{})
-		, m_spatial(*this, *this, parent, position, ZeroQuat)
-		, m_movable(*this, m_spatial)
-		, m_camera(*this, m_spatial, lensDistance, nearClipDistance, farClipDistance)
-		//, m_receptor(*this, m_spatial)
-	{
-		//m_receptor.add_sphere(WorldMedium::me, 0.1f, CM_RECEPTOR);
 	}
 
 	void jump_camera_to(Spatial& spatial, Camera& camera, const vec3& target, float distance, float rotation)

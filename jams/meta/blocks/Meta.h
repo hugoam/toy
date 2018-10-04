@@ -101,7 +101,7 @@ namespace mud
         
     // BlockWorld
     {
-        static Meta meta = { type<BlockWorld>(), &namspc({}), "BlockWorld", sizeof(BlockWorld), TypeClass::Entity };
+        static Meta meta = { type<BlockWorld>(), &namspc({}), "BlockWorld", sizeof(BlockWorld), TypeClass::Object };
         static Class cls = { type<BlockWorld>(),
             // bases
             { &type<mud::Complex>() },
@@ -141,11 +141,11 @@ namespace mud
         
     // Camp
     {
-        static Meta meta = { type<Camp>(), &namspc({}), "Camp", sizeof(Camp), TypeClass::Entity };
+        static Meta meta = { type<Camp>(), &namspc({}), "Camp", sizeof(Camp), TypeClass::Object };
         static Class cls = { type<Camp>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Camp, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
                 { type<Camp>(), [](Ref ref, array<Var> args) { new(&val<Camp>(ref)) Camp( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Faction>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "faction", Ref(type<Faction>()) } } }
@@ -157,7 +157,7 @@ namespace mud
             {
                 { type<Camp>(), member_address(&Camp::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Camp>(), member_address(&Camp::m_position), type<mud::vec3>(), "position", var(mud::vec3()), Member::Value, nullptr },
-                { type<Camp>(), Address(), type<Faction>(), "faction", Ref(type<Faction>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<Camp>(object).m_faction); } }
+                //{ type<Camp>(), Address(), type<Faction>(), "faction", Ref(type<Faction>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<Camp>(object).m_faction); } }
             },
             // methods
             {
@@ -177,14 +177,14 @@ namespace mud
         
     // Shield
     {
-        static Meta meta = { type<Shield>(), &namspc({}), "Shield", sizeof(Shield), TypeClass::Entity };
+        static Meta meta = { type<Shield>(), &namspc({}), "Shield", sizeof(Shield), TypeClass::Object };
         static Class cls = { type<Shield>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Shield, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
-                { type<Shield>(), [](Ref ref, array<Var> args) { new(&val<Shield>(ref)) Shield( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Faction>(args[3]), val<float>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "faction", Ref(type<Faction>()) }, { "radius", var(float()) } } }
+                //{ type<Shield>(), [](Ref ref, array<Var> args) { new(&val<Shield>(ref)) Shield( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Faction>(args[3]), val<float>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "faction", Ref(type<Faction>()) }, { "radius", var(float()) } } }
             },
             // copy constructor
             {
@@ -193,7 +193,7 @@ namespace mud
             {
                 { type<Shield>(), member_address(&Shield::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Shield>(), member_address(&Shield::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
-                { type<Shield>(), Address(), type<Faction>(), "faction", Ref(type<Faction>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<Shield>(object).m_faction); } },
+                //{ type<Shield>(), Address(), type<Faction>(), "faction", Ref(type<Faction>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<Shield>(object).m_faction); } },
                 { type<Shield>(), member_address(&Shield::m_radius), type<float>(), "radius", var(float()), Member::Value, nullptr },
                 { type<Shield>(), member_address(&Shield::m_charge), type<float>(), "charge", var(float()), Member::Value, nullptr },
                 { type<Shield>(), member_address(&Shield::m_discharge), type<float>(), "discharge", var(float()), Member::Value, nullptr }
@@ -216,11 +216,11 @@ namespace mud
         
     // Slug
     {
-        static Meta meta = { type<Slug>(), &namspc({}), "Slug", sizeof(Slug), TypeClass::Entity };
+        static Meta meta = { type<Slug>(), &namspc({}), "Slug", sizeof(Slug), TypeClass::Object };
         static Class cls = { type<Slug>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Slug, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
             },
@@ -251,14 +251,14 @@ namespace mud
         
     // Tank
     {
-        static Meta meta = { type<Tank>(), &namspc({}), "Tank", sizeof(Tank), TypeClass::Entity };
+        static Meta meta = { type<Tank>(), &namspc({}), "Tank", sizeof(Tank), TypeClass::Object };
         static Class cls = { type<Tank>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Tank, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
-                { type<Tank>(), [](Ref ref, array<Var> args) { new(&val<Tank>(ref)) Tank( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Faction>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "faction", Ref(type<Faction>()) } } }
+                //{ type<Tank>(), [](Ref ref, array<Var> args) { new(&val<Tank>(ref)) Tank( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Faction>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "faction", Ref(type<Faction>()) } } }
             },
             // copy constructor
             {
@@ -288,14 +288,14 @@ namespace mud
         
     // Well
     {
-        static Meta meta = { type<Well>(), &namspc({}), "Well", sizeof(Well), TypeClass::Entity };
+        static Meta meta = { type<Well>(), &namspc({}), "Well", sizeof(Well), TypeClass::Object };
         static Class cls = { type<Well>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Well, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
-                { type<Well>(), [](Ref ref, array<Var> args) { new(&val<Well>(ref)) Well( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) } } }
+                //{ type<Well>(), [](Ref ref, array<Var> args) { new(&val<Well>(ref)) Well( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) } } }
             },
             // copy constructor
             {

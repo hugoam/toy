@@ -27,6 +27,8 @@ using namespace mud; namespace toy
 		: m_job_system(job_system)
 	{
 		s_registry.AddBuffers<Spatial>();
+		s_registry.AddBuffers<Spatial, Origin>();
+		s_registry.AddBuffers<Spatial, Waypoint>();
 		s_registry.AddBuffers<Spatial, Movable, Camera>();
 
 		add_parallel_loop<Spatial>(Task::Spatial);
@@ -57,7 +59,5 @@ using namespace mud; namespace toy
 	{}
 
 	DefaultWorld::~DefaultWorld()
-	{
-		m_world.destroy();
-	}
+	{}
 }

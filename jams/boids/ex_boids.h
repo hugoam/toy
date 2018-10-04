@@ -164,7 +164,6 @@ namespace boids
 	};
 }
 
-#ifdef TOY_ECS
 namespace mud
 {
 	template <> struct TypedBuffer<boids::Position> { static size_t index() { return 12; } };
@@ -177,4 +176,3 @@ namespace mud
 	template <> struct TypedBuffer<boids::BoidTarget> { static size_t index() { return 19; } };
 	template <> struct TypedBuffer<boids::Transform4> { static size_t index() { return 20; } };
 }
-#endif

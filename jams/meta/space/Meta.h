@@ -696,11 +696,11 @@ namespace mud
         
     // Fleet
     {
-        static Meta meta = { type<Fleet>(), &namspc({}), "Fleet", sizeof(Fleet), TypeClass::Entity };
+        static Meta meta = { type<Fleet>(), &namspc({}), "Fleet", sizeof(Fleet), TypeClass::Object };
         static Class cls = { type<Fleet>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Fleet, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
                 //{ type<Fleet>(), [](Ref ref, array<Var> args) { new(&val<Fleet>(ref)) Fleet( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<Commander>(args[3]), val<mud::uvec2>(args[4]), val<std::string>(args[5]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "commander", Ref(type<Commander>()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
@@ -747,14 +747,14 @@ namespace mud
         
     // Galaxy
     {
-        static Meta meta = { type<Galaxy>(), &namspc({}), "Galaxy", sizeof(Galaxy), TypeClass::Entity };
+        static Meta meta = { type<Galaxy>(), &namspc({}), "Galaxy", sizeof(Galaxy), TypeClass::Object };
         static Class cls = { type<Galaxy>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Galaxy, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
-                { type<Galaxy>(), [](Ref ref, array<Var> args) { new(&val<Galaxy>(ref)) Galaxy( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec2>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "size", var(mud::uvec2()) } } }
+                //{ type<Galaxy>(), [](Ref ref, array<Var> args) { new(&val<Galaxy>(ref)) Galaxy( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec2>(args[3]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "size", var(mud::uvec2()) } } }
             },
             // copy constructor
             {
@@ -762,7 +762,7 @@ namespace mud
             // members
             {
                 { type<Galaxy>(), member_address(&Galaxy::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
-                { type<Galaxy>(), member_address(&Galaxy::m_quadrants), type<std::vector<Quadrant*>>(), "quadrants", var(std::vector<Quadrant*>()), Member::Value, nullptr },
+                //{ type<Galaxy>(), member_address(&Galaxy::m_quadrants), type<std::vector<Quadrant*>>(), "quadrants", var(std::vector<Quadrant*>()), Member::Value, nullptr },
                 { type<Galaxy>(), member_address(&Galaxy::m_stars), type<std::vector<Star*>>(), "stars", var(std::vector<Star*>()), Member::Value, nullptr },
                 { type<Galaxy>(), member_address(&Galaxy::m_fleets), type<std::vector<Fleet*>>(), "fleets", var(std::vector<Fleet*>()), Member::Value, nullptr },
                 { type<Galaxy>(), member_address(&Galaxy::m_commanders), type<std::vector<Commander*>>(), "commanders", var(std::vector<Commander*>()), Member::Value, nullptr },
@@ -787,11 +787,11 @@ namespace mud
         
     // Star
     {
-        static Meta meta = { type<Star>(), &namspc({}), "Star", sizeof(Star), TypeClass::Entity };
+        static Meta meta = { type<Star>(), &namspc({}), "Star", sizeof(Star), TypeClass::Object };
         static Class cls = { type<Star>(),
             // bases
-            { &type<mud::Entity>() },
-            { base_offset<Star, mud::Entity>() },
+            { },
+			{ },
             // constructors
             {
                 //{ type<Star>(), [](Ref ref, array<Var> args) { new(&val<Star>(ref)) Star( val<toy::HSpatial>(args[1]), val<mud::vec3>(args[2]), val<mud::uvec2>(args[3]), val<std::string>(args[4]) ); }, { { "id", var(mud::Id()) }, { "parent", Ref(type<toy::Spatial>()) }, { "position", var(mud::vec3()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
@@ -837,7 +837,7 @@ namespace mud
         
     // Universe
     {
-        static Meta meta = { type<Universe>(), &namspc({}), "Universe", sizeof(Universe), TypeClass::Entity };
+        static Meta meta = { type<Universe>(), &namspc({}), "Universe", sizeof(Universe), TypeClass::Object };
         static Class cls = { type<Universe>(),
             // bases
             { &type<mud::Complex>() },

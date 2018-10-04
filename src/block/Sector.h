@@ -12,33 +12,30 @@
 #include <core/Navmesh/Navmesh.h>
 #include <block/Forward.h>
 #include <block/Element.h>
+#include <block/Components.h>
+#include <block/Structs.h>
 
 #ifndef MUD_CPP_20
 #include <vector>
-#endif
-
-#ifdef TOY_ECS
-namespace mud
-{
-	template <> struct TypedBuffer<toy::Sector*> { static size_t index() { return 10; } };
-	template <> struct TypedBuffer<toy::TileBlock*> { static size_t index() { return 11; } };
-}
 #endif
 
 using namespace mud; namespace toy
 {
 	typedef std::vector<Chunk*> ChunkVector;
 
-	class refl_ TOY_BLOCK_EXPORT Sector : public Entity
+	class refl_ TOY_BLOCK_EXPORT Sector
 	{
 	public:
-		constr_ Sector(HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size);
+		constr_ Sector() {}
+		constr_ Sector(HSpatial spatial, HWorldPage world_page, HNavblock navblock, const uvec3& coordinate, const vec3& size);
 
-		comp_ attr_ CSpatial m_spatial;
-		//comp_ attr_ CEmitter m_emitter;
-		comp_ attr_ CWorldPage m_world_page;
-		//comp_ attr_ CBufferPage m_buffer_page;
-		comp_ attr_ CNavblock m_navblock;
+		static uint32_t create(HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size);
+
+		attr_ HSpatial m_spatial;
+		attr_ HWorldPage m_world_page;
+		attr_ HNavblock m_navblock;
+		//attr_ HEmitter m_emitter;
+		//attr_ HBufferPage m_buffer_page;
 
 		attr_ uvec3 m_coordinate;
 		attr_ vec3 m_size;
@@ -48,31 +45,34 @@ using namespace mud; namespace toy
 		std::vector<Heap*> m_heaps;
 	};
 
-	class refl_ TOY_BLOCK_EXPORT TileBlock : public Entity
+	class refl_ TOY_BLOCK_EXPORT Tileblock
 	{
 	public:
-		constr_ TileBlock(HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset);
-		~TileBlock();
+		constr_ Tileblock() {}
+		constr_ Tileblock(HSpatial spatial, HWorldPage world_page, HNavblock navblock, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset);
+		~Tileblock();
 
-		comp_ attr_ CSpatial m_spatial;
-		//comp_ attr_ CEmitter m_emitter;
-		comp_ attr_ CWorldPage m_world_page;
-		comp_ attr_ CNavblock m_navblock;
+		static uint32_t create(HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset);
+
+		attr_ HSpatial m_spatial;
+		attr_ HWorldPage m_world_page;
+		attr_ HNavblock m_navblock;
+		//attr_ HEmitter m_emitter;
 
 		attr_ WfcBlock m_wfc_block;
 		attr_ bool m_setup = false;
 		attr_ bool m_populated = false;
 
-		std::function<void(TileBlock&)> m_on_setup;
+		std::function<void(Tileblock&)> m_on_setup;
 
 		void next_frame(WorldPage& world_page, size_t frame, size_t delta);
 
 		bool contains(const vec3& position);
 	};
 
-	TOY_BLOCK_EXPORT func_ TileBlock& generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file = true);
+	TOY_BLOCK_EXPORT func_ Tileblock& generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file = true);
 
-	TOY_BLOCK_EXPORT func_ void build_block_geometry(Scene& scene, WorldPage& page, TileBlock& block);
+	TOY_BLOCK_EXPORT func_ void build_block_geometry(Scene& scene, WorldPage& page, Tileblock& block);
 
 	TOY_BLOCK_EXPORT func_ void index_blocks(const ivec3& grid_size, Grid<Block*>& grid, const std::vector<Block*>& blocks, const std::vector<Sector*>& sectors);
 }

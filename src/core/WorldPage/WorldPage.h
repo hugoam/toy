@@ -35,9 +35,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT WorldPage : public Movabl
     {
 	public:
-#ifdef TOY_ECS
 		constr_ WorldPage() {}
-#endif
 		constr_ WorldPage(HSpatial spatial, bool open, const vec3& extents);
         ~WorldPage();
 

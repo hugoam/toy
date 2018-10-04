@@ -4,8 +4,8 @@
 //  This notice and the license may not be removed or altered from any source distribution.
 
 
-#include <core/Entity/Entity.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Physic/Physic.h>
 #include <core/Physic/CollisionShape.h>
 

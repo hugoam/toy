@@ -9,7 +9,7 @@
 #include <math/Timer.h>
 #include <visu/Forward.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Camera/Camera.h>
 #include <core/Selector/Selection.h>
 
@@ -74,7 +74,7 @@ using namespace mud; namespace toy
 
 		meth_ void next_frame();
 
-		Gnode& entity_node(Gnode& parent, Spatial& spatial, size_t painter);
+		Gnode& entity_node(Gnode& parent, uint32_t entity, Spatial& spatial, size_t painter);
 
 		inline void painter(cstring name, std::function<void(size_t, VisuScene&, Gnode&)> paint)
 		{
@@ -87,10 +87,9 @@ using namespace mud; namespace toy
 			UNUSED(world);
 			auto paint = [this, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
-				s_registry.Loop<Spatial, T*>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T*& component)
+				s_registry.Loop<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
 				{
-					UNUSED(entity);
-					paint_func(this->entity_node(parent, spatial, index), *component);
+					paint_func(this->entity_node(parent, entity, spatial, index), component);
 				});
 			};
 			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
@@ -101,8 +100,8 @@ using namespace mud; namespace toy
 		{
 			auto paint = [this, &objects, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
-				for(T* object : objects)
-					paint_func(this->entity_node(parent, object->m_spatial, index), *object);
+				for(auto object : objects)
+					paint_func(this->entity_node(parent, object->m_spatial.m_handle, object->m_spatial, index), *object);
 			};
 			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 		}

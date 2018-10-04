@@ -6,7 +6,7 @@
 #pragma once
 
 #include <edit/Forward.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <edit/Types.h>
 
 #ifndef MUD_CPP_20

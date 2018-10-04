@@ -10,7 +10,7 @@
 #include <refl/Class.h>
 #include <lang/Script.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #include <vector>
 
@@ -30,17 +30,17 @@ using namespace mud; namespace toy
 	{
 		if(m_logic_script)
 		{
-			Spatial& spatial = m_spatial;
+			//Spatial& spatial = m_spatial;
 			// @hack @kludge add proper way to define a script signature
 			if(m_logic_script->m_signature.m_params.empty())
 			{
 				//m_logic_script->m_signature.m_params.push_back({ "self", Ref(spatial.m_entity->m_type) });
-				m_logic_script->m_signature.m_params.push_back({ "self", Ref(type<Entity>()) });
-				m_logic_script->m_signature.m_params.push_back({ "entity", Ref(type<Spatial>()) });
+				//m_logic_script->m_signature.m_params.push_back({ "self", Ref(type<Entity>()) });
+				//m_logic_script->m_signature.m_params.push_back({ "entity", Ref(type<Spatial>()) });
 			}
 
-			std::vector<Var> args = { Ref(spatial.m_entity), Ref(&spatial) };
-			(*m_logic_script)(args);
+			//std::vector<Var> args = { Ref(spatial.m_handle), Ref(&spatial) };
+			//(*m_logic_script)(args);
 		}
 	}
 

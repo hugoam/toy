@@ -6,8 +6,8 @@
 
 #include <edit/Controller/CameraController.h>
 
-#include <core/Entity/Entity.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
+#include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 
 using namespace mud; namespace toy

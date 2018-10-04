@@ -58,7 +58,6 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Spatial>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>();
-    export_ template <> TOY_CORE_EXPORT Type& type<toy::OCamera>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Waypoint>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Origin>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::BulletCollider>();
@@ -76,7 +75,6 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::VisualMedium>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::WorldMedium>();
 
-#ifdef TOY_ECS
 	export_ template <> TOY_CORE_EXPORT Type& type<toy::HSpatial>();
 	export_ template <> TOY_CORE_EXPORT Type& type<toy::HMovable>();
 	export_ template <> TOY_CORE_EXPORT Type& type<toy::HCamera>();
@@ -85,7 +83,6 @@ namespace mud
 	export_ template <> TOY_CORE_EXPORT Type& type<toy::HEntityScript>();
 	export_ template <> TOY_CORE_EXPORT Type& type<toy::HWorldPage>();
 	export_ template <> TOY_CORE_EXPORT Type& type<toy::HNavblock>();
-#endif
 
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::BulletShape*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Camera*>>;
@@ -113,7 +110,6 @@ namespace mud
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Spatial*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::NavmeshShape*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::DefaultWorld*>>;
-	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::OCamera*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Waypoint*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::Origin*>>;
 	export_ template struct TOY_CORE_EXPORT Typed<std::vector<toy::BulletCollider*>>;

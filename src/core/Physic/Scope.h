@@ -7,24 +7,23 @@
 
 #include <core/Forward.h>
 
-#include <core/Entity/Entity.h> // @array-include
+#include <core/Spatial/Spatial.h> // @array-include
 #include <core/Physic/Collider.h>
 #include <core/Physic/Signal.h>
 
 using namespace mud; namespace toy
 {
-	class refl_ TOY_CORE_EXPORT PhysicScope : public Collider, public ColliderObject
+	class refl_ TOY_CORE_EXPORT PhysicScope : public ColliderObject
     {
     public:
 		PhysicScope() {}
-        PhysicScope(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group);
-
-		virtual void add_contact(Collider& object);
-		virtual void remove_contact(Collider& collider);
+        PhysicScope(HSpatial spatial, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group);
 
 		void add_scope(HSpatial object);
 		void remove_scope(HSpatial object);
 
+		HSpatial m_spatial;
+		OCollider m_collider;
 		std::vector<HSpatial> m_scope;
 		std::vector<Observer*> m_observers;
 	};
@@ -33,10 +32,10 @@ using namespace mud; namespace toy
 	{
 	public:
 		EmitterScope() {}
-		EmitterScope(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group /*= CM_SOURCE*/);
+		EmitterScope(HSpatial spatial, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group /*= CM_SOURCE*/);
 
-		virtual void add_contact(Collider& object);
-		virtual void remove_contact(Collider& collider);
+		virtual void add_contact(Collider& collider, ColliderObject& object);
+		virtual void remove_contact(Collider& collider, ColliderObject& object);
 
 		virtual void handle_moved();
 
@@ -48,29 +47,34 @@ using namespace mud; namespace toy
 	{
 	public:
 		ReceptorScope() {}
-		ReceptorScope(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group /*= CM_RECEPTOR*/);
+		ReceptorScope(HSpatial spatial, Medium& medium, const CollisionShape& collision_shape, CollisionGroup group /*= CM_RECEPTOR*/);
 	};
 
+#if 0
 	using OEmitterScope = OwnedHandle<EmitterScope>;
 	using OReceptorScope = OwnedHandle<ReceptorScope>;
 
 	using HEmitterScope = SparseHandle<EmitterScope>;
 	using HReceptorScope = SparseHandle<ReceptorScope>;
+#else
+	using OEmitterScope = object_ptr<EmitterScope>;
+	using OReceptorScope = object_ptr<ReceptorScope>;
+
+	using HEmitterScope = EmitterScope&;
+	using HReceptorScope = ReceptorScope&;
+#endif
 
 	class refl_ TOY_CORE_EXPORT Emitter : public Movabl
 	{
 	public:
-#ifdef TOY_ECS
 		constr_ Emitter() {}
-#endif
-		constr_ Emitter(HSpatial spatial, HMovable movable);
+		constr_ Emitter(HSpatial spatial);
 		~Emitter();
 
 		Emitter(Emitter&& other) = default;
 		Emitter& operator=(Emitter&& other) = default;
 
 		attr_ HSpatial m_spatial;
-		attr_ HMovable m_movable;
 
 		HEmitterScope add_scope(Medium& medium, const CollisionShape& collision_shape, CollisionGroup group);
 		HEmitterScope add_sphere(Medium& medium, float radius, CollisionGroup group = CM_SOURCE);
@@ -82,17 +86,14 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Receptor : public Movabl
 	{
 	public:
-#ifdef TOY_ECS
 		constr_ Receptor() {}
-#endif
-		constr_ Receptor(HSpatial spatial, HMovable movable);
+		constr_ Receptor(HSpatial spatial);
 		~Receptor();
 
 		Receptor(Receptor&& other) = default;
 		Receptor& operator=(Receptor&& other) = default;
 
 		attr_ HSpatial m_spatial;
-		attr_ HMovable m_movable;
 
 		HReceptorScope add_scope(Medium& medium, const CollisionShape& collision_shape, CollisionGroup group);
 		HReceptorScope add_sphere(Medium& medium, float radius, CollisionGroup group = CM_RECEPTOR);

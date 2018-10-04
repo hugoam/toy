@@ -5,7 +5,7 @@
 
 #include <core/Path/Pathfinder.h>
 
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
 #include <core/WorldPage/WorldPage.h>
 #include <core/Path/DetourPath.h>

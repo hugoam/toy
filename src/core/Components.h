@@ -9,7 +9,6 @@
 #include <pool/Pool.h>
 #include <ecs/Registry.h>
 
-#ifdef TOY_ECS
 namespace mud
 {
 	template <> struct TypedBuffer<toy::Spatial>		{ static size_t index() { return 0; } };
@@ -22,74 +21,32 @@ namespace mud
 	template <> struct TypedBuffer<toy::Navblock>		{ static size_t index() { return 7; } };
 	template <> struct TypedBuffer<toy::Collider>		{ static size_t index() { return 8; } };
 	template <> struct TypedBuffer<toy::Solid>			{ static size_t index() { return 9; } };
+
+	template <> struct TypedBuffer<toy::Origin>			{ static size_t index() { return 10; } };
+	template <> struct TypedBuffer<toy::Waypoint>		{ static size_t index() { return 11; } };
 }
-#endif
 
 using namespace mud; namespace toy
 {
-#ifdef TOY_ECS
-	using HSpatial = ComponentHandle<Spatial>;
-	using CSpatial = Component<Spatial>;
-
-	using HMovable = ComponentHandle<Movable>;
-	using CMovable = Component<Movable>;
-
-	using HCamera = ComponentHandle<Camera>;
-	using CCamera = Component<Camera>;
-
 	using HCollider = SparseHandle<Collider>;
 	using OCollider = OwnedHandle<Collider>;
-	//using HCollider = ComponentHandle<Collider>;
-	using CCollider = Component<Collider>;
-
 	using HSolid = SparseHandle<Solid>;
 	using OSolid = OwnedHandle<Solid>;
-	//using HSolid = ComponentHandle<Solid>;
-	using CSolid = Component<Solid>;
 
+	using HSpatial = ComponentHandle<Spatial>;
+	using HMovable = ComponentHandle<Movable>;
+	using HCamera = ComponentHandle<Camera>;
 	using HEmitter = ComponentHandle<Emitter>;
-	using CEmitter = Component<Emitter>;
-
 	using HReceptor = ComponentHandle<Receptor>;
-	using CReceptor = Component<Receptor>;
-
 	using HEntityScript = ComponentHandle<EntityScript>;
-	using CEntityScript = Component<EntityScript>;
-
 	using HWorldPage = ComponentHandle<WorldPage>;
-	using CWorldPage = Component<WorldPage>;
-
 	using HNavblock = ComponentHandle<Navblock>;
-	using CNavblock = Component<Navblock>;
-#else
-	using HSpatial = Spatial&;
-	using CSpatial = Spatial;
 
-	using HMovable = Movable&;
-	using CMovable = Movable;
-
-	using HCamera = Camera&;
-	using CCamera = Camera;
-
-	using HEmitter = Emitter&;
-	using CEmitter = Emitter;
-
-	using HReceptor = Receptor&;
-	using CReceptor = Receptor;
-
-	using HEntityScript = EntityScript&;
-	using CEntityScript = EntityScript;
-
-	using HWorldPage = WorldPage&;
-	using CWorldPage = WorldPage;
-
-	using HNavblock = Navblock&;
-	using CNavblock = Navblock;
-#endif
+	using HOrigin = ComponentHandle<Origin>;
+	using HWaypoint = ComponentHandle<Waypoint>;
 }
 
 #if 0
-#ifdef TOY_ECS
 namespace mud
 {
 	export_ template <> TOY_CORE_EXPORT Type& type<toy::HSpatial>();
@@ -110,5 +67,4 @@ namespace mud
 	template <> TOY_CORE_EXPORT Type& type<toy::HWorldPage>() { static Type ty("HWorldPage"); return ty; }
 	template <> TOY_CORE_EXPORT Type& type<toy::HNavblock>() { static Type ty("HNavblock"); return ty; }
 }
-#endif
 #endif

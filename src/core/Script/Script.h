@@ -7,7 +7,7 @@
 
 #include <infra/NonCopy.h>
 #include <core/Forward.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 #include <string>
 

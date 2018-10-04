@@ -5,15 +5,19 @@
 #include <minimal/Api.h>
 #include <meta/minimal/Module.h>
 
-Bullet::Bullet(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
-	: Entity(Tags<Spatial, Bullet*>{})
-	, m_spatial(*this, *this, parent, source, rotation)
+uint32_t Bullet::create(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Bullet>();
+	s_registry.SetComponent(entity, Spatial(parent, source, rotation));
+	s_registry.SetComponent(entity, Bullet(HSpatial(entity), source, rotation, velocity));
+	return entity;
+}
+
+Bullet::Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity)
+	: m_spatial(spatial)
 	, m_source(source)
 	, m_velocity(rotate(rotation, -Z3) * velocity)
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
-{}
-
-Bullet::~Bullet()
 {}
 
 void Bullet::update()
@@ -22,9 +26,9 @@ void Bullet::update()
 		return;
 
 	Collision collision = (*m_collider)->raycast(m_spatial->m_position + m_velocity, CM_SOLID | CM_GROUND);
-	Entity* hit = nullptr;//collision.m_second ? &collision.m_second->m_spatial : nullptr;
+	HSpatial hit = collision.m_second ? collision.m_second->m_spatial : HSpatial();
 
-	if(Human* shot = nullptr)//try_as<Human>(hit))
+	if(Human* shot = try_asa<Human>(hit))
 	{
 		m_impacted = true;
 		m_impact = collision.m_hit_point;
@@ -40,15 +44,20 @@ void Bullet::update()
 const vec3 Human::muzzle_offset = { 0.f, 1.6f, -1.f };
 float Human::headlight_angle = 40.f;
 
-Human::Human(HSpatial parent, const vec3& position)
-	: Entity(Tags<Spatial, Movable, Human*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_movable(*this, m_spatial)
+uint32_t Human::create(HSpatial parent, const vec3& position)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Human>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
+	s_registry.SetComponent(entity, Human(entity, entity));
+	return entity;
+}
+
+Human::Human(HSpatial spatial, HMovable movable)
+	: m_spatial(spatial)
+	, m_movable(movable)
 	, m_walk(false)
 	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), SolidMedium::me, CM_SOLID, false, 1.f))
-{}
-
-Human::~Human()
 {}
 
 void Human::next_frame(Spatial& spatial, size_t tick, size_t delta)
@@ -86,10 +95,18 @@ void Human::shoot()
 	m_bullets.emplace_back(make_object<Bullet>(m_spatial, aim.source, rotation, 2.f));
 }
 
-Crate::Crate(HSpatial parent, const vec3& position, const vec3& extents)
-	: Entity(Tags<Spatial, Movable, Crate*>{})
-	, m_spatial(*this, *this, parent, position, ZeroQuat)
-	, m_movable(*this, m_spatial)
+uint32_t Crate::create(HSpatial parent, const vec3& position, const vec3& extents)
+{
+	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Crate>();
+	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
+	s_registry.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
+	return entity;
+}
+
+Crate::Crate(HSpatial spatial, HMovable movable, const vec3& extents)
+	: m_spatial(spatial)
+	, m_movable(movable)
 	, m_extents(extents)
 	, m_solid(Solid::create(m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))
 {}
@@ -265,8 +282,9 @@ public:
 		app.m_gfx_system->add_resource_path("examples/ex_minimal/");
 		app.m_gfx_system->add_resource_path("examples/05_character/");
 
-		global_pool<Human>();
-		global_pool<Crate>();
+		s_registry.AddBuffers<Spatial, Bullet>();
+		s_registry.AddBuffers<Spatial, Movable, Human>();
+		s_registry.AddBuffers<Spatial, Movable, Crate>();
 	}
 
 	virtual void start(GameShell& app, Game& game) final

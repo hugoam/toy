@@ -22,14 +22,11 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Spatial : public Transform
     {
 	public:
-#ifdef TOY_ECS
 		constr_ Spatial() {}
-#endif
-		constr_ Spatial(Entity& entity, HSpatial parent, const vec3& position, const quat& rotation);
-		constr_ Spatial(Entity& entity, World& world, HSpatial parent, const vec3& position, const quat& rotation);
+		constr_ Spatial(HSpatial parent, const vec3& position, const quat& rotation);
+		constr_ Spatial(World& world, HSpatial parent, const vec3& position, const quat& rotation);
         ~Spatial();
 
-		attr_ Entity* m_entity = nullptr;
 		attr_ World* m_world = nullptr;
 		attr_ link_ HSpatial m_parent;
 
@@ -89,10 +86,18 @@ using namespace mud; namespace toy
 	void set_parent(HSpatial spatial, HSpatial target);
 
 	template <class T, class... Types>
-	inline T& construct(HSpatial parent, Types&&... args)
+	inline ComponentHandle<T> construct(HSpatial parent, Types&&... args)
 	{
-		T& object = global_pool<T>().construct(parent, std::forward<Types>(args)...);
-		parent->m_contents.push_back(object.m_spatial);
+		ComponentHandle<T> object = T::create(parent, std::forward<Types>(args)...);
+		parent->m_contents.push_back(object->m_spatial);
+		return object;
+	}
+
+	template <class T, class... Types>
+	inline EntityHandle<T> construct_owned(HSpatial parent, Types&&... args)
+	{
+		EntityHandle<T> object = T::create(parent, std::forward<Types>(args)...);
+		parent->m_contents.push_back(object->m_spatial);
 		return object;
 	}
 }

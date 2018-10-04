@@ -8,7 +8,7 @@
 #include <ecs/Entity.h>
 #include <core/Forward.h>
 #include <core/Bullet/BulletCollider.h>
-#include <core/Entity/Entity.h>
+#include <core/Spatial/Spatial.h>
 
 using namespace mud; namespace toy
 {

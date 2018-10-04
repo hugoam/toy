@@ -457,11 +457,8 @@ using namespace mud; namespace toy
 
 	void GameShell::destroy_world()
 	{
-#ifdef TOY_ECS
-#else
-		Entity& entity = m_game.m_world->m_entity;
+		Complex& complex = m_game.m_world->m_complex;
 		g_pools[complex.m_prototype.m_type.m_id]->destroy(Ref(&complex));
-#endif
 		m_game.m_world = nullptr;
 	}
 
