@@ -40,7 +40,7 @@ using namespace mud; namespace toy
 		bool m_hooked = true;
 
 		Spatial& origin();
-		bool is_child_of(Spatial& spatial);
+		bool is_child_of(HSpatial spatial);
 
 		vec3 absolute_position() const;
 		quat absolute_rotation() const;

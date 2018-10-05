@@ -42,7 +42,8 @@ using namespace mud; namespace toy
 		WorldPage(WorldPage&& other) = default;
 		WorldPage& operator=(WorldPage&& other) = default;
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
+
 		attr_ bool m_open = true;
 		attr_ vec3 m_extents = Zero3;
 		attr_ World* m_world = nullptr;

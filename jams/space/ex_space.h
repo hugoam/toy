@@ -514,7 +514,7 @@ public:
 
 	static uint32_t create(HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const std::string& name);
 
-	attr_ HSpatial m_spatial;
+	comp_ HSpatial m_spatial;
 
 	attr_ Galaxy* m_galaxy;
 	attr_ uvec2 m_coord;
@@ -631,7 +631,7 @@ public:
 
 	static uint32_t create(HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name);
 
-	attr_ HSpatial m_spatial;
+	comp_ HSpatial m_spatial;
 
 	attr_ Galaxy* m_galaxy = nullptr;
 	attr_ Commander* m_commander = nullptr;
@@ -674,6 +674,8 @@ public:
 
 	void jump();
 	void split();
+
+	void destroy();
 
 	meth_ void order_jump(vec2 coord, FleetStance stance);
 	/*meth_*/ void order_split(cstring name, FleetStance stance, std::map<ShipSchema*, uint32_t> ships);
@@ -983,7 +985,7 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position, const uvec2& size);
 
-	attr_ HSpatial m_spatial;
+	comp_ HSpatial m_spatial;
 
 	//attr_ std::vector<HQuadrant> m_quadrants;
 	attr_ std::vector<HStar> m_stars;

@@ -29,7 +29,7 @@ using namespace mud; namespace toy
 
 		static uint32_t create(HSpatial parent, const vec3& position);
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 	};
 
     class refl_ TOY_CORE_EXPORT DetourPath

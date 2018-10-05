@@ -159,7 +159,7 @@ using namespace mud; namespace toy
 		if(m_entities.size() <= entity)
 			m_entities.resize((entity + 1) * 2);
 		if(m_entities[entity] == nullptr)
-			m_entities[entity] = &gfx::node(parent.subx(uint16_t(entity)), Ref(&entity), spatial.absolute_position(), spatial.absolute_rotation());
+			m_entities[entity] = &gfx::node(parent.subx(uint16_t(entity)), ent_ref(entity), spatial.absolute_position(), spatial.absolute_rotation());
 		return m_entities[entity]->subx(uint16_t(painter));
 	}
 
@@ -188,7 +188,7 @@ using namespace mud; namespace toy
 	void scene_painters(VisuScene& scene, World& world)
 	{
 		UNUSED(scene); UNUSED(world);
-		//scene.entity_painter<WorldPage>("WorldPage", world, paint_world_page);
+		scene.entity_painter<WorldPage>("WorldPage", world, paint_world_page);
 	}
 
 	void paint_selection(Gnode& parent, Selection& selection, Ref hovered)

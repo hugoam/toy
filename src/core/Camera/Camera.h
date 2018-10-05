@@ -29,7 +29,7 @@ using namespace mud; namespace toy
 
 		static uint32_t create(toy::HSpatial parent, const vec3& position, float lens_distance, float near = 0.001f, float far = 1000.f);
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 
 		attr_ float m_lens_distance = 1.f;
 		attr_ float m_lens_angle = 0.f;

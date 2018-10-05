@@ -578,14 +578,14 @@ void paint_scene(Gnode& parent)
 
 void paint_viewer(Viewer& viewer)
 {
-	if(viewer.m_viewport.m_rect != uvec4(0) && !viewer.m_camera.m_clusters)
+	if(rect_size(viewer.m_viewport.m_rect) != vec2(0.f) && !viewer.m_camera.m_clusters)
 	{
 		viewer.m_camera.m_clustered = true;
 		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
 
-	//viewer.m_filters.m_glow.m_enabled = true;
+	viewer.m_filters.m_glow.m_enabled = true;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
 	viewer.m_filters.m_glow.m_bicubic_filter = true;
 #endif
@@ -922,13 +922,13 @@ public:
 		app.m_core->add_loop<Tileblock, WorldPage>(Task::Spatial);
 		app.m_core->add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);
 
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>();
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
 
-		s_registry.AddBuffers<Spatial, Bullet>();
-		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human>();
-		s_registry.AddBuffers<Spatial, Movable, Crate>();
-		s_registry.AddBuffers<Spatial, Movable, Lamp>();
+		s_registry.AddBuffers<Spatial, Bullet>("Bullet");
+		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human>("Human");
+		s_registry.AddBuffers<Spatial, Movable, Crate>("Crate");
+		s_registry.AddBuffers<Spatial, Movable, Lamp>("Lamp");
 
 		global_pool<TileWorld>();
 
@@ -1010,7 +1010,7 @@ int main(int argc, char *argv[])
 	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
 	
 	PlatformModule module = { _platform::m() };
-	app.run_game(module);
-	//app.run_editor(module);
+	//app.run_game(module);
+	app.run_editor(module);
 }
 #endif

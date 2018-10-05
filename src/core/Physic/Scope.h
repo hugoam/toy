@@ -74,7 +74,7 @@ using namespace mud; namespace toy
 		Emitter(Emitter&& other) = default;
 		Emitter& operator=(Emitter&& other) = default;
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 
 		HEmitterScope add_scope(Medium& medium, const CollisionShape& collision_shape, CollisionGroup group);
 		HEmitterScope add_sphere(Medium& medium, float radius, CollisionGroup group = CM_SOURCE);
@@ -93,7 +93,7 @@ using namespace mud; namespace toy
 		Receptor(Receptor&& other) = default;
 		Receptor& operator=(Receptor&& other) = default;
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 
 		HReceptorScope add_scope(Medium& medium, const CollisionShape& collision_shape, CollisionGroup group);
 		HReceptorScope add_sphere(Medium& medium, float radius, CollisionGroup group = CM_RECEPTOR);

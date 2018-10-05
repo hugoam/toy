@@ -19,6 +19,6 @@ using namespace mud; namespace toy
 
 		static uint32_t create(World& world);
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 	};
 }

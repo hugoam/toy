@@ -55,8 +55,9 @@ using namespace mud; namespace toy
 		constr_ Navblock(HSpatial spatial, HWorldPage world_page, Navmesh& navmesh);
 		~Navblock();
 
-		attr_ HSpatial m_spatial;
-		attr_ HWorldPage m_world_page;
+		comp_ HSpatial m_spatial;
+		comp_ HWorldPage m_world_page;
+
 		attr_ Navmesh* m_navmesh = nullptr;
 
 		attr_ bool m_auto_update = false;

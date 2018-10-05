@@ -519,8 +519,7 @@ void paint_block_wire(Gnode& parent, Block& block)
 void paint_block(Gnode& parent, Tileblock& block)
 {
 	if(block.m_wfc_block.m_wave.m_solved)
-		paint_tiles(parent, {}, block.m_wfc_block);
-		//paint_tiles(parent, Ref(block.m_spatial), block.m_wfc_block);
+		paint_tiles(parent, ent_ref(block.m_spatial.m_handle), block.m_wfc_block);
 }
 
 void paint_scene(Gnode& parent, bool radiance)
@@ -805,14 +804,14 @@ public:
 		g_factions.emplace_back(0, Colour::Pink);
 		g_factions.emplace_back(0, Colour::Cyan);
 
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>();
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>();
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
+		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
 
-		s_registry.AddBuffers<Spatial, Emitter, Well>();
-		s_registry.AddBuffers<Spatial, Camp>();
-		s_registry.AddBuffers<Spatial, Emitter, Shield>();
-		s_registry.AddBuffers<Spatial, Slug>();
-		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank>();
+		s_registry.AddBuffers<Spatial, Emitter, Well>("Well");
+		s_registry.AddBuffers<Spatial, Camp>("Camp");
+		s_registry.AddBuffers<Spatial, Emitter, Shield>("Shield");
+		s_registry.AddBuffers<Spatial, Slug>("Slug");
+		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank>("Tank");
 	}
 
 	virtual void start(GameShell& app, Game& game) final

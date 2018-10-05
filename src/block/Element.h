@@ -49,7 +49,7 @@ using namespace mud; namespace toy
 
 		static uint32_t create(HSpatial parent, const vec3& position, Element& element, float radius);
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 
 		attr_ link_ Element* m_element;
 		attr_ float m_radius;

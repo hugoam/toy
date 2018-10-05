@@ -31,11 +31,11 @@ using namespace mud; namespace toy
 
 		static uint32_t create(HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size);
 
-		attr_ HSpatial m_spatial;
-		attr_ HWorldPage m_world_page;
-		attr_ HNavblock m_navblock;
-		//attr_ HEmitter m_emitter;
-		//attr_ HBufferPage m_buffer_page;
+		comp_ HSpatial m_spatial;
+		comp_ HWorldPage m_world_page;
+		comp_ HNavblock m_navblock;
+		//comp_ HEmitter m_emitter;
+		//comp_ HBufferPage m_buffer_page;
 
 		attr_ uvec3 m_coordinate;
 		attr_ vec3 m_size;
@@ -54,10 +54,10 @@ using namespace mud; namespace toy
 
 		static uint32_t create(HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset);
 
-		attr_ HSpatial m_spatial;
-		attr_ HWorldPage m_world_page;
-		attr_ HNavblock m_navblock;
-		//attr_ HEmitter m_emitter;
+		comp_ HSpatial m_spatial;
+		comp_ HWorldPage m_world_page;
+		comp_ HNavblock m_navblock;
+		//comp_ HEmitter m_emitter;
 
 		attr_ WfcBlock m_wfc_block;
 		attr_ bool m_setup = false;

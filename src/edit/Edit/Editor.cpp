@@ -199,10 +199,10 @@ using namespace mud; namespace toy
 	{
 		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
 
-		self.m_header->set_state(SELECTED, vector_has(selection, Ref(&entity)));
+		self.m_header->set_state(SELECTED, vector_has(selection, ent_ref(entity)));
 
 		if(self.m_header->activated())
-			vector_select(selection, Ref(&entity));
+			vector_select(selection, ent_ref(entity));
 
 		//object_item(self, object);
 

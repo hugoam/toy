@@ -16,9 +16,7 @@ using namespace mud; namespace toy
 	{
 	public:
 		constr_ Obstacle(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& shape, float throughput);
-		~Obstacle();
 
-		attr_ HSpatial m_spatial;
 		attr_ CollisionShape m_shape;
 		attr_ float m_throughput;
 	};

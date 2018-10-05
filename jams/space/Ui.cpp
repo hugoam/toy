@@ -798,7 +798,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 	}
 	else if(player.m_mode == GameStage::Tactics)
 	{
-		Entity selected = { scene.m_selection.size() > 0 ? val<uint32_t>(scene.m_selection[0]) : UINT32_MAX };
+		Entity selected = scene.m_selection.size() > 0 ? as_ent(scene.m_selection[0]) : UINT32_MAX;
 
 		if(Star* star = try_asa<Star>(selected))
 		{

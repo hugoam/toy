@@ -694,10 +694,7 @@ Fleet::Fleet(HSpatial spatial, Galaxy& galaxy, Commander& commander, const uvec2
 }
 
 Fleet::~Fleet()
-{
-	if(m_commander)
-		vector_remove(m_commander->m_fleets, HFleet(m_spatial.m_handle));
-}
+{}
 
 Galaxy& Fleet::galaxy() { return *m_galaxy; }
 
@@ -834,6 +831,12 @@ void Fleet::split()
 		this->add_ships(*ship_number.first, -int(ship_number.second));
 		m_split.m_dest->add_ships(*ship_number.first, int(ship_number.second));
 	}
+}
+
+void Fleet::destroy()
+{
+	if(m_commander)
+		vector_remove(m_commander->m_fleets, HFleet(m_spatial.m_handle));
 }
 
 Commander::Commander(Id id, const std::string& name, Race race, int command, int commerce, int diplomacy)
@@ -1105,10 +1108,10 @@ public:
 		app.m_core->add_loop<Star, Spatial>(Task::GameObject);
 		app.m_core->add_loop<Fleet, Spatial>(Task::GameObject);
 
-		s_registry.AddBuffers<Spatial, Galaxy>();
-		//s_registry.AddBuffers<Spatial, Quadrant>();
-		s_registry.AddBuffers<Spatial, Star>();
-		s_registry.AddBuffers<Spatial, Fleet>();
+		s_registry.AddBuffers<Spatial, Galaxy>("Galaxy");
+		//s_registry.AddBuffers<Spatial, Quadrant>("Quadrant");
+		s_registry.AddBuffers<Spatial, Star>("Star");
+		s_registry.AddBuffers<Spatial, Fleet>("Fleet");
 
 		global_pool<Universe>();
 		global_pool<Commander>();

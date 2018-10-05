@@ -22,7 +22,7 @@ using namespace mud; namespace toy
 
 		static uint32_t create(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size);
 
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 
 		attr_ size_t m_index;
 		attr_ Block* m_block;

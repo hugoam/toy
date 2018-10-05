@@ -43,8 +43,8 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position);
 
-	attr_ HSpatial m_spatial;
-	attr_ HEmitter m_emitter;
+	comp_ HSpatial m_spatial;
+	comp_ HEmitter m_emitter;
 
 	void next_frame(size_t tick, size_t delta);
 };
@@ -76,7 +76,7 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position, Faction& faction);
 
-	attr_ HSpatial m_spatial;
+	comp_ HSpatial m_spatial;
 
 	attr_ vec3 m_position;
 	attr_ Faction* m_faction;
@@ -90,8 +90,8 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position, Faction& faction, float radius);
 
-	attr_ HSpatial m_spatial;
-	attr_ HEmitter m_emitter;
+	comp_ HSpatial m_spatial;
+	comp_ HEmitter m_emitter;
 
 	attr_ Faction* m_faction;
 	attr_ float m_radius;
@@ -111,7 +111,7 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power = 1.f);
 
-	attr_ HSpatial m_spatial;
+	comp_ HSpatial m_spatial;
 
 	attr_ vec3 m_source;
 	attr_ vec3 m_velocity;
@@ -135,10 +135,10 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position, Faction& faction);
 
-	attr_ HSpatial m_spatial;
-	attr_ HMovable m_movable;
-	attr_ HEmitter m_emitter;
-	attr_ HReceptor m_receptor;
+	comp_ HSpatial m_spatial;
+	comp_ HMovable m_movable;
+	comp_ HEmitter m_emitter;
+	comp_ HReceptor m_receptor;
 
 	Faction* m_faction;
 

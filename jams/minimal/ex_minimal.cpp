@@ -275,9 +275,9 @@ public:
 		app.m_gfx_system->add_resource_path("examples/ex_minimal/");
 		app.m_gfx_system->add_resource_path("examples/05_character/");
 
-		s_registry.AddBuffers<Spatial, Bullet>();
-		s_registry.AddBuffers<Spatial, Movable, Human>();
-		s_registry.AddBuffers<Spatial, Movable, Crate>();
+		s_registry.AddBuffers<Spatial, Bullet>("Bullet");
+		s_registry.AddBuffers<Spatial, Movable, Human>("Human");
+		s_registry.AddBuffers<Spatial, Movable, Crate>("Crate");
 	}
 
 	virtual void start(GameShell& app, Game& game) final

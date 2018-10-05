@@ -59,7 +59,7 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
 
-	attr_ HSpatial m_spatial;
+	comp_ HSpatial m_spatial;
 
 	attr_ vec3 m_source;
 	attr_ vec3 m_velocity;
@@ -110,11 +110,11 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position, Faction faction);
 
-	attr_ HSpatial m_spatial;
-	attr_ HMovable m_movable;
-	attr_ HEmitter m_emitter;
-	attr_ HReceptor m_receptor;
-	attr_ HEntityScript m_script; // @todo ---->> ECS
+	comp_ HSpatial m_spatial;
+	comp_ HMovable m_movable;
+	comp_ HEmitter m_emitter;
+	comp_ HReceptor m_receptor;
+	comp_ HEntityScript m_script; // @todo ---->> ECS
 
 	OSolid m_solid;
 
@@ -162,8 +162,8 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position);
 
-	attr_ HSpatial m_spatial;
-	attr_ HMovable m_movable;
+	comp_ HSpatial m_spatial;
+	comp_ HMovable m_movable;
 };
 
 class refl_ _PLATFORM_EXPORT Crate
@@ -174,8 +174,8 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position, const vec3& extents);
 
-	attr_ HSpatial m_spatial;
-	attr_ HMovable m_movable;
+	comp_ HSpatial m_spatial;
+	comp_ HMovable m_movable;
 
 	attr_ vec3 m_extents;
 	OSolid m_solid;

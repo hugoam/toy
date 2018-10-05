@@ -490,9 +490,9 @@ namespace boids
 			UNUSED(game);
 			app.m_gfx_system->add_resource_path("examples/ex_boids/");
 
-			s_registry.AddBuffers<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>();
-			s_registry.AddBuffers<Position, Rotation, Transform4, BoidObstacle>();
-			s_registry.AddBuffers<Position, Rotation, Transform4, BoidTarget>();
+			s_registry.AddBuffers<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>("Boid");
+			s_registry.AddBuffers<Position, Rotation, Transform4, BoidObstacle>("BoidObstacle");
+			s_registry.AddBuffers<Position, Rotation, Transform4, BoidTarget>("BoidTarget");
 		}
 
 		vec3 random_vec3(float ext)

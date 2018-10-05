@@ -34,7 +34,7 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
 
-	attr_ HSpatial m_spatial;
+	comp_ HSpatial m_spatial;
 
 	attr_ vec3 m_source;
 	attr_ vec3 m_velocity;
@@ -69,8 +69,8 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position);
 
-	attr_ HSpatial m_spatial;
-	attr_ HMovable m_movable;
+	comp_ HSpatial m_spatial;
+	comp_ HMovable m_movable;
 
 	OSolid m_solid;
 
@@ -102,8 +102,8 @@ public:
 
 	static uint32_t create(HSpatial parent, const vec3& position, const vec3& extents);
 
-	attr_ HSpatial m_spatial;
-	attr_ HMovable m_movable;
+	comp_ HSpatial m_spatial;
+	comp_ HMovable m_movable;
 
 	attr_ vec3 m_extents;
 	OSolid m_solid;

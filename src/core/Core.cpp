@@ -26,10 +26,10 @@ using namespace mud; namespace toy
 	Core::Core(JobSystem& job_system)
 		: m_job_system(job_system)
 	{
-		s_registry.AddBuffers<Spatial>();
-		s_registry.AddBuffers<Spatial, Origin>();
-		s_registry.AddBuffers<Spatial, Waypoint>();
-		s_registry.AddBuffers<Spatial, Movable, Camera>();
+		//s_registry.AddBuffers<Spatial>();
+		s_registry.AddBuffers<Spatial, Origin>("Origin");
+		s_registry.AddBuffers<Spatial, Waypoint>("Waypoint");
+		s_registry.AddBuffers<Spatial, Movable, Camera>("Camera");
 
 		add_parallel_loop<Spatial>(Task::Spatial);
 		add_parallel_loop<Movable, Spatial>(Task::Spatial);

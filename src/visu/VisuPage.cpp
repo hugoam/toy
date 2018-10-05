@@ -55,12 +55,13 @@ using namespace mud; namespace toy
 			//}
 			//else
 			{
-				bool add = vector_has(page.m_geometry_filter, string(item.m_model->m_name)) && item.m_node.m_object;
+				bool add = vector_has(page.m_geometry_filter, string(item.m_model->m_name))
+						&& item.m_node.m_object && item.m_node.m_object.m_type->is<EntityRef>();
 				if(add)
 				{
-					Entity entity = { val<uint32_t>(item.m_node.m_object) };
+					Entity entity = as_ent(item.m_node.m_object);
 					Spatial& object = asa<Spatial>(entity);
-					if((object.is_child_of(page.m_spatial) || &object == &spatial) && object.m_hooked && !isa<Movable>(entity))
+					if((object.is_child_of(page.m_spatial) || &object == &spatial) && !isa<Movable>(entity))
 						items.push_back(&item);
 				}
 			}

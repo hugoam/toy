@@ -155,7 +155,7 @@ namespace mud
             },
             // members
             {
-                { type<Camp>(), member_address(&Camp::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
+                //{ type<Camp>(), member_address(&Camp::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Camp>(), member_address(&Camp::m_position), type<mud::vec3>(), "position", var(mud::vec3()), Member::Value, nullptr },
                 //{ type<Camp>(), Address(), type<Faction>(), "faction", Ref(type<Faction>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<Camp>(object).m_faction); } }
             },
@@ -191,8 +191,8 @@ namespace mud
             },
             // members
             {
-                { type<Shield>(), member_address(&Shield::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
-                { type<Shield>(), member_address(&Shield::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
+                //{ type<Shield>(), member_address(&Shield::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
+                //{ type<Shield>(), member_address(&Shield::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
                 //{ type<Shield>(), Address(), type<Faction>(), "faction", Ref(type<Faction>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<Shield>(object).m_faction); } },
                 { type<Shield>(), member_address(&Shield::m_radius), type<float>(), "radius", var(float()), Member::Value, nullptr },
                 { type<Shield>(), member_address(&Shield::m_charge), type<float>(), "charge", var(float()), Member::Value, nullptr },
@@ -229,7 +229,7 @@ namespace mud
             },
             // members
             {
-                { type<Slug>(), member_address(&Slug::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
+                //{ type<Slug>(), member_address(&Slug::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
                 { type<Slug>(), member_address(&Slug::m_source), type<mud::vec3>(), "source", var(mud::vec3()), Member::Value, nullptr },
                 { type<Slug>(), member_address(&Slug::m_velocity), type<mud::vec3>(), "velocity", var(mud::vec3()), Member::Value, nullptr }
             },
@@ -265,10 +265,10 @@ namespace mud
             },
             // members
             {
-                { type<Tank>(), member_address(&Tank::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
-                { type<Tank>(), member_address(&Tank::m_movable), type<toy::Movable>(), "movable", Ref(type<toy::Movable>()), Member::Component, nullptr },
-                { type<Tank>(), member_address(&Tank::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
-                { type<Tank>(), member_address(&Tank::m_receptor), type<toy::Receptor>(), "receptor", Ref(type<toy::Receptor>()), Member::Component, nullptr }
+                //{ type<Tank>(), member_address(&Tank::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
+                //{ type<Tank>(), member_address(&Tank::m_movable), type<toy::Movable>(), "movable", Ref(type<toy::Movable>()), Member::Component, nullptr },
+                //{ type<Tank>(), member_address(&Tank::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr },
+                //{ type<Tank>(), member_address(&Tank::m_receptor), type<toy::Receptor>(), "receptor", Ref(type<toy::Receptor>()), Member::Component, nullptr }
             },
             // methods
             {
@@ -302,8 +302,8 @@ namespace mud
             },
             // members
             {
-                { type<Well>(), member_address(&Well::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
-                { type<Well>(), member_address(&Well::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr }
+                //{ type<Well>(), member_address(&Well::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::Spatial>()), Member::Component, nullptr },
+                //{ type<Well>(), member_address(&Well::m_emitter), type<toy::Emitter>(), "emitter", Ref(type<toy::Emitter>()), Member::Component, nullptr }
             },
             // methods
             {

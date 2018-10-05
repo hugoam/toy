@@ -26,7 +26,7 @@ using namespace mud; namespace toy
 		constr_ EntityScript() {}
 		constr_ EntityScript(HSpatial spatial);
 		
-		attr_ HSpatial m_spatial;
+		comp_ HSpatial m_spatial;
 		attr_ Script* m_logic_script = nullptr;
 		attr_ Script* m_render_script = nullptr;
 

@@ -123,9 +123,9 @@ using namespace mud; namespace toy
 		m_hooked = false;
 	}
 
-	bool Spatial::is_child_of(Spatial& spatial)
+	bool Spatial::is_child_of(HSpatial spatial)
 	{
-		if(&(*m_parent) == &spatial)
+		if(m_parent == spatial)
 			return true;
 		else if(m_parent)
 			return m_parent->is_child_of(spatial);

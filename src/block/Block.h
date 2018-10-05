@@ -48,8 +48,8 @@ using namespace mud; namespace toy
 
 		static uint32_t create(HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size);
 
-		attr_ HSpatial m_spatial;
-		//attr_ HEmitter m_emitter;
+		comp_ HSpatial m_spatial;
+		//comp_ HEmitter m_emitter;
 
 		attr_ HWorldPage m_world_page;
 		attr_ link_ Block* m_parentblock = nullptr;

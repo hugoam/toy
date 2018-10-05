@@ -99,7 +99,7 @@ namespace mud
             },
             // members
             {
-                { type<toy::Camera>(), Address(), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Camera>(object).m_spatial); } },
+                //{ type<toy::Camera>(), Address(), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::Camera>(object).m_spatial); } },
                 { type<toy::Camera>(), member_address(&toy::Camera::m_lens_distance), type<float>(), "lens_distance", var(float(1.f)), Member::Value, nullptr },
                 { type<toy::Camera>(), member_address(&toy::Camera::m_lens_angle), type<float>(), "lens_angle", var(float(0.f)), Member::Value, nullptr },
                 { type<toy::Camera>(), member_address(&toy::Camera::m_near), type<float>(), "near", var(float(0.001f)), Member::Value, nullptr },
@@ -1150,7 +1150,7 @@ namespace mud
             },
             // members
             {
-                { type<toy::Waypoint>(), member_address(&toy::Waypoint::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr }
+                //{ type<toy::Waypoint>(), member_address(&toy::Waypoint::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr }
             },
             // methods
             {
@@ -1184,7 +1184,7 @@ namespace mud
             },
             // members
             {
-                { type<toy::Origin>(), member_address(&toy::Origin::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr }
+                //{ type<toy::Origin>(), member_address(&toy::Origin::m_spatial), type<toy::Spatial>(), "entity", Ref(type<toy::HSpatial>()), Member::Component, nullptr }
             },
             // methods
             {
