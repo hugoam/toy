@@ -53,6 +53,16 @@ namespace mud
     // Exported types
     
     export_ template <> _BOIDS_EXPORT Type& type<boids::Player>();
-    
+
+	export_ template <> _BOIDS_EXPORT Type& type<boids::Position>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::Heading>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::Rotation>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::MoveSpeed>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::MoveForward>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::Transform4>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::Boid>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::BoidTarget>();
+	export_ template <> _BOIDS_EXPORT Type& type<boids::BoidObstacle>();
+
 	export_ template struct _BOIDS_EXPORT Typed<std::vector<boids::Player*>>;
 }

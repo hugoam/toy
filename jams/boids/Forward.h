@@ -44,6 +44,16 @@
 namespace boids
 {
 	class Player;
+
+	struct Position;
+	struct Heading;
+	struct Rotation;
+	struct MoveSpeed;
+	struct MoveForward;
+	struct Transform4;
+	struct Boid;
+	struct BoidTarget;
+	struct BoidObstacle;
 }
 
 namespace std {
