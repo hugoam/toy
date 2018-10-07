@@ -17,15 +17,15 @@
 
 using namespace mud; namespace toy
 {
-	uint32_t Sector::create(HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
+	Entity Sector::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, WorldPage, Navblock, Sector>();
-		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		s_registry.SetComponent(entity, WorldPage(HSpatial(entity), true, size));
-		s_registry.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
+		Entity entity = { ecs.CreateEntity<Spatial, WorldPage, Navblock, Sector>(), ecs.m_index };
+		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, size));
+		ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
 		//, m_emitter(*this, m_spatial, m_movable)
 		//, m_buffer_page(m_spatial, m_world_page, true)
-		s_registry.SetComponent(entity, Sector(HSpatial(entity), HWorldPage(entity), HNavblock(entity), coordinate, size));
+		ecs.SetComponent(entity, Sector(HSpatial(entity), HWorldPage(entity), HNavblock(entity), coordinate, size));
 		return entity;
 	}
 
@@ -87,13 +87,13 @@ using namespace mud; namespace toy
 		index_blocks(grid_subdiv, grid.m_blocks, blocks, grid.m_sectors);
 	}
 
-	uint32_t Tileblock::create(HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset)
+	Entity Tileblock::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, WorldPage, Navblock, Tileblock>();
-		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		s_registry.SetComponent(entity, WorldPage(HSpatial(entity), true, size));
-		s_registry.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
-		s_registry.SetComponent(entity, Tileblock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), size, tile_scale, tileset));
+		Entity entity = { ecs.CreateEntity<Spatial, WorldPage, Navblock, Tileblock>(), ecs.m_index };
+		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, size));
+		ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
+		ecs.SetComponent(entity, Tileblock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), size, tile_scale, tileset));
 		return entity;
 	}
 

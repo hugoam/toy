@@ -17,7 +17,7 @@ using namespace mud; namespace toy
 		constr_ Origin() {}
 		constr_ Origin(HSpatial spatial);
 
-		static uint32_t create(World& world);
+		static Entity create(ECS& ecs, World& world);
 
 		comp_ HSpatial m_spatial;
 	};

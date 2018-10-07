@@ -6,7 +6,6 @@
 #include <core/Types.h>
 #include <core/Core.h>
 
-#include <core/Api.h>
 
 #include <core/World/Section.h>
 #include <math/Anim/Anim.h>
@@ -25,21 +24,7 @@ using namespace mud; namespace toy
 {
 	Core::Core(JobSystem& job_system)
 		: m_job_system(job_system)
-	{
-		//s_registry.AddBuffers<Spatial>();
-		s_registry.AddBuffers<Spatial, Origin>("Origin");
-		s_registry.AddBuffers<Spatial, Waypoint>("Waypoint");
-		s_registry.AddBuffers<Spatial, Movable, Camera>("Camera");
-
-		add_parallel_loop<Spatial>(Task::Spatial);
-		add_parallel_loop<Movable, Spatial>(Task::Spatial);
-		add_parallel_loop<Camera, Spatial>(Task::Spatial);
-		add_parallel_loop<WorldPage, Spatial>(Task::Spatial);
-		add_parallel_loop<Navblock, Spatial, WorldPage>(Task::Spatial);
-
-		// not parallel because we don't know what the script might do
-		add_loop<EntityScript>(Task::Spatial);
-	}
+	{}
 
 	Core::~Core()
 	{}
@@ -51,9 +36,9 @@ using namespace mud; namespace toy
 		m_pump.pump();
 	}
 
-	DefaultWorld::DefaultWorld(const string& name)
+	DefaultWorld::DefaultWorld(const string& name, JobSystem& job_system)
 		: Complex(0, type<DefaultWorld>(), m_bullet_world, m_navmesh, *this)
-		, m_world(0, *this, name)
+		, m_world(0, *this, name, job_system)
 		, m_bullet_world(m_world)
 		, m_navmesh(m_world)
 	{}

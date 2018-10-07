@@ -108,7 +108,7 @@ namespace mud
             { base_offset<BlockWorld, mud::Complex>() },
             // constructors
             {
-                { type<BlockWorld>(), [](Ref ref, array<Var> args) { new(&val<BlockWorld>(ref)) BlockWorld( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
+                //{ type<BlockWorld>(), [](Ref ref, array<Var> args) { new(&val<BlockWorld>(ref)) BlockWorld( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
             },
             // copy constructor
             {

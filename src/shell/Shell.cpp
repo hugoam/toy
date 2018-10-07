@@ -409,9 +409,9 @@ using namespace mud; namespace toy
 		else
 			toy::editor(ui, m_editor, m_game.m_screen);
 
-		if(m_editor.m_run_game || m_editor.m_play_game)
+		if(m_editor.m_run_game)
 			time(m_times, Step::World, "world", [&] { ZoneScopedNC("world", tracy::Color::AliceBlue); this->frame_world(); });
-		if(m_editor.m_play_game)
+		if(m_editor.m_run_game && m_editor.m_play_game)
 			time(m_times, Step::Game,  "game",  [&] { ZoneScopedNC("game", tracy::Color::Violet); this->frame_game(); });
 
 		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange); this->frame_scenes(); });

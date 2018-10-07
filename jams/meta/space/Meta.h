@@ -844,7 +844,7 @@ namespace mud
             { base_offset<Universe, mud::Complex>() },
             // constructors
             {
-                { type<Universe>(), [](Ref ref, array<Var> args) { new(&val<Universe>(ref)) Universe( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
+                //{ type<Universe>(), [](Ref ref, array<Var> args) { new(&val<Universe>(ref)) Universe( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
             },
             // copy constructor
             {

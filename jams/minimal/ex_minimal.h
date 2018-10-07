@@ -32,7 +32,7 @@ public:
 	Bullet() {}
 	Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity);
 
-	static uint32_t create(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity);
 
 	comp_ HSpatial m_spatial;
 
@@ -67,7 +67,7 @@ public:
 	constr_ Human() {}
 	constr_ Human(HSpatial spatial, HMovable movable);
 
-	static uint32_t create(HSpatial parent, const vec3& position);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& position);
 
 	comp_ HSpatial m_spatial;
 	comp_ HMovable m_movable;
@@ -98,9 +98,9 @@ class refl_ _MINIMAL_EXPORT Crate
 {
 public:
 	constr_ Crate() {}
-	constr_ Crate(HSpatial parent, HMovable movable, const vec3& extents);
+	constr_ Crate(HSpatial spatial, HMovable movable, const vec3& extents);
 
-	static uint32_t create(HSpatial parent, const vec3& position, const vec3& extents);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents);
 
 	comp_ HSpatial m_spatial;
 	comp_ HMovable m_movable;

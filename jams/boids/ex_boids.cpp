@@ -297,18 +297,18 @@ namespace boids
 		//std::vector<BoidsData> m_data;
 		BoidsData m_data;
 
-		void update(JobSystem& job_system, const BoidParams& params, float delta)
+		void update(JobSystem& job_system, ECS& ecs, const BoidParams& params, float delta)
 		{
 			EntFlags prototype = (1ULL << TypedBuffer<Position>::index()) | (1ULL << TypedBuffer<Heading>::index()) | (1ULL << TypedBuffer<Boid>::index());
 
 			BoidsData& data = m_data;
 			BoidParams4 params4 = params;
 
-			std::vector<ParallelBuffers*> matches = s_registry.Match(prototype);
+			std::vector<ParallelBuffers*> matches = ecs.Match(prototype);
 			for(ParallelBuffers* stream : matches)
 			{
-				ComponentArray<Position> obstacles = s_registry.Components<Position, BoidObstacle>();
-				ComponentArray<Position> targets = s_registry.Components<Position, BoidTarget>();
+				ComponentArray<Position> obstacles = ecs.Components<Position, BoidObstacle>();
+				ComponentArray<Position> targets = ecs.Components<Position, BoidTarget>();
 
 				const ComponentBuffer<Position>& positions = stream->Buffer<Position>();
 				ComponentBuffer<Heading>& headings = stream->Buffer<Heading>();
@@ -380,7 +380,7 @@ namespace boids
 	class MoveForwardSystem
 	{
 	public:
-		void update(JobSystem& job_system, float delta)
+		void update(JobSystem& job_system, ECS& ecs, float delta)
 		{
 			ZoneScopedNC("move forward", tracy::Color::Chocolate);
 
@@ -392,7 +392,7 @@ namespace boids
 				position = position.m_value + (delta * move_speed.m_value * rotate(rotation.m_value, -Z3), 0.f);
 			};
 
-			Job* job_move_rotation = for_components<Position, Rotation, MoveSpeed>(job_system, job_move, move_forward_rotation);
+			Job* job_move_rotation = for_components<Position, Rotation, MoveSpeed>(job_system, job_move, ecs, move_forward_rotation);
 			job_system.run(job_move_rotation);
 
 			auto move_forward_heading = [delta](uint32_t handle, Position& position, const Heading& heading, const MoveSpeed& move_speed)
@@ -401,7 +401,7 @@ namespace boids
 				position = position.m_value + (delta * move_speed.m_value * heading.m_value);
 			};
 
-			Job* job_move_heading = for_components<Position, Heading, MoveSpeed>(job_system, job_move, move_forward_heading);
+			Job* job_move_heading = for_components<Position, Heading, MoveSpeed>(job_system, job_move, ecs, move_forward_heading);
 			job_system.run(job_move_heading);
 
 			job_system.complete(job_move);
@@ -411,7 +411,7 @@ namespace boids
 	class TransformSystem
 	{
 	public:
-		void update(JobSystem& job_system, float delta)
+		void update(JobSystem& job_system, ECS& ecs, float delta)
 		{
 			ZoneScopedNC("transform", tracy::Color::SteelBlue);
 
@@ -428,7 +428,7 @@ namespace boids
 #endif
 			};
 
-			Job* job_transform = for_components<Position, Heading, Transform4>(job_system, nullptr, transform_heading);
+			Job* job_transform = for_components<Position, Heading, Transform4>(job_system, nullptr, ecs, transform_heading);
 			job_system.complete(job_transform);
 		}
 	};
@@ -456,32 +456,32 @@ namespace boids
 
 		size_t m_num_visible = 4096U * 2;
 
-		void destroy_entities()
+		void destroy_entities(ECS& ecs)
 		{
-			s_registry.Stream<Position, Rotation, Transform4, BoidObstacle>().Clear();
-			s_registry.Stream<Position, Rotation, Transform4, BoidTarget>().Clear();
-			s_registry.Stream<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>().Clear();
+			ecs.Stream<Position, Rotation, Transform4, BoidObstacle>().Clear();
+			ecs.Stream<Position, Rotation, Transform4, BoidTarget>().Clear();
+			ecs.Stream<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>().Clear();
 		}
 
-		void create_entities()
+		void create_entities(ECS& ecs)
 		{
 			for(size_t i = 0; i < m_num_obstacles; ++i)
 			{
-				uint32_t obstacle = s_registry.CreateEntity<Position, Rotation, Transform4, BoidObstacle>();
-				s_registry.SetComponent<Position>(obstacle, random_vec3(m_extents));
+				uint32_t obstacle = ecs.CreateEntity<Position, Rotation, Transform4, BoidObstacle>();
+				ecs.SetComponent<Position>(obstacle, random_vec3(m_extents));
 			}
 
 			for(size_t i = 0; i < m_num_targets; ++i)
 			{
-				uint32_t target = s_registry.CreateEntity<Position, Rotation, Transform4, BoidTarget>();
-				s_registry.SetComponent<Position>(target, random_vec3(m_extents));
+				uint32_t target = ecs.CreateEntity<Position, Rotation, Transform4, BoidTarget>();
+				ecs.SetComponent<Position>(target, random_vec3(m_extents));
 			}
 
 			for(size_t i = 0; i < m_num_boids; ++i)
 			{
-				uint32_t entity = s_registry.CreateEntity<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>();
-				s_registry.SetComponent<Position>(entity, random_vec3(m_extents));
-				s_registry.SetComponent<Heading>(entity, normalize(random_vec3(1.f)));
+				Entity entity = { ecs.CreateEntity<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>(), ecs.m_index };
+				ecs.SetComponent<Position>(entity, random_vec3(m_extents));
+				ecs.SetComponent<Heading>(entity, normalize(random_vec3(1.f)));
 			}
 		}
 
@@ -489,10 +489,6 @@ namespace boids
 		{
 			UNUSED(game);
 			app.m_gfx_system->add_resource_path("examples/ex_boids/");
-
-			s_registry.AddBuffers<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>("Boid");
-			s_registry.AddBuffers<Position, Rotation, Transform4, BoidObstacle>("BoidObstacle");
-			s_registry.AddBuffers<Position, Rotation, Transform4, BoidTarget>("BoidTarget");
 		}
 
 		vec3 random_vec3(float ext)
@@ -503,18 +499,25 @@ namespace boids
 		virtual void start(GameShell& app, Game& game) final
 		{
 			UNUSED(app);
-			DefaultWorld& world = global_pool<DefaultWorld>().construct("Arcadia");
-			game.m_world = &world.m_world;
+			DefaultWorld& default_world = global_pool<DefaultWorld>().construct("Arcadia", *app.m_job_system);
+			World& world = default_world.m_world;
+			game.m_world = &world;
+
+			world.m_ecs.AddBuffers<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>("Boid");
+			world.m_ecs.AddBuffers<Position, Rotation, Transform4, BoidObstacle>("BoidObstacle");
+			world.m_ecs.AddBuffers<Position, Rotation, Transform4, BoidTarget>("BoidTarget");
 
 			static Player player = { *game.m_world };
 			game.m_player = Ref(&player);
 
-			this->create_entities();
+			this->create_entities(world.m_ecs);
 		}
 
 		virtual void scene(GameShell& app, GameScene& scene) final
 		{
 			UNUSED(app);
+
+			ECS& ecs = app.m_game.m_world->m_ecs;
 
 			scene.painter("World", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
 				UNUSED(visu_scene);
@@ -533,7 +536,7 @@ namespace boids
 				Material& material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::White), PLAIN);
 				//Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "boid", Colour::White);
 
-				std::vector<ParallelBuffers*> matches = s_registry.Match(prototype);
+				std::vector<ParallelBuffers*> matches = ecs.Match(prototype);
 				for(ParallelBuffers* stream : matches)
 				{
 					const ComponentBuffer<Transform4>& components = stream->Buffer<Transform4>();
@@ -548,21 +551,21 @@ namespace boids
 				}
 			};
 
-			auto paint_targets = [](size_t index, VisuScene& scene, Gnode& parent)
+			auto paint_targets = [&](size_t index, VisuScene& scene, Gnode& parent)
 			{ 
 				UNUSED(index); UNUSED(scene);
 				Model& model = parent.m_scene->m_gfx_system.fetch_symbol({ Colour::White, Colour::White }, Sphere(0.1f), PLAIN);
 				Material& target_material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::Red), PLAIN);
 				Material& obstacle_material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::Black), PLAIN);
 
-				s_registry.Loop<Position, BoidObstacle>([&](uint32_t entity, Position& position, BoidObstacle& obstacle)
+				ecs.Loop<Position, BoidObstacle>([&](uint32_t entity, Position& position, BoidObstacle& obstacle)
 				{
 					UNUSED(entity); UNUSED(obstacle);
 					Gnode& node = gfx::node(parent, {}, position.m_value);
 					gfx::item(node, model, 0U, &obstacle_material);
 				});
 
-				s_registry.Loop<Position, BoidTarget>([&](uint32_t entity, Position& position, BoidTarget& target)
+				ecs.Loop<Position, BoidTarget>([&](uint32_t entity, Position& position, BoidTarget& target)
 				{
 					UNUSED(entity); UNUSED(target);
 					Gnode& node = gfx::node(parent, {}, position.m_value);
@@ -582,6 +585,8 @@ namespace boids
 			auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 			{
 				UNUSED(dockbar);
+				ECS& ecs = app.m_game.m_world->m_ecs;
+
 				static GameScene& scene = app.add_scene();
 				Viewer& viewer = ui::viewer(parent, scene.m_scene);
 				ui::orbit_controller(viewer);
@@ -602,8 +607,8 @@ namespace boids
 				ui::slider_field<size_t>(numbers, "num visible", { m_num_visible, { 0, 250'000, 100 } });
 				if(ui::button(numbers, "reset").activated())
 				{
-					this->destroy_entities();
-					this->create_entities();
+					this->destroy_entities(ecs);
+					this->create_entities(ecs);
 				}
 
 				Widget& middle = ui::widget(header, panel_style);
@@ -625,9 +630,9 @@ namespace boids
 				static Clock clock;
 				float delta = float(clock.step());
 
-				boid_system.update(*app.m_job_system, params, delta);
-				move_forward_system.update(*app.m_job_system, delta);
-				transform_system.update(*app.m_job_system, delta);
+				boid_system.update(*app.m_job_system, ecs, params, delta);
+				move_forward_system.update(*app.m_job_system, ecs, delta);
+				transform_system.update(*app.m_job_system, ecs, delta);
 			};
 
 			pump(ui);

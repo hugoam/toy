@@ -194,7 +194,7 @@ namespace mud
             { base_offset<TileWorld, mud::Complex>() },
             // constructors
             {
-                { type<TileWorld>(), [](Ref ref, array<Var> args) { new(&val<TileWorld>(ref)) TileWorld( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
+                //{ type<TileWorld>(), [](Ref ref, array<Var> args) { new(&val<TileWorld>(ref)) TileWorld( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
             },
             // copy constructor
             {

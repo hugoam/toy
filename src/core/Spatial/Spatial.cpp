@@ -143,7 +143,7 @@ using namespace mud; namespace toy
 
 	void Spatial::detach(Spatial& child)
 	{
-		child.m_parent = 0;
+		child.m_parent = {};
 		//vector_remove(m_contents, child);
 	}
 

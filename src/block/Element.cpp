@@ -27,11 +27,11 @@ using namespace mud; namespace toy
 		, m_colour(colour)
 	{}
 
-	uint32_t Heap::create(HSpatial parent, const vec3& position, Element& element, float radius)
+	Entity Heap::create(ECS& ecs, HSpatial parent, const vec3& position, Element& element, float radius)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, Heap>();
-		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		s_registry.SetComponent(entity, Heap(entity, element, radius));
+		Entity entity = { ecs.CreateEntity<Spatial, Heap>(), ecs.m_index };
+		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		ecs.SetComponent(entity, Heap(entity, element, radius));
 		return entity;
 	}
 

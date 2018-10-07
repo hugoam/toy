@@ -3,6 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#include <core/Types.h>
 #include <core/Path/DetourPath.h>
 
 #include <core/Spatial/Spatial.h>
@@ -12,11 +13,11 @@
 
 using namespace mud; namespace toy
 {
-	uint32_t Waypoint::create(HSpatial parent, const vec3& position)
+	Entity Waypoint::create(ECS& ecs, HSpatial parent, const vec3& position)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, Origin>();
-		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		s_registry.SetComponent(entity, Waypoint(HSpatial(entity)));
+		Entity entity = { ecs.CreateEntity<Spatial, Waypoint>(), ecs.m_index };
+		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		ecs.SetComponent(entity, Waypoint(HSpatial(entity)));
 		return entity;
 	}
 

@@ -15,11 +15,11 @@
 
 using namespace mud; namespace toy
 {
-	uint32_t Chunk::create(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
+	Entity Chunk::create(ECS& ecs, HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, Chunk>();
-		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		s_registry.SetComponent(entity, Chunk(entity, block, index, element, size));
+		Entity entity = { ecs.CreateEntity<Spatial, Chunk>(), ecs.m_index };
+		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		ecs.SetComponent(entity, Chunk(entity, block, index, element, size));
 		return entity;
 	}
 

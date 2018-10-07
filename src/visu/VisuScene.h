@@ -84,10 +84,9 @@ using namespace mud; namespace toy
 		template <class T>
 		inline void entity_painter(cstring name, World& world, void (*paint_func)(Gnode&, T&))
 		{
-			UNUSED(world);
-			auto paint = [this, paint_func](size_t index, VisuScene&, Gnode& parent)
+			auto paint = [this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
-				s_registry.Loop<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+				world.m_ecs.Loop<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
 				{
 					paint_func(this->entity_node(parent, entity, spatial, index), component);
 				});

@@ -31,7 +31,7 @@ using HCrate = ComponentHandle<Crate>;
 class refl_ _PLATFORM_EXPORT TileWorld : public Complex
 {
 public:
-	constr_ TileWorld(const std::string& name);
+	constr_ TileWorld(const std::string& name, JobSystem& job_system);
 	~TileWorld();
 
 	attr_ World m_world;
@@ -57,7 +57,7 @@ public:
 	Bullet() {}
 	Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity);
 
-	static uint32_t create(HSpatial parent, const vec3& source, const quat& rotation, float velocity);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity);
 
 	comp_ HSpatial m_spatial;
 
@@ -106,9 +106,9 @@ class refl_ _PLATFORM_EXPORT Human
 {
 public:
 	constr_ Human() {}
-	constr_ Human(HSpatial parent, HMovable movable, HEmitter emitter, HReceptor receptor, HEntityScript script, Faction faction);
+	constr_ Human(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor receptor, HEntityScript script, Faction faction);
 
-	static uint32_t create(HSpatial parent, const vec3& position, Faction faction);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& position, Faction faction);
 
 	comp_ HSpatial m_spatial;
 	comp_ HMovable m_movable;
@@ -160,7 +160,7 @@ public:
 	constr_ Lamp() {}
 	constr_ Lamp(HSpatial spatial, HMovable movable);
 
-	static uint32_t create(HSpatial parent, const vec3& position);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& position);
 
 	comp_ HSpatial m_spatial;
 	comp_ HMovable m_movable;
@@ -172,7 +172,7 @@ public:
 	constr_ Crate() {}
 	constr_ Crate(HSpatial spatial, HMovable movable, const vec3& extents);
 
-	static uint32_t create(HSpatial parent, const vec3& position, const vec3& extents);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents);
 
 	comp_ HSpatial m_spatial;
 	comp_ HMovable m_movable;

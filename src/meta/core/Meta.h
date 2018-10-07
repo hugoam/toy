@@ -955,7 +955,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::World>(), [](Ref ref, array<Var> args) { new(&val<toy::World>(ref)) toy::World( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<std::string>(args[2]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Entity>()) }, { "name", var(std::string()) } } }
+                //{ type<toy::World>(), [](Ref ref, array<Var> args) { new(&val<toy::World>(ref)) toy::World( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<std::string>(args[2]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Entity>()) }, { "name", var(std::string()) } } }
             },
             // copy constructor
             {
@@ -1103,7 +1103,7 @@ namespace mud
             { base_offset<toy::DefaultWorld, mud::Complex>() },
             // constructors
             {
-                { type<toy::DefaultWorld>(), [](Ref ref, array<Var> args) { new(&val<toy::DefaultWorld>(ref)) toy::DefaultWorld( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
+                //{ type<toy::DefaultWorld>(), [](Ref ref, array<Var> args) { new(&val<toy::DefaultWorld>(ref)) toy::DefaultWorld( val<std::string>(args[0]) ); }, { { "name", var(std::string()) } } }
             },
             // copy constructor
             {

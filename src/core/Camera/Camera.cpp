@@ -17,12 +17,12 @@
 
 using namespace mud; namespace toy
 {
-	uint32_t Camera::create(HSpatial parent, const vec3& position, float lens_distance, float near, float far)
+	Entity Camera::create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near, float far)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, Movable, toy::Camera>();
-		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		s_registry.SetComponent(entity, Movable(HSpatial(entity)));
-		s_registry.SetComponent(entity, toy::Camera(HSpatial(entity), lens_distance, near, far));
+		Entity entity = { ecs.CreateEntity<Spatial, Movable, toy::Camera>(), ecs.m_index };
+		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+		ecs.SetComponent(entity, Movable(HSpatial(entity)));
+		ecs.SetComponent(entity, toy::Camera(HSpatial(entity), lens_distance, near, far));
 		return entity;
 	}
 

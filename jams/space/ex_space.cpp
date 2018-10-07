@@ -511,9 +511,9 @@ ShipDatabase::ShipDatabase()
 	builtin_ships(*this);
 }
 
-Universe::Universe(const std::string& name)
+Universe::Universe(const std::string& name, JobSystem& job_system)
 	: Complex(0, type<Universe>(), m_bullet_world, *this)
-	, m_world(0, *this, name)
+	, m_world(0, *this, name, job_system)
 	, m_bullet_world(m_world)
 {}
 
@@ -564,11 +564,11 @@ void GalaxyGrid::move_fleet(Fleet& fleet, uvec2 start, uvec2 dest)
 	update_slots(dest);
 }
 
-uint32_t Galaxy::create(HSpatial parent, const vec3& position, const uvec2& size)
+Entity Galaxy::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec2& size)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Galaxy>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Galaxy(HSpatial(entity), size));
+	Entity entity = { ecs.CreateEntity<Spatial, Galaxy>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Galaxy(HSpatial(entity), size));
 	return entity;
 }
 
@@ -589,13 +589,13 @@ uvec2 Galaxy::intersect_coord(Ray ray)
 }
 
 #if 0
-Quadrant::Quadrant(HSpatial parent, const vec3& position, const uvec2& coord, float size)
+Quadrant::Quadrant(HSpatial spatial, const vec3& position, const uvec2& coord, float size)
 	: Entity(Tags<Spatial, Quadrant*>{})
 	, m_spatial(*this, *this, parent, position, ZeroQuat)
 	, m_coord(coord)
 	, m_size(size)
 {
-	s_registry.SetComponent<Quadrant*>(m_handle, this);
+	ecs.SetComponent<Quadrant*>(m_handle, this);
 
 	galaxy.m_quadrants.push_back(this);
 }
@@ -603,11 +603,11 @@ Quadrant::Quadrant(HSpatial parent, const vec3& position, const uvec2& coord, fl
 
 static size_t star_count = 0;
 
-uint32_t Star::create(HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const std::string& name)
+Entity Star::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const std::string& name)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Star>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Star(HSpatial(entity), galaxy, coord, name));
+	Entity entity = { ecs.CreateEntity<Spatial, Star>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Star(HSpatial(entity), galaxy, coord, name));
 	return entity;
 }
 
@@ -618,7 +618,7 @@ Star::Star(HSpatial spatial, Galaxy& galaxy, const uvec2& coord, const std::stri
 	, m_name(name)
 	, m_resources{}
 {
-	galaxy.m_stars.push_back(spatial.m_handle);
+	galaxy.m_stars.push_back(spatial);
 	galaxy.m_grid.m_stars[coord] = this;
 }
 
@@ -672,11 +672,11 @@ void Star::add_buildings(const std::string& code, int number)
 
 static size_t fleet_count = 0;
 
-uint32_t Fleet::create(HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name)
+Entity Fleet::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Fleet>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Fleet(HSpatial(entity), galaxy, commander, coord, name));
+	Entity entity = { ecs.CreateEntity<Spatial, Fleet>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Fleet(HSpatial(entity), galaxy, commander, coord, name));
 	return entity;
 }
 
@@ -687,9 +687,9 @@ Fleet::Fleet(HSpatial spatial, Galaxy& galaxy, Commander& commander, const uvec2
 	, m_coord(coord)
 	, m_name(name)
 {
-	commander.m_fleets.push_back(spatial.m_handle);
+	commander.m_fleets.push_back(spatial);
 
-	galaxy.m_fleets.push_back(spatial.m_handle);
+	galaxy.m_fleets.push_back(spatial);
 	galaxy.m_grid.add_fleet(*this, coord);
 }
 
@@ -836,7 +836,7 @@ void Fleet::split()
 void Fleet::destroy()
 {
 	if(m_commander)
-		vector_remove(m_commander->m_fleets, HFleet(m_spatial.m_handle));
+		vector_remove(m_commander->m_fleets, HFleet(m_spatial));
 }
 
 Commander::Commander(Id id, const std::string& name, Race race, int command, int commerce, int diplomacy)
@@ -885,7 +885,7 @@ void Commander::update_scans(Galaxy& galaxy)
 
 void Commander::take_star(Star& star)
 {
-	HStar hstar = star.m_spatial.m_handle;
+	HStar hstar = star.m_spatial;
 	if(star.m_commander)
 		vector_remove(star.m_commander->m_stars, hstar);
 	m_stars.push_back(hstar);
@@ -894,7 +894,7 @@ void Commander::take_star(Star& star)
 
 void Commander::take_fleet(Fleet& fleet)
 {
-	HFleet hfleet = fleet.m_spatial.m_handle;
+	HFleet hfleet = fleet.m_spatial;
 	if(fleet.m_commander)
 		vector_remove(fleet.m_commander->m_fleets, hfleet);
 	m_fleets.push_back(hfleet);
@@ -1105,19 +1105,17 @@ public:
 
 	virtual void start(GameShell& app, Game& game) final
 	{
-		app.m_core->add_loop<Star, Spatial>(Task::GameObject);
-		app.m_core->add_loop<Fleet, Spatial>(Task::GameObject);
+		Universe& universe = global_pool<Universe>().construct("Arcadia", *app.m_job_system);
+		World& world = universe.m_world;
+		game.m_world = &world;
 
-		s_registry.AddBuffers<Spatial, Galaxy>("Galaxy");
-		//s_registry.AddBuffers<Spatial, Quadrant>("Quadrant");
-		s_registry.AddBuffers<Spatial, Star>("Star");
-		s_registry.AddBuffers<Spatial, Fleet>("Fleet");
+		world.m_ecs.AddBuffers<Spatial, Galaxy>("Galaxy");
+		//world.m_ecs.AddBuffers<Spatial, Quadrant>("Quadrant");
+		world.m_ecs.AddBuffers<Spatial, Star>("Star");
+		world.m_ecs.AddBuffers<Spatial, Fleet>("Fleet");
 
-		global_pool<Universe>();
-		global_pool<Commander>();
-
-		Universe& universe = global_pool<Universe>().construct("Arcadia");
-		game.m_world = &universe.m_world;
+		world.add_loop<Star, Spatial>(Task::GameObject);
+		world.add_loop<Fleet, Spatial>(Task::GameObject);
 
 		//VisualScript& generator = space_generator(app);
 		//generator(carray<Var, 2>{ Ref(game.m_world), Ref(&game.m_world->origin()) });

@@ -40,11 +40,11 @@ Faction::~Faction()
 
 std::vector<Faction> g_factions;
 
-uint32_t Well::create(HSpatial parent, const vec3& position)
+Entity Well::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Emitter, Well>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
+	Entity entity = { ecs.CreateEntity<Spatial, Emitter, Well>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
 	return entity;
 }
 
@@ -58,11 +58,11 @@ void Well::next_frame(size_t tick, size_t delta)
 	UNUSED(tick); UNUSED(delta);
 }
 
-uint32_t Camp::create(HSpatial parent, const vec3& position, Faction& faction)
+Entity Camp::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Camp>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Camp(HSpatial(entity), position, faction));
+	Entity entity = { ecs.CreateEntity<Spatial, Camp>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Camp(HSpatial(entity), position, faction));
 	return entity;
 }
 
@@ -72,12 +72,12 @@ Camp::Camp(HSpatial spatial, const vec3& position, Faction& faction)
 	, m_position(position)
 {}
 
-uint32_t Shield::create(HSpatial parent, const vec3& position, Faction& faction, float radius)
+Entity Shield::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction, float radius)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Emitter, Shield>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
-	s_registry.SetComponent(entity, Shield(HSpatial(entity), HEmitter(entity), faction, radius));
+	Entity entity = { ecs.CreateEntity<Spatial, Emitter, Shield>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
+	ecs.SetComponent(entity, Shield(HSpatial(entity), HEmitter(entity), faction, radius));
 	return entity;
 }
 
@@ -103,11 +103,11 @@ void Shield::next_frame(size_t tick, size_t delta)
 	m_charge = min(1.f, m_charge + 0.01f);
 }
 
-uint32_t Slug::create(HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
+Entity Slug::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Slug>();
-	s_registry.SetComponent(entity, Spatial(parent, source, rotation));
-	s_registry.SetComponent(entity, Slug(HSpatial(entity), source, velocity, power));
+	Entity entity = { ecs.CreateEntity<Spatial, Slug>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, source, rotation));
+	ecs.SetComponent(entity, Slug(HSpatial(entity), source, velocity, power));
 	return entity;
 }
 
@@ -168,14 +168,14 @@ void Slug::update(Spatial& spatial)
 	//m_collider.update_transform();
 }
 
-uint32_t Tank::create(HSpatial parent, const vec3& position, Faction& faction)
+Entity Tank::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Emitter, Receptor, Tank>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
-	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
-	s_registry.SetComponent(entity, Receptor(HSpatial(entity)));
-	s_registry.SetComponent(entity, Tank(HSpatial(entity), HMovable(entity), HEmitter(entity), HReceptor(entity), faction));
+	Entity entity = { ecs.CreateEntity<Spatial, Movable, Emitter, Receptor, Tank>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Movable(HSpatial(entity)));
+	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
+	ecs.SetComponent(entity, Receptor(HSpatial(entity)));
+	ecs.SetComponent(entity, Tank(HSpatial(entity), HMovable(entity), HEmitter(entity), HReceptor(entity), faction));
 	return entity;
 }
 
@@ -277,9 +277,9 @@ void Tank::shoot(bool critical)
 	m_slugs.emplace_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
 }
 
-BlockWorld::BlockWorld(const std::string& name)
+BlockWorld::BlockWorld(const std::string& name, JobSystem& job_system)
 	: Complex(0, type<BlockWorld>(), m_bullet_world, m_navmesh, *this)
-	, m_world(0, *this, name)
+	, m_world(0, *this, name, job_system)
 	, m_bullet_world(m_world)
 	, m_navmesh(m_world)
 	//, m_block_subdiv(64, 1, 64)
@@ -313,7 +313,7 @@ void BlockWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 
 Player::Player(BlockWorld& world)
 	: m_world(&world)
-	, m_tank(Tank::create(world.m_world.origin(), Y3 * 20.f, g_factions[0]))
+	, m_tank(Tank::create(world.m_world.m_ecs, world.m_world.origin(), Y3 * 20.f, g_factions[0]))
 {
 	m_tank->m_faction->m_leader = m_tank;
 	m_tank->m_ia = false;
@@ -736,8 +736,8 @@ Viewer& ex_blocks_menu_viewport(Widget& parent, GameShell& app)
 	viewer.m_camera.m_target = vec3(5.f, 0.f, -2.5f);
 	viewer.m_camera.m_eye = viewer.m_camera.m_target + vec3(-1.5f, 1.0f, -0.5f) * (10.f + sinf(float(clock.read()) * 0.1f));
 
-	static DefaultWorld world = { "" };
-	static EntityHandle<Origin> root = Origin::create(world.m_world);
+	static DefaultWorld world = { "", *app.m_job_system };
+	static EntityHandle<Origin> root = { Origin::create(world.m_world.m_ecs, world.m_world), 0 };
 
 	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root->m_spatial, Zero3, g_factions[0]);
 	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root->m_spatial, X3 * 10.f, g_factions[1]);
@@ -803,36 +803,34 @@ public:
 		g_factions.emplace_back(0, Colour::Red);
 		g_factions.emplace_back(0, Colour::Pink);
 		g_factions.emplace_back(0, Colour::Cyan);
-
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
-
-		s_registry.AddBuffers<Spatial, Emitter, Well>("Well");
-		s_registry.AddBuffers<Spatial, Camp>("Camp");
-		s_registry.AddBuffers<Spatial, Emitter, Shield>("Shield");
-		s_registry.AddBuffers<Spatial, Slug>("Slug");
-		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank>("Tank");
 	}
 
 	virtual void start(GameShell& app, Game& game) final
 	{
-		app.m_core->add_loop<Tileblock, WorldPage>(Task::Spatial);
-		app.m_core->add_loop<Shield>(Task::GameObject);
-		app.m_core->add_loop<Tank, Spatial, Movable, Receptor>(Task::GameObject);
-
-		global_pool<BlockWorld>();
-		//global_pool<Block>();
-
 		SolidMedium::me.m_masks[CollisionGroup(CM_ENERGY)] = CM_SOLID | CM_GROUND | CM_ENERGY;
 
-		BlockWorld& world = global_pool<BlockWorld>().construct("Arcadia");
-		game.m_world = &world.m_world;
+		BlockWorld& block_world = global_pool<BlockWorld>().construct("Arcadia", *app.m_job_system);
+		World& world = block_world.m_world;
+		game.m_world = &world;
 
-		static Player player = { world };
+		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
+		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
+
+		world.m_ecs.AddBuffers<Spatial, Emitter, Well>("Well");
+		world.m_ecs.AddBuffers<Spatial, Camp>("Camp");
+		world.m_ecs.AddBuffers<Spatial, Emitter, Shield>("Shield");
+		world.m_ecs.AddBuffers<Spatial, Slug>("Slug");
+		world.m_ecs.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank>("Tank");
+
+		world.add_loop<Tileblock, WorldPage>(Task::Spatial);
+		world.add_loop<Shield>(Task::GameObject);
+		world.add_loop<Tank, Spatial, Movable, Receptor>(Task::GameObject);
+
+		static Player player = { block_world };
 		game.m_player = Ref(&player);
 
-		world.generate_block(*app.m_gfx_system, ivec2(0));
-		generate_camps(world);
+		block_world.generate_block(*app.m_gfx_system, ivec2(0));
+		generate_camps(block_world);
 	}
 
 	virtual void scene(GameShell& app, GameScene& scene) final

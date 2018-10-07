@@ -31,37 +31,6 @@ using namespace mud; namespace toy
 
 		void next_frame();
 		
-		template <class T_Component, class... T_Args>
-		void add_loop(Task task)
-		{
-			auto loop = [](size_t tick, size_t delta)
-			{
-				s_registry.Loop<T_Component, T_Args...>([tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
-				{
-					UNUSED(entity); component.next_frame(args..., tick, delta);
-				});
-			};
-
-			m_pump.add_step({ task, loop });
-		}
-
-		template <class T_Component, class... T_Args>
-		void add_parallel_loop(Task task)
-		{
-			auto loop = [&](size_t tick, size_t delta)
-			{
-				auto process = [tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
-				{
-					UNUSED(entity); component.next_frame(args..., tick, delta);
-				};
-
-				Job* job = for_components<T_Component, T_Args...>(m_job_system, nullptr, process);
-				m_job_system.complete(job);
-			};
-
-			m_pump.add_step({ task, loop });
-		}
-
 		JobSystem& m_job_system;
 		JobPump m_pump;
 	};
@@ -69,7 +38,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT DefaultWorld : public Complex
 	{
 	public:
-		constr_ DefaultWorld(const string& name);
+		constr_ DefaultWorld(const string& name, JobSystem& job_system);
 		~DefaultWorld();
 
 		attr_ World m_world;

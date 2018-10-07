@@ -29,9 +29,9 @@ void populate_block(Tileblock& block)
 	generate_lamps(block);
 }
 
-TileWorld::TileWorld(const std::string& name)
+TileWorld::TileWorld(const std::string& name, JobSystem& job_system)
 	: Complex(0, type<TileWorld>(), m_bullet_world, m_navmesh, *this)
-	, m_world(0, *this, name)
+	, m_world(0, *this, name, job_system)
 	, m_bullet_world(m_world)
 	, m_navmesh(m_world)
 	, m_block_size(vec3(m_block_subdiv) * m_tile_scale)
@@ -113,11 +113,11 @@ void TileWorld::open_blocks(GfxSystem& gfx_system, const vec3& position, const i
 	}
 }
 
-uint32_t Bullet::create(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
+Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Bullet>();
-	s_registry.SetComponent(entity, Spatial(parent, source, rotation));
-	s_registry.SetComponent(entity, Bullet(HSpatial(entity), source, rotation, velocity));
+	Entity entity = { ecs.CreateEntity<Spatial, Bullet>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, source, rotation));
+	ecs.SetComponent(entity, Bullet(HSpatial(entity), source, rotation, velocity));
 	return entity;
 }
 
@@ -177,15 +177,15 @@ float Human::headlight_angle = 40.f;
 //float Human::headlight_angle = 30.f;
 //float Human::headlight_angle = 20.f;
 
-uint32_t Human::create(HSpatial parent, const vec3& position, Faction faction)
+Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position, Faction faction)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Emitter, Receptor, EntityScript, Human>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
-	s_registry.SetComponent(entity, Emitter(HSpatial(entity)));
-	s_registry.SetComponent(entity, Receptor(HSpatial(entity)));
-	s_registry.SetComponent(entity, EntityScript(entity));
-	s_registry.SetComponent(entity, Human(entity, entity, entity, entity, entity, faction));
+	Entity entity = { ecs.CreateEntity<Spatial, Movable, Emitter, Receptor, EntityScript, Human>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Movable(HSpatial(entity)));
+	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
+	ecs.SetComponent(entity, Receptor(HSpatial(entity)));
+	ecs.SetComponent(entity, EntityScript(entity));
+	ecs.SetComponent(entity, Human(entity, entity, entity, entity, entity, faction));
 	return entity;
 }
 
@@ -352,12 +352,12 @@ void Human::damage(float amount)
 	}
 }
 
-uint32_t Lamp::create(HSpatial parent, const vec3& position)
+Entity Lamp::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Lamp>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
-	s_registry.SetComponent(entity, Lamp(HSpatial(entity), HMovable(entity)));
+	Entity entity = { ecs.CreateEntity<Spatial, Movable, Lamp>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Movable(HSpatial(entity)));
+	ecs.SetComponent(entity, Lamp(HSpatial(entity), HMovable(entity)));
 	return entity;
 }
 
@@ -366,12 +366,12 @@ Lamp::Lamp(HSpatial spatial, HMovable movable)
 	, m_movable(movable)
 {}
 
-uint32_t Crate::create(HSpatial parent, const vec3& position, const vec3& extents)
+Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Crate>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
-	s_registry.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
+	Entity entity = { ecs.CreateEntity<Spatial, Movable, Crate>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Movable(HSpatial(entity)));
+	ecs.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }
 
@@ -878,12 +878,11 @@ void ex_platform_pump_game(GameShell& app, Game& game, Widget& parent)
 template <class T, class T_PaintFunc>
 inline void range_entity_painter(VisuScene& scene, HSpatial reference, float range, cstring name, World& world, T_PaintFunc paint_func)
 {
-	UNUSED(world);
 	float range2 = range*range;
-	auto paint = [&scene, reference, range2, paint_func](size_t index, VisuScene&, Gnode& parent)
+	auto paint = [&scene, reference, range2, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
 	{
 		vec3 position = reference->m_position;
-		s_registry.Loop<Spatial, T>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T& component)
+		world.m_ecs.Loop<Spatial, T>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T& component)
 		{
 			UNUSED(entity);
 			float dist2 = distance2(spatial.m_position, position);
@@ -919,21 +918,20 @@ public:
 
 	virtual void start(GameShell& app, Game& game) final
 	{
-		app.m_core->add_loop<Tileblock, WorldPage>(Task::Spatial);
-		app.m_core->add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);
+		TileWorld& tileworld = global_pool<TileWorld>().construct("Arcadia", *app.m_job_system);
+		World& world = tileworld.m_world;
+		game.m_world = &world;
 
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
-		s_registry.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
+		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
+		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
 
-		s_registry.AddBuffers<Spatial, Bullet>("Bullet");
-		s_registry.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human>("Human");
-		s_registry.AddBuffers<Spatial, Movable, Crate>("Crate");
-		s_registry.AddBuffers<Spatial, Movable, Lamp>("Lamp");
+		world.m_ecs.AddBuffers<Spatial, Bullet>("Bullet");
+		world.m_ecs.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human>("Human");
+		world.m_ecs.AddBuffers<Spatial, Movable, Crate>("Crate");
+		world.m_ecs.AddBuffers<Spatial, Movable, Lamp>("Lamp");
 
-		global_pool<TileWorld>();
-
-		TileWorld& tileworld = global_pool<TileWorld>().construct("Arcadia");
-		game.m_world = &tileworld.m_world;
+		world.add_loop<Tileblock, WorldPage>(Task::Spatial);
+		world.add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);
 
 		static Player player = { tileworld };
 		game.m_player = Ref(&player);
@@ -1010,7 +1008,7 @@ int main(int argc, char *argv[])
 	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
 	
 	PlatformModule module = { _platform::m() };
-	//app.run_game(module);
-	app.run_editor(module);
+	app.run_game(module);
+	//app.run_editor(module);
 }
 #endif

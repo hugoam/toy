@@ -59,7 +59,7 @@ using namespace mud; namespace toy
 						&& item.m_node.m_object && item.m_node.m_object.m_type->is<EntityRef>();
 				if(add)
 				{
-					Entity entity = as_ent(item.m_node.m_object);
+					Entity entity = { as_ent(item.m_node.m_object), 0 };
 					Spatial& object = asa<Spatial>(entity);
 					if((object.is_child_of(page.m_spatial) || &object == &spatial) && !isa<Movable>(entity))
 						items.push_back(&item);

@@ -18,9 +18,9 @@ using namespace mud; namespace toy
 	{
 	public:
 		constr_ Chunk() {}
-		constr_ Chunk(HSpatial parent, Block& block, size_t index, Element& element, float size);
+		constr_ Chunk(HSpatial spatial, Block& block, size_t index, Element& element, float size);
 
-		static uint32_t create(HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size);
+		static Entity create(ECS& ecs, HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size);
 
 		comp_ HSpatial m_spatial;
 

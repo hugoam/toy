@@ -798,7 +798,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 	}
 	else if(player.m_mode == GameStage::Tactics)
 	{
-		Entity selected = scene.m_selection.size() > 0 ? as_ent(scene.m_selection[0]) : UINT32_MAX;
+		Entity selected = { scene.m_selection.size() > 0 ? as_ent(scene.m_selection[0]) : UINT32_MAX, 0 };
 
 		if(Star* star = try_asa<Star>(selected))
 		{
@@ -849,12 +849,12 @@ void ex_space_ui(Widget& parent, GameScene& scene)
 
 	Widget& self = ui::widget(parent, styles().board, &scene);
 
-	Viewer& viewer = game_viewport(self, scene, player.m_camera, HMovable(player.m_camera.m_handle));
+	Viewer& viewer = game_viewport(self, scene, player.m_camera, HMovable(player.m_camera));
 	viewer.m_camera.m_near = 0.001f;
 	paint_viewer(viewer);
 
 	game_viewer_ui(viewer, scene, player);
 
 	uint32_t* hovered = try_val<uint32_t>(viewer.m_hovered);
-	player.m_hovered_item = hovered ? *hovered : Entity();
+	player.m_hovered_item = hovered ? Entity(*hovered, 0) : Entity();
 }

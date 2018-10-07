@@ -27,7 +27,7 @@ using namespace mud; namespace toy
 		constr_ Waypoint() {}
 		constr_ Waypoint(HSpatial parent);
 
-		static uint32_t create(HSpatial parent, const vec3& position);
+		static Entity create(ECS& ecs, HSpatial parent, const vec3& position);
 
 		comp_ HSpatial m_spatial;
 	};

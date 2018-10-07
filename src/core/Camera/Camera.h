@@ -27,7 +27,7 @@ using namespace mud; namespace toy
 		constr_ Camera(HSpatial spatial, float lens_distance = 1.f, float near = 0.001f, float far = 1000.f);
 		~Camera();
 
-		static uint32_t create(toy::HSpatial parent, const vec3& position, float lens_distance, float near = 0.001f, float far = 1000.f);
+		static Entity create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near = 0.001f, float far = 1000.f);
 
 		comp_ HSpatial m_spatial;
 

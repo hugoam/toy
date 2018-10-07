@@ -3,16 +3,16 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#include <core/Types.h>
 #include <core/World/Origin.h>
-
 
 using namespace mud; namespace toy
 {
-	uint32_t Origin::create(World& world)
+	Entity Origin::create(ECS& ecs, World& world)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, Origin>();
-		s_registry.SetComponent(entity, Spatial(world, HSpatial(), Zero3, ZeroQuat));
-		s_registry.SetComponent(entity, Origin(HSpatial(entity)));
+		Entity entity = { ecs.CreateEntity<Spatial, Origin>(), ecs.m_index };
+		ecs.SetComponent(entity, Spatial(world, HSpatial(), Zero3, ZeroQuat));
+		ecs.SetComponent(entity, Origin(HSpatial(entity)));
 		return entity;
 	}
 

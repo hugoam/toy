@@ -10,6 +10,7 @@
 #include <geom/Shapes.h>
 #include <math/Image256.h>
 
+#include <core/World/World.h>
 #include <core/Spatial/Spatial.h>
 
 #include <core/Physic/Scope.h>
@@ -71,11 +72,11 @@ using namespace mud; namespace toy
 				}
 	}
 
-	uint32_t Block::create(HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size)
+	Entity Block::create(ECS& ecs, HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size)
 	{
-		uint32_t entity = s_registry.CreateEntity<Spatial, Block>();
-		s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		s_registry.SetComponent(entity, Block(HSpatial(entity), world_page, parentblock, index, size));
+		Entity entity = { ecs.CreateEntity<Spatial, Block>(), ecs.m_index };
+		asa<Spatial>(entity) = Spatial(parent, position, ZeroQuat);
+		asa<Block>(entity) = Block(HSpatial(entity), world_page, parentblock, index, size);
 		//, m_emitter(*this, m_spatial, m_movable)
 		return entity;
 	}

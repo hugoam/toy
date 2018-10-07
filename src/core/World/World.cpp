@@ -9,6 +9,8 @@
 #include <core/World/Origin.h>
 #include <core/Physic/Collider.h>
 
+#include <core/Api.h>
+
 #include <type/Indexer.h>
 #include <math/Timer.h>
 #include <ecs/Proto.h>
@@ -19,16 +21,24 @@
 
 using namespace mud; namespace toy
 {
-	World::World(Id id, Complex& complex, const string& name)
+	World::World(Id id, Complex& complex, const string& name, JobSystem& job_system)
         : m_id(complex.m_id)
 		, m_complex(complex)
 		, m_name(name)
 		, m_clock(make_object<WorldClock>(*this))
 		, m_pools(c_max_types)
+		, m_job_system(job_system)
     {
 		UNUSED(id);
-		m_origin = Origin::create(*this);
-		m_unworld = Origin::create(*this);
+		s_ecs[0] = &m_ecs;
+
+		//m_ecs.AddBuffers<Spatial>();
+		m_ecs.AddBuffers<Spatial, Origin>("Origin");
+		m_ecs.AddBuffers<Spatial, Waypoint>("Waypoint");
+		m_ecs.AddBuffers<Spatial, Movable, Camera>("Camera");
+
+		m_origin = { Origin::create(m_ecs, *this), 0 };
+		m_unworld = { Origin::create(m_ecs, *this), 0 };
 
 		auto update_colliders = [&](size_t tick, size_t delta)
 		{
@@ -37,6 +47,15 @@ using namespace mud; namespace toy
 		};
 
 		m_pump.add_step({ Task::Physics, update_colliders });
+
+		add_parallel_loop<Spatial>(Task::Spatial);
+		add_parallel_loop<Movable, Spatial>(Task::Spatial);
+		add_parallel_loop<Camera, Spatial>(Task::Spatial);
+		add_parallel_loop<WorldPage, Spatial>(Task::Spatial);
+		add_parallel_loop<Navblock, Spatial, WorldPage>(Task::Spatial);
+
+		// not parallel because we don't know what the script might do
+		add_loop<EntityScript>(Task::Spatial);
 	}
 
     World::~World()

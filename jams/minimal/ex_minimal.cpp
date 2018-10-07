@@ -5,11 +5,11 @@
 #include <minimal/Api.h>
 #include <meta/minimal/Module.h>
 
-uint32_t Bullet::create(HSpatial parent, const vec3& source, const quat& rotation, float velocity)
+Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Bullet>();
-	s_registry.SetComponent(entity, Spatial(parent, source, rotation));
-	s_registry.SetComponent(entity, Bullet(HSpatial(entity), source, rotation, velocity));
+	Entity entity = { ecs.CreateEntity<Spatial, Bullet>(), ecs.m_index };
+	asa<Spatial>(entity) = Spatial(parent, source, rotation);
+	asa<Bullet>(entity) = Bullet(HSpatial(entity), source, rotation, velocity);
 	return entity;
 }
 
@@ -44,12 +44,12 @@ void Bullet::update()
 const vec3 Human::muzzle_offset = { 0.f, 1.6f, -1.f };
 float Human::headlight_angle = 40.f;
 
-uint32_t Human::create(HSpatial parent, const vec3& position)
+Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Human>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
-	s_registry.SetComponent(entity, Human(entity, entity));
+	Entity entity = { ecs.CreateEntity<Spatial, Movable, Human>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Movable(HSpatial(entity)));
+	ecs.SetComponent(entity, Human(entity, entity));
 	return entity;
 }
 
@@ -95,12 +95,12 @@ void Human::shoot()
 	m_bullets.emplace_back(make_object<Bullet>(m_spatial, aim.source, rotation, 2.f));
 }
 
-uint32_t Crate::create(HSpatial parent, const vec3& position, const vec3& extents)
+Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	uint32_t entity = s_registry.CreateEntity<Spatial, Movable, Crate>();
-	s_registry.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	s_registry.SetComponent(entity, Movable(HSpatial(entity)));
-	s_registry.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
+	Entity entity = { ecs.CreateEntity<Spatial, Movable, Crate>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, Movable(HSpatial(entity)));
+	ecs.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }
 
@@ -274,17 +274,18 @@ public:
 		UNUSED(game);
 		app.m_gfx_system->add_resource_path("examples/ex_minimal/");
 		app.m_gfx_system->add_resource_path("examples/05_character/");
-
-		s_registry.AddBuffers<Spatial, Bullet>("Bullet");
-		s_registry.AddBuffers<Spatial, Movable, Human>("Human");
-		s_registry.AddBuffers<Spatial, Movable, Crate>("Crate");
 	}
 
 	virtual void start(GameShell& app, Game& game) final
 	{
 		UNUSED(app);
-		DefaultWorld& world = global_pool<DefaultWorld>().construct("Arcadia");
-		game.m_world = &world.m_world;
+		DefaultWorld& default_world = global_pool<DefaultWorld>().construct("Arcadia", *app.m_job_system);
+		World& world = default_world.m_world;
+		game.m_world = &world;
+
+		world.m_ecs.AddBuffers<Spatial, Bullet>("Bullet");
+		world.m_ecs.AddBuffers<Spatial, Movable, Human>("Human");
+		world.m_ecs.AddBuffers<Spatial, Movable, Crate>("Crate");
 
 		static Player player = { *game.m_world };
 		game.m_player = Ref(&player);

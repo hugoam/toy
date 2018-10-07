@@ -512,7 +512,7 @@ public:
 	constr_ Star(HSpatial spatial, Galaxy& galaxy, const uvec2& coord, const std::string& name);
 	~Star();
 
-	static uint32_t create(HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const std::string& name);
+	static Entity create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const std::string& name);
 
 	comp_ HSpatial m_spatial;
 
@@ -629,7 +629,7 @@ public:
 	constr_ Fleet(HSpatial spatial, Galaxy& galaxy, Commander& commander, const uvec2& coord, const std::string& name);
 	~Fleet();
 
-	static uint32_t create(HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name);
+	static Entity create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name);
 
 	comp_ HSpatial m_spatial;
 
@@ -867,7 +867,7 @@ public:
 class refl_ _SPACE_EXPORT Quadrant
 {
 public:
-	constr_ Quadrant(HSpatial parent, const vec3& position, const uvec2& coord, float size);
+	constr_ Quadrant(HSpatial spatial, const vec3& position, const uvec2& coord, float size);
 
 	attr_ CSpatial m_spatial;
 
@@ -980,10 +980,10 @@ class refl_ _SPACE_EXPORT Galaxy
 {
 public:
 	constr_ Galaxy() {}
-	constr_ Galaxy(HSpatial parent, const uvec2& size);
+	constr_ Galaxy(HSpatial spatial, const uvec2& size);
 	~Galaxy();
 
-	static uint32_t create(HSpatial parent, const vec3& position, const uvec2& size);
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& position, const uvec2& size);
 
 	comp_ HSpatial m_spatial;
 
@@ -1004,7 +1004,7 @@ public:
 class refl_ _SPACE_EXPORT Universe : public Complex
 {
 public:
-	constr_ Universe(const std::string& name);
+	constr_ Universe(const std::string& name, JobSystem& job_system);
 	~Universe();
 
 	attr_ World m_world;

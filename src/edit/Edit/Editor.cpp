@@ -187,12 +187,12 @@ using namespace mud; namespace toy
 
 	string entity_name(uint32_t entity)
 	{
-		return string(entity_prototype(entity)) + ":" + to_string(entity);
+		return string(entity_prototype({ entity, 0 })) + ":" + to_string(entity);
 	}
 
 	string entity_icon(uint32_t entity)
 	{
-		return "(" + string(entity_prototype(entity)) + ")";
+		return "(" + string(entity_prototype({ entity, 0 })) + ")";
 	}
 
 	void outliner_node(Widget& parent, uint32_t entity, HSpatial spatial, std::vector<Ref>& selection)

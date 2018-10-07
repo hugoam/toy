@@ -84,20 +84,4 @@ using namespace mud; namespace toy
 
 	void detach_to(HSpatial spatial, HSpatial target);
 	void set_parent(HSpatial spatial, HSpatial target);
-
-	template <class T, class... Types>
-	inline ComponentHandle<T> construct(HSpatial parent, Types&&... args)
-	{
-		ComponentHandle<T> object = T::create(parent, std::forward<Types>(args)...);
-		parent->m_contents.push_back(object->m_spatial);
-		return object;
-	}
-
-	template <class T, class... Types>
-	inline EntityHandle<T> construct_owned(HSpatial parent, Types&&... args)
-	{
-		EntityHandle<T> object = T::create(parent, std::forward<Types>(args)...);
-		parent->m_contents.push_back(object->m_spatial);
-		return object;
-	}
 }

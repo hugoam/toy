@@ -29,7 +29,7 @@ using namespace mud; namespace toy
 		constr_ Sector() {}
 		constr_ Sector(HSpatial spatial, HWorldPage world_page, HNavblock navblock, const uvec3& coordinate, const vec3& size);
 
-		static uint32_t create(HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size);
+		static Entity create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size);
 
 		comp_ HSpatial m_spatial;
 		comp_ HWorldPage m_world_page;
@@ -52,7 +52,7 @@ using namespace mud; namespace toy
 		constr_ Tileblock(HSpatial spatial, HWorldPage world_page, HNavblock navblock, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset);
 		~Tileblock();
 
-		static uint32_t create(HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset);
+		static Entity create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset);
 
 		comp_ HSpatial m_spatial;
 		comp_ HWorldPage m_world_page;
