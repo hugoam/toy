@@ -32,7 +32,7 @@ $output v_position, v_view, v_normal
 void main()
 {
 	vec3 pos = a_position;
-	vec3 normal = a_normal.xyz*2.0 - 1.0;
+	vec3 normal = a_normal*2.0 - 1.0;
 
 	gl_Position = mul(u_modelViewProj, vec4(pos, 1.0));
 	v_position = gl_Position;

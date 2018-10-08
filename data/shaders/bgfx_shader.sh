@@ -321,6 +321,9 @@ vec4 bgfxTexelFetch(BgfxSampler3D _sampler, ivec3 _coord, int _lod)
 #		define textureCube(_sampler, _coord) bgfxTextureCube(_sampler, _coord)
 #		define textureCubeLod(_sampler, _coord, _level) bgfxTextureCubeLod(_sampler, _coord, _level)
 
+#       define EmitVertex() outputStream.Append(output)
+#       define EndPrimitive() outputStream.RestartStrip()
+
 #		define texelFetch(_sampler, _coord, _lod) bgfxTexelFetch(_sampler, _coord, _lod)
 #	else
 
@@ -465,6 +468,7 @@ float rcp(float _a) { return 1.0/_a; }
 vec2  rcp(vec2  _a) { return vec2(1.0)/_a; }
 vec3  rcp(vec3  _a) { return vec3(1.0)/_a; }
 vec4  rcp(vec4  _a) { return vec4(1.0)/_a; }
+
 #endif // BGFX_SHADER_LANGUAGE_*
 
 vec2 vec2_splat(float _x) { return vec2(_x, _x); }

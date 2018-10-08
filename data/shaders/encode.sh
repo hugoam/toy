@@ -1,6 +1,50 @@
 #ifndef MUD_SHADER_ENCODE
 #define MUD_SHADER_ENCODE
 
+uint encodeNormal(vec3 n)
+{
+	ivec3 inor = ivec3(n * 255.0f);
+	uvec3 signs;
+	signs.x = uint((inor.x >> 5) & 0x04000000);
+	signs.y = uint((inor.y >> 14) & 0x00020000);
+	signs.z = uint((inor.z >> 23) & 0x00000100);
+	uvec3 unor = uvec3(abs(inor));
+	uint val = signs.x | (unor.x << 18u) | signs.y | (unor.y << 9u) | signs.z | unor.z;
+	return val;
+}
+
+vec3 decodeNormal(uint val)
+{
+	uvec3 nor;
+	nor.x = (val >> 18) & 0x000000FFu;
+	nor.y = (val >> 9) & 0x000000FFu;
+	nor.z = val & 0x000000FFu;
+	uvec3 signs;
+	signs.x = (val >> 25) & 0x00000002u;
+	signs.y = (val >> 16) & 0x00000002u;
+	signs.z = (val >> 7) & 0x00000002u;
+	signs = uvec3_splat(1u) - signs;
+	vec3 normal = vec3(nor) / 255.0f;
+	normal *= signs;
+	return normal;
+}
+
+uint encodeRGBA8(vec4 val)
+{
+  return (uint(val.w) & 0x000000FFu) << 24u
+       | (uint(val.z) & 0x000000FFu) << 16u
+       | (uint(val.y) & 0x000000FFu) << 8u
+       | (uint(val.x) & 0x000000FFu);
+}
+
+vec4 decodeRGBA8(uint val)
+{
+  return vec4(float((val & 0x000000FFu)),
+              float((val & 0x0000FF00u) >> 8u),
+              float((val & 0x00FF0000u) >> 16u),
+              float((val & 0xFF000000u) >> 24u));
+}
+
 vec4 encodeRE8(float _r)
 {
 	float exponent = ceil(log2(_r) );

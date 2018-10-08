@@ -28,10 +28,10 @@ void main()
 	//v_texcoord1 = a_texcoord1;
 
 	v_view = mul(modelView, vec4(a_position, 1.0)).xyz;
-    v_normal = normalize(mul(normalModelView, vec4(a_normal.xyz, 0.0)).xyz);
+    v_normal = normalize(mul(normalModelView, vec4(a_normal, 0.0)).xyz);
 	v_tangent = normalize(mul(normalModelView, vec4(a_tangent.xyz, 0.0)).xyz);
     
-	vec3 binormal = normalize(a_tangent.a * cross(a_normal.xyz, a_tangent.xyz));
+	vec3 binormal = normalize(a_tangent.a * cross(a_normal, a_tangent.xyz));
 	v_binormal = normalize(mul(normalModelView, vec4(binormal, 0.0)).xyz);
 
 //#define DEBUG_BONES
