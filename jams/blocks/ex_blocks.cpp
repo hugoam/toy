@@ -656,6 +656,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	Widget& self = ui::widget(parent, styles().board, &scene);
 
 	Viewer& viewer = ui::viewer(self, scene.m_scene);
+	//viewer.m_viewport.m_lighting = lighting(Lighting::VoxelGI);
 
 	Tank& tank = player.m_tank;
 	Spatial& spatial = tank.m_spatial;

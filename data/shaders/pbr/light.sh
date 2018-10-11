@@ -52,9 +52,11 @@ struct Light
 	float RoV;
 };
 
-Light preread_light(int index)
+Light preread_light(int index, int type)
 {
     Light light;
+    
+    light.type = type;
     light.position = u_light_position_range[index].xyz;
     light.range = u_light_position_range[index].w;
     light.energy = u_light_energy_specular[index].xyz;
@@ -65,6 +67,7 @@ Light preread_light(int index)
     light.shadows = bool(u_light_shadow[index].w);
 	light.spot_attenuation = u_light_spot_params[index].x;
 	light.spot_cutoff = u_light_spot_params[index].y;
+    light.spot_inner = light.spot_cutoff; //@todo
     
     return light;
 }
@@ -90,17 +93,17 @@ void precalc_light(Fragment fragment, inout Light light)
 	light.RoV = max(dot(R, V), 0.0);
 }
 
-Light read_infinite_light(int index, Fragment fragment)
+Light read_infinite_light(int index, int type, Fragment fragment)
 {
-    Light light = preread_light(index);
+    Light light = preread_light(index, type);
     light.ray = -light.direction;
     precalc_light(fragment, light);
     return light;
 }
 
-Light read_punctual_light(int index, Fragment fragment)
+Light read_punctual_light(int index, int type, Fragment fragment)
 {
-    Light light = preread_light(index);
+    Light light = preread_light(index, type);
     light.ray = light.position - fragment.position;
     precalc_light(fragment, light);
     return light;
@@ -139,23 +142,23 @@ void apply_lights(Fragment fragment, Material material, inout vec3 diffuse, inou
 {
 	for(int i = 0; i < int(u_light_counts[LIGHT_OMNI]); i++)
 	{
-        Light light = read_punctual_light(int(u_light_indices[i][LIGHT_OMNI]), fragment);
+        Light light = read_punctual_light(int(u_light_indices[i][LIGHT_OMNI]), LIGHT_OMNI, fragment);
         light_brdf(light, fragment, material, omni_attenuation(light), diffuse, specular);
 	}
 
 	for(int j = 0; j < int(u_light_counts[LIGHT_SPOT]); j++)
 	{
-        Light light = read_punctual_light(int(u_light_indices[j][LIGHT_SPOT]), fragment);
+        Light light = read_punctual_light(int(u_light_indices[j][LIGHT_SPOT]), LIGHT_SPOT, fragment);
         light_brdf(light, fragment, material, spot_attenuation(light), diffuse, specular);
 	}
 }
 
-Light read_cluster_light(uint index, Fragment fragment)
+Light read_cluster_light(uint index, int type, Fragment fragment)
 {
     ivec2 uv = record_uv(index);
     //uint light_index = texelFetch(s_light_records, uv, 0).r;
     uint light_index = uint(texelFetch(s_light_records, uv, 0).r * 255.0);
-    return read_punctual_light(int(light_index), fragment);
+    return read_punctual_light(int(light_index), type, fragment);
 }
 
 void apply_cluster_lights(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
@@ -167,13 +170,13 @@ void apply_cluster_lights(Fragment fragment, Material material, inout vec3 diffu
 
     for(uint last_point = index + cluster.point_count; index < last_point; index++)
     {
-        Light light = read_cluster_light(index, fragment);
+        Light light = read_cluster_light(index, LIGHT_OMNI, fragment);
         light_brdf(light, fragment, material, omni_attenuation(light), diffuse, specular);
     }
 
     for(uint last_spot = index + cluster.spot_count; index < last_spot; index++)
     {
-        Light light = read_cluster_light(index, fragment);
+        Light light = read_cluster_light(index, LIGHT_SPOT, fragment);
         light_brdf(light, fragment, material, spot_attenuation(light), diffuse, specular);
     }
 }
@@ -181,7 +184,7 @@ void apply_cluster_lights(Fragment fragment, Material material, inout vec3 diffu
 #ifdef DIRECTIONAL_LIGHT
 void directional_light(Fragment fragment, Material material, float frag_w, inout vec3 diffuse, inout vec3 specular)
 {
-    Light light = read_infinite_light(0, fragment);
+    Light light = read_infinite_light(0, LIGHT_DIRECT, fragment);
     
 #ifdef CSM_SHADOW
     vec3 attenuation = csm_shadow(light, fragment.position, fragment.normal, frag_w);
