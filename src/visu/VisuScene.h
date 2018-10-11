@@ -9,6 +9,9 @@
 #include <math/Timer.h>
 #include <visu/Forward.h>
 
+#include <ecs/Registry.h>
+
+#include <core/World/World.h>
 #include <core/Spatial/Spatial.h>
 #include <core/Camera/Camera.h>
 #include <core/Selector/Selection.h>

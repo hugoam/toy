@@ -20,12 +20,13 @@ uniform vec4 u_csm_splits;
 uniform vec4 u_light_counts;
 uniform vec4 u_light_indices[MAX_LIGHTS];
 
-#define LIGHT_TYPE_DIRECTIONAL 0
-#define LIGHT_TYPE_OMNI 1
-#define LIGHT_TYPE_SPOT 2
+#define LIGHT_DIRECT 0
+#define LIGHT_OMNI 1
+#define LIGHT_SPOT 2
 
 struct Light
 {
+    int type;
     vec3 position;
     float range;
     vec3 energy;
@@ -36,6 +37,7 @@ struct Light
     bool shadows;
     float spot_attenuation;
     float spot_cutoff;
+    float spot_inner;
     
     vec3 ray;
     
@@ -50,7 +52,7 @@ struct Light
 	float RoV;
 };
 
-Light preread_light(int index, Fragment fragment)
+Light preread_light(int index)
 {
     Light light;
     light.position = u_light_position_range[index].xyz;
@@ -90,7 +92,7 @@ void precalc_light(Fragment fragment, inout Light light)
 
 Light read_infinite_light(int index, Fragment fragment)
 {
-    Light light = preread_light(index, fragment);
+    Light light = preread_light(index);
     light.ray = -light.direction;
     precalc_light(fragment, light);
     return light;
@@ -98,7 +100,7 @@ Light read_infinite_light(int index, Fragment fragment)
 
 Light read_punctual_light(int index, Fragment fragment)
 {
-    Light light = preread_light(index, fragment);
+    Light light = preread_light(index);
     light.ray = light.position - fragment.position;
     precalc_light(fragment, light);
     return light;
@@ -135,15 +137,15 @@ vec3 spot_attenuation(Light light)
 
 void apply_lights(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
 {
-	for(int i = 0; i < int(u_light_counts[LIGHT_TYPE_OMNI]); i++)
+	for(int i = 0; i < int(u_light_counts[LIGHT_OMNI]); i++)
 	{
-        Light light = read_punctual_light(int(u_light_indices[i][LIGHT_TYPE_OMNI]), fragment);
+        Light light = read_punctual_light(int(u_light_indices[i][LIGHT_OMNI]), fragment);
         light_brdf(light, fragment, material, omni_attenuation(light), diffuse, specular);
 	}
 
-	for(int j = 0; j < int(u_light_counts[LIGHT_TYPE_SPOT]); j++)
+	for(int j = 0; j < int(u_light_counts[LIGHT_SPOT]); j++)
 	{
-        Light light = read_punctual_light(int(u_light_indices[j][LIGHT_TYPE_SPOT]), fragment);
+        Light light = read_punctual_light(int(u_light_indices[j][LIGHT_SPOT]), fragment);
         light_brdf(light, fragment, material, spot_attenuation(light), diffuse, specular);
 	}
 }
