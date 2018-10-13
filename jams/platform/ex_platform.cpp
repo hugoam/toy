@@ -875,24 +875,6 @@ void ex_platform_pump_game(GameShell& app, Game& game, Widget& parent)
 	}
 }
 
-template <class T, class T_PaintFunc>
-inline void range_entity_painter(VisuScene& scene, HSpatial reference, float range, cstring name, World& world, T_PaintFunc paint_func)
-{
-	float range2 = range*range;
-	auto paint = [&scene, reference, range2, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
-	{
-		vec3 position = reference->m_position;
-		world.m_ecs.Loop<Spatial, T>([index, &parent, &scene, &position, range2, paint_func](uint32_t entity, Spatial& spatial, T& component)
-		{
-			UNUSED(entity);
-			float dist2 = distance2(spatial.m_position, position);
-			if(dist2 < range2)
-				paint_func(scene.entity_node(parent, entity, spatial, index), component);
-		});
-	};
-	scene.m_painters.emplace_back(make_unique<VisuPainter>(name, scene.m_painters.size(), paint));
-}
-
 class PlatformModule : public GameModule
 {
 public:
@@ -973,11 +955,11 @@ public:
 		};
 
 		World& world = *scene.m_game.m_world;
-		range_entity_painter<Lamp>(scene, reference, 100.f, "Lamps", world, paint_lamp);
-		range_entity_painter<Human>(scene, reference, 100.f, "Humans", world, paint_human);
-		range_entity_painter<Crate>(scene, reference, 100.f, "Crates", world, paint_crate);
-		range_entity_painter<Tileblock>(scene, reference, 200.f, "Tileblocks", world, paint_hole_block);
-		range_entity_painter<Bullet>(scene, reference, 100.f, "Bullets", world, paint_bullet);
+		scene.range_entity_painter<Lamp>(reference, 100.f, "Lamps", world, paint_lamp);
+		scene.range_entity_painter<Human>(reference, 100.f, "Humans", world, paint_human);
+		scene.range_entity_painter<Crate>(reference, 100.f, "Crates", world, paint_crate);
+		scene.range_entity_painter<Tileblock>(reference, 200.f, "Tileblocks", world, paint_hole_block);
+		scene.range_entity_painter<Bullet>(reference, 100.f, "Bullets", world, paint_bullet);
 
 		//physic_painter(scene);
 	}

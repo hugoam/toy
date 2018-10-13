@@ -97,6 +97,24 @@ using namespace mud; namespace toy
 			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 		}
 
+		template <class T, class T_PaintFunc>
+		inline void range_entity_painter(HSpatial reference, float range, cstring name, World& world, T_PaintFunc paint_func)
+		{
+			float range2 = range * range;
+			auto paint = [reference, range2, this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
+			{
+				vec3 position = reference->m_position;
+				world.m_ecs.Loop<Spatial, T>([&position, range2, this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+				{
+					UNUSED(entity);
+					float dist2 = distance2(spatial.m_position, position);
+					if(dist2 < range2)
+						paint_func(this->entity_node(parent, entity, spatial, index), component);
+				});
+			};
+			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
+		}
+
 		template <class T, class T_Container>
 		inline void object_painter(cstring name, T_Container& objects, void (*paint_func)(Gnode&, T&))
 		{

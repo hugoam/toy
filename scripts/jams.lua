@@ -25,6 +25,7 @@ space       = mud_module(nil, "_space",     path.join(TOY_DIR, "jams"), "space",
 platform    = mud_module(nil, "_platform",  path.join(TOY_DIR, "jams"), "platform", nil, nil, uses_jam, toy.all)
 blocks      = mud_module(nil, "_blocks",    path.join(TOY_DIR, "jams"), "blocks",   nil, nil, uses_jam, toy.all)
 script      = mud_module(nil, "_wren",      path.join(TOY_DIR, "jams"), "wren",     nil, nil, uses_jam, toy.all)
+godot       = mud_module(nil, "_godot",     path.join(TOY_DIR, "jams"), "godot",    nil, nil, uses_jam, toy.all)
 
 function preload_example_folder(name)
     configuration { "asmjs" }
@@ -52,6 +53,7 @@ jam_project("space",    { space })
 jam_project("platform", { platform }, { "05_character", "17_wfc" })
 jam_project("blocks",   { blocks })
 jam_project("wren",     { script })
+jam_project("godot",    { godot })
 
 project "ex_boids"
     includedirs {

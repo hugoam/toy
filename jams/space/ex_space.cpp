@@ -345,7 +345,7 @@ void update_stability(Turn& turn, Commander& commander, Star& star)
 	ivec2 distance2 = abs(ivec2(star.m_coord) - ivec2(commander.m_capital->m_coord));
 	int distance = distance2.x > distance2.y ? distance2.x : distance2.y;
 	int modifier = star_distance_stability(distance) + star_taxation_stability(star.m_taxation) + (star.m_politic == Politic::Pacification ? 4 : 0);
-	star.m_stability = std::clamp(star.m_stability + modifier, 0, 100);
+	star.m_stability = clamp(star.m_stability + modifier, 0, 100);
 }
 
 void sustain_fleet(Turn& turn, Commander& commander, Fleet& fleet)

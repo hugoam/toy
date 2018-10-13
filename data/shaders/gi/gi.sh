@@ -1,7 +1,7 @@
 #ifndef MUD_SHADER_GI
 #define MUD_SHADER_GI
 
- #include <common.sh>
+#include <common.sh>
 
 uniform mat4 u_voxelgi_world;
 //uniform mat3 u_voxelgi_normal;

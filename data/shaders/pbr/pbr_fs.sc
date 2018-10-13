@@ -6,6 +6,8 @@ $input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0/*, v_texcoo
 #include <pbr/radiance.sh>
 #include <pbr/fog.sh>
 
+#include <gi/conetrace.sh>
+
 void main()
 {
     Fragment fragment;
@@ -72,6 +74,10 @@ void main()
     
 #ifdef AMBIENT_OCCLUSION
 	ambient *= material.ao;
+#endif
+
+#ifdef GI_CONETRACE
+    gi_probes_compute(fragment.position, fragment.normal, material.roughness, specular, ambient);
 #endif
 
 #ifdef DIRECTIONAL_LIGHT
