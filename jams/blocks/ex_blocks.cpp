@@ -459,7 +459,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 		tank_turret_models[faction.m_id] = &faction_model_variant(gfx_system, faction, *gfx_system.models().file("scifi_tank_turret"));
 	}
 
-	Gnode& turret = gfx::node(parent, {}, parent.m_attach->m_position, tank.turret_rotation());
+	Gnode& turret = gfx::node(parent, {}, parent.m_attach->position(), tank.turret_rotation());
 
 	if(tank.m_hitpoints > 0.f)
 	{
@@ -487,7 +487,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 		if(false)
 		{
 			Gnode& alive = parent.subx(Alive);
-			Gnode& symbol = gfx::node(alive, {}, parent.m_attach->m_position, parent.m_attach->m_rotation);
+			Gnode& symbol = gfx::node(alive, {}, parent.m_attach->m_transform);
 			gfx::shape(symbol, Torus(4.f, 0.1f), Symbol(faction.m_colour * 2.f));
 
 			if(false)

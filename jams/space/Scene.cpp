@@ -30,7 +30,7 @@ mat4 planet_transform(VisuPlanet& planet, const mat4& transform)
 
 void paint_planet_ellipsis(Gnode& parent, VisuPlanet& planet)
 {
-	gfx::node(parent, {}, rotate(planet.m_rotation, parent.m_attach->m_position), planet.m_rotation);
+	gfx::node(parent, {}, rotate(planet.m_rotation, parent.m_attach->position()), planet.m_rotation);
 	gfx::shape(parent, Ellipsis(planet.m_ellipsis), Symbol::wire(Colour::AlphaGrey), ITEM_SELECTABLE);
 }
 
@@ -66,10 +66,12 @@ void paint_star(Gnode& parent, Star& star)
 	paint_star_planets(parent, star);
 }
 
+inline vec3 to_xz3(const vec3& vec) { return { vec.x, 0.f, vec.z }; }
+
 void paint_range_grid(Gnode& parent, const Colour& colour, int range)
 {
 	float side = float(range * 2 + 1);
-	Gnode& projected = gfx::node(parent, {}, { parent.m_attach->m_position.x, 0.5f, parent.m_attach->m_position.z });
+	Gnode& projected = gfx::node(parent, {}, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
 	gfx::shape(projected, Grid2(vec2(side), vec2(2.5f)), Symbol::wire(colour));
 }
 
@@ -77,7 +79,7 @@ void paint_range(Gnode& parent, const Colour& colour, int range)
 {
 	if(range == 0) return;
 	float side = float(range * 2 + 1);
-	Gnode& projected = gfx::node(parent, {}, { parent.m_attach->m_position.x, 0.5f, parent.m_attach->m_position.z });
+	Gnode& projected = gfx::node(parent, {}, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
 	gfx::shape(projected, Quad(side, X3, Z3), Symbol::wire(colour));
 }
 
@@ -92,7 +94,7 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 	float length = min(abs(sec(angle)), abs(csc(angle))) * range;
 	vec3 end = rotate(X3 * length, angle, Y3);
 
-	Gnode& projected = gfx::node(parent, {}, { parent.m_attach->m_position.x, 0.5f, parent.m_attach->m_position.z });
+	Gnode& projected = gfx::node(parent, {}, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
 	gfx::draw(projected, Line(Zero3, end), Symbol::wire(colour));
 }
 
