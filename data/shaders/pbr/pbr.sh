@@ -17,9 +17,18 @@ SAMPLER2D(s_albedo, 0);
 SAMPLER2D(s_metallic, 1);
 SAMPLER2D(s_roughness, 2);
 SAMPLER2D(s_emissive, 3);
+
+#ifdef NORMAL_MAP
 SAMPLER2D(s_normal, 4);
+#endif
+
+#ifdef DEPTH_MAPPING
 SAMPLER2D(s_depth, 12);
+#endif
+
+#ifdef AMBIENT_OCCLUSION
 SAMPLER2D(s_ambient_occlusion, 11);
+#endif
 
 #if 0
 SAMPLER2D(s_anisotropy, 6);

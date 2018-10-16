@@ -304,7 +304,7 @@ using namespace mud; namespace toy
 		Gnode& self = parent.suba();
 		if(self.m_sound)
 		{
-			self.m_sound->set_position(parent.m_attach->m_position);
+			self.m_sound->set_position(parent.m_attach->position());
 			return self.m_sound->m_state != Sound::STOPPED;
 		}
 

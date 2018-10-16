@@ -478,9 +478,10 @@ void paint_scene(Gnode& parent)
 void paint_level(Gnode& parent)
 {
 	static Model& demolevel = *parent.m_scene->m_gfx_system.models().file("demolevel");
-	gfx::item(parent, demolevel, 0U);
+	gfx::multi_item(parent, demolevel, ITEM_NO_UPDATE);
 
-	gfx::gi_probe(parent, 256U, vec3(256.f));
+	gfx::gi_probe(parent, 256U, vec3(32.f));
+	//gfx::gi_probe(parent, 256U, vec3(128.f, 64.f, 128.f));
 }
 
 void paint_viewer(Viewer& viewer)
@@ -626,22 +627,6 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 		if(viewer.key_event(Key::LeftControl, EventType::Pressed))
 			human.m_shield = !human.m_shield;
-
-		auto bar = [](Widget& parent, Style& style, cstring icon, float ratio)
-		{
-			UNUSED(ratio);
-			Widget& row = ui::widget(parent, row_bar_style());// row(parent);
-			ui::icon(row, icon);
-			ui::widget(row, style);
-			//ui::fill_bar(row, ratio);
-		};
-
-		//ui::label(left_panel, "Press ARROWS to move, CTRL to activate shield, SHIFT to switch headlight, Space to jump, and Left CLICK to fire");
-		if(false)
-		{
-			bar(left_panel, health_bar_style(), "(health64)", human.m_life);
-			bar(left_panel, energy_bar_style(), "(energy64)", human.m_energy);
-		}
 	}
 
 	if(human.m_life <= 0.f)
@@ -672,6 +657,14 @@ void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 	player.m_viewer = &viewer;
 
 	ui::free_orbit_controller(viewer);
+
+#if 0
+	Widget& screen = ui::screen(viewer);
+	Widget& board = ui::board(screen);
+	Widget& left = ui::layout_span(board, 0.7f);
+	Widget& right = ui::layout_span(board, 0.3f);
+	panel_gfx_stats(right);
+#endif
 
 	//ex_godot_game_hud(viewer, scene, *player.m_human);
 }

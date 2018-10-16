@@ -1,31 +1,34 @@
 #ifndef MUD_SHADER_ENCODE
 #define MUD_SHADER_ENCODE
 
+#include <common.sh>
+
 uint encodeNormal(vec3 n)
 {
-	ivec3 inor = ivec3(n * 255.0f);
+	ivec3 inor = ivec3(n * 255.0);
 	uvec3 signs;
 	signs.x = uint((inor.x >> 5) & 0x04000000);
 	signs.y = uint((inor.y >> 14) & 0x00020000);
 	signs.z = uint((inor.z >> 23) & 0x00000100);
-	uvec3 unor = uvec3(abs(inor));
-	uint val = signs.x | (unor.x << 18u) | signs.y | (unor.y << 9u) | signs.z | unor.z;
+	inor = abs(inor);
+	uint val = int(signs.x) | (inor.x << 18) | int(signs.y) | (inor.y << 9) | int(signs.z) | inor.z;
+	//uint val = signs.x | uint(inor.x << 18) | signs.y | uint(inor.y << 9) | signs.z | uint(inor.z);
 	return val;
 }
 
 vec3 decodeNormal(uint val)
 {
-	uvec3 nor;
-	nor.x = (val >> 18) & 0x000000FFu;
-	nor.y = (val >> 9) & 0x000000FFu;
-	nor.z = val & 0x000000FFu;
-	uvec3 signs;
-	signs.x = (val >> 25) & 0x00000002u;
-	signs.y = (val >> 16) & 0x00000002u;
-	signs.z = (val >> 7) & 0x00000002u;
-	signs = uvec3_splat(1u) - signs;
-	vec3 normal = vec3(nor) / 255.0f;
-	normal *= signs;
+	ivec3 nor;
+	nor.x = (int(val) >> 18) & 0x000000FF;
+	nor.y = (int(val) >> 9) & 0x000000FF;
+	nor.z = int(val) & 0x000000FF;
+	ivec3 signs;
+	signs.x = (int(val) >> 25) & 0x00000002;
+	signs.y = (int(val) >> 16) & 0x00000002;
+	signs.z = (int(val) >> 7) & 0x00000002;
+	signs = ivec3(1,1,1) - signs;
+	vec3 normal = vec3(nor) / 255.0;
+	normal *= vec3(signs);
 	return normal;
 }
 

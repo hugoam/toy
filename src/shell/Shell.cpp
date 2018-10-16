@@ -19,8 +19,6 @@
 #include <numeric>
 #include <deque>
 
-//#define MUD_THREADED 1
-
 class WrenVM;
 
 using namespace mud; namespace toy

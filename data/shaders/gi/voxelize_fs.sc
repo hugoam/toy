@@ -6,12 +6,14 @@ $input v_position, v_normal, v_color, v_texcoord0
 #include <pbr/light.sh>
 
 #include <gi/gi.sh>
+#include <gi/light.sh>
 
 #include <encode.sh>
 #include <bgfx_compute.sh>
 
-UIMAGE3D_RW(s_voxels_albedo, r32ui, 1);
+UIMAGE3D_RW(s_voxels_albedo,  r32ui, 1);
 UIMAGE3D_RW(s_voxels_normals, r32ui, 2);
+UIMAGE3D_RW(s_voxels_light,   r32ui, 3);
 
 void main()
 {
@@ -25,9 +27,6 @@ void main()
 	fragment.uv = v_texcoord0.xy;
 	fragment.color = v_color;
     
-//#include <pbr/fs_depth.sh>
-#include <pbr/fs_normal.sh>
-
     Material material;
 	material.albedo = u_albedo.rgb * sample_material_texture(s_albedo, fragment.uv).rgb;
 
@@ -45,10 +44,24 @@ void main()
     imageAtomicMax(s_voxels_albedo, coord, color_enc);
 #endif
 
-    uint normal_enc = encodeNormal(v_normal);
+    uint normal_enc = encodeNormal(fragment.normal);
 #if BGFX_SHADER_LANGUAGE_HLSL
-    InterlockedMax(s_voxels_normals.m_texture[coord], color_enc);
+    InterlockedMax(s_voxels_normals.m_texture[coord], normal_enc);
 #else
     imageAtomicMax(s_voxels_normals, coord, normal_enc);
 #endif
+
+#ifdef COMPUTE_VOXEL_LIGHT
+    vec3 diffuse = compute_voxel_lights(fragment.position, fragment.color.rgb, fragment.normal);
+    uint light_enc = encodeRGBA8(vec4(diffuse + emission.rgb, 1.0) * 255.0);
+#else
+    uint light_enc = encodeRGBA8(vec4(emission.rgb, 1.0) * 255.0);
+#endif
+
+#if BGFX_SHADER_LANGUAGE_HLSL
+    InterlockedMax(s_voxels_light.m_texture[coord], light_enc);
+#else
+    imageAtomicMax(s_voxels_light, coord, light_enc);
+#endif
+
 }

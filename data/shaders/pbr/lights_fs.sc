@@ -1,11 +1,14 @@
 $input v_texcoord0
 
 #include <filter/filter.sh>
-#include <pbr/pbr.sh>
 
+#include <pbr/pbr.sh>
 #include <pbr/light.sh>
 #include <pbr/radiance.sh>
+
+#ifdef FOG
 #include <pbr/fog.sh>
+#endif
 
 #define s_gposition s_source_0
 #define s_gnormal s_source_1

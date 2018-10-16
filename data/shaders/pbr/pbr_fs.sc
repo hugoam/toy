@@ -1,12 +1,16 @@
 $input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0/*, v_texcoord1*/, v_binormal
 
 #include <pbr/pbr.sh>
-
 #include <pbr/light.sh>
 #include <pbr/radiance.sh>
-#include <pbr/fog.sh>
 
+#ifdef FOG
+#include <pbr/fog.sh>
+#endif
+
+#ifdef GI_CONETRACE
 #include <gi/conetrace.sh>
+#endif
 
 void main()
 {
@@ -70,15 +74,28 @@ void main()
 #else
 	ambient += u_radiance_color * u_ambient;
 #endif
-	ambient *= material.albedo;
     
 #ifdef AMBIENT_OCCLUSION
 	ambient *= material.ao;
 #endif
 
 #ifdef GI_CONETRACE
+#if 0
+	vec3 probe_pos = mul(u_gi_probe_transform, vec4(fragment.position, 1.0)).xyz;
+    vec3 probe_coord = probe_pos * u_gi_probe_cell_size.xyz * 0.5 + 0.5; // [-1,1] to [0,1]
+    if(!( any(greaterThan(probe_coord, vec3_splat(1.0))) 
+       || any(lessThan(probe_coord, vec3_splat(0.0))) ))
+    {
+        //vec4 probe_color = vec4(probe_coord, 1.0);
+        vec4 probe_color = texture3DLod(s_gi_probe, probe_coord, 0.0);
+        ambient = probe_color.rgb;
+        diffuse = vec3_splat(0.0);
+        specular = vec3_splat(0.0);
+    }
+#else
     gi_probes_compute(fragment.position, fragment.normal, material.roughness, specular, ambient);
 #endif
+#else
 
 #ifdef DIRECTIONAL_LIGHT
 	directional_light(fragment, material, fragment.depth, diffuse, specular);
@@ -91,6 +108,9 @@ void main()
 #else
 	apply_lights(fragment, material, diffuse, specular);
 #endif
+#endif
+    
+	ambient *= material.albedo;
     
 #ifdef DIFFUSE_TOON
 	specular *= material.specular * material.metallic * material.albedo * 2.0;

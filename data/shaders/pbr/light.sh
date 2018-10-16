@@ -135,7 +135,6 @@ vec3 spot_attenuation(Light light)
 }
 
 #include "light_brdf.sh"
-#include "light_cluster.sh"
 #include "shadow.sh"
 
 void apply_lights(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
@@ -152,6 +151,9 @@ void apply_lights(Fragment fragment, Material material, inout vec3 diffuse, inou
         light_brdf(light, fragment, material, spot_attenuation(light), diffuse, specular);
 	}
 }
+
+#ifdef CLUSTERED
+#include "light_cluster.sh"
 
 Light read_cluster_light(uint index, int type, Fragment fragment)
 {
@@ -180,6 +182,7 @@ void apply_cluster_lights(Fragment fragment, Material material, inout vec3 diffu
         light_brdf(light, fragment, material, spot_attenuation(light), diffuse, specular);
     }
 }
+#endif
 
 #ifdef DIRECTIONAL_LIGHT
 void directional_light(Fragment fragment, Material material, float frag_w, inout vec3 diffuse, inout vec3 specular)
