@@ -480,7 +480,11 @@ void paint_level(Gnode& parent)
 	static Model& demolevel = *parent.m_scene->m_gfx_system.models().file("demolevel");
 	gfx::multi_item(parent, demolevel, ITEM_NO_UPDATE);
 
-	gfx::gi_probe(parent, 256U, vec3(32.f));
+	//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f));
+	GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(128.f, 64.f, 128.f));
+	//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f, 32.f, 64.f));
+	probe.m_bounces = 4;
+	probe.m_diffuse = 8.f;
 	//gfx::gi_probe(parent, 256U, vec3(128.f, 64.f, 128.f));
 }
 
@@ -510,20 +514,6 @@ Style& button_style()
 	static Style style = { "GameButton", styles().button, [](Layout& l) { UNUSED(l); },
 														  [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::AlphaWhite; s.m_text_size = 24.f; },
 														  [](Style& s) { s.decline_skin(HOVERED).m_text_colour = Colour::White; } };
-	return style;
-}
-
-Style& health_bar_style()
-{
-	static Style style = { "HealthBar", styles().filler, [](Layout& l) { l.m_space = { READING, WRAP, FIXED }; l.m_size = { 0.f, 10.f }; },
-														 [](InkStyle& s) { s.m_empty = false; s.m_background_colour = Colour::Red; } };
-	return style;
-}
-
-Style& energy_bar_style()
-{
-	static Style style = { "EnergyBar", styles().filler, [](Layout& l) { l.m_space = { READING, WRAP, FIXED }; l.m_size = { 0.f, 10.f }; },
-														 [](InkStyle& s) { s.m_empty = false; s.m_background_colour = Colour::Blue; } };
 	return style;
 }
 

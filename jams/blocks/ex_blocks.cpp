@@ -524,7 +524,7 @@ void paint_block(Gnode& parent, Tileblock& block)
 
 void paint_scene(Gnode& parent, bool radiance)
 {
-	Light& light = gfx::directional_light_node(parent);
+	Light& light = gfx::direct_light_node(parent);
 	light.m_shadow_range = 500.f;
 	light.m_shadow_num_splits = 4;
 

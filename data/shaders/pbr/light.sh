@@ -12,7 +12,7 @@ uniform vec4 u_light_spot_params[MAX_LIGHTS];
 uniform vec4 u_light_shadow[MAX_SHADOWS];
 uniform mat4 u_light_shadow_matrix[MAX_SHADOWS];
 
-#ifdef DIRECTIONAL_LIGHT
+#ifdef DIRECT_LIGHT
 uniform mat4 u_csm_matrix[4];
 uniform vec4 u_csm_splits;
 #endif
@@ -184,8 +184,8 @@ void apply_cluster_lights(Fragment fragment, Material material, inout vec3 diffu
 }
 #endif
 
-#ifdef DIRECTIONAL_LIGHT
-void directional_light(Fragment fragment, Material material, float frag_w, inout vec3 diffuse, inout vec3 specular)
+#ifdef DIRECT_LIGHT
+void direct_light(Fragment fragment, Material material, float frag_w, inout vec3 diffuse, inout vec3 specular)
 {
     Light light = read_infinite_light(0, LIGHT_DIRECT, fragment);
     

@@ -174,7 +174,7 @@ void paint_crate(Gnode& parent, Crate& crate)
 
 void paint_scene(Gnode& parent)
 {
-	gfx::directional_light_node(parent);
+	gfx::direct_light_node(parent);
 	gfx::radiance(parent, "radiance/tiber_1_1k.hdr", BackgroundMode::None);
 }
 
@@ -219,7 +219,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 	{
 		{ Key::Up,    -Z3 }, { Key::W, -Z3 },
 		{ Key::Down,   Z3 }, { Key::S,  Z3 },
-		{ Key::Left,	-X3 }, { Key::A, -X3 },
+		{ Key::Left,  -X3 }, { Key::A, -X3 },
 		{ Key::Right,  X3 }, { Key::D,  X3 },
 	};
 

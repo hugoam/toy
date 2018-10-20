@@ -4,13 +4,8 @@
 #include <common.sh>
 #include <pbr/pbr.sh>
 #include <pbr/light.sh>
-
-#ifdef SHADOWS
-//uniform int u_light_shadow;
-//uniform vec2 u_light_proj;
-//uniform float u_shadow_bias;
-//uniform mat4 u_LVP;
-#endif
+#include <pbr/shadow.sh>
+#include <gi/gi.sh>
 
 float attenuate(const float dist)
 {
@@ -71,8 +66,12 @@ vec3 compute_voxel_lights(vec3 voxel_position, vec3 voxel_color, vec3 voxel_norm
 {
     vec3 diffuse = vec3_splat(0.0);
     
-#ifdef DIRECTIONAL_LIGHT
+#ifdef DIRECT_LIGHT
     diffuse += accumulate_light(voxel_position, voxel_color, voxel_normal, 0, LIGHT_DIRECT);
+#ifdef CSM_SHADOW
+    diffuse *= sample_cascade(0, voxel_position, 0.0, u_csm_atlas_pixel_size);
+    //diffuse = debug_sample_cascade(0, voxel_position, 0.0, u_csm_atlas_pixel_size);
+#endif
 #endif
 
     for(int i = 0; i < int(u_light_counts[LIGHT_OMNI]); i++)
@@ -80,9 +79,9 @@ vec3 compute_voxel_lights(vec3 voxel_position, vec3 voxel_color, vec3 voxel_norm
         diffuse += accumulate_light(voxel_position, voxel_color, voxel_normal, int(u_light_indices[i][LIGHT_OMNI]), LIGHT_OMNI);
     }
     
-    for(int i = 0; i < int(u_light_counts[LIGHT_SPOT]); i++)
+    for(int j = 0; j < int(u_light_counts[LIGHT_SPOT]); j++)
     {
-        diffuse += accumulate_light(voxel_position, voxel_color, voxel_normal, int(u_light_indices[i][LIGHT_SPOT]), LIGHT_SPOT);
+        diffuse += accumulate_light(voxel_position, voxel_color, voxel_normal, int(u_light_indices[j][LIGHT_SPOT]), LIGHT_SPOT);
     }
     
     diffuse = clamp(diffuse, vec3_splat(0.0), vec3_splat(1.0));

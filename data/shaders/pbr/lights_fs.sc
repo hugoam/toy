@@ -95,8 +95,8 @@ void main()
 	ambient *= material.ao;
 #endif
 
-#ifdef DIRECTIONAL_LIGHT
-	directional_light(fragment, material, fragment.depth, diffuse, specular);
+#ifdef DIRECT_LIGHT
+	direct_light(fragment, material, fragment.depth, diffuse, specular);
 #endif
 
     //apply_reflections(specular, ambient);

@@ -523,7 +523,7 @@ void paint_galaxy(Gnode& parent, Galaxy& galaxy)
 
 void paint_scene(Gnode& parent)
 {
-	Light& light = gfx::directional_light_node(parent);
+	Light& light = gfx::direct_light_node(parent);
 	light.m_shadows = false;
 
 	gfx::radiance(parent, "equirectangular_space_sampler.jpg", BackgroundMode::None);

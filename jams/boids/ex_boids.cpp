@@ -503,6 +503,19 @@ namespace boids
 			World& world = default_world.m_world;
 			game.m_world = &world;
 
+			// @todo add this to ECS to select name of last component and remove AddBuffers calls
+			// template<typename T>
+			// struct tag
+			// {
+			// 	using type = T;
+			// };
+			// 
+			// template<typename... Ts>
+			// struct select_last
+			// {
+			// 	using type = typename decltype((tag<Ts>{}, ...))::type;
+			// };
+
 			world.m_ecs.AddBuffers<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>("Boid");
 			world.m_ecs.AddBuffers<Position, Rotation, Transform4, BoidObstacle>("BoidObstacle");
 			world.m_ecs.AddBuffers<Position, Rotation, Transform4, BoidTarget>("BoidTarget");

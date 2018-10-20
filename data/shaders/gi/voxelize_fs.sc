@@ -15,6 +15,8 @@ UIMAGE3D_RW(s_voxels_albedo,  r32ui, 1);
 UIMAGE3D_RW(s_voxels_normals, r32ui, 2);
 UIMAGE3D_RW(s_voxels_light,   r32ui, 3);
 
+#define COMPUTE_VOXEL_LIGHT
+
 void main()
 {
     if (abs(v_position.z) > VOXELGI_RESOLUTION_Z || abs(v_position.x) > 1.0 || abs(v_position.y) > 1.0) return;
@@ -35,7 +37,7 @@ void main()
     fragment.color = vec4(material.albedo + emission.rgb, 1.0);
     
     vec3 voxel = v_position.xyz * 0.5 + 0.5; // [-1,1] to [0,1]
-    ivec3 coord = ivec3(u_voxelgi_resolution * voxel);
+    ivec3 coord = ivec3(u_voxelgi_subdiv * voxel);
     
     uint color_enc = encodeRGBA8(fragment.color * 255.0);
 #if BGFX_SHADER_LANGUAGE_HLSL

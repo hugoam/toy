@@ -82,23 +82,23 @@ void main()
 #ifdef GI_CONETRACE
 #if 0
 	vec3 probe_pos = mul(u_gi_probe_transform, vec4(fragment.position, 1.0)).xyz;
-    vec3 probe_coord = probe_pos * u_gi_probe_cell_size.xyz * 0.5 + 0.5; // [-1,1] to [0,1]
+    vec3 probe_coord = probe_pos * u_gi_probe_inv_extents * 0.5 + 0.5; // [-1,1] to [0,1]
     if(!( any(greaterThan(probe_coord, vec3_splat(1.0))) 
        || any(lessThan(probe_coord, vec3_splat(0.0))) ))
     {
-        //vec4 probe_color = vec4(probe_coord, 1.0);
+        //vec4 probe_color = texture3DLod(s_gi_probe, probe_coord, 2.0);
         vec4 probe_color = texture3DLod(s_gi_probe, probe_coord, 0.0);
-        ambient = probe_color.rgb;
-        diffuse = vec3_splat(0.0);
-        specular = vec3_splat(0.0);
+        //gl_FragColor = vec4(probe_coord, 1.0);
+        gl_FragColor = vec4(probe_color.rgb, 1.0);
     }
+    return;
 #else
-    gi_probes_compute(fragment.position, fragment.normal, material.roughness, specular, ambient);
+    gi_probe_compute(fragment.position, fragment.normal, fragment.binormal, fragment.tangent, material.roughness, ambient,  specular);
 #endif
-#else
+#endif
 
-#ifdef DIRECTIONAL_LIGHT
-	directional_light(fragment, material, fragment.depth, diffuse, specular);
+#ifdef DIRECT_LIGHT
+	direct_light(fragment, material, fragment.depth, diffuse, specular);
 #endif
 
     //apply_reflections(specular, ambient);
@@ -107,7 +107,6 @@ void main()
     apply_cluster_lights(fragment, material, diffuse, specular);
 #else
 	apply_lights(fragment, material, diffuse, specular);
-#endif
 #endif
     
 	ambient *= material.albedo;
