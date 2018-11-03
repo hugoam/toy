@@ -51,6 +51,7 @@
     class Human;
     class Lamp;
     class Crate;
+	class WorldBlock;
     class Player;
 
 namespace std {

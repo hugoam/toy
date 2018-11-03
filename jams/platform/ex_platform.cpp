@@ -428,7 +428,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 void paint_lamp(Gnode& parent, Lamp& lamp)
 {
 	UNUSED(lamp);
-	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::Red), ITEM_SELECTABLE);
+	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::Red), ItemFlag::Default | ItemFlag::Selectable);
 	gfx::light(parent, LightType::Point, false, Colour(1.f, 0.3f, 0.2f), 10.f);
 }
 
@@ -473,7 +473,7 @@ void paint_human(Gnode& parent, Human& human)
 	
 	Gnode& self = gfx::node(parent, Ref(&human), spatial.m_position, spatial.m_rotation);
 	
-	Item& item = gfx::item(self, model, ITEM_SELECTABLE);
+	Item& item = gfx::item(self, model, ItemFlag::Default | ItemFlag::Selectable);
 	Animated& animated = gfx::animated(self, item);
 
 	if(animated.m_playing.empty() || animated.playing() != human.m_state.name)
@@ -563,7 +563,7 @@ void paint_world_block(Gnode& parent, Tileblock& block, const uvec3* exclude = n
 void paint_crate(Gnode& parent, Crate& crate)
 {
 	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
-	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ITEM_SELECTABLE, &material);
+	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ItemFlag::Default | ItemFlag::Selectable, &material);
 }
 
 void paint_scene(Gnode& parent)
@@ -961,7 +961,7 @@ public:
 		scene.range_entity_painter<Tileblock>(reference, 200.f, "Tileblocks", world, paint_hole_block);
 		scene.range_entity_painter<Bullet>(reference, 100.f, "Bullets", world, paint_bullet);
 
-		//physic_painter(scene);
+		physic_painter(scene);
 	}
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final

@@ -1,4 +1,4 @@
-$input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0/*, v_texcoord1*/, v_binormal
+$input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0, v_texcoord1, v_binormal
 
 #include <pbr/pbr.sh>
 
@@ -11,7 +11,7 @@ void main()
 	fragment.binormal = normalize(v_binormal);
 	fragment.tangent = normalize(v_tangent);
 	fragment.uv = v_texcoord0.xy;
-	//fragment.uv2 = v_texcoord1.xy;
+	fragment.uv2 = v_texcoord1.xy;
 	fragment.color = v_color;
     
 #include "fs_depth.sh"

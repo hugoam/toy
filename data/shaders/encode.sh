@@ -5,76 +5,6 @@
 
 CONST(float) hdrRange = 10.0;
 
-// Encode HDR color to a 32 bit uint
-// Alpha is 1 bit + 7 bit HDR remapping
-uint encodeColor(vec4 color)
-{
-	// normalize color to LDR
-	float hdr = length(color.rgb);
-	color.rgb /= hdr;
-
-	// encode LDR color and HDR range
-	uvec3 iColor = uvec3(color.rgb * 255.0);
-	uint iHDR = uint(saturate(hdr / hdrRange) * 127);
-	uint colorMask = (iHDR << 24u) | (iColor.r << 16u) | (iColor.g << 8u) | iColor.b;
-
-	// encode alpha into highest bit
-	uint iAlpha = (color.a > 0 ? 1u : 0u);
-	colorMask |= iAlpha << 31u;
-
-	return colorMask;
-}
-
-// Decode 32 bit uint into HDR color with 1 bit alpha
-vec4 decodeColor(uint colorMask)
-{
-	float hdr;
-	vec4 color;
-
-	hdr = (colorMask >> 24u) & 0x0000007f;
-	color.r = (colorMask >> 16u) & 0x000000ff;
-	color.g = (colorMask >> 8u) & 0x000000ff;
-	color.b = colorMask & 0x000000ff;
-
-	hdr /= 127.0f;
-	color.rgb /= 255.0f;
-
-	color.rgb *= hdr * hdrRange;
-
-	color.a = (colorMask >> 31u) & 0x00000001;
-
-	return color;
-}
-
-uint encodeNormal(vec3 n)
-{
-	ivec3 inor = ivec3(n * 255.0);
-	uvec3 signs;
-	signs.x = uint((inor.x >> 5) & 0x04000000);
-	signs.y = uint((inor.y >> 14) & 0x00020000);
-	signs.z = uint((inor.z >> 23) & 0x00000100);
-	inor = abs(inor);
-	uint val = int(signs.x) | (inor.x << 18) | int(signs.y) | (inor.y << 9) | int(signs.z) | inor.z;
-	//uint val = signs.x | uint(inor.x << 18) | signs.y | uint(inor.y << 9) | signs.z | uint(inor.z);
-	return val;
-}
-
-vec3 decodeNormal(uint val)
-{
-	ivec3 nor;
-	nor.x = (int(val) >> 18) & 0x000000FF;
-	nor.y = (int(val) >> 9) & 0x000000FF;
-	nor.z = int(val) & 0x000000FF;
-	ivec3 signs;
-	signs.x = (int(val) >> 25) & 0x00000002;
-	signs.y = (int(val) >> 16) & 0x00000002;
-	signs.z = (int(val) >> 7) & 0x00000002;
-	signs = ivec3(1,1,1) - signs;
-	vec3 normal = vec3(nor) / 255.0;
-	normal *= vec3(signs);
-	return normal;
-}
-
 uint encodeRGBA8(vec4 val)
 {
   return (uint(val.w) & 0x000000FFu) << 24u
@@ -200,6 +130,80 @@ float unpackHalfFloat(vec2 _rg)
 {
 	const vec2 shift = vec2(1.0 / 256.0, 1.0);
 	return dot(_rg, shift);
+}
+
+// Encode HDR color to a 32 bit uint
+// Alpha is 1 bit + 7 bit HDR remapping
+uint encodeColor(vec4 color)
+{
+    // return encodeRGBA8(clamp(color, 0.0, 1.0) * 255.0);
+    
+	// normalize color to LDR
+	float hdr = max(length(color.rgb), 0.0001);
+	color.rgb /= hdr;
+
+	// encode LDR color and HDR range
+	uvec3 iColor = uvec3(color.rgb * 255.0);
+	uint iHDR = uint(saturate(hdr / hdrRange) * 127);
+	uint colorMask = (iHDR << 24u) | (iColor.r << 16u) | (iColor.g << 8u) | iColor.b;
+
+	// encode alpha into highest bit
+	uint iAlpha = (color.a > 0 ? 1u : 0u);
+	colorMask |= iAlpha << 31u;
+
+	return colorMask;
+}
+
+// Decode 32 bit uint into HDR color with 1 bit alpha
+vec4 decodeColor(uint colorMask)
+{
+    // return decodeRGBA8(colorMask) / 255.0;
+    
+	float hdr;
+	vec4 color;
+
+	hdr = (colorMask >> 24u) & 0x0000007f;
+	color.r = (colorMask >> 16u) & 0x000000ff;
+	color.g = (colorMask >> 8u) & 0x000000ff;
+	color.b = colorMask & 0x000000ff;
+
+	hdr /= 127.0;
+	color.rgb /= 255.0;
+
+	color.rgb *= hdr * hdrRange;
+
+	color.a = (colorMask >> 31u) & 0x00000001;
+
+	return color;
+}
+
+uint encodeNormal(vec3 n)
+{
+	ivec3 inor = ivec3(n * 255.0);
+	uvec3 signs;
+	signs.x = uint((inor.x >> 5) & 0x04000000);
+	signs.y = uint((inor.y >> 14) & 0x00020000);
+	signs.z = uint((inor.z >> 23) & 0x00000100);
+	inor = abs(inor);
+	uint val = int(signs.x) | (inor.x << 18) | int(signs.y) | (inor.y << 9) | int(signs.z) | inor.z;
+	//uint val = signs.x | uint(inor.x << 18) | signs.y | uint(inor.y << 9) | signs.z | uint(inor.z);
+	return val;
+}
+
+vec3 decodeNormal(uint val)
+{
+	ivec3 nor;
+	nor.x = (int(val) >> 18) & 0x000000FF;
+	nor.y = (int(val) >> 9) & 0x000000FF;
+	nor.z = int(val) & 0x000000FF;
+	ivec3 signs;
+	signs.x = (int(val) >> 25) & 0x00000002;
+	signs.y = (int(val) >> 16) & 0x00000002;
+	signs.z = (int(val) >> 7) & 0x00000002;
+	signs = ivec3(1,1,1) - signs;
+	vec3 normal = vec3(nor) / 255.0;
+	normal *= vec3(signs);
+	return normal;
 }
 
 #endif // MUD_SHADER_ENCODE

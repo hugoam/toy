@@ -64,13 +64,19 @@ using namespace mud; namespace toy
 	{
 	public:
 		Impl(ImmediateDraw& immediate) : m_immediate(immediate)
-		{
-		}
+		{}
 
 		virtual void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) final
 		{
-			Line line = { to_vec3(from), to_vec3(to) };
-			m_immediate.draw(bxidentity(), ProcShape{ Symbol(to_colour(color)), &line, OUTLINE });
+			ImmediateDraw::Batch* batch = m_immediate.batch(OUTLINE, 2);
+			uint32_t abgr = to_abgr(to_colour(color));
+			uint16_t index = uint16_t(batch->m_vertices.size());
+
+			batch->m_vertices.push_back({ to_vec3(from), abgr });
+			batch->m_vertices.push_back({ to_vec3(to), abgr });
+
+			batch->m_indices.push_back(index);
+			batch->m_indices.push_back(index + 1);
 		}
 
 		virtual void drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color)
@@ -199,10 +205,10 @@ using namespace mud; namespace toy
 		parent.m_scene->m_pool->iterate_objects<Item>([&](Item& item)
 		{
 			for(Ref object : selection)
-				if(item.m_node.m_object == object)
+				if(item.m_node->m_object == object)
 					select_bounds.mergeSafe(item.m_aabb);
 
-			if(hovered != Ref() && item.m_node.m_object == hovered)
+			if(hovered != Ref() && item.m_node->m_object == hovered)
 				hover_bounds.mergeSafe(item.m_aabb);
 		});
 

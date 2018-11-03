@@ -23,4 +23,5 @@ namespace mud
     template <> _GODOT_EXPORT Type& type<Bullet>() { static Type ty("Bullet"); return ty; }
     template <> _GODOT_EXPORT Type& type<Crate>() { static Type ty("Crate"); return ty; }
     template <> _GODOT_EXPORT Type& type<Human>() { static Type ty("Human"); return ty; }
+	template <> _GODOT_EXPORT Type& type<WorldBlock>() { static Type ty("WorldBlock"); return ty; }
 }

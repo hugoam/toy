@@ -8,7 +8,7 @@
 #define PCF5 2
 #define PCF13 3
 
-SAMPLER2DSHADOW(s_shadow_atlas, 5);
+//SAMPLER2DSHADOW(s_shadow_atlas, 5);
 
 #ifdef CSM_SHADOW
 uniform vec4 u_csm_params;

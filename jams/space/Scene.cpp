@@ -31,7 +31,7 @@ mat4 planet_transform(VisuPlanet& planet, const mat4& transform)
 void paint_planet_ellipsis(Gnode& parent, VisuPlanet& planet)
 {
 	gfx::node(parent, {}, rotate(planet.m_rotation, parent.m_attach->position()), planet.m_rotation);
-	gfx::shape(parent, Ellipsis(planet.m_ellipsis), Symbol::wire(Colour::AlphaGrey), ITEM_SELECTABLE);
+	gfx::shape(parent, Ellipsis(planet.m_ellipsis), Symbol::wire(Colour::AlphaGrey), ItemFlag::Default | ItemFlag::Selectable);
 }
 
 void paint_star_ellipses(Gnode& parent, VisuStar& visu)
@@ -100,8 +100,8 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 
 void paint_scan_star(Gnode& parent, Star& star, Player& player)
 {
-	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol(Colour::Invisible), ITEM_SELECTABLE);
-	gfx::shape(parent, Sphere(0.01f), Symbol(Colour::White * 4.f), ITEM_SELECTABLE);
+	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol(Colour::Invisible), ItemFlag::Default | ItemFlag::Selectable);
+	gfx::shape(parent, Sphere(0.01f), Symbol(Colour::White * 4.f), ItemFlag::Default | ItemFlag::Selectable);
 
 	bool hovered = player.m_hovered_item == star.m_spatial;
 	bool selected = player.m_selected_item == star.m_spatial;
@@ -113,10 +113,10 @@ void paint_scan_star(Gnode& parent, Star& star, Player& player)
 		colour = colour * 1.5f;
 
 	gfx::shape(parent, Circle(0.4f, Axis::Y), Symbol::wire(colour));
-	//gfx::shape(parent, Circle(0.4f, Axis::Z), Symbol(colour), ITEM_BILLBOARD);
+	//gfx::shape(parent, Circle(0.4f, Axis::Z), Symbol(colour), ItemFlag::Render | ItemFlag::Billboard);
 
 	//if(star.m_commander)
-	//	gfx::sprite(parent, star.m_commander->m_avatar, vec2{ 0.4f }, ITEM_BILLBOARD | ITEM_SELECTABLE);
+	//	gfx::sprite(parent, star.m_commander->m_avatar, vec2{ 0.4f }, ItemFlag::Render | ItemFlag::Billboard | ItemFlag::Selectable);
 
 	if(star.m_commander == player.m_commander)
 	{
@@ -213,8 +213,8 @@ void paint_fleet_ships(Gnode& parent, VisuFleet& visu, float radius, float ship_
 	for(size_t size = 0; size < 8; ++size)
 		if(!visu.m_ships[size].empty())
 		{
-			Item* item = gfx::model(parent, "spaceship", ITEM_LOD_0, nullptr, visu.m_ships[size].size());
-			mat4 transform = parent.m_attach->transform();
+			Item* item = gfx::model(parent, "spaceship", ItemFlag::Render | ItemFlag::Lod0, nullptr, visu.m_ships[size].size());
+			mat4 transform = parent.m_attach->m_transform;
 			for(size_t i = 0; i < visu.m_ships[size].size(); ++i)
 				item->m_instances[i] = ship_transform(visu.m_ships[size][i], transform, visu.m_points.m_points[index++], ship_scale);
 		}
@@ -234,7 +234,7 @@ void paint_fleet_orders(Gnode& parent, Fleet& fleet, const Colour& colour)
 void paint_fleet_jumping(Gnode& parent, Fleet& fleet, const Colour& colour)
 {
 	float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
-	gfx::shape(parent, Circle(0.4f * size, Axis::Z), Symbol::wire(colour), ITEM_BILLBOARD);
+	gfx::shape(parent, Circle(0.4f * size, Axis::Z), Symbol::wire(colour), ItemFlag::Render | ItemFlag::Billboard);
 }
 
 void paint_fleet_warp(Gnode& parent, VisuFleet& visu)
@@ -246,8 +246,8 @@ void paint_fleet_stationary(Gnode& parent, Fleet& fleet, VisuFleet& visu, const 
 {
 	float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
 	vec2 triangle = { 0.4f * size, 0.6f * size };
-	gfx::shape(parent, Triangle(triangle), Symbol::wire(colour), ITEM_BILLBOARD);
-	gfx::shape(parent, Triangle(triangle * 1.2f), Symbol(Colour::Invisible), ITEM_BILLBOARD | ITEM_SELECTABLE);
+	gfx::shape(parent, Triangle(triangle), Symbol::wire(colour), ItemFlag::Render | ItemFlag::Billboard);
+	gfx::shape(parent, Triangle(triangle * 1.2f), Symbol(Colour::Invisible), ItemFlag::Render | ItemFlag::Billboard | ItemFlag::Selectable);
 	paint_fleet_ships(parent, visu, 0.4f * size * 2.f, 0.01f);
 }
 

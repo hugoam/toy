@@ -429,8 +429,8 @@ void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float perc
 {
 	static const vec2 size = { 4.f, 0.2f };
 	vec2 fill_offset = { size.x * -(1.f - percentage) / 2.f, 0.f };
-	gfx::shape(parent, Quad(position, offset, vec2(4.f, 0.2f)), Symbol(Colour::White, Colour::None, true), ITEM_BILLBOARD);
-	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(colour, true, true), ITEM_BILLBOARD);
+	gfx::shape(parent, Quad(position, offset, vec2(4.f, 0.2f)), Symbol(Colour::White, Colour::None, true), ItemFlag::Render | ItemFlag::Billboard);
+	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(colour, true, true), ItemFlag::Render | ItemFlag::Billboard);
 }
 
 void paint_tank(Gnode& parent, Tank& tank)

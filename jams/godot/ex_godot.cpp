@@ -7,6 +7,7 @@
 
 //#define _GODOT_TOOLS
 //#define SCRIPTED_IA
+#define LIGHTMAPS
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
 {
@@ -130,7 +131,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 	m_discharge = max(0.f, m_discharge - delta * 0.05f);
 	
 	// @kludge in case that weird bug where we go through the scene geometry happens... put us back up
-	if(spatial.m_position.y < -10.f)
+	if(spatial.m_position.y < -64.f)
 		spatial.m_position.y = 10.f;
 
 	bool ia = m_faction == Faction::Enemy;
@@ -291,6 +292,23 @@ Crate::Crate(HSpatial spatial, HMovable movable, const vec3& extents)
 	, m_solid(Solid::create(m_spatial, m_movable, Cube(extents), SolidMedium::me, CM_SOLID, false, 10.f))
 {}
 
+Entity WorldBlock::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
+{
+	Entity entity = { ecs.CreateEntity<Spatial, WorldPage, Navblock, WorldBlock>(), ecs.m_index };
+	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
+	ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, extents));
+	ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
+	ecs.SetComponent(entity, WorldBlock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), extents));
+	return entity;
+}
+
+WorldBlock::WorldBlock(HSpatial spatial, HWorldPage world_page, HNavblock navblock, const vec3& extents)
+	: m_spatial(spatial)
+	, m_world_page(world_page)
+	, m_navblock(navblock)
+	, m_extents(extents)
+{}
+
 Player::Player(DefaultWorld& world)
 	: m_world(&world)
 {}
@@ -337,7 +355,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 void paint_lamp(Gnode& parent, Lamp& lamp)
 {
 	UNUSED(lamp);
-	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::Red), ITEM_SELECTABLE);
+	gfx::shape(parent, Sphere(0.1f), Symbol(Colour::Red), ItemFlag::Default | ItemFlag::Selectable);
 	gfx::light(parent, LightType::Point, false, Colour(1.f, 0.3f, 0.2f), 10.f);
 }
 
@@ -382,7 +400,7 @@ void paint_human(Gnode& parent, Human& human)
 	
 	Gnode& self = gfx::node(parent, Ref(&human), spatial.m_position, spatial.m_rotation);
 	
-	Item& item = gfx::item(self, model, ITEM_SELECTABLE);
+	Item& item = gfx::item(self, model, ItemFlag::Default | ItemFlag::Selectable);
 	Animated& animated = gfx::animated(self, item);
 
 	if(animated.m_playing.empty() || animated.playing() != human.m_state.name)
@@ -462,7 +480,7 @@ void paint_human(Gnode& parent, Human& human)
 void paint_crate(Gnode& parent, Crate& crate)
 {
 	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
-	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ITEM_SELECTABLE, &material);
+	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ItemFlag::Default | ItemFlag::Selectable, &material);
 }
 
 void paint_scene(Gnode& parent)
@@ -475,17 +493,37 @@ void paint_scene(Gnode& parent)
 	//toy::sound(parent, "complexambient", true, 0.1f);
 }
 
+static GIProbe* s_gi_probe = nullptr;
+
 void paint_level(Gnode& parent)
 {
-	static Model& demolevel = *parent.m_scene->m_gfx_system.models().file("demolevel");
-	gfx::multi_item(parent, demolevel, ITEM_NO_UPDATE);
+	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::None), ItemFlag::Occluder);
+	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::AlphaWhite), ItemFlag::Occluder);
 
-	//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f));
-	GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(128.f, 64.f, 128.f));
-	//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f, 32.f, 64.f));
-	probe.m_bounces = 4;
-	probe.m_diffuse = 8.f;
-	//gfx::gi_probe(parent, 256U, vec3(128.f, 64.f, 128.f));
+	static Prefab& reactor = *parent.m_scene->m_gfx_system.prefabs().file("reactor");
+	gfx::prefab(parent, reactor, false, ItemFlag::Default | ItemFlag::NoUpdate);
+
+	if(true)
+	{
+		GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(128.f, 64.f, 128.f));
+		//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f, 32.f, 64.f));
+		//probe.m_bounces = 1;
+		probe.m_diffuse = 1.f;
+		probe.m_mode = GIProbeMode::Voxelize;
+		//probe.m_mode = GIProbeMode::LoadVoxels;
+		s_gi_probe = &probe;
+
+
+#ifdef LIGHTMAPS
+		string path = parent.m_scene->m_gfx_system.m_resource_path + "examples/ex_godot/lightmaps/";
+
+		if(!probe.m_bake_lightmaps)
+		{
+			probe.lightmap(4096U, 4.f, path);
+			//probe.lightmap(4096U, 8.f);
+		}
+#endif
+	}
 }
 
 void paint_viewer(Viewer& viewer)
@@ -496,6 +534,8 @@ void paint_viewer(Viewer& viewer)
 		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
+
+	//viewer.m_filters.m_tonemap.m_mode = TonemapMode::ACES;
 
 	viewer.m_filters.m_glow.m_enabled = true;
 #ifndef MUD_GODOT_EMSCRIPTEN
@@ -586,6 +626,12 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	//OrbitController& orbit = ui::orbit_controller(viewer);
 	OrbitController& orbit = ui::hybrid_controller(viewer, mode, human.m_spatial, human.m_aiming, human.m_angles, scene.m_game.m_mode == GameMode::Play);
 
+	if(scene.m_gfx_system.m_frame == 1)
+	{
+		orbit.m_pitch = -c_pi / 16.f;
+		orbit.m_distance = 60.f;
+	}
+
 	Widget& board = ui::board(screen); UNUSED(board);
 	Widget& row = ui::row(screen);
 	Widget& left_panel = ui::widget(row, style_left_panel);
@@ -634,9 +680,7 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 {
-	Widget& self = ui::widget(parent, styles().board, &scene);//ui::board(parent);
-
-	Viewer& viewer = ui::viewer(self, scene.m_scene);
+	Viewer& viewer = ui::viewer(parent, scene.m_scene);
 	paint_viewer(viewer);
 	viewer.m_viewport.m_lighting = Lighting::VoxelGI;
 
@@ -647,23 +691,11 @@ void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 	player.m_viewer = &viewer;
 
 	ui::free_orbit_controller(viewer);
-
-#if 0
-	Widget& screen = ui::screen(viewer);
-	Widget& board = ui::board(screen);
-	Widget& left = ui::layout_span(board, 0.7f);
-	Widget& right = ui::layout_span(board, 0.3f);
-	panel_gfx_stats(right);
-#endif
-
-	//ex_godot_game_hud(viewer, scene, *player.m_human);
+	//x_godot_game_hud(viewer, scene, *player.m_human);
 }
 
 void ex_godot_pump_game(GameShell& app, Game& game, Widget& parent)
 {
-	Player& player = val<Player>(game.m_player);
-	DefaultWorld& world = *player.m_world;
-
 	Widget& self = ui::widget(parent, styles().board, &game);
 
 	static GameScene& scene = app.add_scene();
@@ -691,6 +723,26 @@ public:
 		World& world = default_world.m_world;
 		game.m_world = &world;
 
+		WorldBlock& block = construct<WorldBlock>(world.origin(), Zero3, vec3(128.f, 64.f, 128.f));
+		Importer& importer = *app.m_gfx_system->importer(ModelFormat::gltf);
+		Prefab& collision_world = app.m_gfx_system->prefabs().create("reactor_collision");
+			
+		ImportConfig config;
+		config.m_format = ModelFormat::gltf;
+		config.m_exclude_elements = { "prop" };
+		config.m_include_materials = { "collision" };
+		config.m_as_prefab = true;
+		config.m_suffix = "collision";
+		LocatedFile location = app.m_gfx_system->locate_file("models/reactor", carray<cstring, 1>{ ".gltf" });
+		importer.import_prefab(collision_world, (string(location.m_location) + location.m_name).c_str(), config);
+
+		std::vector<Item*> items;
+		for(Item& item : collision_world.m_items)
+			items.push_back(&item);
+
+		build_world_page_geometry(block.m_world_page, items);
+		block.m_world_page->update_geometry();
+
 		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
 
 		world.m_ecs.AddBuffers<Spatial, Bullet>("Bullet");
@@ -703,7 +755,7 @@ public:
 		static Player player = { default_world };
 		game.m_player = Ref(&player);
 
-		player.spawn(Zero3);
+		player.spawn(vec3(10.f, 0.f, 10.f));
 	}
 
 	virtual void scene(GameShell& app, GameScene& scene) final
@@ -723,7 +775,7 @@ public:
 
 		World& world = *scene.m_game.m_world;
 		scene.range_entity_painter<Lamp>(reference, 100.f, "Lamps", world, paint_lamp);
-		scene.range_entity_painter<Human>(reference, 100.f, "Humans", world, paint_human);
+		//scene.range_entity_painter<Human>(reference, 100.f, "Humans", world, paint_human);
 		scene.range_entity_painter<Crate>(reference, 100.f, "Crates", world, paint_crate);
 		scene.range_entity_painter<Bullet>(reference, 100.f, "Bullets", world, paint_bullet);
 
@@ -732,6 +784,14 @@ public:
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
+		static bool exported = false;
+		if(s_gi_probe && !s_gi_probe->m_dirty && !exported)
+		{
+			//save_gi_probe(*app.m_gfx_system, *s_gi_probe, bgfx::TextureFormat::RGBA16F, bgfx::TextureFormat::BC6H, app.m_gfx_system->m_resource_path + "gi_probe.dds");
+			//save_gi_probe(*app.m_gfx_system, *s_gi_probe, bgfx::TextureFormat::RGBA16F, bgfx::TextureFormat::RGBA16F, app.m_gfx_system->m_resource_path + "gi_probe.ktx");
+			exported = true;
+		}
+
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
 			UNUSED(dockbar);

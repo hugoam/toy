@@ -10,8 +10,10 @@
 
 using namespace mud; namespace toy
 {
-	void build_world_page_geometry(Scene& scene, WorldPage& page);
+	export_ TOY_VISU_EXPORT void build_geometry(Geometry& geometry, array<Item*> items);
+	export_ TOY_VISU_EXPORT void build_world_page_geometry(WorldPage& page, array<Item*> items);
+	export_ TOY_VISU_EXPORT void build_world_page_geometry(Scene& scene, WorldPage& page);
 
-	void paint_world_page(Gnode& parent, WorldPage& page);
-	void paint_navmesh(Gnode& parent, Navmesh& navmesh);
+	export_ TOY_VISU_EXPORT void paint_world_page(Gnode& parent, WorldPage& page);
+	export_ TOY_VISU_EXPORT void paint_navmesh(Gnode& parent, Navmesh& navmesh);
 }

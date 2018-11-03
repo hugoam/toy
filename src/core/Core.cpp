@@ -41,7 +41,11 @@ using namespace mud; namespace toy
 		, m_world(0, *this, name, job_system)
 		, m_bullet_world(m_world)
 		, m_navmesh(m_world)
-	{}
+	{
+		m_world.m_pump.add_step({ Task::PhysicsWorld,
+			[&](size_t tick, size_t delta) { m_bullet_world.next_frame(tick, delta); }
+		});
+	}
 
 	DefaultWorld::~DefaultWorld()
 	{}

@@ -559,7 +559,7 @@ namespace boids
 					for(size_t i = 0; i < size; i += 4096)
 					{
 						const size_t count = std::min(size - i, size_t(4096U));
-						gfx::item(parent, model, ITEM_NO_UPDATE, &material, count, { transforms.data() + i, count });
+						gfx::item(parent, model, ItemFlag::Default | ItemFlag::NoUpdate, &material, count, { transforms.data() + i, count });
 					}
 				}
 			};

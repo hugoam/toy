@@ -76,6 +76,7 @@ using namespace mud; namespace toy
 			for(int i = 0; i < 3; ++i)
 			{
 				uint32_t index = (&triangle.a)[i];
+				assert(index <= geometry.m_vertices.size());
 				vertex[i] = to_btvec3(geometry.m_vertices[index].m_position);
 			}
 

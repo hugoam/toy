@@ -1,4 +1,4 @@
-$input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0/*, v_texcoord1*/, v_binormal
+$input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0, v_texcoord1, v_binormal
 
 #include <pbr/pbr.sh>
 #include <pbr/light.sh>
@@ -22,7 +22,7 @@ void main()
 	fragment.binormal = normalize(v_binormal);
 	fragment.tangent = normalize(v_tangent);
 	fragment.uv = v_texcoord0.xy;
-	//fragment.uv2 = v_texcoord1.xy;
+	fragment.uv2 = v_texcoord1.xy;
 	fragment.color = v_color;
     
 #if BGFX_SHADER_LANGUAGE_HLSL
@@ -74,42 +74,37 @@ void main()
 #else
 	ambient += u_radiance_color * u_ambient;
 #endif
-    
+
+#if defined GI_CONETRACE || defined LIGHTMAP
+    ConeStart cone = cone_start(fragment.position, fragment.normal);
+#endif
+
+#if defined LIGHTMAP
+    ambient = sample_material_texture(s_lightmap, fragment.uv2).rgb;
+    //specular = trace_specular(s_gi_probe, cone.pos, cone.refl, material.roughness * material.roughness, u_gi_probe_bias) * u_gi_probe_specular;
+#elif defined GI_CONETRACE
+    trace_gi_probe(cone, material.roughness, ambient,  specular);
+    //gl_FragColor = vec4(gi_probe_debug(fragment.position, 0.0), 1.0);
+    //gl_FragColor = vec4(debug_trace_diffuse(s_gi_probe, mul(u_gi_probe_transform, vec4(fragment.normal, 0.0)).xyz), 1.0);
+    //return;
+#endif
+
 #ifdef AMBIENT_OCCLUSION
 	ambient *= material.ao;
 #endif
+	ambient *= material.albedo;
 
-#ifdef GI_CONETRACE
-#if 0
-	vec3 probe_pos = mul(u_gi_probe_transform, vec4(fragment.position, 1.0)).xyz;
-    vec3 probe_coord = probe_pos * u_gi_probe_inv_extents * 0.5 + 0.5; // [-1,1] to [0,1]
-    if(!( any(greaterThan(probe_coord, vec3_splat(1.0))) 
-       || any(lessThan(probe_coord, vec3_splat(0.0))) ))
-    {
-        //vec4 probe_color = texture3DLod(s_gi_probe, probe_coord, 2.0);
-        vec4 probe_color = texture3DLod(s_gi_probe, probe_coord, 0.0);
-        //gl_FragColor = vec4(probe_coord, 1.0);
-        gl_FragColor = vec4(probe_color.rgb, 1.0);
-    }
-    return;
-#else
-    gi_probe_compute(fragment.position, fragment.normal, fragment.binormal, fragment.tangent, material.roughness, ambient,  specular);
-#endif
-#endif
-
+    //apply_reflections(specular, ambient);
+    
 #ifdef DIRECT_LIGHT
 	direct_light(fragment, material, fragment.depth, diffuse, specular);
 #endif
 
-    //apply_reflections(specular, ambient);
-    
 #ifdef CLUSTERED
     apply_cluster_lights(fragment, material, diffuse, specular);
 #else
 	apply_lights(fragment, material, diffuse, specular);
 #endif
-    
-	ambient *= material.albedo;
     
 #ifdef DIFFUSE_TOON
 	specular *= material.specular * material.metallic * material.albedo * 2.0;

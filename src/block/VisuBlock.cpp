@@ -55,7 +55,7 @@ using namespace mud; namespace toy
 		}
 
 		for(auto& element_model : state.m_models)
-			gfx::item(parent, *element_model.second, ITEM_WORLD_GEOMETRY | ITEM_SELECTABLE, material);
+			gfx::item(parent, *element_model.second, ItemFlag::Default | ItemFlag::WorldGeometry | ItemFlag::Selectable, material);
 	}
 
 	Material& plain_material(GfxSystem& gfx_system, cstring name)

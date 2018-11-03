@@ -41,34 +41,8 @@ using namespace mud; namespace toy
 #endif
 	}
 
-	void build_world_page_geometry(Scene& scene, WorldPage& page)
+	void build_geometry(Geometry& geometry, array<Item*> items)
 	{
-		Spatial& spatial = page.m_spatial;
-
-		std::vector<Item*> items;
-
-		scene.m_pool->iterate_objects<Item>([&](Item& item)
-		{
-			//if((item->m_flags & ITEM_WORLD_GEOMETRY) != 0)
-			//{
-				//items.push_back(item);
-			//}
-			//else
-			{
-				bool add = vector_has(page.m_geometry_filter, string(item.m_model->m_name))
-						&& item.m_node.m_object && item.m_node.m_object.m_type->is<EntityRef>();
-				if(add)
-				{
-					Entity entity = { as_ent(item.m_node.m_object), 0 };
-					Spatial& object = asa<Spatial>(entity);
-					if((object.is_child_of(page.m_spatial) || &object == &spatial) && !isa<Movable>(entity))
-						items.push_back(&item);
-				}
-			}
-		});
-
-		// @todo : filter on WORLD_GEOMETRY mask ? a way to filter out debug draw geometry ?
-
 		size_t vertex_count = 0;
 		size_t index_count = 0;
 
@@ -85,11 +59,9 @@ using namespace mud; namespace toy
 		if(vertex_count == 0 || index_count == 0)
 			return;
 
-		page.m_chunks.emplace_back();
-		Geometry& geom = page.m_chunks.back();
-		geom.allocate(vertex_count, index_count / 3);
+		geometry.allocate(vertex_count, index_count / 3);
 
-		MeshData data(geom.vertices(), geom.indices());
+		MeshData data(geometry.vertices(), geometry.indices());
 
 		for(Item* item : items)
 			for(const ModelItem& model_item : item->m_model->m_items)
@@ -97,12 +69,48 @@ using namespace mud; namespace toy
 				if(model_item.m_mesh->m_draw_mode != PLAIN)
 					continue;
 
-				static mat4 identity = bxidentity();
 				if(item->m_instances.empty())
-					model_item.m_mesh->read(data, identity);
+					model_item.m_mesh->read(data, item->m_node->m_transform);
 				else
 					for(const mat4& transform : item->m_instances)
 						model_item.m_mesh->read(data, transform);
 			}
+	}
+
+	void build_world_page_geometry(WorldPage& page, array<Item*> items)
+	{
+		page.m_chunks.emplace_back();
+		Geometry& geom = page.m_chunks.back();
+		build_geometry(geom, items);
+	}
+
+	void build_world_page_geometry(Scene& scene, WorldPage& page)
+	{
+		Spatial& spatial = page.m_spatial;
+
+		std::vector<Item*> items;
+
+		scene.m_pool->iterate_objects<Item>([&](Item& item)
+		{
+			//if((item->m_flags & ItemFlag::WorldGeometry) != 0)
+			//{
+				//items.push_back(item);
+			//}
+			//else
+			{
+				bool add = vector_has(page.m_geometry_filter, string(item.m_model->m_name))
+						&& item.m_node->m_object && item.m_node->m_object.m_type->is<EntityRef>();
+				if(add)
+				{
+					Entity entity = { as_ent(item.m_node->m_object), 0 };
+					Spatial& object = asa<Spatial>(entity);
+					if((object.is_child_of(page.m_spatial) || &object == &spatial) && !isa<Movable>(entity))
+						items.push_back(&item);
+				}
+			}
+		});
+
+		// @todo : filter on WORLD_GEOMETRY mask ? a way to filter out debug draw geometry ?
+		build_world_page_geometry(page, items);
 	}
 }

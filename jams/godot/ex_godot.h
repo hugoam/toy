@@ -21,6 +21,7 @@ namespace mud
 	template <> struct TypedBuffer<Human>  { static size_t index() { return 21; } };
 	template <> struct TypedBuffer<Lamp>   { static size_t index() { return 22; } };
 	template <> struct TypedBuffer<Crate>  { static size_t index() { return 23; } };
+	template <> struct TypedBuffer<WorldBlock>  { static size_t index() { return 24; } };
 }
 
 using HBullet = ComponentHandle<Bullet>;
@@ -156,6 +157,21 @@ public:
 
 	attr_ vec3 m_extents;
 	OSolid m_solid;
+};
+
+class refl_ _GODOT_EXPORT WorldBlock
+{
+public:
+	constr_ WorldBlock() {}
+	constr_ WorldBlock(HSpatial spatial, HWorldPage world_page, HNavblock navblock, const vec3& extents);
+
+	static Entity create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents);
+
+	comp_ HSpatial m_spatial;
+	comp_ HWorldPage m_world_page;
+	comp_ HNavblock m_navblock;
+
+	attr_ vec3 m_extents;
 };
 
 class refl_ _GODOT_EXPORT Player

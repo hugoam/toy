@@ -3,14 +3,14 @@
 #include <bgfx_compute.sh>
 
 UIMAGE3D_RW(s_voxels_light, r32ui, 0);
-IMAGE3D_RW(s_voxels_light_rgba, rgba8, 1);
+IMAGE3D_RW(s_voxels_light_rgba, rgba16f, 1);
 
 NUM_THREADS(64, 1, 1)
 void main()
 {
     ivec3 coord = ivec3(gl_GlobalInvocationID.xyz);
     
-    vec4 color = decodeRGBA8(imageLoad(s_voxels_light, coord).x) / 255.0;
+    vec4 color = decodeColor(imageLoad(s_voxels_light, coord).x);
 
     if (color.a > 0.0)
     {

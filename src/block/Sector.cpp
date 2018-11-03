@@ -23,8 +23,6 @@ using namespace mud; namespace toy
 		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
 		ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, size));
 		ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
-		//, m_emitter(*this, m_spatial, m_movable)
-		//, m_buffer_page(m_spatial, m_world_page, true)
 		ecs.SetComponent(entity, Sector(HSpatial(entity), HWorldPage(entity), HNavblock(entity), coordinate, size));
 		return entity;
 	}

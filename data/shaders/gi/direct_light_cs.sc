@@ -15,7 +15,7 @@ NUM_THREADS(64, 1, 1)
 void main()
 {
     ivec3 coord = ivec3(gl_GlobalInvocationID.xyz);
-    vec4 voxel_color = decodeRGBA8(imageLoad(s_voxels_albedo, coord).x) / 255.0;
+    vec4 voxel_color = decodeColor(imageLoad(s_voxels_albedo, coord).x);
     if (voxel_color.a == 0.0) return;
 
     uint unor = imageLoad(s_voxels_normals, coord).r;
@@ -27,8 +27,7 @@ void main()
 
     vec3 diffuse = compute_voxel_lights(voxel_position, voxel_color.rgb, voxel_normal);
     
-    float alpha = 1.0;//(decodeRGBA8(imageLoad(s_voxels_light, coord).x) / 255.0).a;
-    uint color_enc = encodeRGBA8(vec4(diffuse, alpha) * 255.0);
+    uint color_enc = encodeColor(vec4(diffuse, 1.0));
     
 #if BGFX_SHADER_LANGUAGE_HLSL
     InterlockedAdd(s_voxels_light.m_texture[coord], color_enc);

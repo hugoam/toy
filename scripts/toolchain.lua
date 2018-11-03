@@ -25,15 +25,22 @@ function toy_binary_config()
 	configuration {}
 end
 
-configuration { "windows"}
+configuration { "windows" }
+    includedirs {
+        "C:/Program Files (x86)/OpenAL/include",
+        "C:/Program Files/OpenAL/include",
+    }
+
+configuration { "windows", "x32" }
     libdirs {
         "C:/Program Files (x86)/OpenAL/libs/Win32",
         "C:/Program Files/OpenAL/libs/Win32",
     }
     
-    includedirs {
-        "C:/Program Files (x86)/OpenAL/include",
-        "C:/Program Files/OpenAL/include",
+configuration { "windows", "x64" }
+    libdirs {
+        "C:/Program Files (x86)/OpenAL/libs/Win64",
+        "C:/Program Files/OpenAL/libs/Win64",
     }
 
 configuration { "vs*-clang" }

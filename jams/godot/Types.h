@@ -60,6 +60,7 @@ namespace mud
     export_ template <> _GODOT_EXPORT Type& type<Bullet>();
     export_ template <> _GODOT_EXPORT Type& type<Crate>();
     export_ template <> _GODOT_EXPORT Type& type<Human>();
+	export_ template <> _GODOT_EXPORT Type& type<WorldBlock>();
     
 	export_ template struct _GODOT_EXPORT Typed<std::vector<Aim*>>;
 	export_ template struct _GODOT_EXPORT Typed<std::vector<Player*>>;

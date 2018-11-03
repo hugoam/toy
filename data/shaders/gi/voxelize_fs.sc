@@ -29,17 +29,16 @@ void main()
 	fragment.uv = v_texcoord0.xy;
 	fragment.color = v_color;
     
-    Material material;
-	material.albedo = u_albedo.rgb * sample_material_texture(s_albedo, fragment.uv).rgb;
+    vec3 albedo = u_albedo.rgb * sample_material_texture(s_albedo, fragment.uv).rgb;
 
 #include <pbr/fs_emission.sh>
 
-    fragment.color = vec4(material.albedo + emission.rgb, 1.0);
+    fragment.color = vec4(albedo + emission.rgb, 1.0);
     
     vec3 voxel = v_position.xyz * 0.5 + 0.5; // [-1,1] to [0,1]
     ivec3 coord = ivec3(u_voxelgi_subdiv * voxel);
     
-    uint color_enc = encodeRGBA8(fragment.color * 255.0);
+    uint color_enc = encodeColor(fragment.color);
 #if BGFX_SHADER_LANGUAGE_HLSL
     InterlockedMax(s_voxels_albedo.m_texture[coord], color_enc);
 #else
@@ -55,11 +54,11 @@ void main()
 
 #ifdef COMPUTE_VOXEL_LIGHT
     vec3 diffuse = compute_voxel_lights(fragment.position, fragment.color.rgb, fragment.normal);
-    uint light_enc = encodeRGBA8(vec4(diffuse + emission.rgb, 1.0) * 255.0);
+    uint light_enc = encodeColor(vec4(diffuse + emission.rgb, 1.0));
 #else
-    uint light_enc = encodeRGBA8(vec4(emission.rgb, 1.0) * 255.0);
+    uint light_enc = encodeColor(vec4(emission.rgb, 1.0));
 #endif
-
+    
 #if BGFX_SHADER_LANGUAGE_HLSL
     InterlockedMax(s_voxels_light.m_texture[coord], light_enc);
 #else
