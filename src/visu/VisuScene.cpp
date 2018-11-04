@@ -202,7 +202,7 @@ using namespace mud; namespace toy
 		Aabb select_bounds;
 		Aabb hover_bounds;
 
-		parent.m_scene->m_pool->iterate_objects<Item>([&](Item& item)
+		parent.m_scene->m_pool->pool<Item>().iterate([&](Item& item)
 		{
 			for(Ref object : selection)
 				if(item.m_node->m_object == object)

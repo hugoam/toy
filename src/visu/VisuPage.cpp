@@ -90,7 +90,7 @@ using namespace mud; namespace toy
 
 		std::vector<Item*> items;
 
-		scene.m_pool->iterate_objects<Item>([&](Item& item)
+		scene.m_pool->pool<Item>().iterate([&](Item& item)
 		{
 			//if((item->m_flags & ItemFlag::WorldGeometry) != 0)
 			//{

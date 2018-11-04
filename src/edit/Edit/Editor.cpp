@@ -248,7 +248,7 @@ using namespace mud; namespace toy
 					viewer.m_camera.m_far = 1000.f;
 					ui::orbit_controller(viewer);
 
-					scene->m_pool->iterate_objects<Light>([&](Light& light) {
+					scene->m_pool->pool<Light>().iterate([&](Light& light) {
 						debug_draw_light_slices(scene->m_graph, light);
 					});
 				}

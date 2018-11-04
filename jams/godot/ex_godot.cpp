@@ -7,9 +7,10 @@
 
 //#define _GODOT_TOOLS
 #ifndef __EMSCRIPTEN__
-#define GI_PROBE
+//#define GI_PROBE
 #endif
 #define LIGHTMAPS
+#define REPACK
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
 {
@@ -500,7 +501,11 @@ void paint_level(Gnode& parent)
 	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::None), ItemFlag::Occluder);
 	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::AlphaWhite), ItemFlag::Occluder);
 
+#ifdef REPACK
 	static Prefab& reactor = *parent.m_scene->m_gfx_system.prefabs().file("reactor");
+#else
+	static Prefab& reactor = *parent.m_scene->m_gfx_system.prefabs().file("reactor.repack");
+#endif
 	gfx::prefab(parent, reactor, false, ItemFlag::Default | ItemFlag::NoUpdate);
 
 #ifdef GI_PROBE
@@ -535,42 +540,6 @@ void paint_viewer(Viewer& viewer)
 #ifndef MUD_GODOT_EMSCRIPTEN
 	viewer.m_filters.m_glow.m_bicubic_filter = true;
 #endif
-}
-
-Style& menu_style()
-{
-	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 300.f; l.m_spacing = vec2(30.f); } };
-	return style;
-}
-
-Style& button_style()
-{
-	static Style style = { "GameButton", styles().button, [](Layout& l) { UNUSED(l); },
-														  [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::AlphaWhite; s.m_text_size = 24.f; },
-														  [](Style& s) { s.decline_skin(HOVERED).m_text_colour = Colour::White; } };
-	return style;
-}
-
-Style& row_bar_style()
-{
-	static Style style = { "RowBar", styles().row, [](Layout& l) { l.m_spacing = vec2(20.f); } };
-	return style;
-}
-
-Style& screen_style()
-{
-	static Style style = { "GameScreen", styles().wedge, [](Layout& l) { l.m_space = LAYOUT; l.m_padding = vec4(30.f); } };
-	return style;
-}
-
-Style& left_panel_style(UiWindow& ui_window)
-{
-	UNUSED(ui_window);
-	//static ImageSkin skin = { *ui_window.find_image("graphic/blue_on"), 46, 28, 38, 30 };
-	
-	static Style style = { "LeftPanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, WRAP, FIXED }; l.m_size = { 450.f, 0.f }; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
-													   //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
-	return style;
 }
 
 void human_controller(HumanController& controller, Human& human, OrbitController& orbit, bool relative = true)
@@ -610,11 +579,8 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 {
 	Spatial& spatial = human.m_spatial;
 
-	static Style& style_screen = screen_style();
-	static Style& style_left_panel = left_panel_style(viewer.ui_window());
-
 	//Widget& screen = ui::screen(viewer);
-	Widget& screen = ui::widget(viewer, style_screen);
+	Widget& screen = ui::board(viewer);
 
 	ui::OrbitMode mode = val<Player>(scene.m_player).m_mode;
 	//OrbitController& orbit = ui::orbit_controller(viewer);
@@ -628,7 +594,6 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 	Widget& board = ui::board(screen); UNUSED(board);
 	Widget& row = ui::row(screen);
-	Widget& left_panel = ui::widget(row, style_left_panel);
 
 	static HumanController controller;
 
@@ -778,6 +743,21 @@ public:
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
+#ifdef REPACK
+		static bool repacked = false;
+		if(app.m_gfx_system->m_frame > 100 && !repacked)
+		{
+			LocatedFile location = app.m_gfx_system->locate_file("models/reactor", carray<cstring, 1>{ ".gltf" });
+
+			ImportConfig repack_config;
+			repack_config.m_format = ModelFormat::gltf;
+
+			Importer& importer = *app.m_gfx_system->importer(ModelFormat::gltf);
+			importer.repack((string(location.m_location) + location.m_name).c_str(), repack_config);
+			repacked = true;
+		}
+#endif
+
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
 			UNUSED(dockbar);

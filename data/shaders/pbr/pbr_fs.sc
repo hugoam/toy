@@ -75,14 +75,11 @@ void main()
 	ambient += u_radiance_color * u_ambient;
 #endif
 
-#if defined GI_CONETRACE || defined LIGHTMAP
-    ConeStart cone = cone_start(fragment.position, fragment.normal);
-#endif
-
 #if defined LIGHTMAP
     ambient = sample_material_texture(s_lightmap, fragment.uv2).rgb;
     //specular = trace_specular(s_gi_probe, cone.pos, cone.refl, material.roughness * material.roughness, u_gi_probe_bias) * u_gi_probe_specular;
 #elif defined GI_CONETRACE
+    ConeStart cone = cone_start(fragment.position, fragment.normal);
     trace_gi_probe(cone, material.roughness, ambient,  specular);
     //gl_FragColor = vec4(gi_probe_debug(fragment.position, 0.0), 1.0);
     //gl_FragColor = vec4(debug_trace_diffuse(s_gi_probe, mul(u_gi_probe_transform, vec4(fragment.normal, 0.0)).xyz), 1.0);
