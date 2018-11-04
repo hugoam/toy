@@ -6,7 +6,9 @@
 #include <meta/godot/Module.h>
 
 //#define _GODOT_TOOLS
-//#define SCRIPTED_IA
+#ifndef __EMSCRIPTEN__
+#define GI_PROBE
+#endif
 #define LIGHTMAPS
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
@@ -493,8 +495,6 @@ void paint_scene(Gnode& parent)
 	//toy::sound(parent, "complexambient", true, 0.1f);
 }
 
-static GIProbe* s_gi_probe = nullptr;
-
 void paint_level(Gnode& parent)
 {
 	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::None), ItemFlag::Occluder);
@@ -503,27 +503,21 @@ void paint_level(Gnode& parent)
 	static Prefab& reactor = *parent.m_scene->m_gfx_system.prefabs().file("reactor");
 	gfx::prefab(parent, reactor, false, ItemFlag::Default | ItemFlag::NoUpdate);
 
-	if(true)
-	{
+#ifdef GI_PROBE
 		GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(128.f, 64.f, 128.f));
 		//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f, 32.f, 64.f));
 		//probe.m_bounces = 1;
 		probe.m_diffuse = 1.f;
 		probe.m_mode = GIProbeMode::Voxelize;
 		//probe.m_mode = GIProbeMode::LoadVoxels;
-		s_gi_probe = &probe;
-
+#endif
 
 #ifdef LIGHTMAPS
 		string path = parent.m_scene->m_gfx_system.m_resource_path + "examples/ex_godot/lightmaps/";
 
-		if(!probe.m_bake_lightmaps)
-		{
-			probe.lightmap(4096U, 4.f, path);
-			//probe.lightmap(4096U, 8.f);
-		}
+		gfx::lightmap(parent, 4096U, 4.f, path);
+		//gfx::lightmap(parent, 4096U, 8.f, path);
 #endif
-	}
 }
 
 void paint_viewer(Viewer& viewer)
@@ -784,14 +778,6 @@ public:
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final
 	{
-		static bool exported = false;
-		if(s_gi_probe && !s_gi_probe->m_dirty && !exported)
-		{
-			//save_gi_probe(*app.m_gfx_system, *s_gi_probe, bgfx::TextureFormat::RGBA16F, bgfx::TextureFormat::BC6H, app.m_gfx_system->m_resource_path + "gi_probe.dds");
-			//save_gi_probe(*app.m_gfx_system, *s_gi_probe, bgfx::TextureFormat::RGBA16F, bgfx::TextureFormat::RGBA16F, app.m_gfx_system->m_resource_path + "gi_probe.ktx");
-			exported = true;
-		}
-
 		auto pump = [&](Widget& parent, Dockbar* dockbar = nullptr)
 		{
 			UNUSED(dockbar);

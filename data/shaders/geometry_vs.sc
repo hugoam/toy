@@ -26,8 +26,8 @@ void main()
     mat4 normalModelView = transpose(inverse(modelView));
     
 	v_color = a_color0;
-	v_texcoord0 = a_texcoord0;
-	v_texcoord1 = a_texcoord1;
+	v_texcoord0 = vec4((a_texcoord0.xy * u_uv0_scale) + u_uv0_offset, 0.0, 0.0);
+	v_texcoord1 = vec4((a_texcoord1.xy * u_uv1_scale) + u_uv1_offset, 0.0, 0.0);
 
 	v_view = mul(modelView, vec4(a_position, 1.0)).xyz;
 #ifdef PACKED_NORMALS
