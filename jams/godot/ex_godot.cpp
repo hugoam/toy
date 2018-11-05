@@ -7,10 +7,10 @@
 
 //#define _GODOT_TOOLS
 #ifndef __EMSCRIPTEN__
-//#define GI_PROBE
+#define GI_PROBE
 #endif
 #define LIGHTMAPS
-#define REPACK
+//#define REPACK
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
 {
@@ -496,17 +496,33 @@ void paint_scene(Gnode& parent)
 	//toy::sound(parent, "complexambient", true, 0.1f);
 }
 
+Prefab& import_prefab(GfxSystem& gfx_system, ModelFormat format, const string& name, const ImportConfig& config)
+{
+	string filename = "models/" + name;
+	LocatedFile location = gfx_system.locate_file(filename.c_str(), carray<cstring, 1>{ ".gltf" });
+	Prefab& prefab = gfx_system.prefabs().create(name.c_str());
+	string filepath = string(location.m_location) + location.m_name;
+	gfx_system.importer(format)->import_prefab(prefab, filepath, config);
+	return prefab;
+}
+
 void paint_level(Gnode& parent)
 {
 	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::None), ItemFlag::Occluder);
 	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::AlphaWhite), ItemFlag::Occluder);
 
 #ifdef REPACK
-	static Prefab& reactor = *parent.m_scene->m_gfx_system.prefabs().file("reactor");
+	ImportConfig config;
+	config.m_optimize_geometry = true;
+	config.m_cache_geometry = true;
+	config.m_flags = ItemFlag::Static;
+	static Prefab& reactor = import_prefab(parent.m_scene->m_gfx_system, ModelFormat::gltf, "reactor", config);
 #else
-	static Prefab& reactor = *parent.m_scene->m_gfx_system.prefabs().file("reactor.repack");
+	ImportConfig config;
+	config.m_flags = ItemFlag::Static;
+	static Prefab& reactor = import_prefab(parent.m_scene->m_gfx_system, ModelFormat::gltf, "reactor.repack", config);
 #endif
-	gfx::prefab(parent, reactor, false, ItemFlag::Default | ItemFlag::NoUpdate);
+	gfx::prefab(parent, reactor, false, ItemFlag::NoUpdate);
 
 #ifdef GI_PROBE
 		GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(128.f, 64.f, 128.f));
@@ -520,7 +536,9 @@ void paint_level(Gnode& parent)
 #ifdef LIGHTMAPS
 		string path = parent.m_scene->m_gfx_system.m_resource_path + "examples/ex_godot/lightmaps/";
 
-		gfx::lightmap(parent, 4096U, 4.f, path);
+		LightmapAtlas& lightmap = gfx::lightmap(parent, 4096U, 4.f, path);
+		lightmap.m_capture_transform = bxidentity();
+		lightmap.m_capture_extents = vec3(128.f, 64.f, 128.f);
 		//gfx::lightmap(parent, 4096U, 8.f, path);
 #endif
 }
@@ -669,6 +687,7 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
+		//app.m_gfx_system->add_resource_path("examples/ex_godot_hd/");
 		app.m_gfx_system->add_resource_path("examples/ex_godot/");
 		app.m_gfx_system->add_resource_path("examples/05_character/");
 		app.m_gfx_system->add_resource_path("examples/17_wfc/");
@@ -683,17 +702,10 @@ public:
 		game.m_world = &world;
 
 		WorldBlock& block = construct<WorldBlock>(world.origin(), Zero3, vec3(128.f, 64.f, 128.f));
-		Importer& importer = *app.m_gfx_system->importer(ModelFormat::gltf);
-		Prefab& collision_world = app.m_gfx_system->prefabs().create("reactor_collision");
-			
+
 		ImportConfig config;
-		config.m_format = ModelFormat::gltf;
-		config.m_exclude_elements = { "prop" };
-		config.m_include_materials = { "collision" };
-		config.m_as_prefab = true;
-		config.m_suffix = "collision";
-		LocatedFile location = app.m_gfx_system->locate_file("models/reactor", carray<cstring, 1>{ ".gltf" });
-		importer.import_prefab(collision_world, (string(location.m_location) + location.m_name).c_str(), config);
+		config.m_cache_geometry = true;
+		Prefab& collision_world = import_prefab(*app.m_gfx_system, ModelFormat::gltf, "reactor.collision", config);
 
 		std::vector<Item*> items;
 		for(Item& item : collision_world.m_items)
@@ -734,7 +746,7 @@ public:
 
 		World& world = *scene.m_game.m_world;
 		scene.range_entity_painter<Lamp>(reference, 100.f, "Lamps", world, paint_lamp);
-		//scene.range_entity_painter<Human>(reference, 100.f, "Humans", world, paint_human);
+		scene.range_entity_painter<Human>(reference, 100.f, "Humans", world, paint_human);
 		scene.range_entity_painter<Crate>(reference, 100.f, "Crates", world, paint_crate);
 		scene.range_entity_painter<Bullet>(reference, 100.f, "Bullets", world, paint_bullet);
 
@@ -748,12 +760,8 @@ public:
 		if(app.m_gfx_system->m_frame > 100 && !repacked)
 		{
 			LocatedFile location = app.m_gfx_system->locate_file("models/reactor", carray<cstring, 1>{ ".gltf" });
-
-			ImportConfig repack_config;
-			repack_config.m_format = ModelFormat::gltf;
-
 			Importer& importer = *app.m_gfx_system->importer(ModelFormat::gltf);
-			importer.repack((string(location.m_location) + location.m_name).c_str(), repack_config);
+			importer.repack((string(location.m_location) + location.m_name).c_str(), ImportConfig());
 			repacked = true;
 		}
 #endif
