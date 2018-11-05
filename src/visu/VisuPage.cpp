@@ -92,7 +92,7 @@ using namespace mud; namespace toy
 
 		scene.m_pool->pool<Item>().iterate([&](Item& item)
 		{
-			//if((item->m_flags & ItemFlag::WorldGeometry) != 0)
+			//if((item->m_flags & ItemFlag::Static) != 0)
 			//{
 				//items.push_back(item);
 			//}
