@@ -5,7 +5,7 @@
 
 CONST(float) hdrRange = 10.0;
 
-#if BGFX_SHADER_LANGUAGE_GLSL > 120
+#if BGFX_SHADER_LANGUAGE_GLSL == 0 || BGFX_SHADER_LANGUAGE_GLSL > 120
 uint encodeRGBA8(vec4 val)
 {
   return (uint(val.w) & 0x000000FFu) << 24u
@@ -134,8 +134,22 @@ float unpackHalfFloat(vec2 _rg)
 	return dot(_rg, shift);
 }
 
+vec4 encodeRGBM(vec3 rgb)
+{
+    float maxRGB = max(rgb.x, max(rgb.g, max(rgb.b, 1e-6)));
+    float M =      maxRGB / hdrRange;
+    M =            ceil(M * 255.0) / 255.0;
+    return vec4(rgb / (M * hdrRange), M);
+}
+
+vec3 decodeRGBM(vec4 rgbm)
+{
+    return rgbm.rgb * (rgbm.a * hdrRange);
+}
+
 vec4 encodeHDR(vec3 color)
 {
+    return encodeRGBM(color);
     //return encodeRGBE8(color);
 	float hdr = length(color);
     return vec4(color / hdr, hdr / hdrRange);
@@ -143,12 +157,13 @@ vec4 encodeHDR(vec3 color)
 
 vec3 decodeHDR(vec4 color)
 {
+    return decodeRGBM(color);
     //return decodeRGBE8(color);
     float hdr = color.a * hdrRange;
 	return vec3(color.rgb * hdr);
 }
 
-#if BGFX_SHADER_LANGUAGE_GLSL > 120
+#if BGFX_SHADER_LANGUAGE_GLSL == 0 || BGFX_SHADER_LANGUAGE_GLSL > 120
 // Encode HDR color to a 32 bit uint
 // Alpha is 1 bit + 7 bit HDR remapping
 uint encodeColor(vec4 color)
