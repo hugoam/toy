@@ -8,10 +8,13 @@
 //#define _GODOT_TOOLS
 #ifndef MUD_PLATFORM_EMSCRIPTEN
 //#define GI_PROBE
+#define CLUSTERED
 #endif
-//#define LIGHTMAPS
+#define LIGHTMAPS
 //#define REPACK
 #define PHYSICS
+
+
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
 {
@@ -545,7 +548,7 @@ void paint_level(Gnode& parent)
 
 void paint_viewer(Viewer& viewer)
 {
-#ifndef MUD_PLATFORM_EMSCRIPTEN
+#ifdef CLUSTERED
 	if(rect_size(viewer.m_viewport.m_rect) != vec2(0.f) && !viewer.m_camera.m_clusters)
 	{
 		viewer.m_camera.m_clustered = true;

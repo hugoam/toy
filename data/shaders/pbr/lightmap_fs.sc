@@ -1,5 +1,6 @@
 $input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0, v_texcoord1, v_binormal
 
+#include <encode.sh>
 #include <pbr/pbr.sh>
 #include <pbr/light.sh>
 
@@ -39,7 +40,8 @@ void main()
     diffuse += trace_diffuse(s_gi_probe, cone.pos, cone.normal, u_gi_probe_bias) * u_gi_probe_diffuse;
 #endif
 
-	gl_FragColor = vec4(diffuse, 1.0);
+	//gl_FragColor = vec4(diffuse, 1.0);
+    gl_FragColor = encodeHDR(diffuse);
     //gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
 	//gl_FragColor = vec4(normalize(fragment.normal) * 0.5 + 0.5, 1.0);
 }

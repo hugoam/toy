@@ -1,5 +1,6 @@
 $input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0, v_texcoord1, v_binormal
 
+#include <encode.sh>
 #include <pbr/pbr.sh>
 #include <pbr/light.sh>
 #include <pbr/radiance.sh>
@@ -76,7 +77,9 @@ void main()
 #endif
 
 #if defined LIGHTMAP
-    ambient = sample_material_texture(s_lightmap, fragment.uv2).rgb;
+    vec4 lightmap = sample_material_texture(s_lightmap, fragment.uv2);
+    //ambient = lightmap.rgb;
+    ambient = decodeHDR(lightmap);
     //specular = trace_specular(s_gi_probe, cone.pos, cone.refl, material.roughness * material.roughness, u_gi_probe_bias) * u_gi_probe_specular;
 #elif defined GI_CONETRACE
     ConeStart cone = cone_start(fragment.position, fragment.normal);

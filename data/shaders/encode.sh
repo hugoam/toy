@@ -132,14 +132,26 @@ float unpackHalfFloat(vec2 _rg)
 	return dot(_rg, shift);
 }
 
+vec4 encodeHDR(vec3 color)
+{
+    //return encodeRGBE8(color);
+	float hdr = length(color);
+    return vec4(color / hdr, hdr / hdrRange);
+}
+
+vec3 decodeHDR(vec4 color)
+{
+    //return decodeRGBE8(color);
+    float hdr = color.a * hdrRange;
+	return vec3(color.rgb * hdr);
+}
+
 // Encode HDR color to a 32 bit uint
 // Alpha is 1 bit + 7 bit HDR remapping
 uint encodeColor(vec4 color)
 {
-    // return encodeRGBA8(clamp(color, 0.0, 1.0) * 255.0);
-    
 	// normalize color to LDR
-	float hdr = max(length(color.rgb), 0.0001);
+	float hdr = length(color.rgb);
 	color.rgb /= hdr;
 
 	// encode LDR color and HDR range
@@ -157,8 +169,6 @@ uint encodeColor(vec4 color)
 // Decode 32 bit uint into HDR color with 1 bit alpha
 vec4 decodeColor(uint colorMask)
 {
-    // return decodeRGBA8(colorMask) / 255.0;
-    
 	float hdr;
 	vec4 color;
 
