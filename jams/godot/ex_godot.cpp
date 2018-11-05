@@ -7,7 +7,7 @@
 
 //#define _GODOT_TOOLS
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-//#define GI_PROBE
+#define GI_PROBE
 #define CLUSTERED
 #endif
 #define LIGHTMAPS
