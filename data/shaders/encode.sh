@@ -5,6 +5,7 @@
 
 CONST(float) hdrRange = 10.0;
 
+#if BGFX_SHADER_LANGUAGE_GLSL > 120
 uint encodeRGBA8(vec4 val)
 {
   return (uint(val.w) & 0x000000FFu) << 24u
@@ -20,6 +21,7 @@ vec4 decodeRGBA8(uint val)
               float((val & 0x00FF0000u) >> 16u),
               float((val & 0xFF000000u) >> 24u));
 }
+#endif
 
 vec4 encodeRE8(float _r)
 {
@@ -146,6 +148,7 @@ vec3 decodeHDR(vec4 color)
 	return vec3(color.rgb * hdr);
 }
 
+#if BGFX_SHADER_LANGUAGE_GLSL > 120
 // Encode HDR color to a 32 bit uint
 // Alpha is 1 bit + 7 bit HDR remapping
 uint encodeColor(vec4 color)
@@ -215,5 +218,6 @@ vec3 decodeNormal(uint val)
 	normal *= vec3(signs);
 	return normal;
 }
+#endif
 
 #endif // MUD_SHADER_ENCODE
