@@ -11,6 +11,7 @@
 #endif
 #define LIGHTMAPS
 //#define REPACK
+#define PHYSICS
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
 {
@@ -701,6 +702,7 @@ public:
 		World& world = default_world.m_world;
 		game.m_world = &world;
 
+#ifdef PHYSICS
 		WorldBlock& block = construct<WorldBlock>(world.origin(), Zero3, vec3(128.f, 64.f, 128.f));
 
 		ImportConfig config;
@@ -713,6 +715,7 @@ public:
 
 		build_world_page_geometry(block.m_world_page, items);
 		block.m_world_page->update_geometry();
+#endif
 
 		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
 
