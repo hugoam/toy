@@ -6,10 +6,10 @@
 #include <meta/godot/Module.h>
 
 //#define _GODOT_TOOLS
-#ifndef __EMSCRIPTEN__
-#define GI_PROBE
+#ifndef MUD_PLATFORM_EMSCRIPTEN
+//#define GI_PROBE
 #endif
-#define LIGHTMAPS
+//#define LIGHTMAPS
 //#define REPACK
 #define PHYSICS
 
@@ -330,7 +330,6 @@ void Player::spawn(const vec3& start_position)
 void paint_bullet(Gnode& parent, Bullet& bullet)
 {
 	Spatial& spatial = bullet.m_spatial;
-	return;
 
 	static ParticleGenerator* flash = parent.m_scene->m_gfx_system.particles().file("flash");
 	static ParticleGenerator* impact = parent.m_scene->m_gfx_system.particles().file("impact");
@@ -546,12 +545,14 @@ void paint_level(Gnode& parent)
 
 void paint_viewer(Viewer& viewer)
 {
+#ifndef MUD_PLATFORM_EMSCRIPTEN
 	if(rect_size(viewer.m_viewport.m_rect) != vec2(0.f) && !viewer.m_camera.m_clusters)
 	{
 		viewer.m_camera.m_clustered = true;
 		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
+#endif
 
 	//viewer.m_filters.m_tonemap.m_mode = TonemapMode::ACES;
 
@@ -668,8 +669,8 @@ void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 	Player& player = val<Player>(game.m_player);
 	player.m_viewer = &viewer;
 
-	ui::free_orbit_controller(viewer);
-	//x_godot_game_hud(viewer, scene, *player.m_human);
+	//ui::free_orbit_controller(viewer);
+	ex_godot_game_hud(viewer, scene, *player.m_human);
 }
 
 void ex_godot_pump_game(GameShell& app, Game& game, Widget& parent)
