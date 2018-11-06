@@ -7,7 +7,7 @@
 
 //#define _GODOT_TOOLS
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-#define GI_PROBE
+//#define GI_PROBE
 #define CLUSTERED
 #endif
 #define LIGHTMAPS
@@ -113,8 +113,8 @@ Human::Human(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor rec
 	, m_receptor(receptor)
 	, m_script(script)
 	, m_faction(faction)
-	, m_walk(false)
 	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f))
+	, m_walk(false)
 {
 	emitter->add_sphere(VisualMedium::me, 0.1f);
 	receptor->add_sphere(VisualMedium::me, 30.f);
@@ -398,7 +398,7 @@ void paint_human(Gnode& parent, Human& human)
 {
 	Spatial& spatial = human.m_spatial;
 
-	static Model& model_normal = *parent.m_scene->m_gfx_system.models().file("human00");
+	//static Model& model_normal = *parent.m_scene->m_gfx_system.models().file("human00");
 	static Model& model_stealth = human_model_stealth(parent.m_scene->m_gfx_system);
 	static Model& model_glow = human_model_glow(parent.m_scene->m_gfx_system);
 
@@ -511,9 +511,6 @@ Prefab& import_prefab(GfxSystem& gfx_system, ModelFormat format, const string& n
 
 void paint_level(Gnode& parent)
 {
-	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::None), ItemFlag::Occluder);
-	//gfx::shape(parent, Cylinder(40.f, 64.f, Axis::Y), Symbol::plain(Colour::AlphaWhite), ItemFlag::Occluder);
-
 #ifdef REPACK
 	ImportConfig config;
 	config.m_optimize_geometry = true;
@@ -614,9 +611,6 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 		orbit.m_pitch = -c_pi / 16.f;
 		orbit.m_distance = 60.f;
 	}
-
-	Widget& board = ui::board(screen); UNUSED(board);
-	Widget& row = ui::row(screen);
 
 	static HumanController controller;
 

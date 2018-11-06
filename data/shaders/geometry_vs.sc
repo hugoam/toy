@@ -17,8 +17,6 @@ $output v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0, v_texcoor
 #include <convert.sh>
 #include <skeleton.sh>
 
-//#define PACKED_NORMALS
-
 void main()
 {
 #include "modelview.sh"
@@ -30,7 +28,7 @@ void main()
 	v_texcoord1 = vec4((a_texcoord1.xy * u_uv1_scale) + u_uv1_offset, 0.0, 0.0);
 
 	v_view = mul(modelView, vec4(a_position, 1.0)).xyz;
-#ifdef PACKED_NORMALS
+#ifdef QNORMALS
     v_normal = normalize(mul(normalModelView, vec4(vec3(a_normal) / 255.0 - 0.5, 0.0)).xyz);
 	v_tangent = normalize(mul(normalModelView, vec4(vec3(a_tangent.xyz) / 255.0 - 0.5, 0.0)).xyz);
 #else
