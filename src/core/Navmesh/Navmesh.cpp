@@ -48,7 +48,7 @@ using namespace mud; namespace toy
 		return { num_verts, num_verts * 2 };
 	}
 
-	void draw_shape_lines(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshData& data)
+	void draw_shape_lines(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshAdapter& writer)
 	{
 		UNUSED(shape);
 		Navmesh& navmesh = navmesh_shape.m_navmesh;
@@ -76,8 +76,8 @@ using namespace mud; namespace toy
 					size_t vertex_offset = tile->polys[p].verts[v] * 3;
 					vec3 vertex = { tile->verts[vertex_offset], tile->verts[vertex_offset + 1], tile->verts[vertex_offset + 2] };
 
-					data.position(vertex)
-						.colour(colour);
+					writer.position(vertex)
+						  .colour(colour);
 
 				}
 
@@ -85,7 +85,7 @@ using namespace mud; namespace toy
 				{
 					uint16_t i0 = index + i;
 					uint16_t i1 = i + 1 < tile->polys[p].vertCount ? index + i + 1 : index;
-					data.line(i0, i1);
+					writer.line(i0, i1);
 				}
 
 				index += tile->polys[p].vertCount;
@@ -100,7 +100,7 @@ using namespace mud; namespace toy
 		return { num_verts, num_verts * 3 };
 	}
 
-	void draw_shape_triangles(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshData& data)
+	void draw_shape_triangles(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshAdapter& writer)
 	{
 		UNUSED(shape);
 		Navmesh& navmesh = navmesh_shape.m_navmesh;
@@ -133,14 +133,14 @@ using namespace mud; namespace toy
 
 					center += vertex;
 
-					data.position(vertex)
-						.colour(colour);
+					writer.position(vertex)
+						  .colour(colour);
 				}
 
 				center /= tile->polys[p].vertCount;
 				
-				data.position(center)
-					.colour(colour);
+				writer.position(center)
+					  .colour(colour);
 
 				uint16_t center_index = index + tile->polys[p].vertCount;
 
@@ -148,7 +148,7 @@ using namespace mud; namespace toy
 				{
 					uint16_t i0 = index + i;
 					uint16_t i1 = i + 1 < tile->polys[p].vertCount ? index + i + 1 : index;
-					data.tri(i0, i1, center_index);
+					writer.tri(i0, i1, center_index);
 				}
 
 				index += tile->polys[p].vertCount + 1;

@@ -32,48 +32,6 @@ using namespace mud; namespace toy
 		Background = 12,
 	};
 
-	/* Threading recap :
-			TaskSection 0 - MonoThread
-				BulletWorld next_frame
-					read write BulletCollider (CONFLICT with section 2)
-
-			TaskSection 1 - MonoThread
-				Actor next_frame
-					Observer handleSetCurrentAction
-					Action	execute
-							next_frame
-
-				Active next_frame
-					Effect update
-
-				Camera next_frame
-					Observer cameraUpdated
-
-				Spatial next_frame
-					Observer transformUpdated
-
-				Movable
-					Manipulator update
-					Observer movementUpdated
-								accelerationUpdated
-					Spatial updatePosition
-							updateRotation
-
-				Agent next_frame (lock : position)
-					MotionStrategy update (position)
-
-			TaskSection 2 - MonoThread
-				Collider next_frame
-					receive entity position
-					read write BulletCollider (CONFLICT with section 0)
-
-			TaskSection 3 - MonoThread
-				Reactive next_frame
-					Behavior update
-
-				Human next_frame
-	*/
-
 	class TOY_CORE_EXPORT JobPump
 	{
 	public:

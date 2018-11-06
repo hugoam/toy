@@ -163,15 +163,17 @@ using namespace mud; namespace toy
 		}
 
 		page.m_chunks.emplace_back();
-		Geometry& geom = page.m_chunks.back();
+		Geometry& geometry = page.m_chunks.back();
 
 		ShapeSize size;
 		for(const ProcShape& shape : shapes)
 			size.vec += symbol_triangle_size(shape).vec;
 
-		geom.allocate(size.vertex_count, size.index_count);
+		geometry.allocate(size.vertex_count, size.index_count);
 
-		MeshData data(geom.vertices(), geom.indices());
+		array<Vertex> vertices = geometry.vertices();
+		array<uint32_t> indices = geometry.indices();
+		MeshAdapter data(Vertex::vertex_format, vertices.data(), vertices.size(), indices.data(), indices.size(), true);
 
 		for(const ProcShape& shape : shapes)
 		{

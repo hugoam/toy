@@ -18,10 +18,10 @@ using namespace mud; namespace toy
 	TOY_CORE_EXPORT uint32_t navmesh_num_vertices(const Navmesh& navmesh);
 	
 	TOY_CORE_EXPORT ShapeSize size_shape_lines(const ProcShape& shape, const NavmeshShape& navmesh);
-	TOY_CORE_EXPORT void draw_shape_lines(const ProcShape& shape, const NavmeshShape& navmesh, MeshData& data);
+	TOY_CORE_EXPORT void draw_shape_lines(const ProcShape& shape, const NavmeshShape& navmesh, MeshAdapter& writer);
 
 	TOY_CORE_EXPORT ShapeSize size_shape_triangles(const ProcShape& shape, const NavmeshShape& navmesh);
-	TOY_CORE_EXPORT void draw_shape_triangles(const ProcShape& shape, const NavmeshShape& navmesh, MeshData& data);
+	TOY_CORE_EXPORT void draw_shape_triangles(const ProcShape& shape, const NavmeshShape& navmesh, MeshAdapter& writer);
 
 	class refl_ TOY_CORE_EXPORT Navmesh : public rcTileMesh
     {

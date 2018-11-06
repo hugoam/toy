@@ -61,7 +61,9 @@ using namespace mud; namespace toy
 
 		geometry.allocate(vertex_count, index_count / 3);
 
-		MeshData data(geometry.vertices(), geometry.indices());
+		array<Vertex> vertices = geometry.vertices();
+		array<uint32_t> indices = geometry.indices();
+		MeshAdapter data(Vertex::vertex_format, vertices.data(), vertices.size(), indices.data(), indices.size(), true);
 
 		for(Item* item : items)
 			for(const ModelItem& model_item : item->m_model->m_items)
