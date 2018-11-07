@@ -509,6 +509,23 @@ Prefab& import_prefab(GfxSystem& gfx_system, ModelFormat format, const string& n
 	return prefab;
 }
 
+void destroy_prefab(GfxSystem& gfx_system, Prefab& prefab)
+{
+	std::set<Model*> models;
+	for(Item& item : prefab.m_items)
+		models.insert(item.m_model);
+
+	for(Model* model : models)
+	{
+		for(ModelItem& model_item : model->m_items)
+		{
+			gfx_system.meshes().destroy(Ref(model_item.m_mesh));
+		}
+
+		gfx_system.models().destroy(model->m_name.c_str());
+	}
+}
+
 void paint_level(Gnode& parent)
 {
 #ifdef REPACK
@@ -713,6 +730,8 @@ public:
 
 		build_world_page_geometry(block.m_world_page, items);
 		block.m_world_page->update_geometry();
+
+		destroy_prefab(*app.m_gfx_system, collision_world);
 #endif
 
 		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");

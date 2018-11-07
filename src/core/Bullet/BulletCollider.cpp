@@ -128,6 +128,8 @@ using namespace mud; namespace toy
 			m_collision_object = make_unique<btCollisionObject>();
 			this->setup(spatial, *m_collision_object);
 		}
+
+		collision_shape.m_shape = {};
 	}
 
 	BulletCollider::~BulletCollider()

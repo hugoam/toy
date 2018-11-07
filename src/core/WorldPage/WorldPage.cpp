@@ -71,6 +71,8 @@ using namespace mud; namespace toy
 		{
 			m_solids.emplace_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}
+
+		m_chunks.clear();
 	}
 
 	/*
