@@ -53,7 +53,7 @@ jam_project("space",    { space })
 jam_project("platform", { platform }, { "05_character", "17_wfc" })
 jam_project("blocks",   { blocks })
 jam_project("wren",     { script })
-jam_project("godot",    { godot })
+jam_project("godot",    { godot }, { "05_character" })
 
 project "ex_boids"
     includedirs {

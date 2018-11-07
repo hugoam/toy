@@ -626,7 +626,7 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	if(scene.m_gfx_system.m_frame == 1)
 	{
 		orbit.m_pitch = -c_pi / 16.f;
-		orbit.m_distance = 60.f;
+		orbit.m_distance = 4.f;
 	}
 
 	static HumanController controller;
