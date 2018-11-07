@@ -746,7 +746,9 @@ public:
 		static Player player = { default_world };
 		game.m_player = Ref(&player);
 
-		player.spawn(vec3(10.f, 0.f, 10.f));
+		player.spawn(vec3(15.88f, -12.42f, 13.60f));
+		//player.spawn(vec3(-87.15f, -1.15f, -46.15f));
+		//player.spawn(vec3(-64.f,   -1.15f, -78.50f));
 	}
 
 	virtual void scene(GameShell& app, GameScene& scene) final
