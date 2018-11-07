@@ -118,25 +118,12 @@
                 };
             };
         </script>
-        {{{ SCRIPT }}}
         <script>
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '${name}.wasm.txt', true)
+        xhr.open('GET', '${name}.wasm', true)
         xhr.responseType = 'arraybuffer';
         xhr.onload = function() {
           Module.wasmBinary = xhr.response;
-          (function() {
-            var memoryInitializer = '${name}.html.mem.txt';
-            if (typeof Module['locateFile'] === 'function') {
-              memoryInitializer = Module['locateFile'](memoryInitializer);
-            } else if (Module['memoryInitializerPrefixURL']) {
-              memoryInitializer = Module['memoryInitializerPrefixURL'] + memoryInitializer;
-            }
-            var xhr = Module['memoryInitializerRequest'] = new XMLHttpRequest();
-            xhr.open('GET', memoryInitializer, true);
-            xhr.responseType = 'arraybuffer';
-            xhr.send(null)
-          })();
           var script = document.createElement('script');
           script.src = "${name}.js";
           document.body.appendChild(script);
