@@ -22,6 +22,7 @@
 #include <core/World/World.h>
 //#include <core/Selector/Selector.h>
 
+#include <gfx/Item.h>
 #include <gfx/GfxSystem.h>
 #include <gfx-ui/GfxEdit.h>
 #include <gfx-ui/Viewport.h>
@@ -361,7 +362,8 @@ using namespace mud; namespace toy
 
 		if(editor.m_viewer)
 		{
-			paint_selection(editor.m_viewer->m_scene->m_graph, editor.m_selection, editor.m_viewer->m_hovered);
+			Ref hovered = editor.m_viewer->m_hovered ? editor.m_viewer->m_hovered->m_node->m_object : Ref();
+			paint_selection(editor.m_viewer->m_scene->m_graph, editor.m_selection, hovered);
 			//Widget& layout = toy::editor_viewer_overlay(*editor.m_viewer, editor);
 			//time_entries(layout);
 		}

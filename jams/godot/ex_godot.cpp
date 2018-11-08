@@ -671,6 +671,45 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	}
 }
 
+void viewport_item_picker(Viewer& viewer, Widget& widget, std::vector<Item*>& selection)
+{
+	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::Mouse, EventType::Moved, InputMod::None, false))
+	{
+		auto callback = [&](Item* item) { viewer.m_hovered = item; };
+		viewer.picker(0).pick_point(viewer.m_viewport, mouse_event.m_relative, callback, ItemFlag::Static);
+	}
+
+	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
+	{
+		if(viewer.m_hovered)
+		{
+			bool shift = widget.ui().m_keyboard.m_shift;
+			if(!shift)
+				vector_select(selection, viewer.m_hovered);
+			else
+				vector_swap(selection, viewer.m_hovered);
+		}
+	}
+}
+
+void ex_godot_edit_ui(Viewer& viewer, GameScene& scene)
+{
+	ui::free_orbit_controller(viewer);
+
+	static std::vector<Item*> selection;
+	viewport_item_picker(viewer, viewer, selection);
+
+	mat4 identity = bxidentity();
+	for(Item* item : selection)
+	{
+		Colour colour = { 1.f, 0.f, 1.f, 0.15f };
+		Gnode& n = gfx::node(scene.m_scene.m_graph, {}, item->m_node->m_transform);
+		gfx::draw(n, item->m_model->m_aabb, Symbol::wire(colour, true));
+		gfx::draw(scene.m_scene.m_graph, item->m_aabb, Symbol::wire(colour, true));
+		//scene.m_scene.m_immediate->draw(identity, { Symbol::wire(colour, true), &item->m_aabb, OUTLINE });
+	}
+}
+
 void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 {
 	Viewer& viewer = ui::viewer(parent, scene.m_scene);
@@ -683,7 +722,7 @@ void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 	Player& player = val<Player>(game.m_player);
 	player.m_viewer = &viewer;
 
-	//ui::free_orbit_controller(viewer);
+	//ex_godot_edit_ui(viewer, scene);
 	ex_godot_game_hud(viewer, scene, *player.m_human);
 }
 

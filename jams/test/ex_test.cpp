@@ -76,11 +76,13 @@ bool Shell::pump()
 void Shell::init()
 {
 	m_context = m_gfx_system.create_context("mud EditorCore", 1600, 900, false);
+	GfxContext& context = as<GfxContext>(*m_context);
 
 	//pipeline_minimal(m_gfx_system, *m_gfx_system.m_pipeline);
 	pipeline_pbr(m_gfx_system, *m_gfx_system.m_pipeline);
 	m_gfx_system.init_pipeline();
 }
+
 
 Viewer::Viewer(GfxContext& context, Scene& scene, const vec4& rect)
 	: m_scene(&scene)
@@ -131,20 +133,22 @@ SceneViewer::SceneViewer(GfxContext& context)
 
 void ex_test(Shell& app)
 {
-	static SceneViewer viewer = { app.m_gfx_system.context() };
+	UNUSED(app);
+	SceneViewer viewer = { app.m_gfx_system.context() };
 	Gnode& scene = viewer.m_scene->begin();
 
-	Gnode& node = gfx::node(scene, {}, Zero3);
+	static vec3 position = Zero3;
+	static vec3 speed = Zero3;
+
+	Gnode& node = gfx::node(scene, {}, position);
 	gfx::shape(node, Cube(), Symbol::wire(Colour::Red));
 }
-
 }
-
 #ifdef _EX_TEST_EXE
 int main(int argc, char *argv[])
 {
 	test::Shell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
 	
-	app.run([](test::Shell& shell) { test::ex_test(shell); });
+	app.run(test::ex_test);
 }
 #endif

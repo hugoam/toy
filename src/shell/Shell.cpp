@@ -391,8 +391,8 @@ using namespace mud; namespace toy
 	void GameShell::pump_game()
 	{
 		time(m_times, Step::World, "world",  [&] { ZoneScopedNC("world",  tracy::Color::AliceBlue); this->frame_world(); });
-		time(m_times, Step::Game,  "game",   [&] { ZoneScopedNC("game",   tracy::Color::Violet);    this->frame_game(); });
 		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange);    this->frame_scenes(); });
+		time(m_times, Step::Game,  "game",   [&] { ZoneScopedNC("game",   tracy::Color::Violet);    this->frame_game(); });
 	}
 
 	void GameShell::pump_editor()
