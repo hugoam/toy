@@ -695,6 +695,7 @@ void viewport_item_picker(Viewer& viewer, Widget& widget, std::vector<Item*>& se
 void ex_godot_edit_ui(Viewer& viewer, GameScene& scene)
 {
 	ui::free_orbit_controller(viewer);
+	return;
 
 	static std::vector<Item*> selection;
 	viewport_item_picker(viewer, viewer, selection);
@@ -702,7 +703,7 @@ void ex_godot_edit_ui(Viewer& viewer, GameScene& scene)
 	mat4 identity = bxidentity();
 	for(Item* item : selection)
 	{
-		Colour colour = { 1.f, 0.f, 1.f, 0.15f };
+		static const Colour colour = Colour::AlphaGrey;
 		Gnode& n = gfx::node(scene.m_scene.m_graph, {}, item->m_node->m_transform);
 		gfx::draw(n, item->m_model->m_aabb, Symbol::wire(colour, true));
 		gfx::draw(scene.m_scene.m_graph, item->m_aabb, Symbol::wire(colour, true));
@@ -722,8 +723,8 @@ void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 	Player& player = val<Player>(game.m_player);
 	player.m_viewer = &viewer;
 
-	//ex_godot_edit_ui(viewer, scene);
-	ex_godot_game_hud(viewer, scene, *player.m_human);
+	ex_godot_edit_ui(viewer, scene);
+	//ex_godot_game_hud(viewer, scene, *player.m_human);
 }
 
 void ex_godot_pump_game(GameShell& app, Game& game, Widget& parent)
