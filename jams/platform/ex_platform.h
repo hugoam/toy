@@ -42,8 +42,8 @@ public:
 	vec3 m_tile_scale = vec3(4.f);
 	vec3 m_block_size;
 
-	std::map<ivec2, Tileblock*> m_blocks;
-	Tileblock* m_center_block = nullptr;
+	std::map<ivec2, HTileblock> m_blocks;
+	HTileblock m_center_block = {};
 
 	void next_frame();
 
@@ -134,7 +134,7 @@ public:
 
 	bool m_stealth = false;
 
-	attr_ Human* m_target = nullptr;
+	attr_ HHuman m_target = {};
 	attr_ vec3 m_dest = Zero3;
 	attr_ float m_cooldown = 0.f;
 

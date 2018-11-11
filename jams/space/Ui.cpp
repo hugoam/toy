@@ -855,6 +855,13 @@ void ex_space_ui(Widget& parent, GameScene& scene)
 
 	game_viewer_ui(viewer, scene, player);
 
-	uint32_t* hovered = try_val<uint32_t>(viewer.m_hovered);
-	player.m_hovered_item = hovered ? Entity(*hovered, 0) : Entity();
+	if(viewer.m_hovered)
+	{
+		uint32_t* hovered = try_val<uint32_t>(viewer.m_hovered->m_node->m_object);
+		player.m_hovered_item = hovered ? Entity(*hovered, 0) : Entity();
+	}
+	else
+	{
+		player.m_hovered_item = Entity();
+	}
 }

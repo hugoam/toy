@@ -67,7 +67,7 @@ using namespace mud; namespace toy
 		bool contains(const vec3& position);
 	};
 
-	TOY_BLOCK_EXPORT func_ Tileblock& generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file = true);
+	TOY_BLOCK_EXPORT func_ HTileblock generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file = true);
 
 	TOY_BLOCK_EXPORT func_ void build_block_geometry(Scene& scene, WorldPage& page, Tileblock& block);
 

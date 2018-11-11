@@ -49,13 +49,14 @@ void generate_avatar(Colour& colour, Image256& avatar)
 		}
 }
 
-Star* generate_system(Galaxy& galaxy, const uvec3& coord, const vec3& position)
+HStar generate_system(Galaxy& galaxy, const uvec3& coord, const vec3& position)
 {
 	int roll = random_integer(0, 100);
 	if(roll < 85)
-		return nullptr;
+		return {};
 
-	Star& star = construct<Star>(galaxy.m_spatial, galaxy, position, to_coord(coord), generate_name());
+	HStar hstar = construct<Star>(galaxy.m_spatial, galaxy, position, to_coord(coord), generate_name());
+	Star& star = hstar;
 	star.m_base_population = random_integer(1, 1000);
 	star.m_population = random_integer(1, star.m_base_population);
 	star.m_max_population = star.m_base_population;
@@ -64,13 +65,13 @@ Star* generate_system(Galaxy& galaxy, const uvec3& coord, const vec3& position)
 	for(Resource resource = Resource(0); resource != Resource::Count; resource = Resource(size_t(resource) + 1))
 		if(random_integer(1, 100) > 98)
 			star.m_resources[size_t(resource)] = random_integer(1, 20);
-	return &star;
+	return hstar;
 }
 
-Fleet* generate_fleet(Galaxy& galaxy, const uvec3& coord, const vec3& position)
+HFleet generate_fleet(Galaxy& galaxy, const uvec3& coord, const vec3& position)
 {
 	UNUSED(galaxy); UNUSED(coord); UNUSED(position);
-	return nullptr;
+	return {};
 }
 
 Commander* generate_commander(Galaxy& galaxy, Star& star)
@@ -128,10 +129,9 @@ Commander* generate_commander(Galaxy& galaxy, Star& star)
 	return &commander;
 }
 
-Star* assign_system(Galaxy& galaxy, Star& star, std::vector<Commander*> commanders)
+void assign_system(Galaxy& galaxy, Star& star, std::vector<Commander*> commanders)
 {
 	UNUSED(galaxy); UNUSED(star); UNUSED(commanders);
-	return nullptr;
 }
 
 void space_generate(HSpatial origin)
@@ -149,14 +149,14 @@ void space_generate(HSpatial origin)
 	for(uvec3& coord : coords)
 		positions.push_back(grid_center(coord, vec3(1.f)));
 
-	std::vector<Star*> systems;
+	std::vector<HStar> systems;
 	for(size_t i = 0; i < coords.size(); ++i)
-		if(Star* star = generate_system(galaxy, coords[i], positions[i]))
+		if(HStar star = generate_system(galaxy, coords[i], positions[i]))
 		{
 			systems.push_back(star);
 		}
 
-	for(Star* star : systems)
+	for(HStar star : systems)
 		generate_commander(galaxy, *star);
 }
 

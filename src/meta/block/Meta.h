@@ -401,12 +401,12 @@ namespace mud
             static Function f = { &namspc({ "toy" }), "paint_block_elements", function_id<void(*)(toy::Block&, mud::Image256&, array<toy::Element*>)>(&toy::paint_block_elements), func, params, Var() };
             m.m_functions.push_back(&f);
         }
-        {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(&toy::generate_block(val<mud::GfxSystem>(args[0]), val<mud::WaveTileset>(args[1]), val<toy::HSpatial>(args[2]), val<mud::ivec2>(args[3]), val<mud::uvec3>(args[4]), val<mud::vec3>(args[5]), val<bool>(args[6]))); };
-            std::vector<Param> params = { { "gfx_system", Ref(type<mud::GfxSystem>()) }, { "tileset", var(mud::WaveTileset()) }, { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::ivec2()) }, { "block_subdiv", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "from_file", var(bool(true)), Param::Default } };
-            static Function f = { &namspc({ "toy" }), "generate_block", function_id<toy::Tileblock&(*)(mud::GfxSystem&, mud::WaveTileset&, toy::HSpatial, const mud::ivec2&, const mud::uvec3&, const mud::vec3&, bool)>(&toy::generate_block), func, params, Ref(type<toy::Tileblock>()) };
-            m.m_functions.push_back(&f);
-        }
+        //{
+        //    auto func = [](array<Var> args, Var& result) {  result = Ref(&toy::generate_block(val<mud::GfxSystem>(args[0]), val<mud::WaveTileset>(args[1]), val<toy::HSpatial>(args[2]), val<mud::ivec2>(args[3]), val<mud::uvec3>(args[4]), val<mud::vec3>(args[5]), val<bool>(args[6]))); };
+        //    std::vector<Param> params = { { "gfx_system", Ref(type<mud::GfxSystem>()) }, { "tileset", var(mud::WaveTileset()) }, { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::ivec2()) }, { "block_subdiv", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "from_file", var(bool(true)), Param::Default } };
+        //    static Function f = { &namspc({ "toy" }), "generate_block", function_id<toy::HTileblock(*)(mud::GfxSystem&, mud::WaveTileset&, toy::HSpatial, const mud::ivec2&, const mud::uvec3&, const mud::vec3&, bool)>(&toy::generate_block), func, params, Ref(type<toy::Tileblock>()) };
+        //    m.m_functions.push_back(&f);
+        //}
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::build_block_geometry(val<mud::Scene>(args[0]), val<toy::WorldPage>(args[1]), val<toy::Tileblock>(args[2])); };
             std::vector<Param> params = { { "scene", Ref(type<mud::Scene>()) }, { "page", Ref(type<toy::WorldPage>()) }, { "block", Ref(type<toy::Tileblock>()) } };

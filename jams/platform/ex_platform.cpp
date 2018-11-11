@@ -58,46 +58,47 @@ void TileWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 {
 	static WaveTileset& tileset = generator_tileset(gfx_system);
 
-	Tileblock& block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale);
-	WorldPage& world_page = block.m_world_page;
+	HTileblock block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale);
+	WfcBlock& wfc = block->m_wfc_block;
+	WorldPage& world_page = block->m_world_page;
 
 	world_page.m_geometry_filter = { "platform/cube_covered", "platform/cube_covered_side", "platform/cube_covered_angle", "platform/corner_covered", "platform/empty_covered" };
 
-	m_blocks[coord] = &block;
+	m_blocks[coord] = block;
 
 	// @todo why u clang no accept this ?
 	// for(size_t x : { 0U, block.m_wfc_block.m_tiles.m_x - 1 })
-	std::vector<size_t> xs = { 0U, block.m_wfc_block.m_tiles.m_x - 1 };
+	std::vector<size_t> xs = { 0U, wfc.m_tiles.m_x - 1 };
 	for(size_t x : xs)
-	for(size_t y = 0; y < block.m_wfc_block.m_tiles.m_y; ++y)
-	for(size_t z = 0; z < block.m_wfc_block.m_tiles.m_z; ++z)
+	for(size_t y = 0; y < wfc.m_tiles.m_y; ++y)
+	for(size_t z = 0; z < wfc.m_tiles.m_z; ++z)
 	{
 		uint16_t empty = 0;
-		block.m_wfc_block.m_wave.set_tile({ uint(x), uint(y), uint(z) }, empty);
+		wfc.m_wave.set_tile({ uint(x), uint(y), uint(z) }, empty);
 	}
 
-	if(m_center_block == nullptr)
+	if(!m_center_block)
 	{
-		m_center_block = &block;
-		block.m_wfc_block.m_auto_solve = true;
+		m_center_block = block;
+		wfc.m_auto_solve = true;
 		return;
 	}
 
-	bool positive = m_blocks[coord + ivec2(0, 1)] == nullptr;
+	bool positive = (bool)m_blocks[coord + ivec2(0, -1)];
 	Tileblock& neighbour = positive ? *m_blocks[coord + ivec2(0, -1)] : *m_blocks[coord + ivec2(0, 1)];
 
-	for(size_t x = 0; x < block.m_wfc_block.m_tiles.m_x; ++x)
-	for(size_t y = 0; y < block.m_wfc_block.m_tiles.m_y; ++y)
+	for(size_t x = 0; x < wfc.m_tiles.m_x; ++x)
+	for(size_t y = 0; y < wfc.m_tiles.m_y; ++y)
 	{
-		size_t z = positive ? 0U : block.m_wfc_block.m_tiles.m_z - 1;
-		size_t adjacent_z = positive ? block.m_wfc_block.m_tiles.m_z - 1 : 0U;
+		size_t z = positive ? 0U : wfc.m_tiles.m_z - 1;
+		size_t adjacent_z = positive ? wfc.m_tiles.m_z - 1 : 0U;
 		uint16_t tile = neighbour.m_wfc_block.m_tiles.at(x, y, adjacent_z);
-		block.m_wfc_block.m_wave.set_tile({ uint(x), uint(y), uint(z) }, tile);
+		wfc.m_wave.set_tile({ uint(x), uint(y), uint(z) }, tile);
 	}
 
-	block.m_wfc_block.m_wave.propagate();
+	wfc.m_wave.propagate();
 
-	block.m_wfc_block.m_auto_solve = true;
+	wfc.m_auto_solve = true;
 }
 
 void TileWorld::open_blocks(GfxSystem& gfx_system, const vec3& position, const ivec2& radius)
@@ -241,10 +242,10 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 			disable |= aim.hit && aim.hit != &(*m_target->m_spatial);
 			disable |= m_target->m_life <= 0.f;
 			if(disable)
-				m_target = nullptr;
+				m_target = {};
 		}
 
-		if(m_target == nullptr)
+		if(!m_target)
 		{
 			ReceptorScope* vision = receptor.scope(VisualMedium::me);
 			for(HSpatial seen : vision->m_scope)
@@ -257,7 +258,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 						float visibility = light * (human->m_headlight ? 4.f : 0.5f);
 						if(human->m_life > 0.f && (visibility > 0.2f || length(direction) < 4.f))
 						{
-							m_target = human;
+							m_target = seen;
 							m_cooldown = 2.f;
 						}
 					}
@@ -961,7 +962,7 @@ public:
 		scene.range_entity_painter<Tileblock>(reference, 200.f, "Tileblocks", world, paint_hole_block);
 		scene.range_entity_painter<Bullet>(reference, 100.f, "Bullets", world, paint_bullet);
 
-		physic_painter(scene);
+		//physic_painter(scene);
 	}
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final

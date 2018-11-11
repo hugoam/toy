@@ -125,13 +125,13 @@ using namespace mud; namespace toy
 		return !outside;
 	}
 
-	Tileblock& generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
+	HTileblock generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
 	{
 		vec3 position = vec3(to_xz(coord)) * vec3(block_subdiv) * tile_scale;
-		Tileblock& block = construct<Tileblock>(origin, position, block_subdiv, tile_scale, tileset);
+		HTileblock block = construct<Tileblock>(origin, position, block_subdiv, tile_scale, tileset);
 
-		if(block.m_wfc_block.m_tile_models.empty())
-			block.m_wfc_block.load_models(gfx_system, from_file);
+		if(block->m_wfc_block.m_tile_models.empty())
+			block->m_wfc_block.load_models(gfx_system, from_file);
 
 		return block;
 	}

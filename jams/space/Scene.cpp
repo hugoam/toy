@@ -51,7 +51,7 @@ void paint_star_planets(Gnode& parent, Star& star)
 	}
 
 	Item& item = gfx::shape(parent, Sphere(0.005f), Symbol(), 0, nullptr, visu.m_planets.size());
-	mat4 transform = parent.m_attach->transform();
+	mat4 transform = parent.m_attach->m_transform;
 
 	for(size_t i = 0; i < visu.m_planets.size(); ++i)
 	{

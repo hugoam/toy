@@ -1188,29 +1188,29 @@ namespace mud
         m.m_types.push_back(&type<PlanetaryCombat>());
         m.m_types.push_back(&type<SpatialCombat>());
     
-        {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_system(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
-            std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
-            static Function f = { &namspc({}), "generate_system", function_id<Star*(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&::generate_system), func, params, Ref(type<Star>()) };
-            m.m_functions.push_back(&f);
-        }
-        {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_fleet(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
-            std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
-            static Function f = { &namspc({}), "generate_fleet", function_id<Fleet*(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&::generate_fleet), func, params, Ref(type<Fleet>()) };
-            m.m_functions.push_back(&f);
-        }
-        {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_commander(val<Galaxy>(args[0]), val<Star>(args[1]))); };
-            std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "star", Ref(type<Star>()) } };
-            static Function f = { &namspc({}), "generate_commander", function_id<Commander*(*)(Galaxy&, Star&)>(&::generate_commander), func, params, Ref(type<Commander>()) };
-            m.m_functions.push_back(&f);
-        }
-        {
-            auto func = [](array<Var> args, Var& result) {  result = Ref(::assign_system(val<Galaxy>(args[0]), val<Star>(args[1]), val<std::vector<Commander*>>(args[2]))); };
-            std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "star", Ref(type<Star>()) }, { "commanders", var(std::vector<Commander*>()) } };
-            static Function f = { &namspc({}), "assign_system", function_id<Star*(*)(Galaxy&, Star&, std::vector<Commander*>)>(&::assign_system), func, params, Ref(type<Star>()) };
-            m.m_functions.push_back(&f);
-        }
+        //{
+        //    auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_system(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
+        //    std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
+        //    static Function f = { &namspc({}), "generate_system", function_id<Star*(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&::generate_system), func, params, Ref(type<Star>()) };
+        //    m.m_functions.push_back(&f);
+        //}
+        //{
+        //    auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_fleet(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2]))); };
+        //    std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
+        //    static Function f = { &namspc({}), "generate_fleet", function_id<Fleet*(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&::generate_fleet), func, params, Ref(type<Fleet>()) };
+        //    m.m_functions.push_back(&f);
+        //}
+        //{
+        //    auto func = [](array<Var> args, Var& result) {  result = Ref(::generate_commander(val<Galaxy>(args[0]), val<Star>(args[1]))); };
+        //    std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "star", Ref(type<Star>()) } };
+        //    static Function f = { &namspc({}), "generate_commander", function_id<Commander*(*)(Galaxy&, Star&)>(&::generate_commander), func, params, Ref(type<Commander>()) };
+        //    m.m_functions.push_back(&f);
+        //}
+        //{
+        //    auto func = [](array<Var> args, Var& result) {  result = Ref(::assign_system(val<Galaxy>(args[0]), val<Star>(args[1]), val<std::vector<Commander*>>(args[2]))); };
+        //    std::vector<Param> params = { { "origin", Ref(type<toy::Spatial>()) }, { "star", Ref(type<Star>()) }, { "commanders", var(std::vector<Commander*>()) } };
+        //    static Function f = { &namspc({}), "assign_system", function_id<Star*(*)(Galaxy&, Star&, std::vector<Commander*>)>(&::assign_system), func, params, Ref(type<Star>()) };
+        //    m.m_functions.push_back(&f);
+        //}
     }
 }
