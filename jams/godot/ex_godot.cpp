@@ -524,7 +524,11 @@ void paint_level(Gnode& parent)
 #endif
 
 #ifdef LIGHTMAPS
+#ifdef MUD_PLATFORM_EMSCRIPTEN
+		string path = parent.m_scene->m_gfx_system.m_resource_path + "lightmaps/";
+#else
 		string path = parent.m_scene->m_gfx_system.m_resource_path + "examples/ex_godot/lightmaps/";
+#endif
 
 		LightmapAtlas& lightmap = gfx::lightmap(parent, 4096U, 4.f, path);
 		lightmap.m_capture_transform = bxidentity();
