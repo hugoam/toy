@@ -1,10 +1,10 @@
 {
     "accessors": [
         {
-            "bufferView": 120,
+            "bufferView": 84,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 64,
+            "count": 58,
             "max": [
                 0.0,
                 1.0
@@ -13,14 +13,14 @@
                 0.0,
                 1.0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.040_TEXCOORD_0_0",
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.014_TEXCOORD_0_0",
             "type": "VEC2"
         },
         {
-            "bufferView": 72,
+            "bufferView": 100,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 320,
+            "count": 168,
             "max": [
                 0.0,
                 1.0
@@ -29,11 +29,11 @@
                 0.0,
                 1.0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.007_TEXCOORD_0_0",
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.026_TEXCOORD_0_0",
             "type": "VEC2"
         },
         {
-            "bufferView": 86,
+            "bufferView": 74,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 548,
@@ -51,7 +51,21 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 112,
+            "bufferView": 115,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 156,
+            "max": [
+                107
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Plane.025_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 96,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 244,
@@ -85,35 +99,89 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 53,
+            "bufferView": 107,
             "byteOffset": 0,
-            "componentType": 5123,
-            "count": 96,
+            "componentType": 5126,
+            "count": 108,
             "max": [
-                57
+                0.9998970031738281,
+                1.0,
+                0.9548324346542358
             ],
             "min": [
-                0
+                -0.9549197554588318,
+                -1.0,
+                -0.9556478261947632
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.001_0",
-            "type": "SCALAR"
+            "name": "accessor_buffer_Plane.000_NORMAL_0",
+            "type": "VEC3"
         },
         {
-            "bufferView": 37,
+            "bufferView": 73,
             "byteOffset": 0,
             "componentType": 5123,
             "count": 384,
             "max": [
-                313
+                255
             ],
             "min": [
                 0
             ],
-            "name": "accessor_buffer_Cube.011_0",
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.010_0",
             "type": "SCALAR"
         },
         {
-            "bufferView": 66,
+            "bufferView": 28,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 2856,
+            "max": [
+                1643
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Cube.003_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 54,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 445,
+            "max": [
+                10.341187477111816,
+                0.20139306783676147,
+                -95.48432922363281
+            ],
+            "min": [
+                -10.3118896484375,
+                -1.1506637334823608,
+                -105.35427856445312
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.005_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 20,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1467,
+            "max": [
+                0.9999895095825195,
+                1.0,
+                0.9999817609786987
+            ],
+            "min": [
+                -0.9999895095825195,
+                -1.0,
+                -0.9999818205833435
+            ],
+            "name": "accessor_buffer_Circle.055_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 58,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 222,
@@ -129,6 +197,38 @@
             ],
             "name": "accessor_buffer_hall_circ1125_fences_1Base.006_POSITION_0",
             "type": "VEC3"
+        },
+        {
+            "bufferView": 51,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 320,
+            "max": [
+                0.09196501970291138,
+                1.0,
+                0.999981164932251
+            ],
+            "min": [
+                -0.09195828437805176,
+                -0.000335562537657097,
+                -0.999981164932251
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.002_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 61,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 336,
+            "max": [
+                221
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.006_0",
+            "type": "SCALAR"
         },
         {
             "bufferView": 4,
@@ -149,18 +249,40 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 89,
+            "bufferView": 59,
             "byteOffset": 0,
-            "componentType": 5123,
-            "count": 804,
+            "componentType": 5126,
+            "count": 222,
             "max": [
-                547
+                0.28446540236473083,
+                1.0,
+                0.9945542216300964
             ],
             "min": [
-                0
+                -0.28444385528564453,
+                -0.00033556210109964013,
+                -0.9945531487464905
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.011_0",
-            "type": "SCALAR"
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.006_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 27,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1644,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "name": "accessor_buffer_Cube.003_NORMAL_0",
+            "type": "VEC3"
         },
         {
             "bufferView": 32,
@@ -178,6 +300,56 @@
                 -1.0402846336364746
             ],
             "name": "accessor_buffer_Cube.007_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 47,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 140,
+            "max": [
+                16.71202850341797,
+                0.836543083190918,
+                1.911353349685669
+            ],
+            "min": [
+                0.307952880859375,
+                -2.642970085144043,
+                -1.911353349685669
+            ],
+            "name": "accessor_buffer_Cube.570_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 31,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 948,
+            "max": [
+                579
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Cube.004_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 26,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1644,
+            "max": [
+                6.50486946105957,
+                -0.02237558364868164,
+                -42.23163986206055
+            ],
+            "min": [
+                -6.504865646362305,
+                -9.180625915527344,
+                -81.03204345703125
+            ],
+            "name": "accessor_buffer_Cube.003_POSITION_0",
             "type": "VEC3"
         },
         {
@@ -199,7 +371,39 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 132,
+            "bufferView": 122,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 36,
+            "max": [
+                23
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Plane.033_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 42,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 147,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "name": "accessor_buffer_Cube.025_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 108,
             "byteOffset": 0,
             "componentType": 5123,
             "count": 156,
@@ -211,6 +415,24 @@
             ],
             "name": "accessor_buffer_Plane.000_0",
             "type": "SCALAR"
+        },
+        {
+            "bufferView": 30,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 580,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "name": "accessor_buffer_Cube.004_NORMAL_0",
+            "type": "VEC3"
         },
         {
             "bufferView": 16,
@@ -231,6 +453,50 @@
             "type": "VEC3"
         },
         {
+            "bufferView": 104,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 64,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.040_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 25,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 906,
+            "max": [
+                616
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Cube.001_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 89,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 960,
+            "max": [
+                616
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.019_0",
+            "type": "SCALAR"
+        },
+        {
             "bufferView": 41,
             "byteOffset": 0,
             "componentType": 5126,
@@ -249,7 +515,77 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 114,
+            "bufferView": 13,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1188,
+            "max": [
+                0.9999992847442627,
+                1.0,
+                0.9999999403953552
+            ],
+            "min": [
+                -0.9999992847442627,
+                -1.0,
+                -0.9999712705612183
+            ],
+            "name": "accessor_buffer_Circle.025_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 94,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 244,
+            "max": [
+                9.210002899169922,
+                -6.347543239593506,
+                -82.5213851928711
+            ],
+            "min": [
+                -9.183913230895996,
+                -6.3779683113098145,
+                -95.87855529785156
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.025_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 116,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 175,
+            "max": [
+                2.251364231109619,
+                0.01991558074951172,
+                3.8326687812805176
+            ],
+            "min": [
+                -2.251364231109619,
+                -3.5626144409179688,
+                -2.9848904609680176
+            ],
+            "name": "accessor_buffer_Plane.026_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 92,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 436,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.020_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 98,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 168,
@@ -267,55 +603,125 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 108,
+            "bufferView": 120,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 64,
+            "count": 24,
             "max": [
-                0.0,
-                1.0
+                0.9981569647789001,
+                1.0,
+                0.9999991655349731
             ],
             "min": [
-                0.0,
-                1.0
+                -0.9999472498893738,
+                -1.0,
+                -0.9999991655349731
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.024_TEXCOORD_0_0",
-            "type": "VEC2"
+            "name": "accessor_buffer_Plane.033_NORMAL_0",
+            "type": "VEC3"
         },
         {
-            "bufferView": 109,
+            "bufferView": 29,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 580,
+            "max": [
+                -20.303070068359375,
+                -3.726937770843506,
+                18.82189178466797
+            ],
+            "min": [
+                -38.94629669189453,
+                -24.47516441345215,
+                -18.82189178466797
+            ],
+            "name": "accessor_buffer_Cube.004_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 110,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 24,
+            "max": [
+                0.9981570243835449,
+                1.0,
+                0.9999991655349731
+            ],
+            "min": [
+                -0.9999473690986633,
+                -1.0,
+                -0.9999992251396179
+            ],
+            "name": "accessor_buffer_Plane.024_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 82,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 58,
+            "max": [
+                8.794677734375,
+                -6.377287864685059,
+                -82.25827026367188
+            ],
+            "min": [
+                -8.769765853881836,
+                -6.377287864685059,
+                -89.59873962402344
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.014_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 77,
             "byteOffset": 0,
             "componentType": 5123,
-            "count": 96,
+            "count": 804,
             "max": [
-                63
+                547
             ],
             "min": [
                 0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.024_0",
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.011_0",
             "type": "SCALAR"
         },
         {
-            "bufferView": 107,
+            "bufferView": 60,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 64,
+            "count": 222,
             "max": [
-                0.0849834755063057,
-                0.37734514474868774,
-                0.9260551929473877
+                0.0,
+                1.0
             ],
             "min": [
-                -0.08511223644018173,
-                0.3770342767238617,
-                0.9221534729003906
+                0.0,
+                1.0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.024_NORMAL_0",
-            "type": "VEC3"
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.006_TEXCOORD_0_0",
+            "type": "VEC2"
         },
         {
-            "bufferView": 95,
+            "bufferView": 6,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1982,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_Circle.013_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 83,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 58,
@@ -333,7 +739,25 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 98,
+            "bufferView": 87,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 617,
+            "max": [
+                1.0,
+                1.0,
+                0.9990795254707336
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -0.9990835189819336
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.019_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 86,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 617,
@@ -351,10 +775,10 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 124,
+            "bufferView": 111,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 58,
+            "count": 24,
             "max": [
                 0.0,
                 1.0
@@ -363,26 +787,90 @@
                 0.0,
                 1.0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.041_TEXCOORD_0_0",
+            "name": "accessor_buffer_Plane.024_TEXCOORD_0_0",
             "type": "VEC2"
         },
         {
-            "bufferView": 70,
+            "bufferView": 36,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 320,
+            "count": 314,
             "max": [
-                8.139291763305664,
-                -4.790992259979248,
-                -78.65122985839844
+                1.0,
+                0.9999999403953552,
+                1.0
             ],
             "min": [
-                -8.116235733032227,
-                -6.406675338745117,
-                -82.92178344726562
+                -1.0,
+                -1.0,
+                -1.0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.007_POSITION_0",
+            "name": "accessor_buffer_Cube.011_NORMAL_0",
             "type": "VEC3"
+        },
+        {
+            "bufferView": 37,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 384,
+            "max": [
+                313
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Cube.011_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 109,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 24,
+            "max": [
+                4.105161666870117,
+                2.032817840576172,
+                0.41448211669921875
+            ],
+            "min": [
+                -4.105175018310547,
+                -2.032817840576172,
+                -0.41448211669921875
+            ],
+            "name": "accessor_buffer_Plane.024_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 78,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 284,
+            "max": [
+                17.818334579467773,
+                10.986199378967285,
+                -75.70828247070312
+            ],
+            "min": [
+                7.757567882537842,
+                -11.479183197021484,
+                -104.49893951416016
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 53,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 480,
+            "max": [
+                319
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.002_0",
+            "type": "SCALAR"
         },
         {
             "bufferView": 11,
@@ -399,25 +887,43 @@
             "type": "SCALAR"
         },
         {
-            "bufferView": 126,
+            "bufferView": 70,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 445,
+            "count": 256,
             "max": [
-                10.341187477111816,
-                0.20139306783676147,
-                -95.48432922363281
+                10.192761421203613,
+                10.986199378967285,
+                -102.78978729248047
             ],
             "min": [
-                -10.3118896484375,
+                -10.163886070251465,
                 -1.1506637334823608,
-                -105.35427856445312
+                -104.07420349121094
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.069_POSITION_0",
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.010_POSITION_0",
             "type": "VEC3"
         },
         {
-            "bufferView": 54,
+            "bufferView": 106,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 108,
+            "max": [
+                4.814804553985596,
+                0.07337409257888794,
+                5.055655479431152
+            ],
+            "min": [
+                -5.175188064575195,
+                -2.450896739959717,
+                -5.1758832931518555
+            ],
+            "name": "accessor_buffer_Plane.000_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 50,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 320,
@@ -435,7 +941,7 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 138,
+            "bufferView": 114,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 108,
@@ -453,118 +959,38 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 128,
+            "bufferView": 9,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 445,
+            "count": 906,
             "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.069_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 63,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 445,
-            "max": [
-                0.9990187883377075,
                 1.0,
-                0.9999811053276062
+                1.0,
+                1.0
             ],
             "min": [
-                -0.999036431312561,
                 -1.0,
-                -0.9999811053276062
+                -1.0,
+                -1.0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.005_NORMAL_0",
+            "name": "accessor_buffer_Circle.022_NORMAL_0",
             "type": "VEC3"
         },
         {
-            "bufferView": 19,
+            "bufferView": 80,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 1467,
+            "count": 284,
             "max": [
-                13.287075996398926,
-                3.0,
-                -9.79333782196045
-            ],
-            "min": [
-                -13.287075996398926,
-                -4.276350975036621,
-                -26.574344635009766
-            ],
-            "name": "accessor_buffer_Circle.055_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 67,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 222,
-            "max": [
-                0.28446540236473083,
-                1.0,
-                0.9945542216300964
-            ],
-            "min": [
-                -0.28444385528564453,
-                -0.00033556210109964013,
-                -0.9945531487464905
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.006_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 21,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 1467,
-            "max": [
-                1.0,
+                0.0,
                 1.0
             ],
             "min": [
-                -0.01708984375,
-                0.0009765625
+                0.0,
+                1.0
             ],
-            "name": "accessor_buffer_Circle.055_TEXCOORD_0_0",
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_TEXCOORD_0_0",
             "type": "VEC2"
-        },
-        {
-            "bufferView": 34,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 108,
-            "max": [
-                67
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Cube.007_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 18,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 192,
-            "max": [
-                159
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Circle.044_0",
-            "type": "SCALAR"
         },
         {
             "bufferView": 8,
@@ -585,7 +1011,275 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 79,
+            "bufferView": 118,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 288,
+            "max": [
+                174
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Plane.026_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 88,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 617,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.019_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 65,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 192,
+            "max": [
+                111
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.008_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 55,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 445,
+            "max": [
+                0.9990187883377075,
+                1.0,
+                0.9999811053276062
+            ],
+            "min": [
+                -0.999036431312561,
+                -1.0,
+                -0.9999811053276062
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.005_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 75,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 548,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -0.06131665036082268
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.011_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 76,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 548,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.011_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 33,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 68,
+            "max": [
+                0.8605265617370605,
+                1.0,
+                0.8605266213417053
+            ],
+            "min": [
+                -0.8605265617370605,
+                -1.0,
+                -0.8605265617370605
+            ],
+            "name": "accessor_buffer_Cube.007_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 40,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 204,
+            "max": [
+                90
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Cube.023_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 10,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 906,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_Circle.022_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 5,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1982,
+            "max": [
+                0.999947726726532,
+                1.0,
+                0.9986297488212585
+            ],
+            "min": [
+                -0.999947726726532,
+                -1.0,
+                -0.998741626739502
+            ],
+            "name": "accessor_buffer_Circle.013_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 69,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 786,
+            "max": [
+                535
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.009_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 21,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1467,
+            "max": [
+                1.0,
+                1.0
+            ],
+            "min": [
+                -0.01708984375,
+                0.0009765625
+            ],
+            "name": "accessor_buffer_Circle.055_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 101,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 252,
+            "max": [
+                167
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.026_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 34,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 108,
+            "max": [
+                67
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Cube.007_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1156,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_Circle.012_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 85,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 96,
+            "max": [
+                57
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.014_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 38,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 91,
+            "max": [
+                2.6203880310058594,
+                2.300539255142212,
+                1.8233470916748047
+            ],
+            "min": [
+                -3.8335180282592773,
+                1.1043519973754883,
+                -1.8233470916748047
+            ],
+            "name": "accessor_buffer_Cube.023_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 67,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 536,
@@ -603,7 +1297,7 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 113,
+            "bufferView": 97,
             "byteOffset": 0,
             "componentType": 5123,
             "count": 408,
@@ -631,6 +1325,24 @@
             "type": "SCALAR"
         },
         {
+            "bufferView": 99,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 168,
+            "max": [
+                0.9992049336433411,
+                0.38834962248802185,
+                0.9999998211860657
+            ],
+            "min": [
+                -0.9992049932479858,
+                -0.9684001803398132,
+                -0.04119660705327988
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.026_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
             "bufferView": 45,
             "byteOffset": 0,
             "componentType": 5126,
@@ -647,22 +1359,6 @@
             ],
             "name": "accessor_buffer_Cube.052_NORMAL_0",
             "type": "VEC3"
-        },
-        {
-            "bufferView": 60,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 64,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.003_TEXCOORD_0_0",
-            "type": "VEC2"
         },
         {
             "bufferView": 35,
@@ -683,25 +1379,39 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 59,
+            "bufferView": 72,
             "byteOffset": 0,
             "componentType": 5126,
-            "count": 64,
+            "count": 256,
             "max": [
-                0.0849834755063057,
-                0.37734514474868774,
-                0.9260551929473877
+                0.0,
+                1.0
             ],
             "min": [
-                -0.08511223644018173,
-                0.3770342767238617,
-                0.9221534729003906
+                0.0,
+                1.0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.003_NORMAL_0",
-            "type": "VEC3"
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.010_TEXCOORD_0_0",
+            "type": "VEC2"
         },
         {
-            "bufferView": 102,
+            "bufferView": 64,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 112,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.008_TEXCOORD_0_0",
+            "type": "VEC2"
+        },
+        {
+            "bufferView": 90,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 436,
@@ -719,7 +1429,7 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 143,
+            "bufferView": 119,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 24,
@@ -737,7 +1447,7 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 74,
+            "bufferView": 62,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 112,
@@ -753,20 +1463,6 @@
             ],
             "name": "accessor_buffer_hall_circ1125_fences_1Base.008_POSITION_0",
             "type": "VEC3"
-        },
-        {
-            "bufferView": 61,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 96,
-            "max": [
-                63
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.003_0",
-            "type": "SCALAR"
         },
         {
             "bufferView": 1,
@@ -787,7 +1483,7 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 78,
+            "bufferView": 66,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 536,
@@ -823,21 +1519,75 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 146,
+            "bufferView": 91,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 436,
+            "max": [
+                0.9999657869338989,
+                1.0,
+                0.9999810457229614
+            ],
+            "min": [
+                -0.9999657869338989,
+                -0.9684001803398132,
+                -0.9999657273292542
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.020_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 81,
             "byteOffset": 0,
             "componentType": 5123,
-            "count": 36,
+            "count": 372,
             "max": [
-                23
+                283
             ],
             "min": [
                 0
             ],
-            "name": "accessor_buffer_Plane.033_0",
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_0",
             "type": "SCALAR"
         },
         {
-            "bufferView": 111,
+            "bufferView": 117,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 175,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "name": "accessor_buffer_Plane.026_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 79,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 284,
+            "max": [
+                0.9951711297035217,
+                1.0,
+                0.9951711893081665
+            ],
+            "min": [
+                -0.9951711297035217,
+                -1.0,
+                -0.9951713681221008
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 95,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 244,
@@ -869,7 +1619,7 @@
             "type": "SCALAR"
         },
         {
-            "bufferView": 118,
+            "bufferView": 102,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 64,
@@ -887,7 +1637,7 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 80,
+            "bufferView": 68,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 536,
@@ -949,1199 +1699,25 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 88,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 548,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.011_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 121,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 96,
-            "max": [
-                63
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.040_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 43,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 276,
-            "max": [
-                146
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Cube.025_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 137,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 108,
-            "max": [
-                4.814804553985596,
-                0.07337409257888794,
-                5.055655479431152
-            ],
-            "min": [
-                -5.175188064575195,
-                -2.450896739959717,
-                -5.1758832931518555
-            ],
-            "name": "accessor_buffer_Plane.025_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 119,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 64,
-            "max": [
-                0.0849834755063057,
-                0.37734514474868774,
-                0.9260551929473877
-            ],
-            "min": [
-                -0.08511223644018173,
-                0.3770342767238617,
-                0.9221534729003906
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.040_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 106,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 64,
-            "max": [
-                9.417859077453613,
-                -1.1506637334823608,
-                -93.37694549560547
-            ],
-            "min": [
-                -9.391179084777832,
-                -6.347543239593506,
-                -95.9476089477539
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.024_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 24,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 617,
-            "max": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -1.0
-            ],
-            "name": "accessor_buffer_Cube.001_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 127,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 445,
-            "max": [
-                0.9990187883377075,
-                1.0,
-                0.9999811053276062
-            ],
-            "min": [
-                -0.999036431312561,
-                -1.0,
-                -0.9999811053276062
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.069_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 103,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 436,
-            "max": [
-                0.9999657869338989,
-                1.0,
-                0.9999810457229614
-            ],
-            "min": [
-                -0.9999657869338989,
-                -0.9684001803398132,
-                -0.9999657273292542
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.020_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 142,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 288,
-            "max": [
-                174
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Plane.026_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 26,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 1644,
-            "max": [
-                6.50486946105957,
-                -0.02237558364868164,
-                -42.23163986206055
-            ],
-            "min": [
-                -6.504865646362305,
-                -9.180625915527344,
-                -81.03204345703125
-            ],
-            "name": "accessor_buffer_Cube.003_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 96,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 58,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.014_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 116,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 168,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.026_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 139,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 156,
-            "max": [
-                107
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Plane.025_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 135,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 24,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_Plane.024_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 131,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 108,
-            "max": [
-                0.9998970031738281,
-                1.0,
-                0.9548324346542358
-            ],
-            "min": [
-                -0.9549197554588318,
-                -1.0,
-                -0.9556478261947632
-            ],
-            "name": "accessor_buffer_Plane.000_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 85,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 384,
-            "max": [
-                255
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.010_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 62,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 445,
-            "max": [
-                10.341187477111816,
-                0.20139306783676147,
-                -95.48432922363281
-            ],
-            "min": [
-                -10.3118896484375,
-                -1.1506637334823608,
-                -105.35427856445312
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.005_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 20,
+            "bufferView": 19,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 1467,
             "max": [
-                0.9999895095825195,
-                1.0,
-                0.9999817609786987
+                13.287075996398926,
+                3.0,
+                -9.79333782196045
             ],
             "min": [
-                -0.9999895095825195,
-                -1.0,
-                -0.9999818205833435
+                -13.287075996398926,
+                -4.276350975036621,
+                -26.574344635009766
             ],
-            "name": "accessor_buffer_Circle.055_NORMAL_0",
+            "name": "accessor_buffer_Circle.055_POSITION_0",
             "type": "VEC3"
         },
         {
-            "bufferView": 55,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 320,
-            "max": [
-                0.09196501970291138,
-                1.0,
-                0.999981164932251
-            ],
-            "min": [
-                -0.09195828437805176,
-                -0.000335562537657097,
-                -0.999981164932251
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.002_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 69,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 336,
-            "max": [
-                221
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.006_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 117,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 252,
-            "max": [
-                167
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.026_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 27,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 1644,
-            "max": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -1.0
-            ],
-            "name": "accessor_buffer_Cube.003_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 47,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 140,
-            "max": [
-                16.71202850341797,
-                0.836543083190918,
-                1.911353349685669
-            ],
-            "min": [
-                0.307952880859375,
-                -2.642970085144043,
-                -1.911353349685669
-            ],
-            "name": "accessor_buffer_Cube.570_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 31,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 948,
-            "max": [
-                579
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Cube.004_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 23,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 617,
-            "max": [
-                2.5379397869110107,
-                8.492536544799805,
-                -76.81551361083984
-            ],
-            "min": [
-                -2.53794002532959,
-                -11.479183197021484,
-                -105.47747802734375
-            ],
-            "name": "accessor_buffer_Cube.001_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 42,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 147,
-            "max": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -1.0
-            ],
-            "name": "accessor_buffer_Cube.025_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 30,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 580,
-            "max": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -1.0
-            ],
-            "name": "accessor_buffer_Cube.004_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 25,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 906,
-            "max": [
-                616
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Cube.001_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 101,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 960,
-            "max": [
-                616
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.019_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 13,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 1188,
-            "max": [
-                0.9999992847442627,
-                1.0,
-                0.9999999403953552
-            ],
-            "min": [
-                -0.9999992847442627,
-                -1.0,
-                -0.9999712705612183
-            ],
-            "name": "accessor_buffer_Circle.025_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 110,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 244,
-            "max": [
-                9.210002899169922,
-                -6.347543239593506,
-                -82.5213851928711
-            ],
-            "min": [
-                -9.183913230895996,
-                -6.3779683113098145,
-                -95.87855529785156
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.025_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 140,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 175,
-            "max": [
-                2.251364231109619,
-                0.01991558074951172,
-                3.8326687812805176
-            ],
-            "min": [
-                -2.251364231109619,
-                -3.5626144409179688,
-                -2.9848904609680176
-            ],
-            "name": "accessor_buffer_Plane.026_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 144,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 24,
-            "max": [
-                0.9981569647789001,
-                1.0,
-                0.9999991655349731
-            ],
-            "min": [
-                -0.9999472498893738,
-                -1.0,
-                -0.9999991655349731
-            ],
-            "name": "accessor_buffer_Plane.033_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 58,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 64,
-            "max": [
-                9.417859077453613,
-                -1.1506637334823608,
-                -93.37694549560547
-            ],
-            "min": [
-                -9.391179084777832,
-                -6.347543239593506,
-                -95.9476089477539
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.003_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 29,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 580,
-            "max": [
-                -20.303070068359375,
-                -3.726937770843506,
-                18.82189178466797
-            ],
-            "min": [
-                -38.94629669189453,
-                -24.47516441345215,
-                -18.82189178466797
-            ],
-            "name": "accessor_buffer_Cube.004_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 134,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 24,
-            "max": [
-                0.9981570243835449,
-                1.0,
-                0.9999991655349731
-            ],
-            "min": [
-                -0.9999473690986633,
-                -1.0,
-                -0.9999992251396179
-            ],
-            "name": "accessor_buffer_Plane.024_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 94,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 58,
-            "max": [
-                8.794677734375,
-                -6.377287864685059,
-                -82.25827026367188
-            ],
-            "min": [
-                -8.769765853881836,
-                -6.377287864685059,
-                -89.59873962402344
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.014_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 125,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 96,
-            "max": [
-                57
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.041_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 51,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 58,
-            "max": [
-                0.0003350566257722676,
-                1.0,
-                0.00033509943750686944
-            ],
-            "min": [
-                -1.6463825886603445e-05,
-                0.9999999403953552,
-                -6.499594462638925e-08
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.001_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 68,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 222,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.006_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 99,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 617,
-            "max": [
-                1.0,
-                1.0,
-                0.9990795254707336
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -0.9990835189819336
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.019_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 36,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 314,
-            "max": [
-                1.0,
-                0.9999999403953552,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -1.0
-            ],
-            "name": "accessor_buffer_Cube.011_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 133,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 24,
-            "max": [
-                4.105161666870117,
-                2.032817840576172,
-                0.41448211669921875
-            ],
-            "min": [
-                -4.105175018310547,
-                -2.032817840576172,
-                -0.41448211669921875
-            ],
-            "name": "accessor_buffer_Plane.024_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 90,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 284,
-            "max": [
-                17.818334579467773,
-                10.986199378967285,
-                -75.70828247070312
-            ],
-            "min": [
-                7.757567882537842,
-                -11.479183197021484,
-                -104.49893951416016
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 38,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 91,
-            "max": [
-                2.6203880310058594,
-                2.300539255142212,
-                1.8233470916748047
-            ],
-            "min": [
-                -3.8335180282592773,
-                1.1043519973754883,
-                -1.8233470916748047
-            ],
-            "name": "accessor_buffer_Cube.023_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 57,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 480,
-            "max": [
-                319
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.002_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 82,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 256,
-            "max": [
-                10.192761421203613,
-                10.986199378967285,
-                -102.78978729248047
-            ],
-            "min": [
-                -10.163886070251465,
-                -1.1506637334823608,
-                -104.07420349121094
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.010_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 130,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 108,
-            "max": [
-                4.814804553985596,
-                0.07337409257888794,
-                5.055655479431152
-            ],
-            "min": [
-                -5.175188064575195,
-                -2.450896739959717,
-                -5.1758832931518555
-            ],
-            "name": "accessor_buffer_Plane.000_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 9,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 906,
-            "max": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -1.0
-            ],
-            "name": "accessor_buffer_Circle.022_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 92,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 284,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 100,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 617,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.019_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 87,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 548,
-            "max": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -0.06131665036082268
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.011_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 40,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 204,
-            "max": [
-                90
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Cube.023_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 10,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 906,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_Circle.022_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 6,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 1982,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_Circle.013_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 5,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 1982,
-            "max": [
-                0.999947726726532,
-                1.0,
-                0.9986297488212585
-            ],
-            "min": [
-                -0.999947726726532,
-                -1.0,
-                -0.998741626739502
-            ],
-            "name": "accessor_buffer_Circle.013_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 81,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 786,
-            "max": [
-                535
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.009_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 104,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 436,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.020_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 2,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 1156,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_Circle.012_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 97,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 96,
-            "max": [
-                57
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.014_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 33,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 68,
-            "max": [
-                0.8605265617370605,
-                1.0,
-                0.8605266213417053
-            ],
-            "min": [
-                -0.8605265617370605,
-                -1.0,
-                -0.8605265617370605
-            ],
-            "name": "accessor_buffer_Cube.007_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 115,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 168,
-            "max": [
-                0.9992049336433411,
-                0.38834962248802185,
-                0.9999998211860657
-            ],
-            "min": [
-                -0.9992049932479858,
-                -0.9684001803398132,
-                -0.04119660705327988
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.026_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 84,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 256,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.010_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 76,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 112,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.008_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 56,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 320,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.002_TEXCOORD_0_0",
-            "type": "VEC2"
-        },
-        {
-            "bufferView": 28,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 2856,
-            "max": [
-                1643
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_Cube.003_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 73,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 480,
-            "max": [
-                319
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.007_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 93,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 372,
-            "max": [
-                283
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 141,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 175,
-            "max": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "min": [
-                -1.0,
-                -1.0,
-                -1.0
-            ],
-            "name": "accessor_buffer_Plane.026_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 91,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 284,
-            "max": [
-                0.9951711297035217,
-                1.0,
-                0.9951711893081665
-            ],
-            "min": [
-                -0.9951711297035217,
-                -1.0,
-                -0.9951713681221008
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.012_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 77,
-            "byteOffset": 0,
-            "componentType": 5123,
-            "count": 192,
-            "max": [
-                111
-            ],
-            "min": [
-                0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.008_0",
-            "type": "SCALAR"
-        },
-        {
-            "bufferView": 83,
+            "bufferView": 71,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 256,
@@ -2173,7 +1749,7 @@
             "type": "SCALAR"
         },
         {
-            "bufferView": 64,
+            "bufferView": 56,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 445,
@@ -2189,25 +1765,21 @@
             "type": "VEC2"
         },
         {
-            "bufferView": 123,
+            "bufferView": 105,
             "byteOffset": 0,
-            "componentType": 5126,
-            "count": 58,
+            "componentType": 5123,
+            "count": 96,
             "max": [
-                0.0003350566257722676,
-                1.0,
-                0.00033509943750686944
+                63
             ],
             "min": [
-                -1.6463825886603445e-05,
-                0.9999999403953552,
-                -6.499594462638925e-08
+                0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.041_NORMAL_0",
-            "type": "VEC3"
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.040_0",
+            "type": "SCALAR"
         },
         {
-            "bufferView": 75,
+            "bufferView": 63,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 112,
@@ -2223,22 +1795,6 @@
             ],
             "name": "accessor_buffer_hall_circ1125_fences_1Base.008_NORMAL_0",
             "type": "VEC3"
-        },
-        {
-            "bufferView": 52,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 58,
-            "max": [
-                0.0,
-                1.0
-            ],
-            "min": [
-                0.0,
-                1.0
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.001_TEXCOORD_0_0",
-            "type": "VEC2"
         },
         {
             "bufferView": 44,
@@ -2259,71 +1815,85 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 50,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 58,
-            "max": [
-                8.794677734375,
-                -6.377287864685059,
-                -82.25827026367188
-            ],
-            "min": [
-                -8.769765853881836,
-                -6.377287864685059,
-                -89.59873962402344
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.001_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 71,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 320,
-            "max": [
-                0.09196501970291138,
-                1.0,
-                0.999981164932251
-            ],
-            "min": [
-                -0.09195828437805176,
-                -0.000335562537657097,
-                -0.999981164932251
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.007_NORMAL_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 122,
-            "byteOffset": 0,
-            "componentType": 5126,
-            "count": 58,
-            "max": [
-                8.794677734375,
-                -6.377287864685059,
-                -82.25827026367188
-            ],
-            "min": [
-                -8.769765853881836,
-                -6.377287864685059,
-                -89.59873962402344
-            ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.041_POSITION_0",
-            "type": "VEC3"
-        },
-        {
-            "bufferView": 129,
+            "bufferView": 43,
             "byteOffset": 0,
             "componentType": 5123,
-            "count": 732,
+            "count": 276,
             "max": [
-                444
+                146
             ],
             "min": [
                 0
             ],
-            "name": "accessor_buffer_hall_circ1125_fences_1Base.069_0",
+            "name": "accessor_buffer_Cube.025_0",
+            "type": "SCALAR"
+        },
+        {
+            "bufferView": 113,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 108,
+            "max": [
+                4.814804553985596,
+                0.07337409257888794,
+                5.055655479431152
+            ],
+            "min": [
+                -5.175188064575195,
+                -2.450896739959717,
+                -5.1758832931518555
+            ],
+            "name": "accessor_buffer_Plane.025_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 103,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 64,
+            "max": [
+                0.0849834755063057,
+                0.37734514474868774,
+                0.9260551929473877
+            ],
+            "min": [
+                -0.08511223644018173,
+                0.3770342767238617,
+                0.9221534729003906
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.040_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 24,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 617,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "name": "accessor_buffer_Cube.001_NORMAL_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 18,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 192,
+            "max": [
+                159
+            ],
+            "min": [
+                0
+            ],
+            "name": "accessor_buffer_Circle.044_0",
             "type": "SCALAR"
         },
         {
@@ -2359,7 +1929,7 @@
             "type": "VEC3"
         },
         {
-            "bufferView": 105,
+            "bufferView": 93,
             "byteOffset": 0,
             "componentType": 5123,
             "count": 702,
@@ -2373,7 +1943,7 @@
             "type": "SCALAR"
         },
         {
-            "bufferView": 65,
+            "bufferView": 57,
             "byteOffset": 0,
             "componentType": 5123,
             "count": 732,
@@ -2387,7 +1957,7 @@
             "type": "SCALAR"
         },
         {
-            "bufferView": 145,
+            "bufferView": 121,
             "byteOffset": 0,
             "componentType": 5126,
             "count": 24,
@@ -2403,7 +1973,7 @@
             "type": "VEC2"
         },
         {
-            "bufferView": 136,
+            "bufferView": 112,
             "byteOffset": 0,
             "componentType": 5123,
             "count": 36,
@@ -2415,6 +1985,40 @@
             ],
             "name": "accessor_buffer_Plane.024_0",
             "type": "SCALAR"
+        },
+        {
+            "bufferView": 23,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 617,
+            "max": [
+                2.5379397869110107,
+                8.492536544799805,
+                -76.81551361083984
+            ],
+            "min": [
+                -2.53794002532959,
+                -11.479183197021484,
+                -105.47747802734375
+            ],
+            "name": "accessor_buffer_Cube.001_POSITION_0",
+            "type": "VEC3"
+        },
+        {
+            "bufferView": 52,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 320,
+            "max": [
+                0.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                1.0
+            ],
+            "name": "accessor_buffer_hall_circ1125_fences_1Base.002_TEXCOORD_0_0",
+            "type": "VEC2"
         },
         {
             "bufferView": 14,
@@ -2826,39 +2430,8 @@
         },
         {
             "buffer": 0,
-            "byteLength": 696,
-            "byteOffset": 350052,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.001_POSITION_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 696,
-            "byteOffset": 350748,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.001_NORMAL_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 464,
-            "byteOffset": 351444,
-            "byteStride": 8,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.001_TEXCOORD_0_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 196,
-            "byteOffset": 351908,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.001_0",
-            "target": 34963
-        },
-        {
-            "buffer": 0,
             "byteLength": 3840,
-            "byteOffset": 352104,
+            "byteOffset": 350052,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.002_POSITION_0",
             "target": 34962
@@ -2866,7 +2439,7 @@
         {
             "buffer": 0,
             "byteLength": 3840,
-            "byteOffset": 355944,
+            "byteOffset": 353892,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.002_NORMAL_0",
             "target": 34962
@@ -2874,7 +2447,7 @@
         {
             "buffer": 0,
             "byteLength": 2560,
-            "byteOffset": 359784,
+            "byteOffset": 357732,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.002_TEXCOORD_0_0",
             "target": 34962
@@ -2882,45 +2455,14 @@
         {
             "buffer": 0,
             "byteLength": 964,
-            "byteOffset": 362344,
+            "byteOffset": 360292,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.002_0",
             "target": 34963
         },
         {
             "buffer": 0,
-            "byteLength": 768,
-            "byteOffset": 363308,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.003_POSITION_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 768,
-            "byteOffset": 364076,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.003_NORMAL_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 512,
-            "byteOffset": 364844,
-            "byteStride": 8,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.003_TEXCOORD_0_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 196,
-            "byteOffset": 365356,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.003_0",
-            "target": 34963
-        },
-        {
-            "buffer": 0,
             "byteLength": 5340,
-            "byteOffset": 365552,
+            "byteOffset": 361256,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.005_POSITION_0",
             "target": 34962
@@ -2928,7 +2470,7 @@
         {
             "buffer": 0,
             "byteLength": 5340,
-            "byteOffset": 370892,
+            "byteOffset": 366596,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.005_NORMAL_0",
             "target": 34962
@@ -2936,7 +2478,7 @@
         {
             "buffer": 0,
             "byteLength": 3560,
-            "byteOffset": 376232,
+            "byteOffset": 371936,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.005_TEXCOORD_0_0",
             "target": 34962
@@ -2944,14 +2486,14 @@
         {
             "buffer": 0,
             "byteLength": 1468,
-            "byteOffset": 379792,
+            "byteOffset": 375496,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.005_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 2664,
-            "byteOffset": 381260,
+            "byteOffset": 376964,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.006_POSITION_0",
             "target": 34962
@@ -2959,7 +2501,7 @@
         {
             "buffer": 0,
             "byteLength": 2664,
-            "byteOffset": 383924,
+            "byteOffset": 379628,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.006_NORMAL_0",
             "target": 34962
@@ -2967,7 +2509,7 @@
         {
             "buffer": 0,
             "byteLength": 1776,
-            "byteOffset": 386588,
+            "byteOffset": 382292,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.006_TEXCOORD_0_0",
             "target": 34962
@@ -2975,45 +2517,14 @@
         {
             "buffer": 0,
             "byteLength": 676,
-            "byteOffset": 388364,
+            "byteOffset": 384068,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.006_0",
             "target": 34963
         },
         {
             "buffer": 0,
-            "byteLength": 3840,
-            "byteOffset": 389040,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.007_POSITION_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 3840,
-            "byteOffset": 392880,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.007_NORMAL_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 2560,
-            "byteOffset": 396720,
-            "byteStride": 8,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.007_TEXCOORD_0_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 964,
-            "byteOffset": 399280,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.007_0",
-            "target": 34963
-        },
-        {
-            "buffer": 0,
             "byteLength": 1344,
-            "byteOffset": 400244,
+            "byteOffset": 384744,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.008_POSITION_0",
             "target": 34962
@@ -3021,7 +2532,7 @@
         {
             "buffer": 0,
             "byteLength": 1344,
-            "byteOffset": 401588,
+            "byteOffset": 386088,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.008_NORMAL_0",
             "target": 34962
@@ -3029,7 +2540,7 @@
         {
             "buffer": 0,
             "byteLength": 896,
-            "byteOffset": 402932,
+            "byteOffset": 387432,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.008_TEXCOORD_0_0",
             "target": 34962
@@ -3037,14 +2548,14 @@
         {
             "buffer": 0,
             "byteLength": 388,
-            "byteOffset": 403828,
+            "byteOffset": 388328,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.008_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 6432,
-            "byteOffset": 404216,
+            "byteOffset": 388716,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.009_POSITION_0",
             "target": 34962
@@ -3052,7 +2563,7 @@
         {
             "buffer": 0,
             "byteLength": 6432,
-            "byteOffset": 410648,
+            "byteOffset": 395148,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.009_NORMAL_0",
             "target": 34962
@@ -3060,7 +2571,7 @@
         {
             "buffer": 0,
             "byteLength": 4288,
-            "byteOffset": 417080,
+            "byteOffset": 401580,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.009_TEXCOORD_0_0",
             "target": 34962
@@ -3068,14 +2579,14 @@
         {
             "buffer": 0,
             "byteLength": 1576,
-            "byteOffset": 421368,
+            "byteOffset": 405868,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.009_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 3072,
-            "byteOffset": 422944,
+            "byteOffset": 407444,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.010_POSITION_0",
             "target": 34962
@@ -3083,7 +2594,7 @@
         {
             "buffer": 0,
             "byteLength": 3072,
-            "byteOffset": 426016,
+            "byteOffset": 410516,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.010_NORMAL_0",
             "target": 34962
@@ -3091,7 +2602,7 @@
         {
             "buffer": 0,
             "byteLength": 2048,
-            "byteOffset": 429088,
+            "byteOffset": 413588,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.010_TEXCOORD_0_0",
             "target": 34962
@@ -3099,14 +2610,14 @@
         {
             "buffer": 0,
             "byteLength": 772,
-            "byteOffset": 431136,
+            "byteOffset": 415636,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.010_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 6576,
-            "byteOffset": 431908,
+            "byteOffset": 416408,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.011_POSITION_0",
             "target": 34962
@@ -3114,7 +2625,7 @@
         {
             "buffer": 0,
             "byteLength": 6576,
-            "byteOffset": 438484,
+            "byteOffset": 422984,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.011_NORMAL_0",
             "target": 34962
@@ -3122,7 +2633,7 @@
         {
             "buffer": 0,
             "byteLength": 4384,
-            "byteOffset": 445060,
+            "byteOffset": 429560,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.011_TEXCOORD_0_0",
             "target": 34962
@@ -3130,14 +2641,14 @@
         {
             "buffer": 0,
             "byteLength": 1612,
-            "byteOffset": 449444,
+            "byteOffset": 433944,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.011_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 3408,
-            "byteOffset": 451056,
+            "byteOffset": 435556,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.012_POSITION_0",
             "target": 34962
@@ -3145,7 +2656,7 @@
         {
             "buffer": 0,
             "byteLength": 3408,
-            "byteOffset": 454464,
+            "byteOffset": 438964,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.012_NORMAL_0",
             "target": 34962
@@ -3153,7 +2664,7 @@
         {
             "buffer": 0,
             "byteLength": 2272,
-            "byteOffset": 457872,
+            "byteOffset": 442372,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.012_TEXCOORD_0_0",
             "target": 34962
@@ -3161,14 +2672,14 @@
         {
             "buffer": 0,
             "byteLength": 748,
-            "byteOffset": 460144,
+            "byteOffset": 444644,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.012_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 696,
-            "byteOffset": 460892,
+            "byteOffset": 445392,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.014_POSITION_0",
             "target": 34962
@@ -3176,7 +2687,7 @@
         {
             "buffer": 0,
             "byteLength": 696,
-            "byteOffset": 461588,
+            "byteOffset": 446088,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.014_NORMAL_0",
             "target": 34962
@@ -3184,7 +2695,7 @@
         {
             "buffer": 0,
             "byteLength": 464,
-            "byteOffset": 462284,
+            "byteOffset": 446784,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.014_TEXCOORD_0_0",
             "target": 34962
@@ -3192,14 +2703,14 @@
         {
             "buffer": 0,
             "byteLength": 196,
-            "byteOffset": 462748,
+            "byteOffset": 447248,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.014_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 7404,
-            "byteOffset": 462944,
+            "byteOffset": 447444,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.019_POSITION_0",
             "target": 34962
@@ -3207,7 +2718,7 @@
         {
             "buffer": 0,
             "byteLength": 7404,
-            "byteOffset": 470348,
+            "byteOffset": 454848,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.019_NORMAL_0",
             "target": 34962
@@ -3215,7 +2726,7 @@
         {
             "buffer": 0,
             "byteLength": 4936,
-            "byteOffset": 477752,
+            "byteOffset": 462252,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.019_TEXCOORD_0_0",
             "target": 34962
@@ -3223,14 +2734,14 @@
         {
             "buffer": 0,
             "byteLength": 1924,
-            "byteOffset": 482688,
+            "byteOffset": 467188,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.019_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 5232,
-            "byteOffset": 484612,
+            "byteOffset": 469112,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.020_POSITION_0",
             "target": 34962
@@ -3238,7 +2749,7 @@
         {
             "buffer": 0,
             "byteLength": 5232,
-            "byteOffset": 489844,
+            "byteOffset": 474344,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.020_NORMAL_0",
             "target": 34962
@@ -3246,7 +2757,7 @@
         {
             "buffer": 0,
             "byteLength": 3488,
-            "byteOffset": 495076,
+            "byteOffset": 479576,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.020_TEXCOORD_0_0",
             "target": 34962
@@ -3254,45 +2765,14 @@
         {
             "buffer": 0,
             "byteLength": 1408,
-            "byteOffset": 498564,
+            "byteOffset": 483064,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.020_0",
             "target": 34963
         },
         {
             "buffer": 0,
-            "byteLength": 768,
-            "byteOffset": 499972,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.024_POSITION_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 768,
-            "byteOffset": 500740,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.024_NORMAL_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 512,
-            "byteOffset": 501508,
-            "byteStride": 8,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.024_TEXCOORD_0_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 196,
-            "byteOffset": 502020,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.024_0",
-            "target": 34963
-        },
-        {
-            "buffer": 0,
             "byteLength": 2928,
-            "byteOffset": 502216,
+            "byteOffset": 484472,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.025_POSITION_0",
             "target": 34962
@@ -3300,7 +2780,7 @@
         {
             "buffer": 0,
             "byteLength": 2928,
-            "byteOffset": 505144,
+            "byteOffset": 487400,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.025_NORMAL_0",
             "target": 34962
@@ -3308,7 +2788,7 @@
         {
             "buffer": 0,
             "byteLength": 1952,
-            "byteOffset": 508072,
+            "byteOffset": 490328,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.025_TEXCOORD_0_0",
             "target": 34962
@@ -3316,14 +2796,14 @@
         {
             "buffer": 0,
             "byteLength": 820,
-            "byteOffset": 510024,
+            "byteOffset": 492280,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.025_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 2016,
-            "byteOffset": 510844,
+            "byteOffset": 493100,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.026_POSITION_0",
             "target": 34962
@@ -3331,7 +2811,7 @@
         {
             "buffer": 0,
             "byteLength": 2016,
-            "byteOffset": 512860,
+            "byteOffset": 495116,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.026_NORMAL_0",
             "target": 34962
@@ -3339,7 +2819,7 @@
         {
             "buffer": 0,
             "byteLength": 1344,
-            "byteOffset": 514876,
+            "byteOffset": 497132,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.026_TEXCOORD_0_0",
             "target": 34962
@@ -3347,14 +2827,14 @@
         {
             "buffer": 0,
             "byteLength": 508,
-            "byteOffset": 516220,
+            "byteOffset": 498476,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.026_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 768,
-            "byteOffset": 516728,
+            "byteOffset": 498984,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.040_POSITION_0",
             "target": 34962
@@ -3362,7 +2842,7 @@
         {
             "buffer": 0,
             "byteLength": 768,
-            "byteOffset": 517496,
+            "byteOffset": 499752,
             "byteStride": 12,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.040_NORMAL_0",
             "target": 34962
@@ -3370,7 +2850,7 @@
         {
             "buffer": 0,
             "byteLength": 512,
-            "byteOffset": 518264,
+            "byteOffset": 500520,
             "byteStride": 8,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.040_TEXCOORD_0_0",
             "target": 34962
@@ -3378,76 +2858,14 @@
         {
             "buffer": 0,
             "byteLength": 196,
-            "byteOffset": 518776,
+            "byteOffset": 501032,
             "name": "bufferView_buffer_hall_circ1125_fences_1Base.040_0",
             "target": 34963
         },
         {
             "buffer": 0,
-            "byteLength": 696,
-            "byteOffset": 518972,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.041_POSITION_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 696,
-            "byteOffset": 519668,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.041_NORMAL_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 464,
-            "byteOffset": 520364,
-            "byteStride": 8,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.041_TEXCOORD_0_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 196,
-            "byteOffset": 520828,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.041_0",
-            "target": 34963
-        },
-        {
-            "buffer": 0,
-            "byteLength": 5340,
-            "byteOffset": 521024,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.069_POSITION_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 5340,
-            "byteOffset": 526364,
-            "byteStride": 12,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.069_NORMAL_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 3560,
-            "byteOffset": 531704,
-            "byteStride": 8,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.069_TEXCOORD_0_0",
-            "target": 34962
-        },
-        {
-            "buffer": 0,
-            "byteLength": 1468,
-            "byteOffset": 535264,
-            "name": "bufferView_buffer_hall_circ1125_fences_1Base.069_0",
-            "target": 34963
-        },
-        {
-            "buffer": 0,
             "byteLength": 1296,
-            "byteOffset": 536732,
+            "byteOffset": 501228,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.000_POSITION_0",
             "target": 34962
@@ -3455,7 +2873,7 @@
         {
             "buffer": 0,
             "byteLength": 1296,
-            "byteOffset": 538028,
+            "byteOffset": 502524,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.000_NORMAL_0",
             "target": 34962
@@ -3463,14 +2881,14 @@
         {
             "buffer": 0,
             "byteLength": 316,
-            "byteOffset": 539324,
+            "byteOffset": 503820,
             "name": "bufferView_buffer_Plane.000_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 288,
-            "byteOffset": 539640,
+            "byteOffset": 504136,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.024_POSITION_0",
             "target": 34962
@@ -3478,7 +2896,7 @@
         {
             "buffer": 0,
             "byteLength": 288,
-            "byteOffset": 539928,
+            "byteOffset": 504424,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.024_NORMAL_0",
             "target": 34962
@@ -3486,7 +2904,7 @@
         {
             "buffer": 0,
             "byteLength": 192,
-            "byteOffset": 540216,
+            "byteOffset": 504712,
             "byteStride": 8,
             "name": "bufferView_buffer_Plane.024_TEXCOORD_0_0",
             "target": 34962
@@ -3494,14 +2912,14 @@
         {
             "buffer": 0,
             "byteLength": 76,
-            "byteOffset": 540408,
+            "byteOffset": 504904,
             "name": "bufferView_buffer_Plane.024_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 1296,
-            "byteOffset": 540484,
+            "byteOffset": 504980,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.025_POSITION_0",
             "target": 34962
@@ -3509,7 +2927,7 @@
         {
             "buffer": 0,
             "byteLength": 1296,
-            "byteOffset": 541780,
+            "byteOffset": 506276,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.025_NORMAL_0",
             "target": 34962
@@ -3517,14 +2935,14 @@
         {
             "buffer": 0,
             "byteLength": 316,
-            "byteOffset": 543076,
+            "byteOffset": 507572,
             "name": "bufferView_buffer_Plane.025_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 2100,
-            "byteOffset": 543392,
+            "byteOffset": 507888,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.026_POSITION_0",
             "target": 34962
@@ -3532,7 +2950,7 @@
         {
             "buffer": 0,
             "byteLength": 2100,
-            "byteOffset": 545492,
+            "byteOffset": 509988,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.026_NORMAL_0",
             "target": 34962
@@ -3540,14 +2958,14 @@
         {
             "buffer": 0,
             "byteLength": 580,
-            "byteOffset": 547592,
+            "byteOffset": 512088,
             "name": "bufferView_buffer_Plane.026_0",
             "target": 34963
         },
         {
             "buffer": 0,
             "byteLength": 288,
-            "byteOffset": 548172,
+            "byteOffset": 512668,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.033_POSITION_0",
             "target": 34962
@@ -3555,7 +2973,7 @@
         {
             "buffer": 0,
             "byteLength": 288,
-            "byteOffset": 548460,
+            "byteOffset": 512956,
             "byteStride": 12,
             "name": "bufferView_buffer_Plane.033_NORMAL_0",
             "target": 34962
@@ -3563,7 +2981,7 @@
         {
             "buffer": 0,
             "byteLength": 192,
-            "byteOffset": 548748,
+            "byteOffset": 513244,
             "byteStride": 8,
             "name": "bufferView_buffer_Plane.033_TEXCOORD_0_0",
             "target": 34962
@@ -3571,14 +2989,14 @@
         {
             "buffer": 0,
             "byteLength": 76,
-            "byteOffset": 548940,
+            "byteOffset": 513436,
             "name": "bufferView_buffer_Plane.033_0",
             "target": 34963
         }
     ],
     "buffers": [
         {
-            "byteLength": 549016,
+            "byteLength": 513512,
             "name": "reactor.collision",
             "uri": "reactor.collision.bin"
         }
@@ -3611,11 +3029,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 46,
-                        "POSITION": 48,
-                        "TEXCOORD_0": 116
+                        "NORMAL": 88,
+                        "POSITION": 90,
+                        "TEXCOORD_0": 74
                     },
-                    "indices": 140,
+                    "indices": 114,
                     "material": 0,
                     "mode": 4
                 }
@@ -3626,11 +3044,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 113,
-                        "POSITION": 8,
-                        "TEXCOORD_0": 112
+                        "NORMAL": 69,
+                        "POSITION": 14,
+                        "TEXCOORD_0": 42
                     },
-                    "indices": 55,
+                    "indices": 100,
                     "material": 0,
                     "mode": 4
                 }
@@ -3641,11 +3059,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 106,
-                        "POSITION": 34,
-                        "TEXCOORD_0": 111
+                        "NORMAL": 57,
+                        "POSITION": 59,
+                        "TEXCOORD_0": 68
                     },
-                    "indices": 23,
+                    "indices": 52,
                     "material": 0,
                     "mode": 4
                 }
@@ -3656,11 +3074,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 87,
-                        "POSITION": 56,
-                        "TEXCOORD_0": 146
+                        "NORMAL": 31,
+                        "POSITION": 101,
+                        "TEXCOORD_0": 122
                     },
-                    "indices": 37,
+                    "indices": 79,
                     "material": 0,
                     "mode": 4
                 }
@@ -3671,10 +3089,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 141,
-                        "POSITION": 13
+                        "NORMAL": 115,
+                        "POSITION": 26
                     },
-                    "indices": 33,
+                    "indices": 113,
                     "material": 0,
                     "mode": 4
                 }
@@ -3685,11 +3103,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 75,
-                        "POSITION": 29,
-                        "TEXCOORD_0": 31
+                        "NORMAL": 10,
+                        "POSITION": 102,
+                        "TEXCOORD_0": 71
                     },
-                    "indices": 54,
+                    "indices": 99,
                     "material": 0,
                     "mode": 4
                 }
@@ -3700,10 +3118,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 63,
-                        "POSITION": 82
+                        "NORMAL": 112,
+                        "POSITION": 120
                     },
-                    "indices": 85,
+                    "indices": 28,
                     "material": 0,
                     "mode": 4
                 }
@@ -3714,10 +3132,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 79,
-                        "POSITION": 67
+                        "NORMAL": 16,
+                        "POSITION": 20
                     },
-                    "indices": 123,
+                    "indices": 8,
                     "material": 0,
                     "mode": 4
                 }
@@ -3728,10 +3146,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 84,
-                        "POSITION": 92
+                        "NORMAL": 25,
+                        "POSITION": 37
                     },
-                    "indices": 81,
+                    "indices": 19,
                     "material": 0,
                     "mode": 4
                 }
@@ -3742,10 +3160,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 118,
-                        "POSITION": 10
+                        "NORMAL": 66,
+                        "POSITION": 17
                     },
-                    "indices": 32,
+                    "indices": 73,
                     "material": 0,
                     "mode": 4
                 }
@@ -3756,10 +3174,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 99,
-                        "POSITION": 40
+                        "NORMAL": 47,
+                        "POSITION": 82
                     },
-                    "indices": 6,
+                    "indices": 48,
                     "material": 0,
                     "mode": 4
                 }
@@ -3770,10 +3188,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 4,
-                        "POSITION": 102
+                        "NORMAL": 5,
+                        "POSITION": 76
                     },
-                    "indices": 110,
+                    "indices": 67,
                     "material": 0,
                     "mode": 4
                 }
@@ -3784,10 +3202,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 83,
-                        "POSITION": 14
+                        "NORMAL": 23,
+                        "POSITION": 30
                     },
-                    "indices": 59,
+                    "indices": 109,
                     "material": 0,
                     "mode": 4
                 }
@@ -3798,10 +3216,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 38,
-                        "POSITION": 135
+                        "NORMAL": 81,
+                        "POSITION": 108
                     },
-                    "indices": 51,
+                    "indices": 96,
                     "material": 0,
                     "mode": 4
                 }
@@ -3812,25 +3230,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 11,
-                        "POSITION": 80
+                        "NORMAL": 21,
+                        "POSITION": 18
                     },
-                    "indices": 130,
-                    "material": 0,
-                    "mode": 4
-                }
-            ]
-        },
-        {
-            "name": "hall_circ1125_fences_1Base.001",
-            "primitives": [
-                {
-                    "attributes": {
-                        "NORMAL": 96,
-                        "POSITION": 136,
-                        "TEXCOORD_0": 134
-                    },
-                    "indices": 5,
+                    "indices": 104,
                     "material": 0,
                     "mode": 4
                 }
@@ -3841,26 +3244,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 76,
-                        "POSITION": 25,
-                        "TEXCOORD_0": 122
+                        "NORMAL": 12,
+                        "POSITION": 55,
+                        "TEXCOORD_0": 121
                     },
-                    "indices": 103,
-                    "material": 0,
-                    "mode": 4
-                }
-            ]
-        },
-        {
-            "name": "hall_circ1125_fences_1Base.003",
-            "primitives": [
-                {
-                    "attributes": {
-                        "NORMAL": 41,
-                        "POSITION": 91,
-                        "TEXCOORD_0": 39
-                    },
-                    "indices": 45,
+                    "indices": 51,
                     "material": 0,
                     "mode": 4
                 }
@@ -3871,11 +3259,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 28,
-                        "POSITION": 74,
-                        "TEXCOORD_0": 131
+                        "NORMAL": 63,
+                        "POSITION": 9,
+                        "TEXCOORD_0": 105
                     },
-                    "indices": 143,
+                    "indices": 117,
                     "material": 0,
                     "mode": 4
                 }
@@ -3886,26 +3274,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 30,
-                        "POSITION": 7,
-                        "TEXCOORD_0": 97
+                        "NORMAL": 15,
+                        "POSITION": 11,
+                        "TEXCOORD_0": 41
                     },
-                    "indices": 77,
-                    "material": 0,
-                    "mode": 4
-                }
-            ]
-        },
-        {
-            "name": "hall_circ1125_fences_1Base.007",
-            "primitives": [
-                {
-                    "attributes": {
-                        "NORMAL": 137,
-                        "POSITION": 22,
-                        "TEXCOORD_0": 1
-                    },
-                    "indices": 124,
+                    "indices": 13,
                     "material": 0,
                     "mode": 4
                 }
@@ -3916,11 +3289,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 133,
-                        "POSITION": 44,
-                        "TEXCOORD_0": 121
+                        "NORMAL": 107,
+                        "POSITION": 87,
+                        "TEXCOORD_0": 84
                     },
-                    "indices": 128,
+                    "indices": 62,
                     "material": 0,
                     "mode": 4
                 }
@@ -3931,11 +3304,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 35,
-                        "POSITION": 47,
-                        "TEXCOORD_0": 53
+                        "NORMAL": 77,
+                        "POSITION": 89,
+                        "TEXCOORD_0": 98
                     },
-                    "indices": 114,
+                    "indices": 70,
                     "material": 0,
                     "mode": 4
                 }
@@ -3946,11 +3319,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 129,
-                        "POSITION": 104,
-                        "TEXCOORD_0": 120
+                        "NORMAL": 103,
+                        "POSITION": 53,
+                        "TEXCOORD_0": 83
                     },
-                    "indices": 73,
+                    "indices": 7,
                     "material": 0,
                     "mode": 4
                 }
@@ -3961,11 +3334,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 109,
+                        "NORMAL": 64,
                         "POSITION": 2,
-                        "TEXCOORD_0": 57
+                        "TEXCOORD_0": 65
                     },
-                    "indices": 9,
+                    "indices": 40,
                     "material": 0,
                     "mode": 4
                 }
@@ -3976,11 +3349,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 127,
-                        "POSITION": 101,
-                        "TEXCOORD_0": 107
+                        "NORMAL": 94,
+                        "POSITION": 50,
+                        "TEXCOORD_0": 58
                     },
-                    "indices": 125,
+                    "indices": 92,
                     "material": 0,
                     "mode": 4
                 }
@@ -3991,11 +3364,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 19,
-                        "POSITION": 94,
-                        "TEXCOORD_0": 68
+                        "NORMAL": 43,
+                        "POSITION": 39,
+                        "TEXCOORD_0": 0
                     },
-                    "indices": 117,
+                    "indices": 75,
                     "material": 0,
                     "mode": 4
                 }
@@ -4006,11 +3379,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 98,
-                        "POSITION": 20,
-                        "TEXCOORD_0": 108
+                        "NORMAL": 44,
+                        "POSITION": 45,
+                        "TEXCOORD_0": 61
                     },
-                    "indices": 86,
+                    "indices": 29,
                     "material": 0,
                     "mode": 4
                 }
@@ -4021,26 +3394,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 65,
-                        "POSITION": 42,
-                        "TEXCOORD_0": 115
+                        "NORMAL": 91,
+                        "POSITION": 85,
+                        "TEXCOORD_0": 34
                     },
-                    "indices": 142,
-                    "material": 0,
-                    "mode": 4
-                }
-            ]
-        },
-        {
-            "name": "hall_circ1125_fences_1Base.024",
-            "primitives": [
-                {
-                    "attributes": {
-                        "NORMAL": 18,
-                        "POSITION": 62,
-                        "TEXCOORD_0": 16
-                    },
-                    "indices": 17,
+                    "indices": 116,
                     "material": 0,
                     "mode": 4
                 }
@@ -4051,11 +3409,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 50,
-                        "POSITION": 88,
-                        "TEXCOORD_0": 3
+                        "NORMAL": 95,
+                        "POSITION": 32,
+                        "TEXCOORD_0": 4
                     },
-                    "indices": 36,
+                    "indices": 78,
                     "material": 0,
                     "mode": 4
                 }
@@ -4066,11 +3424,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 119,
-                        "POSITION": 15,
-                        "TEXCOORD_0": 69
+                        "NORMAL": 80,
+                        "POSITION": 35,
+                        "TEXCOORD_0": 1
                     },
-                    "indices": 78,
+                    "indices": 72,
                     "material": 0,
                     "mode": 4
                 }
@@ -4081,41 +3439,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 61,
-                        "POSITION": 52,
-                        "TEXCOORD_0": 0
-                    },
-                    "indices": 58,
-                    "material": 0,
-                    "mode": 4
-                }
-            ]
-        },
-        {
-            "name": "hall_circ1125_fences_1Base.041",
-            "primitives": [
-                {
-                    "attributes": {
-                        "NORMAL": 132,
-                        "POSITION": 138,
-                        "TEXCOORD_0": 21
-                    },
-                    "indices": 95,
-                    "material": 0,
-                    "mode": 4
-                }
-            ]
-        },
-        {
-            "name": "hall_circ1125_fences_1Base.069",
-            "primitives": [
-                {
-                    "attributes": {
-                        "NORMAL": 64,
-                        "POSITION": 24,
+                        "NORMAL": 111,
+                        "POSITION": 97,
                         "TEXCOORD_0": 27
                     },
-                    "indices": 139,
+                    "indices": 106,
                     "material": 0,
                     "mode": 4
                 }
@@ -4126,10 +3454,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 72,
-                        "POSITION": 105
+                        "NORMAL": 6,
+                        "POSITION": 54
                     },
-                    "indices": 12,
+                    "indices": 24,
                     "material": 0,
                     "mode": 4
                 }
@@ -4140,11 +3468,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 93,
-                        "POSITION": 100,
-                        "TEXCOORD_0": 71
+                        "NORMAL": 38,
+                        "POSITION": 49,
+                        "TEXCOORD_0": 46
                     },
-                    "indices": 145,
+                    "indices": 119,
                     "material": 0,
                     "mode": 4
                 }
@@ -4155,10 +3483,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 26,
-                        "POSITION": 60
+                        "NORMAL": 56,
+                        "POSITION": 110
                     },
-                    "indices": 70,
+                    "indices": 3,
                     "material": 0,
                     "mode": 4
                 }
@@ -4169,10 +3497,10 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 126,
-                        "POSITION": 89
+                        "NORMAL": 93,
+                        "POSITION": 33
                     },
-                    "indices": 66,
+                    "indices": 60,
                     "material": 0,
                     "mode": 4
                 }
@@ -4183,11 +3511,11 @@
             "primitives": [
                 {
                     "attributes": {
-                        "NORMAL": 90,
-                        "POSITION": 43,
-                        "TEXCOORD_0": 144
+                        "NORMAL": 36,
+                        "POSITION": 86,
+                        "TEXCOORD_0": 118
                     },
-                    "indices": 49,
+                    "indices": 22,
                     "material": 0,
                     "mode": 4
                 }
@@ -4196,7 +3524,7 @@
     ],
     "nodes": [
         {
-            "mesh": 39,
+            "mesh": 33,
             "name": "doorsimple_colonly",
             "rotation": [
                 0.0,
@@ -4216,7 +3544,7 @@
             ]
         },
         {
-            "mesh": 39,
+            "mesh": 33,
             "name": "doorsimple_colonly.001",
             "rotation": [
                 2.3132153970095715e-08,
@@ -4236,7 +3564,7 @@
             ]
         },
         {
-            "mesh": 39,
+            "mesh": 33,
             "name": "doorsimple_colonly.002",
             "rotation": [
                 0.0,
@@ -4256,7 +3584,7 @@
             ]
         },
         {
-            "mesh": 39,
+            "mesh": 33,
             "name": "doorsimple_colonly.003",
             "rotation": [
                 0.0,
@@ -4276,7 +3604,7 @@
             ]
         },
         {
-            "mesh": 36,
+            "mesh": 30,
             "name": "doorsimple_colonly.004",
             "rotation": [
                 2.6341799852502845e-09,
@@ -4296,7 +3624,7 @@
             ]
         },
         {
-            "mesh": 36,
+            "mesh": 30,
             "name": "doorsimple_colonly.005",
             "rotation": [
                 2.468502957597707e-09,
@@ -4316,7 +3644,7 @@
             ]
         },
         {
-            "mesh": 36,
+            "mesh": 30,
             "name": "doorsimple_colonly.006",
             "rotation": [
                 3.2318151710342136e-08,
@@ -4476,7 +3804,7 @@
             ]
         },
         {
-            "mesh": 38,
+            "mesh": 32,
             "name": "FLOOR_reactor120_Eleavotr-colonly",
             "rotation": [
                 3.7103708994123963e-09,
@@ -4496,7 +3824,7 @@
             ]
         },
         {
-            "mesh": 38,
+            "mesh": 32,
             "name": "FLOOR_reactor120_Eleavotr-colonly.001",
             "rotation": [
                 1.983464414934133e-08,
@@ -4516,7 +3844,7 @@
             ]
         },
         {
-            "mesh": 38,
+            "mesh": 32,
             "name": "FLOOR_reactor120_Eleavotr-colonly.002",
             "rotation": [
                 -7.756233155742365e-11,
@@ -4656,7 +3984,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly",
             "rotation": [
                 0.0,
@@ -4676,7 +4004,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.001",
             "rotation": [
                 0.0,
@@ -4696,7 +4024,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.002",
             "rotation": [
                 0.0,
@@ -4716,7 +4044,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.003",
             "rotation": [
                 0.0,
@@ -4736,7 +4064,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.004",
             "rotation": [
                 0.0,
@@ -4756,7 +4084,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.005",
             "rotation": [
                 0.0,
@@ -4776,27 +4104,7 @@
             ]
         },
         {
-            "mesh": 21,
-            "name": "FLOORhall_circ1125_Road_0Base-colonly.006",
-            "rotation": [
-                0.0,
-                0.42761823534965515,
-                0.0,
-                0.9039593935012817
-            ],
-            "scale": [
-                0.9999998211860657,
-                1.0,
-                0.9999998211860657
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.007",
             "rotation": [
                 0.0,
@@ -4816,7 +4124,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.008",
             "rotation": [
                 0.0,
@@ -4836,7 +4144,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.009",
             "rotation": [
                 0.0,
@@ -4856,7 +4164,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.010",
             "rotation": [
                 0.0,
@@ -4876,7 +4184,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.011",
             "rotation": [
                 0.0,
@@ -4896,7 +4204,7 @@
             ]
         },
         {
-            "mesh": 21,
+            "mesh": 18,
             "name": "FLOORhall_circ1125_Road_0Base-colonly.012",
             "rotation": [
                 0.0,
@@ -4916,7 +4224,7 @@
             ]
         },
         {
-            "mesh": 30,
+            "mesh": 26,
             "name": "FLOORhall_circ1125_Road_2Tjoint-colonly",
             "rotation": [
                 -4.053906567701778e-16,
@@ -4936,7 +4244,7 @@
             ]
         },
         {
-            "mesh": 30,
+            "mesh": 26,
             "name": "FLOORhall_circ1125_Road_2Tjoint-colonly.001",
             "rotation": [
                 4.840711898986051e-17,
@@ -4956,7 +4264,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly",
             "rotation": [
                 0.0,
@@ -4976,7 +4284,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.001",
             "rotation": [
                 0.0,
@@ -4996,7 +4304,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.002",
             "rotation": [
                 0.0,
@@ -5016,7 +4324,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.003",
             "rotation": [
                 0.0,
@@ -5036,7 +4344,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.004",
             "rotation": [
                 0.0,
@@ -5056,7 +4364,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.005",
             "rotation": [
                 0.0,
@@ -5076,7 +4384,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.006",
             "rotation": [
                 0.0,
@@ -5096,7 +4404,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.007",
             "rotation": [
                 0.0,
@@ -5116,7 +4424,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.008",
             "rotation": [
                 0.0,
@@ -5136,7 +4444,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.009",
             "rotation": [
                 0.0,
@@ -5156,7 +4464,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.010",
             "rotation": [
                 0.0,
@@ -5176,7 +4484,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.011",
             "rotation": [
                 0.0,
@@ -5196,7 +4504,7 @@
             ]
         },
         {
-            "mesh": 18,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.012",
             "rotation": [
                 0.0,
@@ -5216,7 +4524,7 @@
             ]
         },
         {
-            "mesh": 34,
+            "mesh": 16,
             "name": "FLOORhall_circ1125_upperdeckfloor_0Base-colonly.013",
             "rotation": [
                 0.0,
@@ -5236,7 +4544,7 @@
             ]
         },
         {
-            "mesh": 27,
+            "mesh": 24,
             "name": "FLOORhall_circ1125_upperdeckfloor_2Elevator.001-colonly",
             "rotation": [
                 0.0,
@@ -5256,7 +4564,7 @@
             ]
         },
         {
-            "mesh": 27,
+            "mesh": 24,
             "name": "FLOORhall_circ1125_upperdeckfloor_2Elevator.001-colonly.001",
             "rotation": [
                 0.0,
@@ -5276,7 +4584,7 @@
             ]
         },
         {
-            "mesh": 27,
+            "mesh": 24,
             "name": "FLOORhall_circ1125_upperdeckfloor_2Elevator.001-colonly.002",
             "rotation": [
                 0.0,
@@ -5296,7 +4604,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly",
             "rotation": [
                 -4.625359396974811e-17,
@@ -5316,7 +4624,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.001",
             "rotation": [
                 5.634916327762387e-16,
@@ -5336,7 +4644,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.002",
             "rotation": [
                 -1.2868928554242732e-17,
@@ -5356,7 +4664,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.003",
             "rotation": [
                 1.5041276896374394e-17,
@@ -5376,27 +4684,7 @@
             ]
         },
         {
-            "mesh": 15,
-            "name": "FLOORhall_Road2-colonly.004",
-            "rotation": [
-                -1.2868928554242732e-17,
-                0.42761826515197754,
-                -1.7026166921111328e-16,
-                0.9039593935012817
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.005",
             "rotation": [
                 1.424504607362065e-17,
@@ -5416,7 +4704,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.006",
             "rotation": [
                 1.9180065826860607e-16,
@@ -5436,7 +4724,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.007",
             "rotation": [
                 2.290842428101026e-16,
@@ -5456,7 +4744,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.008",
             "rotation": [
                 2.4450161887867015e-16,
@@ -5476,7 +4764,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.009",
             "rotation": [
                 -2.5756429629342995e-16,
@@ -5496,27 +4784,7 @@
             ]
         },
         {
-            "mesh": 33,
-            "name": "FLOORhall_Road2-colonly.010",
-            "rotation": [
-                -1.2868928554242732e-17,
-                0.42761826515197754,
-                -1.7026166921111328e-16,
-                0.9039593935012817
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.011",
             "rotation": [
                 9.68371806611908e-17,
@@ -5536,7 +4804,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.012",
             "rotation": [
                 1.4714629889922104e-16,
@@ -5556,7 +4824,7 @@
             ]
         },
         {
-            "mesh": 26,
+            "mesh": 23,
             "name": "FLOORhall_Road2-colonly.013",
             "rotation": [
                 1.225819993217115e-16,
@@ -5936,7 +5204,7 @@
             ]
         },
         {
-            "mesh": 37,
+            "mesh": 31,
             "name": "hall_circ1125_ElevatorFloor.001-colonly",
             "rotation": [
                 -4.300658440481442e-11,
@@ -5956,7 +5224,7 @@
             ]
         },
         {
-            "mesh": 37,
+            "mesh": 31,
             "name": "hall_circ1125_ElevatorFloor.001-colonly.001",
             "rotation": [
                 0.0,
@@ -5976,7 +5244,7 @@
             ]
         },
         {
-            "mesh": 35,
+            "mesh": 29,
             "name": "hall_circ1125_ElevatorFloor.001-colonly.002",
             "rotation": [
                 7.268938873039588e-08,
@@ -5996,7 +5264,7 @@
             ]
         },
         {
-            "mesh": 31,
+            "mesh": 27,
             "name": "hall_circ1125_LowerDeckWall_0Base-colonly",
             "rotation": [
                 -2.326749478224116e-16,
@@ -6016,7 +5284,7 @@
             ]
         },
         {
-            "mesh": 31,
+            "mesh": 27,
             "name": "hall_circ1125_LowerDeckWall_0Base-colonly.001",
             "rotation": [
                 0.857764482498169,
@@ -6036,7 +5304,7 @@
             ]
         },
         {
-            "mesh": 31,
+            "mesh": 27,
             "name": "hall_circ1125_LowerDeckWall_0Base-colonly.002",
             "rotation": [
                 8.42752717718257e-17,
@@ -6056,7 +5324,7 @@
             ]
         },
         {
-            "mesh": 28,
+            "mesh": 25,
             "name": "hall_circ1125_upperdeckfloor_1Door.000-colonly",
             "rotation": [
                 3.3394657757305015e-16,
@@ -6076,7 +5344,7 @@
             ]
         },
         {
-            "mesh": 28,
+            "mesh": 25,
             "name": "hall_circ1125_upperdeckfloor_1Door.000-colonly.001",
             "rotation": [
                 1.4980631322584456e-17,
@@ -6096,7 +5364,7 @@
             ]
         },
         {
-            "mesh": 28,
+            "mesh": 25,
             "name": "hall_circ1125_upperdeckfloor_1Door.000-colonly.002",
             "rotation": [
                 5.820219328711573e-08,
@@ -6116,7 +5384,7 @@
             ]
         },
         {
-            "mesh": 22,
+            "mesh": 19,
             "name": "hall_circ1125_upperdeckwall_1doorinset-colonly",
             "rotation": [
                 0.0,
@@ -6136,7 +5404,7 @@
             ]
         },
         {
-            "mesh": 22,
+            "mesh": 19,
             "name": "hall_circ1125_upperdeckwall_1doorinset-colonly.001",
             "rotation": [
                 0.0,
@@ -6156,7 +5424,7 @@
             ]
         },
         {
-            "mesh": 22,
+            "mesh": 19,
             "name": "hall_circ1125_upperdeckwall_1doorinset-colonly.002",
             "rotation": [
                 0.0,
@@ -6176,7 +5444,7 @@
             ]
         },
         {
-            "mesh": 22,
+            "mesh": 19,
             "name": "hall_circ1125_upperdeckwall_1doorinset-colonly.003",
             "rotation": [
                 0.0,
@@ -6196,7 +5464,7 @@
             ]
         },
         {
-            "mesh": 24,
+            "mesh": 21,
             "name": "hall_circ1125_upperdeckwall_4PipesInset-colonly",
             "rotation": [
                 0.0,
@@ -6216,7 +5484,7 @@
             ]
         },
         {
-            "mesh": 24,
+            "mesh": 21,
             "name": "hall_circ1125_upperdeckwall_4PipesInset-colonly.001",
             "rotation": [
                 0.0,
@@ -6236,7 +5504,7 @@
             ]
         },
         {
-            "mesh": 24,
+            "mesh": 21,
             "name": "hall_circ1125_upperdeckwall_4PipesInset-colonly.002",
             "rotation": [
                 0.0,
@@ -6256,7 +5524,7 @@
             ]
         },
         {
-            "mesh": 25,
+            "mesh": 22,
             "name": "hall_endcap-colonly",
             "rotation": [
                 0.0,
@@ -6416,7 +5684,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.001",
             "rotation": [
                 0.0,
@@ -6436,7 +5704,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.002",
             "rotation": [
                 0.0,
@@ -6456,7 +5724,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.003",
             "rotation": [
                 0.0,
@@ -6476,7 +5744,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.004",
             "rotation": [
                 0.0,
@@ -6496,7 +5764,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.005",
             "rotation": [
                 0.0,
@@ -6516,27 +5784,7 @@
             ]
         },
         {
-            "mesh": 17,
-            "name": "road-colonly.006",
-            "rotation": [
-                0.0,
-                0.42761826515197754,
-                0.0,
-                0.9039593935012817
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.007",
             "rotation": [
                 0.0,
@@ -6556,7 +5804,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.008",
             "rotation": [
                 0.0,
@@ -6576,7 +5824,7 @@
             ]
         },
         {
-            "mesh": 29,
+            "mesh": 28,
             "name": "road-colonly.009",
             "rotation": [
                 0.0,
@@ -6596,7 +5844,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.010",
             "rotation": [
                 0.0,
@@ -6616,7 +5864,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.011",
             "rotation": [
                 0.0,
@@ -6636,7 +5884,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.012",
             "rotation": [
                 0.0,
@@ -6656,7 +5904,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.013",
             "rotation": [
                 0.0,
@@ -6676,7 +5924,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.014",
             "rotation": [
                 0.0,
@@ -6696,7 +5944,7 @@
             ]
         },
         {
-            "mesh": 29,
+            "mesh": 28,
             "name": "road-colonly.015",
             "rotation": [
                 0.0,
@@ -6716,7 +5964,7 @@
             ]
         },
         {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.016",
             "rotation": [
                 0.0,
@@ -6736,7 +5984,7 @@
             ]
         },
         {
-            "mesh": 19,
+            "mesh": 17,
             "name": "road-colonly",
             "rotation": [
                 0.0,
@@ -6756,7 +6004,7 @@
             ]
         },
         {
-            "mesh": 29,
+            "mesh": 28,
             "name": "road-colonly.017",
             "rotation": [
                 0.0,
@@ -6776,27 +6024,7 @@
             ]
         },
         {
-            "mesh": 20,
-            "name": "road-colonly.018",
-            "rotation": [
-                0.0,
-                0.42761826515197754,
-                0.0,
-                0.9039593935012817
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.019",
             "rotation": [
                 0.0,
@@ -6816,7 +6044,7 @@
             ]
         },
         {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.020",
             "rotation": [
                 0.0,
@@ -6836,7 +6064,7 @@
             ]
         },
         {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.021",
             "rotation": [
                 0.0,
@@ -6856,7 +6084,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.022",
             "rotation": [
                 0.0,
@@ -6876,7 +6104,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.023",
             "rotation": [
                 0.0,
@@ -6896,7 +6124,7 @@
             ]
         },
         {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.024",
             "rotation": [
                 0.0,
@@ -6916,7 +6144,7 @@
             ]
         },
         {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.025",
             "rotation": [
                 0.0,
@@ -6936,7 +6164,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.026",
             "rotation": [
                 0.0,
@@ -6956,47 +6184,7 @@
             ]
         },
         {
-            "mesh": 16,
-            "name": "road-colonly.027",
-            "rotation": [
-                0.0,
-                0.42761826515197754,
-                0.0,
-                0.9039593935012817
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        {
-            "mesh": 32,
-            "name": "road-colonly.028",
-            "rotation": [
-                0.0,
-                0.42761826515197754,
-                0.0,
-                0.9039593935012817
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.029",
             "rotation": [
                 0.0,
@@ -7016,7 +6204,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.030",
             "rotation": [
                 0.0,
@@ -7036,7 +6224,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.031",
             "rotation": [
                 0.0,
@@ -7056,7 +6244,7 @@
             ]
         },
         {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.032",
             "rotation": [
                 0.0,
@@ -7076,7 +6264,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.033",
             "rotation": [
                 0.0,
@@ -7096,7 +6284,7 @@
             ]
         },
         {
-            "mesh": 32,
+            "mesh": 28,
             "name": "road-colonly.034",
             "rotation": [
                 0.0,
@@ -7116,7 +6304,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.035",
             "rotation": [
                 0.0,
@@ -7136,7 +6324,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.036",
             "rotation": [
                 0.0,
@@ -7156,7 +6344,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.037",
             "rotation": [
                 0.0,
@@ -7176,7 +6364,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.038",
             "rotation": [
                 0.0,
@@ -7196,7 +6384,7 @@
             ]
         },
         {
-            "mesh": 23,
+            "mesh": 20,
             "name": "road-colonly.039",
             "rotation": [
                 0.0,
@@ -7216,7 +6404,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.040",
             "rotation": [
                 0.0,
@@ -7236,7 +6424,7 @@
             ]
         },
         {
-            "mesh": 16,
+            "mesh": 15,
             "name": "road-colonly.041",
             "rotation": [
                 5.820219328711573e-08,
@@ -7730,182 +6918,175 @@
             },
             "name": "Scene",
             "nodes": [
-                89,
-                54,
-                95,
-                152,
-                151,
-                37,
+                86,
+                53,
                 92,
-                51,
-                102,
-                101,
-                50,
-                99,
-                150,
-                49,
-                149,
-                48,
-                47,
-                148,
-                147,
-                46,
-                45,
-                146,
-                68,
                 145,
                 144,
-                35,
-                67,
+                36,
+                89,
+                50,
+                99,
+                98,
+                49,
+                96,
                 143,
+                48,
                 142,
-                34,
-                33,
+                47,
+                46,
                 141,
                 140,
-                66,
-                65,
+                45,
+                44,
                 139,
+                65,
                 138,
                 137,
-                136,
+                34,
                 64,
-                32,
-                31,
-                63,
+                136,
                 135,
+                33,
+                32,
                 134,
                 133,
+                63,
                 132,
-                62,
-                30,
-                28,
-                61,
                 131,
+                62,
+                31,
+                30,
+                61,
                 130,
                 129,
-                116,
+                128,
+                127,
+                60,
+                29,
+                28,
                 59,
-                78,
-                86,
-                85,
-                84,
+                126,
+                125,
+                75,
                 83,
                 82,
                 81,
                 80,
                 79,
-                175,
-                174,
-                173,
-                171,
-                170,
-                172,
-                169,
+                78,
+                77,
+                76,
+                168,
+                167,
+                166,
+                164,
+                163,
+                165,
+                162,
                 15,
                 14,
                 16,
                 13,
                 12,
                 11,
-                158,
-                157,
-                159,
-                110,
-                168,
-                166,
+                151,
+                150,
+                152,
+                107,
                 161,
-                156,
+                159,
                 154,
-                164,
-                163,
+                149,
+                147,
+                157,
+                156,
                 6,
                 5,
                 4,
-                109,
-                108,
-                107,
+                106,
+                105,
+                104,
                 7,
                 9,
                 8,
-                105,
-                104,
-                106,
+                102,
+                101,
+                103,
                 20,
                 22,
                 19,
                 17,
                 18,
                 21,
-                56,
                 55,
-                117,
-                91,
+                54,
+                113,
+                88,
                 2,
                 0,
                 1,
-                103,
-                52,
-                93,
-                87,
-                10,
-                127,
-                58,
-                57,
-                43,
-                69,
-                42,
-                124,
-                44,
-                53,
-                94,
-                60,
-                98,
-                88,
-                41,
-                123,
                 100,
-                126,
-                125,
-                119,
-                122,
-                40,
-                121,
-                38,
-                39,
-                96,
-                120,
-                3,
+                51,
                 90,
+                84,
+                10,
+                123,
+                57,
+                56,
+                42,
+                66,
+                41,
+                120,
+                43,
+                52,
+                91,
+                58,
+                95,
+                85,
+                40,
+                119,
                 97,
-                36,
+                122,
+                121,
                 115,
-                114,
-                113,
-                112,
                 118,
-                128,
-                29,
+                39,
+                117,
+                37,
+                38,
+                93,
+                116,
+                3,
+                87,
+                94,
+                35,
+                112,
+                111,
+                110,
+                109,
+                114,
+                124,
                 27,
                 26,
                 25,
                 24,
                 23,
-                111,
-                77,
-                73,
+                108,
                 74,
-                75,
-                76,
-                72,
-                71,
                 70,
-                162,
+                71,
+                72,
+                73,
+                69,
+                68,
+                67,
                 155,
+                148,
+                153,
+                158,
                 160,
-                165,
-                167,
-                153
+                146
             ]
         }
     ]
