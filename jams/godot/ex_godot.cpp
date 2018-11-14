@@ -499,33 +499,6 @@ void paint_scene(Gnode& parent)
 	//toy::sound(parent, "complexambient", true, 0.1f);
 }
 
-Prefab& import_prefab(GfxSystem& gfx_system, ModelFormat format, const string& name, const ImportConfig& config)
-{
-	string filename = "models/" + name;
-	LocatedFile location = gfx_system.locate_file(filename.c_str(), carray<cstring, 1>{ ".gltf" });
-	Prefab& prefab = gfx_system.prefabs().create(name.c_str());
-	string filepath = string(location.m_location) + location.m_name;
-	gfx_system.importer(format)->import_prefab(prefab, filepath, config);
-	return prefab;
-}
-
-void destroy_prefab(GfxSystem& gfx_system, Prefab& prefab)
-{
-	std::set<Model*> models;
-	for(Item& item : prefab.m_items)
-		models.insert(item.m_model);
-
-	for(Model* model : models)
-	{
-		for(ModelItem& model_item : model->m_items)
-		{
-			gfx_system.meshes().destroy(Ref(model_item.m_mesh));
-		}
-
-		gfx_system.models().destroy(model->m_name.c_str());
-	}
-}
-
 void paint_level(Gnode& parent)
 {
 #ifdef REPACK

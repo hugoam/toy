@@ -21,6 +21,8 @@
 
 class WrenVM;
 
+//#define MUD_GFX_DEFERRED
+
 using namespace mud; namespace toy
 {
 #if MUD_PLATFORM_EMSCRIPTEN
@@ -176,7 +178,6 @@ using namespace mud; namespace toy
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
-//#define MUD_GFX_DEFERRED
 #ifdef MUD_GFX_DEFERRED
 		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
 #else
@@ -367,7 +368,7 @@ using namespace mud; namespace toy
 	void GameShell::start_game()
 	{
 		m_game_module->start(*this, m_game);
-		this->pump_game();
+		//this->pump_game();
 	}
 
 	void GameShell::frame_world()
@@ -391,8 +392,8 @@ using namespace mud; namespace toy
 	void GameShell::pump_game()
 	{
 		time(m_times, Step::World, "world",  [&] { ZoneScopedNC("world",  tracy::Color::AliceBlue); this->frame_world(); });
-		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange);    this->frame_scenes(); });
 		time(m_times, Step::Game,  "game",   [&] { ZoneScopedNC("game",   tracy::Color::Violet);    this->frame_game(); });
+		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange);    this->frame_scenes(); });
 	}
 
 	void GameShell::pump_editor()
