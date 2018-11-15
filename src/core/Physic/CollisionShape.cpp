@@ -30,7 +30,8 @@ using namespace mud; namespace toy
 
 	CollisionShape& CollisionShape::operator=(const CollisionShape& other)
 	{
-		m_shape = other.m_shape->clone();
+		if(other.m_shape)
+			m_shape = other.m_shape->clone();
 		m_center = other.m_center;
 		m_margin = other.m_margin;
 		return *this;

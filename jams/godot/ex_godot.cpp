@@ -125,13 +125,15 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 	UNUSED(tick);
 	(*m_solid)->set_angular_factor(Zero3);
 
+	vec3 velocity = (*m_solid)->linear_velocity();
+
 	m_visor = this->aim();
 
-	for(auto& bullet : reverse_adapt(m_bullets))
+	for(int i = m_bullets.size() - 1; i >= 0; --i)
 	{
-		bullet->update();
-		//if(bullet->m_destroy)
-		//	vector_remove_pt(m_bullets, *bullet);
+		m_bullets[i]->update();
+		if(m_bullets[i]->m_destroy)
+			m_bullets.erase(m_bullets.begin() + i);
 	}
 
 	m_energy = min(1.f, m_energy + delta * 0.01f);
@@ -154,7 +156,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 		if(m_target)
 		{
 			Aim aim = this->aim();
-			bool disable = distance(((Spatial&)m_target->m_spatial).m_position, spatial.m_position) > 50.f;
+			bool disable = distance(m_target->m_spatial->m_position, spatial.m_position) > 50.f;
 			disable |= aim.hit && aim.hit != &(*m_target->m_spatial);
 			disable |= m_target->m_life <= 0.f;
 			if(disable)
@@ -206,6 +208,9 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 				if(!is_walkable(m_dest))
 					m_dest = Zero3;
 			}
+
+			//(*m_solid)->set_linear_velocity(Zero3);
+			//return;
 
 			if(m_dest != Zero3)
 			{
@@ -700,8 +705,8 @@ void ex_godot_game_ui(Widget& parent, Game& game, GameScene& scene)
 	Player& player = val<Player>(game.m_player);
 	player.m_viewer = &viewer;
 
-	ex_godot_edit_ui(viewer, scene);
-	//ex_godot_game_hud(viewer, scene, *player.m_human);
+	//ex_godot_edit_ui(viewer, scene);
+	ex_godot_game_hud(viewer, scene, *player.m_human);
 }
 
 void ex_godot_pump_game(GameShell& app, Game& game, Widget& parent)
@@ -766,6 +771,20 @@ public:
 		player.spawn(vec3(15.88f, -12.42f, 13.60f));
 		//player.spawn(vec3(-87.15f, -1.15f, -46.15f));
 		//player.spawn(vec3(-64.f,   -1.15f, -78.50f));
+
+		vec3 ennemies[] = {
+			{ -12.50f, -12.41f, -15.06f },
+			{ -64.31f,  -6.33f, -19.29f },
+			{ -77.81f,  -6.37f, -43.68f },
+			{ -25.99f,  -6.34f, -86.29f },
+			{ -62.10f,  -1.15f, -75.88f },
+		};
+
+		HSpatial origin = world.origin();
+		for(vec3 position : ennemies)
+		{
+			construct<Human>(origin, position, Faction::Enemy);
+		}
 	}
 
 	virtual void scene(GameShell& app, GameScene& scene) final

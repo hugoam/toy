@@ -8,6 +8,7 @@
 #include <infra/NonCopy.h>
 #include <type/Unique.h>
 #include <math/Vec.h>
+#include <geom/Shape.h>
 #include <core/Forward.h>
 
 using namespace mud; namespace toy
@@ -18,6 +19,9 @@ using namespace mud; namespace toy
 		constr_ CollisionShape();
 		constr_ CollisionShape(const Shape& shape, const vec3& center = Zero3, float margin = 0.f);
 		~CollisionShape();
+
+		CollisionShape(CollisionShape&& other) = default;
+		CollisionShape& operator=(CollisionShape&& other) = default;
 
 		CollisionShape(const CollisionShape& shape);
 		CollisionShape& operator=(const CollisionShape& shape);

@@ -980,7 +980,6 @@ Style& menu_style()
 	return style;
 }
 
-#if 1
 Style& button_style(UiWindow& ui_window)
 {
 	UNUSED(ui_window);
@@ -989,18 +988,6 @@ Style& button_style(UiWindow& ui_window)
 														  [](Style& s) { s.decline_skin(HOVERED).m_text_colour = Colour::White; } };
 	return style;
 }
-#else
-Style& button_style(UiWindow& ui_window)
-{
-	static ImageSkin skin = { *ui_window.find_image("graphic/blue_off"), 46, 28, 38, 30 };
-	static ImageSkin skin_focused = { *ui_window.find_image("graphic/blue_on"), 46, 28, 38, 30 };
-
-	static Style style = { "GameButton", styles().button, [](Layout& l) { l.m_size = { 400.f, 80.f }; },
-														  [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::White; s.m_text_font = "veramono"; s.m_text_size = 24.f; s.m_padding = vec4(40.f, 20.f, 40.f, 20.f); s.m_image_skin = skin; },
-														  [](Style& s) { s.decline_skin(HOVERED).m_text_colour = Colour::White; s.decline_skin(HOVERED).m_image_skin = skin_focused; } };
-	return style;
-}
-#endif
 
 Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 {
