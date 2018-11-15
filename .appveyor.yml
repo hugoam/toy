@@ -15,4 +15,4 @@ install:
   - bin\windows\genie --sound %TOOLSET%
 
 build:
-  project: build/projects/$(TOOLSET)/mud.sln
+  project: build/projects/$(TOOLSET)/toy.sln
