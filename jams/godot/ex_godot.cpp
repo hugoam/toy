@@ -14,7 +14,9 @@
 //#define REPACK
 #define PHYSICS
 
-
+static const vec3 c_start_pos = vec3(15.88f, -12.42f, 13.60f);
+//static const vec3 c_start_pos = vec3(-87.15f, -1.15f, -46.15f);
+//static const vec3 c_start_pos = vec3(-64.f,   -1.15f, -78.50f);
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
 {
@@ -141,7 +143,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 	
 	// @kludge in case that weird bug where we go through the scene geometry happens... put us back up
 	if(spatial.m_position.y < -64.f)
-		spatial.m_position.y = 10.f;
+		spatial.m_position = c_start_pos;
 
 	bool ia = m_faction == Faction::Enemy;
 	//ia = false;
@@ -768,9 +770,7 @@ public:
 		static Player player = { default_world };
 		game.m_player = Ref(&player);
 
-		player.spawn(vec3(15.88f, -12.42f, 13.60f));
-		//player.spawn(vec3(-87.15f, -1.15f, -46.15f));
-		//player.spawn(vec3(-64.f,   -1.15f, -78.50f));
+		player.spawn(c_start_pos);
 
 		vec3 ennemies[] = {
 			{ -12.50f, -12.41f, -15.06f },
