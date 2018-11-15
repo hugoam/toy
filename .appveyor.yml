@@ -11,7 +11,7 @@ configuration:
   - Release
 
 install:
-  - git submodule update --init
+  - git submodule update --init --recursive
   - bin\windows\genie --sound %TOOLSET%
 
 build:
