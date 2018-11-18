@@ -12,7 +12,7 @@ configuration:
 
 install:
   - git submodule update --init --recursive
-  - bin\windows\genie --sound %TOOLSET%
+  - bin\windows\genie %TOOLSET%
 
 build:
   project: build/projects/$(TOOLSET)/toy.sln
