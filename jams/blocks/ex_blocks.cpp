@@ -589,28 +589,28 @@ Style& screen_style()
 
 Style& right_panel_style(UiWindow& ui_window)
 {
-	static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
+	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Right, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); },
-													   [](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Right, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
 
 Style& center_panel_style(UiWindow& ui_window)
 {
-	static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
+	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { CENTER, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); },
-													   [](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { CENTER, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
 
 Style& left_panel_style(UiWindow& ui_window)
 {
-	static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
+	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); },
-													   [](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
 

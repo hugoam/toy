@@ -15,7 +15,9 @@
 #include <meta/srlz/Module.h>
 #include <meta/math/Module.h>
 #include <meta/geom/Module.h>
-#include <meta/procgen/Module.h>
+#include <meta/noise/Module.h>
+#include <meta/wfc/Module.h>
+#include <meta/fract/Module.h>
 #include <meta/lang/Module.h>
 #include <meta/ctx/Module.h>
 #include <meta/ui/Module.h>
@@ -30,7 +32,7 @@
 #include <meta/gfx-gltf/Module.h>
 #include <meta/gfx-ui/Module.h>
 #include <meta/tool/Module.h>
-#include <meta/procgen-gfx/Module.h>
+#include <meta/wfc-gfx/Module.h>
 #include <meta/util/Module.h>
 #include <meta/core/Module.h>
 #include <meta/visu/Module.h>

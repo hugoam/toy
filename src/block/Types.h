@@ -10,7 +10,7 @@
 #ifndef MUD_MODULES
 #include <type/Types.h>
 #include <math/Types.h>
-#include <procgen-gfx/Types.h>
+#include <wfc-gfx/Types.h>
 #include <core/Types.h>
 #include <visu/Types.h>
 #include <edit/Types.h>

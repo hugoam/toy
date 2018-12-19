@@ -24,8 +24,8 @@
 
 #include <gfx/Item.h>
 #include <gfx/GfxSystem.h>
-#include <gfx-ui/GfxEdit.h>
 #include <gfx-ui/Viewport.h>
+#include <gfx-edit/GfxEdit.h>
 
 #include <uio/Edit/Section.h>
 #include <uio/Edit/Injector.h>

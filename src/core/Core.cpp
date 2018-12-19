@@ -8,7 +8,7 @@
 
 
 #include <core/World/Section.h>
-#include <math/Anim/Anim.h>
+#include <core/Anim/Anim.h>
 
 #define TOY_POOL_IMPLEMENTATION
 #include <pool/Pool.h>

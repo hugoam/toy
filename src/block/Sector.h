@@ -6,7 +6,7 @@
 #pragma once
 
 #include <ecs/Proto.h>
-#include <procgen-gfx/Wfc/Tileblock.h>
+#include <wfc-gfx/Wfc/Tileblock.h>
 #include <core/WorldPage/WorldPage.h>
 //#include <core/WorldPage/BufferPage.h>
 #include <core/Navmesh/Navmesh.h>

@@ -8,7 +8,7 @@
 #ifndef MUD_MODULES
 #include <meta/type/Module.h>
 #include <meta/math/Module.h>
-#include <meta/procgen-gfx/Module.h>
+#include <meta/wfc-gfx/Module.h>
 #include <meta/core/Module.h>
 #include <meta/visu/Module.h>
 #include <meta/edit/Module.h>

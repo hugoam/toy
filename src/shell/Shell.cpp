@@ -129,7 +129,7 @@ using namespace mud; namespace toy
 		, m_game(m_user, *m_gfx_system)
 	{
 		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_proto::m(), &mud_tree::m() });
-		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_procgen::m(), &mud_lang::m() });
+		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(), &mud_lang::m() });
 		System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
 
 		static Meta m = { type<VirtualMethod>(), &namspc({}), "VirtualMethod", sizeof(VirtualMethod), TypeClass::Object };
@@ -154,6 +154,18 @@ using namespace mud; namespace toy
 	GameShell::~GameShell()
     {
 		m_job_system->emancipate();
+	}
+
+	template <class T_Asset>
+	void add_asset_loader(AssetStore<T_Asset>& store, cstring format)
+	{
+		auto loader = [&](GfxSystem& gfx_system, T_Asset& asset, cstring path)
+		{
+			UNUSED(gfx_system);
+			unpack_json_file(Ref(&asset), string(path) + store.m_cformats[0]);
+		};
+
+		store.add_format(format, loader);
 	}
 
 	void GameShell::init()
@@ -191,11 +203,15 @@ using namespace mud; namespace toy
 		string stylesheet = "minimal.yml";
 		//string stylesheet = "vector.yml";
 		//string stylesheet = "blendish_dark.yml";
-		set_style_sheet(*m_ui_window->m_styler, (string(m_ui_window->m_resource_path) + "interface/styles/" + stylesheet).c_str());
+		//set_style_sheet(*m_ui_window->m_styler, (string(m_ui_window->m_resource_path) + "interface/styles/" + stylesheet).c_str());
 
-		declare_gfx_edit();
+		style_minimal(*m_ui_window);
+
+		//declare_gfx_edit();
 
 		m_ui = m_ui_window->m_root_sheet.get();
+
+		add_asset_loader(m_gfx_system->particles(), ".ptc");
 	}
 
 	void GameShell::reset_interpreters(bool reflect)

@@ -1,3 +1,4 @@
+#include <core/Anim/Anim.h>
 #include <core/Bullet.h>
 #include <core/Core.h>
 #include <core/Forward.h>

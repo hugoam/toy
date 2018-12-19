@@ -6,7 +6,7 @@
 
 #include <type/Forward.h>
 #include <math/Forward.h>
-#include <procgen-gfx/Forward.h>
+#include <wfc-gfx/Forward.h>
 #include <core/Forward.h>
 #include <visu/Forward.h>
 #include <edit/Forward.h>

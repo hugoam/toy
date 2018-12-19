@@ -27,7 +27,9 @@ namespace toy
         mud_srlz::m();
         mud_math::m();
         mud_geom::m();
-        mud_procgen::m();
+		mud_noise::m();
+		mud_wfc::m();
+		mud_fract::m();
         mud_lang::m();
         mud_ctx::m();
         mud_ui::m();
@@ -41,7 +43,7 @@ namespace toy
         mud_gfx_gltf::m();
         mud_gfx_ui::m();
         mud_tool::m();
-        mud_procgen_gfx::m();
+        mud_wfc_gfx::m();
 
         // setup reflection meta data
 		toy_shell_meta(*this);
