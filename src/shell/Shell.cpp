@@ -270,14 +270,6 @@ using namespace mud; namespace toy
 #endif
 	}
 
-	void GameShell::run_game(GameModule& module, size_t iterations)
-	{
-		this->load(module);
-		//this->start_game();
-		m_pump = [&]() { this->pump_game(); };
-		this->run(iterations);
-	}
-
 	void GameShell::run_script(Module& module, const string& file, bool run)
 	{
 		string path = "scripts/" + file;
@@ -330,10 +322,18 @@ using namespace mud; namespace toy
 		this->run(0);
 	}
 
+	void GameShell::run_game(GameModule& module, size_t iterations)
+	{
+		this->load(module);
+		//this->start_game();
+		m_pump = [&]() { this->pump_game(); };
+		this->run(iterations);
+	}
+
 	void GameShell::run_editor(GameModule& module, size_t iterations)
 	{
 		this->load(module);
-		this->start_game();
+		//this->start_game();
 		m_pump = [&]() { this->pump_editor(); };
 		this->run(iterations);
 	}
