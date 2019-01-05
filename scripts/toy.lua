@@ -83,7 +83,6 @@ toy.core.aliases = { ['toy::string'] = 'std::string' }
 
 toy.toy = { toy.util, toy.core, toy.visu, toy.edit, toy.block, toy.shell }
 
-
 group "lib"
 if _OPTIONS["as-libs"] then
     group "lib/toy"
@@ -96,6 +95,8 @@ else
             path.join(TOY_SRC_DIR, "toy",    "**.h"),
         }
 end
+
+toy.all = table.union(mud.mud, toy.toy)
 
 group "bin"
 --dofile(path.join(TOY_DIR, "scripts/shell.lua"))

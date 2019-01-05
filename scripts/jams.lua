@@ -17,8 +17,6 @@ function uses_jam()
     end
 end
 
-toy.all = table.union(mud.mud, toy.toy)
-
 test        = mud_module(nil, "_test",      path.join(TOY_DIR, "jams"), "test",     nil, nil, uses_jam, toy.all)
 minimal     = mud_module(nil, "_minimal",   path.join(TOY_DIR, "jams"), "minimal",  nil, nil, uses_jam, toy.all)
 boids       = mud_module(nil, "_boids",     path.join(TOY_DIR, "jams"), "boids",    nil, nil, uses_jam, toy.all)
