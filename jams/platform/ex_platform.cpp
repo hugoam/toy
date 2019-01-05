@@ -586,9 +586,9 @@ void paint_viewer(Viewer& viewer)
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
 
-	viewer.m_filters.m_glow.m_enabled = true;
+	//viewer.m_filters.m_glow.m_enabled = true;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	viewer.m_filters.m_glow.m_bicubic_filter = true;
+	//viewer.m_filters.m_glow.m_bicubic_filter = true;
 #endif
 }
 

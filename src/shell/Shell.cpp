@@ -128,7 +128,7 @@ using namespace mud; namespace toy
 		, m_editor(*m_gfx_system)
 		, m_game(m_user, *m_gfx_system)
 	{
-		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_proto::m(), &mud_tree::m() });
+		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
 		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(), &mud_lang::m() });
 		System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
 
@@ -190,12 +190,7 @@ using namespace mud; namespace toy
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
-#ifdef MUD_GFX_DEFERRED
-		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline, true);
-#else
-		pipeline_pbr(*m_gfx_system, *m_gfx_system->m_pipeline);
-#endif
-		m_gfx_system->init_pipeline();
+		m_gfx_system->init_pipeline(pipeline_pbr);
 
 		static ImporterOBJ obj_importer(*m_gfx_system);
 		static ImporterGltf gltf_importer(*m_gfx_system);

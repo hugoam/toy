@@ -15,16 +15,8 @@ module toy.core;
 namespace toy
 {
 	toy_core::toy_core()
-		: Module("toy::core")
+		: Module("toy::core", { &mud_type::m(), &mud_ecs::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m(), &toy_util::m() })
 	{
-        // ensure dependencies are instantiated
-        mud_type::m();
-        mud_proto::m();
-        mud_math::m();
-        mud_geom::m();
-        mud_lang::m();
-        toy_util::m();
-
         // setup reflection meta data
 		toy_core_meta(*this);
 	}

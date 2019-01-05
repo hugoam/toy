@@ -15,12 +15,8 @@ module toy.util;
 namespace toy
 {
 	toy_util::toy_util()
-		: Module("toy::util")
+		: Module("toy::util", { &mud_type::m(), &mud_math::m() })
 	{
-        // ensure dependencies are instantiated
-        mud_type::m();
-        mud_math::m();
-
         // setup reflection meta data
 		toy_util_meta(*this);
 	}

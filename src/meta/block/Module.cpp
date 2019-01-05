@@ -15,16 +15,8 @@ module toy.block;
 namespace toy
 {
 	toy_block::toy_block()
-		: Module("toy::block")
+		: Module("toy::block", { &mud_type::m(), &mud_math::m(), &mud_wfc_gfx::m(), &toy_core::m(), &toy_visu::m(), &toy_edit::m() })
 	{
-        // ensure dependencies are instantiated
-        mud_type::m();
-        mud_math::m();
-        mud_wfc_gfx::m();
-        toy_core::m();
-        toy_visu::m();
-        toy_edit::m();
-
         // setup reflection meta data
 		toy_block_meta(*this);
 	}

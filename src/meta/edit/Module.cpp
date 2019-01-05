@@ -15,16 +15,8 @@ module toy.edit;
 namespace toy
 {
 	toy_edit::toy_edit()
-		: Module("toy::edit")
+		: Module("toy::edit", { &mud_type::m(), &mud_ui::m(), &mud_tool::m(), &toy_util::m(), &toy_core::m(), &toy_visu::m() })
 	{
-        // ensure dependencies are instantiated
-        mud_type::m();
-        mud_ui::m();
-        mud_tool::m();
-        toy_util::m();
-        toy_core::m();
-        toy_visu::m();
-
         // setup reflection meta data
 		toy_edit_meta(*this);
 	}

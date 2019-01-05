@@ -108,10 +108,6 @@ end
 
 function toy_shell(name, modules, deps)
     toy_binary(name, modules, deps)
-    
-    files {
-        path.join(MUD_DIR, "src", "mud", "Shell.cpp"),
-    }
 end
 
 function toy_dll(name, modules, deps)

@@ -15,14 +15,8 @@ module toy.visu;
 namespace toy
 {
 	toy_visu::toy_visu()
-		: Module("toy::visu")
+		: Module("toy::visu", { &mud_type::m(), &mud_gfx::m(), &toy_util::m(), &toy_core::m() })
 	{
-        // ensure dependencies are instantiated
-        mud_type::m();
-        mud_gfx::m();
-        toy_util::m();
-        toy_core::m();
-
         // setup reflection meta data
 		toy_visu_meta(*this);
 	}

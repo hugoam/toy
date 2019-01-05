@@ -15,7 +15,7 @@
 #include <core/World/World.h>
 #include <core/Physic/PhysicWorld.h>
 
-#include <uio/Edit/Section.h>
+#include <ui/Section.h>
 #include <visu/VisuScene.h>
 
 #include <edit/Controller/RTSCameraController.h>

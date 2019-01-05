@@ -27,7 +27,7 @@
 #include <gfx-ui/Viewport.h>
 #include <gfx-edit/GfxEdit.h>
 
-#include <uio/Edit/Section.h>
+#include <ui/Section.h>
 #include <uio/Edit/Injector.h>
 #include <uio/Edit/Indexer.h>
 #include <uio/Edit/Structure.h>

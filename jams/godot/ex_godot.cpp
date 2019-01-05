@@ -557,9 +557,9 @@ void paint_viewer(Viewer& viewer)
 
 	//viewer.m_filters.m_tonemap.m_mode = TonemapMode::ACES;
 
-	viewer.m_filters.m_glow.m_enabled = true;
+	//viewer.m_filters.m_glow.m_enabled = true;
 #ifndef MUD_GODOT_EMSCRIPTEN
-	viewer.m_filters.m_glow.m_bicubic_filter = true;
+	//viewer.m_filters.m_glow.m_bicubic_filter = true;
 #endif
 }
 
