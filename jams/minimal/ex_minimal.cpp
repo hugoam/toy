@@ -301,7 +301,7 @@ public:
 			UNUSED(dockbar);
 			static GameScene& scene = app.add_scene();
 			Viewer& viewer = ui::viewer(parent, scene.m_scene);
-			viewer.m_filters.m_glow.m_enabled = true;
+			//viewer.m_filters.m_glow.m_enabled = true;
 
 			Player& player = val<Player>(game.m_player);
 			ex_minimal_game_hud(viewer, scene, *player.m_human);

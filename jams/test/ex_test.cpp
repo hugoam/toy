@@ -78,9 +78,7 @@ void Shell::init()
 	m_context = m_gfx_system.create_context("mud EditorCore", 1600, 900, false);
 	GfxContext& context = as<GfxContext>(*m_context);
 
-	//pipeline_minimal(m_gfx_system, *m_gfx_system.m_pipeline);
-	pipeline_pbr(m_gfx_system, *m_gfx_system.m_pipeline);
-	m_gfx_system.init_pipeline();
+	m_gfx_system.init_pipeline(pipeline_pbr);
 }
 
 
