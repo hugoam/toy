@@ -536,11 +536,11 @@ void paint_viewer(Viewer& viewer)
 {
 	viewer.m_camera.m_far = 500.f;
 
-	viewer.m_filters.m_glow.m_enabled = true;
-	viewer.m_filters.m_glow.m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
-	viewer.m_filters.m_glow.m_intensity = 0.8f;
+	//viewer.m_filters.m_glow.m_enabled = true;
+	//viewer.m_filters.m_glow.m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
+	//viewer.m_filters.m_glow.m_intensity = 0.8f;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	viewer.m_filters.m_glow.m_bicubic_filter = true;
+	//viewer.m_filters.m_glow.m_bicubic_filter = true;
 #endif
 }
 
