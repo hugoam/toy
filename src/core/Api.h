@@ -2,6 +2,8 @@
 #include <core/Bullet.h>
 #include <core/Core.h>
 #include <core/Forward.h>
+#include <core/Handles.h>
+#include <core/HandlesDecl.h>
 #include <core/Structs.h>
 #include <core/Types.h>
 #include <core/User.h>

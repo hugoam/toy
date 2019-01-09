@@ -8,7 +8,7 @@
 #include <ecs/Entity.h>
 #include <math/Math.h>
 #include <block/Forward.h>
-#include <block/Components.h>
+#include <block/Handles.h>
 #include <core/Spatial/Spatial.h>
 #include <ecs/ECS.h>
 

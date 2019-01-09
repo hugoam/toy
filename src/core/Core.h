@@ -6,14 +6,12 @@
 #pragma once
 
 #include <infra/NonCopy.h>
+#include <ecs/Loop.h>
 #include <core/Forward.h>
 #include <core/World/Section.h>
-
 #include <core/World/World.h>
-#include <core/Bullet/BulletWorld.h>
 #include <core/Navmesh/Navmesh.h>
-
-#include <ecs/Loop.h>
+#include <core/Bullet/BulletWorld.h>
 
 #ifndef MUD_CPP_20
 #include <map>

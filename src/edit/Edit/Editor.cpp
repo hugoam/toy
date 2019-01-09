@@ -64,7 +64,7 @@ using namespace mud; namespace toy
 
 	string to_icon(const string& name)
 	{
-		string clean = replace_all(to_lower(name), " ", "_");
+		string clean = replace(to_lower(name), " ", "_");
 		return "(" + clean + ")";
 	}
 

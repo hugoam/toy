@@ -15,72 +15,8 @@
 #define TOY_BLOCK_EXPORT MUD_IMPORT
 #endif
 
-
-    
-    
-
-namespace std {
-
-    
-    
-}
-
-namespace mud {
-namespace ui {
-
-    
-    
-}
-}
-
-namespace glm {
-
-    
-    
-}
-
-namespace mud {
-namespace gfx {
-
-    
-    
-}
-}
-
-namespace json11 {
-
-    
-    
-}
-
-namespace mud {
-
-    
-    
-}
-
-namespace mud {
-namespace detail {
-
-    
-    
-}
-}
-
-namespace bgfx {
-
-    
-    
-}
-
-namespace bimg {
-
-    
-    
-}
-
-namespace toy {
-
+namespace toy
+{
     enum class MatterState : unsigned int;
     
     
@@ -103,10 +39,3 @@ namespace toy {
     class Tileblock;
     struct BlockState;
 }
-
-namespace bx {
-
-    
-    
-}
-

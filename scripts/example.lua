@@ -2,7 +2,7 @@
 -- toy example modules
 
 function toy_example(name, deps)
-    _G[name] = mud_module(nil, "_" .. name, path.join(TOY_DIR, "example"), name, nil, nil, nil, toy.toy)
+    _G[name] = mud_module(nil, "_" .. name, path.join(TOY_DIR, "example"), name, nil, nil, false, toy.toy)
         
     toy_shell("_" .. name, table.union({ _G[name] }, deps))
 end

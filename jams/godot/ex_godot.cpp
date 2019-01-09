@@ -808,7 +808,7 @@ public:
 		scene.range_entity_painter<Crate>(reference, 100.f, "Crates", world, paint_crate);
 		scene.range_entity_painter<Bullet>(reference, 100.f, "Bullets", world, paint_bullet);
 
-		physic_painter(scene);
+		//physic_painter(scene);
 	}
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final

@@ -12,7 +12,6 @@
 #include <core/Navmesh/Navmesh.h>
 #include <block/Forward.h>
 #include <block/Element.h>
-#include <block/Components.h>
 #include <block/Structs.h>
 
 #ifndef MUD_CPP_20

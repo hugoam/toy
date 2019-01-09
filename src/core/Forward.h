@@ -15,72 +15,8 @@
 #define TOY_CORE_EXPORT MUD_IMPORT
 #endif
 
-
-    
-    
-
-namespace std {
-
-    
-    
-}
-
-namespace mud {
-namespace ui {
-
-    
-    
-}
-}
-
-namespace glm {
-
-    
-    
-}
-
-namespace bx {
-
-    
-    
-}
-
-namespace json11 {
-
-    
-    
-}
-
-namespace mud {
-
-    
-    
-}
-
-namespace mud {
-namespace detail {
-
-    
-    
-}
-}
-
-namespace mud {
-namespace gfx {
-
-    
-    
-}
-}
-
-namespace bimg {
-
-    
-    
-}
-
-namespace toy {
-
+namespace toy
+{
     enum class Task : unsigned int;
     enum SamplePolyAreas : unsigned int;
     enum SamplePolyFlags : unsigned int;
@@ -151,10 +87,3 @@ namespace toy {
     class WorldMedium;
     class WorldPage;
 }
-
-namespace bgfx {
-
-    
-    
-}
-
