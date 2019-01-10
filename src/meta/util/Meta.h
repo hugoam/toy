@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #ifndef MUD_MODULES
@@ -14,19 +12,14 @@
 namespace mud
 {
     void toy_util_meta(Module& m)
-    {   
+    {
+    
     // Base Types
     
     // Enums
     
     // Sequences
     
-    
-    
-    
-    
-    
-        
     // toy::Procedure
     {
         static Meta meta = { type<toy::Procedure>(), &namspc({ "toy" }), "Procedure", sizeof(toy::Procedure), TypeClass::Object };
@@ -50,15 +43,8 @@ namespace mud
             {
             }
         };
-        
-        
-        
-        
         meta_class<toy::Procedure>();
     }
-    
-    
-        
     // toy::ProcedureType
     {
         static Meta meta = { type<toy::ProcedureType>(), &namspc({ "toy" }), "ProcedureType", sizeof(toy::ProcedureType), TypeClass::Object };
@@ -85,31 +71,9 @@ namespace mud
             {
             }
         };
-        
-        
-        
-        
         meta_class<toy::ProcedureType>();
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    
-
-    
         m.m_types.push_back(&type<toy::Procedure>());
         m.m_types.push_back(&type<toy::ProcedureType>());
-    
     }
 }

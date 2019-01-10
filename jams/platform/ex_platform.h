@@ -35,8 +35,8 @@ public:
 	~TileWorld();
 
 	attr_ World m_world;
-	attr_ BulletWorld m_bullet_world;
-	attr_ Navmesh m_navmesh;
+	attr_ comp_ BulletWorld m_bullet_world;
+	attr_ comp_ Navmesh m_navmesh;
 
 	uvec3 m_block_subdiv = uvec3(20, 4, 20);
 	vec3 m_tile_scale = vec3(4.f);

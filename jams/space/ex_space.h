@@ -1008,7 +1008,7 @@ public:
 	~Universe();
 
 	attr_ World m_world;
-	attr_ BulletWorld m_bullet_world;
+	attr_ comp_ BulletWorld m_bullet_world;
 
 	std::vector<HGalaxy> m_galaxies;
 

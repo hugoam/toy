@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #ifndef MUD_MODULES
@@ -14,13 +12,13 @@
 namespace mud
 {
     void _wren_meta(Module& m)
-    {   
+    {
+    
     // Base Types
     
     // Enums
     
     // Sequences
     
-
     }
 }

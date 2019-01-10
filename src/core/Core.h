@@ -40,7 +40,7 @@ using namespace mud; namespace toy
 		~DefaultWorld();
 
 		attr_ World m_world;
-		attr_ BulletWorld m_bullet_world;
-		attr_ Navmesh m_navmesh;
+		attr_ comp_ BulletWorld m_bullet_world;
+		attr_ comp_ Navmesh m_navmesh;
 	};
 }

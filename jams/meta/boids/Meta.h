@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #ifndef MUD_MODULES
@@ -14,21 +12,17 @@
 namespace mud
 {
     void _boids_meta(Module& m)
-    {   
+    {
+    
     // Base Types
     
     // Enums
     
     // Sequences
     
-    
-    
-    
-    
-        
-    // Player
+    // boids::Player
     {
-        static Meta meta = { type<boids::Player>(), &namspc({}), "Player", sizeof(boids::Player), TypeClass::Object };
+        static Meta meta = { type<boids::Player>(), &namspc({ "boids" }), "Player", sizeof(boids::Player), TypeClass::Object };
         static Class cls = { type<boids::Player>(),
             // bases
             {  },
@@ -49,22 +43,8 @@ namespace mud
             {
             }
         };
-        
-        
-        
-        
         meta_class<boids::Player>();
     }
-    
-    
-    
-    
-    
-    
-    
-
-    
         m.m_types.push_back(&type<boids::Player>());
-    
     }
 }

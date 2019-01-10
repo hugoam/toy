@@ -1,4 +1,3 @@
-
 #pragma once
 
 #if !defined MUD_MODULES || defined MUD_TYPE_LIB
@@ -11,7 +10,7 @@
 #include <meta/util/Module.h>
 #include <meta/core/Module.h>
 #endif
-        
+
 #include <visu/Forward.h>
 #include <visu/Types.h>
 #include <visu/Api.h>
@@ -28,7 +27,7 @@ namespace toy
 	{
 	private:
 		toy_visu();
-
+		
 	public:
 		static toy_visu& m() { static toy_visu instance; return instance; }
 	};

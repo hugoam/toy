@@ -17,7 +17,7 @@ namespace toy
 	toy_block::toy_block()
 		: Module("toy::block", { &mud_type::m(), &mud_math::m(), &mud_wfc_gfx::m(), &toy_core::m(), &toy_visu::m(), &toy_edit::m() })
 	{
-        // setup reflection meta data
+		// setup reflection meta data
 		toy_block_meta(*this);
 	}
 }
@@ -26,6 +26,6 @@ namespace toy
 extern "C"
 Module& getModule()
 {
-	return toy_block::m();
+		return toy_block::m();
 }
 #endif

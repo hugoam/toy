@@ -17,7 +17,7 @@ namespace toy
 	toy_util::toy_util()
 		: Module("toy::util", { &mud_type::m(), &mud_math::m() })
 	{
-        // setup reflection meta data
+		// setup reflection meta data
 		toy_util_meta(*this);
 	}
 }
@@ -26,6 +26,6 @@ namespace toy
 extern "C"
 Module& getModule()
 {
-	return toy_util::m();
+		return toy_util::m();
 }
 #endif

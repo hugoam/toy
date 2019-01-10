@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <minimal/Types.h>
@@ -11,5 +10,5 @@
 
 namespace mud
 {
-    
+	
 }

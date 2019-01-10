@@ -9,11 +9,12 @@
 
 #ifndef MUD_MODULES
 #include <infra/Types.h>
+#include <jobs/Types.h>
 #include <type/Types.h>
+#include <tree/Types.h>
 #include <pool/Types.h>
 #include <refl/Types.h>
 #include <ecs/Types.h>
-#include <tree/Types.h>
 #include <srlz/Types.h>
 #include <math/Types.h>
 #include <geom/Types.h>
@@ -24,15 +25,14 @@
 #include <ctx/Types.h>
 #include <ui/Types.h>
 #include <uio/Types.h>
-#include <snd/Types.h>
-#include <ctx-glfw/Types.h>
-#include <ui-vg/Types.h>
 #include <bgfx/Types.h>
 #include <gfx/Types.h>
 #include <gfx-pbr/Types.h>
 #include <gfx-obj/Types.h>
+#include <gltf/Types.h>
 #include <gfx-gltf/Types.h>
 #include <gfx-ui/Types.h>
+#include <gfx-edit/Types.h>
 #include <tool/Types.h>
 #include <wfc-gfx/Types.h>
 #include <util/Types.h>
@@ -55,16 +55,6 @@ namespace mud
     // Exported types
     
     export_ template <> _BOIDS_EXPORT Type& type<boids::Player>();
-
-	export_ template <> _BOIDS_EXPORT Type& type<boids::Position>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::Heading>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::Rotation>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::MoveSpeed>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::MoveForward>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::Transform4>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::Boid>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::BoidTarget>();
-	export_ template <> _BOIDS_EXPORT Type& type<boids::BoidObstacle>();
-
-	export_ template struct _BOIDS_EXPORT Typed<std::vector<boids::Player*>>;
+    
+    export_ template struct _BOIDS_EXPORT Typed<std::vector<boids::Player*>>;
 }

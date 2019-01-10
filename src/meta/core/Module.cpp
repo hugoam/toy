@@ -15,9 +15,9 @@ module toy.core;
 namespace toy
 {
 	toy_core::toy_core()
-		: Module("toy::core", { &mud_type::m(), &mud_ecs::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m(), &toy_util::m() })
+		: Module("toy::core", { &mud_type::m(), &mud_jobs::m(), &mud_ecs::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m(), &toy_util::m() })
 	{
-        // setup reflection meta data
+		// setup reflection meta data
 		toy_core_meta(*this);
 	}
 }
@@ -26,6 +26,6 @@ namespace toy
 extern "C"
 Module& getModule()
 {
-	return toy_core::m();
+		return toy_core::m();
 }
 #endif

@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <platform/Types.h>
@@ -11,8 +10,8 @@
 
 namespace mud
 {
-    export_ template <> inline void from_string(const string& str, Faction& val) { val = static_cast<Faction>(enu<Faction>().value(str.c_str())); };
-    export_ template <> inline void to_string(const Faction& val, string& str) { str = enu<Faction>().m_map[size_t(val)]; };
-    
-    
+	export_ template <> inline void from_string(const string& str, Faction& val) { val = Faction(enu<Faction>().value(str.c_str())); };
+	export_ template <> inline void to_string(const Faction& val, string& str) { str = enu<Faction>().name(uint32_t(val)); };
+	
+	
 }

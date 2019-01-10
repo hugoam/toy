@@ -478,7 +478,7 @@ void paint_human(Gnode& parent, Human& human)
 	Animated& animated = gfx::animated(self, item);
 
 	if(animated.m_playing.empty() || animated.playing() != human.m_state.name)
-		animated.play(human.m_state.name.c_str(), human.m_state.loop, 0.f, human.m_walk ? 0.7f : 1.f);
+		animated.start(human.m_state.name.c_str(), human.m_state.loop, 0.f, human.m_walk ? 0.7f : 1.f);
 
 	Bone* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
 
@@ -803,7 +803,7 @@ Viewer& ex_platform_menu_viewport(Widget& parent, GameShell& app)
 	Animated& animated = gfx::animated(node, item);
 	 
 	if(animated.m_playing.empty())
-		animated.play("IdleAim", true, 0.f);
+		animated.start("IdleAim", true, 0.f);
 
 	return viewer;
 }

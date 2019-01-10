@@ -15,12 +15,9 @@ module toy.shell;
 namespace toy
 {
 	toy_shell::toy_shell()
-		: Module("toy::shell", { &mud_ecs::m(), &mud_tree::m(), &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(),
-								 &mud_lang::m(), &mud_ctx::m(), &mud_ui::m(), &mud_uio::m(), &mud_ui_vg::m(), &mud_bgfx::m(), &mud_gfx::m(),
-								 &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m(), &mud_wfc_gfx::m(),
-								 &toy_core::m(), &toy_visu::m(), &toy_edit::m(), &toy_block::m() })
+		: Module("toy::shell", { &toy_core::m(), &toy_visu::m(), &toy_edit::m(), &toy_block::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(), &mud_lang::m(), &mud_ctx::m(), &mud_ui::m(), &mud_uio::m(), &mud_bgfx::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gltf::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_gfx_edit::m(), &mud_tool::m(), &mud_wfc_gfx::m() })
 	{
-        // setup reflection meta data
+		// setup reflection meta data
 		toy_shell_meta(*this);
 	}
 }
@@ -29,6 +26,6 @@ namespace toy
 extern "C"
 Module& getModule()
 {
-	return toy_shell::m();
+		return toy_shell::m();
 }
 #endif

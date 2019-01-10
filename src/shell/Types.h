@@ -12,8 +12,9 @@
 #include <visu/Types.h>
 #include <edit/Types.h>
 #include <block/Types.h>
+#include <pool/Types.h>
+#include <refl/Types.h>
 #include <ecs/Types.h>
-#include <tree/Types.h>
 #include <srlz/Types.h>
 #include <math/Types.h>
 #include <geom/Types.h>
@@ -24,14 +25,14 @@
 #include <ctx/Types.h>
 #include <ui/Types.h>
 #include <uio/Types.h>
-#include <ctx-glfw/Types.h>
-#include <ui-vg/Types.h>
 #include <bgfx/Types.h>
 #include <gfx/Types.h>
 #include <gfx-pbr/Types.h>
 #include <gfx-obj/Types.h>
+#include <gltf/Types.h>
 #include <gfx-gltf/Types.h>
 #include <gfx-ui/Types.h>
+#include <gfx-edit/Types.h>
 #include <tool/Types.h>
 #include <wfc-gfx/Types.h>
 #endif
@@ -51,12 +52,12 @@ namespace mud
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::Game>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModule>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>();
-    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     
-	export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::Game*>>;
-	export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModule*>>;
-	export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameShell*>>;
-	export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameScene*>>;
-	export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModuleBind*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::Game*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModule*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameShell*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModuleBind*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameScene*>>;
 }

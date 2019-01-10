@@ -1,4 +1,3 @@
-
 #pragma once
 
 #if !defined MUD_MODULES || defined MUD_TYPE_LIB
@@ -9,7 +8,7 @@
 #include <meta/type/Module.h>
 #include <meta/math/Module.h>
 #endif
-        
+
 #include <util/Forward.h>
 #include <util/Types.h>
 #include <util/Api.h>
@@ -26,7 +25,7 @@ namespace toy
 	{
 	private:
 		toy_util();
-
+		
 	public:
 		static toy_util& m() { static toy_util instance; return instance; }
 	};
