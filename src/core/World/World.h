@@ -104,6 +104,6 @@ using namespace mud; namespace toy
 		ECS& ecs = parent->m_world->m_ecs;
 		ComponentHandle<T> object = T::create(ecs, parent, std::forward<Types>(args)...);
 		parent->m_contents.push_back(object->m_spatial);
-		return { object.m_handle, object.m_stream };
+		return { object.m_handle, object.m_ecs };
 	}
 }
