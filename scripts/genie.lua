@@ -18,14 +18,14 @@ PROJECT_DIR = path.getabsolute("..")
 BUILD_DIR = path.join(path.getabsolute(".."), "build")
 
 dofile "toolchain.lua"
-
 dofile "toy.lua"
+
 group "bin"
 dofile "jams.lua"
 
-mud_binary("metagen", { mud.clrefl }, {})
+--mud_binary("metagen", { mud.clrefl }, {})
 
 --dofile "editor.lua"
 --dofile "example.lua"
 
-dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))
+--dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))
