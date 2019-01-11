@@ -140,7 +140,7 @@ namespace mud
                 { type<Human>(), member_address(&Human::m_headlight), type<bool>(), "headlight", var(bool(true)), Member::Value, nullptr },
                 { type<Human>(), member_address(&Human::m_shield), type<bool>(), "shield", var(bool(false)), Member::Value, nullptr },
                 { type<Human>(), member_address(&Human::m_walk), type<bool>(), "walk", var(bool(true)), Member::Value, nullptr },
-                { type<Human>(), member_address(&Human::m_target), type<Human>(), "target", Ref(type<Human>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
+                { type<Human>(), member_address(&Human::m_target), type<HHuman>(), "target", var(HHuman{}), Member::Value, nullptr },
                 { type<Human>(), member_address(&Human::m_dest), type<mud::vec3>(), "dest", var(mud::vec3(Zero3)), Member::Value, nullptr },
                 { type<Human>(), member_address(&Human::m_cooldown), type<float>(), "cooldown", var(float(0.f)), Member::Value, nullptr },
                 { type<Human>(), member_address(&Human::m_state), type<Stance>(), "state", var(Stance{"IdleAim",true}), Member::Value, nullptr }
@@ -271,6 +271,110 @@ namespace mud
         init_pool<WorldBlock>();
         meta_class<WorldBlock>();
     }
+    // ComponentHandle<Bullet>
+    {
+        static Meta meta = { type<ComponentHandle<Bullet>>(), &namspc({}), "ComponentHandle<Bullet>", sizeof(ComponentHandle<Bullet>), TypeClass::Struct };
+        static Class cls = { type<ComponentHandle<Bullet>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<ComponentHandle<Bullet>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<ComponentHandle<Bullet>>(), [](Ref ref, Ref other) { new(&val<ComponentHandle<Bullet>>(ref)) ComponentHandle<Bullet>(val<ComponentHandle<Bullet>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<ComponentHandle<Bullet>>();
+    }
+    // ComponentHandle<Crate>
+    {
+        static Meta meta = { type<ComponentHandle<Crate>>(), &namspc({}), "ComponentHandle<Crate>", sizeof(ComponentHandle<Crate>), TypeClass::Struct };
+        static Class cls = { type<ComponentHandle<Crate>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<ComponentHandle<Crate>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<ComponentHandle<Crate>>(), [](Ref ref, Ref other) { new(&val<ComponentHandle<Crate>>(ref)) ComponentHandle<Crate>(val<ComponentHandle<Crate>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<ComponentHandle<Crate>>();
+    }
+    // ComponentHandle<Human>
+    {
+        static Meta meta = { type<ComponentHandle<Human>>(), &namspc({}), "ComponentHandle<Human>", sizeof(ComponentHandle<Human>), TypeClass::Struct };
+        static Class cls = { type<ComponentHandle<Human>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<ComponentHandle<Human>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<ComponentHandle<Human>>(), [](Ref ref, Ref other) { new(&val<ComponentHandle<Human>>(ref)) ComponentHandle<Human>(val<ComponentHandle<Human>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<ComponentHandle<Human>>();
+    }
+    // ComponentHandle<Lamp>
+    {
+        static Meta meta = { type<ComponentHandle<Lamp>>(), &namspc({}), "ComponentHandle<Lamp>", sizeof(ComponentHandle<Lamp>), TypeClass::Struct };
+        static Class cls = { type<ComponentHandle<Lamp>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<ComponentHandle<Lamp>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<ComponentHandle<Lamp>>(), [](Ref ref, Ref other) { new(&val<ComponentHandle<Lamp>>(ref)) ComponentHandle<Lamp>(val<ComponentHandle<Lamp>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<ComponentHandle<Lamp>>();
+    }
         m.m_types.push_back(&type<Aim>());
         m.m_types.push_back(&type<Bullet>());
         m.m_types.push_back(&type<Crate>());
@@ -280,5 +384,9 @@ namespace mud
         m.m_types.push_back(&type<Player>());
         m.m_types.push_back(&type<Stance>());
         m.m_types.push_back(&type<WorldBlock>());
+        m.m_types.push_back(&type<ComponentHandle<Bullet>>());
+        m.m_types.push_back(&type<ComponentHandle<Crate>>());
+        m.m_types.push_back(&type<ComponentHandle<Human>>());
+        m.m_types.push_back(&type<ComponentHandle<Lamp>>());
     }
 }

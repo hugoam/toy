@@ -21,4 +21,8 @@ namespace mud
     template <> _GODOT_EXPORT Type& type<Player>() { static Type ty("Player", sizeof(Player)); return ty; }
     template <> _GODOT_EXPORT Type& type<Stance>() { static Type ty("Stance", sizeof(Stance)); return ty; }
     template <> _GODOT_EXPORT Type& type<WorldBlock>() { static Type ty("WorldBlock", sizeof(WorldBlock)); return ty; }
+    template <> _GODOT_EXPORT Type& type<ComponentHandle<Bullet>>() { static Type ty("ComponentHandle<Bullet>", type<mud::Entity>(), sizeof(ComponentHandle<Bullet>)); return ty; }
+    template <> _GODOT_EXPORT Type& type<ComponentHandle<Crate>>() { static Type ty("ComponentHandle<Crate>", type<mud::Entity>(), sizeof(ComponentHandle<Crate>)); return ty; }
+    template <> _GODOT_EXPORT Type& type<ComponentHandle<Human>>() { static Type ty("ComponentHandle<Human>", type<mud::Entity>(), sizeof(ComponentHandle<Human>)); return ty; }
+    template <> _GODOT_EXPORT Type& type<ComponentHandle<Lamp>>() { static Type ty("ComponentHandle<Lamp>", type<mud::Entity>(), sizeof(ComponentHandle<Lamp>)); return ty; }
 }
