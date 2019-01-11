@@ -151,7 +151,7 @@ namespace boids
 				distance = nearest ? d : distance;
 				index = nearest ? i : index;
 			}
-			return { index, bx::sqrt(distance) };
+			return { index, sqrtf(distance) };
 		};
 
 		vec3 position = cells.separation[index] / vec3(float(cells.count[index]));
@@ -304,12 +304,12 @@ namespace boids
 			BoidsData& data = m_data;
 			BoidParams4 params4 = params;
 
+			ComponentArray<Position> obstacles = ecs.Components<Position, BoidObstacle>();
+			ComponentArray<Position> targets = ecs.Components<Position, BoidTarget>();
+
 			std::vector<ParallelBuffers*> matches = ecs.Match(prototype);
 			for(ParallelBuffers* stream : matches)
 			{
-				ComponentArray<Position> obstacles = ecs.Components<Position, BoidObstacle>();
-				ComponentArray<Position> targets = ecs.Components<Position, BoidTarget>();
-
 				const ComponentBuffer<Position>& positions = stream->Buffer<Position>();
 				ComponentBuffer<Heading>& headings = stream->Buffer<Heading>();
 				const uint32_t count = uint32_t(positions.m_data.size());

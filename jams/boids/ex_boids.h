@@ -98,7 +98,7 @@ namespace boids
 		T m_value;
 	};
 
-	struct Position
+	struct refl_ Position
 	{
 		Position() {}
 		Position(vec3 value) : m_value(value) {}
@@ -107,7 +107,7 @@ namespace boids
 		vec3 m_value = vec3(0.f);
 	};
 
-	struct Heading
+	struct refl_ Heading
 	{
 		Heading() {}
 		Heading(vec3 value) : m_value(value) {}
@@ -116,7 +116,7 @@ namespace boids
 		vec3 m_value = { 0.f, 0.f, -1.f, 0.f };
 	};
 
-	struct Rotation
+	struct refl_ Rotation
 	{
 		Rotation() {}
 		Rotation(quat value) : m_value(value) {}
@@ -125,7 +125,7 @@ namespace boids
 		quat m_value = ZeroQuat;
 	};
 
-	struct MoveSpeed
+	struct refl_ MoveSpeed
 	{
 		MoveSpeed() {}
 		MoveSpeed(float value) : m_value(value) {}
@@ -134,7 +134,7 @@ namespace boids
 		float m_value = 1.f;
 	};
 
-	struct Transform4
+	struct refl_ Transform4
 	{
 		Transform4() : m_value(bxidentity()) {}
 		Transform4(mat4 value) : m_value(value) {}
@@ -143,16 +143,16 @@ namespace boids
 		mat4 m_value;
 	};
 
-	struct Boid
+	struct refl_ Boid
 	{};
 
-	struct BoidTarget
+	struct refl_ BoidTarget
 	{};
 
-	struct BoidObstacle
+	struct refl_ BoidObstacle
 	{};
 
-	struct MoveForward
+	struct refl_ MoveForward
 	{};
 
 	class refl_ _BOIDS_EXPORT Player
