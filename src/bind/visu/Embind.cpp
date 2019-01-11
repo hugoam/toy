@@ -18,8 +18,8 @@ EMSCRIPTEN_BINDINGS(toy_visu)
     class_<toy::PhysicDebugDraw>("PhysicDebugDraw")
         ;
     class_<toy::VisuScene>("VisuScene")
-        .property("gfx_system", &toy::VisuScene::gfx_system)
-        .property("scene", &toy::VisuScene::scene)
+        .property("gfx_system", &toy::VisuScene::m_gfx_system)
+        .property("scene", &toy::VisuScene::m_scene)
         .function("next_frame", &toy::VisuScene::next_frame)
         ;
     

@@ -34,12 +34,12 @@ EMSCRIPTEN_BINDINGS(toy_edit)
     class_<toy::DynamicToolbox>("DynamicToolbox")
         ;
     class_<toy::Editor>("Editor")
-        .property("run_tool", &toy::Editor::run_tool)
-        .property("play_tool", &toy::Editor::play_tool)
-        .property("frame_view_tool", &toy::Editor::frame_view_tool)
-        .property("edited_world", &toy::Editor::edited_world)
-        .property("run_game", &toy::Editor::run_game)
-        .property("play_game", &toy::Editor::play_game)
+        .property("run_tool", &toy::Editor::m_run_tool)
+        .property("play_tool", &toy::Editor::m_play_tool)
+        .property("frame_view_tool", &toy::Editor::m_frame_view_tool)
+        .property("edited_world", &toy::Editor::m_edited_world)
+        .property("run_game", &toy::Editor::m_run_game)
+        .property("play_game", &toy::Editor::m_play_game)
         ;
     class_<toy::PlayTool>("PlayTool")
         ;

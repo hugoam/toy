@@ -18,9 +18,9 @@ EMSCRIPTEN_BINDINGS(toy_util)
     class_<toy::Procedure>("Procedure")
         ;
     class_<toy::ProcedureType>("ProcedureType")
-        .property("type", &toy::ProcedureType::type)
-        .property("index", &toy::ProcedureType::index)
-        .property("name", &toy::ProcedureType::name)
+        .property("type", &toy::ProcedureType::m_type)
+        .property("index", &toy::ProcedureType::m_index)
+        .property("name", &toy::ProcedureType::m_name)
         ;
     
     // Functions

@@ -22,13 +22,13 @@ EMSCRIPTEN_BINDINGS(_minimal)
     
     // Classes
     class_<Bullet>("Bullet")
-        .property("source", &Bullet::source)
-        .property("velocity", &Bullet::velocity)
+        .property("source", &Bullet::m_source)
+        .property("velocity", &Bullet::m_velocity)
         ;
     class_<Crate>("Crate")
         .constructor<>()
         .constructor<toy::HSpatial, toy::HMovable, const mud::vec3&>()
-        .property("extents", &Crate::extents)
+        .property("extents", &Crate::m_extents)
         ;
     class_<Human>("Human")
         .constructor<>()
