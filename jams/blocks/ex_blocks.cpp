@@ -804,7 +804,7 @@ public:
 		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
 		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
 
-		world.m_ecs.AddBuffers<Spatial, Emitter, Well>("Well");
+		//world.m_ecs.AddBuffers<Spatial, Emitter, Well>("Well");
 		world.m_ecs.AddBuffers<Spatial, Camp>("Camp");
 		world.m_ecs.AddBuffers<Spatial, Emitter, Shield>("Shield");
 		world.m_ecs.AddBuffers<Spatial, Slug>("Slug");
