@@ -20,22 +20,22 @@
 
 namespace mud
 {
-	export_ template struct refl_ struct_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Collider>;
-	export_ template struct refl_ struct_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Solid>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT SparseHandle<toy::Collider>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT SparseHandle<toy::Solid>;
+	export_ template struct refl_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Collider>;
+	export_ template struct refl_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Solid>;
+	export_ template struct refl_ TOY_CORE_EXPORT SparseHandle<toy::Collider>;
+	export_ template struct refl_ TOY_CORE_EXPORT SparseHandle<toy::Solid>;
 
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Spatial>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Movable>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Camera>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Emitter>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Receptor>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::EntityScript>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::WorldPage>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Navblock>;
-	//export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Collider>;
-	//export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Solid>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Spatial>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Movable>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Camera>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Emitter>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Receptor>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::EntityScript>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::WorldPage>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Navblock>;
+	//export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Collider>;
+	//export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Solid>;
 
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Origin>;
-	export_ template struct refl_ struct_ TOY_CORE_EXPORT ComponentHandle<toy::Waypoint>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Origin>;
+	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Waypoint>;
 }

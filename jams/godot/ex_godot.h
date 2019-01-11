@@ -24,6 +24,11 @@ namespace mud
 	template <> struct TypedBuffer<WorldBlock>  { static size_t index() { return 24; } };
 }
 
+template struct refl_ ComponentHandle<Bullet>;
+template struct refl_ ComponentHandle<Human>;
+template struct refl_ ComponentHandle<Lamp>;
+template struct refl_ ComponentHandle<Crate>;
+
 using HBullet = ComponentHandle<Bullet>;
 using HHuman = ComponentHandle<Human>;
 using HLamp = ComponentHandle<Lamp>;
@@ -112,7 +117,7 @@ public:
 
 	bool m_stealth = false;
 
-	attr_ Human* m_target = nullptr;
+	attr_ HHuman m_target = {};
 	attr_ vec3 m_dest = Zero3;
 	attr_ float m_cooldown = 0.f;
 

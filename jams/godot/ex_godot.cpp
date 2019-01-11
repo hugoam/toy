@@ -162,10 +162,10 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 			disable |= aim.hit && aim.hit != &(*m_target->m_spatial);
 			disable |= m_target->m_life <= 0.f;
 			if(disable)
-				m_target = nullptr;
+				m_target = {};
 		}
 
-		if(m_target == nullptr)
+		if(!m_target)
 		{
 			ReceptorScope* vision = receptor.scope(VisualMedium::me);
 			for(HSpatial seen : vision->m_scope)
@@ -178,7 +178,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 						float visibility = light * (human->m_headlight ? 4.f : 0.5f);
 						if(human->m_life > 0.f && (visibility > 0.2f || length(direction) < 4.f))
 						{
-							m_target = human;
+							m_target = seen;
 							m_cooldown = 2.f;
 						}
 					}

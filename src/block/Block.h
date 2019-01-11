@@ -20,7 +20,7 @@
 
 namespace mud
 {
-	template struct refl_ struct_ TOY_BLOCK_EXPORT Grid<toy::Block*>;
+	template struct refl_ TOY_BLOCK_EXPORT Grid<toy::Block*>;
 }
 
 using namespace mud; namespace toy

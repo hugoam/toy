@@ -13,9 +13,9 @@
 
 namespace mud
 {
-	export_ template struct refl_ struct_ TOY_BLOCK_EXPORT ComponentHandle<toy::Block>;
-	export_ template struct refl_ struct_ TOY_BLOCK_EXPORT ComponentHandle<toy::Chunk>;
-	export_ template struct refl_ struct_ TOY_BLOCK_EXPORT ComponentHandle<toy::Heap>;
-	export_ template struct refl_ struct_ TOY_BLOCK_EXPORT ComponentHandle<toy::Sector>;
-	export_ template struct refl_ struct_ TOY_BLOCK_EXPORT ComponentHandle<toy::Tileblock>;
+	export_ template struct refl_ TOY_BLOCK_EXPORT ComponentHandle<toy::Block>;
+	export_ template struct refl_ TOY_BLOCK_EXPORT ComponentHandle<toy::Chunk>;
+	export_ template struct refl_ TOY_BLOCK_EXPORT ComponentHandle<toy::Heap>;
+	export_ template struct refl_ TOY_BLOCK_EXPORT ComponentHandle<toy::Sector>;
+	export_ template struct refl_ TOY_BLOCK_EXPORT ComponentHandle<toy::Tileblock>;
 }
