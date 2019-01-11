@@ -58,9 +58,15 @@ namespace mud
     export_ template <> _MINIMAL_EXPORT Type& type<Crate>();
     export_ template <> _MINIMAL_EXPORT Type& type<Human>();
     export_ template <> _MINIMAL_EXPORT Type& type<Player>();
+    export_ template <> _MINIMAL_EXPORT Type& type<mud::ComponentHandle<Bullet>>();
+    export_ template <> _MINIMAL_EXPORT Type& type<mud::ComponentHandle<Crate>>();
+    export_ template <> _MINIMAL_EXPORT Type& type<mud::ComponentHandle<Human>>();
     
     export_ template struct _MINIMAL_EXPORT Typed<std::vector<Bullet*>>;
     export_ template struct _MINIMAL_EXPORT Typed<std::vector<Crate*>>;
     export_ template struct _MINIMAL_EXPORT Typed<std::vector<Human*>>;
     export_ template struct _MINIMAL_EXPORT Typed<std::vector<Player*>>;
+    export_ template struct _MINIMAL_EXPORT Typed<std::vector<mud::ComponentHandle<Bullet>*>>;
+    export_ template struct _MINIMAL_EXPORT Typed<std::vector<mud::ComponentHandle<Crate>*>>;
+    export_ template struct _MINIMAL_EXPORT Typed<std::vector<mud::ComponentHandle<Human>*>>;
 }

@@ -40,7 +40,7 @@ Faction::~Faction()
 
 std::vector<Faction> g_factions;
 
-Entity Well::create(ECS& ecs, HSpatial parent, const vec3& position)
+/*Entity Well::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
 	Entity entity = { ecs.CreateEntity<Spatial, Emitter, Well>(), ecs.m_index };
 	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
@@ -56,7 +56,7 @@ Well::Well(HSpatial spatial, HEmitter emitter)
 void Well::next_frame(size_t tick, size_t delta)
 {
 	UNUSED(tick); UNUSED(delta);
-}
+}*/
 
 Entity Camp::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {

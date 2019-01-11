@@ -25,6 +25,13 @@ namespace mud
 	template <> struct TypedBuffer<Fleet>	{ static size_t index() { return 22; } };
 }
 
+namespace mud
+{
+	template struct refl_ ComponentHandle<Galaxy>;
+	template struct refl_ ComponentHandle<Star>;
+	template struct refl_ ComponentHandle<Fleet>;
+}
+
 using HGalaxy = ComponentHandle<Galaxy>;
 using HStar = ComponentHandle<Star>;
 using HFleet = ComponentHandle<Fleet>;

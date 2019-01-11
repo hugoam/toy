@@ -703,6 +703,84 @@ namespace mud
         };
         meta_class<CommanderBrush>();
     }
+    // mud::ComponentHandle<Fleet>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Fleet>>(), &namspc({ "mud" }), "ComponentHandle<Fleet>", sizeof(mud::ComponentHandle<Fleet>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Fleet>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Fleet>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Fleet>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Fleet>>(ref)) mud::ComponentHandle<Fleet>(val<mud::ComponentHandle<Fleet>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Fleet>>();
+    }
+    // mud::ComponentHandle<Galaxy>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Galaxy>>(), &namspc({ "mud" }), "ComponentHandle<Galaxy>", sizeof(mud::ComponentHandle<Galaxy>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Galaxy>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Galaxy>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Galaxy>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Galaxy>>(ref)) mud::ComponentHandle<Galaxy>(val<mud::ComponentHandle<Galaxy>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Galaxy>>();
+    }
+    // mud::ComponentHandle<Star>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Star>>(), &namspc({ "mud" }), "ComponentHandle<Star>", sizeof(mud::ComponentHandle<Star>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Star>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Star>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Star>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Star>>(ref)) mud::ComponentHandle<Star>(val<mud::ComponentHandle<Star>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Star>>();
+    }
     // PlanetaryCombat
     {
         static Meta meta = { type<PlanetaryCombat>(), &namspc({}), "PlanetaryCombat", sizeof(PlanetaryCombat), TypeClass::Struct };
@@ -929,6 +1007,9 @@ namespace mud
         m.m_types.push_back(&type<std::vector<Commander*>>());
         m.m_types.push_back(&type<BuildingSchema>());
         m.m_types.push_back(&type<CommanderBrush>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Fleet>>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Galaxy>>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Star>>());
         m.m_types.push_back(&type<PlanetaryCombat>());
         m.m_types.push_back(&type<ShipComponent>());
         m.m_types.push_back(&type<ShipEngine>());

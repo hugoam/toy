@@ -84,6 +84,9 @@ namespace mud
     export_ template <> _SPACE_EXPORT Type& type<Turn>();
     export_ template <> _SPACE_EXPORT Type& type<BuildingSchema>();
     export_ template <> _SPACE_EXPORT Type& type<CommanderBrush>();
+    export_ template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Fleet>>();
+    export_ template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Galaxy>>();
+    export_ template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Star>>();
     export_ template <> _SPACE_EXPORT Type& type<PlanetaryCombat>();
     export_ template <> _SPACE_EXPORT Type& type<ShipComponent>();
     export_ template <> _SPACE_EXPORT Type& type<ShipEngine>();
@@ -110,6 +113,9 @@ namespace mud
     export_ template struct _SPACE_EXPORT Typed<std::vector<Turn*>>;
     export_ template struct _SPACE_EXPORT Typed<std::vector<BuildingSchema*>>;
     export_ template struct _SPACE_EXPORT Typed<std::vector<CommanderBrush*>>;
+    export_ template struct _SPACE_EXPORT Typed<std::vector<mud::ComponentHandle<Fleet>*>>;
+    export_ template struct _SPACE_EXPORT Typed<std::vector<mud::ComponentHandle<Galaxy>*>>;
+    export_ template struct _SPACE_EXPORT Typed<std::vector<mud::ComponentHandle<Star>*>>;
     export_ template struct _SPACE_EXPORT Typed<std::vector<PlanetaryCombat*>>;
     export_ template struct _SPACE_EXPORT Typed<std::vector<ShipComponent*>>;
     export_ template struct _SPACE_EXPORT Typed<std::vector<ShipEngine*>>;

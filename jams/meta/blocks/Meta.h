@@ -192,34 +192,6 @@ namespace mud
         init_pool<Tank>();
         meta_class<Tank>();
     }
-    // Well
-    {
-        static Meta meta = { type<Well>(), &namspc({}), "Well", sizeof(Well), TypeClass::Object };
-        static Class cls = { type<Well>(),
-            // bases
-            {  },
-            {  },
-            // constructors
-            {
-                { type<Well>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Well>(ref)) Well(  ); }, {} },
-                { type<Well>(), [](Ref ref, array<Var> args) { new(&val<Well>(ref)) Well( val<toy::HSpatial>(args[0]), val<toy::HEmitter>(args[1]) ); }, { { "spatial", var(toy::HSpatial()) }, { "emitter", var(toy::HEmitter()) } } }
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        init_pool<Well>();
-        meta_class<Well>();
-    }
     // BlockWorld
     {
         static Meta meta = { type<BlockWorld>(), &namspc({}), "BlockWorld", sizeof(BlockWorld), TypeClass::Object };
@@ -254,13 +226,120 @@ namespace mud
         init_pool<BlockWorld>();
         meta_class<BlockWorld>();
     }
+    // mud::ComponentHandle<Camp>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Camp>>(), &namspc({ "mud" }), "ComponentHandle<Camp>", sizeof(mud::ComponentHandle<Camp>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Camp>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Camp>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Camp>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Camp>>(ref)) mud::ComponentHandle<Camp>(val<mud::ComponentHandle<Camp>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Camp>>();
+    }
+    // mud::ComponentHandle<Shield>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Shield>>(), &namspc({ "mud" }), "ComponentHandle<Shield>", sizeof(mud::ComponentHandle<Shield>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Shield>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Shield>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Shield>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Shield>>(ref)) mud::ComponentHandle<Shield>(val<mud::ComponentHandle<Shield>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Shield>>();
+    }
+    // mud::ComponentHandle<Slug>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Slug>>(), &namspc({ "mud" }), "ComponentHandle<Slug>", sizeof(mud::ComponentHandle<Slug>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Slug>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Slug>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Slug>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Slug>>(ref)) mud::ComponentHandle<Slug>(val<mud::ComponentHandle<Slug>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Slug>>();
+    }
+    // mud::ComponentHandle<Tank>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Tank>>(), &namspc({ "mud" }), "ComponentHandle<Tank>", sizeof(mud::ComponentHandle<Tank>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Tank>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Tank>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Tank>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Tank>>(ref)) mud::ComponentHandle<Tank>(val<mud::ComponentHandle<Tank>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Tank>>();
+    }
         m.m_types.push_back(&type<Camp>());
         m.m_types.push_back(&type<Faction>());
         m.m_types.push_back(&type<Player>());
         m.m_types.push_back(&type<Shield>());
         m.m_types.push_back(&type<Slug>());
         m.m_types.push_back(&type<Tank>());
-        m.m_types.push_back(&type<Well>());
         m.m_types.push_back(&type<BlockWorld>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Camp>>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Shield>>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Slug>>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Tank>>());
     }
 }

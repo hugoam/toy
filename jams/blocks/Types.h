@@ -60,8 +60,11 @@ namespace mud
     export_ template <> _BLOCKS_EXPORT Type& type<Shield>();
     export_ template <> _BLOCKS_EXPORT Type& type<Slug>();
     export_ template <> _BLOCKS_EXPORT Type& type<Tank>();
-    export_ template <> _BLOCKS_EXPORT Type& type<Well>();
     export_ template <> _BLOCKS_EXPORT Type& type<BlockWorld>();
+    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Camp>>();
+    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Shield>>();
+    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Slug>>();
+    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Tank>>();
     
     export_ template struct _BLOCKS_EXPORT Typed<std::vector<Camp*>>;
     export_ template struct _BLOCKS_EXPORT Typed<std::vector<Faction*>>;
@@ -69,6 +72,9 @@ namespace mud
     export_ template struct _BLOCKS_EXPORT Typed<std::vector<Shield*>>;
     export_ template struct _BLOCKS_EXPORT Typed<std::vector<Slug*>>;
     export_ template struct _BLOCKS_EXPORT Typed<std::vector<Tank*>>;
-    export_ template struct _BLOCKS_EXPORT Typed<std::vector<Well*>>;
     export_ template struct _BLOCKS_EXPORT Typed<std::vector<BlockWorld*>>;
+    export_ template struct _BLOCKS_EXPORT Typed<std::vector<mud::ComponentHandle<Camp>*>>;
+    export_ template struct _BLOCKS_EXPORT Typed<std::vector<mud::ComponentHandle<Shield>*>>;
+    export_ template struct _BLOCKS_EXPORT Typed<std::vector<mud::ComponentHandle<Slug>*>>;
+    export_ template struct _BLOCKS_EXPORT Typed<std::vector<mud::ComponentHandle<Tank>*>>;
 }

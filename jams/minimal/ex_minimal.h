@@ -22,6 +22,13 @@ namespace mud
 	template <> struct TypedBuffer<Crate>  { static size_t index() { return 22; } };
 }
 
+namespace mud
+{
+	template struct refl_ ComponentHandle<Bullet>;
+	template struct refl_ ComponentHandle<Human>;
+	template struct refl_ ComponentHandle<Crate>;
+}
+
 using HBullet = ComponentHandle<Bullet>;
 using HHuman = ComponentHandle<Human>;
 using HCrate = ComponentHandle<Crate>;

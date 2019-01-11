@@ -129,9 +129,90 @@ namespace mud
         };
         meta_class<Player>();
     }
+    // mud::ComponentHandle<Bullet>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Bullet>>(), &namspc({ "mud" }), "ComponentHandle<Bullet>", sizeof(mud::ComponentHandle<Bullet>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Bullet>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Bullet>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Bullet>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Bullet>>(ref)) mud::ComponentHandle<Bullet>(val<mud::ComponentHandle<Bullet>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Bullet>>();
+    }
+    // mud::ComponentHandle<Crate>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Crate>>(), &namspc({ "mud" }), "ComponentHandle<Crate>", sizeof(mud::ComponentHandle<Crate>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Crate>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Crate>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Crate>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Crate>>(ref)) mud::ComponentHandle<Crate>(val<mud::ComponentHandle<Crate>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Crate>>();
+    }
+    // mud::ComponentHandle<Human>
+    {
+        static Meta meta = { type<mud::ComponentHandle<Human>>(), &namspc({ "mud" }), "ComponentHandle<Human>", sizeof(mud::ComponentHandle<Human>), TypeClass::Struct };
+        static Class cls = { type<mud::ComponentHandle<Human>>(),
+            // bases
+            { &type<mud::Entity>() },
+            { base_offset<mud::ComponentHandle<Human>, mud::Entity>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+                { type<mud::ComponentHandle<Human>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<Human>>(ref)) mud::ComponentHandle<Human>(val<mud::ComponentHandle<Human>>(other)); } }
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<mud::ComponentHandle<Human>>();
+    }
         m.m_types.push_back(&type<Bullet>());
         m.m_types.push_back(&type<Crate>());
         m.m_types.push_back(&type<Human>());
         m.m_types.push_back(&type<Player>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Bullet>>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Crate>>());
+        m.m_types.push_back(&type<mud::ComponentHandle<Human>>());
     }
 }

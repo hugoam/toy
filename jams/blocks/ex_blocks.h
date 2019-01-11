@@ -17,14 +17,23 @@ extern "C"
 
 namespace mud
 {
-	template <> struct TypedBuffer<Well>	{ static size_t index() { return 20; } };
+//	template <> struct TypedBuffer<Well>	{ static size_t index() { return 20; } };
 	template <> struct TypedBuffer<Camp>	{ static size_t index() { return 21; } };
 	template <> struct TypedBuffer<Shield>	{ static size_t index() { return 22; } };
 	template <> struct TypedBuffer<Slug>	{ static size_t index() { return 23; } };
 	template <> struct TypedBuffer<Tank>	{ static size_t index() { return 24; } };
 }
 
-using HWell = ComponentHandle<Well>;
+namespace mud
+{
+//	template struct refl_ ComponentHandle<Well>;
+	template struct refl_ ComponentHandle<Camp>;
+	template struct refl_ ComponentHandle<Shield>;
+	template struct refl_ ComponentHandle<Slug>;
+	template struct refl_ ComponentHandle<Tank>;
+}
+
+//using HWell = ComponentHandle<Well>;
 using HCamp = ComponentHandle<Camp>;
 using HShield = ComponentHandle<Shield>;
 using HSlug = ComponentHandle<Slug>;
@@ -35,7 +44,7 @@ enum CustomCollisionGroup : short int
 	CM_ENERGY = 1 << 10,
 };
 
-class refl_ _BLOCKS_EXPORT Well
+/*class refl_ _BLOCKS_EXPORT Well
 {
 public:
 	constr_ Well() {}
@@ -47,7 +56,7 @@ public:
 	comp_ HEmitter m_emitter;
 
 	void next_frame(size_t tick, size_t delta);
-};
+};*/
 
 class refl_ _BLOCKS_EXPORT Faction
 {
