@@ -62,10 +62,10 @@ namespace mud
     export_ template <> _PLATFORM_EXPORT Type& type<Lamp>();
     export_ template <> _PLATFORM_EXPORT Type& type<Player>();
     export_ template <> _PLATFORM_EXPORT Type& type<Stance>();
-    export_ template <> _PLATFORM_EXPORT Type& type<ComponentHandle<Bullet>>();
-    export_ template <> _PLATFORM_EXPORT Type& type<ComponentHandle<Crate>>();
-    export_ template <> _PLATFORM_EXPORT Type& type<ComponentHandle<Human>>();
-    export_ template <> _PLATFORM_EXPORT Type& type<ComponentHandle<Lamp>>();
+    export_ template <> _PLATFORM_EXPORT Type& type<mud::ComponentHandle<Bullet>>();
+    export_ template <> _PLATFORM_EXPORT Type& type<mud::ComponentHandle<Crate>>();
+    export_ template <> _PLATFORM_EXPORT Type& type<mud::ComponentHandle<Human>>();
+    export_ template <> _PLATFORM_EXPORT Type& type<mud::ComponentHandle<Lamp>>();
     export_ template <> _PLATFORM_EXPORT Type& type<TileWorld>();
     
     export_ template struct _PLATFORM_EXPORT Typed<std::vector<Aim*>>;
@@ -75,9 +75,9 @@ namespace mud
     export_ template struct _PLATFORM_EXPORT Typed<std::vector<Lamp*>>;
     export_ template struct _PLATFORM_EXPORT Typed<std::vector<Player*>>;
     export_ template struct _PLATFORM_EXPORT Typed<std::vector<Stance*>>;
-    export_ template struct _PLATFORM_EXPORT Typed<std::vector<ComponentHandle<Bullet>*>>;
-    export_ template struct _PLATFORM_EXPORT Typed<std::vector<ComponentHandle<Crate>*>>;
-    export_ template struct _PLATFORM_EXPORT Typed<std::vector<ComponentHandle<Human>*>>;
-    export_ template struct _PLATFORM_EXPORT Typed<std::vector<ComponentHandle<Lamp>*>>;
+    export_ template struct _PLATFORM_EXPORT Typed<std::vector<mud::ComponentHandle<Bullet>*>>;
+    export_ template struct _PLATFORM_EXPORT Typed<std::vector<mud::ComponentHandle<Crate>*>>;
+    export_ template struct _PLATFORM_EXPORT Typed<std::vector<mud::ComponentHandle<Human>*>>;
+    export_ template struct _PLATFORM_EXPORT Typed<std::vector<mud::ComponentHandle<Lamp>*>>;
     export_ template struct _PLATFORM_EXPORT Typed<std::vector<TileWorld*>>;
 }
