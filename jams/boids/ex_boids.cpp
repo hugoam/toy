@@ -13,7 +13,6 @@
 
 #include <boids/Api.h>
 #include <meta/boids/Module.h>
-#include <meta/boids/Embind.h>
 
 #include <jobs/JobLoop.h>
 #include <ecs/Loop.h>
