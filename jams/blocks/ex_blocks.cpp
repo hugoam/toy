@@ -829,8 +829,8 @@ public:
 		});
 
 		World& world = *scene.m_game.m_world;
+		//scene.entity_painter<Well>("Well", world, paint_well);
 		scene.entity_painter<Shield>("Shields", world, paint_shield);
-		scene.entity_painter<Well>("Well", world, paint_well);
 		scene.entity_painter<Tank>("Tanks", world, paint_tank);
 		scene.entity_painter<Slug>("Slugs", world, paint_shell);
 		scene.entity_painter<Tileblock>("Tileblocks", world, paint_block);
