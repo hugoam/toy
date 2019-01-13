@@ -167,20 +167,11 @@ extern "C" {
 	toy::World* EMSCRIPTEN_KEEPALIVE BlockWorld_get_world(BlockWorld* self) {
 		return &self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_world(BlockWorld* self, toy::World* world) {
-		self->m_world = *world;
-	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE BlockWorld_get_bullet_world(BlockWorld* self) {
 		return &self->m_bullet_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_bullet_world(BlockWorld* self, toy::BulletWorld* bullet_world) {
-		self->m_bullet_world = *bullet_world;
-	}
 	toy::Navmesh* EMSCRIPTEN_KEEPALIVE BlockWorld_get_navmesh(BlockWorld* self) {
 		return &self->m_navmesh;
-	}
-	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_navmesh(BlockWorld* self, toy::Navmesh* navmesh) {
-		self->m_navmesh = *navmesh;
 	}
 	mud::uvec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_block_subdiv(BlockWorld* self) {
 		static mud::uvec3 temp;

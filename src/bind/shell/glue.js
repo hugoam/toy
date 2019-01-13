@@ -259,14 +259,7 @@ Object.defineProperty(GameShell.prototype, "editor", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_editor(self), toy::Editor);
-    },
-    set: function(editor) {
-        var self = this.ptr;
-        /* editor <Editor> [] */
-        editor = editor.ptr;
-        _GameShell_set_editor(self, editor);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "ui", {
     get: function() {
         var self = this.ptr;

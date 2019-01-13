@@ -382,38 +382,17 @@ Object.defineProperty(TileWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_TileWorld_get_world(self), toy::World);
-    },
-    set: function(world) {
-        var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _TileWorld_set_world(self, world);
-    }
-});
+    }});
 Object.defineProperty(TileWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_TileWorld_get_bullet_world(self), toy::BulletWorld);
-    },
-    set: function(bullet_world) {
-        var self = this.ptr;
-        /* bullet_world <BulletWorld> [] */
-        bullet_world = bullet_world.ptr;
-        _TileWorld_set_bullet_world(self, bullet_world);
-    }
-});
+    }});
 Object.defineProperty(TileWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_TileWorld_get_navmesh(self), toy::Navmesh);
-    },
-    set: function(navmesh) {
-        var self = this.ptr;
-        /* navmesh <Navmesh> [] */
-        navmesh = navmesh.ptr;
-        _TileWorld_set_navmesh(self, navmesh);
-    }
-});
+    }});
 TileWorld.prototype["__destroy__"] = TileWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
     _TileWorld___destroy__(self);

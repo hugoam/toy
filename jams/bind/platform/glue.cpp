@@ -253,20 +253,11 @@ extern "C" {
 	toy::World* EMSCRIPTEN_KEEPALIVE TileWorld_get_world(TileWorld* self) {
 		return &self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE TileWorld_set_world(TileWorld* self, toy::World* world) {
-		self->m_world = *world;
-	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE TileWorld_get_bullet_world(TileWorld* self) {
 		return &self->m_bullet_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE TileWorld_set_bullet_world(TileWorld* self, toy::BulletWorld* bullet_world) {
-		self->m_bullet_world = *bullet_world;
-	}
 	toy::Navmesh* EMSCRIPTEN_KEEPALIVE TileWorld_get_navmesh(TileWorld* self) {
 		return &self->m_navmesh;
-	}
-	void EMSCRIPTEN_KEEPALIVE TileWorld_set_navmesh(TileWorld* self, toy::Navmesh* navmesh) {
-		self->m_navmesh = *navmesh;
 	}
 	void EMSCRIPTEN_KEEPALIVE TileWorld___destroy__(TileWorld* self) {
 		delete self;

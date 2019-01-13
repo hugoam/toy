@@ -98,9 +98,6 @@ extern "C" {
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE Collider_get_collision_shape(toy::Collider* self) {
 		return &self->m_collision_shape;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collider_set_collision_shape(toy::Collider* self, toy::CollisionShape* collision_shape) {
-		self->m_collision_shape = *collision_shape;
-	}
 	toy::Medium* EMSCRIPTEN_KEEPALIVE Collider_get_medium(toy::Collider* self) {
 		return self->m_medium;
 	}
@@ -567,20 +564,11 @@ extern "C" {
 	toy::World* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_world(toy::DefaultWorld* self) {
 		return &self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE DefaultWorld_set_world(toy::DefaultWorld* self, toy::World* world) {
-		self->m_world = *world;
-	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_bullet_world(toy::DefaultWorld* self) {
 		return &self->m_bullet_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE DefaultWorld_set_bullet_world(toy::DefaultWorld* self, toy::BulletWorld* bullet_world) {
-		self->m_bullet_world = *bullet_world;
-	}
 	toy::Navmesh* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_navmesh(toy::DefaultWorld* self) {
 		return &self->m_navmesh;
-	}
-	void EMSCRIPTEN_KEEPALIVE DefaultWorld_set_navmesh(toy::DefaultWorld* self, toy::Navmesh* navmesh) {
-		self->m_navmesh = *navmesh;
 	}
 	void EMSCRIPTEN_KEEPALIVE DefaultWorld___destroy__(toy::DefaultWorld* self) {
 		delete self;
@@ -606,9 +594,6 @@ extern "C" {
 	}
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE Obstacle_get_shape(toy::Obstacle* self) {
 		return &self->m_shape;
-	}
-	void EMSCRIPTEN_KEEPALIVE Obstacle_set_shape(toy::Obstacle* self, toy::CollisionShape* shape) {
-		self->m_shape = *shape;
 	}
 	float EMSCRIPTEN_KEEPALIVE Obstacle_get_throughput(toy::Obstacle* self) {
 		return self->m_throughput;

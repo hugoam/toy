@@ -30,9 +30,6 @@ extern "C" {
 	mud::Scene* EMSCRIPTEN_KEEPALIVE VisuScene_get_scene(toy::VisuScene* self) {
 		return &self->m_scene;
 	}
-	void EMSCRIPTEN_KEEPALIVE VisuScene_set_scene(toy::VisuScene* self, mud::Scene* scene) {
-		self->m_scene = *scene;
-	}
 	void EMSCRIPTEN_KEEPALIVE VisuScene___destroy__(toy::VisuScene* self) {
 		delete self;
 	}

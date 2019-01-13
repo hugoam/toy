@@ -186,9 +186,6 @@ extern "C" {
 	toy::Editor* EMSCRIPTEN_KEEPALIVE GameShell_get_editor(toy::GameShell* self) {
 		return &self->m_editor;
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_editor(toy::GameShell* self, toy::Editor* editor) {
-		self->m_editor = *editor;
-	}
 	mud::Ui* EMSCRIPTEN_KEEPALIVE GameShell_get_ui(toy::GameShell* self) {
 		return self->m_ui;
 	}

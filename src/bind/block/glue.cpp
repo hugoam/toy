@@ -199,9 +199,6 @@ extern "C" {
 	mud::WfcBlock* EMSCRIPTEN_KEEPALIVE Tileblock_get_wfc_block(toy::Tileblock* self) {
 		return &self->m_wfc_block;
 	}
-	void EMSCRIPTEN_KEEPALIVE Tileblock_set_wfc_block(toy::Tileblock* self, mud::WfcBlock* wfc_block) {
-		self->m_wfc_block = *wfc_block;
-	}
 	bool EMSCRIPTEN_KEEPALIVE Tileblock_get_setup(toy::Tileblock* self) {
 		return self->m_setup;
 	}

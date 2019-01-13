@@ -705,14 +705,8 @@ extern "C" {
 	toy::World* EMSCRIPTEN_KEEPALIVE Universe_get_world(Universe* self) {
 		return &self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE Universe_set_world(Universe* self, toy::World* world) {
-		self->m_world = *world;
-	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE Universe_get_bullet_world(Universe* self) {
 		return &self->m_bullet_world;
-	}
-	void EMSCRIPTEN_KEEPALIVE Universe_set_bullet_world(Universe* self, toy::BulletWorld* bullet_world) {
-		self->m_bullet_world = *bullet_world;
 	}
 	void EMSCRIPTEN_KEEPALIVE Universe___destroy__(Universe* self) {
 		delete self;

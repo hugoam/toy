@@ -118,38 +118,17 @@ Object.defineProperty(Editor.prototype, "run_tool", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Editor_get_run_tool(self), toy::RunTool);
-    },
-    set: function(run_tool) {
-        var self = this.ptr;
-        /* run_tool <RunTool> [] */
-        run_tool = run_tool.ptr;
-        _Editor_set_run_tool(self, run_tool);
-    }
-});
+    }});
 Object.defineProperty(Editor.prototype, "play_tool", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Editor_get_play_tool(self), toy::PlayTool);
-    },
-    set: function(play_tool) {
-        var self = this.ptr;
-        /* play_tool <PlayTool> [] */
-        play_tool = play_tool.ptr;
-        _Editor_set_play_tool(self, play_tool);
-    }
-});
+    }});
 Object.defineProperty(Editor.prototype, "frame_view_tool", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Editor_get_frame_view_tool(self), mud::FrameViewTool);
-    },
-    set: function(frame_view_tool) {
-        var self = this.ptr;
-        /* frame_view_tool <FrameViewTool> [] */
-        frame_view_tool = frame_view_tool.ptr;
-        _Editor_set_frame_view_tool(self, frame_view_tool);
-    }
-});
+    }});
 Object.defineProperty(Editor.prototype, "edited_world", {
     get: function() {
         var self = this.ptr;

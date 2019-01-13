@@ -357,14 +357,7 @@ Object.defineProperty(Tileblock.prototype, "wfc_block", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Tileblock_get_wfc_block(self), mud::WfcBlock);
-    },
-    set: function(wfc_block) {
-        var self = this.ptr;
-        /* wfc_block <WfcBlock> [] */
-        wfc_block = wfc_block.ptr;
-        _Tileblock_set_wfc_block(self, wfc_block);
-    }
-});
+    }});
 Object.defineProperty(Tileblock.prototype, "setup", {
     get: function() {
         var self = this.ptr;

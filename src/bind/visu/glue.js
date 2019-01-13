@@ -32,14 +32,7 @@ Object.defineProperty(VisuScene.prototype, "scene", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_VisuScene_get_scene(self), mud::Scene);
-    },
-    set: function(scene) {
-        var self = this.ptr;
-        /* scene <Scene> [] */
-        scene = scene.ptr;
-        _VisuScene_set_scene(self, scene);
-    }
-});
+    }});
 VisuScene.prototype["__destroy__"] = VisuScene.prototype.__destroy__ = function() {
     var self = this.ptr;
     _VisuScene___destroy__(self);

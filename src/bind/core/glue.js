@@ -146,14 +146,7 @@ Object.defineProperty(Collider.prototype, "collision_shape", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Collider_get_collision_shape(self), toy::CollisionShape);
-    },
-    set: function(collision_shape) {
-        var self = this.ptr;
-        /* collision_shape <CollisionShape> [] */
-        collision_shape = collision_shape.ptr;
-        _Collider_set_collision_shape(self, collision_shape);
-    }
-});
+    }});
 Object.defineProperty(Collider.prototype, "medium", {
     get: function() {
         var self = this.ptr;
@@ -1049,38 +1042,17 @@ Object.defineProperty(DefaultWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_DefaultWorld_get_world(self), toy::World);
-    },
-    set: function(world) {
-        var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _DefaultWorld_set_world(self, world);
-    }
-});
+    }});
 Object.defineProperty(DefaultWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_DefaultWorld_get_bullet_world(self), toy::BulletWorld);
-    },
-    set: function(bullet_world) {
-        var self = this.ptr;
-        /* bullet_world <BulletWorld> [] */
-        bullet_world = bullet_world.ptr;
-        _DefaultWorld_set_bullet_world(self, bullet_world);
-    }
-});
+    }});
 Object.defineProperty(DefaultWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_DefaultWorld_get_navmesh(self), toy::Navmesh);
-    },
-    set: function(navmesh) {
-        var self = this.ptr;
-        /* navmesh <Navmesh> [] */
-        navmesh = navmesh.ptr;
-        _DefaultWorld_set_navmesh(self, navmesh);
-    }
-});
+    }});
 DefaultWorld.prototype["__destroy__"] = DefaultWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
     _DefaultWorld___destroy__(self);
@@ -1144,14 +1116,7 @@ Object.defineProperty(Obstacle.prototype, "shape", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Obstacle_get_shape(self), toy::CollisionShape);
-    },
-    set: function(shape) {
-        var self = this.ptr;
-        /* shape <CollisionShape> [] */
-        shape = shape.ptr;
-        _Obstacle_set_shape(self, shape);
-    }
-});
+    }});
 Object.defineProperty(Obstacle.prototype, "throughput", {
     get: function() {
         var self = this.ptr;

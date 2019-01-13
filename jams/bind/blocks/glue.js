@@ -249,38 +249,17 @@ Object.defineProperty(BlockWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_BlockWorld_get_world(self), toy::World);
-    },
-    set: function(world) {
-        var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _BlockWorld_set_world(self, world);
-    }
-});
+    }});
 Object.defineProperty(BlockWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_BlockWorld_get_bullet_world(self), toy::BulletWorld);
-    },
-    set: function(bullet_world) {
-        var self = this.ptr;
-        /* bullet_world <BulletWorld> [] */
-        bullet_world = bullet_world.ptr;
-        _BlockWorld_set_bullet_world(self, bullet_world);
-    }
-});
+    }});
 Object.defineProperty(BlockWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_BlockWorld_get_navmesh(self), toy::Navmesh);
-    },
-    set: function(navmesh) {
-        var self = this.ptr;
-        /* navmesh <Navmesh> [] */
-        navmesh = navmesh.ptr;
-        _BlockWorld_set_navmesh(self, navmesh);
-    }
-});
+    }});
 Object.defineProperty(BlockWorld.prototype, "block_subdiv", {
     get: function() {
         var self = this.ptr;

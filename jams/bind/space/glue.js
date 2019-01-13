@@ -1293,26 +1293,12 @@ Object.defineProperty(Universe.prototype, "world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Universe_get_world(self), toy::World);
-    },
-    set: function(world) {
-        var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _Universe_set_world(self, world);
-    }
-});
+    }});
 Object.defineProperty(Universe.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Universe_get_bullet_world(self), toy::BulletWorld);
-    },
-    set: function(bullet_world) {
-        var self = this.ptr;
-        /* bullet_world <BulletWorld> [] */
-        bullet_world = bullet_world.ptr;
-        _Universe_set_bullet_world(self, bullet_world);
-    }
-});
+    }});
 Universe.prototype["__destroy__"] = Universe.prototype.__destroy__ = function() {
     var self = this.ptr;
     _Universe___destroy__(self);

@@ -64,20 +64,11 @@ extern "C" {
 	toy::RunTool* EMSCRIPTEN_KEEPALIVE Editor_get_run_tool(toy::Editor* self) {
 		return &self->m_run_tool;
 	}
-	void EMSCRIPTEN_KEEPALIVE Editor_set_run_tool(toy::Editor* self, toy::RunTool* run_tool) {
-		self->m_run_tool = *run_tool;
-	}
 	toy::PlayTool* EMSCRIPTEN_KEEPALIVE Editor_get_play_tool(toy::Editor* self) {
 		return &self->m_play_tool;
 	}
-	void EMSCRIPTEN_KEEPALIVE Editor_set_play_tool(toy::Editor* self, toy::PlayTool* play_tool) {
-		self->m_play_tool = *play_tool;
-	}
 	mud::FrameViewTool* EMSCRIPTEN_KEEPALIVE Editor_get_frame_view_tool(toy::Editor* self) {
 		return &self->m_frame_view_tool;
-	}
-	void EMSCRIPTEN_KEEPALIVE Editor_set_frame_view_tool(toy::Editor* self, mud::FrameViewTool* frame_view_tool) {
-		self->m_frame_view_tool = *frame_view_tool;
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Editor_get_edited_world(toy::Editor* self) {
 		return self->m_edited_world;
