@@ -422,16 +422,6 @@ Module['generate_block'] = function(gfx_system, tileset, origin, coord, block_su
     if (from_file === undefined) { return _toy_generate_block_6(gfx_system, tileset, origin, coord, block_subdiv, tile_scale); return; }
     return _toy_generate_block_7(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file);
 };
-Module['paint_block_elements'] = function(block, image, elements) {
-    var self = this.ptr;
-    /* block <Block> [] */
-    block = block.ptr;
-    /* image <Image256> [] */
-    image = image.ptr;
-    /* elements <array<toy::Element*>> [] */
-    elements = elements.ptr;
-    _toy_paint_block_elements_3(block, image, elements);
-};
 Module['paint_block_height'] = function(block, image, element) {
     var self = this.ptr;
     /* block <Block> [] */
