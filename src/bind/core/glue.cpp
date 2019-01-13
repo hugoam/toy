@@ -382,9 +382,6 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE Solid_set_spatial(toy::Solid* self, toy::HSpatial value) {
 		self->m_spatial = value;
 	}
-	toy::OCollider EMSCRIPTEN_KEEPALIVE Solid_get_collider(toy::Solid* self) {
-		return self->m_collider;
-	}
 	bool EMSCRIPTEN_KEEPALIVE Solid_get_static(toy::Solid* self) {
 		return self->m_static;
 	}

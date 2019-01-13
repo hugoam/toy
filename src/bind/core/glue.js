@@ -696,11 +696,6 @@ Object.defineProperty(Solid.prototype, "spatial", {
         _Solid_set_spatial(self, spatial);
     }
 });
-Object.defineProperty(Solid.prototype, "collider", {
-    get: function() {
-        var self = this.ptr;
-        return _Solid_get_collider(self);
-    }});
 Object.defineProperty(Solid.prototype, "static", {
     get: function() {
         var self = this.ptr;
