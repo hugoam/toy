@@ -138,7 +138,7 @@ namespace mud
             {
                 { type<toy::Collider>(), member_address(&toy::Collider::m_spatial), type<toy::HSpatial>(), "spatial", var(toy::HSpatial()), Member::Value, nullptr },
                 { type<toy::Collider>(), member_address(&toy::Collider::m_movable), type<toy::HMovable>(), "movable", var(toy::HMovable()), Member::Value, nullptr },
-                { type<toy::Collider>(), member_address(&toy::Collider::m_collision_shape), type<toy::CollisionShape>(), "collision_shape", Ref(type<toy::CollisionShape>()), Member::None, nullptr },
+                { type<toy::Collider>(), member_address(&toy::Collider::m_collision_shape), type<toy::CollisionShape>(), "collision_shape", Ref(type<toy::CollisionShape>()), Member::NonMutable, nullptr },
                 { type<toy::Collider>(), member_address(&toy::Collider::m_medium), type<toy::Medium>(), "medium", Ref(type<toy::Medium>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Collider>(), member_address(&toy::Collider::m_group), type<toy::CollisionGroup>(), "group", var(toy::CollisionGroup()), Member::Value, nullptr },
                 { type<toy::Collider>(), member_address(&toy::Collider::m_object), type<toy::ColliderObject>(), "object", Ref(type<toy::ColliderObject>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
@@ -213,6 +213,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<toy::Collision>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Collision>(ref)) toy::Collision(  ); }, {} }
             },
             // copy constructor
             {
@@ -556,6 +557,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<mud::OwnedHandle<toy::Collider>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::OwnedHandle<toy::Collider>>(ref)) mud::OwnedHandle<toy::Collider>(  ); }, {} }
             },
             // copy constructor
             {
@@ -581,6 +583,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<mud::OwnedHandle<toy::Solid>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::OwnedHandle<toy::Solid>>(ref)) mud::OwnedHandle<toy::Solid>(  ); }, {} }
             },
             // copy constructor
             {
@@ -690,8 +693,6 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::Solid>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Solid>(ref)) toy::Solid(  ); }, {} },
-                //{ type<toy::Solid>(), [](Ref ref, array<Var> args) { new(&val<toy::Solid>(ref)) toy::Solid( val<toy::HSpatial>(args[0]), val<toy::HMovable>(args[1]), val<toy::OCollider>(args[2]), val<bool>(args[3]), val<float>(args[4]) ); }, { { "spatial", var(toy::HSpatial()) }, { "movable", var(toy::HMovable()) }, { "collider", var(toy::OCollider()) }, { "isstatic", var(bool()) }, { "mass", var(float(0.f)), Param::Default } } }
             },
             // copy constructor
             {
@@ -699,7 +700,6 @@ namespace mud
             // members
             {
                 { type<toy::Solid>(), member_address(&toy::Solid::m_spatial), type<toy::HSpatial>(), "spatial", var(toy::HSpatial()), Member::Value, nullptr },
-                { type<toy::Solid>(), member_address(&toy::Solid::m_collider), type<toy::OCollider>(), "collider", var(toy::OCollider()), Member::Value, nullptr },
                 { type<toy::Solid>(), member_address(&toy::Solid::m_static), type<bool>(), "static", var(bool(false)), Member::Value, nullptr },
                 { type<toy::Solid>(), member_address(&toy::Solid::m_mass), type<float>(), "mass", var(float(0.f)), Member::Value, nullptr }
             },
@@ -710,7 +710,6 @@ namespace mud
             {
             }
         };
-        init_pool<toy::Solid>();
         meta_class<toy::Solid>();
     }
     // toy::SolidImpl
@@ -753,6 +752,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<mud::SparseHandle<toy::Collider>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::SparseHandle<toy::Collider>>(ref)) mud::SparseHandle<toy::Collider>(  ); }, {} }
             },
             // copy constructor
             {
@@ -779,6 +779,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<mud::SparseHandle<toy::Solid>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::SparseHandle<toy::Solid>>(ref)) mud::SparseHandle<toy::Solid>(  ); }, {} }
             },
             // copy constructor
             {
@@ -868,8 +869,8 @@ namespace mud
                 { type<toy::World>(), member_address(&toy::World::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
                 { type<toy::World>(), Address(), type<mud::Complex>(), "complex", Ref(type<mud::Complex>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::World>(object).m_complex); } },
                 { type<toy::World>(), member_address(&toy::World::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
-                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::origin), type<toy::HSpatial>(), "origin", var(toy::HSpatial()), Member::Flags(Member::Value|Member::Structure), nullptr }, //[](Ref object) { return Ref(&val<toy::World>(object).origin()); } },
-                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::unworld), type<toy::HSpatial>(), "unworld", var(toy::HSpatial()), Member::Flags(Member::Value|Member::Structure), nullptr }, //[](Ref object) { return Ref(&val<toy::World>(object).unworld()); } }
+                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::origin), type<toy::HSpatial>(), "origin", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), [](Ref object) { return Ref(&val<toy::World>(object).origin()); } },
+                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::unworld), type<toy::HSpatial>(), "unworld", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), [](Ref object) { return Ref(&val<toy::World>(object).unworld()); } }
             },
             // methods
             {
@@ -1028,6 +1029,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Camera>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Camera>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Camera>>(ref)) mud::ComponentHandle<toy::Camera>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1054,6 +1056,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Emitter>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Emitter>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Emitter>>(ref)) mud::ComponentHandle<toy::Emitter>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1080,6 +1083,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::EntityScript>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::EntityScript>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::EntityScript>>(ref)) mud::ComponentHandle<toy::EntityScript>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1106,6 +1110,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Movable>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Movable>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Movable>>(ref)) mud::ComponentHandle<toy::Movable>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1132,6 +1137,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Navblock>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Navblock>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Navblock>>(ref)) mud::ComponentHandle<toy::Navblock>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1158,6 +1164,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Origin>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Origin>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Origin>>(ref)) mud::ComponentHandle<toy::Origin>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1184,6 +1191,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Receptor>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Receptor>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Receptor>>(ref)) mud::ComponentHandle<toy::Receptor>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1210,6 +1218,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Spatial>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Spatial>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Spatial>>(ref)) mud::ComponentHandle<toy::Spatial>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1236,6 +1245,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Waypoint>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Waypoint>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Waypoint>>(ref)) mud::ComponentHandle<toy::Waypoint>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1262,6 +1272,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::WorldPage>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::WorldPage>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::WorldPage>>(ref)) mud::ComponentHandle<toy::WorldPage>(  ); }, {} }
             },
             // copy constructor
             {
@@ -1295,9 +1306,9 @@ namespace mud
             },
             // members
             {
-                { type<toy::DefaultWorld>(), member_address(&toy::DefaultWorld::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::None, nullptr },
-                { type<toy::DefaultWorld>(), member_address(&toy::DefaultWorld::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Component, nullptr },
-                { type<toy::DefaultWorld>(), member_address(&toy::DefaultWorld::m_navmesh), type<toy::Navmesh>(), "navmesh", Ref(type<toy::Navmesh>()), Member::Component, nullptr }
+                { type<toy::DefaultWorld>(), member_address(&toy::DefaultWorld::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::NonMutable, nullptr },
+                { type<toy::DefaultWorld>(), member_address(&toy::DefaultWorld::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Flags(Member::NonMutable|Member::Component), nullptr },
+                { type<toy::DefaultWorld>(), member_address(&toy::DefaultWorld::m_navmesh), type<toy::Navmesh>(), "navmesh", Ref(type<toy::Navmesh>()), Member::Flags(Member::NonMutable|Member::Component), nullptr }
             },
             // methods
             {
@@ -1402,7 +1413,7 @@ namespace mud
             },
             // members
             {
-                { type<toy::Obstacle>(), member_address(&toy::Obstacle::m_shape), type<toy::CollisionShape>(), "shape", Ref(type<toy::CollisionShape>()), Member::None, nullptr },
+                { type<toy::Obstacle>(), member_address(&toy::Obstacle::m_shape), type<toy::CollisionShape>(), "shape", Ref(type<toy::CollisionShape>()), Member::NonMutable, nullptr },
                 { type<toy::Obstacle>(), member_address(&toy::Obstacle::m_throughput), type<float>(), "throughput", var(float()), Member::Value, nullptr }
             },
             // methods
@@ -1634,10 +1645,10 @@ namespace mud
         m.m_types.push_back(&type<mud::ComponentHandle<toy::Waypoint>>());
         m.m_types.push_back(&type<mud::ComponentHandle<toy::WorldPage>>());
         m.m_types.push_back(&type<toy::DefaultWorld>());
+        m.m_types.push_back(&type<toy::PhysicScope>());
         m.m_types.push_back(&type<toy::EmitterScope>());
         m.m_types.push_back(&type<toy::NavmeshShape>());
         m.m_types.push_back(&type<toy::Obstacle>());
-        m.m_types.push_back(&type<toy::PhysicScope>());
         m.m_types.push_back(&type<toy::ReceptorScope>());
         m.m_types.push_back(&type<toy::SolidMedium>());
         m.m_types.push_back(&type<toy::SoundMedium>());

@@ -51,11 +51,12 @@ Object.defineProperty(Aim.prototype, "end", {
 Object.defineProperty(Aim.prototype, "hit", {
     get: function() {
         var self = this.ptr;
-        return _Aim__get_hit(self);
+        return wrapPointer(_Aim__get_hit(self), toy::Spatial);
     },
     set: function(hit) {
         var self = this.ptr;
-        /* hit <toy::Spatial> [] */
+        /* hit <Spatial> [] */
+        hit = hit.ptr;
         _Aim__set_hit(self, hit);
     }
 });

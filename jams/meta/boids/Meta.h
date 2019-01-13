@@ -29,6 +29,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::Boid>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::Boid>(ref)) boids::Boid(  ); }, {} }
             },
             // copy constructor
             {
@@ -55,6 +56,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::BoidObstacle>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::BoidObstacle>(ref)) boids::BoidObstacle(  ); }, {} }
             },
             // copy constructor
             {
@@ -81,6 +83,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::BoidTarget>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::BoidTarget>(ref)) boids::BoidTarget(  ); }, {} }
             },
             // copy constructor
             {
@@ -107,6 +110,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::Heading>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::Heading>(ref)) boids::Heading(  ); }, {} }
             },
             // copy constructor
             {
@@ -133,6 +137,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::MoveForward>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::MoveForward>(ref)) boids::MoveForward(  ); }, {} }
             },
             // copy constructor
             {
@@ -159,6 +164,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::MoveSpeed>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::MoveSpeed>(ref)) boids::MoveSpeed(  ); }, {} }
             },
             // copy constructor
             {
@@ -210,6 +216,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::Position>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::Position>(ref)) boids::Position(  ); }, {} }
             },
             // copy constructor
             {
@@ -236,6 +243,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::Rotation>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::Rotation>(ref)) boids::Rotation(  ); }, {} }
             },
             // copy constructor
             {
@@ -262,6 +270,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<boids::Transform4>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<boids::Transform4>(ref)) boids::Transform4(  ); }, {} }
             },
             // copy constructor
             {

@@ -157,6 +157,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<mud::Grid<toy::Block*>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::Grid<toy::Block*>>(ref)) mud::Grid<toy::Block*>(  ); }, {} }
             },
             // copy constructor
             {
@@ -252,7 +253,7 @@ namespace mud
             },
             // members
             {
-                { type<toy::Tileblock>(), member_address(&toy::Tileblock::m_wfc_block), type<mud::WfcBlock>(), "wfc_block", Ref(type<mud::WfcBlock>()), Member::None, nullptr },
+                { type<toy::Tileblock>(), member_address(&toy::Tileblock::m_wfc_block), type<mud::WfcBlock>(), "wfc_block", Ref(type<mud::WfcBlock>()), Member::NonMutable, nullptr },
                 { type<toy::Tileblock>(), member_address(&toy::Tileblock::m_setup), type<bool>(), "setup", var(bool(false)), Member::Value, nullptr },
                 { type<toy::Tileblock>(), member_address(&toy::Tileblock::m_populated), type<bool>(), "populated", var(bool(false)), Member::Value, nullptr }
             },
@@ -275,6 +276,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Block>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Block>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Block>>(ref)) mud::ComponentHandle<toy::Block>(  ); }, {} }
             },
             // copy constructor
             {
@@ -301,6 +303,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Chunk>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Chunk>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Chunk>>(ref)) mud::ComponentHandle<toy::Chunk>(  ); }, {} }
             },
             // copy constructor
             {
@@ -327,6 +330,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Heap>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Heap>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Heap>>(ref)) mud::ComponentHandle<toy::Heap>(  ); }, {} }
             },
             // copy constructor
             {
@@ -353,6 +357,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Sector>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Sector>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Sector>>(ref)) mud::ComponentHandle<toy::Sector>(  ); }, {} }
             },
             // copy constructor
             {
@@ -379,6 +384,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<toy::Tileblock>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<toy::Tileblock>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Tileblock>>(ref)) mud::ComponentHandle<toy::Tileblock>(  ); }, {} }
             },
             // copy constructor
             {

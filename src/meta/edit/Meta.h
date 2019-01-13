@@ -29,6 +29,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<toy::ActionGroup>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::ActionGroup>(ref)) toy::ActionGroup(  ); }, {} }
             },
             // copy constructor
             {
@@ -130,6 +131,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<toy::GraphicsDebug>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::GraphicsDebug>(ref)) toy::GraphicsDebug(  ); }, {} }
             },
             // copy constructor
             {
@@ -262,9 +264,9 @@ namespace mud
             },
             // members
             {
-                { type<toy::Editor>(), member_address(&toy::Editor::m_run_tool), type<toy::RunTool>(), "run_tool", Ref(type<toy::RunTool>()), Member::None, nullptr },
-                { type<toy::Editor>(), member_address(&toy::Editor::m_play_tool), type<toy::PlayTool>(), "play_tool", Ref(type<toy::PlayTool>()), Member::None, nullptr },
-                { type<toy::Editor>(), member_address(&toy::Editor::m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", Ref(type<mud::FrameViewTool>()), Member::None, nullptr },
+                { type<toy::Editor>(), member_address(&toy::Editor::m_run_tool), type<toy::RunTool>(), "run_tool", Ref(type<toy::RunTool>()), Member::NonMutable, nullptr },
+                { type<toy::Editor>(), member_address(&toy::Editor::m_play_tool), type<toy::PlayTool>(), "play_tool", Ref(type<toy::PlayTool>()), Member::NonMutable, nullptr },
+                { type<toy::Editor>(), member_address(&toy::Editor::m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", Ref(type<mud::FrameViewTool>()), Member::NonMutable, nullptr },
                 { type<toy::Editor>(), member_address(&toy::Editor::m_edited_world), type<toy::World>(), "edited_world", Ref(type<toy::World>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Editor>(), member_address(&toy::Editor::m_run_game), type<bool>(), "run_game", var(bool(false)), Member::Value, nullptr },
                 { type<toy::Editor>(), member_address(&toy::Editor::m_play_game), type<bool>(), "play_game", var(bool(false)), Member::Value, nullptr }

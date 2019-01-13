@@ -25,7 +25,7 @@
 #include <gfx-edit/Api.h>
 #include <tool/Api.h>
 #include <wfc-gfx/Api.h>
-#include <core/Api.h>
+#include <frame/Api.h>
 #include <util/Api.h>
 #include <core/Api.h>
 #include <visu/Api.h>
@@ -69,10 +69,10 @@ extern "C" {
 	void DECL Aim__set_end(Aim* self, mud::vec3* value) {
 		self->end = *value;
 	}
-	toy::Spatial DECL Aim__get_hit(Aim* self) {
+	toy::Spatial* DECL Aim__get_hit(Aim* self) {
 		return self->hit;
 	}
-	void DECL Aim__set_hit(Aim* self, toy::Spatial value) {
+	void DECL Aim__set_hit(Aim* self, toy::Spatial* value) {
 		self->hit = value;
 	}
 	void DECL Aim__destroy(Aim* self) {

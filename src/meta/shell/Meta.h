@@ -49,7 +49,7 @@ namespace mud
                 { type<toy::Game>(), member_address(&toy::Game::m_mode), type<toy::GameMode>(), "mode", var(toy::GameMode::Play), Member::Value, nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_shell), type<toy::GameShell>(), "shell", Ref(type<toy::GameShell>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_module), type<toy::GameModule>(), "module", Ref(type<toy::GameModule>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-                { type<toy::Game>(), member_address(&toy::Game::m_player), type<mud::Ref>(), "player", Ref(), Member::None, nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_player), type<mud::Ref>(), "player", Ref(), Member::NonMutable, nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_screen), type<mud::Widget>(), "screen", Ref(type<mud::Widget>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
             },
@@ -101,6 +101,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<toy::GameShell>(), [](Ref ref, array<Var> args) { new(&val<toy::GameShell>(ref)) toy::GameShell( val<const char*>(args[0]), val<const char*>(args[1]) ); }, { { "resource_path", Ref(type<const char*>()), Param::Nullable }, { "exec_path", Ref(type<const char*>()), Param::Flags(Param::Nullable|Param::Default) } } }
             },
             // copy constructor
             {
@@ -114,7 +115,7 @@ namespace mud
                 { type<toy::GameShell>(), member_address<mud::Context&(toy::GameShell::*)()>(&toy::GameShell::context), type<mud::Context>(), "context", Ref(type<mud::Context>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).context()); } },
                 { type<toy::GameShell>(), member_address<mud::Vg&(toy::GameShell::*)()>(&toy::GameShell::vg), type<mud::Vg>(), "vg", Ref(type<mud::Vg>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).vg()); } },
                 { type<toy::GameShell>(), member_address<mud::UiWindow&(toy::GameShell::*)()>(&toy::GameShell::ui_window), type<mud::UiWindow>(), "ui_window", Ref(type<mud::UiWindow>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::GameShell>(object).ui_window()); } },
-                { type<toy::GameShell>(), member_address(&toy::GameShell::m_editor), type<toy::Editor>(), "editor", Ref(type<toy::Editor>()), Member::None, nullptr },
+                { type<toy::GameShell>(), member_address(&toy::GameShell::m_editor), type<toy::Editor>(), "editor", Ref(type<toy::Editor>()), Member::NonMutable, nullptr },
                 { type<toy::GameShell>(), member_address(&toy::GameShell::m_ui), type<mud::Ui>(), "ui", Ref(type<mud::Ui>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
             },
             // methods
@@ -140,6 +141,7 @@ namespace mud
             {
             }
         };
+        init_pool<toy::GameShell>();
         meta_class<toy::GameShell>();
     }
     // toy::GameModuleBind

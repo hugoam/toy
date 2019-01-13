@@ -32,6 +32,7 @@
 #include <meta/gfx-edit/Module.h>
 #include <meta/tool/Module.h>
 #include <meta/wfc-gfx/Module.h>
+#include <meta/frame/Module.h>
 #include <meta/util/Module.h>
 #include <meta/core/Module.h>
 #include <meta/visu/Module.h>

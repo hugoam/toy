@@ -138,6 +138,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Bullet>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Bullet>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Bullet>>(ref)) mud::ComponentHandle<Bullet>(  ); }, {} }
             },
             // copy constructor
             {
@@ -164,6 +165,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Crate>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Crate>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Crate>>(ref)) mud::ComponentHandle<Crate>(  ); }, {} }
             },
             // copy constructor
             {
@@ -190,6 +192,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Human>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Human>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Human>>(ref)) mud::ComponentHandle<Human>(  ); }, {} }
             },
             // copy constructor
             {

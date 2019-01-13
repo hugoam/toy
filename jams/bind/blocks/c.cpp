@@ -25,7 +25,7 @@
 #include <gfx-edit/Api.h>
 #include <tool/Api.h>
 #include <wfc-gfx/Api.h>
-#include <core/Api.h>
+#include <frame/Api.h>
 #include <util/Api.h>
 #include <core/Api.h>
 #include <visu/Api.h>
@@ -163,23 +163,14 @@ extern "C" {
 	BlockWorld* DECL BlockWorld_BlockWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new BlockWorld(name, *job_system);
 	}
-	toy::World DECL BlockWorld__get_world(BlockWorld* self) {
-		return self->m_world;
+	toy::World* DECL BlockWorld__get_world(BlockWorld* self) {
+		return &self->m_world;
 	}
-	void DECL BlockWorld__set_world(BlockWorld* self, toy::World value) {
-		self->m_world = value;
+	toy::BulletWorld* DECL BlockWorld__get_bullet_world(BlockWorld* self) {
+		return &self->m_bullet_world;
 	}
-	toy::BulletWorld DECL BlockWorld__get_bullet_world(BlockWorld* self) {
-		return self->m_bullet_world;
-	}
-	void DECL BlockWorld__set_bullet_world(BlockWorld* self, toy::BulletWorld value) {
-		self->m_bullet_world = value;
-	}
-	toy::Navmesh DECL BlockWorld__get_navmesh(BlockWorld* self) {
-		return self->m_navmesh;
-	}
-	void DECL BlockWorld__set_navmesh(BlockWorld* self, toy::Navmesh value) {
-		self->m_navmesh = value;
+	toy::Navmesh* DECL BlockWorld__get_navmesh(BlockWorld* self) {
+		return &self->m_navmesh;
 	}
 	mud::uvec3* DECL BlockWorld__get_block_subdiv(BlockWorld* self) {
 		static mud::uvec3 temp;

@@ -25,7 +25,7 @@
 #include <gfx-edit/Api.h>
 #include <tool/Api.h>
 #include <wfc-gfx/Api.h>
-#include <core/Api.h>
+#include <frame/Api.h>
 #include <util/Api.h>
 #include <core/Api.h>
 #include <visu/Api.h>
@@ -69,10 +69,10 @@ extern "C" {
 	void DECL Aim__set_end(Aim* self, mud::vec3* value) {
 		self->end = *value;
 	}
-	toy::Spatial DECL Aim__get_hit(Aim* self) {
+	toy::Spatial* DECL Aim__get_hit(Aim* self) {
 		return self->hit;
 	}
-	void DECL Aim__set_hit(Aim* self, toy::Spatial value) {
+	void DECL Aim__set_hit(Aim* self, toy::Spatial* value) {
 		self->hit = value;
 	}
 	void DECL Aim__destroy(Aim* self) {
@@ -249,23 +249,14 @@ extern "C" {
 	TileWorld* DECL TileWorld_TileWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new TileWorld(name, *job_system);
 	}
-	toy::World DECL TileWorld__get_world(TileWorld* self) {
-		return self->m_world;
+	toy::World* DECL TileWorld__get_world(TileWorld* self) {
+		return &self->m_world;
 	}
-	void DECL TileWorld__set_world(TileWorld* self, toy::World value) {
-		self->m_world = value;
+	toy::BulletWorld* DECL TileWorld__get_bullet_world(TileWorld* self) {
+		return &self->m_bullet_world;
 	}
-	toy::BulletWorld DECL TileWorld__get_bullet_world(TileWorld* self) {
-		return self->m_bullet_world;
-	}
-	void DECL TileWorld__set_bullet_world(TileWorld* self, toy::BulletWorld value) {
-		self->m_bullet_world = value;
-	}
-	toy::Navmesh DECL TileWorld__get_navmesh(TileWorld* self) {
-		return self->m_navmesh;
-	}
-	void DECL TileWorld__set_navmesh(TileWorld* self, toy::Navmesh value) {
-		self->m_navmesh = value;
+	toy::Navmesh* DECL TileWorld__get_navmesh(TileWorld* self) {
+		return &self->m_navmesh;
 	}
 	void DECL TileWorld__destroy(TileWorld* self) {
 		delete self;

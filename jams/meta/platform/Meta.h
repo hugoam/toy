@@ -39,6 +39,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Aim>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Aim>(ref)) Aim(  ); }, {} }
             },
             // copy constructor
             {
@@ -251,6 +252,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Bullet>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Bullet>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Bullet>>(ref)) mud::ComponentHandle<Bullet>(  ); }, {} }
             },
             // copy constructor
             {
@@ -277,6 +279,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Crate>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Crate>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Crate>>(ref)) mud::ComponentHandle<Crate>(  ); }, {} }
             },
             // copy constructor
             {
@@ -303,6 +306,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Human>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Human>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Human>>(ref)) mud::ComponentHandle<Human>(  ); }, {} }
             },
             // copy constructor
             {
@@ -329,6 +333,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Lamp>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Lamp>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Lamp>>(ref)) mud::ComponentHandle<Lamp>(  ); }, {} }
             },
             // copy constructor
             {
@@ -362,9 +367,9 @@ namespace mud
             },
             // members
             {
-                { type<TileWorld>(), member_address(&TileWorld::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::None, nullptr },
-                { type<TileWorld>(), member_address(&TileWorld::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Component, nullptr },
-                { type<TileWorld>(), member_address(&TileWorld::m_navmesh), type<toy::Navmesh>(), "navmesh", Ref(type<toy::Navmesh>()), Member::Component, nullptr }
+                { type<TileWorld>(), member_address(&TileWorld::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::NonMutable, nullptr },
+                { type<TileWorld>(), member_address(&TileWorld::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Flags(Member::NonMutable|Member::Component), nullptr },
+                { type<TileWorld>(), member_address(&TileWorld::m_navmesh), type<toy::Navmesh>(), "navmesh", Ref(type<toy::Navmesh>()), Member::Flags(Member::NonMutable|Member::Component), nullptr }
             },
             // methods
             {

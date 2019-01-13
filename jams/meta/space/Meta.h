@@ -161,6 +161,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Combat>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Combat>(ref)) Combat(  ); }, {} }
             },
             // copy constructor
             {
@@ -187,6 +188,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<CombatFleet>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<CombatFleet>(ref)) CombatFleet(  ); }, {} }
             },
             // copy constructor
             {
@@ -213,6 +215,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<CombatStar>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<CombatStar>(ref)) CombatStar(  ); }, {} }
             },
             // copy constructor
             {
@@ -281,6 +284,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Construction>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Construction>(ref)) Construction(  ); }, {} }
             },
             // copy constructor
             {
@@ -385,6 +389,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Jump>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Jump>(ref)) Jump(  ); }, {} }
             },
             // copy constructor
             {
@@ -441,6 +446,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Scans>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Scans>(ref)) Scans(  ); }, {} }
             },
             // copy constructor
             {
@@ -467,6 +473,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Schema>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Schema>(ref)) Schema(  ); }, {} }
             },
             // copy constructor
             {
@@ -506,6 +513,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<SpatialPower>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<SpatialPower>(ref)) SpatialPower(  ); }, {} }
             },
             // copy constructor
             {
@@ -532,6 +540,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Split>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Split>(ref)) Split(  ); }, {} }
             },
             // copy constructor
             {
@@ -607,6 +616,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<TechDomain>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<TechDomain>(ref)) TechDomain(  ); }, {} }
             },
             // copy constructor
             {
@@ -633,6 +643,7 @@ namespace mud
             {  },
             // constructors
             {
+                { type<Turn>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Turn>(ref)) Turn(  ); }, {} }
             },
             // copy constructor
             {
@@ -659,6 +670,7 @@ namespace mud
             { base_offset<BuildingSchema, Schema>() },
             // constructors
             {
+                { type<BuildingSchema>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<BuildingSchema>(ref)) BuildingSchema(  ); }, {} }
             },
             // copy constructor
             {
@@ -712,6 +724,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Fleet>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Fleet>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Fleet>>(ref)) mud::ComponentHandle<Fleet>(  ); }, {} }
             },
             // copy constructor
             {
@@ -738,6 +751,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Galaxy>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Galaxy>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Galaxy>>(ref)) mud::ComponentHandle<Galaxy>(  ); }, {} }
             },
             // copy constructor
             {
@@ -764,6 +778,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Star>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Star>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Star>>(ref)) mud::ComponentHandle<Star>(  ); }, {} }
             },
             // copy constructor
             {
@@ -790,6 +805,7 @@ namespace mud
             { base_offset<PlanetaryCombat, Combat>() },
             // constructors
             {
+                { type<PlanetaryCombat>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<PlanetaryCombat>(ref)) PlanetaryCombat(  ); }, {} }
             },
             // copy constructor
             {
@@ -819,6 +835,7 @@ namespace mud
             { base_offset<ShipComponent, Schema>() },
             // constructors
             {
+                { type<ShipComponent>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<ShipComponent>(ref)) ShipComponent(  ); }, {} }
             },
             // copy constructor
             {
@@ -845,6 +862,7 @@ namespace mud
             { base_offset<ShipEngine, Schema>() },
             // constructors
             {
+                { type<ShipEngine>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<ShipEngine>(ref)) ShipEngine(  ); }, {} }
             },
             // copy constructor
             {
@@ -871,6 +889,7 @@ namespace mud
             { base_offset<ShipHull, Schema>() },
             // constructors
             {
+                { type<ShipHull>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<ShipHull>(ref)) ShipHull(  ); }, {} }
             },
             // copy constructor
             {
@@ -897,6 +916,7 @@ namespace mud
             { base_offset<ShipSchema, Schema>() },
             // constructors
             {
+                { type<ShipSchema>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<ShipSchema>(ref)) ShipSchema(  ); }, {} }
             },
             // copy constructor
             {
@@ -926,6 +946,7 @@ namespace mud
             { base_offset<SpatialCombat, Combat>() },
             // constructors
             {
+                { type<SpatialCombat>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<SpatialCombat>(ref)) SpatialCombat(  ); }, {} }
             },
             // copy constructor
             {
@@ -962,8 +983,8 @@ namespace mud
             },
             // members
             {
-                { type<Universe>(), member_address(&Universe::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::None, nullptr },
-                { type<Universe>(), member_address(&Universe::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Component, nullptr }
+                { type<Universe>(), member_address(&Universe::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::NonMutable, nullptr },
+                { type<Universe>(), member_address(&Universe::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Flags(Member::NonMutable|Member::Component), nullptr }
             },
             // methods
             {

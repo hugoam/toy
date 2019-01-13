@@ -208,9 +208,9 @@ namespace mud
             },
             // members
             {
-                { type<BlockWorld>(), member_address(&BlockWorld::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::None, nullptr },
-                { type<BlockWorld>(), member_address(&BlockWorld::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Component, nullptr },
-                { type<BlockWorld>(), member_address(&BlockWorld::m_navmesh), type<toy::Navmesh>(), "navmesh", Ref(type<toy::Navmesh>()), Member::Component, nullptr },
+                { type<BlockWorld>(), member_address(&BlockWorld::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::NonMutable, nullptr },
+                { type<BlockWorld>(), member_address(&BlockWorld::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Flags(Member::NonMutable|Member::Component), nullptr },
+                { type<BlockWorld>(), member_address(&BlockWorld::m_navmesh), type<toy::Navmesh>(), "navmesh", Ref(type<toy::Navmesh>()), Member::Flags(Member::NonMutable|Member::Component), nullptr },
                 { type<BlockWorld>(), member_address(&BlockWorld::m_block_subdiv), type<mud::uvec3>(), "block_subdiv", var(mud::uvec3(20,4,20)), Member::Value, nullptr },
                 { type<BlockWorld>(), member_address(&BlockWorld::m_tile_scale), type<mud::vec3>(), "tile_scale", var(mud::vec3(4.f)), Member::Value, nullptr },
                 { type<BlockWorld>(), member_address(&BlockWorld::m_block_size), type<mud::vec3>(), "block_size", var(mud::vec3()), Member::Value, nullptr },
@@ -235,6 +235,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Camp>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Camp>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Camp>>(ref)) mud::ComponentHandle<Camp>(  ); }, {} }
             },
             // copy constructor
             {
@@ -261,6 +262,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Shield>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Shield>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Shield>>(ref)) mud::ComponentHandle<Shield>(  ); }, {} }
             },
             // copy constructor
             {
@@ -287,6 +289,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Slug>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Slug>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Slug>>(ref)) mud::ComponentHandle<Slug>(  ); }, {} }
             },
             // copy constructor
             {
@@ -313,6 +316,7 @@ namespace mud
             { base_offset<mud::ComponentHandle<Tank>, mud::Entity>() },
             // constructors
             {
+                { type<mud::ComponentHandle<Tank>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<Tank>>(ref)) mud::ComponentHandle<Tank>(  ); }, {} }
             },
             // copy constructor
             {

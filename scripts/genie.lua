@@ -23,9 +23,11 @@ dofile "toy.lua"
 group "bin"
 dofile "jams.lua"
 
---mud_binary("metagen", { mud.clrefl }, {})
+if _OPTIONS["metagen"] then
+    mud_binary("metagen", { mud.clrefl }, {})
+end
 
 --dofile "editor.lua"
 --dofile "example.lua"
 
---dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))
+dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))

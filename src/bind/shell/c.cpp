@@ -25,7 +25,7 @@
 #include <gfx-edit/Api.h>
 #include <tool/Api.h>
 #include <wfc-gfx/Api.h>
-#include <core/Api.h>
+#include <frame/Api.h>
 #include <shell/Api.h>
 
 #ifdef MUD_PLATFORM_EMSCRIPTEN
@@ -39,10 +39,10 @@
 extern "C" {
 	
 	// Game
-	class User DECL toy_Game__get_user(toy::Game* self) {
+	toy::User* DECL toy_Game__get_user(toy::Game* self) {
 		return self->m_user;
 	}
-	void DECL toy_Game__set_user(toy::Game* self, class User value) {
+	void DECL toy_Game__set_user(toy::Game* self, toy::User* value) {
 		self->m_user = value;
 	}
 	toy::GameMode DECL toy_Game__get_mode(toy::Game* self) {
@@ -63,10 +63,10 @@ extern "C" {
 	void DECL toy_Game__set_module(toy::Game* self, toy::GameModule* value) {
 		self->m_module = value;
 	}
-	int DECL toy_Game__get_world(toy::Game* self) {
+	toy::World* DECL toy_Game__get_world(toy::Game* self) {
 		return self->m_world;
 	}
-	void DECL toy_Game__set_world(toy::Game* self, int value) {
+	void DECL toy_Game__set_world(toy::Game* self, toy::World* value) {
 		self->m_world = value;
 	}
 	mud::Widget* DECL toy_Game__get_screen(toy::Game* self) {
@@ -95,10 +95,6 @@ extern "C" {
 		self->start(*shell, *game);
 	}
 	void DECL toy_GameModule__destroy(toy::GameModule* self) {
-		delete self;
-	}
-	// GameScene
-	void DECL toy_GameScene__destroy(toy::GameScene* self) {
 		delete self;
 	}
 	// GameShell
@@ -171,8 +167,8 @@ extern "C" {
 	void DECL toy_GameShell_save_0(toy::GameShell* self) {
 		self->save();
 	}
-	int DECL toy_GameShell__get_core(toy::GameShell* self) {
-		return self->core();
+	toy::Core* DECL toy_GameShell__get_core(toy::GameShell* self) {
+		return &self->core();
 	}
 	mud::LuaInterpreter* DECL toy_GameShell__get_lua(toy::GameShell* self) {
 		return &self->lua();
@@ -192,11 +188,8 @@ extern "C" {
 	mud::UiWindow* DECL toy_GameShell__get_ui_window(toy::GameShell* self) {
 		return &self->ui_window();
 	}
-	toy::Editor DECL toy_GameShell__get_editor(toy::GameShell* self) {
-		return self->m_editor;
-	}
-	void DECL toy_GameShell__set_editor(toy::GameShell* self, toy::Editor value) {
-		self->m_editor = value;
+	toy::Editor* DECL toy_GameShell__get_editor(toy::GameShell* self) {
+		return &self->m_editor;
 	}
 	mud::Ui* DECL toy_GameShell__get_ui(toy::GameShell* self) {
 		return self->m_ui;
@@ -212,6 +205,10 @@ extern "C" {
 		return new toy::GameModuleBind(*module, call);
 	}
 	void DECL toy_GameModuleBind__destroy(toy::GameModuleBind* self) {
+		delete self;
+	}
+	// GameScene
+	void DECL toy_GameScene__destroy(toy::GameScene* self) {
 		delete self;
 	}
 	// GameMode
