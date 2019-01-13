@@ -53,16 +53,28 @@ extern "C" {
 		static mud::quat temp;
 		return (temp = self->rotation, &temp);
 	}
+	void EMSCRIPTEN_KEEPALIVE Aim_set_rotation(Aim* self, mud::quat* rotation) {
+		self->rotation = *rotation;
+	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_start(Aim* self) {
 		static mud::vec3 temp;
 		return (temp = self->start, &temp);
+	}
+	void EMSCRIPTEN_KEEPALIVE Aim_set_start(Aim* self, mud::vec3* start) {
+		self->start = *start;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_end(Aim* self) {
 		static mud::vec3 temp;
 		return (temp = self->end, &temp);
 	}
+	void EMSCRIPTEN_KEEPALIVE Aim_set_end(Aim* self, mud::vec3* end) {
+		self->end = *end;
+	}
 	toy::Spatial* EMSCRIPTEN_KEEPALIVE Aim_get_hit(Aim* self) {
 		return self->hit;
+	}
+	void EMSCRIPTEN_KEEPALIVE Aim_set_hit(Aim* self, toy::Spatial* hit) {
+		self->hit = hit;
 	}
 	void EMSCRIPTEN_KEEPALIVE Aim___destroy__(Aim* self) {
 		delete self;
@@ -72,9 +84,15 @@ extern "C" {
 		static mud::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
+	void EMSCRIPTEN_KEEPALIVE Bullet_set_source(Bullet* self, mud::vec3* source) {
+		self->m_source = *source;
+	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_velocity, &temp);
+	}
+	void EMSCRIPTEN_KEEPALIVE Bullet_set_velocity(Bullet* self, mud::vec3* velocity) {
+		self->m_velocity = *velocity;
 	}
 	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
 		delete self;
@@ -89,6 +107,9 @@ extern "C" {
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_extents, &temp);
+	}
+	void EMSCRIPTEN_KEEPALIVE Crate_set_extents(Crate* self, mud::vec3* extents) {
+		self->m_extents = *extents;
 	}
 	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
 		delete self;
@@ -121,37 +142,70 @@ extern "C" {
 	Faction EMSCRIPTEN_KEEPALIVE Human_get_faction(Human* self) {
 		return self->m_faction;
 	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_faction(Human* self, Faction faction) {
+		self->m_faction = faction;
+	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_life(Human* self) {
 		return self->m_life;
+	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_life(Human* self, float life) {
+		self->m_life = life;
 	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_energy(Human* self) {
 		return self->m_energy;
 	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_energy(Human* self, float energy) {
+		self->m_energy = energy;
+	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_discharge(Human* self) {
 		return self->m_discharge;
+	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_discharge(Human* self, float discharge) {
+		self->m_discharge = discharge;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Human_get_headlight(Human* self) {
 		return self->m_headlight;
 	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_headlight(Human* self, bool headlight) {
+		self->m_headlight = headlight;
+	}
 	bool EMSCRIPTEN_KEEPALIVE Human_get_shield(Human* self) {
 		return self->m_shield;
+	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_shield(Human* self, bool shield) {
+		self->m_shield = shield;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Human_get_walk(Human* self) {
 		return self->m_walk;
 	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_walk(Human* self, bool walk) {
+		self->m_walk = walk;
+	}
 	HHuman EMSCRIPTEN_KEEPALIVE Human_get_target(Human* self) {
 		return self->m_target;
+	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_target(Human* self, HHuman target) {
+		self->m_target = target;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Human_get_dest(Human* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_dest, &temp);
 	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_dest(Human* self, mud::vec3* dest) {
+		self->m_dest = *dest;
+	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_cooldown(Human* self) {
 		return self->m_cooldown;
+	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_cooldown(Human* self, float cooldown) {
+		self->m_cooldown = cooldown;
 	}
 	Stance* EMSCRIPTEN_KEEPALIVE Human_get_state(Human* self) {
 		static Stance temp;
 		return (temp = self->m_state, &temp);
+	}
+	void EMSCRIPTEN_KEEPALIVE Human_set_state(Human* self, Stance* state) {
+		self->m_state = *state;
 	}
 	void EMSCRIPTEN_KEEPALIVE Human___destroy__(Human* self) {
 		delete self;
@@ -180,8 +234,14 @@ extern "C" {
 	const char* EMSCRIPTEN_KEEPALIVE Stance_get_name(Stance* self) {
 		return self->name.c_str();
 	}
+	void EMSCRIPTEN_KEEPALIVE Stance_set_name(Stance* self, const char* name) {
+		self->name = name;
+	}
 	bool EMSCRIPTEN_KEEPALIVE Stance_get_loop(Stance* self) {
 		return self->loop;
+	}
+	void EMSCRIPTEN_KEEPALIVE Stance_set_loop(Stance* self, bool loop) {
+		self->loop = loop;
 	}
 	void EMSCRIPTEN_KEEPALIVE Stance___destroy__(Stance* self) {
 		delete self;
@@ -196,6 +256,9 @@ extern "C" {
 	mud::vec3* EMSCRIPTEN_KEEPALIVE WorldBlock_get_extents(WorldBlock* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_extents, &temp);
+	}
+	void EMSCRIPTEN_KEEPALIVE WorldBlock_set_extents(WorldBlock* self, mud::vec3* extents) {
+		self->m_extents = *extents;
 	}
 	void EMSCRIPTEN_KEEPALIVE WorldBlock___destroy__(WorldBlock* self) {
 		delete self;

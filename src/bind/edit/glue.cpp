@@ -62,25 +62,40 @@ extern "C" {
 	}
 	// Editor
 	toy::RunTool* EMSCRIPTEN_KEEPALIVE Editor_get_run_tool(toy::Editor* self) {
-		static toy::RunTool temp;
-		return (temp = self->m_run_tool, &temp);
+		return &self->m_run_tool;
+	}
+	void EMSCRIPTEN_KEEPALIVE Editor_set_run_tool(toy::Editor* self, toy::RunTool* run_tool) {
+		self->m_run_tool = *run_tool;
 	}
 	toy::PlayTool* EMSCRIPTEN_KEEPALIVE Editor_get_play_tool(toy::Editor* self) {
-		static toy::PlayTool temp;
-		return (temp = self->m_play_tool, &temp);
+		return &self->m_play_tool;
+	}
+	void EMSCRIPTEN_KEEPALIVE Editor_set_play_tool(toy::Editor* self, toy::PlayTool* play_tool) {
+		self->m_play_tool = *play_tool;
 	}
 	mud::FrameViewTool* EMSCRIPTEN_KEEPALIVE Editor_get_frame_view_tool(toy::Editor* self) {
-		static mud::FrameViewTool temp;
-		return (temp = self->m_frame_view_tool, &temp);
+		return &self->m_frame_view_tool;
+	}
+	void EMSCRIPTEN_KEEPALIVE Editor_set_frame_view_tool(toy::Editor* self, mud::FrameViewTool* frame_view_tool) {
+		self->m_frame_view_tool = *frame_view_tool;
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Editor_get_edited_world(toy::Editor* self) {
 		return self->m_edited_world;
 	}
+	void EMSCRIPTEN_KEEPALIVE Editor_set_edited_world(toy::Editor* self, toy::World* edited_world) {
+		self->m_edited_world = edited_world;
+	}
 	bool EMSCRIPTEN_KEEPALIVE Editor_get_run_game(toy::Editor* self) {
 		return self->m_run_game;
 	}
+	void EMSCRIPTEN_KEEPALIVE Editor_set_run_game(toy::Editor* self, bool run_game) {
+		self->m_run_game = run_game;
+	}
 	bool EMSCRIPTEN_KEEPALIVE Editor_get_play_game(toy::Editor* self) {
 		return self->m_play_game;
+	}
+	void EMSCRIPTEN_KEEPALIVE Editor_set_play_game(toy::Editor* self, bool play_game) {
+		self->m_play_game = play_game;
 	}
 	void EMSCRIPTEN_KEEPALIVE Editor___destroy__(toy::Editor* self) {
 		delete self;

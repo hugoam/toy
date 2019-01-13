@@ -43,20 +43,38 @@ extern "C" {
 	toy::User* EMSCRIPTEN_KEEPALIVE Game_get_user(toy::Game* self) {
 		return self->m_user;
 	}
+	void EMSCRIPTEN_KEEPALIVE Game_set_user(toy::Game* self, toy::User* user) {
+		self->m_user = user;
+	}
 	toy::GameMode EMSCRIPTEN_KEEPALIVE Game_get_mode(toy::Game* self) {
 		return self->m_mode;
+	}
+	void EMSCRIPTEN_KEEPALIVE Game_set_mode(toy::Game* self, toy::GameMode mode) {
+		self->m_mode = mode;
 	}
 	toy::GameShell* EMSCRIPTEN_KEEPALIVE Game_get_shell(toy::Game* self) {
 		return self->m_shell;
 	}
+	void EMSCRIPTEN_KEEPALIVE Game_set_shell(toy::Game* self, toy::GameShell* shell) {
+		self->m_shell = shell;
+	}
 	toy::GameModule* EMSCRIPTEN_KEEPALIVE Game_get_module(toy::Game* self) {
 		return self->m_module;
+	}
+	void EMSCRIPTEN_KEEPALIVE Game_set_module(toy::Game* self, toy::GameModule* module) {
+		self->m_module = module;
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Game_get_world(toy::Game* self) {
 		return self->m_world;
 	}
+	void EMSCRIPTEN_KEEPALIVE Game_set_world(toy::Game* self, toy::World* world) {
+		self->m_world = world;
+	}
 	mud::Widget* EMSCRIPTEN_KEEPALIVE Game_get_screen(toy::Game* self) {
 		return self->m_screen;
+	}
+	void EMSCRIPTEN_KEEPALIVE Game_set_screen(toy::Game* self, mud::Widget* screen) {
+		self->m_screen = screen;
 	}
 	void EMSCRIPTEN_KEEPALIVE Game___destroy__(toy::Game* self) {
 		delete self;
@@ -147,30 +165,56 @@ extern "C" {
 	toy::Core* EMSCRIPTEN_KEEPALIVE GameShell_get_core(toy::GameShell* self) {
 		return &self->core();
 	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_core(toy::GameShell* self, toy::Core* core) {
+		self->core = *core;
+	}
 	mud::LuaInterpreter* EMSCRIPTEN_KEEPALIVE GameShell_get_lua(toy::GameShell* self) {
 		return &self->lua();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_lua(toy::GameShell* self, mud::LuaInterpreter* lua) {
+		self->lua = *lua;
 	}
 	mud::WrenInterpreter* EMSCRIPTEN_KEEPALIVE GameShell_get_wren(toy::GameShell* self) {
 		return &self->wren();
 	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_wren(toy::GameShell* self, mud::WrenInterpreter* wren) {
+		self->wren = *wren;
+	}
 	mud::GfxSystem* EMSCRIPTEN_KEEPALIVE GameShell_get_gfx(toy::GameShell* self) {
 		return &self->gfx();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_gfx(toy::GameShell* self, mud::GfxSystem* gfx) {
+		self->gfx = *gfx;
 	}
 	mud::Context* EMSCRIPTEN_KEEPALIVE GameShell_get_context(toy::GameShell* self) {
 		return &self->context();
 	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_context(toy::GameShell* self, mud::Context* context) {
+		self->context = *context;
+	}
 	mud::Vg* EMSCRIPTEN_KEEPALIVE GameShell_get_vg(toy::GameShell* self) {
 		return &self->vg();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_vg(toy::GameShell* self, mud::Vg* vg) {
+		self->vg = *vg;
 	}
 	mud::UiWindow* EMSCRIPTEN_KEEPALIVE GameShell_get_ui_window(toy::GameShell* self) {
 		return &self->ui_window();
 	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_ui_window(toy::GameShell* self, mud::UiWindow* ui_window) {
+		self->ui_window = *ui_window;
+	}
 	toy::Editor* EMSCRIPTEN_KEEPALIVE GameShell_get_editor(toy::GameShell* self) {
-		static toy::Editor temp;
-		return (temp = self->m_editor, &temp);
+		return &self->m_editor;
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_editor(toy::GameShell* self, toy::Editor* editor) {
+		self->m_editor = *editor;
 	}
 	mud::Ui* EMSCRIPTEN_KEEPALIVE GameShell_get_ui(toy::GameShell* self) {
 		return self->m_ui;
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_ui(toy::GameShell* self, mud::Ui* ui) {
+		self->m_ui = ui;
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell___destroy__(toy::GameShell* self) {
 		delete self;
