@@ -145,25 +145,25 @@ extern "C" {
 		self->clear_scenes();
 	}
 	toy::Core* EMSCRIPTEN_KEEPALIVE GameShell_get_core(toy::GameShell* self) {
-		return &self->core;
+		return &self->core();
 	}
 	mud::LuaInterpreter* EMSCRIPTEN_KEEPALIVE GameShell_get_lua(toy::GameShell* self) {
-		return &self->lua;
+		return &self->lua();
 	}
 	mud::WrenInterpreter* EMSCRIPTEN_KEEPALIVE GameShell_get_wren(toy::GameShell* self) {
-		return &self->wren;
+		return &self->wren();
 	}
 	mud::GfxSystem* EMSCRIPTEN_KEEPALIVE GameShell_get_gfx(toy::GameShell* self) {
-		return &self->gfx;
+		return &self->gfx();
 	}
 	mud::Context* EMSCRIPTEN_KEEPALIVE GameShell_get_context(toy::GameShell* self) {
-		return &self->context;
+		return &self->context();
 	}
 	mud::Vg* EMSCRIPTEN_KEEPALIVE GameShell_get_vg(toy::GameShell* self) {
-		return &self->vg;
+		return &self->vg();
 	}
 	mud::UiWindow* EMSCRIPTEN_KEEPALIVE GameShell_get_ui_window(toy::GameShell* self) {
-		return &self->ui_window;
+		return &self->ui_window();
 	}
 	toy::Editor* EMSCRIPTEN_KEEPALIVE GameShell_get_editor(toy::GameShell* self) {
 		static toy::Editor temp;

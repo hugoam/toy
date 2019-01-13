@@ -88,7 +88,7 @@ extern "C" {
 		return self->m_object;
 	}
 	toy::ColliderImpl* EMSCRIPTEN_KEEPALIVE Collider_get_impl(toy::Collider* self) {
-		return &self->impl;
+		return &self->impl();
 	}
 	void EMSCRIPTEN_KEEPALIVE Collider___destroy__(toy::Collider* self) {
 		delete self;
@@ -379,10 +379,10 @@ extern "C" {
 		return self->m_name.c_str();
 	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE World_get_origin(toy::World* self) {
-		return self->origin;
+		return self->origin();
 	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE World_get_unworld(toy::World* self) {
-		return self->unworld;
+		return self->unworld();
 	}
 	void EMSCRIPTEN_KEEPALIVE World___destroy__(toy::World* self) {
 		delete self;
