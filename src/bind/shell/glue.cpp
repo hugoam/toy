@@ -91,31 +91,31 @@ extern "C" {
 		self->load_path(*module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_0(toy::GameShell* self) {
-		self->run(iterations);
+		self->run();
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_1(toy::GameShell* self, size_t iterations) {
 		self->run(iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_1(toy::GameShell* self, toy::GameModule* module) {
-		self->run_game(*module, iterations);
+		self->run_game(*module);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
 		self->run_game(*module, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_1(toy::GameShell* self, toy::GameModule* module) {
-		self->run_editor(*module, iterations);
+		self->run_editor(*module);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
 		self->run_editor(*module, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_1(toy::GameShell* self, const char* module_path) {
-		self->run_game_path(*module_path, iterations);
+		self->run_game_path(*module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
 		self->run_game_path(*module_path, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_1(toy::GameShell* self, const char* module_path) {
-		self->run_editor_path(*module_path, iterations);
+		self->run_editor_path(*module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
 		self->run_editor_path(*module_path, iterations);

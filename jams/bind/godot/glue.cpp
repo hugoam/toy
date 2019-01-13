@@ -102,7 +102,7 @@ extern "C" {
 	}
 	mud::quat* EMSCRIPTEN_KEEPALIVE Human_sight_0(Human* self) {
 		static mud::quat temp;
-		return (temp = self->sight(aiming), &temp);
+		return (temp = self->sight(), &temp);
 	}
 	mud::quat* EMSCRIPTEN_KEEPALIVE Human_sight_1(Human* self, bool aiming) {
 		static mud::quat temp;

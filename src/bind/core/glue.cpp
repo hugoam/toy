@@ -32,13 +32,13 @@ extern "C" {
 		return new toy::Camera();
 	}
 	toy::Camera* EMSCRIPTEN_KEEPALIVE Camera_Camera_1(toy::HSpatial spatial) {
-		return new toy::Camera(spatial, lens_distance, near, far);
+		return new toy::Camera(spatial);
 	}
 	toy::Camera* EMSCRIPTEN_KEEPALIVE Camera_Camera_2(toy::HSpatial spatial, float lens_distance) {
-		return new toy::Camera(spatial, lens_distance, near, far);
+		return new toy::Camera(spatial, lens_distance);
 	}
 	toy::Camera* EMSCRIPTEN_KEEPALIVE Camera_Camera_3(toy::HSpatial spatial, float lens_distance, float near) {
-		return new toy::Camera(spatial, lens_distance, near, far);
+		return new toy::Camera(spatial, lens_distance, near);
 	}
 	toy::Camera* EMSCRIPTEN_KEEPALIVE Camera_Camera_4(toy::HSpatial spatial, float lens_distance, float near, float far) {
 		return new toy::Camera(spatial, lens_distance, near, far);
@@ -123,10 +123,10 @@ extern "C" {
 		return new toy::CollisionShape();
 	}
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE CollisionShape_CollisionShape_1(const mud::Shape* shape) {
-		return new toy::CollisionShape(*shape, *center, margin);
+		return new toy::CollisionShape(*shape);
 	}
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE CollisionShape_CollisionShape_2(const mud::Shape* shape, const mud::vec3* center) {
-		return new toy::CollisionShape(*shape, *center, margin);
+		return new toy::CollisionShape(*shape, *center);
 	}
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE CollisionShape_CollisionShape_3(const mud::Shape* shape, const mud::vec3* center, float margin) {
 		return new toy::CollisionShape(*shape, *center, margin);
@@ -307,7 +307,7 @@ extern "C" {
 		return new toy::Solid();
 	}
 	toy::Solid* EMSCRIPTEN_KEEPALIVE Solid_Solid_4(toy::HSpatial spatial, toy::HMovable movable, toy::OCollider collider, bool isstatic) {
-		return new toy::Solid(spatial, movable, collider, isstatic, mass);
+		return new toy::Solid(spatial, movable, collider, isstatic);
 	}
 	toy::Solid* EMSCRIPTEN_KEEPALIVE Solid_Solid_5(toy::HSpatial spatial, toy::HMovable movable, toy::OCollider collider, bool isstatic, float mass) {
 		return new toy::Solid(spatial, movable, collider, isstatic, mass);
