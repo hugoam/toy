@@ -44,8 +44,7 @@ extern "C" {
 		return self->m_user;
 	}
 	toy::GameMode EMSCRIPTEN_KEEPALIVE Game_get_mode(toy::Game* self) {
-		static toy::GameMode temp;
-		return (temp = self->m_mode, &temp);
+		return self->m_mode;
 	}
 	toy::GameShell* EMSCRIPTEN_KEEPALIVE Game_get_shell(toy::Game* self) {
 		return self->m_shell;

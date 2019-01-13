@@ -77,8 +77,7 @@ extern "C" {
 		return self->m_name.c_str();
 	}
 	Race EMSCRIPTEN_KEEPALIVE Commander_get_race(Commander* self) {
-		static Race temp;
-		return (temp = self->m_race, &temp);
+		return self->m_race;
 	}
 	int EMSCRIPTEN_KEEPALIVE Commander_get_command(Commander* self) {
 		return self->m_command;
@@ -105,8 +104,7 @@ extern "C" {
 		return self->m_capital;
 	}
 	Regime EMSCRIPTEN_KEEPALIVE Commander_get_regime(Commander* self) {
-		static Regime temp;
-		return (temp = self->m_regime, &temp);
+		return self->m_regime;
 	}
 	float EMSCRIPTEN_KEEPALIVE Commander_get_power(Commander* self) {
 		return self->m_power;
@@ -178,8 +176,7 @@ extern "C" {
 		return self->m_upkeep;
 	}
 	FleetStance EMSCRIPTEN_KEEPALIVE Fleet_get_stance(Fleet* self) {
-		static FleetStance temp;
-		return (temp = self->m_stance, &temp);
+		return self->m_stance;
 	}
 	Jump* EMSCRIPTEN_KEEPALIVE Fleet_get_jump(Fleet* self) {
 		static Jump temp;
@@ -238,8 +235,7 @@ extern "C" {
 		return (temp = self->m_dest, &temp);
 	}
 	FleetStance EMSCRIPTEN_KEEPALIVE Jump_get_stance(Jump* self) {
-		static FleetStance temp;
-		return (temp = self->m_stance, &temp);
+		return self->m_stance;
 	}
 	Fleet* EMSCRIPTEN_KEEPALIVE Jump_get_track(Jump* self) {
 		return self->m_track;
@@ -326,8 +322,7 @@ extern "C" {
 		return self->m_code.c_str();
 	}
 	FleetStance EMSCRIPTEN_KEEPALIVE Split_get_stance(Split* self) {
-		static FleetStance temp;
-		return (temp = self->m_stance, &temp);
+		return self->m_stance;
 	}
 	void EMSCRIPTEN_KEEPALIVE Split___destroy__(Split* self) {
 		delete self;
@@ -380,12 +375,10 @@ extern "C" {
 		return self->m_revenue;
 	}
 	Politic EMSCRIPTEN_KEEPALIVE Star_get_politic(Star* self) {
-		static Politic temp;
-		return (temp = self->m_politic, &temp);
+		return self->m_politic;
 	}
 	Taxation EMSCRIPTEN_KEEPALIVE Star_get_taxation(Star* self) {
-		static Taxation temp;
-		return (temp = self->m_taxation, &temp);
+		return self->m_taxation;
 	}
 	Commander* EMSCRIPTEN_KEEPALIVE Star_get_commander(Star* self) {
 		return self->m_commander;
@@ -478,8 +471,7 @@ extern "C" {
 		return self->m_class;
 	}
 	WeaponType EMSCRIPTEN_KEEPALIVE ShipSchema_get_main_weapon(ShipSchema* self) {
-		static WeaponType temp;
-		return (temp = self->m_main_weapon, &temp);
+		return self->m_main_weapon;
 	}
 	void EMSCRIPTEN_KEEPALIVE ShipSchema___destroy__(ShipSchema* self) {
 		delete self;

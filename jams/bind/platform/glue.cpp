@@ -119,8 +119,7 @@ extern "C" {
 		self->stop();
 	}
 	Faction EMSCRIPTEN_KEEPALIVE Human_get_faction(Human* self) {
-		static Faction temp;
-		return (temp = self->m_faction, &temp);
+		return self->m_faction;
 	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_life(Human* self) {
 		return self->m_life;

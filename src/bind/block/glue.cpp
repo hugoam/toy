@@ -89,8 +89,7 @@ extern "C" {
 		return self->m_name.c_str();
 	}
 	toy::MatterState EMSCRIPTEN_KEEPALIVE Element_get_state(toy::Element* self) {
-		static toy::MatterState temp;
-		return (temp = self->m_state, &temp);
+		return self->m_state;
 	}
 	mud::Colour* EMSCRIPTEN_KEEPALIVE Element_get_colour(toy::Element* self) {
 		static mud::Colour temp;

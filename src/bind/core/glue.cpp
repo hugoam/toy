@@ -82,8 +82,7 @@ extern "C" {
 		return self->m_medium;
 	}
 	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE Collider_get_group(toy::Collider* self) {
-		static toy::CollisionGroup temp;
-		return (temp = self->m_group, &temp);
+		return self->m_group;
 	}
 	toy::ColliderObject* EMSCRIPTEN_KEEPALIVE Collider_get_object(toy::Collider* self) {
 		return self->m_object;
