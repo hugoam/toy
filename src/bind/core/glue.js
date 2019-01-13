@@ -1269,8 +1269,7 @@ WorldMedium.prototype["__destroy__"] = WorldMedium.prototype.__destroy__ = funct
 
 (function() {
     function setupEnums() {
-        
-        // 'CollisionGroup'
+        // CollisionGroup
         Module['CM_NOMASK'] = _emscripten_enum_CollisionGroup_CM_NOMASK();
         Module['CM_OBJECT'] = _emscripten_enum_CollisionGroup_CM_OBJECT();
         Module['CM_SOLID'] = _emscripten_enum_CollisionGroup_CM_SOLID();

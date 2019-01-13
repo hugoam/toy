@@ -25,6 +25,7 @@
 #include <gfx-edit/Api.h>
 #include <tool/Api.h>
 #include <wfc-gfx/Api.h>
+#include <shell/Api.h>
 #include <emscripten.h>
 
 
@@ -42,44 +43,23 @@ extern "C" {
 	User EMSCRIPTEN_KEEPALIVE Game_get_user(toy::Game* self) {
 		return self->m_user;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_user(toy::Game* self, User user) {
-		self->m_user = user;
-	}
 	GameMode EMSCRIPTEN_KEEPALIVE Game_get_mode(toy::Game* self) {
 		return self->m_mode;
-	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_mode(toy::Game* self, GameMode mode) {
-		self->m_mode = mode;
 	}
 	GameShell EMSCRIPTEN_KEEPALIVE Game_get_shell(toy::Game* self) {
 		return self->m_shell;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_shell(toy::Game* self, GameShell shell) {
-		self->m_shell = shell;
-	}
 	GameModule EMSCRIPTEN_KEEPALIVE Game_get_module(toy::Game* self) {
 		return self->m_module;
-	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_module(toy::Game* self, GameModule module) {
-		self->m_module = module;
 	}
 	Ref EMSCRIPTEN_KEEPALIVE Game_get_player(toy::Game* self) {
 		return self->m_player;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_player(toy::Game* self, Ref player) {
-		self->m_player = player;
-	}
 	World EMSCRIPTEN_KEEPALIVE Game_get_world(toy::Game* self) {
 		return self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_world(toy::Game* self, World world) {
-		self->m_world = world;
-	}
 	Widget EMSCRIPTEN_KEEPALIVE Game_get_screen(toy::Game* self) {
 		return self->m_screen;
-	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_screen(toy::Game* self, Widget screen) {
-		self->m_screen = screen;
 	}
 	void EMSCRIPTEN_KEEPALIVE Game___destroy__(toy::Game* self) {
 		delete self;
@@ -170,56 +150,29 @@ extern "C" {
 	Core EMSCRIPTEN_KEEPALIVE GameShell_get_core(toy::GameShell* self) {
 		return self->core;
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_core(toy::GameShell* self, Core core) {
-		self->core = core;
-	}
 	LuaInterpreter EMSCRIPTEN_KEEPALIVE GameShell_get_lua(toy::GameShell* self) {
 		return self->lua;
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_lua(toy::GameShell* self, LuaInterpreter lua) {
-		self->lua = lua;
 	}
 	WrenInterpreter EMSCRIPTEN_KEEPALIVE GameShell_get_wren(toy::GameShell* self) {
 		return self->wren;
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_wren(toy::GameShell* self, WrenInterpreter wren) {
-		self->wren = wren;
-	}
 	GfxSystem EMSCRIPTEN_KEEPALIVE GameShell_get_gfx(toy::GameShell* self) {
 		return self->gfx;
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_gfx(toy::GameShell* self, GfxSystem gfx) {
-		self->gfx = gfx;
 	}
 	Context EMSCRIPTEN_KEEPALIVE GameShell_get_context(toy::GameShell* self) {
 		return self->context;
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_context(toy::GameShell* self, Context context) {
-		self->context = context;
-	}
 	Vg EMSCRIPTEN_KEEPALIVE GameShell_get_vg(toy::GameShell* self) {
 		return self->vg;
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_vg(toy::GameShell* self, Vg vg) {
-		self->vg = vg;
 	}
 	UiWindow EMSCRIPTEN_KEEPALIVE GameShell_get_ui_window(toy::GameShell* self) {
 		return self->ui_window;
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_ui_window(toy::GameShell* self, UiWindow ui_window) {
-		self->ui_window = ui_window;
-	}
 	Editor EMSCRIPTEN_KEEPALIVE GameShell_get_editor(toy::GameShell* self) {
 		return self->m_editor;
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_editor(toy::GameShell* self, Editor editor) {
-		self->m_editor = editor;
-	}
 	Ui EMSCRIPTEN_KEEPALIVE GameShell_get_ui(toy::GameShell* self) {
 		return self->m_ui;
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_ui(toy::GameShell* self, Ui ui) {
-		self->m_ui = ui;
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell___destroy__(toy::GameShell* self) {
 		delete self;
@@ -234,6 +187,16 @@ extern "C" {
 	// GameScene
 	void EMSCRIPTEN_KEEPALIVE GameScene___destroy__(toy::GameScene* self) {
 		delete self;
+	}
+	// GameMode
+	toy::GameMode EMSCRIPTEN_KEEPALIVE emscripten_enum_GameMode_Play() {
+		return toy::GameMode::Play;
+	}
+	toy::GameMode EMSCRIPTEN_KEEPALIVE emscripten_enum_GameMode_PlayEditor() {
+		return toy::GameMode::PlayEditor;
+	}
+	toy::GameMode EMSCRIPTEN_KEEPALIVE emscripten_enum_GameMode_Pause() {
+		return toy::GameMode::Pause;
 	}
 	
 }

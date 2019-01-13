@@ -2,6 +2,7 @@
 #include <gfx/Api.h>
 #include <util/Api.h>
 #include <core/Api.h>
+#include <visu/Api.h>
 #include <emscripten.h>
 
 

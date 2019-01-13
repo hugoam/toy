@@ -5,6 +5,7 @@
 #include <geom/Api.h>
 #include <lang/Api.h>
 #include <util/Api.h>
+#include <core/Api.h>
 #include <emscripten.h>
 
 
@@ -534,41 +535,41 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE WorldMedium___destroy__(toy::WorldMedium* self) {
 		delete self;
 	}
+	// CollisionGroup
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_NOMASK() {
+		return toy::CM_NOMASK;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_OBJECT() {
+		return toy::CM_OBJECT;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_SOLID() {
+		return toy::CM_SOLID;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_GROUND() {
+		return toy::CM_GROUND;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_AREA() {
+		return toy::CM_AREA;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_BUFFER() {
+		return toy::CM_BUFFER;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_LIGHT() {
+		return toy::CM_LIGHT;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_LIGHTREFLECTOR() {
+		return toy::CM_LIGHTREFLECTOR;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_SOURCE() {
+		return toy::CM_SOURCE;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_RECEPTOR() {
+		return toy::CM_RECEPTOR;
+	}
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_OBSTACLE() {
+		return toy::CM_OBSTACLE;
+	}
 	
 }
 
 
-// 'CollisionGroup'
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_NOMASK() {
-	return toy::CM_NOMASK;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_OBJECT() {
-	return toy::CM_OBJECT;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_SOLID() {
-	return toy::CM_SOLID;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_GROUND() {
-	return toy::CM_GROUND;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_AREA() {
-	return toy::CM_AREA;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_BUFFER() {
-	return toy::CM_BUFFER;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_LIGHT() {
-	return toy::CM_LIGHT;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_LIGHTREFLECTOR() {
-	return toy::CM_LIGHTREFLECTOR;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_SOURCE() {
-	return toy::CM_SOURCE;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_RECEPTOR() {
-	return toy::CM_RECEPTOR;
-}
-CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_OBSTACLE() {
-	return toy::CM_OBSTACLE;
-}

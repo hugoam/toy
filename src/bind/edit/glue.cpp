@@ -4,6 +4,7 @@
 #include <util/Api.h>
 #include <core/Api.h>
 #include <visu/Api.h>
+#include <edit/Api.h>
 #include <emscripten.h>
 
 
