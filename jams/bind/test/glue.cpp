@@ -33,6 +33,7 @@
 #include <shell/Api.h>
 #include <test/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {

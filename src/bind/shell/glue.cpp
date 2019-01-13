@@ -27,6 +27,7 @@
 #include <wfc-gfx/Api.h>
 #include <shell/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {
@@ -43,38 +44,38 @@ extern "C" {
 	toy::User* EMSCRIPTEN_KEEPALIVE Game_get_user(toy::Game* self) {
 		return self->m_user;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_user(toy::Game* self, toy::User* user) {
-		self->m_user = user;
+	void EMSCRIPTEN_KEEPALIVE Game_set_user(toy::Game* self, toy::User* value) {
+		self->m_user = value;
 	}
 	toy::GameMode EMSCRIPTEN_KEEPALIVE Game_get_mode(toy::Game* self) {
 		return self->m_mode;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_mode(toy::Game* self, toy::GameMode mode) {
-		self->m_mode = mode;
+	void EMSCRIPTEN_KEEPALIVE Game_set_mode(toy::Game* self, toy::GameMode value) {
+		self->m_mode = value;
 	}
 	toy::GameShell* EMSCRIPTEN_KEEPALIVE Game_get_shell(toy::Game* self) {
 		return self->m_shell;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_shell(toy::Game* self, toy::GameShell* shell) {
-		self->m_shell = shell;
+	void EMSCRIPTEN_KEEPALIVE Game_set_shell(toy::Game* self, toy::GameShell* value) {
+		self->m_shell = value;
 	}
 	toy::GameModule* EMSCRIPTEN_KEEPALIVE Game_get_module(toy::Game* self) {
 		return self->m_module;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_module(toy::Game* self, toy::GameModule* module) {
-		self->m_module = module;
+	void EMSCRIPTEN_KEEPALIVE Game_set_module(toy::Game* self, toy::GameModule* value) {
+		self->m_module = value;
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Game_get_world(toy::Game* self) {
 		return self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_world(toy::Game* self, toy::World* world) {
-		self->m_world = world;
+	void EMSCRIPTEN_KEEPALIVE Game_set_world(toy::Game* self, toy::World* value) {
+		self->m_world = value;
 	}
 	mud::Widget* EMSCRIPTEN_KEEPALIVE Game_get_screen(toy::Game* self) {
 		return self->m_screen;
 	}
-	void EMSCRIPTEN_KEEPALIVE Game_set_screen(toy::Game* self, mud::Widget* screen) {
-		self->m_screen = screen;
+	void EMSCRIPTEN_KEEPALIVE Game_set_screen(toy::Game* self, mud::Widget* value) {
+		self->m_screen = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Game___destroy__(toy::Game* self) {
 		delete self;
@@ -189,8 +190,8 @@ extern "C" {
 	mud::Ui* EMSCRIPTEN_KEEPALIVE GameShell_get_ui(toy::GameShell* self) {
 		return self->m_ui;
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_set_ui(toy::GameShell* self, mud::Ui* ui) {
-		self->m_ui = ui;
+	void EMSCRIPTEN_KEEPALIVE GameShell_set_ui(toy::GameShell* self, mud::Ui* value) {
+		self->m_ui = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell___destroy__(toy::GameShell* self) {
 		delete self;

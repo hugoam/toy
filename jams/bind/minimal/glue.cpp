@@ -33,6 +33,7 @@
 #include <shell/Api.h>
 #include <minimal/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {
@@ -50,15 +51,15 @@ extern "C" {
 		static mud::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet_set_source(Bullet* self, mud::vec3* source) {
-		self->m_source = *source;
+	void EMSCRIPTEN_KEEPALIVE Bullet_set_source(Bullet* self, mud::vec3* value) {
+		self->m_source = *value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_velocity, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet_set_velocity(Bullet* self, mud::vec3* velocity) {
-		self->m_velocity = *velocity;
+	void EMSCRIPTEN_KEEPALIVE Bullet_set_velocity(Bullet* self, mud::vec3* value) {
+		self->m_velocity = *value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
 		delete self;
@@ -74,8 +75,8 @@ extern "C" {
 		static mud::vec3 temp;
 		return (temp = self->m_extents, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Crate_set_extents(Crate* self, mud::vec3* extents) {
-		self->m_extents = *extents;
+	void EMSCRIPTEN_KEEPALIVE Crate_set_extents(Crate* self, mud::vec3* value) {
+		self->m_extents = *value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
 		delete self;

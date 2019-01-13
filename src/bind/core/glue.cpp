@@ -7,6 +7,7 @@
 #include <util/Api.h>
 #include <core/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {
@@ -46,32 +47,32 @@ extern "C" {
 	float EMSCRIPTEN_KEEPALIVE Camera_get_lens_distance(toy::Camera* self) {
 		return self->m_lens_distance;
 	}
-	void EMSCRIPTEN_KEEPALIVE Camera_set_lens_distance(toy::Camera* self, float lens_distance) {
-		self->m_lens_distance = lens_distance;
+	void EMSCRIPTEN_KEEPALIVE Camera_set_lens_distance(toy::Camera* self, float value) {
+		self->m_lens_distance = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Camera_get_lens_angle(toy::Camera* self) {
 		return self->m_lens_angle;
 	}
-	void EMSCRIPTEN_KEEPALIVE Camera_set_lens_angle(toy::Camera* self, float lens_angle) {
-		self->m_lens_angle = lens_angle;
+	void EMSCRIPTEN_KEEPALIVE Camera_set_lens_angle(toy::Camera* self, float value) {
+		self->m_lens_angle = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Camera_get_near(toy::Camera* self) {
 		return self->m_near;
 	}
-	void EMSCRIPTEN_KEEPALIVE Camera_set_near(toy::Camera* self, float near) {
-		self->m_near = near;
+	void EMSCRIPTEN_KEEPALIVE Camera_set_near(toy::Camera* self, float value) {
+		self->m_near = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Camera_get_far(toy::Camera* self) {
 		return self->m_far;
 	}
-	void EMSCRIPTEN_KEEPALIVE Camera_set_far(toy::Camera* self, float far) {
-		self->m_far = far;
+	void EMSCRIPTEN_KEEPALIVE Camera_set_far(toy::Camera* self, float value) {
+		self->m_far = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Camera_get_aspect(toy::Camera* self) {
 		return self->m_aspect;
 	}
-	void EMSCRIPTEN_KEEPALIVE Camera_set_aspect(toy::Camera* self, float aspect) {
-		self->m_aspect = aspect;
+	void EMSCRIPTEN_KEEPALIVE Camera_set_aspect(toy::Camera* self, float value) {
+		self->m_aspect = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Camera___destroy__(toy::Camera* self) {
 		delete self;
@@ -86,14 +87,14 @@ extern "C" {
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE Collider_get_spatial(toy::Collider* self) {
 		return self->m_spatial;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collider_set_spatial(toy::Collider* self, toy::HSpatial spatial) {
-		self->m_spatial = spatial;
+	void EMSCRIPTEN_KEEPALIVE Collider_set_spatial(toy::Collider* self, toy::HSpatial value) {
+		self->m_spatial = value;
 	}
 	toy::HMovable EMSCRIPTEN_KEEPALIVE Collider_get_movable(toy::Collider* self) {
 		return self->m_movable;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collider_set_movable(toy::Collider* self, toy::HMovable movable) {
-		self->m_movable = movable;
+	void EMSCRIPTEN_KEEPALIVE Collider_set_movable(toy::Collider* self, toy::HMovable value) {
+		self->m_movable = value;
 	}
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE Collider_get_collision_shape(toy::Collider* self) {
 		return &self->m_collision_shape;
@@ -101,20 +102,20 @@ extern "C" {
 	toy::Medium* EMSCRIPTEN_KEEPALIVE Collider_get_medium(toy::Collider* self) {
 		return self->m_medium;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collider_set_medium(toy::Collider* self, toy::Medium* medium) {
-		self->m_medium = medium;
+	void EMSCRIPTEN_KEEPALIVE Collider_set_medium(toy::Collider* self, toy::Medium* value) {
+		self->m_medium = value;
 	}
 	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE Collider_get_group(toy::Collider* self) {
 		return self->m_group;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collider_set_group(toy::Collider* self, toy::CollisionGroup group) {
-		self->m_group = group;
+	void EMSCRIPTEN_KEEPALIVE Collider_set_group(toy::Collider* self, toy::CollisionGroup value) {
+		self->m_group = value;
 	}
 	toy::ColliderObject* EMSCRIPTEN_KEEPALIVE Collider_get_object(toy::Collider* self) {
 		return self->m_object;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collider_set_object(toy::Collider* self, toy::ColliderObject* object) {
-		self->m_object = object;
+	void EMSCRIPTEN_KEEPALIVE Collider_set_object(toy::Collider* self, toy::ColliderObject* value) {
+		self->m_object = value;
 	}
 	toy::ColliderImpl* EMSCRIPTEN_KEEPALIVE Collider_get_impl(toy::Collider* self) {
 		return &self->impl();
@@ -137,21 +138,21 @@ extern "C" {
 	toy::HCollider EMSCRIPTEN_KEEPALIVE Collision_get_first(toy::Collision* self) {
 		return self->m_first;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collision_set_first(toy::Collision* self, toy::HCollider first) {
-		self->m_first = first;
+	void EMSCRIPTEN_KEEPALIVE Collision_set_first(toy::Collision* self, toy::HCollider value) {
+		self->m_first = value;
 	}
 	toy::HCollider EMSCRIPTEN_KEEPALIVE Collision_get_second(toy::Collision* self) {
 		return self->m_second;
 	}
-	void EMSCRIPTEN_KEEPALIVE Collision_set_second(toy::Collision* self, toy::HCollider second) {
-		self->m_second = second;
+	void EMSCRIPTEN_KEEPALIVE Collision_set_second(toy::Collision* self, toy::HCollider value) {
+		self->m_second = value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Collision_get_hit_point(toy::Collision* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_hit_point, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Collision_set_hit_point(toy::Collision* self, mud::vec3* hit_point) {
-		self->m_hit_point = *hit_point;
+	void EMSCRIPTEN_KEEPALIVE Collision_set_hit_point(toy::Collision* self, mud::vec3* value) {
+		self->m_hit_point = *value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Collision___destroy__(toy::Collision* self) {
 		delete self;
@@ -204,14 +205,14 @@ extern "C" {
 	mud::Script* EMSCRIPTEN_KEEPALIVE EntityScript_get_logic_script(toy::EntityScript* self) {
 		return self->m_logic_script;
 	}
-	void EMSCRIPTEN_KEEPALIVE EntityScript_set_logic_script(toy::EntityScript* self, mud::Script* logic_script) {
-		self->m_logic_script = logic_script;
+	void EMSCRIPTEN_KEEPALIVE EntityScript_set_logic_script(toy::EntityScript* self, mud::Script* value) {
+		self->m_logic_script = value;
 	}
 	mud::Script* EMSCRIPTEN_KEEPALIVE EntityScript_get_render_script(toy::EntityScript* self) {
 		return self->m_render_script;
 	}
-	void EMSCRIPTEN_KEEPALIVE EntityScript_set_render_script(toy::EntityScript* self, mud::Script* render_script) {
-		self->m_render_script = render_script;
+	void EMSCRIPTEN_KEEPALIVE EntityScript_set_render_script(toy::EntityScript* self, mud::Script* value) {
+		self->m_render_script = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE EntityScript___destroy__(toy::EntityScript* self) {
 		delete self;
@@ -220,20 +221,20 @@ extern "C" {
 	const char* EMSCRIPTEN_KEEPALIVE Medium_get_name(toy::Medium* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Medium_set_name(toy::Medium* self, const char* name) {
-		self->m_name = name;
+	void EMSCRIPTEN_KEEPALIVE Medium_set_name(toy::Medium* self, const char* value) {
+		self->m_name = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Medium_get_occlusions(toy::Medium* self) {
 		return self->m_occlusions;
 	}
-	void EMSCRIPTEN_KEEPALIVE Medium_set_occlusions(toy::Medium* self, bool occlusions) {
-		self->m_occlusions = occlusions;
+	void EMSCRIPTEN_KEEPALIVE Medium_set_occlusions(toy::Medium* self, bool value) {
+		self->m_occlusions = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Medium_get_solid(toy::Medium* self) {
 		return self->m_solid;
 	}
-	void EMSCRIPTEN_KEEPALIVE Medium_set_solid(toy::Medium* self, bool solid) {
-		self->m_solid = solid;
+	void EMSCRIPTEN_KEEPALIVE Medium_set_solid(toy::Medium* self, bool value) {
+		self->m_solid = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Medium___destroy__(toy::Medium* self) {
 		delete self;
@@ -261,28 +262,28 @@ extern "C" {
 		static mud::vec3 temp;
 		return (temp = self->m_linear_velocity, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Movable_set_linear_velocity(toy::Movable* self, mud::vec3* linear_velocity) {
-		self->m_linear_velocity = *linear_velocity;
+	void EMSCRIPTEN_KEEPALIVE Movable_set_linear_velocity(toy::Movable* self, mud::vec3* value) {
+		self->m_linear_velocity = *value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Movable_get_angular_velocity(toy::Movable* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_angular_velocity, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Movable_set_angular_velocity(toy::Movable* self, mud::vec3* angular_velocity) {
-		self->m_angular_velocity = *angular_velocity;
+	void EMSCRIPTEN_KEEPALIVE Movable_set_angular_velocity(toy::Movable* self, mud::vec3* value) {
+		self->m_angular_velocity = *value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Movable_get_moving(toy::Movable* self) {
 		return self->m_moving;
 	}
-	void EMSCRIPTEN_KEEPALIVE Movable_set_moving(toy::Movable* self, bool moving) {
-		self->m_moving = moving;
+	void EMSCRIPTEN_KEEPALIVE Movable_set_moving(toy::Movable* self, bool value) {
+		self->m_moving = value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Movable_get_previous_position(toy::Movable* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_previous_position, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Movable_set_previous_position(toy::Movable* self, mud::vec3* previous_position) {
-		self->m_previous_position = *previous_position;
+	void EMSCRIPTEN_KEEPALIVE Movable_set_previous_position(toy::Movable* self, mud::vec3* value) {
+		self->m_previous_position = *value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Movable___destroy__(toy::Movable* self) {
 		delete self;
@@ -297,20 +298,20 @@ extern "C" {
 	toy::Navmesh* EMSCRIPTEN_KEEPALIVE Navblock_get_navmesh(toy::Navblock* self) {
 		return self->m_navmesh;
 	}
-	void EMSCRIPTEN_KEEPALIVE Navblock_set_navmesh(toy::Navblock* self, toy::Navmesh* navmesh) {
-		self->m_navmesh = navmesh;
+	void EMSCRIPTEN_KEEPALIVE Navblock_set_navmesh(toy::Navblock* self, toy::Navmesh* value) {
+		self->m_navmesh = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Navblock_get_auto_update(toy::Navblock* self) {
 		return self->m_auto_update;
 	}
-	void EMSCRIPTEN_KEEPALIVE Navblock_set_auto_update(toy::Navblock* self, bool auto_update) {
-		self->m_auto_update = auto_update;
+	void EMSCRIPTEN_KEEPALIVE Navblock_set_auto_update(toy::Navblock* self, bool value) {
+		self->m_auto_update = value;
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Navblock_get_updated(toy::Navblock* self) {
 		return self->m_updated;
 	}
-	void EMSCRIPTEN_KEEPALIVE Navblock_set_updated(toy::Navblock* self, size_t updated) {
-		self->m_updated = updated;
+	void EMSCRIPTEN_KEEPALIVE Navblock_set_updated(toy::Navblock* self, size_t value) {
+		self->m_updated = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Navblock___destroy__(toy::Navblock* self) {
 		delete self;
@@ -325,14 +326,14 @@ extern "C" {
 	size_t EMSCRIPTEN_KEEPALIVE Navmesh_get_updated(toy::Navmesh* self) {
 		return self->m_updated;
 	}
-	void EMSCRIPTEN_KEEPALIVE Navmesh_set_updated(toy::Navmesh* self, size_t updated) {
-		self->m_updated = updated;
+	void EMSCRIPTEN_KEEPALIVE Navmesh_set_updated(toy::Navmesh* self, size_t value) {
+		self->m_updated = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Navmesh_get_dirty(toy::Navmesh* self) {
 		return self->m_dirty;
 	}
-	void EMSCRIPTEN_KEEPALIVE Navmesh_set_dirty(toy::Navmesh* self, bool dirty) {
-		self->m_dirty = dirty;
+	void EMSCRIPTEN_KEEPALIVE Navmesh_set_dirty(toy::Navmesh* self, bool value) {
+		self->m_dirty = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Navmesh___destroy__(toy::Navmesh* self) {
 		delete self;
@@ -395,26 +396,26 @@ extern "C" {
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE Solid_get_spatial(toy::Solid* self) {
 		return self->m_spatial;
 	}
-	void EMSCRIPTEN_KEEPALIVE Solid_set_spatial(toy::Solid* self, toy::HSpatial spatial) {
-		self->m_spatial = spatial;
+	void EMSCRIPTEN_KEEPALIVE Solid_set_spatial(toy::Solid* self, toy::HSpatial value) {
+		self->m_spatial = value;
 	}
 	toy::OCollider EMSCRIPTEN_KEEPALIVE Solid_get_collider(toy::Solid* self) {
 		return self->m_collider;
 	}
-	void EMSCRIPTEN_KEEPALIVE Solid_set_collider(toy::Solid* self, toy::OCollider collider) {
-		self->m_collider = collider;
+	void EMSCRIPTEN_KEEPALIVE Solid_set_collider(toy::Solid* self, toy::OCollider value) {
+		self->m_collider = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Solid_get_static(toy::Solid* self) {
 		return self->m_static;
 	}
-	void EMSCRIPTEN_KEEPALIVE Solid_set_static(toy::Solid* self, bool static) {
-		self->m_static = static;
+	void EMSCRIPTEN_KEEPALIVE Solid_set_static(toy::Solid* self, bool value) {
+		self->m_static = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Solid_get_mass(toy::Solid* self) {
 		return self->m_mass;
 	}
-	void EMSCRIPTEN_KEEPALIVE Solid_set_mass(toy::Solid* self, float mass) {
-		self->m_mass = mass;
+	void EMSCRIPTEN_KEEPALIVE Solid_set_mass(toy::Solid* self, float value) {
+		self->m_mass = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Solid___destroy__(toy::Solid* self) {
 		delete self;
@@ -464,8 +465,8 @@ extern "C" {
 	mud::Id EMSCRIPTEN_KEEPALIVE World_get_id(toy::World* self) {
 		return self->m_id;
 	}
-	void EMSCRIPTEN_KEEPALIVE World_set_id(toy::World* self, mud::Id id) {
-		self->m_id = id;
+	void EMSCRIPTEN_KEEPALIVE World_set_id(toy::World* self, mud::Id value) {
+		self->m_id = value;
 	}
 	mud::Complex* EMSCRIPTEN_KEEPALIVE World_get_complex(toy::World* self) {
 		return &self->m_complex;
@@ -473,8 +474,8 @@ extern "C" {
 	const char* EMSCRIPTEN_KEEPALIVE World_get_name(toy::World* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE World_set_name(toy::World* self, const char* name) {
-		self->m_name = name;
+	void EMSCRIPTEN_KEEPALIVE World_set_name(toy::World* self, const char* value) {
+		self->m_name = value;
 	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE World_get_origin(toy::World* self) {
 		return self->origin();
@@ -511,27 +512,27 @@ extern "C" {
 	bool EMSCRIPTEN_KEEPALIVE WorldPage_get_open(toy::WorldPage* self) {
 		return self->m_open;
 	}
-	void EMSCRIPTEN_KEEPALIVE WorldPage_set_open(toy::WorldPage* self, bool open) {
-		self->m_open = open;
+	void EMSCRIPTEN_KEEPALIVE WorldPage_set_open(toy::WorldPage* self, bool value) {
+		self->m_open = value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE WorldPage_get_extents(toy::WorldPage* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_extents, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE WorldPage_set_extents(toy::WorldPage* self, mud::vec3* extents) {
-		self->m_extents = *extents;
+	void EMSCRIPTEN_KEEPALIVE WorldPage_set_extents(toy::WorldPage* self, mud::vec3* value) {
+		self->m_extents = *value;
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE WorldPage_get_world(toy::WorldPage* self) {
 		return self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE WorldPage_set_world(toy::WorldPage* self, toy::World* world) {
-		self->m_world = world;
+	void EMSCRIPTEN_KEEPALIVE WorldPage_set_world(toy::WorldPage* self, toy::World* value) {
+		self->m_world = value;
 	}
 	size_t EMSCRIPTEN_KEEPALIVE WorldPage_get_last_rebuilt(toy::WorldPage* self) {
 		return self->m_last_rebuilt;
 	}
-	void EMSCRIPTEN_KEEPALIVE WorldPage_set_last_rebuilt(toy::WorldPage* self, size_t last_rebuilt) {
-		self->m_last_rebuilt = last_rebuilt;
+	void EMSCRIPTEN_KEEPALIVE WorldPage_set_last_rebuilt(toy::WorldPage* self, size_t value) {
+		self->m_last_rebuilt = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE WorldPage___destroy__(toy::WorldPage* self) {
 		delete self;
@@ -592,8 +593,8 @@ extern "C" {
 	float EMSCRIPTEN_KEEPALIVE Obstacle_get_throughput(toy::Obstacle* self) {
 		return self->m_throughput;
 	}
-	void EMSCRIPTEN_KEEPALIVE Obstacle_set_throughput(toy::Obstacle* self, float throughput) {
-		self->m_throughput = throughput;
+	void EMSCRIPTEN_KEEPALIVE Obstacle_set_throughput(toy::Obstacle* self, float value) {
+		self->m_throughput = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Obstacle___destroy__(toy::Obstacle* self) {
 		delete self;
@@ -632,14 +633,14 @@ extern "C" {
 	toy::World* EMSCRIPTEN_KEEPALIVE Spatial_get_world(toy::Spatial* self) {
 		return self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE Spatial_set_world(toy::Spatial* self, toy::World* world) {
-		self->m_world = world;
+	void EMSCRIPTEN_KEEPALIVE Spatial_set_world(toy::Spatial* self, toy::World* value) {
+		self->m_world = value;
 	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE Spatial_get_parent(toy::Spatial* self) {
 		return self->m_parent;
 	}
-	void EMSCRIPTEN_KEEPALIVE Spatial_set_parent(toy::Spatial* self, toy::HSpatial parent) {
-		self->m_parent = parent;
+	void EMSCRIPTEN_KEEPALIVE Spatial_set_parent(toy::Spatial* self, toy::HSpatial value) {
+		self->m_parent = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Spatial___destroy__(toy::Spatial* self) {
 		delete self;

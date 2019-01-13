@@ -6,6 +6,7 @@
 #include <edit/Api.h>
 #include <block/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {
@@ -40,33 +41,33 @@ extern "C" {
 	toy::HWorldPage EMSCRIPTEN_KEEPALIVE Block_get_world_page(toy::Block* self) {
 		return self->m_world_page;
 	}
-	void EMSCRIPTEN_KEEPALIVE Block_set_world_page(toy::Block* self, toy::HWorldPage world_page) {
-		self->m_world_page = world_page;
+	void EMSCRIPTEN_KEEPALIVE Block_set_world_page(toy::Block* self, toy::HWorldPage value) {
+		self->m_world_page = value;
 	}
 	toy::Block* EMSCRIPTEN_KEEPALIVE Block_get_parentblock(toy::Block* self) {
 		return self->m_parentblock;
 	}
-	void EMSCRIPTEN_KEEPALIVE Block_set_parentblock(toy::Block* self, toy::Block* parentblock) {
-		self->m_parentblock = parentblock;
+	void EMSCRIPTEN_KEEPALIVE Block_set_parentblock(toy::Block* self, toy::Block* value) {
+		self->m_parentblock = value;
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Block_get_index(toy::Block* self) {
 		return self->m_index;
 	}
-	void EMSCRIPTEN_KEEPALIVE Block_set_index(toy::Block* self, size_t index) {
-		self->m_index = index;
+	void EMSCRIPTEN_KEEPALIVE Block_set_index(toy::Block* self, size_t value) {
+		self->m_index = value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Block_get_size(toy::Block* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_size, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Block_set_size(toy::Block* self, mud::vec3* size) {
-		self->m_size = *size;
+	void EMSCRIPTEN_KEEPALIVE Block_set_size(toy::Block* self, mud::vec3* value) {
+		self->m_size = *value;
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Block_get_updated(toy::Block* self) {
 		return self->m_updated;
 	}
-	void EMSCRIPTEN_KEEPALIVE Block_set_updated(toy::Block* self, size_t updated) {
-		self->m_updated = updated;
+	void EMSCRIPTEN_KEEPALIVE Block_set_updated(toy::Block* self, size_t value) {
+		self->m_updated = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Block___destroy__(toy::Block* self) {
 		delete self;
@@ -81,26 +82,26 @@ extern "C" {
 	size_t EMSCRIPTEN_KEEPALIVE Chunk_get_index(toy::Chunk* self) {
 		return self->m_index;
 	}
-	void EMSCRIPTEN_KEEPALIVE Chunk_set_index(toy::Chunk* self, size_t index) {
-		self->m_index = index;
+	void EMSCRIPTEN_KEEPALIVE Chunk_set_index(toy::Chunk* self, size_t value) {
+		self->m_index = value;
 	}
 	toy::Block* EMSCRIPTEN_KEEPALIVE Chunk_get_block(toy::Chunk* self) {
 		return self->m_block;
 	}
-	void EMSCRIPTEN_KEEPALIVE Chunk_set_block(toy::Chunk* self, toy::Block* block) {
-		self->m_block = block;
+	void EMSCRIPTEN_KEEPALIVE Chunk_set_block(toy::Chunk* self, toy::Block* value) {
+		self->m_block = value;
 	}
 	toy::Element* EMSCRIPTEN_KEEPALIVE Chunk_get_element(toy::Chunk* self) {
 		return self->m_element;
 	}
-	void EMSCRIPTEN_KEEPALIVE Chunk_set_element(toy::Chunk* self, toy::Element* element) {
-		self->m_element = element;
+	void EMSCRIPTEN_KEEPALIVE Chunk_set_element(toy::Chunk* self, toy::Element* value) {
+		self->m_element = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Chunk_get_size(toy::Chunk* self) {
 		return self->m_size;
 	}
-	void EMSCRIPTEN_KEEPALIVE Chunk_set_size(toy::Chunk* self, float size) {
-		self->m_size = size;
+	void EMSCRIPTEN_KEEPALIVE Chunk_set_size(toy::Chunk* self, float value) {
+		self->m_size = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Chunk___destroy__(toy::Chunk* self) {
 		delete self;
@@ -112,27 +113,27 @@ extern "C" {
 	mud::Id EMSCRIPTEN_KEEPALIVE Element_get_id(toy::Element* self) {
 		return self->m_id;
 	}
-	void EMSCRIPTEN_KEEPALIVE Element_set_id(toy::Element* self, mud::Id id) {
-		self->m_id = id;
+	void EMSCRIPTEN_KEEPALIVE Element_set_id(toy::Element* self, mud::Id value) {
+		self->m_id = value;
 	}
 	const char* EMSCRIPTEN_KEEPALIVE Element_get_name(toy::Element* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Element_set_name(toy::Element* self, const char* name) {
-		self->m_name = name;
+	void EMSCRIPTEN_KEEPALIVE Element_set_name(toy::Element* self, const char* value) {
+		self->m_name = value;
 	}
 	toy::MatterState EMSCRIPTEN_KEEPALIVE Element_get_state(toy::Element* self) {
 		return self->m_state;
 	}
-	void EMSCRIPTEN_KEEPALIVE Element_set_state(toy::Element* self, toy::MatterState state) {
-		self->m_state = state;
+	void EMSCRIPTEN_KEEPALIVE Element_set_state(toy::Element* self, toy::MatterState value) {
+		self->m_state = value;
 	}
 	mud::Colour* EMSCRIPTEN_KEEPALIVE Element_get_colour(toy::Element* self) {
 		static mud::Colour temp;
 		return (temp = self->m_colour, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Element_set_colour(toy::Element* self, mud::Colour* colour) {
-		self->m_colour = *colour;
+	void EMSCRIPTEN_KEEPALIVE Element_set_colour(toy::Element* self, mud::Colour* value) {
+		self->m_colour = *value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Element___destroy__(toy::Element* self) {
 		delete self;
@@ -147,14 +148,14 @@ extern "C" {
 	toy::Element* EMSCRIPTEN_KEEPALIVE Heap_get_element(toy::Heap* self) {
 		return self->m_element;
 	}
-	void EMSCRIPTEN_KEEPALIVE Heap_set_element(toy::Heap* self, toy::Element* element) {
-		self->m_element = element;
+	void EMSCRIPTEN_KEEPALIVE Heap_set_element(toy::Heap* self, toy::Element* value) {
+		self->m_element = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Heap_get_radius(toy::Heap* self) {
 		return self->m_radius;
 	}
-	void EMSCRIPTEN_KEEPALIVE Heap_set_radius(toy::Heap* self, float radius) {
-		self->m_radius = radius;
+	void EMSCRIPTEN_KEEPALIVE Heap_set_radius(toy::Heap* self, float value) {
+		self->m_radius = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Heap___destroy__(toy::Heap* self) {
 		delete self;
@@ -170,21 +171,21 @@ extern "C" {
 		static mud::uvec3 temp;
 		return (temp = self->m_coordinate, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Sector_set_coordinate(toy::Sector* self, mud::uvec3* coordinate) {
-		self->m_coordinate = *coordinate;
+	void EMSCRIPTEN_KEEPALIVE Sector_set_coordinate(toy::Sector* self, mud::uvec3* value) {
+		self->m_coordinate = *value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Sector_get_size(toy::Sector* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_size, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Sector_set_size(toy::Sector* self, mud::vec3* size) {
-		self->m_size = *size;
+	void EMSCRIPTEN_KEEPALIVE Sector_set_size(toy::Sector* self, mud::vec3* value) {
+		self->m_size = *value;
 	}
 	toy::Block* EMSCRIPTEN_KEEPALIVE Sector_get_block(toy::Sector* self) {
 		return self->m_block;
 	}
-	void EMSCRIPTEN_KEEPALIVE Sector_set_block(toy::Sector* self, toy::Block* block) {
-		self->m_block = block;
+	void EMSCRIPTEN_KEEPALIVE Sector_set_block(toy::Sector* self, toy::Block* value) {
+		self->m_block = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Sector___destroy__(toy::Sector* self) {
 		delete self;
@@ -202,14 +203,14 @@ extern "C" {
 	bool EMSCRIPTEN_KEEPALIVE Tileblock_get_setup(toy::Tileblock* self) {
 		return self->m_setup;
 	}
-	void EMSCRIPTEN_KEEPALIVE Tileblock_set_setup(toy::Tileblock* self, bool setup) {
-		self->m_setup = setup;
+	void EMSCRIPTEN_KEEPALIVE Tileblock_set_setup(toy::Tileblock* self, bool value) {
+		self->m_setup = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Tileblock_get_populated(toy::Tileblock* self) {
 		return self->m_populated;
 	}
-	void EMSCRIPTEN_KEEPALIVE Tileblock_set_populated(toy::Tileblock* self, bool populated) {
-		self->m_populated = populated;
+	void EMSCRIPTEN_KEEPALIVE Tileblock_set_populated(toy::Tileblock* self, bool value) {
+		self->m_populated = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Tileblock___destroy__(toy::Tileblock* self) {
 		delete self;

@@ -33,6 +33,7 @@
 #include <shell/Api.h>
 #include <blocks/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {
@@ -56,14 +57,14 @@ extern "C" {
 		static mud::vec3 temp;
 		return (temp = self->m_position, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Camp_set_position(Camp* self, mud::vec3* position) {
-		self->m_position = *position;
+	void EMSCRIPTEN_KEEPALIVE Camp_set_position(Camp* self, mud::vec3* value) {
+		self->m_position = *value;
 	}
 	Faction* EMSCRIPTEN_KEEPALIVE Camp_get_faction(Camp* self) {
 		return self->m_faction;
 	}
-	void EMSCRIPTEN_KEEPALIVE Camp_set_faction(Camp* self, Faction* faction) {
-		self->m_faction = faction;
+	void EMSCRIPTEN_KEEPALIVE Camp_set_faction(Camp* self, Faction* value) {
+		self->m_faction = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Camp___destroy__(Camp* self) {
 		delete self;
@@ -75,15 +76,15 @@ extern "C" {
 	uint32_t EMSCRIPTEN_KEEPALIVE Faction_get_id(Faction* self) {
 		return self->m_id;
 	}
-	void EMSCRIPTEN_KEEPALIVE Faction_set_id(Faction* self, uint32_t id) {
-		self->m_id = id;
+	void EMSCRIPTEN_KEEPALIVE Faction_set_id(Faction* self, uint32_t value) {
+		self->m_id = value;
 	}
 	mud::Colour* EMSCRIPTEN_KEEPALIVE Faction_get_colour(Faction* self) {
 		static mud::Colour temp;
 		return (temp = self->m_colour, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Faction_set_colour(Faction* self, mud::Colour* colour) {
-		self->m_colour = *colour;
+	void EMSCRIPTEN_KEEPALIVE Faction_set_colour(Faction* self, mud::Colour* value) {
+		self->m_colour = *value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Faction___destroy__(Faction* self) {
 		delete self;
@@ -102,26 +103,26 @@ extern "C" {
 	Faction* EMSCRIPTEN_KEEPALIVE Shield_get_faction(Shield* self) {
 		return self->m_faction;
 	}
-	void EMSCRIPTEN_KEEPALIVE Shield_set_faction(Shield* self, Faction* faction) {
-		self->m_faction = faction;
+	void EMSCRIPTEN_KEEPALIVE Shield_set_faction(Shield* self, Faction* value) {
+		self->m_faction = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Shield_get_radius(Shield* self) {
 		return self->m_radius;
 	}
-	void EMSCRIPTEN_KEEPALIVE Shield_set_radius(Shield* self, float radius) {
-		self->m_radius = radius;
+	void EMSCRIPTEN_KEEPALIVE Shield_set_radius(Shield* self, float value) {
+		self->m_radius = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Shield_get_charge(Shield* self) {
 		return self->m_charge;
 	}
-	void EMSCRIPTEN_KEEPALIVE Shield_set_charge(Shield* self, float charge) {
-		self->m_charge = charge;
+	void EMSCRIPTEN_KEEPALIVE Shield_set_charge(Shield* self, float value) {
+		self->m_charge = value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Shield_get_discharge(Shield* self) {
 		return self->m_discharge;
 	}
-	void EMSCRIPTEN_KEEPALIVE Shield_set_discharge(Shield* self, float discharge) {
-		self->m_discharge = discharge;
+	void EMSCRIPTEN_KEEPALIVE Shield_set_discharge(Shield* self, float value) {
+		self->m_discharge = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Shield___destroy__(Shield* self) {
 		delete self;
@@ -131,21 +132,21 @@ extern "C" {
 		static mud::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Slug_set_source(Slug* self, mud::vec3* source) {
-		self->m_source = *source;
+	void EMSCRIPTEN_KEEPALIVE Slug_set_source(Slug* self, mud::vec3* value) {
+		self->m_source = *value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Slug_get_velocity(Slug* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_velocity, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Slug_set_velocity(Slug* self, mud::vec3* velocity) {
-		self->m_velocity = *velocity;
+	void EMSCRIPTEN_KEEPALIVE Slug_set_velocity(Slug* self, mud::vec3* value) {
+		self->m_velocity = *value;
 	}
 	float EMSCRIPTEN_KEEPALIVE Slug_get_power(Slug* self) {
 		return self->m_power;
 	}
-	void EMSCRIPTEN_KEEPALIVE Slug_set_power(Slug* self, float power) {
-		self->m_power = power;
+	void EMSCRIPTEN_KEEPALIVE Slug_set_power(Slug* self, float value) {
+		self->m_power = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Slug___destroy__(Slug* self) {
 		delete self;
@@ -177,29 +178,29 @@ extern "C" {
 		static mud::uvec3 temp;
 		return (temp = self->m_block_subdiv, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_block_subdiv(BlockWorld* self, mud::uvec3* block_subdiv) {
-		self->m_block_subdiv = *block_subdiv;
+	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_block_subdiv(BlockWorld* self, mud::uvec3* value) {
+		self->m_block_subdiv = *value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_tile_scale(BlockWorld* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_tile_scale, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_tile_scale(BlockWorld* self, mud::vec3* tile_scale) {
-		self->m_tile_scale = *tile_scale;
+	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_tile_scale(BlockWorld* self, mud::vec3* value) {
+		self->m_tile_scale = *value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_block_size(BlockWorld* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_block_size, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_block_size(BlockWorld* self, mud::vec3* block_size) {
-		self->m_block_size = *block_size;
+	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_block_size(BlockWorld* self, mud::vec3* value) {
+		self->m_block_size = *value;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_world_size(BlockWorld* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_world_size, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_world_size(BlockWorld* self, mud::vec3* world_size) {
-		self->m_world_size = *world_size;
+	void EMSCRIPTEN_KEEPALIVE BlockWorld_set_world_size(BlockWorld* self, mud::vec3* value) {
+		self->m_world_size = *value;
 	}
 	void EMSCRIPTEN_KEEPALIVE BlockWorld___destroy__(BlockWorld* self) {
 		delete self;

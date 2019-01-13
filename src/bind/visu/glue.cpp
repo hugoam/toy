@@ -4,6 +4,7 @@
 #include <core/Api.h>
 #include <visu/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {

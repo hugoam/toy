@@ -6,6 +6,7 @@
 #include <visu/Api.h>
 #include <edit/Api.h>
 #include <emscripten.h>
+#include <cstdint>
 
 
 extern "C" {
@@ -73,20 +74,20 @@ extern "C" {
 	toy::World* EMSCRIPTEN_KEEPALIVE Editor_get_edited_world(toy::Editor* self) {
 		return self->m_edited_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE Editor_set_edited_world(toy::Editor* self, toy::World* edited_world) {
-		self->m_edited_world = edited_world;
+	void EMSCRIPTEN_KEEPALIVE Editor_set_edited_world(toy::Editor* self, toy::World* value) {
+		self->m_edited_world = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Editor_get_run_game(toy::Editor* self) {
 		return self->m_run_game;
 	}
-	void EMSCRIPTEN_KEEPALIVE Editor_set_run_game(toy::Editor* self, bool run_game) {
-		self->m_run_game = run_game;
+	void EMSCRIPTEN_KEEPALIVE Editor_set_run_game(toy::Editor* self, bool value) {
+		self->m_run_game = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Editor_get_play_game(toy::Editor* self) {
 		return self->m_play_game;
 	}
-	void EMSCRIPTEN_KEEPALIVE Editor_set_play_game(toy::Editor* self, bool play_game) {
-		self->m_play_game = play_game;
+	void EMSCRIPTEN_KEEPALIVE Editor_set_play_game(toy::Editor* self, bool value) {
+		self->m_play_game = value;
 	}
 	void EMSCRIPTEN_KEEPALIVE Editor___destroy__(toy::Editor* self) {
 		delete self;
