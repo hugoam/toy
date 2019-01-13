@@ -53,6 +53,7 @@ function Commander(id, name, race, command, commerce, diplomacy) {
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* race <Race> [] */
+    if (race && typeof race === "object") race = race.ptr;
     /* command <int> [] */
     /* commerce <int> [] */
     /* diplomacy <int> [] */
@@ -95,6 +96,7 @@ Object.defineProperty(Commander.prototype, "race", {
     set: function(race) {
         var self = this.ptr;
         /* race <Race> [] */
+        if (race && typeof race === "object") race = race.ptr;
         _Commander_set_race(self, race);
     }
 });
@@ -178,11 +180,12 @@ Object.defineProperty(Commander.prototype, "fleets", {
 Object.defineProperty(Commander.prototype, "capital", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_capital(self);
+        return wrapPointer(_Commander_get_capital(self), Star);
     },
     set: function(capital) {
         var self = this.ptr;
         /* capital <Star> [] */
+        capital = capital.ptr;
         _Commander_set_capital(self, capital);
     }
 });
@@ -194,6 +197,7 @@ Object.defineProperty(Commander.prototype, "regime", {
     set: function(regime) {
         var self = this.ptr;
         /* regime <Regime> [] */
+        if (regime && typeof regime === "object") regime = regime.ptr;
         _Commander_set_regime(self, regime);
     }
 });
@@ -222,11 +226,12 @@ Object.defineProperty(Commander.prototype, "centaures", {
 Object.defineProperty(Commander.prototype, "scans", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_scans(self);
+        return wrapPointer(_Commander_get_scans(self), Scans);
     },
     set: function(scans) {
         var self = this.ptr;
         /* scans <Scans> [] */
+        scans = scans.ptr;
         _Commander_set_scans(self, scans);
     }
 });
@@ -254,8 +259,11 @@ function Fleet(spatial, galaxy, commander, coord, name) {
     ensureCache.prepare();
     /* spatial <toy::HSpatial> [] */
     /* galaxy <Galaxy> [] */
+    galaxy = galaxy.ptr;
     /* commander <Commander> [] */
+    commander = commander.ptr;
     /* coord <uvec2> [] */
+    coord = coord.ptr;
     /* name <std::string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
@@ -269,54 +277,61 @@ Fleet.__cache__ = {};
 Module['Fleet'] = Fleet;
 Fleet.prototype["order_attack"] = Fleet.prototype.order_attack = function(star) {
     /* star <Star> [] */
+    star = star.ptr;
     _Fleet_order_attack_1(star);
 };
 Fleet.prototype["order_jump"] = Fleet.prototype.order_jump = function(coord, stance) {
     /* coord <vec2> [] */
+    coord = coord.ptr;
     /* stance <FleetStance> [] */
+    if (stance && typeof stance === "object") stance = stance.ptr;
     _Fleet_order_jump_2(coord, stance);
 };
 Object.defineProperty(Fleet.prototype, "galaxy", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_galaxy(self);
+        return wrapPointer(_Fleet_get_galaxy(self), Galaxy);
     },
     set: function(galaxy) {
         var self = this.ptr;
         /* galaxy <Galaxy> [] */
+        galaxy = galaxy.ptr;
         _Fleet_set_galaxy(self, galaxy);
     }
 });
 Object.defineProperty(Fleet.prototype, "commander", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_commander(self);
+        return wrapPointer(_Fleet_get_commander(self), Commander);
     },
     set: function(commander) {
         var self = this.ptr;
         /* commander <Commander> [] */
+        commander = commander.ptr;
         _Fleet_set_commander(self, commander);
     }
 });
 Object.defineProperty(Fleet.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_coord(self);
+        return wrapPointer(_Fleet_get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
+        coord = coord.ptr;
         _Fleet_set_coord(self, coord);
     }
 });
 Object.defineProperty(Fleet.prototype, "slot", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_slot(self);
+        return wrapPointer(_Fleet_get_slot(self), mud::vec3);
     },
     set: function(slot) {
         var self = this.ptr;
         /* slot <vec3> [] */
+        slot = slot.ptr;
         _Fleet_set_slot(self, slot);
     }
 });
@@ -347,11 +362,12 @@ Object.defineProperty(Fleet.prototype, "experience", {
 Object.defineProperty(Fleet.prototype, "spatial_power", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_spatial_power(self);
+        return wrapPointer(_Fleet_get_spatial_power(self), SpatialPower);
     },
     set: function(spatial_power) {
         var self = this.ptr;
         /* spatial_power <SpatialPower> [] */
+        spatial_power = spatial_power.ptr;
         _Fleet_set_spatial_power(self, spatial_power);
     }
 });
@@ -407,28 +423,31 @@ Object.defineProperty(Fleet.prototype, "stance", {
     set: function(stance) {
         var self = this.ptr;
         /* stance <FleetStance> [] */
+        if (stance && typeof stance === "object") stance = stance.ptr;
         _Fleet_set_stance(self, stance);
     }
 });
 Object.defineProperty(Fleet.prototype, "jump", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_jump(self);
+        return wrapPointer(_Fleet_get_jump(self), Jump);
     },
     set: function(jump) {
         var self = this.ptr;
         /* jump <Jump> [] */
+        jump = jump.ptr;
         _Fleet_set_jump(self, jump);
     }
 });
 Object.defineProperty(Fleet.prototype, "split", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_split(self);
+        return wrapPointer(_Fleet_get_split(self), Split);
     },
     set: function(split) {
         var self = this.ptr;
         /* split <Split> [] */
+        split = split.ptr;
         _Fleet_set_split(self, split);
     }
 });
@@ -463,6 +482,7 @@ function Galaxy(spatial, size) {
     var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* size <uvec2> [] */
+    size = size.ptr;
     if (spatial === undefined) { this.ptr = _Galaxy_Galaxy_0(self); getCache(Galaxy)[this.ptr] = this; return; }
     this.ptr = _Galaxy_Galaxy_2(self, spatial, size); getCache(Galaxy)[this.ptr] = this;
 };
@@ -496,22 +516,24 @@ Object.defineProperty(Galaxy.prototype, "fleets", {
 Object.defineProperty(Galaxy.prototype, "commanders", {
     get: function() {
         var self = this.ptr;
-        return _Galaxy_get_commanders(self);
+        return wrapPointer(_Galaxy_get_commanders(self), std::vector<Commander*>);
     },
     set: function(commanders) {
         var self = this.ptr;
         /* commanders <std::vector<Commander*>> [] */
+        commanders = commanders.ptr;
         _Galaxy_set_commanders(self, commanders);
     }
 });
 Object.defineProperty(Galaxy.prototype, "size", {
     get: function() {
         var self = this.ptr;
-        return _Galaxy_get_size(self);
+        return wrapPointer(_Galaxy_get_size(self), mud::uvec2);
     },
     set: function(size) {
         var self = this.ptr;
         /* size <uvec2> [] */
+        size = size.ptr;
         _Galaxy_set_size(self, size);
     }
 });
@@ -532,33 +554,36 @@ Module['Jump'] = Jump;
 Object.defineProperty(Jump.prototype, "fleet", {
     get: function() {
         var self = this.ptr;
-        return _Jump_get_fleet(self);
+        return wrapPointer(_Jump_get_fleet(self), Fleet);
     },
     set: function(fleet) {
         var self = this.ptr;
         /* fleet <Fleet> [] */
+        fleet = fleet.ptr;
         _Jump_set_fleet(self, fleet);
     }
 });
 Object.defineProperty(Jump.prototype, "start", {
     get: function() {
         var self = this.ptr;
-        return _Jump_get_start(self);
+        return wrapPointer(_Jump_get_start(self), mud::uvec2);
     },
     set: function(start) {
         var self = this.ptr;
         /* start <uvec2> [] */
+        start = start.ptr;
         _Jump_set_start(self, start);
     }
 });
 Object.defineProperty(Jump.prototype, "dest", {
     get: function() {
         var self = this.ptr;
-        return _Jump_get_dest(self);
+        return wrapPointer(_Jump_get_dest(self), mud::uvec2);
     },
     set: function(dest) {
         var self = this.ptr;
         /* dest <uvec2> [] */
+        dest = dest.ptr;
         _Jump_set_dest(self, dest);
     }
 });
@@ -570,17 +595,19 @@ Object.defineProperty(Jump.prototype, "stance", {
     set: function(stance) {
         var self = this.ptr;
         /* stance <FleetStance> [] */
+        if (stance && typeof stance === "object") stance = stance.ptr;
         _Jump_set_stance(self, stance);
     }
 });
 Object.defineProperty(Jump.prototype, "track", {
     get: function() {
         var self = this.ptr;
-        return _Jump_get_track(self);
+        return wrapPointer(_Jump_get_track(self), Fleet);
     },
     set: function(track) {
         var self = this.ptr;
         /* track <Fleet> [] */
+        track = track.ptr;
         _Jump_set_track(self, track);
     }
 });
@@ -753,11 +780,12 @@ Object.defineProperty(Schema.prototype, "planetary", {
 Object.defineProperty(Schema.prototype, "spatial", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_spatial(self);
+        return wrapPointer(_Schema_get_spatial(self), SpatialPower);
     },
     set: function(spatial) {
         var self = this.ptr;
         /* spatial <SpatialPower> [] */
+        spatial = spatial.ptr;
         _Schema_set_spatial(self, spatial);
     }
 });
@@ -803,22 +831,24 @@ Module['Split'] = Split;
 Object.defineProperty(Split.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return _Split_get_source(self);
+        return wrapPointer(_Split_get_source(self), Fleet);
     },
     set: function(source) {
         var self = this.ptr;
         /* source <Fleet> [] */
+        source = source.ptr;
         _Split_set_source(self, source);
     }
 });
 Object.defineProperty(Split.prototype, "dest", {
     get: function() {
         var self = this.ptr;
-        return _Split_get_dest(self);
+        return wrapPointer(_Split_get_dest(self), Fleet);
     },
     set: function(dest) {
         var self = this.ptr;
         /* dest <Fleet> [] */
+        dest = dest.ptr;
         _Split_set_dest(self, dest);
     }
 });
@@ -843,6 +873,7 @@ Object.defineProperty(Split.prototype, "stance", {
     set: function(stance) {
         var self = this.ptr;
         /* stance <FleetStance> [] */
+        if (stance && typeof stance === "object") stance = stance.ptr;
         _Split_set_stance(self, stance);
     }
 });
@@ -856,7 +887,9 @@ function Star(spatial, galaxy, coord, name) {
     ensureCache.prepare();
     /* spatial <toy::HSpatial> [] */
     /* galaxy <Galaxy> [] */
+    galaxy = galaxy.ptr;
     /* coord <uvec2> [] */
+    coord = coord.ptr;
     /* name <std::string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
@@ -871,22 +904,24 @@ Module['Star'] = Star;
 Object.defineProperty(Star.prototype, "galaxy", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_galaxy(self);
+        return wrapPointer(_Star_get_galaxy(self), Galaxy);
     },
     set: function(galaxy) {
         var self = this.ptr;
         /* galaxy <Galaxy> [] */
+        galaxy = galaxy.ptr;
         _Star_set_galaxy(self, galaxy);
     }
 });
 Object.defineProperty(Star.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_coord(self);
+        return wrapPointer(_Star_get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
+        coord = coord.ptr;
         _Star_set_coord(self, coord);
     }
 });
@@ -1021,6 +1056,7 @@ Object.defineProperty(Star.prototype, "politic", {
     set: function(politic) {
         var self = this.ptr;
         /* politic <Politic> [] */
+        if (politic && typeof politic === "object") politic = politic.ptr;
         _Star_set_politic(self, politic);
     }
 });
@@ -1032,17 +1068,19 @@ Object.defineProperty(Star.prototype, "taxation", {
     set: function(taxation) {
         var self = this.ptr;
         /* taxation <Taxation> [] */
+        if (taxation && typeof taxation === "object") taxation = taxation.ptr;
         _Star_set_taxation(self, taxation);
     }
 });
 Object.defineProperty(Star.prototype, "commander", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_commander(self);
+        return wrapPointer(_Star_get_commander(self), Commander);
     },
     set: function(commander) {
         var self = this.ptr;
         /* commander <Commander> [] */
+        commander = commander.ptr;
         _Star_set_commander(self, commander);
     }
 });
@@ -1113,11 +1151,12 @@ Module['CommanderBrush'] = CommanderBrush;
 Object.defineProperty(CommanderBrush.prototype, "commander", {
     get: function() {
         var self = this.ptr;
-        return _CommanderBrush_get_commander(self);
+        return wrapPointer(_CommanderBrush_get_commander(self), Commander);
     },
     set: function(commander) {
         var self = this.ptr;
         /* commander <Commander> [] */
+        commander = commander.ptr;
         _CommanderBrush_set_commander(self, commander);
     }
 });
@@ -1149,33 +1188,36 @@ Module['PlanetaryCombat'] = PlanetaryCombat;
 Object.defineProperty(PlanetaryCombat.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return _PlanetaryCombat_get_coord(self);
+        return wrapPointer(_PlanetaryCombat_get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
+        coord = coord.ptr;
         _PlanetaryCombat_set_coord(self, coord);
     }
 });
 Object.defineProperty(PlanetaryCombat.prototype, "attack", {
     get: function() {
         var self = this.ptr;
-        return _PlanetaryCombat_get_attack(self);
+        return wrapPointer(_PlanetaryCombat_get_attack(self), std::vector<CombatFleet>);
     },
     set: function(attack) {
         var self = this.ptr;
         /* attack <std::vector<CombatFleet>> [] */
+        attack = attack.ptr;
         _PlanetaryCombat_set_attack(self, attack);
     }
 });
 Object.defineProperty(PlanetaryCombat.prototype, "defense", {
     get: function() {
         var self = this.ptr;
-        return _PlanetaryCombat_get_defense(self);
+        return wrapPointer(_PlanetaryCombat_get_defense(self), CombatStar);
     },
     set: function(defense) {
         var self = this.ptr;
         /* defense <CombatStar> [] */
+        defense = defense.ptr;
         _PlanetaryCombat_set_defense(self, defense);
     }
 });
@@ -1265,6 +1307,7 @@ Object.defineProperty(ShipSchema.prototype, "main_weapon", {
     set: function(main_weapon) {
         var self = this.ptr;
         /* main_weapon <WeaponType> [] */
+        if (main_weapon && typeof main_weapon === "object") main_weapon = main_weapon.ptr;
         _ShipSchema_set_main_weapon(self, main_weapon);
     }
 });
@@ -1285,33 +1328,36 @@ Module['SpatialCombat'] = SpatialCombat;
 Object.defineProperty(SpatialCombat.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return _SpatialCombat_get_coord(self);
+        return wrapPointer(_SpatialCombat_get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
+        coord = coord.ptr;
         _SpatialCombat_set_coord(self, coord);
     }
 });
 Object.defineProperty(SpatialCombat.prototype, "attack", {
     get: function() {
         var self = this.ptr;
-        return _SpatialCombat_get_attack(self);
+        return wrapPointer(_SpatialCombat_get_attack(self), std::vector<CombatFleet>);
     },
     set: function(attack) {
         var self = this.ptr;
         /* attack <std::vector<CombatFleet>> [] */
+        attack = attack.ptr;
         _SpatialCombat_set_attack(self, attack);
     }
 });
 Object.defineProperty(SpatialCombat.prototype, "defense", {
     get: function() {
         var self = this.ptr;
-        return _SpatialCombat_get_defense(self);
+        return wrapPointer(_SpatialCombat_get_defense(self), std::vector<CombatFleet>);
     },
     set: function(defense) {
         var self = this.ptr;
         /* defense <std::vector<CombatFleet>> [] */
+        defense = defense.ptr;
         _SpatialCombat_set_defense(self, defense);
     }
 });
@@ -1327,6 +1373,7 @@ function Universe(name, job_system) {
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */
+    job_system = job_system.ptr;
     this.ptr = _Universe_Universe_2(self, name, job_system); getCache(Universe)[this.ptr] = this;
 };
 Universe.prototype = Object.create(WrapperObject.prototype);
@@ -1337,22 +1384,24 @@ Module['Universe'] = Universe;
 Object.defineProperty(Universe.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return _Universe_get_world(self);
+        return wrapPointer(_Universe_get_world(self), toy::World);
     },
     set: function(world) {
         var self = this.ptr;
         /* world <World> [] */
+        world = world.ptr;
         _Universe_set_world(self, world);
     }
 });
 Object.defineProperty(Universe.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return _Universe_get_bullet_world(self);
+        return wrapPointer(_Universe_get_bullet_world(self), toy::BulletWorld);
     },
     set: function(bullet_world) {
         var self = this.ptr;
         /* bullet_world <BulletWorld> [] */
+        bullet_world = bullet_world.ptr;
         _Universe_set_bullet_world(self, bullet_world);
     }
 });

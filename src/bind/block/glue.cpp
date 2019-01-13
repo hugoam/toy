@@ -22,7 +22,7 @@ extern "C" {
 	toy::Block* EMSCRIPTEN_KEEPALIVE Block_Block_0() {
 		return new toy::Block();
 	}
-	toy::Block* EMSCRIPTEN_KEEPALIVE Block_Block_5(toy::HSpatial spatial, toy::HWorldPage world_page, Block parentblock, size_t index, const vec3 size) {
+	toy::Block* EMSCRIPTEN_KEEPALIVE Block_Block_5(toy::HSpatial spatial, toy::HWorldPage world_page, toy::Block* parentblock, size_t index, const mud::vec3* size) {
 		return new toy::Block(spatial, world_page, parentblock, index, *size);
 	}
 	void EMSCRIPTEN_KEEPALIVE Block_subdivide_0(toy::Block* self) {
@@ -31,7 +31,7 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE Block_reset_0(toy::Block* self) {
 		self->reset();
 	}
-	void EMSCRIPTEN_KEEPALIVE Block_chunk_4(toy::Block* self, size_t x, size_t y, size_t z, Element element) {
+	void EMSCRIPTEN_KEEPALIVE Block_chunk_4(toy::Block* self, size_t x, size_t y, size_t z, toy::Element* element) {
 		self->chunk(x, y, z, *element);
 	}
 	void EMSCRIPTEN_KEEPALIVE Block_commit_0(toy::Block* self) {
@@ -40,14 +40,15 @@ extern "C" {
 	toy::HWorldPage EMSCRIPTEN_KEEPALIVE Block_get_world_page(toy::Block* self) {
 		return self->m_world_page;
 	}
-	Block EMSCRIPTEN_KEEPALIVE Block_get_parentblock(toy::Block* self) {
+	toy::Block* EMSCRIPTEN_KEEPALIVE Block_get_parentblock(toy::Block* self) {
 		return self->m_parentblock;
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Block_get_index(toy::Block* self) {
 		return self->m_index;
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Block_get_size(toy::Block* self) {
-		return self->m_size;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Block_get_size(toy::Block* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_size, &temp);
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Block_get_updated(toy::Block* self) {
 		return self->m_updated;
@@ -59,16 +60,16 @@ extern "C" {
 	toy::Chunk* EMSCRIPTEN_KEEPALIVE Chunk_Chunk_0() {
 		return new toy::Chunk();
 	}
-	toy::Chunk* EMSCRIPTEN_KEEPALIVE Chunk_Chunk_5(toy::HSpatial spatial, Block block, size_t index, Element element, float size) {
+	toy::Chunk* EMSCRIPTEN_KEEPALIVE Chunk_Chunk_5(toy::HSpatial spatial, toy::Block* block, size_t index, toy::Element* element, float size) {
 		return new toy::Chunk(spatial, *block, index, *element, size);
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Chunk_get_index(toy::Chunk* self) {
 		return self->m_index;
 	}
-	Block EMSCRIPTEN_KEEPALIVE Chunk_get_block(toy::Chunk* self) {
+	toy::Block* EMSCRIPTEN_KEEPALIVE Chunk_get_block(toy::Chunk* self) {
 		return self->m_block;
 	}
-	Element EMSCRIPTEN_KEEPALIVE Chunk_get_element(toy::Chunk* self) {
+	toy::Element* EMSCRIPTEN_KEEPALIVE Chunk_get_element(toy::Chunk* self) {
 		return self->m_element;
 	}
 	float EMSCRIPTEN_KEEPALIVE Chunk_get_size(toy::Chunk* self) {
@@ -78,7 +79,7 @@ extern "C" {
 		delete self;
 	}
 	// Element
-	toy::Element* EMSCRIPTEN_KEEPALIVE Element_Element_3(const char* name, MatterState state, Colour colour) {
+	toy::Element* EMSCRIPTEN_KEEPALIVE Element_Element_3(const char* name, toy::MatterState state, mud::Colour* colour) {
 		return new toy::Element(name, state, colour);
 	}
 	mud::Id EMSCRIPTEN_KEEPALIVE Element_get_id(toy::Element* self) {
@@ -87,11 +88,13 @@ extern "C" {
 	std::string EMSCRIPTEN_KEEPALIVE Element_get_name(toy::Element* self) {
 		return self->m_name;
 	}
-	MatterState EMSCRIPTEN_KEEPALIVE Element_get_state(toy::Element* self) {
-		return self->m_state;
+	toy::MatterState EMSCRIPTEN_KEEPALIVE Element_get_state(toy::Element* self) {
+		static toy::MatterState temp;
+		return (temp = &self->m_state, &temp);
 	}
-	Colour EMSCRIPTEN_KEEPALIVE Element_get_colour(toy::Element* self) {
-		return self->m_colour;
+	mud::Colour* EMSCRIPTEN_KEEPALIVE Element_get_colour(toy::Element* self) {
+		static mud::Colour temp;
+		return (temp = &self->m_colour, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Element___destroy__(toy::Element* self) {
 		delete self;
@@ -100,10 +103,10 @@ extern "C" {
 	toy::Heap* EMSCRIPTEN_KEEPALIVE Heap_Heap_0() {
 		return new toy::Heap();
 	}
-	toy::Heap* EMSCRIPTEN_KEEPALIVE Heap_Heap_3(toy::HSpatial spatial, Element element, float radius) {
+	toy::Heap* EMSCRIPTEN_KEEPALIVE Heap_Heap_3(toy::HSpatial spatial, toy::Element* element, float radius) {
 		return new toy::Heap(spatial, *element, radius);
 	}
-	Element EMSCRIPTEN_KEEPALIVE Heap_get_element(toy::Heap* self) {
+	toy::Element* EMSCRIPTEN_KEEPALIVE Heap_get_element(toy::Heap* self) {
 		return self->m_element;
 	}
 	float EMSCRIPTEN_KEEPALIVE Heap_get_radius(toy::Heap* self) {
@@ -116,16 +119,18 @@ extern "C" {
 	toy::Sector* EMSCRIPTEN_KEEPALIVE Sector_Sector_0() {
 		return new toy::Sector();
 	}
-	toy::Sector* EMSCRIPTEN_KEEPALIVE Sector_Sector_5(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const uvec3 coordinate, const vec3 size) {
+	toy::Sector* EMSCRIPTEN_KEEPALIVE Sector_Sector_5(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const mud::uvec3* coordinate, const mud::vec3* size) {
 		return new toy::Sector(spatial, world_page, navblock, *coordinate, *size);
 	}
-	uvec3 EMSCRIPTEN_KEEPALIVE Sector_get_coordinate(toy::Sector* self) {
-		return self->m_coordinate;
+	mud::uvec3* EMSCRIPTEN_KEEPALIVE Sector_get_coordinate(toy::Sector* self) {
+		static mud::uvec3 temp;
+		return (temp = &self->m_coordinate, &temp);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Sector_get_size(toy::Sector* self) {
-		return self->m_size;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Sector_get_size(toy::Sector* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_size, &temp);
 	}
-	Block EMSCRIPTEN_KEEPALIVE Sector_get_block(toy::Sector* self) {
+	toy::Block* EMSCRIPTEN_KEEPALIVE Sector_get_block(toy::Sector* self) {
 		return self->m_block;
 	}
 	void EMSCRIPTEN_KEEPALIVE Sector___destroy__(toy::Sector* self) {
@@ -135,11 +140,12 @@ extern "C" {
 	toy::Tileblock* EMSCRIPTEN_KEEPALIVE Tileblock_Tileblock_0() {
 		return new toy::Tileblock();
 	}
-	toy::Tileblock* EMSCRIPTEN_KEEPALIVE Tileblock_Tileblock_6(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const uvec3 size, const vec3 tile_scale, WaveTileset tileset) {
+	toy::Tileblock* EMSCRIPTEN_KEEPALIVE Tileblock_Tileblock_6(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const mud::uvec3* size, const mud::vec3* tile_scale, mud::WaveTileset* tileset) {
 		return new toy::Tileblock(spatial, world_page, navblock, *size, *tile_scale, *tileset);
 	}
-	WfcBlock EMSCRIPTEN_KEEPALIVE Tileblock_get_wfc_block(toy::Tileblock* self) {
-		return self->m_wfc_block;
+	mud::WfcBlock* EMSCRIPTEN_KEEPALIVE Tileblock_get_wfc_block(toy::Tileblock* self) {
+		static mud::WfcBlock temp;
+		return (temp = &self->m_wfc_block, &temp);
 	}
 	bool EMSCRIPTEN_KEEPALIVE Tileblock_get_setup(toy::Tileblock* self) {
 		return self->m_setup;

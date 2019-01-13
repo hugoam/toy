@@ -49,27 +49,32 @@ extern "C" {
 	Aim* EMSCRIPTEN_KEEPALIVE Aim_Aim_0() {
 		return new Aim();
 	}
-	quat EMSCRIPTEN_KEEPALIVE Aim_get_rotation(Aim* self) {
-		return self->rotation;
+	mud::quat* EMSCRIPTEN_KEEPALIVE Aim_get_rotation(Aim* self) {
+		static mud::quat temp;
+		return (temp = &self->rotation, &temp);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Aim_get_start(Aim* self) {
-		return self->start;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_start(Aim* self) {
+		static mud::vec3 temp;
+		return (temp = &self->start, &temp);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Aim_get_end(Aim* self) {
-		return self->end;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_end(Aim* self) {
+		static mud::vec3 temp;
+		return (temp = &self->end, &temp);
 	}
-	Spatial EMSCRIPTEN_KEEPALIVE Aim_get_hit(Aim* self) {
+	toy::Spatial* EMSCRIPTEN_KEEPALIVE Aim_get_hit(Aim* self) {
 		return self->hit;
 	}
 	void EMSCRIPTEN_KEEPALIVE Aim___destroy__(Aim* self) {
 		delete self;
 	}
 	// Bullet
-	vec3 EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
-		return self->m_source;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_source, &temp);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
-		return self->m_velocity;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_velocity, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
 		delete self;
@@ -78,11 +83,12 @@ extern "C" {
 	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_0() {
 		return new Crate();
 	}
-	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const vec3 extents) {
+	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
 		return new Crate(spatial, movable, *extents);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
-		return self->m_extents;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_extents, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
 		delete self;
@@ -94,14 +100,17 @@ extern "C" {
 	Human* EMSCRIPTEN_KEEPALIVE Human_Human_6(toy::HSpatial spatial, toy::HMovable movable, toy::HEmitter emitter, toy::HReceptor receptor, toy::HEntityScript script, Faction faction) {
 		return new Human(spatial, movable, emitter, receptor, script, faction);
 	}
-	quat EMSCRIPTEN_KEEPALIVE Human_sight_0(Human* self) {
-		return self->sight(aiming);
+	mud::quat* EMSCRIPTEN_KEEPALIVE Human_sight_0(Human* self) {
+		static mud::quat temp;
+		return (temp = self->sight(aiming), &temp);
 	}
-	quat EMSCRIPTEN_KEEPALIVE Human_sight_1(Human* self, bool aiming) {
-		return self->sight(aiming);
+	mud::quat* EMSCRIPTEN_KEEPALIVE Human_sight_1(Human* self, bool aiming) {
+		static mud::quat temp;
+		return (temp = self->sight(aiming), &temp);
 	}
-	Aim EMSCRIPTEN_KEEPALIVE Human_aim_0(Human* self) {
-		return self->aim();
+	Aim* EMSCRIPTEN_KEEPALIVE Human_aim_0(Human* self) {
+		static Aim temp;
+		return (temp = self->aim(), &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Human_shoot_0(Human* self) {
 		self->shoot();
@@ -110,7 +119,8 @@ extern "C" {
 		self->stop();
 	}
 	Faction EMSCRIPTEN_KEEPALIVE Human_get_faction(Human* self) {
-		return self->m_faction;
+		static Faction temp;
+		return (temp = &self->m_faction, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_life(Human* self) {
 		return self->m_life;
@@ -133,14 +143,16 @@ extern "C" {
 	HHuman EMSCRIPTEN_KEEPALIVE Human_get_target(Human* self) {
 		return self->m_target;
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Human_get_dest(Human* self) {
-		return self->m_dest;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Human_get_dest(Human* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_dest, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_cooldown(Human* self) {
 		return self->m_cooldown;
 	}
-	Stance EMSCRIPTEN_KEEPALIVE Human_get_state(Human* self) {
-		return self->m_state;
+	Stance* EMSCRIPTEN_KEEPALIVE Human_get_state(Human* self) {
+		static Stance temp;
+		return (temp = &self->m_state, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Human___destroy__(Human* self) {
 		delete self;
@@ -182,11 +194,12 @@ extern "C" {
 	WorldBlock* EMSCRIPTEN_KEEPALIVE WorldBlock_WorldBlock_0() {
 		return new WorldBlock();
 	}
-	WorldBlock* EMSCRIPTEN_KEEPALIVE WorldBlock_WorldBlock_4(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const vec3 extents) {
+	WorldBlock* EMSCRIPTEN_KEEPALIVE WorldBlock_WorldBlock_4(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const mud::vec3* extents) {
 		return new WorldBlock(spatial, world_page, navblock, *extents);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE WorldBlock_get_extents(WorldBlock* self) {
-		return self->m_extents;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE WorldBlock_get_extents(WorldBlock* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_extents, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE WorldBlock___destroy__(WorldBlock* self) {
 		delete self;

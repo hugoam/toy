@@ -24,11 +24,12 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE VisuScene_next_frame_0(toy::VisuScene* self) {
 		self->next_frame();
 	}
-	GfxSystem EMSCRIPTEN_KEEPALIVE VisuScene_get_gfx_system(toy::VisuScene* self) {
-		return self->m_gfx_system;
+	mud::GfxSystem* EMSCRIPTEN_KEEPALIVE VisuScene_get_gfx_system(toy::VisuScene* self) {
+		return &&self->m_gfx_system;
 	}
-	Scene EMSCRIPTEN_KEEPALIVE VisuScene_get_scene(toy::VisuScene* self) {
-		return self->m_scene;
+	mud::Scene* EMSCRIPTEN_KEEPALIVE VisuScene_get_scene(toy::VisuScene* self) {
+		static mud::Scene temp;
+		return (temp = &self->m_scene, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE VisuScene___destroy__(toy::VisuScene* self) {
 		delete self;

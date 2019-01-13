@@ -23,11 +23,12 @@ Module['ProcedureType'] = ProcedureType;
 Object.defineProperty(ProcedureType.prototype, "type", {
     get: function() {
         var self = this.ptr;
-        return _ProcedureType_get_type(self);
+        return wrapPointer(_ProcedureType_get_type(self), mud::Type);
     },
     set: function(type) {
         var self = this.ptr;
         /* type <Type> [] */
+        type = type.ptr;
         _ProcedureType_set_type(self, type);
     }
 });

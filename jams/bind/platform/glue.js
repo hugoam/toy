@@ -15,44 +15,48 @@ Module['Aim'] = Aim;
 Object.defineProperty(Aim.prototype, "rotation", {
     get: function() {
         var self = this.ptr;
-        return _Aim_get_rotation(self);
+        return wrapPointer(_Aim_get_rotation(self), mud::quat);
     },
     set: function(rotation) {
         var self = this.ptr;
         /* rotation <quat> [] */
+        rotation = rotation.ptr;
         _Aim_set_rotation(self, rotation);
     }
 });
 Object.defineProperty(Aim.prototype, "start", {
     get: function() {
         var self = this.ptr;
-        return _Aim_get_start(self);
+        return wrapPointer(_Aim_get_start(self), mud::vec3);
     },
     set: function(start) {
         var self = this.ptr;
         /* start <vec3> [] */
+        start = start.ptr;
         _Aim_set_start(self, start);
     }
 });
 Object.defineProperty(Aim.prototype, "end", {
     get: function() {
         var self = this.ptr;
-        return _Aim_get_end(self);
+        return wrapPointer(_Aim_get_end(self), mud::vec3);
     },
     set: function(end) {
         var self = this.ptr;
         /* end <vec3> [] */
+        end = end.ptr;
         _Aim_set_end(self, end);
     }
 });
 Object.defineProperty(Aim.prototype, "hit", {
     get: function() {
         var self = this.ptr;
-        return _Aim_get_hit(self);
+        return wrapPointer(_Aim_get_hit(self), toy::Spatial);
     },
     set: function(hit) {
         var self = this.ptr;
         /* hit <Spatial> [] */
+        hit = hit.ptr;
         _Aim_set_hit(self, hit);
     }
 });
@@ -70,22 +74,24 @@ Module['Bullet'] = Bullet;
 Object.defineProperty(Bullet.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return _Bullet_get_source(self);
+        return wrapPointer(_Bullet_get_source(self), mud::vec3);
     },
     set: function(source) {
         var self = this.ptr;
         /* source <vec3> [] */
+        source = source.ptr;
         _Bullet_set_source(self, source);
     }
 });
 Object.defineProperty(Bullet.prototype, "velocity", {
     get: function() {
         var self = this.ptr;
-        return _Bullet_get_velocity(self);
+        return wrapPointer(_Bullet_get_velocity(self), mud::vec3);
     },
     set: function(velocity) {
         var self = this.ptr;
         /* velocity <vec3> [] */
+        velocity = velocity.ptr;
         _Bullet_set_velocity(self, velocity);
     }
 });
@@ -99,6 +105,7 @@ function Crate(spatial, movable, extents) {
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
     /* extents <vec3> [] */
+    extents = extents.ptr;
     if (spatial === undefined) { this.ptr = _Crate_Crate_0(self); getCache(Crate)[this.ptr] = this; return; }
     this.ptr = _Crate_Crate_3(self, spatial, movable, extents); getCache(Crate)[this.ptr] = this;
 };
@@ -110,11 +117,12 @@ Module['Crate'] = Crate;
 Object.defineProperty(Crate.prototype, "extents", {
     get: function() {
         var self = this.ptr;
-        return _Crate_get_extents(self);
+        return wrapPointer(_Crate_get_extents(self), mud::vec3);
     },
     set: function(extents) {
         var self = this.ptr;
         /* extents <vec3> [] */
+        extents = extents.ptr;
         _Crate_set_extents(self, extents);
     }
 });
@@ -131,6 +139,7 @@ function Human(spatial, movable, emitter, receptor, script, faction) {
     /* receptor <toy::HReceptor> [] */
     /* script <toy::HEntityScript> [] */
     /* faction <Faction> [] */
+    if (faction && typeof faction === "object") faction = faction.ptr;
     if (spatial === undefined) { this.ptr = _Human_Human_0(self); getCache(Human)[this.ptr] = this; return; }
     this.ptr = _Human_Human_6(self, spatial, movable, emitter, receptor, script, faction); getCache(Human)[this.ptr] = this;
 };
@@ -140,15 +149,15 @@ Human.prototype.__class__ = Human;
 Human.__cache__ = {};
 Module['Human'] = Human;
 Human.prototype["aim"] = Human.prototype.aim = function() {
-    return _Human_aim_0();
+    return wrapPointer(_Human_aim_0(), Aim);
 };
 Human.prototype["shoot"] = Human.prototype.shoot = function() {
     _Human_shoot_0();
 };
 Human.prototype["sight"] = Human.prototype.sight = function(aiming) {
     /* aiming <bool> [] */
-    if (aiming === undefined) { return _Human_sight_0(); return; }
-    return _Human_sight_1(aiming);
+    if (aiming === undefined) { return wrapPointer(_Human_sight_0(), mud::quat); return; }
+    return wrapPointer(_Human_sight_1(aiming), mud::quat);
 };
 Human.prototype["stop"] = Human.prototype.stop = function() {
     _Human_stop_0();
@@ -161,6 +170,7 @@ Object.defineProperty(Human.prototype, "faction", {
     set: function(faction) {
         var self = this.ptr;
         /* faction <Faction> [] */
+        if (faction && typeof faction === "object") faction = faction.ptr;
         _Human_set_faction(self, faction);
     }
 });
@@ -244,11 +254,12 @@ Object.defineProperty(Human.prototype, "target", {
 Object.defineProperty(Human.prototype, "dest", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_dest(self);
+        return wrapPointer(_Human_get_dest(self), mud::vec3);
     },
     set: function(dest) {
         var self = this.ptr;
         /* dest <vec3> [] */
+        dest = dest.ptr;
         _Human_set_dest(self, dest);
     }
 });
@@ -266,11 +277,12 @@ Object.defineProperty(Human.prototype, "cooldown", {
 Object.defineProperty(Human.prototype, "state", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_state(self);
+        return wrapPointer(_Human_get_state(self), Stance);
     },
     set: function(state) {
         var self = this.ptr;
         /* state <Stance> [] */
+        state = state.ptr;
         _Human_set_state(self, state);
     }
 });
@@ -358,6 +370,7 @@ function TileWorld(name, job_system) {
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */
+    job_system = job_system.ptr;
     this.ptr = _TileWorld_TileWorld_2(self, name, job_system); getCache(TileWorld)[this.ptr] = this;
 };
 TileWorld.prototype = Object.create(WrapperObject.prototype);
@@ -368,33 +381,36 @@ Module['TileWorld'] = TileWorld;
 Object.defineProperty(TileWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return _TileWorld_get_world(self);
+        return wrapPointer(_TileWorld_get_world(self), toy::World);
     },
     set: function(world) {
         var self = this.ptr;
         /* world <World> [] */
+        world = world.ptr;
         _TileWorld_set_world(self, world);
     }
 });
 Object.defineProperty(TileWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return _TileWorld_get_bullet_world(self);
+        return wrapPointer(_TileWorld_get_bullet_world(self), toy::BulletWorld);
     },
     set: function(bullet_world) {
         var self = this.ptr;
         /* bullet_world <BulletWorld> [] */
+        bullet_world = bullet_world.ptr;
         _TileWorld_set_bullet_world(self, bullet_world);
     }
 });
 Object.defineProperty(TileWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
-        return _TileWorld_get_navmesh(self);
+        return wrapPointer(_TileWorld_get_navmesh(self), toy::Navmesh);
     },
     set: function(navmesh) {
         var self = this.ptr;
         /* navmesh <Navmesh> [] */
+        navmesh = navmesh.ptr;
         _TileWorld_set_navmesh(self, navmesh);
     }
 });

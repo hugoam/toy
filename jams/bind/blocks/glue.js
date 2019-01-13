@@ -7,7 +7,9 @@ function Camp(spatial, position, faction) {
     var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* position <vec3> [] */
+    position = position.ptr;
     /* faction <Faction> [] */
+    faction = faction.ptr;
     if (spatial === undefined) { this.ptr = _Camp_Camp_0(self); getCache(Camp)[this.ptr] = this; return; }
     this.ptr = _Camp_Camp_3(self, spatial, position, faction); getCache(Camp)[this.ptr] = this;
 };
@@ -19,22 +21,24 @@ Module['Camp'] = Camp;
 Object.defineProperty(Camp.prototype, "position", {
     get: function() {
         var self = this.ptr;
-        return _Camp_get_position(self);
+        return wrapPointer(_Camp_get_position(self), mud::vec3);
     },
     set: function(position) {
         var self = this.ptr;
         /* position <vec3> [] */
+        position = position.ptr;
         _Camp_set_position(self, position);
     }
 });
 Object.defineProperty(Camp.prototype, "faction", {
     get: function() {
         var self = this.ptr;
-        return _Camp_get_faction(self);
+        return wrapPointer(_Camp_get_faction(self), Faction);
     },
     set: function(faction) {
         var self = this.ptr;
         /* faction <Faction> [] */
+        faction = faction.ptr;
         _Camp_set_faction(self, faction);
     }
 });
@@ -47,6 +51,7 @@ function Faction(id, colour) {
     var self = this.ptr;
     /* id <uint32_t> [] */
     /* colour <Colour> [] */
+    colour = colour.ptr;
     this.ptr = _Faction_Faction_2(self, id, colour); getCache(Faction)[this.ptr] = this;
 };
 Faction.prototype = Object.create(WrapperObject.prototype);
@@ -68,11 +73,12 @@ Object.defineProperty(Faction.prototype, "id", {
 Object.defineProperty(Faction.prototype, "colour", {
     get: function() {
         var self = this.ptr;
-        return _Faction_get_colour(self);
+        return wrapPointer(_Faction_get_colour(self), mud::Colour);
     },
     set: function(colour) {
         var self = this.ptr;
         /* colour <Colour> [] */
+        colour = colour.ptr;
         _Faction_set_colour(self, colour);
     }
 });
@@ -97,6 +103,7 @@ function Shield(spatial, emitter, faction, radius) {
     /* spatial <toy::HSpatial> [] */
     /* emitter <toy::HEmitter> [] */
     /* faction <Faction> [] */
+    faction = faction.ptr;
     /* radius <float> [] */
     if (spatial === undefined) { this.ptr = _Shield_Shield_0(self); getCache(Shield)[this.ptr] = this; return; }
     this.ptr = _Shield_Shield_4(self, spatial, emitter, faction, radius); getCache(Shield)[this.ptr] = this;
@@ -109,11 +116,12 @@ Module['Shield'] = Shield;
 Object.defineProperty(Shield.prototype, "faction", {
     get: function() {
         var self = this.ptr;
-        return _Shield_get_faction(self);
+        return wrapPointer(_Shield_get_faction(self), Faction);
     },
     set: function(faction) {
         var self = this.ptr;
         /* faction <Faction> [] */
+        faction = faction.ptr;
         _Shield_set_faction(self, faction);
     }
 });
@@ -164,22 +172,24 @@ Module['Slug'] = Slug;
 Object.defineProperty(Slug.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return _Slug_get_source(self);
+        return wrapPointer(_Slug_get_source(self), mud::vec3);
     },
     set: function(source) {
         var self = this.ptr;
         /* source <vec3> [] */
+        source = source.ptr;
         _Slug_set_source(self, source);
     }
 });
 Object.defineProperty(Slug.prototype, "velocity", {
     get: function() {
         var self = this.ptr;
-        return _Slug_get_velocity(self);
+        return wrapPointer(_Slug_get_velocity(self), mud::vec3);
     },
     set: function(velocity) {
         var self = this.ptr;
         /* velocity <vec3> [] */
+        velocity = velocity.ptr;
         _Slug_set_velocity(self, velocity);
     }
 });
@@ -206,6 +216,7 @@ function Tank(spatial, movable, emitter, receptor, faction) {
     /* emitter <toy::HEmitter> [] */
     /* receptor <toy::HReceptor> [] */
     /* faction <Faction> [] */
+    faction = faction.ptr;
     if (spatial === undefined) { this.ptr = _Tank_Tank_0(self); getCache(Tank)[this.ptr] = this; return; }
     this.ptr = _Tank_Tank_5(self, spatial, movable, emitter, receptor, faction); getCache(Tank)[this.ptr] = this;
 };
@@ -226,6 +237,7 @@ function BlockWorld(name, job_system) {
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */
+    job_system = job_system.ptr;
     this.ptr = _BlockWorld_BlockWorld_2(self, name, job_system); getCache(BlockWorld)[this.ptr] = this;
 };
 BlockWorld.prototype = Object.create(WrapperObject.prototype);
@@ -236,77 +248,84 @@ Module['BlockWorld'] = BlockWorld;
 Object.defineProperty(BlockWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return _BlockWorld_get_world(self);
+        return wrapPointer(_BlockWorld_get_world(self), toy::World);
     },
     set: function(world) {
         var self = this.ptr;
         /* world <World> [] */
+        world = world.ptr;
         _BlockWorld_set_world(self, world);
     }
 });
 Object.defineProperty(BlockWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return _BlockWorld_get_bullet_world(self);
+        return wrapPointer(_BlockWorld_get_bullet_world(self), toy::BulletWorld);
     },
     set: function(bullet_world) {
         var self = this.ptr;
         /* bullet_world <BulletWorld> [] */
+        bullet_world = bullet_world.ptr;
         _BlockWorld_set_bullet_world(self, bullet_world);
     }
 });
 Object.defineProperty(BlockWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
-        return _BlockWorld_get_navmesh(self);
+        return wrapPointer(_BlockWorld_get_navmesh(self), toy::Navmesh);
     },
     set: function(navmesh) {
         var self = this.ptr;
         /* navmesh <Navmesh> [] */
+        navmesh = navmesh.ptr;
         _BlockWorld_set_navmesh(self, navmesh);
     }
 });
 Object.defineProperty(BlockWorld.prototype, "block_subdiv", {
     get: function() {
         var self = this.ptr;
-        return _BlockWorld_get_block_subdiv(self);
+        return wrapPointer(_BlockWorld_get_block_subdiv(self), mud::uvec3);
     },
     set: function(block_subdiv) {
         var self = this.ptr;
         /* block_subdiv <uvec3> [] */
+        block_subdiv = block_subdiv.ptr;
         _BlockWorld_set_block_subdiv(self, block_subdiv);
     }
 });
 Object.defineProperty(BlockWorld.prototype, "tile_scale", {
     get: function() {
         var self = this.ptr;
-        return _BlockWorld_get_tile_scale(self);
+        return wrapPointer(_BlockWorld_get_tile_scale(self), mud::vec3);
     },
     set: function(tile_scale) {
         var self = this.ptr;
         /* tile_scale <vec3> [] */
+        tile_scale = tile_scale.ptr;
         _BlockWorld_set_tile_scale(self, tile_scale);
     }
 });
 Object.defineProperty(BlockWorld.prototype, "block_size", {
     get: function() {
         var self = this.ptr;
-        return _BlockWorld_get_block_size(self);
+        return wrapPointer(_BlockWorld_get_block_size(self), mud::vec3);
     },
     set: function(block_size) {
         var self = this.ptr;
         /* block_size <vec3> [] */
+        block_size = block_size.ptr;
         _BlockWorld_set_block_size(self, block_size);
     }
 });
 Object.defineProperty(BlockWorld.prototype, "world_size", {
     get: function() {
         var self = this.ptr;
-        return _BlockWorld_get_world_size(self);
+        return wrapPointer(_BlockWorld_get_world_size(self), mud::vec3);
     },
     set: function(world_size) {
         var self = this.ptr;
         /* world_size <vec3> [] */
+        world_size = world_size.ptr;
         _BlockWorld_set_world_size(self, world_size);
     }
 });

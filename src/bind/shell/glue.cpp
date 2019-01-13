@@ -40,44 +40,46 @@ extern "C" {
 			  }
 	}
 	// Game
-	User EMSCRIPTEN_KEEPALIVE Game_get_user(toy::Game* self) {
+	toy::User* EMSCRIPTEN_KEEPALIVE Game_get_user(toy::Game* self) {
 		return self->m_user;
 	}
-	GameMode EMSCRIPTEN_KEEPALIVE Game_get_mode(toy::Game* self) {
-		return self->m_mode;
+	toy::GameMode EMSCRIPTEN_KEEPALIVE Game_get_mode(toy::Game* self) {
+		static toy::GameMode temp;
+		return (temp = &self->m_mode, &temp);
 	}
-	GameShell EMSCRIPTEN_KEEPALIVE Game_get_shell(toy::Game* self) {
+	toy::GameShell* EMSCRIPTEN_KEEPALIVE Game_get_shell(toy::Game* self) {
 		return self->m_shell;
 	}
-	GameModule EMSCRIPTEN_KEEPALIVE Game_get_module(toy::Game* self) {
+	toy::GameModule* EMSCRIPTEN_KEEPALIVE Game_get_module(toy::Game* self) {
 		return self->m_module;
 	}
-	Ref EMSCRIPTEN_KEEPALIVE Game_get_player(toy::Game* self) {
-		return self->m_player;
+	mud::Ref* EMSCRIPTEN_KEEPALIVE Game_get_player(toy::Game* self) {
+		static mud::Ref temp;
+		return (temp = &self->m_player, &temp);
 	}
-	World EMSCRIPTEN_KEEPALIVE Game_get_world(toy::Game* self) {
+	toy::World* EMSCRIPTEN_KEEPALIVE Game_get_world(toy::Game* self) {
 		return self->m_world;
 	}
-	Widget EMSCRIPTEN_KEEPALIVE Game_get_screen(toy::Game* self) {
+	mud::Widget* EMSCRIPTEN_KEEPALIVE Game_get_screen(toy::Game* self) {
 		return self->m_screen;
 	}
 	void EMSCRIPTEN_KEEPALIVE Game___destroy__(toy::Game* self) {
 		delete self;
 	}
 	// GameModule
-	void EMSCRIPTEN_KEEPALIVE GameModule_init_2(toy::GameModule* self, GameShell shell, Game game) {
+	void EMSCRIPTEN_KEEPALIVE GameModule_init_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
 		self->init(*shell, *game);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameModule_start_2(toy::GameModule* self, GameShell shell, Game game) {
+	void EMSCRIPTEN_KEEPALIVE GameModule_start_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
 		self->start(*shell, *game);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameModule_pump_3(toy::GameModule* self, GameShell shell, Game game, Widget ui) {
+	void EMSCRIPTEN_KEEPALIVE GameModule_pump_3(toy::GameModule* self, toy::GameShell* shell, toy::Game* game, mud::Widget* ui) {
 		self->pump(*shell, *game, *ui);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameModule_scene_2(toy::GameModule* self, GameShell shell, GameScene scene) {
+	void EMSCRIPTEN_KEEPALIVE GameModule_scene_2(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene) {
 		self->scene(*shell, *scene);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameModule_paint_3(toy::GameModule* self, GameShell shell, GameScene scene, Gnode graph) {
+	void EMSCRIPTEN_KEEPALIVE GameModule_paint_3(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene, mud::Gnode* graph) {
 		self->paint(*shell, *scene, *graph);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameModule___destroy__(toy::GameModule* self) {
@@ -87,7 +89,7 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameShell_init_0(toy::GameShell* self) {
 		self->init();
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_load_1(toy::GameShell* self, GameModule module) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_load_1(toy::GameShell* self, toy::GameModule* module) {
 		self->load(*module);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_load_path_1(toy::GameShell* self, const std::string module_path) {
@@ -99,16 +101,16 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_1(toy::GameShell* self, size_t iterations) {
 		self->run(iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_1(toy::GameShell* self, GameModule module) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_1(toy::GameShell* self, toy::GameModule* module) {
 		self->run_game(*module, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_2(toy::GameShell* self, GameModule module, size_t iterations) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
 		self->run_game(*module, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_1(toy::GameShell* self, GameModule module) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_1(toy::GameShell* self, toy::GameModule* module) {
 		self->run_editor(*module, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_2(toy::GameShell* self, GameModule module, size_t iterations) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
 		self->run_editor(*module, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_1(toy::GameShell* self, const std::string module_path) {
@@ -138,47 +140,48 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameShell_cleanup_0(toy::GameShell* self) {
 		self->cleanup();
 	}
-	GameScene EMSCRIPTEN_KEEPALIVE GameShell_add_scene_0(toy::GameShell* self) {
-		return self->add_scene();
+	toy::GameScene* EMSCRIPTEN_KEEPALIVE GameShell_add_scene_0(toy::GameShell* self) {
+		return &self->add_scene();
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_remove_scene_1(toy::GameShell* self, GameScene scene) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_remove_scene_1(toy::GameShell* self, toy::GameScene* scene) {
 		self->remove_scene(*scene);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_clear_scenes_0(toy::GameShell* self) {
 		self->clear_scenes();
 	}
-	Core EMSCRIPTEN_KEEPALIVE GameShell_get_core(toy::GameShell* self) {
-		return self->core;
+	toy::Core* EMSCRIPTEN_KEEPALIVE GameShell_get_core(toy::GameShell* self) {
+		return &&self->core;
 	}
-	LuaInterpreter EMSCRIPTEN_KEEPALIVE GameShell_get_lua(toy::GameShell* self) {
-		return self->lua;
+	mud::LuaInterpreter* EMSCRIPTEN_KEEPALIVE GameShell_get_lua(toy::GameShell* self) {
+		return &&self->lua;
 	}
-	WrenInterpreter EMSCRIPTEN_KEEPALIVE GameShell_get_wren(toy::GameShell* self) {
-		return self->wren;
+	mud::WrenInterpreter* EMSCRIPTEN_KEEPALIVE GameShell_get_wren(toy::GameShell* self) {
+		return &&self->wren;
 	}
-	GfxSystem EMSCRIPTEN_KEEPALIVE GameShell_get_gfx(toy::GameShell* self) {
-		return self->gfx;
+	mud::GfxSystem* EMSCRIPTEN_KEEPALIVE GameShell_get_gfx(toy::GameShell* self) {
+		return &&self->gfx;
 	}
-	Context EMSCRIPTEN_KEEPALIVE GameShell_get_context(toy::GameShell* self) {
-		return self->context;
+	mud::Context* EMSCRIPTEN_KEEPALIVE GameShell_get_context(toy::GameShell* self) {
+		return &&self->context;
 	}
-	Vg EMSCRIPTEN_KEEPALIVE GameShell_get_vg(toy::GameShell* self) {
-		return self->vg;
+	mud::Vg* EMSCRIPTEN_KEEPALIVE GameShell_get_vg(toy::GameShell* self) {
+		return &&self->vg;
 	}
-	UiWindow EMSCRIPTEN_KEEPALIVE GameShell_get_ui_window(toy::GameShell* self) {
-		return self->ui_window;
+	mud::UiWindow* EMSCRIPTEN_KEEPALIVE GameShell_get_ui_window(toy::GameShell* self) {
+		return &&self->ui_window;
 	}
-	Editor EMSCRIPTEN_KEEPALIVE GameShell_get_editor(toy::GameShell* self) {
-		return self->m_editor;
+	toy::Editor* EMSCRIPTEN_KEEPALIVE GameShell_get_editor(toy::GameShell* self) {
+		static toy::Editor temp;
+		return (temp = &self->m_editor, &temp);
 	}
-	Ui EMSCRIPTEN_KEEPALIVE GameShell_get_ui(toy::GameShell* self) {
+	mud::Ui* EMSCRIPTEN_KEEPALIVE GameShell_get_ui(toy::GameShell* self) {
 		return self->m_ui;
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell___destroy__(toy::GameShell* self) {
 		delete self;
 	}
 	// GameModuleBind
-	toy::GameModuleBind* EMSCRIPTEN_KEEPALIVE GameModuleBind_GameModuleBind_2(Module module, const mud::VirtualMethod call) {
+	toy::GameModuleBind* EMSCRIPTEN_KEEPALIVE GameModuleBind_GameModuleBind_2(mud::Module* module, const mud::VirtualMethod call) {
 		return new toy::GameModuleBind(*module, *call);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameModuleBind___destroy__(toy::GameModuleBind* self) {

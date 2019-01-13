@@ -61,16 +61,19 @@ extern "C" {
 		delete self;
 	}
 	// Editor
-	RunTool EMSCRIPTEN_KEEPALIVE Editor_get_run_tool(toy::Editor* self) {
-		return self->m_run_tool;
+	toy::RunTool* EMSCRIPTEN_KEEPALIVE Editor_get_run_tool(toy::Editor* self) {
+		static toy::RunTool temp;
+		return (temp = &self->m_run_tool, &temp);
 	}
-	PlayTool EMSCRIPTEN_KEEPALIVE Editor_get_play_tool(toy::Editor* self) {
-		return self->m_play_tool;
+	toy::PlayTool* EMSCRIPTEN_KEEPALIVE Editor_get_play_tool(toy::Editor* self) {
+		static toy::PlayTool temp;
+		return (temp = &self->m_play_tool, &temp);
 	}
-	FrameViewTool EMSCRIPTEN_KEEPALIVE Editor_get_frame_view_tool(toy::Editor* self) {
-		return self->m_frame_view_tool;
+	mud::FrameViewTool* EMSCRIPTEN_KEEPALIVE Editor_get_frame_view_tool(toy::Editor* self) {
+		static mud::FrameViewTool temp;
+		return (temp = &self->m_frame_view_tool, &temp);
 	}
-	World EMSCRIPTEN_KEEPALIVE Editor_get_edited_world(toy::Editor* self) {
+	toy::World* EMSCRIPTEN_KEEPALIVE Editor_get_edited_world(toy::Editor* self) {
 		return self->m_edited_world;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Editor_get_run_game(toy::Editor* self) {

@@ -12,22 +12,24 @@ Module['Bullet'] = Bullet;
 Object.defineProperty(Bullet.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return _Bullet_get_source(self);
+        return wrapPointer(_Bullet_get_source(self), mud::vec3);
     },
     set: function(source) {
         var self = this.ptr;
         /* source <vec3> [] */
+        source = source.ptr;
         _Bullet_set_source(self, source);
     }
 });
 Object.defineProperty(Bullet.prototype, "velocity", {
     get: function() {
         var self = this.ptr;
-        return _Bullet_get_velocity(self);
+        return wrapPointer(_Bullet_get_velocity(self), mud::vec3);
     },
     set: function(velocity) {
         var self = this.ptr;
         /* velocity <vec3> [] */
+        velocity = velocity.ptr;
         _Bullet_set_velocity(self, velocity);
     }
 });
@@ -41,6 +43,7 @@ function Crate(spatial, movable, extents) {
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
     /* extents <vec3> [] */
+    extents = extents.ptr;
     if (spatial === undefined) { this.ptr = _Crate_Crate_0(self); getCache(Crate)[this.ptr] = this; return; }
     this.ptr = _Crate_Crate_3(self, spatial, movable, extents); getCache(Crate)[this.ptr] = this;
 };
@@ -52,11 +55,12 @@ Module['Crate'] = Crate;
 Object.defineProperty(Crate.prototype, "extents", {
     get: function() {
         var self = this.ptr;
-        return _Crate_get_extents(self);
+        return wrapPointer(_Crate_get_extents(self), mud::vec3);
     },
     set: function(extents) {
         var self = this.ptr;
         /* extents <vec3> [] */
+        extents = extents.ptr;
         _Crate_set_extents(self, extents);
     }
 });

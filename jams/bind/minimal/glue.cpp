@@ -46,11 +46,13 @@ extern "C" {
 			  }
 	}
 	// Bullet
-	vec3 EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
-		return self->m_source;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_source, &temp);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
-		return self->m_velocity;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_velocity, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
 		delete self;
@@ -59,11 +61,12 @@ extern "C" {
 	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_0() {
 		return new Crate();
 	}
-	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const vec3 extents) {
+	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
 		return new Crate(spatial, movable, *extents);
 	}
-	vec3 EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
-		return self->m_extents;
+	mud::vec3* EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
+		static mud::vec3 temp;
+		return (temp = &self->m_extents, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
 		delete self;
