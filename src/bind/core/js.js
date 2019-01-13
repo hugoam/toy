@@ -26,16 +26,15 @@ BulletShape.prototype["__destroy__"] = BulletShape.prototype.__destroy__ = funct
 };
 // Camera
 function Camera(spatial, lens_distance, near, far) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* lens_distance <float> [] */
     /* near <float> [] */
     /* far <float> [] */
-    if (spatial === undefined) { this.ptr = _toy_Camera_Camera_0(self); getCache(Camera)[this.ptr] = this; return; }
-    if (lens_distance === undefined) { this.ptr = _toy_Camera_Camera_1(self, spatial); getCache(Camera)[this.ptr] = this; return; }
-    if (near === undefined) { this.ptr = _toy_Camera_Camera_2(self, spatial, lens_distance); getCache(Camera)[this.ptr] = this; return; }
-    if (far === undefined) { this.ptr = _toy_Camera_Camera_3(self, spatial, lens_distance, near); getCache(Camera)[this.ptr] = this; return; }
-    this.ptr = _toy_Camera_Camera_4(self, spatial, lens_distance, near, far); getCache(Camera)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Camera_Camera_0(); getCache(Camera)[this.ptr] = this; return; }
+    if (lens_distance === undefined) { this.ptr = _toy_Camera_Camera_1(spatial); getCache(Camera)[this.ptr] = this; return; }
+    if (near === undefined) { this.ptr = _toy_Camera_Camera_2(spatial, lens_distance); getCache(Camera)[this.ptr] = this; return; }
+    if (far === undefined) { this.ptr = _toy_Camera_Camera_3(spatial, lens_distance, near); getCache(Camera)[this.ptr] = this; return; }
+    this.ptr = _toy_Camera_Camera_4(spatial, lens_distance, near, far); getCache(Camera)[this.ptr] = this;
 };
 Camera.prototype = Object.create(WrapperObject.prototype);
 Camera.prototype.constructor = Camera;
@@ -47,10 +46,10 @@ Object.defineProperty(Camera.prototype, "lens_distance", {
         var self = this.ptr;
         return _toy_Camera__get_lens_distance(self);
     },
-    set: function(lens_distance) {
+    set: function(value) {
         var self = this.ptr;
-        /* lens_distance <float> [] */
-        _toy_Camera__set_lens_distance(self, lens_distance);
+        /* value <float> [] */
+        _toy_Camera__set_lens_distance(self, value);
     }
 });
 Object.defineProperty(Camera.prototype, "lens_angle", {
@@ -58,10 +57,10 @@ Object.defineProperty(Camera.prototype, "lens_angle", {
         var self = this.ptr;
         return _toy_Camera__get_lens_angle(self);
     },
-    set: function(lens_angle) {
+    set: function(value) {
         var self = this.ptr;
-        /* lens_angle <float> [] */
-        _toy_Camera__set_lens_angle(self, lens_angle);
+        /* value <float> [] */
+        _toy_Camera__set_lens_angle(self, value);
     }
 });
 Object.defineProperty(Camera.prototype, "near", {
@@ -69,10 +68,10 @@ Object.defineProperty(Camera.prototype, "near", {
         var self = this.ptr;
         return _toy_Camera__get_near(self);
     },
-    set: function(near) {
+    set: function(value) {
         var self = this.ptr;
-        /* near <float> [] */
-        _toy_Camera__set_near(self, near);
+        /* value <float> [] */
+        _toy_Camera__set_near(self, value);
     }
 });
 Object.defineProperty(Camera.prototype, "far", {
@@ -80,10 +79,10 @@ Object.defineProperty(Camera.prototype, "far", {
         var self = this.ptr;
         return _toy_Camera__get_far(self);
     },
-    set: function(far) {
+    set: function(value) {
         var self = this.ptr;
-        /* far <float> [] */
-        _toy_Camera__set_far(self, far);
+        /* value <float> [] */
+        _toy_Camera__set_far(self, value);
     }
 });
 Object.defineProperty(Camera.prototype, "aspect", {
@@ -91,10 +90,10 @@ Object.defineProperty(Camera.prototype, "aspect", {
         var self = this.ptr;
         return _toy_Camera__get_aspect(self);
     },
-    set: function(aspect) {
+    set: function(value) {
         var self = this.ptr;
-        /* aspect <float> [] */
-        _toy_Camera__set_aspect(self, aspect);
+        /* value <float> [] */
+        _toy_Camera__set_aspect(self, value);
     }
 });
 Camera.prototype["__destroy__"] = Camera.prototype.__destroy__ = function() {
@@ -103,7 +102,6 @@ Camera.prototype["__destroy__"] = Camera.prototype.__destroy__ = function() {
 };
 // Collider
 function Collider(spatial, movable, collision_shape, medium, group) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
     /* collision_shape <CollisionShape> [] */
@@ -112,8 +110,8 @@ function Collider(spatial, movable, collision_shape, medium, group) {
     medium = medium.ptr;
     /* group <CollisionGroup> [] */
     if (group && typeof group === "object") group = group.ptr;
-    if (spatial === undefined) { this.ptr = _toy_Collider_Collider_0(self); getCache(Collider)[this.ptr] = this; return; }
-    this.ptr = _toy_Collider_Collider_5(self, spatial, movable, collision_shape, medium, group); getCache(Collider)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Collider_Collider_0(); getCache(Collider)[this.ptr] = this; return; }
+    this.ptr = _toy_Collider_Collider_5(spatial, movable, collision_shape, medium, group); getCache(Collider)[this.ptr] = this;
 };
 Collider.prototype = Object.create(WrapperObject.prototype);
 Collider.prototype.constructor = Collider;
@@ -125,10 +123,10 @@ Object.defineProperty(Collider.prototype, "spatial", {
         var self = this.ptr;
         return _toy_Collider__get_spatial(self);
     },
-    set: function(spatial) {
+    set: function(value) {
         var self = this.ptr;
-        /* spatial <toy::HSpatial> [] */
-        _toy_Collider__set_spatial(self, spatial);
+        /* value <toy::HSpatial> [] */
+        _toy_Collider__set_spatial(self, value);
     }
 });
 Object.defineProperty(Collider.prototype, "movable", {
@@ -136,27 +134,27 @@ Object.defineProperty(Collider.prototype, "movable", {
         var self = this.ptr;
         return _toy_Collider__get_movable(self);
     },
-    set: function(movable) {
+    set: function(value) {
         var self = this.ptr;
-        /* movable <toy::HMovable> [] */
-        _toy_Collider__set_movable(self, movable);
+        /* value <toy::HMovable> [] */
+        _toy_Collider__set_movable(self, value);
     }
 });
 Object.defineProperty(Collider.prototype, "collision_shape", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Collider__get_collision_shape(self), toy::CollisionShape);
+        return wrapPointer(_toy_Collider__get_collision_shape(self), CollisionShape);
     }});
 Object.defineProperty(Collider.prototype, "medium", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Collider__get_medium(self), toy::Medium);
+        return wrapPointer(_toy_Collider__get_medium(self), Medium);
     },
-    set: function(medium) {
+    set: function(value) {
         var self = this.ptr;
-        /* medium <Medium> [] */
-        medium = medium.ptr;
-        _toy_Collider__set_medium(self, medium);
+        /* value <Medium> [] */
+        value = value.ptr;
+        _toy_Collider__set_medium(self, value);
     }
 });
 Object.defineProperty(Collider.prototype, "group", {
@@ -164,29 +162,29 @@ Object.defineProperty(Collider.prototype, "group", {
         var self = this.ptr;
         return _toy_Collider__get_group(self);
     },
-    set: function(group) {
+    set: function(value) {
         var self = this.ptr;
-        /* group <CollisionGroup> [] */
-        if (group && typeof group === "object") group = group.ptr;
-        _toy_Collider__set_group(self, group);
+        /* value <CollisionGroup> [] */
+        if (value && typeof value === "object") value = value.ptr;
+        _toy_Collider__set_group(self, value);
     }
 });
 Object.defineProperty(Collider.prototype, "object", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Collider__get_object(self), toy::ColliderObject);
+        return wrapPointer(_toy_Collider__get_object(self), ColliderObject);
     },
-    set: function(object) {
+    set: function(value) {
         var self = this.ptr;
-        /* object <ColliderObject> [] */
-        object = object.ptr;
-        _toy_Collider__set_object(self, object);
+        /* value <ColliderObject> [] */
+        value = value.ptr;
+        _toy_Collider__set_object(self, value);
     }
 });
 Object.defineProperty(Collider.prototype, "impl", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Collider__get_impl(self), toy::ColliderImpl);
+        return wrapPointer(_toy_Collider__get_impl(self), ColliderImpl);
     }});
 Collider.prototype["__destroy__"] = Collider.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -216,8 +214,7 @@ ColliderObject.prototype["__destroy__"] = ColliderObject.prototype.__destroy__ =
 };
 // Collision
 function Collision() {
-    var self = this.ptr;
-    this.ptr = _toy_Collision_Collision_0(self); getCache(Collision)[this.ptr] = this;
+    this.ptr = _toy_Collision_Collision_0(); getCache(Collision)[this.ptr] = this;
 };
 Collision.prototype = Object.create(WrapperObject.prototype);
 Collision.prototype.constructor = Collision;
@@ -229,10 +226,10 @@ Object.defineProperty(Collision.prototype, "first", {
         var self = this.ptr;
         return _toy_Collision__get_first(self);
     },
-    set: function(first) {
+    set: function(value) {
         var self = this.ptr;
-        /* first <toy::HCollider> [] */
-        _toy_Collision__set_first(self, first);
+        /* value <toy::HCollider> [] */
+        _toy_Collision__set_first(self, value);
     }
 });
 Object.defineProperty(Collision.prototype, "second", {
@@ -240,22 +237,22 @@ Object.defineProperty(Collision.prototype, "second", {
         var self = this.ptr;
         return _toy_Collision__get_second(self);
     },
-    set: function(second) {
+    set: function(value) {
         var self = this.ptr;
-        /* second <toy::HCollider> [] */
-        _toy_Collision__set_second(self, second);
+        /* value <toy::HCollider> [] */
+        _toy_Collision__set_second(self, value);
     }
 });
 Object.defineProperty(Collision.prototype, "hit_point", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Collision__get_hit_point(self), mud::vec3);
+        return wrapPointer(_toy_Collision__get_hit_point(self), vec3);
     },
-    set: function(hit_point) {
+    set: function(value) {
         var self = this.ptr;
-        /* hit_point <vec3> [] */
-        hit_point = hit_point.ptr;
-        _toy_Collision__set_hit_point(self, hit_point);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _toy_Collision__set_hit_point(self, value);
     }
 });
 Collision.prototype["__destroy__"] = Collision.prototype.__destroy__ = function() {
@@ -264,16 +261,15 @@ Collision.prototype["__destroy__"] = Collision.prototype.__destroy__ = function(
 };
 // CollisionShape
 function CollisionShape(shape, center, margin) {
-    var self = this.ptr;
     /* shape <Shape> [] */
     shape = shape.ptr;
     /* center <vec3> [] */
     center = center.ptr;
     /* margin <float> [] */
-    if (shape === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_0(self); getCache(CollisionShape)[this.ptr] = this; return; }
-    if (center === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_1(self, shape); getCache(CollisionShape)[this.ptr] = this; return; }
-    if (margin === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_2(self, shape, center); getCache(CollisionShape)[this.ptr] = this; return; }
-    this.ptr = _toy_CollisionShape_CollisionShape_3(self, shape, center, margin); getCache(CollisionShape)[this.ptr] = this;
+    if (shape === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_0(); getCache(CollisionShape)[this.ptr] = this; return; }
+    if (center === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_1(shape); getCache(CollisionShape)[this.ptr] = this; return; }
+    if (margin === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_2(shape, center); getCache(CollisionShape)[this.ptr] = this; return; }
+    this.ptr = _toy_CollisionShape_CollisionShape_3(shape, center, margin); getCache(CollisionShape)[this.ptr] = this;
 };
 CollisionShape.prototype = Object.create(WrapperObject.prototype);
 CollisionShape.prototype.constructor = CollisionShape;
@@ -319,10 +315,9 @@ DetourPath.prototype["__destroy__"] = DetourPath.prototype.__destroy__ = functio
 };
 // Emitter
 function Emitter(spatial) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
-    if (spatial === undefined) { this.ptr = _toy_Emitter_Emitter_0(self); getCache(Emitter)[this.ptr] = this; return; }
-    this.ptr = _toy_Emitter_Emitter_1(self, spatial); getCache(Emitter)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Emitter_Emitter_0(); getCache(Emitter)[this.ptr] = this; return; }
+    this.ptr = _toy_Emitter_Emitter_1(spatial); getCache(Emitter)[this.ptr] = this;
 };
 Emitter.prototype = Object.create(WrapperObject.prototype);
 Emitter.prototype.constructor = Emitter;
@@ -335,10 +330,9 @@ Emitter.prototype["__destroy__"] = Emitter.prototype.__destroy__ = function() {
 };
 // EntityScript
 function EntityScript(spatial) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
-    if (spatial === undefined) { this.ptr = _toy_EntityScript_EntityScript_0(self); getCache(EntityScript)[this.ptr] = this; return; }
-    this.ptr = _toy_EntityScript_EntityScript_1(self, spatial); getCache(EntityScript)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_EntityScript_EntityScript_0(); getCache(EntityScript)[this.ptr] = this; return; }
+    this.ptr = _toy_EntityScript_EntityScript_1(spatial); getCache(EntityScript)[this.ptr] = this;
 };
 EntityScript.prototype = Object.create(WrapperObject.prototype);
 EntityScript.prototype.constructor = EntityScript;
@@ -348,25 +342,25 @@ Module['EntityScript'] = EntityScript;
 Object.defineProperty(EntityScript.prototype, "logic_script", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_EntityScript__get_logic_script(self), mud::Script);
+        return wrapPointer(_toy_EntityScript__get_logic_script(self), Script);
     },
-    set: function(logic_script) {
+    set: function(value) {
         var self = this.ptr;
-        /* logic_script <Script> [] */
-        logic_script = logic_script.ptr;
-        _toy_EntityScript__set_logic_script(self, logic_script);
+        /* value <Script> [] */
+        value = value.ptr;
+        _toy_EntityScript__set_logic_script(self, value);
     }
 });
 Object.defineProperty(EntityScript.prototype, "render_script", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_EntityScript__get_render_script(self), mud::Script);
+        return wrapPointer(_toy_EntityScript__get_render_script(self), Script);
     },
-    set: function(render_script) {
+    set: function(value) {
         var self = this.ptr;
-        /* render_script <Script> [] */
-        render_script = render_script.ptr;
-        _toy_EntityScript__set_render_script(self, render_script);
+        /* value <Script> [] */
+        value = value.ptr;
+        _toy_EntityScript__set_render_script(self, value);
     }
 });
 EntityScript.prototype["__destroy__"] = EntityScript.prototype.__destroy__ = function() {
@@ -385,12 +379,12 @@ Object.defineProperty(Medium.prototype, "name", {
         var self = this.ptr;
         return Pointer_stringify(_toy_Medium__get_name(self));
     },
-    set: function(name) {
+    set: function(value) {
         var self = this.ptr;
-        /* name <std::string> [] */
-        if (name && typeof name === "object") name = name.ptr;
-        else name = ensureString(name);
-        _toy_Medium__set_name(self, name);
+        /* value <std::string> [] */
+        if (value && typeof value === "object") value = value.ptr;
+        else value = ensureString(value);
+        _toy_Medium__set_name(self, value);
     }
 });
 Object.defineProperty(Medium.prototype, "occlusions", {
@@ -398,10 +392,10 @@ Object.defineProperty(Medium.prototype, "occlusions", {
         var self = this.ptr;
         return !!(_toy_Medium__get_occlusions(self));
     },
-    set: function(occlusions) {
+    set: function(value) {
         var self = this.ptr;
-        /* occlusions <bool> [] */
-        _toy_Medium__set_occlusions(self, occlusions);
+        /* value <bool> [] */
+        _toy_Medium__set_occlusions(self, value);
     }
 });
 Object.defineProperty(Medium.prototype, "solid", {
@@ -409,10 +403,10 @@ Object.defineProperty(Medium.prototype, "solid", {
         var self = this.ptr;
         return !!(_toy_Medium__get_solid(self));
     },
-    set: function(solid) {
+    set: function(value) {
         var self = this.ptr;
-        /* solid <bool> [] */
-        _toy_Medium__set_solid(self, solid);
+        /* value <bool> [] */
+        _toy_Medium__set_solid(self, value);
     }
 });
 Medium.prototype["__destroy__"] = Medium.prototype.__destroy__ = function() {
@@ -421,58 +415,61 @@ Medium.prototype["__destroy__"] = Medium.prototype.__destroy__ = function() {
 };
 // Movable
 function Movable(spatial) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
-    if (spatial === undefined) { this.ptr = _toy_Movable_Movable_0(self); getCache(Movable)[this.ptr] = this; return; }
-    this.ptr = _toy_Movable_Movable_1(self, spatial); getCache(Movable)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Movable_Movable_0(); getCache(Movable)[this.ptr] = this; return; }
+    this.ptr = _toy_Movable_Movable_1(spatial); getCache(Movable)[this.ptr] = this;
 };
 Movable.prototype = Object.create(WrapperObject.prototype);
 Movable.prototype.constructor = Movable;
 Movable.prototype.__class__ = Movable;
 Movable.__cache__ = {};
 Module['Movable'] = Movable;
-Movable.prototype["modify_angular_velocity"] = Movable.prototype.modify_angular_velocity = function(velocity) {
+Movable.prototype["modify_angular_velocity"] = Movable.prototype.modify_angular_velocity = function(self, velocity) {
+    var self = this.ptr;
     /* velocity <vec3> [] */
     velocity = velocity.ptr;
-    _toy_Movable_modify_angular_velocity_1(velocity);
+    _toy_Movable_modify_angular_velocity_1(self, velocity);
 };
-Movable.prototype["modify_linear_velocity"] = Movable.prototype.modify_linear_velocity = function(velocity) {
+Movable.prototype["modify_linear_velocity"] = Movable.prototype.modify_linear_velocity = function(self, velocity) {
+    var self = this.ptr;
     /* velocity <vec3> [] */
     velocity = velocity.ptr;
-    _toy_Movable_modify_linear_velocity_1(velocity);
+    _toy_Movable_modify_linear_velocity_1(self, velocity);
 };
-Movable.prototype["set_angular_velocity"] = Movable.prototype.set_angular_velocity = function(velocity) {
+Movable.prototype["set_angular_velocity"] = Movable.prototype.set_angular_velocity = function(self, velocity) {
+    var self = this.ptr;
     /* velocity <vec3> [] */
     velocity = velocity.ptr;
-    _toy_Movable_set_angular_velocity_1(velocity);
+    _toy_Movable_set_angular_velocity_1(self, velocity);
 };
-Movable.prototype["set_linear_velocity"] = Movable.prototype.set_linear_velocity = function(velocity) {
+Movable.prototype["set_linear_velocity"] = Movable.prototype.set_linear_velocity = function(self, velocity) {
+    var self = this.ptr;
     /* velocity <vec3> [] */
     velocity = velocity.ptr;
-    _toy_Movable_set_linear_velocity_1(velocity);
+    _toy_Movable_set_linear_velocity_1(self, velocity);
 };
 Object.defineProperty(Movable.prototype, "linear_velocity", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Movable__get_linear_velocity(self), mud::vec3);
+        return wrapPointer(_toy_Movable__get_linear_velocity(self), vec3);
     },
-    set: function(linear_velocity) {
+    set: function(value) {
         var self = this.ptr;
-        /* linear_velocity <vec3> [] */
-        linear_velocity = linear_velocity.ptr;
-        _toy_Movable__set_linear_velocity(self, linear_velocity);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _toy_Movable__set_linear_velocity(self, value);
     }
 });
 Object.defineProperty(Movable.prototype, "angular_velocity", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Movable__get_angular_velocity(self), mud::vec3);
+        return wrapPointer(_toy_Movable__get_angular_velocity(self), vec3);
     },
-    set: function(angular_velocity) {
+    set: function(value) {
         var self = this.ptr;
-        /* angular_velocity <vec3> [] */
-        angular_velocity = angular_velocity.ptr;
-        _toy_Movable__set_angular_velocity(self, angular_velocity);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _toy_Movable__set_angular_velocity(self, value);
     }
 });
 Object.defineProperty(Movable.prototype, "moving", {
@@ -480,22 +477,22 @@ Object.defineProperty(Movable.prototype, "moving", {
         var self = this.ptr;
         return !!(_toy_Movable__get_moving(self));
     },
-    set: function(moving) {
+    set: function(value) {
         var self = this.ptr;
-        /* moving <bool> [] */
-        _toy_Movable__set_moving(self, moving);
+        /* value <bool> [] */
+        _toy_Movable__set_moving(self, value);
     }
 });
 Object.defineProperty(Movable.prototype, "previous_position", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Movable__get_previous_position(self), mud::vec3);
+        return wrapPointer(_toy_Movable__get_previous_position(self), vec3);
     },
-    set: function(previous_position) {
+    set: function(value) {
         var self = this.ptr;
-        /* previous_position <vec3> [] */
-        previous_position = previous_position.ptr;
-        _toy_Movable__set_previous_position(self, previous_position);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _toy_Movable__set_previous_position(self, value);
     }
 });
 Movable.prototype["__destroy__"] = Movable.prototype.__destroy__ = function() {
@@ -504,13 +501,12 @@ Movable.prototype["__destroy__"] = Movable.prototype.__destroy__ = function() {
 };
 // Navblock
 function Navblock(spatial, world_page, navmesh) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* world_page <toy::HWorldPage> [] */
     /* navmesh <Navmesh> [] */
     navmesh = navmesh.ptr;
-    if (spatial === undefined) { this.ptr = _toy_Navblock_Navblock_0(self); getCache(Navblock)[this.ptr] = this; return; }
-    this.ptr = _toy_Navblock_Navblock_3(self, spatial, world_page, navmesh); getCache(Navblock)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Navblock_Navblock_0(); getCache(Navblock)[this.ptr] = this; return; }
+    this.ptr = _toy_Navblock_Navblock_3(spatial, world_page, navmesh); getCache(Navblock)[this.ptr] = this;
 };
 Navblock.prototype = Object.create(WrapperObject.prototype);
 Navblock.prototype.constructor = Navblock;
@@ -520,13 +516,13 @@ Module['Navblock'] = Navblock;
 Object.defineProperty(Navblock.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Navblock__get_navmesh(self), toy::Navmesh);
+        return wrapPointer(_toy_Navblock__get_navmesh(self), Navmesh);
     },
-    set: function(navmesh) {
+    set: function(value) {
         var self = this.ptr;
-        /* navmesh <Navmesh> [] */
-        navmesh = navmesh.ptr;
-        _toy_Navblock__set_navmesh(self, navmesh);
+        /* value <Navmesh> [] */
+        value = value.ptr;
+        _toy_Navblock__set_navmesh(self, value);
     }
 });
 Object.defineProperty(Navblock.prototype, "auto_update", {
@@ -534,10 +530,10 @@ Object.defineProperty(Navblock.prototype, "auto_update", {
         var self = this.ptr;
         return !!(_toy_Navblock__get_auto_update(self));
     },
-    set: function(auto_update) {
+    set: function(value) {
         var self = this.ptr;
-        /* auto_update <bool> [] */
-        _toy_Navblock__set_auto_update(self, auto_update);
+        /* value <bool> [] */
+        _toy_Navblock__set_auto_update(self, value);
     }
 });
 Object.defineProperty(Navblock.prototype, "updated", {
@@ -545,10 +541,10 @@ Object.defineProperty(Navblock.prototype, "updated", {
         var self = this.ptr;
         return _toy_Navblock__get_updated(self);
     },
-    set: function(updated) {
+    set: function(value) {
         var self = this.ptr;
-        /* updated <size_t> [] */
-        _toy_Navblock__set_updated(self, updated);
+        /* value <size_t> [] */
+        _toy_Navblock__set_updated(self, value);
     }
 });
 Navblock.prototype["__destroy__"] = Navblock.prototype.__destroy__ = function() {
@@ -557,10 +553,9 @@ Navblock.prototype["__destroy__"] = Navblock.prototype.__destroy__ = function() 
 };
 // Navmesh
 function Navmesh(world) {
-    var self = this.ptr;
     /* world <World> [] */
     world = world.ptr;
-    this.ptr = _toy_Navmesh_Navmesh_1(self, world); getCache(Navmesh)[this.ptr] = this;
+    this.ptr = _toy_Navmesh_Navmesh_1(world); getCache(Navmesh)[this.ptr] = this;
 };
 Navmesh.prototype = Object.create(WrapperObject.prototype);
 Navmesh.prototype.constructor = Navmesh;
@@ -570,17 +565,17 @@ Module['Navmesh'] = Navmesh;
 Object.defineProperty(Navmesh.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Navmesh__get_world(self), toy::World);
+        return wrapPointer(_toy_Navmesh__get_world(self), World);
     }});
 Object.defineProperty(Navmesh.prototype, "updated", {
     get: function() {
         var self = this.ptr;
         return _toy_Navmesh__get_updated(self);
     },
-    set: function(updated) {
+    set: function(value) {
         var self = this.ptr;
-        /* updated <size_t> [] */
-        _toy_Navmesh__set_updated(self, updated);
+        /* value <size_t> [] */
+        _toy_Navmesh__set_updated(self, value);
     }
 });
 Object.defineProperty(Navmesh.prototype, "dirty", {
@@ -588,10 +583,10 @@ Object.defineProperty(Navmesh.prototype, "dirty", {
         var self = this.ptr;
         return !!(_toy_Navmesh__get_dirty(self));
     },
-    set: function(dirty) {
+    set: function(value) {
         var self = this.ptr;
-        /* dirty <bool> [] */
-        _toy_Navmesh__set_dirty(self, dirty);
+        /* value <bool> [] */
+        _toy_Navmesh__set_dirty(self, value);
     }
 });
 Navmesh.prototype["__destroy__"] = Navmesh.prototype.__destroy__ = function() {
@@ -600,10 +595,9 @@ Navmesh.prototype["__destroy__"] = Navmesh.prototype.__destroy__ = function() {
 };
 // Origin
 function Origin(spatial) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
-    if (spatial === undefined) { this.ptr = _toy_Origin_Origin_0(self); getCache(Origin)[this.ptr] = this; return; }
-    this.ptr = _toy_Origin_Origin_1(self, spatial); getCache(Origin)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Origin_Origin_0(); getCache(Origin)[this.ptr] = this; return; }
+    this.ptr = _toy_Origin_Origin_1(spatial); getCache(Origin)[this.ptr] = this;
 };
 Origin.prototype = Object.create(WrapperObject.prototype);
 Origin.prototype.constructor = Origin;
@@ -616,10 +610,9 @@ Origin.prototype["__destroy__"] = Origin.prototype.__destroy__ = function() {
 };
 // Pathfinder
 function Pathfinder(navmesh) {
-    var self = this.ptr;
     /* navmesh <Navmesh> [] */
     navmesh = navmesh.ptr;
-    this.ptr = _toy_Pathfinder_Pathfinder_1(self, navmesh); getCache(Pathfinder)[this.ptr] = this;
+    this.ptr = _toy_Pathfinder_Pathfinder_1(navmesh); getCache(Pathfinder)[this.ptr] = this;
 };
 Pathfinder.prototype = Object.create(WrapperObject.prototype);
 Pathfinder.prototype.constructor = Pathfinder;
@@ -637,21 +630,23 @@ PhysicWorld.prototype.constructor = PhysicWorld;
 PhysicWorld.prototype.__class__ = PhysicWorld;
 PhysicWorld.__cache__ = {};
 Module['PhysicWorld'] = PhysicWorld;
-PhysicWorld.prototype["ground_point"] = PhysicWorld.prototype.ground_point = function(ray) {
+PhysicWorld.prototype["ground_point"] = PhysicWorld.prototype.ground_point = function(self, ray) {
+    var self = this.ptr;
     /* ray <Ray> [] */
     ray = ray.ptr;
-    return wrapPointer(_toy_PhysicWorld_ground_point_1(ray), mud::vec3);
+    return wrapPointer(_toy_PhysicWorld_ground_point_1(self, ray), vec3);
 };
-PhysicWorld.prototype["raycast"] = PhysicWorld.prototype.raycast = function(ray, mask) {
+PhysicWorld.prototype["raycast"] = PhysicWorld.prototype.raycast = function(self, ray, mask) {
+    var self = this.ptr;
     /* ray <Ray> [] */
     ray = ray.ptr;
     /* mask <short> [] */
-    return wrapPointer(_toy_PhysicWorld_raycast_2(ray, mask), toy::Collision);
+    return wrapPointer(_toy_PhysicWorld_raycast_2(self, ray, mask), Collision);
 };
 Object.defineProperty(PhysicWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_PhysicWorld__get_world(self), toy::World);
+        return wrapPointer(_toy_PhysicWorld__get_world(self), World);
     }});
 PhysicWorld.prototype["__destroy__"] = PhysicWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -659,20 +654,20 @@ PhysicWorld.prototype["__destroy__"] = PhysicWorld.prototype.__destroy__ = funct
 };
 // Receptor
 function Receptor(spatial) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
-    if (spatial === undefined) { this.ptr = _toy_Receptor_Receptor_0(self); getCache(Receptor)[this.ptr] = this; return; }
-    this.ptr = _toy_Receptor_Receptor_1(self, spatial); getCache(Receptor)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Receptor_Receptor_0(); getCache(Receptor)[this.ptr] = this; return; }
+    this.ptr = _toy_Receptor_Receptor_1(spatial); getCache(Receptor)[this.ptr] = this;
 };
 Receptor.prototype = Object.create(WrapperObject.prototype);
 Receptor.prototype.constructor = Receptor;
 Receptor.prototype.__class__ = Receptor;
 Receptor.__cache__ = {};
 Module['Receptor'] = Receptor;
-Receptor.prototype["scope"] = Receptor.prototype.scope = function(medium) {
+Receptor.prototype["scope"] = Receptor.prototype.scope = function(self, medium) {
+    var self = this.ptr;
     /* medium <Medium> [] */
     medium = medium.ptr;
-    return wrapPointer(_toy_Receptor_scope_1(medium), toy::ReceptorScope);
+    return wrapPointer(_toy_Receptor_scope_1(self, medium), ReceptorScope);
 };
 Receptor.prototype["__destroy__"] = Receptor.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -690,10 +685,10 @@ Object.defineProperty(Solid.prototype, "spatial", {
         var self = this.ptr;
         return _toy_Solid__get_spatial(self);
     },
-    set: function(spatial) {
+    set: function(value) {
         var self = this.ptr;
-        /* spatial <toy::HSpatial> [] */
-        _toy_Solid__set_spatial(self, spatial);
+        /* value <toy::HSpatial> [] */
+        _toy_Solid__set_spatial(self, value);
     }
 });
 Object.defineProperty(Solid.prototype, "static", {
@@ -701,10 +696,10 @@ Object.defineProperty(Solid.prototype, "static", {
         var self = this.ptr;
         return !!(_toy_Solid__get_static(self));
     },
-    set: function(static) {
+    set: function(value) {
         var self = this.ptr;
-        /* static <bool> [] */
-        _toy_Solid__set_static(self, static);
+        /* value <bool> [] */
+        _toy_Solid__set_static(self, value);
     }
 });
 Object.defineProperty(Solid.prototype, "mass", {
@@ -712,10 +707,10 @@ Object.defineProperty(Solid.prototype, "mass", {
         var self = this.ptr;
         return _toy_Solid__get_mass(self);
     },
-    set: function(mass) {
+    set: function(value) {
         var self = this.ptr;
-        /* mass <float> [] */
-        _toy_Solid__set_mass(self, mass);
+        /* value <float> [] */
+        _toy_Solid__set_mass(self, value);
     }
 });
 Solid.prototype["__destroy__"] = Solid.prototype.__destroy__ = function() {
@@ -729,33 +724,39 @@ SolidImpl.prototype.constructor = SolidImpl;
 SolidImpl.prototype.__class__ = SolidImpl;
 SolidImpl.__cache__ = {};
 Module['SolidImpl'] = SolidImpl;
-SolidImpl.prototype["angular_velocity"] = SolidImpl.prototype.angular_velocity = function() {
-    return wrapPointer(_toy_SolidImpl_angular_velocity_0(), mud::vec3);
+SolidImpl.prototype["angular_velocity"] = SolidImpl.prototype.angular_velocity = function(self) {
+    var self = this.ptr;
+    return wrapPointer(_toy_SolidImpl_angular_velocity_0(self), vec3);
 };
-SolidImpl.prototype["impulse"] = SolidImpl.prototype.impulse = function(force, point) {
+SolidImpl.prototype["impulse"] = SolidImpl.prototype.impulse = function(self, force, point) {
+    var self = this.ptr;
     /* force <vec3> [] */
     force = force.ptr;
     /* point <vec3> [] */
     point = point.ptr;
-    _toy_SolidImpl_impulse_2(force, point);
+    _toy_SolidImpl_impulse_2(self, force, point);
 };
-SolidImpl.prototype["linear_velocity"] = SolidImpl.prototype.linear_velocity = function() {
-    return wrapPointer(_toy_SolidImpl_linear_velocity_0(), mud::vec3);
+SolidImpl.prototype["linear_velocity"] = SolidImpl.prototype.linear_velocity = function(self) {
+    var self = this.ptr;
+    return wrapPointer(_toy_SolidImpl_linear_velocity_0(self), vec3);
 };
-SolidImpl.prototype["set_angular_factor"] = SolidImpl.prototype.set_angular_factor = function(factor) {
+SolidImpl.prototype["set_angular_factor"] = SolidImpl.prototype.set_angular_factor = function(self, factor) {
+    var self = this.ptr;
     /* factor <vec3> [] */
     factor = factor.ptr;
-    _toy_SolidImpl_set_angular_factor_1(factor);
+    _toy_SolidImpl_set_angular_factor_1(self, factor);
 };
-SolidImpl.prototype["set_angular_velocity"] = SolidImpl.prototype.set_angular_velocity = function(torque) {
+SolidImpl.prototype["set_angular_velocity"] = SolidImpl.prototype.set_angular_velocity = function(self, torque) {
+    var self = this.ptr;
     /* torque <vec3> [] */
     torque = torque.ptr;
-    _toy_SolidImpl_set_angular_velocity_1(torque);
+    _toy_SolidImpl_set_angular_velocity_1(self, torque);
 };
-SolidImpl.prototype["set_linear_velocity"] = SolidImpl.prototype.set_linear_velocity = function(force) {
+SolidImpl.prototype["set_linear_velocity"] = SolidImpl.prototype.set_linear_velocity = function(self, force) {
+    var self = this.ptr;
     /* force <vec3> [] */
     force = force.ptr;
-    _toy_SolidImpl_set_linear_velocity_1(force);
+    _toy_SolidImpl_set_linear_velocity_1(self, force);
 };
 SolidImpl.prototype["__destroy__"] = SolidImpl.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -774,10 +775,9 @@ User.prototype["__destroy__"] = User.prototype.__destroy__ = function() {
 };
 // Waypoint
 function Waypoint(parent) {
-    var self = this.ptr;
     /* parent <toy::HSpatial> [] */
-    if (parent === undefined) { this.ptr = _toy_Waypoint_Waypoint_0(self); getCache(Waypoint)[this.ptr] = this; return; }
-    this.ptr = _toy_Waypoint_Waypoint_1(self, parent); getCache(Waypoint)[this.ptr] = this;
+    if (parent === undefined) { this.ptr = _toy_Waypoint_Waypoint_0(); getCache(Waypoint)[this.ptr] = this; return; }
+    this.ptr = _toy_Waypoint_Waypoint_1(parent); getCache(Waypoint)[this.ptr] = this;
 };
 Waypoint.prototype = Object.create(WrapperObject.prototype);
 Waypoint.prototype.constructor = Waypoint;
@@ -790,7 +790,6 @@ Waypoint.prototype["__destroy__"] = Waypoint.prototype.__destroy__ = function() 
 };
 // World
 function World(id, complex, name, job_system) {
-    var self = this.ptr;
     ensureCache.prepare();
     /* id <mud::Id> [] */
     /* complex <Complex> [] */
@@ -800,7 +799,7 @@ function World(id, complex, name, job_system) {
     else name = ensureString(name);
     /* job_system <JobSystem> [] */
     job_system = job_system.ptr;
-    this.ptr = _toy_World_World_4(self, id, complex, name, job_system); getCache(World)[this.ptr] = this;
+    this.ptr = _toy_World_World_4(id, complex, name, job_system); getCache(World)[this.ptr] = this;
 };
 World.prototype = Object.create(WrapperObject.prototype);
 World.prototype.constructor = World;
@@ -812,28 +811,28 @@ Object.defineProperty(World.prototype, "id", {
         var self = this.ptr;
         return _toy_World__get_id(self);
     },
-    set: function(id) {
+    set: function(value) {
         var self = this.ptr;
-        /* id <mud::Id> [] */
-        _toy_World__set_id(self, id);
+        /* value <mud::Id> [] */
+        _toy_World__set_id(self, value);
     }
 });
 Object.defineProperty(World.prototype, "complex", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_World__get_complex(self), mud::Complex);
+        return wrapPointer(_toy_World__get_complex(self), Complex);
     }});
 Object.defineProperty(World.prototype, "name", {
     get: function() {
         var self = this.ptr;
         return Pointer_stringify(_toy_World__get_name(self));
     },
-    set: function(name) {
+    set: function(value) {
         var self = this.ptr;
-        /* name <std::string> [] */
-        if (name && typeof name === "object") name = name.ptr;
-        else name = ensureString(name);
-        _toy_World__set_name(self, name);
+        /* value <std::string> [] */
+        if (value && typeof value === "object") value = value.ptr;
+        else value = ensureString(value);
+        _toy_World__set_name(self, value);
     }
 });
 Object.defineProperty(World.prototype, "origin", {
@@ -863,77 +862,80 @@ WorldClock.prototype["__destroy__"] = WorldClock.prototype.__destroy__ = functio
 };
 // WorldPage
 function WorldPage(spatial, open, extents) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* open <bool> [] */
     /* extents <vec3> [] */
     extents = extents.ptr;
-    if (spatial === undefined) { this.ptr = _toy_WorldPage_WorldPage_0(self); getCache(WorldPage)[this.ptr] = this; return; }
-    this.ptr = _toy_WorldPage_WorldPage_3(self, spatial, open, extents); getCache(WorldPage)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_WorldPage_WorldPage_0(); getCache(WorldPage)[this.ptr] = this; return; }
+    this.ptr = _toy_WorldPage_WorldPage_3(spatial, open, extents); getCache(WorldPage)[this.ptr] = this;
 };
 WorldPage.prototype = Object.create(WrapperObject.prototype);
 WorldPage.prototype.constructor = WorldPage;
 WorldPage.prototype.__class__ = WorldPage;
 WorldPage.__cache__ = {};
 Module['WorldPage'] = WorldPage;
-WorldPage.prototype["build_geometry"] = WorldPage.prototype.build_geometry = function(spatial) {
+WorldPage.prototype["build_geometry"] = WorldPage.prototype.build_geometry = function(self, spatial) {
+    var self = this.ptr;
     /* spatial <Spatial> [] */
     spatial = spatial.ptr;
-    _toy_WorldPage_build_geometry_1(spatial);
+    _toy_WorldPage_build_geometry_1(self, spatial);
 };
-WorldPage.prototype["ground_point"] = WorldPage.prototype.ground_point = function(position, relative, outputPoint) {
+WorldPage.prototype["ground_point"] = WorldPage.prototype.ground_point = function(self, position, relative, outputPoint) {
+    var self = this.ptr;
     /* position <vec3> [] */
     position = position.ptr;
     /* relative <bool> [] */
     /* outputPoint <vec3> [] */
     outputPoint = outputPoint.ptr;
-    _toy_WorldPage_ground_point_3(position, relative, outputPoint);
+    _toy_WorldPage_ground_point_3(self, position, relative, outputPoint);
 };
-WorldPage.prototype["raycast_ground"] = WorldPage.prototype.raycast_ground = function(from, to, ground_point) {
+WorldPage.prototype["raycast_ground"] = WorldPage.prototype.raycast_ground = function(self, from, to, ground_point) {
+    var self = this.ptr;
     /* from <vec3> [] */
     from = from.ptr;
     /* to <vec3> [] */
     to = to.ptr;
     /* ground_point <vec3> [] */
     ground_point = ground_point.ptr;
-    _toy_WorldPage_raycast_ground_3(from, to, ground_point);
+    _toy_WorldPage_raycast_ground_3(self, from, to, ground_point);
 };
-WorldPage.prototype["update_geometry"] = WorldPage.prototype.update_geometry = function() {
-    _toy_WorldPage_update_geometry_0();
+WorldPage.prototype["update_geometry"] = WorldPage.prototype.update_geometry = function(self) {
+    var self = this.ptr;
+    _toy_WorldPage_update_geometry_0(self);
 };
 Object.defineProperty(WorldPage.prototype, "open", {
     get: function() {
         var self = this.ptr;
         return !!(_toy_WorldPage__get_open(self));
     },
-    set: function(open) {
+    set: function(value) {
         var self = this.ptr;
-        /* open <bool> [] */
-        _toy_WorldPage__set_open(self, open);
+        /* value <bool> [] */
+        _toy_WorldPage__set_open(self, value);
     }
 });
 Object.defineProperty(WorldPage.prototype, "extents", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_WorldPage__get_extents(self), mud::vec3);
+        return wrapPointer(_toy_WorldPage__get_extents(self), vec3);
     },
-    set: function(extents) {
+    set: function(value) {
         var self = this.ptr;
-        /* extents <vec3> [] */
-        extents = extents.ptr;
-        _toy_WorldPage__set_extents(self, extents);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _toy_WorldPage__set_extents(self, value);
     }
 });
 Object.defineProperty(WorldPage.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_WorldPage__get_world(self), toy::World);
+        return wrapPointer(_toy_WorldPage__get_world(self), World);
     },
-    set: function(world) {
+    set: function(value) {
         var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _toy_WorldPage__set_world(self, world);
+        /* value <World> [] */
+        value = value.ptr;
+        _toy_WorldPage__set_world(self, value);
     }
 });
 Object.defineProperty(WorldPage.prototype, "last_rebuilt", {
@@ -941,10 +943,10 @@ Object.defineProperty(WorldPage.prototype, "last_rebuilt", {
         var self = this.ptr;
         return _toy_WorldPage__get_last_rebuilt(self);
     },
-    set: function(last_rebuilt) {
+    set: function(value) {
         var self = this.ptr;
-        /* last_rebuilt <size_t> [] */
-        _toy_WorldPage__set_last_rebuilt(self, last_rebuilt);
+        /* value <size_t> [] */
+        _toy_WorldPage__set_last_rebuilt(self, value);
     }
 });
 WorldPage.prototype["__destroy__"] = WorldPage.prototype.__destroy__ = function() {
@@ -975,10 +977,9 @@ BulletSolid.prototype["__destroy__"] = BulletSolid.prototype.__destroy__ = funct
 };
 // BulletWorld
 function BulletWorld(world) {
-    var self = this.ptr;
     /* world <World> [] */
     world = world.ptr;
-    this.ptr = _toy_BulletWorld_BulletWorld_1(self, world); getCache(BulletWorld)[this.ptr] = this;
+    this.ptr = _toy_BulletWorld_BulletWorld_1(world); getCache(BulletWorld)[this.ptr] = this;
 };
 BulletWorld.prototype = Object.create(WrapperObject.prototype);
 BulletWorld.prototype.constructor = BulletWorld;
@@ -991,14 +992,13 @@ BulletWorld.prototype["__destroy__"] = BulletWorld.prototype.__destroy__ = funct
 };
 // DefaultWorld
 function DefaultWorld(name, job_system) {
-    var self = this.ptr;
     ensureCache.prepare();
     /* name <std::string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */
     job_system = job_system.ptr;
-    this.ptr = _toy_DefaultWorld_DefaultWorld_2(self, name, job_system); getCache(DefaultWorld)[this.ptr] = this;
+    this.ptr = _toy_DefaultWorld_DefaultWorld_2(name, job_system); getCache(DefaultWorld)[this.ptr] = this;
 };
 DefaultWorld.prototype = Object.create(WrapperObject.prototype);
 DefaultWorld.prototype.constructor = DefaultWorld;
@@ -1008,17 +1008,17 @@ Module['DefaultWorld'] = DefaultWorld;
 Object.defineProperty(DefaultWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_DefaultWorld__get_world(self), toy::World);
+        return wrapPointer(_toy_DefaultWorld__get_world(self), World);
     }});
 Object.defineProperty(DefaultWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_DefaultWorld__get_bullet_world(self), toy::BulletWorld);
+        return wrapPointer(_toy_DefaultWorld__get_bullet_world(self), BulletWorld);
     }});
 Object.defineProperty(DefaultWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_DefaultWorld__get_navmesh(self), toy::Navmesh);
+        return wrapPointer(_toy_DefaultWorld__get_navmesh(self), Navmesh);
     }});
 DefaultWorld.prototype["__destroy__"] = DefaultWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1048,10 +1048,9 @@ EmitterScope.prototype["__destroy__"] = EmitterScope.prototype.__destroy__ = fun
 };
 // NavmeshShape
 function NavmeshShape(navmesh) {
-    var self = this.ptr;
     /* navmesh <Navmesh> [] */
     navmesh = navmesh.ptr;
-    this.ptr = _toy_NavmeshShape_NavmeshShape_1(self, navmesh); getCache(NavmeshShape)[this.ptr] = this;
+    this.ptr = _toy_NavmeshShape_NavmeshShape_1(navmesh); getCache(NavmeshShape)[this.ptr] = this;
 };
 NavmeshShape.prototype = Object.create(WrapperObject.prototype);
 NavmeshShape.prototype.constructor = NavmeshShape;
@@ -1064,7 +1063,6 @@ NavmeshShape.prototype["__destroy__"] = NavmeshShape.prototype.__destroy__ = fun
 };
 // Obstacle
 function Obstacle(spatial, movable, medium, shape, throughput) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
     /* medium <Medium> [] */
@@ -1072,7 +1070,7 @@ function Obstacle(spatial, movable, medium, shape, throughput) {
     /* shape <CollisionShape> [] */
     shape = shape.ptr;
     /* throughput <float> [] */
-    this.ptr = _toy_Obstacle_Obstacle_5(self, spatial, movable, medium, shape, throughput); getCache(Obstacle)[this.ptr] = this;
+    this.ptr = _toy_Obstacle_Obstacle_5(spatial, movable, medium, shape, throughput); getCache(Obstacle)[this.ptr] = this;
 };
 Obstacle.prototype = Object.create(WrapperObject.prototype);
 Obstacle.prototype.constructor = Obstacle;
@@ -1082,17 +1080,17 @@ Module['Obstacle'] = Obstacle;
 Object.defineProperty(Obstacle.prototype, "shape", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Obstacle__get_shape(self), toy::CollisionShape);
+        return wrapPointer(_toy_Obstacle__get_shape(self), CollisionShape);
     }});
 Object.defineProperty(Obstacle.prototype, "throughput", {
     get: function() {
         var self = this.ptr;
         return _toy_Obstacle__get_throughput(self);
     },
-    set: function(throughput) {
+    set: function(value) {
         var self = this.ptr;
-        /* throughput <float> [] */
-        _toy_Obstacle__set_throughput(self, throughput);
+        /* value <float> [] */
+        _toy_Obstacle__set_throughput(self, value);
     }
 });
 Obstacle.prototype["__destroy__"] = Obstacle.prototype.__destroy__ = function() {
@@ -1112,8 +1110,7 @@ ReceptorScope.prototype["__destroy__"] = ReceptorScope.prototype.__destroy__ = f
 };
 // SolidMedium
 function SolidMedium() {
-    var self = this.ptr;
-    this.ptr = _toy_SolidMedium_SolidMedium_0(self); getCache(SolidMedium)[this.ptr] = this;
+    this.ptr = _toy_SolidMedium_SolidMedium_0(); getCache(SolidMedium)[this.ptr] = this;
 };
 SolidMedium.prototype = Object.create(WrapperObject.prototype);
 SolidMedium.prototype.constructor = SolidMedium;
@@ -1126,8 +1123,7 @@ SolidMedium.prototype["__destroy__"] = SolidMedium.prototype.__destroy__ = funct
 };
 // SoundMedium
 function SoundMedium() {
-    var self = this.ptr;
-    this.ptr = _toy_SoundMedium_SoundMedium_0(self); getCache(SoundMedium)[this.ptr] = this;
+    this.ptr = _toy_SoundMedium_SoundMedium_0(); getCache(SoundMedium)[this.ptr] = this;
 };
 SoundMedium.prototype = Object.create(WrapperObject.prototype);
 SoundMedium.prototype.constructor = SoundMedium;
@@ -1140,40 +1136,41 @@ SoundMedium.prototype["__destroy__"] = SoundMedium.prototype.__destroy__ = funct
 };
 // Spatial
 function Spatial(parent, position, rotation) {
-    var self = this.ptr;
     /* parent <toy::HSpatial> [] */
     /* position <vec3> [] */
     position = position.ptr;
     /* rotation <quat> [] */
     rotation = rotation.ptr;
-    if (parent === undefined) { this.ptr = _toy_Spatial_Spatial_0(self); getCache(Spatial)[this.ptr] = this; return; }
-    this.ptr = _toy_Spatial_Spatial_3(self, parent, position, rotation); getCache(Spatial)[this.ptr] = this;
+    if (parent === undefined) { this.ptr = _toy_Spatial_Spatial_0(); getCache(Spatial)[this.ptr] = this; return; }
+    this.ptr = _toy_Spatial_Spatial_3(parent, position, rotation); getCache(Spatial)[this.ptr] = this;
 };
 Spatial.prototype = Object.create(WrapperObject.prototype);
 Spatial.prototype.constructor = Spatial;
 Spatial.prototype.__class__ = Spatial;
 Spatial.__cache__ = {};
 Module['Spatial'] = Spatial;
-Spatial.prototype["set_position"] = Spatial.prototype.set_position = function(position) {
+Spatial.prototype["set_position"] = Spatial.prototype.set_position = function(self, position) {
+    var self = this.ptr;
     /* position <vec3> [] */
     position = position.ptr;
-    _toy_Spatial_set_position_1(position);
+    _toy_Spatial_set_position_1(self, position);
 };
-Spatial.prototype["set_rotation"] = Spatial.prototype.set_rotation = function(rotation) {
+Spatial.prototype["set_rotation"] = Spatial.prototype.set_rotation = function(self, rotation) {
+    var self = this.ptr;
     /* rotation <quat> [] */
     rotation = rotation.ptr;
-    _toy_Spatial_set_rotation_1(rotation);
+    _toy_Spatial_set_rotation_1(self, rotation);
 };
 Object.defineProperty(Spatial.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Spatial__get_world(self), toy::World);
+        return wrapPointer(_toy_Spatial__get_world(self), World);
     },
-    set: function(world) {
+    set: function(value) {
         var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _toy_Spatial__set_world(self, world);
+        /* value <World> [] */
+        value = value.ptr;
+        _toy_Spatial__set_world(self, value);
     }
 });
 Object.defineProperty(Spatial.prototype, "parent", {
@@ -1181,10 +1178,10 @@ Object.defineProperty(Spatial.prototype, "parent", {
         var self = this.ptr;
         return _toy_Spatial__get_parent(self);
     },
-    set: function(parent) {
+    set: function(value) {
         var self = this.ptr;
-        /* parent <toy::HSpatial> [] */
-        _toy_Spatial__set_parent(self, parent);
+        /* value <toy::HSpatial> [] */
+        _toy_Spatial__set_parent(self, value);
     }
 });
 Spatial.prototype["__destroy__"] = Spatial.prototype.__destroy__ = function() {
@@ -1193,8 +1190,7 @@ Spatial.prototype["__destroy__"] = Spatial.prototype.__destroy__ = function() {
 };
 // VisualMedium
 function VisualMedium() {
-    var self = this.ptr;
-    this.ptr = _toy_VisualMedium_VisualMedium_0(self); getCache(VisualMedium)[this.ptr] = this;
+    this.ptr = _toy_VisualMedium_VisualMedium_0(); getCache(VisualMedium)[this.ptr] = this;
 };
 VisualMedium.prototype = Object.create(WrapperObject.prototype);
 VisualMedium.prototype.constructor = VisualMedium;
@@ -1207,8 +1203,7 @@ VisualMedium.prototype["__destroy__"] = VisualMedium.prototype.__destroy__ = fun
 };
 // WorldMedium
 function WorldMedium() {
-    var self = this.ptr;
-    this.ptr = _toy_WorldMedium_WorldMedium_0(self); getCache(WorldMedium)[this.ptr] = this;
+    this.ptr = _toy_WorldMedium_WorldMedium_0(); getCache(WorldMedium)[this.ptr] = this;
 };
 WorldMedium.prototype = Object.create(WrapperObject.prototype);
 WorldMedium.prototype.constructor = WorldMedium;
@@ -1218,6 +1213,34 @@ Module['WorldMedium'] = WorldMedium;
 WorldMedium.prototype["__destroy__"] = WorldMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
     _toy_WorldMedium__destroy(self);
+};
+Module['move_2d'] = function(spatial, movable, target, velocity, time_step, margin) {
+    var self = this.ptr;
+    /* spatial <Spatial> [] */
+    spatial = spatial.ptr;
+    /* movable <Movable> [] */
+    movable = movable.ptr;
+    /* target <vec3> [] */
+    target = target.ptr;
+    /* velocity <float> [] */
+    /* time_step <float> [] */
+    /* margin <float> [] */
+    if (margin === undefined) { return !!(_toy_move_2d_5(spatial, movable, target, velocity, time_step)); return; }
+    return !!(_toy_move_2d_6(spatial, movable, target, velocity, time_step, margin));
+};
+Module['steer_2d'] = function(spatial, movable, target, velocity, time_step, margin) {
+    var self = this.ptr;
+    /* spatial <Spatial> [] */
+    spatial = spatial.ptr;
+    /* movable <Movable> [] */
+    movable = movable.ptr;
+    /* target <vec3> [] */
+    target = target.ptr;
+    /* velocity <float> [] */
+    /* time_step <float> [] */
+    /* margin <float> [] */
+    if (margin === undefined) { return !!(_toy_steer_2d_5(spatial, movable, target, velocity, time_step)); return; }
+    return !!(_toy_steer_2d_6(spatial, movable, target, velocity, time_step, margin));
 };
 
 (function() {

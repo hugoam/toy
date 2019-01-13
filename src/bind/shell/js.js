@@ -12,13 +12,13 @@ Module['Game'] = Game;
 Object.defineProperty(Game.prototype, "user", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game__get_user(self), toy::User);
+        return wrapPointer(_toy_Game__get_user(self), User);
     },
-    set: function(user) {
+    set: function(value) {
         var self = this.ptr;
-        /* user <User> [] */
-        user = user.ptr;
-        _toy_Game__set_user(self, user);
+        /* value <User> [] */
+        value = value.ptr;
+        _toy_Game__set_user(self, value);
     }
 });
 Object.defineProperty(Game.prototype, "mode", {
@@ -26,59 +26,59 @@ Object.defineProperty(Game.prototype, "mode", {
         var self = this.ptr;
         return _toy_Game__get_mode(self);
     },
-    set: function(mode) {
+    set: function(value) {
         var self = this.ptr;
-        /* mode <GameMode> [] */
-        if (mode && typeof mode === "object") mode = mode.ptr;
-        _toy_Game__set_mode(self, mode);
+        /* value <GameMode> [] */
+        if (value && typeof value === "object") value = value.ptr;
+        _toy_Game__set_mode(self, value);
     }
 });
 Object.defineProperty(Game.prototype, "shell", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game__get_shell(self), toy::GameShell);
+        return wrapPointer(_toy_Game__get_shell(self), GameShell);
     },
-    set: function(shell) {
+    set: function(value) {
         var self = this.ptr;
-        /* shell <GameShell> [] */
-        shell = shell.ptr;
-        _toy_Game__set_shell(self, shell);
+        /* value <GameShell> [] */
+        value = value.ptr;
+        _toy_Game__set_shell(self, value);
     }
 });
 Object.defineProperty(Game.prototype, "module", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game__get_module(self), toy::GameModule);
+        return wrapPointer(_toy_Game__get_module(self), GameModule);
     },
-    set: function(module) {
+    set: function(value) {
         var self = this.ptr;
-        /* module <GameModule> [] */
-        module = module.ptr;
-        _toy_Game__set_module(self, module);
+        /* value <GameModule> [] */
+        value = value.ptr;
+        _toy_Game__set_module(self, value);
     }
 });
 Object.defineProperty(Game.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game__get_world(self), toy::World);
+        return wrapPointer(_toy_Game__get_world(self), World);
     },
-    set: function(world) {
+    set: function(value) {
         var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _toy_Game__set_world(self, world);
+        /* value <World> [] */
+        value = value.ptr;
+        _toy_Game__set_world(self, value);
     }
 });
 Object.defineProperty(Game.prototype, "screen", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game__get_screen(self), mud::Widget);
+        return wrapPointer(_toy_Game__get_screen(self), Widget);
     },
-    set: function(screen) {
+    set: function(value) {
         var self = this.ptr;
-        /* screen <Widget> [] */
-        screen = screen.ptr;
-        _toy_Game__set_screen(self, screen);
+        /* value <Widget> [] */
+        value = value.ptr;
+        _toy_Game__set_screen(self, value);
     }
 });
 Game.prototype["__destroy__"] = Game.prototype.__destroy__ = function() {
@@ -92,44 +92,49 @@ GameModule.prototype.constructor = GameModule;
 GameModule.prototype.__class__ = GameModule;
 GameModule.__cache__ = {};
 Module['GameModule'] = GameModule;
-GameModule.prototype["init"] = GameModule.prototype.init = function(shell, game) {
+GameModule.prototype["init"] = GameModule.prototype.init = function(self, shell, game) {
+    var self = this.ptr;
     /* shell <GameShell> [] */
     shell = shell.ptr;
     /* game <Game> [] */
     game = game.ptr;
-    _toy_GameModule_init_2(shell, game);
+    _toy_GameModule_init_2(self, shell, game);
 };
-GameModule.prototype["paint"] = GameModule.prototype.paint = function(shell, scene, graph) {
+GameModule.prototype["paint"] = GameModule.prototype.paint = function(self, shell, scene, graph) {
+    var self = this.ptr;
     /* shell <GameShell> [] */
     shell = shell.ptr;
     /* scene <GameScene> [] */
     scene = scene.ptr;
     /* graph <Gnode> [] */
     graph = graph.ptr;
-    _toy_GameModule_paint_3(shell, scene, graph);
+    _toy_GameModule_paint_3(self, shell, scene, graph);
 };
-GameModule.prototype["pump"] = GameModule.prototype.pump = function(shell, game, ui) {
+GameModule.prototype["pump"] = GameModule.prototype.pump = function(self, shell, game, ui) {
+    var self = this.ptr;
     /* shell <GameShell> [] */
     shell = shell.ptr;
     /* game <Game> [] */
     game = game.ptr;
     /* ui <Widget> [] */
     ui = ui.ptr;
-    _toy_GameModule_pump_3(shell, game, ui);
+    _toy_GameModule_pump_3(self, shell, game, ui);
 };
-GameModule.prototype["scene"] = GameModule.prototype.scene = function(shell, scene) {
+GameModule.prototype["scene"] = GameModule.prototype.scene = function(self, shell, scene) {
+    var self = this.ptr;
     /* shell <GameShell> [] */
     shell = shell.ptr;
     /* scene <GameScene> [] */
     scene = scene.ptr;
-    _toy_GameModule_scene_2(shell, scene);
+    _toy_GameModule_scene_2(self, shell, scene);
 };
-GameModule.prototype["start"] = GameModule.prototype.start = function(shell, game) {
+GameModule.prototype["start"] = GameModule.prototype.start = function(self, shell, game) {
+    var self = this.ptr;
     /* shell <GameShell> [] */
     shell = shell.ptr;
     /* game <Game> [] */
     game = game.ptr;
-    _toy_GameModule_start_2(shell, game);
+    _toy_GameModule_start_2(self, shell, game);
 };
 GameModule.prototype["__destroy__"] = GameModule.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -137,145 +142,160 @@ GameModule.prototype["__destroy__"] = GameModule.prototype.__destroy__ = functio
 };
 // GameShell
 function GameShell(resource_path, exec_path) {
-    var self = this.ptr;
     /* resource_path <const char*> [] */
     /* exec_path <const char*> [] */
-    if (exec_path === undefined) { this.ptr = _toy_GameShell_GameShell_1(self, resource_path); getCache(GameShell)[this.ptr] = this; return; }
-    this.ptr = _toy_GameShell_GameShell_2(self, resource_path, exec_path); getCache(GameShell)[this.ptr] = this;
+    if (exec_path === undefined) { this.ptr = _toy_GameShell_GameShell_1(resource_path); getCache(GameShell)[this.ptr] = this; return; }
+    this.ptr = _toy_GameShell_GameShell_2(resource_path, exec_path); getCache(GameShell)[this.ptr] = this;
 };
 GameShell.prototype = Object.create(WrapperObject.prototype);
 GameShell.prototype.constructor = GameShell;
 GameShell.prototype.__class__ = GameShell;
 GameShell.__cache__ = {};
 Module['GameShell'] = GameShell;
-GameShell.prototype["add_scene"] = GameShell.prototype.add_scene = function() {
-    return wrapPointer(_toy_GameShell_add_scene_0(), toy::GameScene);
+GameShell.prototype["add_scene"] = GameShell.prototype.add_scene = function(self) {
+    var self = this.ptr;
+    return wrapPointer(_toy_GameShell_add_scene_0(self), GameScene);
 };
-GameShell.prototype["cleanup"] = GameShell.prototype.cleanup = function() {
-    _toy_GameShell_cleanup_0();
+GameShell.prototype["cleanup"] = GameShell.prototype.cleanup = function(self) {
+    var self = this.ptr;
+    _toy_GameShell_cleanup_0(self);
 };
-GameShell.prototype["clear_scenes"] = GameShell.prototype.clear_scenes = function() {
-    _toy_GameShell_clear_scenes_0();
+GameShell.prototype["clear_scenes"] = GameShell.prototype.clear_scenes = function(self) {
+    var self = this.ptr;
+    _toy_GameShell_clear_scenes_0(self);
 };
-GameShell.prototype["init"] = GameShell.prototype.init = function() {
-    _toy_GameShell_init_0();
+GameShell.prototype["init"] = GameShell.prototype.init = function(self) {
+    var self = this.ptr;
+    _toy_GameShell_init_0(self);
 };
-GameShell.prototype["launch"] = GameShell.prototype.launch = function() {
-    _toy_GameShell_launch_0();
+GameShell.prototype["launch"] = GameShell.prototype.launch = function(self) {
+    var self = this.ptr;
+    _toy_GameShell_launch_0(self);
 };
-GameShell.prototype["load"] = GameShell.prototype.load = function(module) {
+GameShell.prototype["load"] = GameShell.prototype.load = function(self, module) {
+    var self = this.ptr;
     /* module <GameModule> [] */
     module = module.ptr;
-    _toy_GameShell_load_1(module);
+    _toy_GameShell_load_1(self, module);
 };
-GameShell.prototype["load_path"] = GameShell.prototype.load_path = function(module_path) {
+GameShell.prototype["load_path"] = GameShell.prototype.load_path = function(self, module_path) {
+    var self = this.ptr;
     ensureCache.prepare();
     /* module_path <std::string> [] */
     if (module_path && typeof module_path === "object") module_path = module_path.ptr;
     else module_path = ensureString(module_path);
-    _toy_GameShell_load_path_1(module_path);
+    _toy_GameShell_load_path_1(self, module_path);
 };
-GameShell.prototype["pump"] = GameShell.prototype.pump = function() {
-    return !!(_toy_GameShell_pump_0());
+GameShell.prototype["pump"] = GameShell.prototype.pump = function(self) {
+    var self = this.ptr;
+    return !!(_toy_GameShell_pump_0(self));
 };
-GameShell.prototype["reload"] = GameShell.prototype.reload = function() {
-    _toy_GameShell_reload_0();
+GameShell.prototype["reload"] = GameShell.prototype.reload = function(self) {
+    var self = this.ptr;
+    _toy_GameShell_reload_0(self);
 };
-GameShell.prototype["remove_scene"] = GameShell.prototype.remove_scene = function(scene) {
+GameShell.prototype["remove_scene"] = GameShell.prototype.remove_scene = function(self, scene) {
+    var self = this.ptr;
     /* scene <GameScene> [] */
     scene = scene.ptr;
-    _toy_GameShell_remove_scene_1(scene);
+    _toy_GameShell_remove_scene_1(self, scene);
 };
-GameShell.prototype["run"] = GameShell.prototype.run = function(iterations) {
+GameShell.prototype["run"] = GameShell.prototype.run = function(self, iterations) {
+    var self = this.ptr;
     /* iterations <size_t> [] */
-    if (iterations === undefined) { _toy_GameShell_run_0(); return; }
-    _toy_GameShell_run_1(iterations);
+    if (iterations === undefined) { _toy_GameShell_run_0(self); return; }
+    _toy_GameShell_run_1(self, iterations);
 };
-GameShell.prototype["run_editor"] = GameShell.prototype.run_editor = function(module, iterations) {
+GameShell.prototype["run_editor"] = GameShell.prototype.run_editor = function(self, module, iterations) {
+    var self = this.ptr;
     /* module <GameModule> [] */
     module = module.ptr;
     /* iterations <size_t> [] */
-    if (iterations === undefined) { _toy_GameShell_run_editor_1(module); return; }
-    _toy_GameShell_run_editor_2(module, iterations);
+    if (iterations === undefined) { _toy_GameShell_run_editor_1(self, module); return; }
+    _toy_GameShell_run_editor_2(self, module, iterations);
 };
-GameShell.prototype["run_editor_path"] = GameShell.prototype.run_editor_path = function(module_path, iterations) {
+GameShell.prototype["run_editor_path"] = GameShell.prototype.run_editor_path = function(self, module_path, iterations) {
+    var self = this.ptr;
     ensureCache.prepare();
     /* module_path <std::string> [] */
     if (module_path && typeof module_path === "object") module_path = module_path.ptr;
     else module_path = ensureString(module_path);
     /* iterations <size_t> [] */
-    if (iterations === undefined) { _toy_GameShell_run_editor_path_1(module_path); return; }
-    _toy_GameShell_run_editor_path_2(module_path, iterations);
+    if (iterations === undefined) { _toy_GameShell_run_editor_path_1(self, module_path); return; }
+    _toy_GameShell_run_editor_path_2(self, module_path, iterations);
 };
-GameShell.prototype["run_game"] = GameShell.prototype.run_game = function(module, iterations) {
+GameShell.prototype["run_game"] = GameShell.prototype.run_game = function(self, module, iterations) {
+    var self = this.ptr;
     /* module <GameModule> [] */
     module = module.ptr;
     /* iterations <size_t> [] */
-    if (iterations === undefined) { _toy_GameShell_run_game_1(module); return; }
-    _toy_GameShell_run_game_2(module, iterations);
+    if (iterations === undefined) { _toy_GameShell_run_game_1(self, module); return; }
+    _toy_GameShell_run_game_2(self, module, iterations);
 };
-GameShell.prototype["run_game_path"] = GameShell.prototype.run_game_path = function(module_path, iterations) {
+GameShell.prototype["run_game_path"] = GameShell.prototype.run_game_path = function(self, module_path, iterations) {
+    var self = this.ptr;
     ensureCache.prepare();
     /* module_path <std::string> [] */
     if (module_path && typeof module_path === "object") module_path = module_path.ptr;
     else module_path = ensureString(module_path);
     /* iterations <size_t> [] */
-    if (iterations === undefined) { _toy_GameShell_run_game_path_1(module_path); return; }
-    _toy_GameShell_run_game_path_2(module_path, iterations);
+    if (iterations === undefined) { _toy_GameShell_run_game_path_1(self, module_path); return; }
+    _toy_GameShell_run_game_path_2(self, module_path, iterations);
 };
-GameShell.prototype["save"] = GameShell.prototype.save = function() {
-    _toy_GameShell_save_0();
+GameShell.prototype["save"] = GameShell.prototype.save = function(self) {
+    var self = this.ptr;
+    _toy_GameShell_save_0(self);
 };
 Object.defineProperty(GameShell.prototype, "core", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_core(self), toy::Core);
+        return wrapPointer(_toy_GameShell__get_core(self), Core);
     }});
 Object.defineProperty(GameShell.prototype, "lua", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_lua(self), mud::LuaInterpreter);
+        return wrapPointer(_toy_GameShell__get_lua(self), LuaInterpreter);
     }});
 Object.defineProperty(GameShell.prototype, "wren", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_wren(self), mud::WrenInterpreter);
+        return wrapPointer(_toy_GameShell__get_wren(self), WrenInterpreter);
     }});
 Object.defineProperty(GameShell.prototype, "gfx", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_gfx(self), mud::GfxSystem);
+        return wrapPointer(_toy_GameShell__get_gfx(self), GfxSystem);
     }});
 Object.defineProperty(GameShell.prototype, "context", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_context(self), mud::Context);
+        return wrapPointer(_toy_GameShell__get_context(self), Context);
     }});
 Object.defineProperty(GameShell.prototype, "vg", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_vg(self), mud::Vg);
+        return wrapPointer(_toy_GameShell__get_vg(self), Vg);
     }});
 Object.defineProperty(GameShell.prototype, "ui_window", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_ui_window(self), mud::UiWindow);
+        return wrapPointer(_toy_GameShell__get_ui_window(self), UiWindow);
     }});
 Object.defineProperty(GameShell.prototype, "editor", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_editor(self), toy::Editor);
+        return wrapPointer(_toy_GameShell__get_editor(self), Editor);
     }});
 Object.defineProperty(GameShell.prototype, "ui", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_ui(self), mud::Ui);
+        return wrapPointer(_toy_GameShell__get_ui(self), Ui);
     },
-    set: function(ui) {
+    set: function(value) {
         var self = this.ptr;
-        /* ui <Ui> [] */
-        ui = ui.ptr;
-        _toy_GameShell__set_ui(self, ui);
+        /* value <Ui> [] */
+        value = value.ptr;
+        _toy_GameShell__set_ui(self, value);
     }
 });
 GameShell.prototype["__destroy__"] = GameShell.prototype.__destroy__ = function() {
@@ -284,11 +304,10 @@ GameShell.prototype["__destroy__"] = GameShell.prototype.__destroy__ = function(
 };
 // GameModuleBind
 function GameModuleBind(module, call) {
-    var self = this.ptr;
     /* module <Module> [] */
     module = module.ptr;
     /* call <mud::VirtualMethod> [] */
-    this.ptr = _toy_GameModuleBind_GameModuleBind_2(self, module, call); getCache(GameModuleBind)[this.ptr] = this;
+    this.ptr = _toy_GameModuleBind_GameModuleBind_2(module, call); getCache(GameModuleBind)[this.ptr] = this;
 };
 GameModuleBind.prototype = Object.create(WrapperObject.prototype);
 GameModuleBind.prototype.constructor = GameModuleBind;
@@ -309,6 +328,20 @@ Module['GameScene'] = GameScene;
 GameScene.prototype["__destroy__"] = GameScene.prototype.__destroy__ = function() {
     var self = this.ptr;
     _toy_GameScene__destroy(self);
+};
+Module['paint_physics'] = function(parent, world) {
+    var self = this.ptr;
+    /* parent <Gnode> [] */
+    parent = parent.ptr;
+    /* world <World> [] */
+    world = world.ptr;
+    _toy_paint_physics_2(parent, world);
+};
+Module['physic_painter'] = function(scene) {
+    var self = this.ptr;
+    /* scene <GameScene> [] */
+    scene = scene.ptr;
+    _toy_physic_painter_1(scene);
 };
 
 (function() {

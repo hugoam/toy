@@ -23,17 +23,17 @@ Module['ProcedureType'] = ProcedureType;
 Object.defineProperty(ProcedureType.prototype, "type", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_ProcedureType__get_type(self), mud::Type);
+        return wrapPointer(_toy_ProcedureType__get_type(self), Type);
     }});
 Object.defineProperty(ProcedureType.prototype, "index", {
     get: function() {
         var self = this.ptr;
         return _toy_ProcedureType__get_index(self);
     },
-    set: function(index) {
+    set: function(value) {
         var self = this.ptr;
-        /* index <uint32_t> [] */
-        _toy_ProcedureType__set_index(self, index);
+        /* value <uint32_t> [] */
+        _toy_ProcedureType__set_index(self, value);
     }
 });
 Object.defineProperty(ProcedureType.prototype, "name", {
@@ -41,12 +41,12 @@ Object.defineProperty(ProcedureType.prototype, "name", {
         var self = this.ptr;
         return Pointer_stringify(_toy_ProcedureType__get_name(self));
     },
-    set: function(name) {
+    set: function(value) {
         var self = this.ptr;
-        /* name <std::string> [] */
-        if (name && typeof name === "object") name = name.ptr;
-        else name = ensureString(name);
-        _toy_ProcedureType__set_name(self, name);
+        /* value <std::string> [] */
+        if (value && typeof value === "object") value = value.ptr;
+        else value = ensureString(value);
+        _toy_ProcedureType__set_name(self, value);
     }
 });
 ProcedureType.prototype["__destroy__"] = ProcedureType.prototype.__destroy__ = function() {

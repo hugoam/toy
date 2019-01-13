@@ -4,8 +4,7 @@ function WrapperObject() {
 }
 // ActionGroup
 function ActionGroup() {
-    var self = this.ptr;
-    this.ptr = _toy_ActionGroup_ActionGroup_0(self); getCache(ActionGroup)[this.ptr] = this;
+    this.ptr = _toy_ActionGroup_ActionGroup_0(); getCache(ActionGroup)[this.ptr] = this;
 };
 ActionGroup.prototype = Object.create(WrapperObject.prototype);
 ActionGroup.prototype.constructor = ActionGroup;
@@ -51,8 +50,7 @@ Edit.prototype["__destroy__"] = Edit.prototype.__destroy__ = function() {
 };
 // GraphicsDebug
 function GraphicsDebug() {
-    var self = this.ptr;
-    this.ptr = _toy_GraphicsDebug_GraphicsDebug_0(self); getCache(GraphicsDebug)[this.ptr] = this;
+    this.ptr = _toy_GraphicsDebug_GraphicsDebug_0(); getCache(GraphicsDebug)[this.ptr] = this;
 };
 GraphicsDebug.prototype = Object.create(WrapperObject.prototype);
 GraphicsDebug.prototype.constructor = GraphicsDebug;
@@ -117,28 +115,28 @@ Module['Editor'] = Editor;
 Object.defineProperty(Editor.prototype, "run_tool", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor__get_run_tool(self), toy::RunTool);
+        return wrapPointer(_toy_Editor__get_run_tool(self), RunTool);
     }});
 Object.defineProperty(Editor.prototype, "play_tool", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor__get_play_tool(self), toy::PlayTool);
+        return wrapPointer(_toy_Editor__get_play_tool(self), PlayTool);
     }});
 Object.defineProperty(Editor.prototype, "frame_view_tool", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor__get_frame_view_tool(self), mud::FrameViewTool);
+        return wrapPointer(_toy_Editor__get_frame_view_tool(self), FrameViewTool);
     }});
 Object.defineProperty(Editor.prototype, "edited_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor__get_edited_world(self), toy::World);
+        return wrapPointer(_toy_Editor__get_edited_world(self), World);
     },
-    set: function(edited_world) {
+    set: function(value) {
         var self = this.ptr;
-        /* edited_world <World> [] */
-        edited_world = edited_world.ptr;
-        _toy_Editor__set_edited_world(self, edited_world);
+        /* value <World> [] */
+        value = value.ptr;
+        _toy_Editor__set_edited_world(self, value);
     }
 });
 Object.defineProperty(Editor.prototype, "run_game", {
@@ -146,10 +144,10 @@ Object.defineProperty(Editor.prototype, "run_game", {
         var self = this.ptr;
         return !!(_toy_Editor__get_run_game(self));
     },
-    set: function(run_game) {
+    set: function(value) {
         var self = this.ptr;
-        /* run_game <bool> [] */
-        _toy_Editor__set_run_game(self, run_game);
+        /* value <bool> [] */
+        _toy_Editor__set_run_game(self, value);
     }
 });
 Object.defineProperty(Editor.prototype, "play_game", {
@@ -157,10 +155,10 @@ Object.defineProperty(Editor.prototype, "play_game", {
         var self = this.ptr;
         return !!(_toy_Editor__get_play_game(self));
     },
-    set: function(play_game) {
+    set: function(value) {
         var self = this.ptr;
-        /* play_game <bool> [] */
-        _toy_Editor__set_play_game(self, play_game);
+        /* value <bool> [] */
+        _toy_Editor__set_play_game(self, value);
     }
 });
 Editor.prototype["__destroy__"] = Editor.prototype.__destroy__ = function() {

@@ -4,7 +4,6 @@ function WrapperObject() {
 }
 // Block
 function Block(spatial, world_page, parentblock, index, size) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* world_page <toy::HWorldPage> [] */
     /* parentblock <Block> [] */
@@ -12,52 +11,56 @@ function Block(spatial, world_page, parentblock, index, size) {
     /* index <size_t> [] */
     /* size <vec3> [] */
     size = size.ptr;
-    if (spatial === undefined) { this.ptr = _toy_Block_Block_0(self); getCache(Block)[this.ptr] = this; return; }
-    this.ptr = _toy_Block_Block_5(self, spatial, world_page, parentblock, index, size); getCache(Block)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Block_Block_0(); getCache(Block)[this.ptr] = this; return; }
+    this.ptr = _toy_Block_Block_5(spatial, world_page, parentblock, index, size); getCache(Block)[this.ptr] = this;
 };
 Block.prototype = Object.create(WrapperObject.prototype);
 Block.prototype.constructor = Block;
 Block.prototype.__class__ = Block;
 Block.__cache__ = {};
 Module['Block'] = Block;
-Block.prototype["chunk"] = Block.prototype.chunk = function(x, y, z, element) {
+Block.prototype["chunk"] = Block.prototype.chunk = function(self, x, y, z, element) {
+    var self = this.ptr;
     /* x <size_t> [] */
     /* y <size_t> [] */
     /* z <size_t> [] */
     /* element <Element> [] */
     element = element.ptr;
-    _toy_Block_chunk_4(x, y, z, element);
+    _toy_Block_chunk_4(self, x, y, z, element);
 };
-Block.prototype["commit"] = Block.prototype.commit = function() {
-    _toy_Block_commit_0();
+Block.prototype["commit"] = Block.prototype.commit = function(self) {
+    var self = this.ptr;
+    _toy_Block_commit_0(self);
 };
-Block.prototype["reset"] = Block.prototype.reset = function() {
-    _toy_Block_reset_0();
+Block.prototype["reset"] = Block.prototype.reset = function(self) {
+    var self = this.ptr;
+    _toy_Block_reset_0(self);
 };
-Block.prototype["subdivide"] = Block.prototype.subdivide = function() {
-    _toy_Block_subdivide_0();
+Block.prototype["subdivide"] = Block.prototype.subdivide = function(self) {
+    var self = this.ptr;
+    _toy_Block_subdivide_0(self);
 };
 Object.defineProperty(Block.prototype, "world_page", {
     get: function() {
         var self = this.ptr;
         return _toy_Block__get_world_page(self);
     },
-    set: function(world_page) {
+    set: function(value) {
         var self = this.ptr;
-        /* world_page <toy::HWorldPage> [] */
-        _toy_Block__set_world_page(self, world_page);
+        /* value <toy::HWorldPage> [] */
+        _toy_Block__set_world_page(self, value);
     }
 });
 Object.defineProperty(Block.prototype, "parentblock", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Block__get_parentblock(self), toy::Block);
+        return wrapPointer(_toy_Block__get_parentblock(self), Block);
     },
-    set: function(parentblock) {
+    set: function(value) {
         var self = this.ptr;
-        /* parentblock <Block> [] */
-        parentblock = parentblock.ptr;
-        _toy_Block__set_parentblock(self, parentblock);
+        /* value <Block> [] */
+        value = value.ptr;
+        _toy_Block__set_parentblock(self, value);
     }
 });
 Object.defineProperty(Block.prototype, "index", {
@@ -65,22 +68,22 @@ Object.defineProperty(Block.prototype, "index", {
         var self = this.ptr;
         return _toy_Block__get_index(self);
     },
-    set: function(index) {
+    set: function(value) {
         var self = this.ptr;
-        /* index <size_t> [] */
-        _toy_Block__set_index(self, index);
+        /* value <size_t> [] */
+        _toy_Block__set_index(self, value);
     }
 });
 Object.defineProperty(Block.prototype, "size", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Block__get_size(self), mud::vec3);
+        return wrapPointer(_toy_Block__get_size(self), vec3);
     },
-    set: function(size) {
+    set: function(value) {
         var self = this.ptr;
-        /* size <vec3> [] */
-        size = size.ptr;
-        _toy_Block__set_size(self, size);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _toy_Block__set_size(self, value);
     }
 });
 Object.defineProperty(Block.prototype, "updated", {
@@ -88,10 +91,10 @@ Object.defineProperty(Block.prototype, "updated", {
         var self = this.ptr;
         return _toy_Block__get_updated(self);
     },
-    set: function(updated) {
+    set: function(value) {
         var self = this.ptr;
-        /* updated <size_t> [] */
-        _toy_Block__set_updated(self, updated);
+        /* value <size_t> [] */
+        _toy_Block__set_updated(self, value);
     }
 });
 Block.prototype["__destroy__"] = Block.prototype.__destroy__ = function() {
@@ -100,7 +103,6 @@ Block.prototype["__destroy__"] = Block.prototype.__destroy__ = function() {
 };
 // Chunk
 function Chunk(spatial, block, index, element, size) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* block <Block> [] */
     block = block.ptr;
@@ -108,8 +110,8 @@ function Chunk(spatial, block, index, element, size) {
     /* element <Element> [] */
     element = element.ptr;
     /* size <float> [] */
-    if (spatial === undefined) { this.ptr = _toy_Chunk_Chunk_0(self); getCache(Chunk)[this.ptr] = this; return; }
-    this.ptr = _toy_Chunk_Chunk_5(self, spatial, block, index, element, size); getCache(Chunk)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Chunk_Chunk_0(); getCache(Chunk)[this.ptr] = this; return; }
+    this.ptr = _toy_Chunk_Chunk_5(spatial, block, index, element, size); getCache(Chunk)[this.ptr] = this;
 };
 Chunk.prototype = Object.create(WrapperObject.prototype);
 Chunk.prototype.constructor = Chunk;
@@ -121,34 +123,34 @@ Object.defineProperty(Chunk.prototype, "index", {
         var self = this.ptr;
         return _toy_Chunk__get_index(self);
     },
-    set: function(index) {
+    set: function(value) {
         var self = this.ptr;
-        /* index <size_t> [] */
-        _toy_Chunk__set_index(self, index);
+        /* value <size_t> [] */
+        _toy_Chunk__set_index(self, value);
     }
 });
 Object.defineProperty(Chunk.prototype, "block", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Chunk__get_block(self), toy::Block);
+        return wrapPointer(_toy_Chunk__get_block(self), Block);
     },
-    set: function(block) {
+    set: function(value) {
         var self = this.ptr;
-        /* block <Block> [] */
-        block = block.ptr;
-        _toy_Chunk__set_block(self, block);
+        /* value <Block> [] */
+        value = value.ptr;
+        _toy_Chunk__set_block(self, value);
     }
 });
 Object.defineProperty(Chunk.prototype, "element", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Chunk__get_element(self), toy::Element);
+        return wrapPointer(_toy_Chunk__get_element(self), Element);
     },
-    set: function(element) {
+    set: function(value) {
         var self = this.ptr;
-        /* element <Element> [] */
-        element = element.ptr;
-        _toy_Chunk__set_element(self, element);
+        /* value <Element> [] */
+        value = value.ptr;
+        _toy_Chunk__set_element(self, value);
     }
 });
 Object.defineProperty(Chunk.prototype, "size", {
@@ -156,10 +158,10 @@ Object.defineProperty(Chunk.prototype, "size", {
         var self = this.ptr;
         return _toy_Chunk__get_size(self);
     },
-    set: function(size) {
+    set: function(value) {
         var self = this.ptr;
-        /* size <float> [] */
-        _toy_Chunk__set_size(self, size);
+        /* value <float> [] */
+        _toy_Chunk__set_size(self, value);
     }
 });
 Chunk.prototype["__destroy__"] = Chunk.prototype.__destroy__ = function() {
@@ -168,13 +170,12 @@ Chunk.prototype["__destroy__"] = Chunk.prototype.__destroy__ = function() {
 };
 // Element
 function Element(name, state, colour) {
-    var self = this.ptr;
     /* name <const char*> [] */
     /* state <MatterState> [] */
     if (state && typeof state === "object") state = state.ptr;
     /* colour <Colour> [] */
     colour = colour.ptr;
-    this.ptr = _toy_Element_Element_3(self, name, state, colour); getCache(Element)[this.ptr] = this;
+    this.ptr = _toy_Element_Element_3(name, state, colour); getCache(Element)[this.ptr] = this;
 };
 Element.prototype = Object.create(WrapperObject.prototype);
 Element.prototype.constructor = Element;
@@ -186,10 +187,10 @@ Object.defineProperty(Element.prototype, "id", {
         var self = this.ptr;
         return _toy_Element__get_id(self);
     },
-    set: function(id) {
+    set: function(value) {
         var self = this.ptr;
-        /* id <mud::Id> [] */
-        _toy_Element__set_id(self, id);
+        /* value <mud::Id> [] */
+        _toy_Element__set_id(self, value);
     }
 });
 Object.defineProperty(Element.prototype, "name", {
@@ -197,12 +198,12 @@ Object.defineProperty(Element.prototype, "name", {
         var self = this.ptr;
         return Pointer_stringify(_toy_Element__get_name(self));
     },
-    set: function(name) {
+    set: function(value) {
         var self = this.ptr;
-        /* name <std::string> [] */
-        if (name && typeof name === "object") name = name.ptr;
-        else name = ensureString(name);
-        _toy_Element__set_name(self, name);
+        /* value <std::string> [] */
+        if (value && typeof value === "object") value = value.ptr;
+        else value = ensureString(value);
+        _toy_Element__set_name(self, value);
     }
 });
 Object.defineProperty(Element.prototype, "state", {
@@ -210,23 +211,23 @@ Object.defineProperty(Element.prototype, "state", {
         var self = this.ptr;
         return _toy_Element__get_state(self);
     },
-    set: function(state) {
+    set: function(value) {
         var self = this.ptr;
-        /* state <MatterState> [] */
-        if (state && typeof state === "object") state = state.ptr;
-        _toy_Element__set_state(self, state);
+        /* value <MatterState> [] */
+        if (value && typeof value === "object") value = value.ptr;
+        _toy_Element__set_state(self, value);
     }
 });
 Object.defineProperty(Element.prototype, "colour", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Element__get_colour(self), mud::Colour);
+        return wrapPointer(_toy_Element__get_colour(self), Colour);
     },
-    set: function(colour) {
+    set: function(value) {
         var self = this.ptr;
-        /* colour <Colour> [] */
-        colour = colour.ptr;
-        _toy_Element__set_colour(self, colour);
+        /* value <Colour> [] */
+        value = value.ptr;
+        _toy_Element__set_colour(self, value);
     }
 });
 Element.prototype["__destroy__"] = Element.prototype.__destroy__ = function() {
@@ -235,13 +236,12 @@ Element.prototype["__destroy__"] = Element.prototype.__destroy__ = function() {
 };
 // Heap
 function Heap(spatial, element, radius) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* element <Element> [] */
     element = element.ptr;
     /* radius <float> [] */
-    if (spatial === undefined) { this.ptr = _toy_Heap_Heap_0(self); getCache(Heap)[this.ptr] = this; return; }
-    this.ptr = _toy_Heap_Heap_3(self, spatial, element, radius); getCache(Heap)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Heap_Heap_0(); getCache(Heap)[this.ptr] = this; return; }
+    this.ptr = _toy_Heap_Heap_3(spatial, element, radius); getCache(Heap)[this.ptr] = this;
 };
 Heap.prototype = Object.create(WrapperObject.prototype);
 Heap.prototype.constructor = Heap;
@@ -251,13 +251,13 @@ Module['Heap'] = Heap;
 Object.defineProperty(Heap.prototype, "element", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Heap__get_element(self), toy::Element);
+        return wrapPointer(_toy_Heap__get_element(self), Element);
     },
-    set: function(element) {
+    set: function(value) {
         var self = this.ptr;
-        /* element <Element> [] */
-        element = element.ptr;
-        _toy_Heap__set_element(self, element);
+        /* value <Element> [] */
+        value = value.ptr;
+        _toy_Heap__set_element(self, value);
     }
 });
 Object.defineProperty(Heap.prototype, "radius", {
@@ -265,10 +265,10 @@ Object.defineProperty(Heap.prototype, "radius", {
         var self = this.ptr;
         return _toy_Heap__get_radius(self);
     },
-    set: function(radius) {
+    set: function(value) {
         var self = this.ptr;
-        /* radius <float> [] */
-        _toy_Heap__set_radius(self, radius);
+        /* value <float> [] */
+        _toy_Heap__set_radius(self, value);
     }
 });
 Heap.prototype["__destroy__"] = Heap.prototype.__destroy__ = function() {
@@ -277,7 +277,6 @@ Heap.prototype["__destroy__"] = Heap.prototype.__destroy__ = function() {
 };
 // Sector
 function Sector(spatial, world_page, navblock, coordinate, size) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* world_page <toy::HWorldPage> [] */
     /* navblock <toy::HNavblock> [] */
@@ -285,8 +284,8 @@ function Sector(spatial, world_page, navblock, coordinate, size) {
     coordinate = coordinate.ptr;
     /* size <vec3> [] */
     size = size.ptr;
-    if (spatial === undefined) { this.ptr = _toy_Sector_Sector_0(self); getCache(Sector)[this.ptr] = this; return; }
-    this.ptr = _toy_Sector_Sector_5(self, spatial, world_page, navblock, coordinate, size); getCache(Sector)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Sector_Sector_0(); getCache(Sector)[this.ptr] = this; return; }
+    this.ptr = _toy_Sector_Sector_5(spatial, world_page, navblock, coordinate, size); getCache(Sector)[this.ptr] = this;
 };
 Sector.prototype = Object.create(WrapperObject.prototype);
 Sector.prototype.constructor = Sector;
@@ -296,37 +295,37 @@ Module['Sector'] = Sector;
 Object.defineProperty(Sector.prototype, "coordinate", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Sector__get_coordinate(self), mud::uvec3);
+        return wrapPointer(_toy_Sector__get_coordinate(self), uvec3);
     },
-    set: function(coordinate) {
+    set: function(value) {
         var self = this.ptr;
-        /* coordinate <uvec3> [] */
-        coordinate = coordinate.ptr;
-        _toy_Sector__set_coordinate(self, coordinate);
+        /* value <uvec3> [] */
+        value = value.ptr;
+        _toy_Sector__set_coordinate(self, value);
     }
 });
 Object.defineProperty(Sector.prototype, "size", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Sector__get_size(self), mud::vec3);
+        return wrapPointer(_toy_Sector__get_size(self), vec3);
     },
-    set: function(size) {
+    set: function(value) {
         var self = this.ptr;
-        /* size <vec3> [] */
-        size = size.ptr;
-        _toy_Sector__set_size(self, size);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _toy_Sector__set_size(self, value);
     }
 });
 Object.defineProperty(Sector.prototype, "block", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Sector__get_block(self), toy::Block);
+        return wrapPointer(_toy_Sector__get_block(self), Block);
     },
-    set: function(block) {
+    set: function(value) {
         var self = this.ptr;
-        /* block <Block> [] */
-        block = block.ptr;
-        _toy_Sector__set_block(self, block);
+        /* value <Block> [] */
+        value = value.ptr;
+        _toy_Sector__set_block(self, value);
     }
 });
 Sector.prototype["__destroy__"] = Sector.prototype.__destroy__ = function() {
@@ -335,7 +334,6 @@ Sector.prototype["__destroy__"] = Sector.prototype.__destroy__ = function() {
 };
 // Tileblock
 function Tileblock(spatial, world_page, navblock, size, tile_scale, tileset) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* world_page <toy::HWorldPage> [] */
     /* navblock <toy::HNavblock> [] */
@@ -345,8 +343,8 @@ function Tileblock(spatial, world_page, navblock, size, tile_scale, tileset) {
     tile_scale = tile_scale.ptr;
     /* tileset <WaveTileset> [] */
     tileset = tileset.ptr;
-    if (spatial === undefined) { this.ptr = _toy_Tileblock_Tileblock_0(self); getCache(Tileblock)[this.ptr] = this; return; }
-    this.ptr = _toy_Tileblock_Tileblock_6(self, spatial, world_page, navblock, size, tile_scale, tileset); getCache(Tileblock)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _toy_Tileblock_Tileblock_0(); getCache(Tileblock)[this.ptr] = this; return; }
+    this.ptr = _toy_Tileblock_Tileblock_6(spatial, world_page, navblock, size, tile_scale, tileset); getCache(Tileblock)[this.ptr] = this;
 };
 Tileblock.prototype = Object.create(WrapperObject.prototype);
 Tileblock.prototype.constructor = Tileblock;
@@ -356,17 +354,17 @@ Module['Tileblock'] = Tileblock;
 Object.defineProperty(Tileblock.prototype, "wfc_block", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Tileblock__get_wfc_block(self), mud::WfcBlock);
+        return wrapPointer(_toy_Tileblock__get_wfc_block(self), WfcBlock);
     }});
 Object.defineProperty(Tileblock.prototype, "setup", {
     get: function() {
         var self = this.ptr;
         return !!(_toy_Tileblock__get_setup(self));
     },
-    set: function(setup) {
+    set: function(value) {
         var self = this.ptr;
-        /* setup <bool> [] */
-        _toy_Tileblock__set_setup(self, setup);
+        /* value <bool> [] */
+        _toy_Tileblock__set_setup(self, value);
     }
 });
 Object.defineProperty(Tileblock.prototype, "populated", {
@@ -374,10 +372,10 @@ Object.defineProperty(Tileblock.prototype, "populated", {
         var self = this.ptr;
         return !!(_toy_Tileblock__get_populated(self));
     },
-    set: function(populated) {
+    set: function(value) {
         var self = this.ptr;
-        /* populated <bool> [] */
-        _toy_Tileblock__set_populated(self, populated);
+        /* value <bool> [] */
+        _toy_Tileblock__set_populated(self, value);
     }
 });
 Tileblock.prototype["__destroy__"] = Tileblock.prototype.__destroy__ = function() {
@@ -386,8 +384,7 @@ Tileblock.prototype["__destroy__"] = Tileblock.prototype.__destroy__ = function(
 };
 // Earth
 function Earth() {
-    var self = this.ptr;
-    this.ptr = _toy_Earth_Earth_0(self); getCache(Earth)[this.ptr] = this;
+    this.ptr = _toy_Earth_Earth_0(); getCache(Earth)[this.ptr] = this;
 };
 Earth.prototype = Object.create(WrapperObject.prototype);
 Earth.prototype.constructor = Earth;
@@ -397,6 +394,53 @@ Module['Earth'] = Earth;
 Earth.prototype["__destroy__"] = Earth.prototype.__destroy__ = function() {
     var self = this.ptr;
     _toy_Earth__destroy(self);
+};
+Module['build_block_geometry'] = function(scene, page, block) {
+    var self = this.ptr;
+    /* scene <Scene> [] */
+    scene = scene.ptr;
+    /* page <WorldPage> [] */
+    page = page.ptr;
+    /* block <Tileblock> [] */
+    block = block.ptr;
+    _toy_build_block_geometry_3(scene, page, block);
+};
+Module['generate_block'] = function(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file) {
+    var self = this.ptr;
+    /* gfx_system <GfxSystem> [] */
+    gfx_system = gfx_system.ptr;
+    /* tileset <WaveTileset> [] */
+    tileset = tileset.ptr;
+    /* origin <toy::HSpatial> [] */
+    /* coord <ivec2> [] */
+    coord = coord.ptr;
+    /* block_subdiv <uvec3> [] */
+    block_subdiv = block_subdiv.ptr;
+    /* tile_scale <vec3> [] */
+    tile_scale = tile_scale.ptr;
+    /* from_file <bool> [] */
+    if (from_file === undefined) { return _toy_generate_block_6(gfx_system, tileset, origin, coord, block_subdiv, tile_scale); return; }
+    return _toy_generate_block_7(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file);
+};
+Module['paint_block_elements'] = function(block, image, elements) {
+    var self = this.ptr;
+    /* block <Block> [] */
+    block = block.ptr;
+    /* image <Image256> [] */
+    image = image.ptr;
+    /* elements <array<toy::Element*>> [] */
+    elements = elements.ptr;
+    _toy_paint_block_elements_3(block, image, elements);
+};
+Module['paint_block_height'] = function(block, image, element) {
+    var self = this.ptr;
+    /* block <Block> [] */
+    block = block.ptr;
+    /* image <Image256> [] */
+    image = image.ptr;
+    /* element <Element> [] */
+    element = element.ptr;
+    _toy_paint_block_height_3(block, image, element);
 };
 
 (function() {

@@ -20,18 +20,19 @@ VisuScene.prototype.constructor = VisuScene;
 VisuScene.prototype.__class__ = VisuScene;
 VisuScene.__cache__ = {};
 Module['VisuScene'] = VisuScene;
-VisuScene.prototype["next_frame"] = VisuScene.prototype.next_frame = function() {
-    _toy_VisuScene_next_frame_0();
+VisuScene.prototype["next_frame"] = VisuScene.prototype.next_frame = function(self) {
+    var self = this.ptr;
+    _toy_VisuScene_next_frame_0(self);
 };
 Object.defineProperty(VisuScene.prototype, "gfx_system", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_VisuScene__get_gfx_system(self), mud::GfxSystem);
+        return wrapPointer(_toy_VisuScene__get_gfx_system(self), GfxSystem);
     }});
 Object.defineProperty(VisuScene.prototype, "scene", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_VisuScene__get_scene(self), mud::Scene);
+        return wrapPointer(_toy_VisuScene__get_scene(self), Scene);
     }});
 VisuScene.prototype["__destroy__"] = VisuScene.prototype.__destroy__ = function() {
     var self = this.ptr;

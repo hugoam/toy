@@ -641,6 +641,18 @@ extern "C" {
 	void DECL toy_WorldMedium__destroy(toy::WorldMedium* self) {
 		delete self;
 	}
+	bool DECL toy_move_2d_5(toy::Spatial* spatial, toy::Movable* movable, const mud::vec3* target, float velocity, float time_step) {
+		return toy::move_2d(*spatial, *movable, *target, velocity, time_step);
+	}
+	bool DECL toy_move_2d_6(toy::Spatial* spatial, toy::Movable* movable, const mud::vec3* target, float velocity, float time_step, float margin) {
+		return toy::move_2d(*spatial, *movable, *target, velocity, time_step, margin);
+	}
+	bool DECL toy_steer_2d_5(toy::Spatial* spatial, toy::Movable* movable, const mud::vec3* target, float velocity, float time_step) {
+		return toy::steer_2d(*spatial, *movable, *target, velocity, time_step);
+	}
+	bool DECL toy_steer_2d_6(toy::Spatial* spatial, toy::Movable* movable, const mud::vec3* target, float velocity, float time_step, float margin) {
+		return toy::steer_2d(*spatial, *movable, *target, velocity, time_step, margin);
+	}
 	// CollisionGroup
 	toy::CollisionGroup DECL toy_CollisionGroup_CM_NOMASK() {
 		return toy::CM_NOMASK;

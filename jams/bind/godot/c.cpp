@@ -127,7 +127,7 @@ extern "C" {
 	void DECL Human_shoot_0(Human* self) {
 		self->shoot();
 	}
-	mud::quat* DECL Human_sight_0(Human* self) {
+	mud::quat* DECL Human_sight_0(Human* self, ) {
 		static mud::quat temp;
 		return (temp = self->sight(), &temp);
 	}

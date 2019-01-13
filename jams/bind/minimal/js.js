@@ -12,25 +12,25 @@ Module['Bullet'] = Bullet;
 Object.defineProperty(Bullet.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Bullet__get_source(self), mud::vec3);
+        return wrapPointer(_Bullet__get_source(self), vec3);
     },
-    set: function(source) {
+    set: function(value) {
         var self = this.ptr;
-        /* source <vec3> [] */
-        source = source.ptr;
-        _Bullet__set_source(self, source);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _Bullet__set_source(self, value);
     }
 });
 Object.defineProperty(Bullet.prototype, "velocity", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Bullet__get_velocity(self), mud::vec3);
+        return wrapPointer(_Bullet__get_velocity(self), vec3);
     },
-    set: function(velocity) {
+    set: function(value) {
         var self = this.ptr;
-        /* velocity <vec3> [] */
-        velocity = velocity.ptr;
-        _Bullet__set_velocity(self, velocity);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _Bullet__set_velocity(self, value);
     }
 });
 Bullet.prototype["__destroy__"] = Bullet.prototype.__destroy__ = function() {
@@ -39,13 +39,12 @@ Bullet.prototype["__destroy__"] = Bullet.prototype.__destroy__ = function() {
 };
 // Crate
 function Crate(spatial, movable, extents) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
     /* extents <vec3> [] */
     extents = extents.ptr;
-    if (spatial === undefined) { this.ptr = _Crate_Crate_0(self); getCache(Crate)[this.ptr] = this; return; }
-    this.ptr = _Crate_Crate_3(self, spatial, movable, extents); getCache(Crate)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _Crate_Crate_0(); getCache(Crate)[this.ptr] = this; return; }
+    this.ptr = _Crate_Crate_3(spatial, movable, extents); getCache(Crate)[this.ptr] = this;
 };
 Crate.prototype = Object.create(WrapperObject.prototype);
 Crate.prototype.constructor = Crate;
@@ -55,13 +54,13 @@ Module['Crate'] = Crate;
 Object.defineProperty(Crate.prototype, "extents", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Crate__get_extents(self), mud::vec3);
+        return wrapPointer(_Crate__get_extents(self), vec3);
     },
-    set: function(extents) {
+    set: function(value) {
         var self = this.ptr;
-        /* extents <vec3> [] */
-        extents = extents.ptr;
-        _Crate__set_extents(self, extents);
+        /* value <vec3> [] */
+        value = value.ptr;
+        _Crate__set_extents(self, value);
     }
 });
 Crate.prototype["__destroy__"] = Crate.prototype.__destroy__ = function() {
@@ -70,11 +69,10 @@ Crate.prototype["__destroy__"] = Crate.prototype.__destroy__ = function() {
 };
 // Human
 function Human(spatial, movable) {
-    var self = this.ptr;
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
-    if (spatial === undefined) { this.ptr = _Human_Human_0(self); getCache(Human)[this.ptr] = this; return; }
-    this.ptr = _Human_Human_2(self, spatial, movable); getCache(Human)[this.ptr] = this;
+    if (spatial === undefined) { this.ptr = _Human_Human_0(); getCache(Human)[this.ptr] = this; return; }
+    this.ptr = _Human_Human_2(spatial, movable); getCache(Human)[this.ptr] = this;
 };
 Human.prototype = Object.create(WrapperObject.prototype);
 Human.prototype.constructor = Human;

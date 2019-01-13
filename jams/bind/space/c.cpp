@@ -710,6 +710,15 @@ extern "C" {
 	void DECL Universe__destroy(Universe* self) {
 		delete self;
 	}
+	Commander* DECL _generate_commander_2(Galaxy* galaxy, Star* star) {
+		return generate_commander(*galaxy, *star);
+	}
+	HFleet DECL _generate_fleet_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {
+		return generate_fleet(*galaxy, *coord, *position);
+	}
+	HStar DECL _generate_system_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {
+		return generate_system(*galaxy, *coord, *position);
+	}
 	// CombatType
 	CombatType DECL CombatType_Spatial() {
 		return CombatType::Spatial;

@@ -219,6 +219,21 @@ extern "C" {
 	void DECL toy_Earth__destroy(toy::Earth* self) {
 		delete self;
 	}
+	void DECL toy_build_block_geometry_3(mud::Scene* scene, toy::WorldPage* page, toy::Tileblock* block) {
+		toy::build_block_geometry(*scene, *page, *block);
+	}
+	toy::HTileblock DECL toy_generate_block_6(mud::GfxSystem* gfx_system, mud::WaveTileset* tileset, toy::HSpatial origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale) {
+		return toy::generate_block(*gfx_system, *tileset, origin, *coord, *block_subdiv, *tile_scale);
+	}
+	toy::HTileblock DECL toy_generate_block_7(mud::GfxSystem* gfx_system, mud::WaveTileset* tileset, toy::HSpatial origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale, bool from_file) {
+		return toy::generate_block(*gfx_system, *tileset, origin, *coord, *block_subdiv, *tile_scale, from_file);
+	}
+	void DECL toy_paint_block_elements_3(toy::Block* block, mud::Image256* image, array<toy::Element*>* elements) {
+		toy::paint_block_elements(*block, *image, *elements);
+	}
+	void DECL toy_paint_block_height_3(toy::Block* block, mud::Image256* image, toy::Element* element) {
+		toy::paint_block_height(*block, *image, *element);
+	}
 	// MatterState
 	toy::MatterState DECL toy_MatterState_Solid() {
 		return toy::MatterState::Solid;
