@@ -11,7 +11,7 @@ Procedure.__cache__ = {};
 Module['Procedure'] = Procedure;
 Procedure.prototype["__destroy__"] = Procedure.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Procedure___destroy__(self);
+    _toy_Procedure___destroy__(self);
 };
 // ProcedureType
 function ProcedureType() { throw "cannot construct a ProcedureType, no constructor in IDL" }
@@ -23,35 +23,35 @@ Module['ProcedureType'] = ProcedureType;
 Object.defineProperty(ProcedureType.prototype, "type", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_ProcedureType_get_type(self), mud::Type);
+        return wrapPointer(_toy_ProcedureType_get_type(self), mud::Type);
     }});
 Object.defineProperty(ProcedureType.prototype, "index", {
     get: function() {
         var self = this.ptr;
-        return _ProcedureType_get_index(self);
+        return _toy_ProcedureType_get_index(self);
     },
     set: function(index) {
         var self = this.ptr;
         /* index <uint32_t> [] */
-        _ProcedureType_set_index(self, index);
+        _toy_ProcedureType_set_index(self, index);
     }
 });
 Object.defineProperty(ProcedureType.prototype, "name", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_ProcedureType_get_name(self));
+        return Pointer_stringify(_toy_ProcedureType_get_name(self));
     },
     set: function(name) {
         var self = this.ptr;
         /* name <std::string> [] */
         if (name && typeof name === "object") name = name.ptr;
         else name = ensureString(name);
-        _ProcedureType_set_name(self, name);
+        _toy_ProcedureType_set_name(self, name);
     }
 });
 ProcedureType.prototype["__destroy__"] = ProcedureType.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _ProcedureType___destroy__(self);
+    _toy_ProcedureType___destroy__(self);
 };
 
 (function() {

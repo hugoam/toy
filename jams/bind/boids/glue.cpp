@@ -39,70 +39,70 @@
 extern "C" {
 	
 	// Boid
-	boids::Boid* EMSCRIPTEN_KEEPALIVE Boid_Boid_0() {
+	boids::Boid* EMSCRIPTEN_KEEPALIVE boids_Boid_Boid_0() {
 		return new boids::Boid();
 	}
-	void EMSCRIPTEN_KEEPALIVE Boid___destroy__(boids::Boid* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_Boid___destroy__(boids::Boid* self) {
 		delete self;
 	}
 	// BoidObstacle
-	boids::BoidObstacle* EMSCRIPTEN_KEEPALIVE BoidObstacle_BoidObstacle_0() {
+	boids::BoidObstacle* EMSCRIPTEN_KEEPALIVE boids_BoidObstacle_BoidObstacle_0() {
 		return new boids::BoidObstacle();
 	}
-	void EMSCRIPTEN_KEEPALIVE BoidObstacle___destroy__(boids::BoidObstacle* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_BoidObstacle___destroy__(boids::BoidObstacle* self) {
 		delete self;
 	}
 	// BoidTarget
-	boids::BoidTarget* EMSCRIPTEN_KEEPALIVE BoidTarget_BoidTarget_0() {
+	boids::BoidTarget* EMSCRIPTEN_KEEPALIVE boids_BoidTarget_BoidTarget_0() {
 		return new boids::BoidTarget();
 	}
-	void EMSCRIPTEN_KEEPALIVE BoidTarget___destroy__(boids::BoidTarget* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_BoidTarget___destroy__(boids::BoidTarget* self) {
 		delete self;
 	}
 	// Heading
-	boids::Heading* EMSCRIPTEN_KEEPALIVE Heading_Heading_0() {
+	boids::Heading* EMSCRIPTEN_KEEPALIVE boids_Heading_Heading_0() {
 		return new boids::Heading();
 	}
-	void EMSCRIPTEN_KEEPALIVE Heading___destroy__(boids::Heading* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_Heading___destroy__(boids::Heading* self) {
 		delete self;
 	}
 	// MoveForward
-	boids::MoveForward* EMSCRIPTEN_KEEPALIVE MoveForward_MoveForward_0() {
+	boids::MoveForward* EMSCRIPTEN_KEEPALIVE boids_MoveForward_MoveForward_0() {
 		return new boids::MoveForward();
 	}
-	void EMSCRIPTEN_KEEPALIVE MoveForward___destroy__(boids::MoveForward* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_MoveForward___destroy__(boids::MoveForward* self) {
 		delete self;
 	}
 	// MoveSpeed
-	boids::MoveSpeed* EMSCRIPTEN_KEEPALIVE MoveSpeed_MoveSpeed_0() {
+	boids::MoveSpeed* EMSCRIPTEN_KEEPALIVE boids_MoveSpeed_MoveSpeed_0() {
 		return new boids::MoveSpeed();
 	}
-	void EMSCRIPTEN_KEEPALIVE MoveSpeed___destroy__(boids::MoveSpeed* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_MoveSpeed___destroy__(boids::MoveSpeed* self) {
 		delete self;
 	}
 	// Player
-	void EMSCRIPTEN_KEEPALIVE Player___destroy__(boids::Player* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_Player___destroy__(boids::Player* self) {
 		delete self;
 	}
 	// Position
-	boids::Position* EMSCRIPTEN_KEEPALIVE Position_Position_0() {
+	boids::Position* EMSCRIPTEN_KEEPALIVE boids_Position_Position_0() {
 		return new boids::Position();
 	}
-	void EMSCRIPTEN_KEEPALIVE Position___destroy__(boids::Position* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_Position___destroy__(boids::Position* self) {
 		delete self;
 	}
 	// Rotation
-	boids::Rotation* EMSCRIPTEN_KEEPALIVE Rotation_Rotation_0() {
+	boids::Rotation* EMSCRIPTEN_KEEPALIVE boids_Rotation_Rotation_0() {
 		return new boids::Rotation();
 	}
-	void EMSCRIPTEN_KEEPALIVE Rotation___destroy__(boids::Rotation* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_Rotation___destroy__(boids::Rotation* self) {
 		delete self;
 	}
 	// Transform4
-	boids::Transform4* EMSCRIPTEN_KEEPALIVE Transform4_Transform4_0() {
+	boids::Transform4* EMSCRIPTEN_KEEPALIVE boids_Transform4_Transform4_0() {
 		return new boids::Transform4();
 	}
-	void EMSCRIPTEN_KEEPALIVE Transform4___destroy__(boids::Transform4* self) {
+	void EMSCRIPTEN_KEEPALIVE boids_Transform4___destroy__(boids::Transform4* self) {
 		delete self;
 	}
 	
