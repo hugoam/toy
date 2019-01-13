@@ -679,17 +679,7 @@ Receptor.prototype["__destroy__"] = Receptor.prototype.__destroy__ = function() 
     _Receptor___destroy__(self);
 };
 // Solid
-function Solid(spatial, movable, collider, isstatic, mass) {
-    var self = this.ptr;
-    /* spatial <toy::HSpatial> [] */
-    /* movable <toy::HMovable> [] */
-    /* collider <toy::OCollider> [] */
-    /* isstatic <bool> [] */
-    /* mass <float> [] */
-    if (spatial === undefined) { this.ptr = _Solid_Solid_0(self); getCache(Solid)[this.ptr] = this; return; }
-    if (mass === undefined) { this.ptr = _Solid_Solid_4(self, spatial, movable, collider, isstatic); getCache(Solid)[this.ptr] = this; return; }
-    this.ptr = _Solid_Solid_5(self, spatial, movable, collider, isstatic, mass); getCache(Solid)[this.ptr] = this;
-};
+function Solid() { throw "cannot construct a Solid, no constructor in IDL" }
 Solid.prototype = Object.create(WrapperObject.prototype);
 Solid.prototype.constructor = Solid;
 Solid.prototype.__class__ = Solid;
@@ -710,13 +700,7 @@ Object.defineProperty(Solid.prototype, "collider", {
     get: function() {
         var self = this.ptr;
         return _Solid_get_collider(self);
-    },
-    set: function(collider) {
-        var self = this.ptr;
-        /* collider <toy::OCollider> [] */
-        _Solid_set_collider(self, collider);
-    }
-});
+    }});
 Object.defineProperty(Solid.prototype, "static", {
     get: function() {
         var self = this.ptr;

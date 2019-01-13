@@ -376,15 +376,6 @@ extern "C" {
 		delete self;
 	}
 	// Solid
-	toy::Solid* EMSCRIPTEN_KEEPALIVE Solid_Solid_0() {
-		return new toy::Solid();
-	}
-	toy::Solid* EMSCRIPTEN_KEEPALIVE Solid_Solid_4(toy::HSpatial spatial, toy::HMovable movable, toy::OCollider collider, bool isstatic) {
-		return new toy::Solid(spatial, movable, collider, isstatic);
-	}
-	toy::Solid* EMSCRIPTEN_KEEPALIVE Solid_Solid_5(toy::HSpatial spatial, toy::HMovable movable, toy::OCollider collider, bool isstatic, float mass) {
-		return new toy::Solid(spatial, movable, collider, isstatic, mass);
-	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE Solid_get_spatial(toy::Solid* self) {
 		return self->m_spatial;
 	}
@@ -393,9 +384,6 @@ extern "C" {
 	}
 	toy::OCollider EMSCRIPTEN_KEEPALIVE Solid_get_collider(toy::Solid* self) {
 		return self->m_collider;
-	}
-	void EMSCRIPTEN_KEEPALIVE Solid_set_collider(toy::Solid* self, toy::OCollider value) {
-		self->m_collider = value;
 	}
 	bool EMSCRIPTEN_KEEPALIVE Solid_get_static(toy::Solid* self) {
 		return self->m_static;
