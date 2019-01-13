@@ -12,30 +12,30 @@ Module['Bullet'] = Bullet;
 Object.defineProperty(Bullet.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Bullet_get_source(self), mud::vec3);
+        return wrapPointer(_Bullet__get_source(self), mud::vec3);
     },
     set: function(source) {
         var self = this.ptr;
         /* source <vec3> [] */
         source = source.ptr;
-        _Bullet_set_source(self, source);
+        _Bullet__set_source(self, source);
     }
 });
 Object.defineProperty(Bullet.prototype, "velocity", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Bullet_get_velocity(self), mud::vec3);
+        return wrapPointer(_Bullet__get_velocity(self), mud::vec3);
     },
     set: function(velocity) {
         var self = this.ptr;
         /* velocity <vec3> [] */
         velocity = velocity.ptr;
-        _Bullet_set_velocity(self, velocity);
+        _Bullet__set_velocity(self, velocity);
     }
 });
 Bullet.prototype["__destroy__"] = Bullet.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Bullet___destroy__(self);
+    _Bullet__destroy(self);
 };
 // Crate
 function Crate(spatial, movable, extents) {
@@ -55,18 +55,18 @@ Module['Crate'] = Crate;
 Object.defineProperty(Crate.prototype, "extents", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Crate_get_extents(self), mud::vec3);
+        return wrapPointer(_Crate__get_extents(self), mud::vec3);
     },
     set: function(extents) {
         var self = this.ptr;
         /* extents <vec3> [] */
         extents = extents.ptr;
-        _Crate_set_extents(self, extents);
+        _Crate__set_extents(self, extents);
     }
 });
 Crate.prototype["__destroy__"] = Crate.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Crate___destroy__(self);
+    _Crate__destroy(self);
 };
 // Human
 function Human(spatial, movable) {
@@ -83,7 +83,7 @@ Human.__cache__ = {};
 Module['Human'] = Human;
 Human.prototype["__destroy__"] = Human.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Human___destroy__(self);
+    _Human__destroy(self);
 };
 // Player
 function Player() { throw "cannot construct a Player, no constructor in IDL" }
@@ -94,7 +94,7 @@ Player.__cache__ = {};
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Player___destroy__(self);
+    _Player__destroy(self);
 };
 
 (function() {

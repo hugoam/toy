@@ -1,33 +1,39 @@
 #include <type/Api.h>
 #include <math/Api.h>
 #include <util/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 
 extern "C" {
 	
 	// Procedure
-	void EMSCRIPTEN_KEEPALIVE toy_Procedure___destroy__(toy::Procedure* self) {
+	void DECL toy_Procedure__destroy(toy::Procedure* self) {
 		delete self;
 	}
 	// ProcedureType
-	mud::Type* EMSCRIPTEN_KEEPALIVE toy_ProcedureType_get_type(toy::ProcedureType* self) {
+	mud::Type* DECL toy_ProcedureType__get_type(toy::ProcedureType* self) {
 		return &self->m_type;
 	}
-	uint32_t EMSCRIPTEN_KEEPALIVE toy_ProcedureType_get_index(toy::ProcedureType* self) {
+	uint32_t DECL toy_ProcedureType__get_index(toy::ProcedureType* self) {
 		return self->m_index;
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_ProcedureType_set_index(toy::ProcedureType* self, uint32_t value) {
+	void DECL toy_ProcedureType__set_index(toy::ProcedureType* self, uint32_t value) {
 		self->m_index = value;
 	}
-	const char* EMSCRIPTEN_KEEPALIVE toy_ProcedureType_get_name(toy::ProcedureType* self) {
+	const char* DECL toy_ProcedureType__get_name(toy::ProcedureType* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_ProcedureType_set_name(toy::ProcedureType* self, const char* value) {
+	void DECL toy_ProcedureType__set_name(toy::ProcedureType* self, const char* value) {
 		self->m_name = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_ProcedureType___destroy__(toy::ProcedureType* self) {
+	void DECL toy_ProcedureType__destroy(toy::ProcedureType* self) {
 		delete self;
 	}
 	

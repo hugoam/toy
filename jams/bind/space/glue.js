@@ -14,7 +14,7 @@ Combat.__cache__ = {};
 Module['Combat'] = Combat;
 Combat.prototype["__destroy__"] = Combat.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Combat___destroy__(self);
+    _Combat__destroy(self);
 };
 // CombatFleet
 function CombatFleet() {
@@ -28,7 +28,7 @@ CombatFleet.__cache__ = {};
 Module['CombatFleet'] = CombatFleet;
 CombatFleet.prototype["__destroy__"] = CombatFleet.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _CombatFleet___destroy__(self);
+    _CombatFleet__destroy(self);
 };
 // CombatStar
 function CombatStar() {
@@ -42,7 +42,7 @@ CombatStar.__cache__ = {};
 Module['CombatStar'] = CombatStar;
 CombatStar.prototype["__destroy__"] = CombatStar.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _CombatStar___destroy__(self);
+    _CombatStar__destroy(self);
 };
 // Commander
 function Commander(id, name, race, command, commerce, diplomacy) {
@@ -67,155 +67,155 @@ Module['Commander'] = Commander;
 Object.defineProperty(Commander.prototype, "id", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_id(self);
+        return _Commander__get_id(self);
     },
     set: function(id) {
         var self = this.ptr;
         /* id <mud::Id> [] */
-        _Commander_set_id(self, id);
+        _Commander__set_id(self, id);
     }
 });
 Object.defineProperty(Commander.prototype, "name", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Commander_get_name(self));
+        return Pointer_stringify(_Commander__get_name(self));
     },
     set: function(name) {
         var self = this.ptr;
         /* name <std::string> [] */
         if (name && typeof name === "object") name = name.ptr;
         else name = ensureString(name);
-        _Commander_set_name(self, name);
+        _Commander__set_name(self, name);
     }
 });
 Object.defineProperty(Commander.prototype, "race", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_race(self);
+        return _Commander__get_race(self);
     },
     set: function(race) {
         var self = this.ptr;
         /* race <Race> [] */
         if (race && typeof race === "object") race = race.ptr;
-        _Commander_set_race(self, race);
+        _Commander__set_race(self, race);
     }
 });
 Object.defineProperty(Commander.prototype, "command", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_command(self);
+        return _Commander__get_command(self);
     },
     set: function(command) {
         var self = this.ptr;
         /* command <int> [] */
-        _Commander_set_command(self, command);
+        _Commander__set_command(self, command);
     }
 });
 Object.defineProperty(Commander.prototype, "commerce", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_commerce(self);
+        return _Commander__get_commerce(self);
     },
     set: function(commerce) {
         var self = this.ptr;
         /* commerce <int> [] */
-        _Commander_set_commerce(self, commerce);
+        _Commander__set_commerce(self, commerce);
     }
 });
 Object.defineProperty(Commander.prototype, "diplomacy", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_diplomacy(self);
+        return _Commander__get_diplomacy(self);
     },
     set: function(diplomacy) {
         var self = this.ptr;
         /* diplomacy <int> [] */
-        _Commander_set_diplomacy(self, diplomacy);
+        _Commander__set_diplomacy(self, diplomacy);
     }
 });
 Object.defineProperty(Commander.prototype, "reputation", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_reputation(self);
+        return _Commander__get_reputation(self);
     },
     set: function(reputation) {
         var self = this.ptr;
         /* reputation <int> [] */
-        _Commander_set_reputation(self, reputation);
+        _Commander__set_reputation(self, reputation);
     }
 });
 Object.defineProperty(Commander.prototype, "victory", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_victory(self);
+        return _Commander__get_victory(self);
     },
     set: function(victory) {
         var self = this.ptr;
         /* victory <int> [] */
-        _Commander_set_victory(self, victory);
+        _Commander__set_victory(self, victory);
     }
 });
 Object.defineProperty(Commander.prototype, "capital", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Commander_get_capital(self), Star);
+        return wrapPointer(_Commander__get_capital(self), Star);
     },
     set: function(capital) {
         var self = this.ptr;
         /* capital <Star> [] */
         capital = capital.ptr;
-        _Commander_set_capital(self, capital);
+        _Commander__set_capital(self, capital);
     }
 });
 Object.defineProperty(Commander.prototype, "regime", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_regime(self);
+        return _Commander__get_regime(self);
     },
     set: function(regime) {
         var self = this.ptr;
         /* regime <Regime> [] */
         if (regime && typeof regime === "object") regime = regime.ptr;
-        _Commander_set_regime(self, regime);
+        _Commander__set_regime(self, regime);
     }
 });
 Object.defineProperty(Commander.prototype, "power", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_power(self);
+        return _Commander__get_power(self);
     },
     set: function(power) {
         var self = this.ptr;
         /* power <float> [] */
-        _Commander_set_power(self, power);
+        _Commander__set_power(self, power);
     }
 });
 Object.defineProperty(Commander.prototype, "centaures", {
     get: function() {
         var self = this.ptr;
-        return _Commander_get_centaures(self);
+        return _Commander__get_centaures(self);
     },
     set: function(centaures) {
         var self = this.ptr;
         /* centaures <float> [] */
-        _Commander_set_centaures(self, centaures);
+        _Commander__set_centaures(self, centaures);
     }
 });
 Object.defineProperty(Commander.prototype, "scans", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Commander_get_scans(self), Scans);
+        return wrapPointer(_Commander__get_scans(self), Scans);
     },
     set: function(scans) {
         var self = this.ptr;
         /* scans <Scans> [] */
         scans = scans.ptr;
-        _Commander_set_scans(self, scans);
+        _Commander__set_scans(self, scans);
     }
 });
 Commander.prototype["__destroy__"] = Commander.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Commander___destroy__(self);
+    _Commander__destroy(self);
 };
 // Construction
 function Construction() {
@@ -229,7 +229,7 @@ Construction.__cache__ = {};
 Module['Construction'] = Construction;
 Construction.prototype["__destroy__"] = Construction.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Construction___destroy__(self);
+    _Construction__destroy(self);
 };
 // Fleet
 function Fleet(spatial, galaxy, commander, coord, name) {
@@ -268,192 +268,192 @@ Fleet.prototype["order_jump"] = Fleet.prototype.order_jump = function(coord, sta
 Object.defineProperty(Fleet.prototype, "galaxy", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Fleet_get_galaxy(self), Galaxy);
+        return wrapPointer(_Fleet__get_galaxy(self), Galaxy);
     },
     set: function(galaxy) {
         var self = this.ptr;
         /* galaxy <Galaxy> [] */
         galaxy = galaxy.ptr;
-        _Fleet_set_galaxy(self, galaxy);
+        _Fleet__set_galaxy(self, galaxy);
     }
 });
 Object.defineProperty(Fleet.prototype, "commander", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Fleet_get_commander(self), Commander);
+        return wrapPointer(_Fleet__get_commander(self), Commander);
     },
     set: function(commander) {
         var self = this.ptr;
         /* commander <Commander> [] */
         commander = commander.ptr;
-        _Fleet_set_commander(self, commander);
+        _Fleet__set_commander(self, commander);
     }
 });
 Object.defineProperty(Fleet.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Fleet_get_coord(self), mud::uvec2);
+        return wrapPointer(_Fleet__get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
         coord = coord.ptr;
-        _Fleet_set_coord(self, coord);
+        _Fleet__set_coord(self, coord);
     }
 });
 Object.defineProperty(Fleet.prototype, "slot", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Fleet_get_slot(self), mud::vec3);
+        return wrapPointer(_Fleet__get_slot(self), mud::vec3);
     },
     set: function(slot) {
         var self = this.ptr;
         /* slot <vec3> [] */
         slot = slot.ptr;
-        _Fleet_set_slot(self, slot);
+        _Fleet__set_slot(self, slot);
     }
 });
 Object.defineProperty(Fleet.prototype, "name", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Fleet_get_name(self));
+        return Pointer_stringify(_Fleet__get_name(self));
     },
     set: function(name) {
         var self = this.ptr;
         /* name <std::string> [] */
         if (name && typeof name === "object") name = name.ptr;
         else name = ensureString(name);
-        _Fleet_set_name(self, name);
+        _Fleet__set_name(self, name);
     }
 });
 Object.defineProperty(Fleet.prototype, "experience", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_experience(self);
+        return _Fleet__get_experience(self);
     },
     set: function(experience) {
         var self = this.ptr;
         /* experience <float> [] */
-        _Fleet_set_experience(self, experience);
+        _Fleet__set_experience(self, experience);
     }
 });
 Object.defineProperty(Fleet.prototype, "spatial_power", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Fleet_get_spatial_power(self), SpatialPower);
+        return wrapPointer(_Fleet__get_spatial_power(self), SpatialPower);
     },
     set: function(spatial_power) {
         var self = this.ptr;
         /* spatial_power <SpatialPower> [] */
         spatial_power = spatial_power.ptr;
-        _Fleet_set_spatial_power(self, spatial_power);
+        _Fleet__set_spatial_power(self, spatial_power);
     }
 });
 Object.defineProperty(Fleet.prototype, "planetary_power", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_planetary_power(self);
+        return _Fleet__get_planetary_power(self);
     },
     set: function(planetary_power) {
         var self = this.ptr;
         /* planetary_power <float> [] */
-        _Fleet_set_planetary_power(self, planetary_power);
+        _Fleet__set_planetary_power(self, planetary_power);
     }
 });
 Object.defineProperty(Fleet.prototype, "speed", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_speed(self);
+        return _Fleet__get_speed(self);
     },
     set: function(speed) {
         var self = this.ptr;
         /* speed <uint8_t> [] */
-        _Fleet_set_speed(self, speed);
+        _Fleet__set_speed(self, speed);
     }
 });
 Object.defineProperty(Fleet.prototype, "scan", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_scan(self);
+        return _Fleet__get_scan(self);
     },
     set: function(scan) {
         var self = this.ptr;
         /* scan <uint8_t> [] */
-        _Fleet_set_scan(self, scan);
+        _Fleet__set_scan(self, scan);
     }
 });
 Object.defineProperty(Fleet.prototype, "upkeep", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_upkeep(self);
+        return _Fleet__get_upkeep(self);
     },
     set: function(upkeep) {
         var self = this.ptr;
         /* upkeep <float> [] */
-        _Fleet_set_upkeep(self, upkeep);
+        _Fleet__set_upkeep(self, upkeep);
     }
 });
 Object.defineProperty(Fleet.prototype, "stance", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_stance(self);
+        return _Fleet__get_stance(self);
     },
     set: function(stance) {
         var self = this.ptr;
         /* stance <FleetStance> [] */
         if (stance && typeof stance === "object") stance = stance.ptr;
-        _Fleet_set_stance(self, stance);
+        _Fleet__set_stance(self, stance);
     }
 });
 Object.defineProperty(Fleet.prototype, "jump", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Fleet_get_jump(self), Jump);
+        return wrapPointer(_Fleet__get_jump(self), Jump);
     },
     set: function(jump) {
         var self = this.ptr;
         /* jump <Jump> [] */
         jump = jump.ptr;
-        _Fleet_set_jump(self, jump);
+        _Fleet__set_jump(self, jump);
     }
 });
 Object.defineProperty(Fleet.prototype, "split", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Fleet_get_split(self), Split);
+        return wrapPointer(_Fleet__get_split(self), Split);
     },
     set: function(split) {
         var self = this.ptr;
         /* split <Split> [] */
         split = split.ptr;
-        _Fleet_set_split(self, split);
+        _Fleet__set_split(self, split);
     }
 });
 Object.defineProperty(Fleet.prototype, "fought", {
     get: function() {
         var self = this.ptr;
-        return !!(_Fleet_get_fought(self));
+        return !!(_Fleet__get_fought(self));
     },
     set: function(fought) {
         var self = this.ptr;
         /* fought <bool> [] */
-        _Fleet_set_fought(self, fought);
+        _Fleet__set_fought(self, fought);
     }
 });
 Object.defineProperty(Fleet.prototype, "ships_updated", {
     get: function() {
         var self = this.ptr;
-        return _Fleet_get_ships_updated(self);
+        return _Fleet__get_ships_updated(self);
     },
     set: function(ships_updated) {
         var self = this.ptr;
         /* ships_updated <size_t> [] */
-        _Fleet_set_ships_updated(self, ships_updated);
+        _Fleet__set_ships_updated(self, ships_updated);
     }
 });
 Fleet.prototype["__destroy__"] = Fleet.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Fleet___destroy__(self);
+    _Fleet__destroy(self);
 };
 // Galaxy
 function Galaxy(spatial, size) {
@@ -472,18 +472,18 @@ Module['Galaxy'] = Galaxy;
 Object.defineProperty(Galaxy.prototype, "size", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Galaxy_get_size(self), mud::uvec2);
+        return wrapPointer(_Galaxy__get_size(self), mud::uvec2);
     },
     set: function(size) {
         var self = this.ptr;
         /* size <uvec2> [] */
         size = size.ptr;
-        _Galaxy_set_size(self, size);
+        _Galaxy__set_size(self, size);
     }
 });
 Galaxy.prototype["__destroy__"] = Galaxy.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Galaxy___destroy__(self);
+    _Galaxy__destroy(self);
 };
 // Jump
 function Jump() {
@@ -498,66 +498,66 @@ Module['Jump'] = Jump;
 Object.defineProperty(Jump.prototype, "fleet", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Jump_get_fleet(self), Fleet);
+        return wrapPointer(_Jump__get_fleet(self), Fleet);
     },
     set: function(fleet) {
         var self = this.ptr;
         /* fleet <Fleet> [] */
         fleet = fleet.ptr;
-        _Jump_set_fleet(self, fleet);
+        _Jump__set_fleet(self, fleet);
     }
 });
 Object.defineProperty(Jump.prototype, "start", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Jump_get_start(self), mud::uvec2);
+        return wrapPointer(_Jump__get_start(self), mud::uvec2);
     },
     set: function(start) {
         var self = this.ptr;
         /* start <uvec2> [] */
         start = start.ptr;
-        _Jump_set_start(self, start);
+        _Jump__set_start(self, start);
     }
 });
 Object.defineProperty(Jump.prototype, "dest", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Jump_get_dest(self), mud::uvec2);
+        return wrapPointer(_Jump__get_dest(self), mud::uvec2);
     },
     set: function(dest) {
         var self = this.ptr;
         /* dest <uvec2> [] */
         dest = dest.ptr;
-        _Jump_set_dest(self, dest);
+        _Jump__set_dest(self, dest);
     }
 });
 Object.defineProperty(Jump.prototype, "stance", {
     get: function() {
         var self = this.ptr;
-        return _Jump_get_stance(self);
+        return _Jump__get_stance(self);
     },
     set: function(stance) {
         var self = this.ptr;
         /* stance <FleetStance> [] */
         if (stance && typeof stance === "object") stance = stance.ptr;
-        _Jump_set_stance(self, stance);
+        _Jump__set_stance(self, stance);
     }
 });
 Object.defineProperty(Jump.prototype, "track", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Jump_get_track(self), Fleet);
+        return wrapPointer(_Jump__get_track(self), Fleet);
     },
     set: function(track) {
         var self = this.ptr;
         /* track <Fleet> [] */
         track = track.ptr;
-        _Jump_set_track(self, track);
+        _Jump__set_track(self, track);
     }
 });
 Jump.prototype["__destroy__"] = Jump.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Jump___destroy__(self);
+    _Jump__destroy(self);
 };
 // Player
 function Player() { throw "cannot construct a Player, no constructor in IDL" }
@@ -568,7 +568,7 @@ Player.__cache__ = {};
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Player___destroy__(self);
+    _Player__destroy(self);
 };
 // Scans
 function Scans() {
@@ -582,7 +582,7 @@ Scans.__cache__ = {};
 Module['Scans'] = Scans;
 Scans.prototype["__destroy__"] = Scans.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Scans___destroy__(self);
+    _Scans__destroy(self);
 };
 // Schema
 function Schema() {
@@ -597,156 +597,156 @@ Module['Schema'] = Schema;
 Object.defineProperty(Schema.prototype, "code", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Schema_get_code(self));
+        return Pointer_stringify(_Schema__get_code(self));
     },
     set: function(code) {
         var self = this.ptr;
         /* code <std::string> [] */
         if (code && typeof code === "object") code = code.ptr;
         else code = ensureString(code);
-        _Schema_set_code(self, code);
+        _Schema__set_code(self, code);
     }
 });
 Object.defineProperty(Schema.prototype, "name", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Schema_get_name(self));
+        return Pointer_stringify(_Schema__get_name(self));
     },
     set: function(name) {
         var self = this.ptr;
         /* name <std::string> [] */
         if (name && typeof name === "object") name = name.ptr;
         else name = ensureString(name);
-        _Schema_set_name(self, name);
+        _Schema__set_name(self, name);
     }
 });
 Object.defineProperty(Schema.prototype, "conceptor", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Schema_get_conceptor(self));
+        return Pointer_stringify(_Schema__get_conceptor(self));
     },
     set: function(conceptor) {
         var self = this.ptr;
         /* conceptor <std::string> [] */
         if (conceptor && typeof conceptor === "object") conceptor = conceptor.ptr;
         else conceptor = ensureString(conceptor);
-        _Schema_set_conceptor(self, conceptor);
+        _Schema__set_conceptor(self, conceptor);
     }
 });
 Object.defineProperty(Schema.prototype, "level", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_level(self);
+        return _Schema__get_level(self);
     },
     set: function(level) {
         var self = this.ptr;
         /* level <uint8_t> [] */
-        _Schema_set_level(self, level);
+        _Schema__set_level(self, level);
     }
 });
 Object.defineProperty(Schema.prototype, "cost", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_cost(self);
+        return _Schema__get_cost(self);
     },
     set: function(cost) {
         var self = this.ptr;
         /* cost <float> [] */
-        _Schema_set_cost(self, cost);
+        _Schema__set_cost(self, cost);
     }
 });
 Object.defineProperty(Schema.prototype, "minerals", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_minerals(self);
+        return _Schema__get_minerals(self);
     },
     set: function(minerals) {
         var self = this.ptr;
         /* minerals <float> [] */
-        _Schema_set_minerals(self, minerals);
+        _Schema__set_minerals(self, minerals);
     }
 });
 Object.defineProperty(Schema.prototype, "andrium", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_andrium(self);
+        return _Schema__get_andrium(self);
     },
     set: function(andrium) {
         var self = this.ptr;
         /* andrium <float> [] */
-        _Schema_set_andrium(self, andrium);
+        _Schema__set_andrium(self, andrium);
     }
 });
 Object.defineProperty(Schema.prototype, "resistance", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_resistance(self);
+        return _Schema__get_resistance(self);
     },
     set: function(resistance) {
         var self = this.ptr;
         /* resistance <float> [] */
-        _Schema_set_resistance(self, resistance);
+        _Schema__set_resistance(self, resistance);
     }
 });
 Object.defineProperty(Schema.prototype, "speed", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_speed(self);
+        return _Schema__get_speed(self);
     },
     set: function(speed) {
         var self = this.ptr;
         /* speed <uint8_t> [] */
-        _Schema_set_speed(self, speed);
+        _Schema__set_speed(self, speed);
     }
 });
 Object.defineProperty(Schema.prototype, "scan", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_scan(self);
+        return _Schema__get_scan(self);
     },
     set: function(scan) {
         var self = this.ptr;
         /* scan <uint8_t> [] */
-        _Schema_set_scan(self, scan);
+        _Schema__set_scan(self, scan);
     }
 });
 Object.defineProperty(Schema.prototype, "planetary", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_planetary(self);
+        return _Schema__get_planetary(self);
     },
     set: function(planetary) {
         var self = this.ptr;
         /* planetary <float> [] */
-        _Schema_set_planetary(self, planetary);
+        _Schema__set_planetary(self, planetary);
     }
 });
 Object.defineProperty(Schema.prototype, "spatial", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Schema_get_spatial(self), SpatialPower);
+        return wrapPointer(_Schema__get_spatial(self), SpatialPower);
     },
     set: function(spatial) {
         var self = this.ptr;
         /* spatial <SpatialPower> [] */
         spatial = spatial.ptr;
-        _Schema_set_spatial(self, spatial);
+        _Schema__set_spatial(self, spatial);
     }
 });
 Object.defineProperty(Schema.prototype, "upkeep_factor", {
     get: function() {
         var self = this.ptr;
-        return _Schema_get_upkeep_factor(self);
+        return _Schema__get_upkeep_factor(self);
     },
     set: function(upkeep_factor) {
         var self = this.ptr;
         /* upkeep_factor <float> [] */
-        _Schema_set_upkeep_factor(self, upkeep_factor);
+        _Schema__set_upkeep_factor(self, upkeep_factor);
     }
 });
 Schema.prototype["__destroy__"] = Schema.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Schema___destroy__(self);
+    _Schema__destroy(self);
 };
 // SpatialPower
 function SpatialPower() {
@@ -760,7 +760,7 @@ SpatialPower.__cache__ = {};
 Module['SpatialPower'] = SpatialPower;
 SpatialPower.prototype["__destroy__"] = SpatialPower.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _SpatialPower___destroy__(self);
+    _SpatialPower__destroy(self);
 };
 // Split
 function Split() {
@@ -775,55 +775,55 @@ Module['Split'] = Split;
 Object.defineProperty(Split.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Split_get_source(self), Fleet);
+        return wrapPointer(_Split__get_source(self), Fleet);
     },
     set: function(source) {
         var self = this.ptr;
         /* source <Fleet> [] */
         source = source.ptr;
-        _Split_set_source(self, source);
+        _Split__set_source(self, source);
     }
 });
 Object.defineProperty(Split.prototype, "dest", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Split_get_dest(self), Fleet);
+        return wrapPointer(_Split__get_dest(self), Fleet);
     },
     set: function(dest) {
         var self = this.ptr;
         /* dest <Fleet> [] */
         dest = dest.ptr;
-        _Split_set_dest(self, dest);
+        _Split__set_dest(self, dest);
     }
 });
 Object.defineProperty(Split.prototype, "code", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Split_get_code(self));
+        return Pointer_stringify(_Split__get_code(self));
     },
     set: function(code) {
         var self = this.ptr;
         /* code <std::string> [] */
         if (code && typeof code === "object") code = code.ptr;
         else code = ensureString(code);
-        _Split_set_code(self, code);
+        _Split__set_code(self, code);
     }
 });
 Object.defineProperty(Split.prototype, "stance", {
     get: function() {
         var self = this.ptr;
-        return _Split_get_stance(self);
+        return _Split__get_stance(self);
     },
     set: function(stance) {
         var self = this.ptr;
         /* stance <FleetStance> [] */
         if (stance && typeof stance === "object") stance = stance.ptr;
-        _Split_set_stance(self, stance);
+        _Split__set_stance(self, stance);
     }
 });
 Split.prototype["__destroy__"] = Split.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Split___destroy__(self);
+    _Split__destroy(self);
 };
 // Star
 function Star(spatial, galaxy, coord, name) {
@@ -848,200 +848,200 @@ Module['Star'] = Star;
 Object.defineProperty(Star.prototype, "galaxy", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Star_get_galaxy(self), Galaxy);
+        return wrapPointer(_Star__get_galaxy(self), Galaxy);
     },
     set: function(galaxy) {
         var self = this.ptr;
         /* galaxy <Galaxy> [] */
         galaxy = galaxy.ptr;
-        _Star_set_galaxy(self, galaxy);
+        _Star__set_galaxy(self, galaxy);
     }
 });
 Object.defineProperty(Star.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Star_get_coord(self), mud::uvec2);
+        return wrapPointer(_Star__get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
         coord = coord.ptr;
-        _Star_set_coord(self, coord);
+        _Star__set_coord(self, coord);
     }
 });
 Object.defineProperty(Star.prototype, "name", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Star_get_name(self));
+        return Pointer_stringify(_Star__get_name(self));
     },
     set: function(name) {
         var self = this.ptr;
         /* name <std::string> [] */
         if (name && typeof name === "object") name = name.ptr;
         else name = ensureString(name);
-        _Star_set_name(self, name);
+        _Star__set_name(self, name);
     }
 });
 Object.defineProperty(Star.prototype, "stability", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_stability(self);
+        return _Star__get_stability(self);
     },
     set: function(stability) {
         var self = this.ptr;
         /* stability <int> [] */
-        _Star_set_stability(self, stability);
+        _Star__set_stability(self, stability);
     }
 });
 Object.defineProperty(Star.prototype, "revolt", {
     get: function() {
         var self = this.ptr;
-        return !!(_Star_get_revolt(self));
+        return !!(_Star__get_revolt(self));
     },
     set: function(revolt) {
         var self = this.ptr;
         /* revolt <bool> [] */
-        _Star_set_revolt(self, revolt);
+        _Star__set_revolt(self, revolt);
     }
 });
 Object.defineProperty(Star.prototype, "environment", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_environment(self);
+        return _Star__get_environment(self);
     },
     set: function(environment) {
         var self = this.ptr;
         /* environment <int> [] */
-        _Star_set_environment(self, environment);
+        _Star__set_environment(self, environment);
     }
 });
 Object.defineProperty(Star.prototype, "terraformation", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_terraformation(self);
+        return _Star__get_terraformation(self);
     },
     set: function(terraformation) {
         var self = this.ptr;
         /* terraformation <int> [] */
-        _Star_set_terraformation(self, terraformation);
+        _Star__set_terraformation(self, terraformation);
     }
 });
 Object.defineProperty(Star.prototype, "base_population", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_base_population(self);
+        return _Star__get_base_population(self);
     },
     set: function(base_population) {
         var self = this.ptr;
         /* base_population <int> [] */
-        _Star_set_base_population(self, base_population);
+        _Star__set_base_population(self, base_population);
     }
 });
 Object.defineProperty(Star.prototype, "max_population", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_max_population(self);
+        return _Star__get_max_population(self);
     },
     set: function(max_population) {
         var self = this.ptr;
         /* max_population <int> [] */
-        _Star_set_max_population(self, max_population);
+        _Star__set_max_population(self, max_population);
     }
 });
 Object.defineProperty(Star.prototype, "population", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_population(self);
+        return _Star__get_population(self);
     },
     set: function(population) {
         var self = this.ptr;
         /* population <int> [] */
-        _Star_set_population(self, population);
+        _Star__set_population(self, population);
     }
 });
 Object.defineProperty(Star.prototype, "militia", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_militia(self);
+        return _Star__get_militia(self);
     },
     set: function(militia) {
         var self = this.ptr;
         /* militia <float> [] */
-        _Star_set_militia(self, militia);
+        _Star__set_militia(self, militia);
     }
 });
 Object.defineProperty(Star.prototype, "defense", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_defense(self);
+        return _Star__get_defense(self);
     },
     set: function(defense) {
         var self = this.ptr;
         /* defense <float> [] */
-        _Star_set_defense(self, defense);
+        _Star__set_defense(self, defense);
     }
 });
 Object.defineProperty(Star.prototype, "revenue", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_revenue(self);
+        return _Star__get_revenue(self);
     },
     set: function(revenue) {
         var self = this.ptr;
         /* revenue <float> [] */
-        _Star_set_revenue(self, revenue);
+        _Star__set_revenue(self, revenue);
     }
 });
 Object.defineProperty(Star.prototype, "politic", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_politic(self);
+        return _Star__get_politic(self);
     },
     set: function(politic) {
         var self = this.ptr;
         /* politic <Politic> [] */
         if (politic && typeof politic === "object") politic = politic.ptr;
-        _Star_set_politic(self, politic);
+        _Star__set_politic(self, politic);
     }
 });
 Object.defineProperty(Star.prototype, "taxation", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_taxation(self);
+        return _Star__get_taxation(self);
     },
     set: function(taxation) {
         var self = this.ptr;
         /* taxation <Taxation> [] */
         if (taxation && typeof taxation === "object") taxation = taxation.ptr;
-        _Star_set_taxation(self, taxation);
+        _Star__set_taxation(self, taxation);
     }
 });
 Object.defineProperty(Star.prototype, "commander", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Star_get_commander(self), Commander);
+        return wrapPointer(_Star__get_commander(self), Commander);
     },
     set: function(commander) {
         var self = this.ptr;
         /* commander <Commander> [] */
         commander = commander.ptr;
-        _Star_set_commander(self, commander);
+        _Star__set_commander(self, commander);
     }
 });
 Object.defineProperty(Star.prototype, "scan", {
     get: function() {
         var self = this.ptr;
-        return _Star_get_scan(self);
+        return _Star__get_scan(self);
     },
     set: function(scan) {
         var self = this.ptr;
         /* scan <int> [] */
-        _Star_set_scan(self, scan);
+        _Star__set_scan(self, scan);
     }
 });
 Star.prototype["__destroy__"] = Star.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Star___destroy__(self);
+    _Star__destroy(self);
 };
 // TechDomain
 function TechDomain() {
@@ -1055,7 +1055,7 @@ TechDomain.__cache__ = {};
 Module['TechDomain'] = TechDomain;
 TechDomain.prototype["__destroy__"] = TechDomain.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _TechDomain___destroy__(self);
+    _TechDomain__destroy(self);
 };
 // Turn
 function Turn() {
@@ -1069,7 +1069,7 @@ Turn.__cache__ = {};
 Module['Turn'] = Turn;
 Turn.prototype["__destroy__"] = Turn.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Turn___destroy__(self);
+    _Turn__destroy(self);
 };
 // BuildingSchema
 function BuildingSchema() {
@@ -1083,7 +1083,7 @@ BuildingSchema.__cache__ = {};
 Module['BuildingSchema'] = BuildingSchema;
 BuildingSchema.prototype["__destroy__"] = BuildingSchema.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _BuildingSchema___destroy__(self);
+    _BuildingSchema__destroy(self);
 };
 // CommanderBrush
 function CommanderBrush() { throw "cannot construct a CommanderBrush, no constructor in IDL" }
@@ -1095,29 +1095,29 @@ Module['CommanderBrush'] = CommanderBrush;
 Object.defineProperty(CommanderBrush.prototype, "commander", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_CommanderBrush_get_commander(self), Commander);
+        return wrapPointer(_CommanderBrush__get_commander(self), Commander);
     },
     set: function(commander) {
         var self = this.ptr;
         /* commander <Commander> [] */
         commander = commander.ptr;
-        _CommanderBrush_set_commander(self, commander);
+        _CommanderBrush__set_commander(self, commander);
     }
 });
 Object.defineProperty(CommanderBrush.prototype, "radius", {
     get: function() {
         var self = this.ptr;
-        return _CommanderBrush_get_radius(self);
+        return _CommanderBrush__get_radius(self);
     },
     set: function(radius) {
         var self = this.ptr;
         /* radius <float> [] */
-        _CommanderBrush_set_radius(self, radius);
+        _CommanderBrush__set_radius(self, radius);
     }
 });
 CommanderBrush.prototype["__destroy__"] = CommanderBrush.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _CommanderBrush___destroy__(self);
+    _CommanderBrush__destroy(self);
 };
 // PlanetaryCombat
 function PlanetaryCombat() {
@@ -1132,30 +1132,30 @@ Module['PlanetaryCombat'] = PlanetaryCombat;
 Object.defineProperty(PlanetaryCombat.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_PlanetaryCombat_get_coord(self), mud::uvec2);
+        return wrapPointer(_PlanetaryCombat__get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
         coord = coord.ptr;
-        _PlanetaryCombat_set_coord(self, coord);
+        _PlanetaryCombat__set_coord(self, coord);
     }
 });
 Object.defineProperty(PlanetaryCombat.prototype, "defense", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_PlanetaryCombat_get_defense(self), CombatStar);
+        return wrapPointer(_PlanetaryCombat__get_defense(self), CombatStar);
     },
     set: function(defense) {
         var self = this.ptr;
         /* defense <CombatStar> [] */
         defense = defense.ptr;
-        _PlanetaryCombat_set_defense(self, defense);
+        _PlanetaryCombat__set_defense(self, defense);
     }
 });
 PlanetaryCombat.prototype["__destroy__"] = PlanetaryCombat.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _PlanetaryCombat___destroy__(self);
+    _PlanetaryCombat__destroy(self);
 };
 // ShipComponent
 function ShipComponent() {
@@ -1169,7 +1169,7 @@ ShipComponent.__cache__ = {};
 Module['ShipComponent'] = ShipComponent;
 ShipComponent.prototype["__destroy__"] = ShipComponent.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _ShipComponent___destroy__(self);
+    _ShipComponent__destroy(self);
 };
 // ShipEngine
 function ShipEngine() {
@@ -1183,7 +1183,7 @@ ShipEngine.__cache__ = {};
 Module['ShipEngine'] = ShipEngine;
 ShipEngine.prototype["__destroy__"] = ShipEngine.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _ShipEngine___destroy__(self);
+    _ShipEngine__destroy(self);
 };
 // ShipHull
 function ShipHull() {
@@ -1197,7 +1197,7 @@ ShipHull.__cache__ = {};
 Module['ShipHull'] = ShipHull;
 ShipHull.prototype["__destroy__"] = ShipHull.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _ShipHull___destroy__(self);
+    _ShipHull__destroy(self);
 };
 // ShipSchema
 function ShipSchema() {
@@ -1212,40 +1212,40 @@ Module['ShipSchema'] = ShipSchema;
 Object.defineProperty(ShipSchema.prototype, "size", {
     get: function() {
         var self = this.ptr;
-        return _ShipSchema_get_size(self);
+        return _ShipSchema__get_size(self);
     },
     set: function(size) {
         var self = this.ptr;
         /* size <uint8_t> [] */
-        _ShipSchema_set_size(self, size);
+        _ShipSchema__set_size(self, size);
     }
 });
 Object.defineProperty(ShipSchema.prototype, "class", {
     get: function() {
         var self = this.ptr;
-        return _ShipSchema_get_class(self);
+        return _ShipSchema__get_class(self);
     },
     set: function(class) {
         var self = this.ptr;
         /* class <uint8_t> [] */
-        _ShipSchema_set_class(self, class);
+        _ShipSchema__set_class(self, class);
     }
 });
 Object.defineProperty(ShipSchema.prototype, "main_weapon", {
     get: function() {
         var self = this.ptr;
-        return _ShipSchema_get_main_weapon(self);
+        return _ShipSchema__get_main_weapon(self);
     },
     set: function(main_weapon) {
         var self = this.ptr;
         /* main_weapon <WeaponType> [] */
         if (main_weapon && typeof main_weapon === "object") main_weapon = main_weapon.ptr;
-        _ShipSchema_set_main_weapon(self, main_weapon);
+        _ShipSchema__set_main_weapon(self, main_weapon);
     }
 });
 ShipSchema.prototype["__destroy__"] = ShipSchema.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _ShipSchema___destroy__(self);
+    _ShipSchema__destroy(self);
 };
 // SpatialCombat
 function SpatialCombat() {
@@ -1260,18 +1260,18 @@ Module['SpatialCombat'] = SpatialCombat;
 Object.defineProperty(SpatialCombat.prototype, "coord", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_SpatialCombat_get_coord(self), mud::uvec2);
+        return wrapPointer(_SpatialCombat__get_coord(self), mud::uvec2);
     },
     set: function(coord) {
         var self = this.ptr;
         /* coord <uvec2> [] */
         coord = coord.ptr;
-        _SpatialCombat_set_coord(self, coord);
+        _SpatialCombat__set_coord(self, coord);
     }
 });
 SpatialCombat.prototype["__destroy__"] = SpatialCombat.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _SpatialCombat___destroy__(self);
+    _SpatialCombat__destroy(self);
 };
 // Universe
 function Universe(name, job_system) {
@@ -1292,16 +1292,16 @@ Module['Universe'] = Universe;
 Object.defineProperty(Universe.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Universe_get_world(self), toy::World);
+        return wrapPointer(_Universe__get_world(self), toy::World);
     }});
 Object.defineProperty(Universe.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Universe_get_bullet_world(self), toy::BulletWorld);
+        return wrapPointer(_Universe__get_bullet_world(self), toy::BulletWorld);
     }});
 Universe.prototype["__destroy__"] = Universe.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Universe___destroy__(self);
+    _Universe__destroy(self);
 };
 
 (function() {

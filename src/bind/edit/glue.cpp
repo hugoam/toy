@@ -5,91 +5,97 @@
 #include <core/Api.h>
 #include <visu/Api.h>
 #include <edit/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 
 extern "C" {
 	
 	// ActionGroup
-	toy::ActionGroup* EMSCRIPTEN_KEEPALIVE toy_ActionGroup_ActionGroup_0() {
+	toy::ActionGroup* DECL toy_ActionGroup_ActionGroup_0() {
 		return new toy::ActionGroup();
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_ActionGroup___destroy__(toy::ActionGroup* self) {
+	void DECL toy_ActionGroup__destroy(toy::ActionGroup* self) {
 		delete self;
 	}
 	// Clone
-	void EMSCRIPTEN_KEEPALIVE toy_Clone___destroy__(toy::Clone* self) {
+	void DECL toy_Clone__destroy(toy::Clone* self) {
 		delete self;
 	}
 	// Cut
-	void EMSCRIPTEN_KEEPALIVE toy_Cut___destroy__(toy::Cut* self) {
+	void DECL toy_Cut__destroy(toy::Cut* self) {
 		delete self;
 	}
 	// Edit
-	void EMSCRIPTEN_KEEPALIVE toy_Edit___destroy__(toy::Edit* self) {
+	void DECL toy_Edit__destroy(toy::Edit* self) {
 		delete self;
 	}
 	// GraphicsDebug
-	toy::GraphicsDebug* EMSCRIPTEN_KEEPALIVE toy_GraphicsDebug_GraphicsDebug_0() {
+	toy::GraphicsDebug* DECL toy_GraphicsDebug_GraphicsDebug_0() {
 		return new toy::GraphicsDebug();
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_GraphicsDebug___destroy__(toy::GraphicsDebug* self) {
+	void DECL toy_GraphicsDebug__destroy(toy::GraphicsDebug* self) {
 		delete self;
 	}
 	// Paste
-	void EMSCRIPTEN_KEEPALIVE toy_Paste___destroy__(toy::Paste* self) {
+	void DECL toy_Paste__destroy(toy::Paste* self) {
 		delete self;
 	}
 	// Toolbelt
-	void EMSCRIPTEN_KEEPALIVE toy_Toolbelt___destroy__(toy::Toolbelt* self) {
+	void DECL toy_Toolbelt__destroy(toy::Toolbelt* self) {
 		delete self;
 	}
 	// Toolbox
-	void EMSCRIPTEN_KEEPALIVE toy_Toolbox___destroy__(toy::Toolbox* self) {
+	void DECL toy_Toolbox__destroy(toy::Toolbox* self) {
 		delete self;
 	}
 	// DynamicToolbox
-	void EMSCRIPTEN_KEEPALIVE toy_DynamicToolbox___destroy__(toy::DynamicToolbox* self) {
+	void DECL toy_DynamicToolbox__destroy(toy::DynamicToolbox* self) {
 		delete self;
 	}
 	// Editor
-	toy::RunTool* EMSCRIPTEN_KEEPALIVE toy_Editor_get_run_tool(toy::Editor* self) {
+	toy::RunTool* DECL toy_Editor__get_run_tool(toy::Editor* self) {
 		return &self->m_run_tool;
 	}
-	toy::PlayTool* EMSCRIPTEN_KEEPALIVE toy_Editor_get_play_tool(toy::Editor* self) {
+	toy::PlayTool* DECL toy_Editor__get_play_tool(toy::Editor* self) {
 		return &self->m_play_tool;
 	}
-	mud::FrameViewTool* EMSCRIPTEN_KEEPALIVE toy_Editor_get_frame_view_tool(toy::Editor* self) {
+	mud::FrameViewTool* DECL toy_Editor__get_frame_view_tool(toy::Editor* self) {
 		return &self->m_frame_view_tool;
 	}
-	toy::World* EMSCRIPTEN_KEEPALIVE toy_Editor_get_edited_world(toy::Editor* self) {
+	toy::World* DECL toy_Editor__get_edited_world(toy::Editor* self) {
 		return self->m_edited_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_Editor_set_edited_world(toy::Editor* self, toy::World* value) {
+	void DECL toy_Editor__set_edited_world(toy::Editor* self, toy::World* value) {
 		self->m_edited_world = value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE toy_Editor_get_run_game(toy::Editor* self) {
+	bool DECL toy_Editor__get_run_game(toy::Editor* self) {
 		return self->m_run_game;
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_Editor_set_run_game(toy::Editor* self, bool value) {
+	void DECL toy_Editor__set_run_game(toy::Editor* self, bool value) {
 		self->m_run_game = value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE toy_Editor_get_play_game(toy::Editor* self) {
+	bool DECL toy_Editor__get_play_game(toy::Editor* self) {
 		return self->m_play_game;
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_Editor_set_play_game(toy::Editor* self, bool value) {
+	void DECL toy_Editor__set_play_game(toy::Editor* self, bool value) {
 		self->m_play_game = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_Editor___destroy__(toy::Editor* self) {
+	void DECL toy_Editor__destroy(toy::Editor* self) {
 		delete self;
 	}
 	// PlayTool
-	void EMSCRIPTEN_KEEPALIVE toy_PlayTool___destroy__(toy::PlayTool* self) {
+	void DECL toy_PlayTool__destroy(toy::PlayTool* self) {
 		delete self;
 	}
 	// RunTool
-	void EMSCRIPTEN_KEEPALIVE toy_RunTool___destroy__(toy::RunTool* self) {
+	void DECL toy_RunTool__destroy(toy::RunTool* self) {
 		delete self;
 	}
 	

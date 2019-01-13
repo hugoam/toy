@@ -15,54 +15,54 @@ Module['Aim'] = Aim;
 Object.defineProperty(Aim.prototype, "rotation", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Aim_get_rotation(self), mud::quat);
+        return wrapPointer(_Aim__get_rotation(self), mud::quat);
     },
     set: function(rotation) {
         var self = this.ptr;
         /* rotation <quat> [] */
         rotation = rotation.ptr;
-        _Aim_set_rotation(self, rotation);
+        _Aim__set_rotation(self, rotation);
     }
 });
 Object.defineProperty(Aim.prototype, "start", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Aim_get_start(self), mud::vec3);
+        return wrapPointer(_Aim__get_start(self), mud::vec3);
     },
     set: function(start) {
         var self = this.ptr;
         /* start <vec3> [] */
         start = start.ptr;
-        _Aim_set_start(self, start);
+        _Aim__set_start(self, start);
     }
 });
 Object.defineProperty(Aim.prototype, "end", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Aim_get_end(self), mud::vec3);
+        return wrapPointer(_Aim__get_end(self), mud::vec3);
     },
     set: function(end) {
         var self = this.ptr;
         /* end <vec3> [] */
         end = end.ptr;
-        _Aim_set_end(self, end);
+        _Aim__set_end(self, end);
     }
 });
 Object.defineProperty(Aim.prototype, "hit", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Aim_get_hit(self), toy::Spatial);
+        return wrapPointer(_Aim__get_hit(self), toy::Spatial);
     },
     set: function(hit) {
         var self = this.ptr;
         /* hit <Spatial> [] */
         hit = hit.ptr;
-        _Aim_set_hit(self, hit);
+        _Aim__set_hit(self, hit);
     }
 });
 Aim.prototype["__destroy__"] = Aim.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Aim___destroy__(self);
+    _Aim__destroy(self);
 };
 // Bullet
 function Bullet() { throw "cannot construct a Bullet, no constructor in IDL" }
@@ -74,30 +74,30 @@ Module['Bullet'] = Bullet;
 Object.defineProperty(Bullet.prototype, "source", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Bullet_get_source(self), mud::vec3);
+        return wrapPointer(_Bullet__get_source(self), mud::vec3);
     },
     set: function(source) {
         var self = this.ptr;
         /* source <vec3> [] */
         source = source.ptr;
-        _Bullet_set_source(self, source);
+        _Bullet__set_source(self, source);
     }
 });
 Object.defineProperty(Bullet.prototype, "velocity", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Bullet_get_velocity(self), mud::vec3);
+        return wrapPointer(_Bullet__get_velocity(self), mud::vec3);
     },
     set: function(velocity) {
         var self = this.ptr;
         /* velocity <vec3> [] */
         velocity = velocity.ptr;
-        _Bullet_set_velocity(self, velocity);
+        _Bullet__set_velocity(self, velocity);
     }
 });
 Bullet.prototype["__destroy__"] = Bullet.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Bullet___destroy__(self);
+    _Bullet__destroy(self);
 };
 // Crate
 function Crate(spatial, movable, extents) {
@@ -117,18 +117,18 @@ Module['Crate'] = Crate;
 Object.defineProperty(Crate.prototype, "extents", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Crate_get_extents(self), mud::vec3);
+        return wrapPointer(_Crate__get_extents(self), mud::vec3);
     },
     set: function(extents) {
         var self = this.ptr;
         /* extents <vec3> [] */
         extents = extents.ptr;
-        _Crate_set_extents(self, extents);
+        _Crate__set_extents(self, extents);
     }
 });
 Crate.prototype["__destroy__"] = Crate.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Crate___destroy__(self);
+    _Crate__destroy(self);
 };
 // Human
 function Human(spatial, movable, emitter, receptor, script, faction) {
@@ -165,130 +165,130 @@ Human.prototype["stop"] = Human.prototype.stop = function() {
 Object.defineProperty(Human.prototype, "faction", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_faction(self);
+        return _Human__get_faction(self);
     },
     set: function(faction) {
         var self = this.ptr;
         /* faction <Faction> [] */
         if (faction && typeof faction === "object") faction = faction.ptr;
-        _Human_set_faction(self, faction);
+        _Human__set_faction(self, faction);
     }
 });
 Object.defineProperty(Human.prototype, "life", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_life(self);
+        return _Human__get_life(self);
     },
     set: function(life) {
         var self = this.ptr;
         /* life <float> [] */
-        _Human_set_life(self, life);
+        _Human__set_life(self, life);
     }
 });
 Object.defineProperty(Human.prototype, "energy", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_energy(self);
+        return _Human__get_energy(self);
     },
     set: function(energy) {
         var self = this.ptr;
         /* energy <float> [] */
-        _Human_set_energy(self, energy);
+        _Human__set_energy(self, energy);
     }
 });
 Object.defineProperty(Human.prototype, "discharge", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_discharge(self);
+        return _Human__get_discharge(self);
     },
     set: function(discharge) {
         var self = this.ptr;
         /* discharge <float> [] */
-        _Human_set_discharge(self, discharge);
+        _Human__set_discharge(self, discharge);
     }
 });
 Object.defineProperty(Human.prototype, "headlight", {
     get: function() {
         var self = this.ptr;
-        return !!(_Human_get_headlight(self));
+        return !!(_Human__get_headlight(self));
     },
     set: function(headlight) {
         var self = this.ptr;
         /* headlight <bool> [] */
-        _Human_set_headlight(self, headlight);
+        _Human__set_headlight(self, headlight);
     }
 });
 Object.defineProperty(Human.prototype, "shield", {
     get: function() {
         var self = this.ptr;
-        return !!(_Human_get_shield(self));
+        return !!(_Human__get_shield(self));
     },
     set: function(shield) {
         var self = this.ptr;
         /* shield <bool> [] */
-        _Human_set_shield(self, shield);
+        _Human__set_shield(self, shield);
     }
 });
 Object.defineProperty(Human.prototype, "walk", {
     get: function() {
         var self = this.ptr;
-        return !!(_Human_get_walk(self));
+        return !!(_Human__get_walk(self));
     },
     set: function(walk) {
         var self = this.ptr;
         /* walk <bool> [] */
-        _Human_set_walk(self, walk);
+        _Human__set_walk(self, walk);
     }
 });
 Object.defineProperty(Human.prototype, "target", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_target(self);
+        return _Human__get_target(self);
     },
     set: function(target) {
         var self = this.ptr;
         /* target <HHuman> [] */
-        _Human_set_target(self, target);
+        _Human__set_target(self, target);
     }
 });
 Object.defineProperty(Human.prototype, "dest", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Human_get_dest(self), mud::vec3);
+        return wrapPointer(_Human__get_dest(self), mud::vec3);
     },
     set: function(dest) {
         var self = this.ptr;
         /* dest <vec3> [] */
         dest = dest.ptr;
-        _Human_set_dest(self, dest);
+        _Human__set_dest(self, dest);
     }
 });
 Object.defineProperty(Human.prototype, "cooldown", {
     get: function() {
         var self = this.ptr;
-        return _Human_get_cooldown(self);
+        return _Human__get_cooldown(self);
     },
     set: function(cooldown) {
         var self = this.ptr;
         /* cooldown <float> [] */
-        _Human_set_cooldown(self, cooldown);
+        _Human__set_cooldown(self, cooldown);
     }
 });
 Object.defineProperty(Human.prototype, "state", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Human_get_state(self), Stance);
+        return wrapPointer(_Human__get_state(self), Stance);
     },
     set: function(state) {
         var self = this.ptr;
         /* state <Stance> [] */
         state = state.ptr;
-        _Human_set_state(self, state);
+        _Human__set_state(self, state);
     }
 });
 Human.prototype["__destroy__"] = Human.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Human___destroy__(self);
+    _Human__destroy(self);
 };
 // Lamp
 function Lamp(spatial, movable) {
@@ -305,7 +305,7 @@ Lamp.__cache__ = {};
 Module['Lamp'] = Lamp;
 Lamp.prototype["__destroy__"] = Lamp.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Lamp___destroy__(self);
+    _Lamp__destroy(self);
 };
 // Player
 function Player() { throw "cannot construct a Player, no constructor in IDL" }
@@ -316,7 +316,7 @@ Player.__cache__ = {};
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Player___destroy__(self);
+    _Player__destroy(self);
 };
 // Stance
 function Stance(name, loop) {
@@ -337,30 +337,30 @@ Module['Stance'] = Stance;
 Object.defineProperty(Stance.prototype, "name", {
     get: function() {
         var self = this.ptr;
-        return Pointer_stringify(_Stance_get_name(self));
+        return Pointer_stringify(_Stance__get_name(self));
     },
     set: function(name) {
         var self = this.ptr;
         /* name <std::string> [] */
         if (name && typeof name === "object") name = name.ptr;
         else name = ensureString(name);
-        _Stance_set_name(self, name);
+        _Stance__set_name(self, name);
     }
 });
 Object.defineProperty(Stance.prototype, "loop", {
     get: function() {
         var self = this.ptr;
-        return !!(_Stance_get_loop(self));
+        return !!(_Stance__get_loop(self));
     },
     set: function(loop) {
         var self = this.ptr;
         /* loop <bool> [] */
-        _Stance_set_loop(self, loop);
+        _Stance__set_loop(self, loop);
     }
 });
 Stance.prototype["__destroy__"] = Stance.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _Stance___destroy__(self);
+    _Stance__destroy(self);
 };
 // TileWorld
 function TileWorld(name, job_system) {
@@ -381,21 +381,21 @@ Module['TileWorld'] = TileWorld;
 Object.defineProperty(TileWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_TileWorld_get_world(self), toy::World);
+        return wrapPointer(_TileWorld__get_world(self), toy::World);
     }});
 Object.defineProperty(TileWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_TileWorld_get_bullet_world(self), toy::BulletWorld);
+        return wrapPointer(_TileWorld__get_bullet_world(self), toy::BulletWorld);
     }});
 Object.defineProperty(TileWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_TileWorld_get_navmesh(self), toy::Navmesh);
+        return wrapPointer(_TileWorld__get_navmesh(self), toy::Navmesh);
     }});
 TileWorld.prototype["__destroy__"] = TileWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _TileWorld___destroy__(self);
+    _TileWorld__destroy(self);
 };
 
 (function() {

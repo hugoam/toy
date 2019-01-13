@@ -32,7 +32,13 @@
 #include <block/Api.h>
 #include <shell/Api.h>
 #include <test/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 

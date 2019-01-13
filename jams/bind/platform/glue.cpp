@@ -32,234 +32,240 @@
 #include <block/Api.h>
 #include <shell/Api.h>
 #include <platform/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 
 extern "C" {
 	
 	// Aim
-	Aim* EMSCRIPTEN_KEEPALIVE Aim_Aim_0() {
+	Aim* DECL Aim_Aim_0() {
 		return new Aim();
 	}
-	mud::quat* EMSCRIPTEN_KEEPALIVE Aim_get_rotation(Aim* self) {
+	mud::quat* DECL Aim__get_rotation(Aim* self) {
 		static mud::quat temp;
 		return (temp = self->rotation, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Aim_set_rotation(Aim* self, mud::quat* value) {
+	void DECL Aim__set_rotation(Aim* self, mud::quat* value) {
 		self->rotation = *value;
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_start(Aim* self) {
+	mud::vec3* DECL Aim__get_start(Aim* self) {
 		static mud::vec3 temp;
 		return (temp = self->start, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Aim_set_start(Aim* self, mud::vec3* value) {
+	void DECL Aim__set_start(Aim* self, mud::vec3* value) {
 		self->start = *value;
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_end(Aim* self) {
+	mud::vec3* DECL Aim__get_end(Aim* self) {
 		static mud::vec3 temp;
 		return (temp = self->end, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Aim_set_end(Aim* self, mud::vec3* value) {
+	void DECL Aim__set_end(Aim* self, mud::vec3* value) {
 		self->end = *value;
 	}
-	toy::Spatial* EMSCRIPTEN_KEEPALIVE Aim_get_hit(Aim* self) {
+	toy::Spatial* DECL Aim__get_hit(Aim* self) {
 		return self->hit;
 	}
-	void EMSCRIPTEN_KEEPALIVE Aim_set_hit(Aim* self, toy::Spatial* value) {
+	void DECL Aim__set_hit(Aim* self, toy::Spatial* value) {
 		self->hit = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Aim___destroy__(Aim* self) {
+	void DECL Aim__destroy(Aim* self) {
 		delete self;
 	}
 	// Bullet
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
+	mud::vec3* DECL Bullet__get_source(Bullet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet_set_source(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_source(Bullet* self, mud::vec3* value) {
 		self->m_source = *value;
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
+	mud::vec3* DECL Bullet__get_velocity(Bullet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_velocity, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet_set_velocity(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_velocity(Bullet* self, mud::vec3* value) {
 		self->m_velocity = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
+	void DECL Bullet__destroy(Bullet* self) {
 		delete self;
 	}
 	// Crate
-	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_0() {
+	Crate* DECL Crate_Crate_0() {
 		return new Crate();
 	}
-	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
+	Crate* DECL Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
 		return new Crate(spatial, movable, *extents);
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
+	mud::vec3* DECL Crate__get_extents(Crate* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_extents, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Crate_set_extents(Crate* self, mud::vec3* value) {
+	void DECL Crate__set_extents(Crate* self, mud::vec3* value) {
 		self->m_extents = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
+	void DECL Crate__destroy(Crate* self) {
 		delete self;
 	}
 	// Human
-	Human* EMSCRIPTEN_KEEPALIVE Human_Human_0() {
+	Human* DECL Human_Human_0() {
 		return new Human();
 	}
-	Human* EMSCRIPTEN_KEEPALIVE Human_Human_6(toy::HSpatial spatial, toy::HMovable movable, toy::HEmitter emitter, toy::HReceptor receptor, toy::HEntityScript script, Faction faction) {
+	Human* DECL Human_Human_6(toy::HSpatial spatial, toy::HMovable movable, toy::HEmitter emitter, toy::HReceptor receptor, toy::HEntityScript script, Faction faction) {
 		return new Human(spatial, movable, emitter, receptor, script, faction);
 	}
-	Aim* EMSCRIPTEN_KEEPALIVE Human_aim_0(Human* self) {
+	Aim* DECL Human_aim_0(Human* self) {
 		static Aim temp;
 		return (temp = self->aim(), &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_shoot_0(Human* self) {
+	void DECL Human_shoot_0(Human* self) {
 		self->shoot();
 	}
-	mud::quat* EMSCRIPTEN_KEEPALIVE Human_sight_0(Human* self) {
+	mud::quat* DECL Human_sight_0(Human* self) {
 		static mud::quat temp;
 		return (temp = self->sight(), &temp);
 	}
-	mud::quat* EMSCRIPTEN_KEEPALIVE Human_sight_1(Human* self, bool aiming) {
+	mud::quat* DECL Human_sight_1(Human* self, bool aiming) {
 		static mud::quat temp;
 		return (temp = self->sight(aiming), &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_stop_0(Human* self) {
+	void DECL Human_stop_0(Human* self) {
 		self->stop();
 	}
-	Faction EMSCRIPTEN_KEEPALIVE Human_get_faction(Human* self) {
+	Faction DECL Human__get_faction(Human* self) {
 		return self->m_faction;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_faction(Human* self, Faction value) {
+	void DECL Human__set_faction(Human* self, Faction value) {
 		self->m_faction = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Human_get_life(Human* self) {
+	float DECL Human__get_life(Human* self) {
 		return self->m_life;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_life(Human* self, float value) {
+	void DECL Human__set_life(Human* self, float value) {
 		self->m_life = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Human_get_energy(Human* self) {
+	float DECL Human__get_energy(Human* self) {
 		return self->m_energy;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_energy(Human* self, float value) {
+	void DECL Human__set_energy(Human* self, float value) {
 		self->m_energy = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Human_get_discharge(Human* self) {
+	float DECL Human__get_discharge(Human* self) {
 		return self->m_discharge;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_discharge(Human* self, float value) {
+	void DECL Human__set_discharge(Human* self, float value) {
 		self->m_discharge = value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE Human_get_headlight(Human* self) {
+	bool DECL Human__get_headlight(Human* self) {
 		return self->m_headlight;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_headlight(Human* self, bool value) {
+	void DECL Human__set_headlight(Human* self, bool value) {
 		self->m_headlight = value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE Human_get_shield(Human* self) {
+	bool DECL Human__get_shield(Human* self) {
 		return self->m_shield;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_shield(Human* self, bool value) {
+	void DECL Human__set_shield(Human* self, bool value) {
 		self->m_shield = value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE Human_get_walk(Human* self) {
+	bool DECL Human__get_walk(Human* self) {
 		return self->m_walk;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_walk(Human* self, bool value) {
+	void DECL Human__set_walk(Human* self, bool value) {
 		self->m_walk = value;
 	}
-	HHuman EMSCRIPTEN_KEEPALIVE Human_get_target(Human* self) {
+	HHuman DECL Human__get_target(Human* self) {
 		return self->m_target;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_target(Human* self, HHuman value) {
+	void DECL Human__set_target(Human* self, HHuman value) {
 		self->m_target = value;
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Human_get_dest(Human* self) {
+	mud::vec3* DECL Human__get_dest(Human* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_dest, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_dest(Human* self, mud::vec3* value) {
+	void DECL Human__set_dest(Human* self, mud::vec3* value) {
 		self->m_dest = *value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Human_get_cooldown(Human* self) {
+	float DECL Human__get_cooldown(Human* self) {
 		return self->m_cooldown;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_cooldown(Human* self, float value) {
+	void DECL Human__set_cooldown(Human* self, float value) {
 		self->m_cooldown = value;
 	}
-	Stance* EMSCRIPTEN_KEEPALIVE Human_get_state(Human* self) {
+	Stance* DECL Human__get_state(Human* self) {
 		static Stance temp;
 		return (temp = self->m_state, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Human_set_state(Human* self, Stance* value) {
+	void DECL Human__set_state(Human* self, Stance* value) {
 		self->m_state = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Human___destroy__(Human* self) {
+	void DECL Human__destroy(Human* self) {
 		delete self;
 	}
 	// Lamp
-	Lamp* EMSCRIPTEN_KEEPALIVE Lamp_Lamp_0() {
+	Lamp* DECL Lamp_Lamp_0() {
 		return new Lamp();
 	}
-	Lamp* EMSCRIPTEN_KEEPALIVE Lamp_Lamp_2(toy::HSpatial spatial, toy::HMovable movable) {
+	Lamp* DECL Lamp_Lamp_2(toy::HSpatial spatial, toy::HMovable movable) {
 		return new Lamp(spatial, movable);
 	}
-	void EMSCRIPTEN_KEEPALIVE Lamp___destroy__(Lamp* self) {
+	void DECL Lamp__destroy(Lamp* self) {
 		delete self;
 	}
 	// Player
-	void EMSCRIPTEN_KEEPALIVE Player___destroy__(Player* self) {
+	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Stance
-	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_0() {
+	Stance* DECL Stance_Stance_0() {
 		return new Stance();
 	}
-	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_2(const char* name, bool loop) {
+	Stance* DECL Stance_Stance_2(const char* name, bool loop) {
 		return new Stance(name, loop);
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Stance_get_name(Stance* self) {
+	const char* DECL Stance__get_name(Stance* self) {
 		return self->name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Stance_set_name(Stance* self, const char* value) {
+	void DECL Stance__set_name(Stance* self, const char* value) {
 		self->name = value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE Stance_get_loop(Stance* self) {
+	bool DECL Stance__get_loop(Stance* self) {
 		return self->loop;
 	}
-	void EMSCRIPTEN_KEEPALIVE Stance_set_loop(Stance* self, bool value) {
+	void DECL Stance__set_loop(Stance* self, bool value) {
 		self->loop = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Stance___destroy__(Stance* self) {
+	void DECL Stance__destroy(Stance* self) {
 		delete self;
 	}
 	// TileWorld
-	TileWorld* EMSCRIPTEN_KEEPALIVE TileWorld_TileWorld_2(const char* name, mud::JobSystem* job_system) {
+	TileWorld* DECL TileWorld_TileWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new TileWorld(name, *job_system);
 	}
-	toy::World* EMSCRIPTEN_KEEPALIVE TileWorld_get_world(TileWorld* self) {
+	toy::World* DECL TileWorld__get_world(TileWorld* self) {
 		return &self->m_world;
 	}
-	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE TileWorld_get_bullet_world(TileWorld* self) {
+	toy::BulletWorld* DECL TileWorld__get_bullet_world(TileWorld* self) {
 		return &self->m_bullet_world;
 	}
-	toy::Navmesh* EMSCRIPTEN_KEEPALIVE TileWorld_get_navmesh(TileWorld* self) {
+	toy::Navmesh* DECL TileWorld__get_navmesh(TileWorld* self) {
 		return &self->m_navmesh;
 	}
-	void EMSCRIPTEN_KEEPALIVE TileWorld___destroy__(TileWorld* self) {
+	void DECL TileWorld__destroy(TileWorld* self) {
 		delete self;
 	}
 	// Faction
-	Faction EMSCRIPTEN_KEEPALIVE Faction_Ally() {
+	Faction DECL Faction_Ally() {
 		return Faction::Ally;
 	}
-	Faction EMSCRIPTEN_KEEPALIVE Faction_Enemy() {
+	Faction DECL Faction_Enemy() {
 		return Faction::Enemy;
 	}
 	

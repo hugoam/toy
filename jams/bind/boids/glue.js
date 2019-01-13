@@ -14,7 +14,7 @@ Boid.__cache__ = {};
 Module['Boid'] = Boid;
 Boid.prototype["__destroy__"] = Boid.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_Boid___destroy__(self);
+    _boids_Boid__destroy(self);
 };
 // BoidObstacle
 function BoidObstacle() {
@@ -28,7 +28,7 @@ BoidObstacle.__cache__ = {};
 Module['BoidObstacle'] = BoidObstacle;
 BoidObstacle.prototype["__destroy__"] = BoidObstacle.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_BoidObstacle___destroy__(self);
+    _boids_BoidObstacle__destroy(self);
 };
 // BoidTarget
 function BoidTarget() {
@@ -42,7 +42,7 @@ BoidTarget.__cache__ = {};
 Module['BoidTarget'] = BoidTarget;
 BoidTarget.prototype["__destroy__"] = BoidTarget.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_BoidTarget___destroy__(self);
+    _boids_BoidTarget__destroy(self);
 };
 // Heading
 function Heading() {
@@ -56,7 +56,7 @@ Heading.__cache__ = {};
 Module['Heading'] = Heading;
 Heading.prototype["__destroy__"] = Heading.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_Heading___destroy__(self);
+    _boids_Heading__destroy(self);
 };
 // MoveForward
 function MoveForward() {
@@ -70,7 +70,7 @@ MoveForward.__cache__ = {};
 Module['MoveForward'] = MoveForward;
 MoveForward.prototype["__destroy__"] = MoveForward.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_MoveForward___destroy__(self);
+    _boids_MoveForward__destroy(self);
 };
 // MoveSpeed
 function MoveSpeed() {
@@ -84,7 +84,7 @@ MoveSpeed.__cache__ = {};
 Module['MoveSpeed'] = MoveSpeed;
 MoveSpeed.prototype["__destroy__"] = MoveSpeed.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_MoveSpeed___destroy__(self);
+    _boids_MoveSpeed__destroy(self);
 };
 // Player
 function Player() { throw "cannot construct a Player, no constructor in IDL" }
@@ -95,7 +95,7 @@ Player.__cache__ = {};
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_Player___destroy__(self);
+    _boids_Player__destroy(self);
 };
 // Position
 function Position() {
@@ -109,7 +109,7 @@ Position.__cache__ = {};
 Module['Position'] = Position;
 Position.prototype["__destroy__"] = Position.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_Position___destroy__(self);
+    _boids_Position__destroy(self);
 };
 // Rotation
 function Rotation() {
@@ -123,7 +123,7 @@ Rotation.__cache__ = {};
 Module['Rotation'] = Rotation;
 Rotation.prototype["__destroy__"] = Rotation.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_Rotation___destroy__(self);
+    _boids_Rotation__destroy(self);
 };
 // Transform4
 function Transform4() {
@@ -137,7 +137,7 @@ Transform4.__cache__ = {};
 Module['Transform4'] = Transform4;
 Transform4.prototype["__destroy__"] = Transform4.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _boids_Transform4___destroy__(self);
+    _boids_Transform4__destroy(self);
 };
 
 (function() {

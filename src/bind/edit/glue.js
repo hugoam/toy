@@ -14,7 +14,7 @@ ActionGroup.__cache__ = {};
 Module['ActionGroup'] = ActionGroup;
 ActionGroup.prototype["__destroy__"] = ActionGroup.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_ActionGroup___destroy__(self);
+    _toy_ActionGroup__destroy(self);
 };
 // Clone
 function Clone() { throw "cannot construct a Clone, no constructor in IDL" }
@@ -25,7 +25,7 @@ Clone.__cache__ = {};
 Module['Clone'] = Clone;
 Clone.prototype["__destroy__"] = Clone.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Clone___destroy__(self);
+    _toy_Clone__destroy(self);
 };
 // Cut
 function Cut() { throw "cannot construct a Cut, no constructor in IDL" }
@@ -36,7 +36,7 @@ Cut.__cache__ = {};
 Module['Cut'] = Cut;
 Cut.prototype["__destroy__"] = Cut.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Cut___destroy__(self);
+    _toy_Cut__destroy(self);
 };
 // Edit
 function Edit() { throw "cannot construct a Edit, no constructor in IDL" }
@@ -47,7 +47,7 @@ Edit.__cache__ = {};
 Module['Edit'] = Edit;
 Edit.prototype["__destroy__"] = Edit.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Edit___destroy__(self);
+    _toy_Edit__destroy(self);
 };
 // GraphicsDebug
 function GraphicsDebug() {
@@ -61,7 +61,7 @@ GraphicsDebug.__cache__ = {};
 Module['GraphicsDebug'] = GraphicsDebug;
 GraphicsDebug.prototype["__destroy__"] = GraphicsDebug.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_GraphicsDebug___destroy__(self);
+    _toy_GraphicsDebug__destroy(self);
 };
 // Paste
 function Paste() { throw "cannot construct a Paste, no constructor in IDL" }
@@ -72,7 +72,7 @@ Paste.__cache__ = {};
 Module['Paste'] = Paste;
 Paste.prototype["__destroy__"] = Paste.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Paste___destroy__(self);
+    _toy_Paste__destroy(self);
 };
 // Toolbelt
 function Toolbelt() { throw "cannot construct a Toolbelt, no constructor in IDL" }
@@ -83,7 +83,7 @@ Toolbelt.__cache__ = {};
 Module['Toolbelt'] = Toolbelt;
 Toolbelt.prototype["__destroy__"] = Toolbelt.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Toolbelt___destroy__(self);
+    _toy_Toolbelt__destroy(self);
 };
 // Toolbox
 function Toolbox() { throw "cannot construct a Toolbox, no constructor in IDL" }
@@ -94,7 +94,7 @@ Toolbox.__cache__ = {};
 Module['Toolbox'] = Toolbox;
 Toolbox.prototype["__destroy__"] = Toolbox.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Toolbox___destroy__(self);
+    _toy_Toolbox__destroy(self);
 };
 // DynamicToolbox
 function DynamicToolbox() { throw "cannot construct a DynamicToolbox, no constructor in IDL" }
@@ -105,7 +105,7 @@ DynamicToolbox.__cache__ = {};
 Module['DynamicToolbox'] = DynamicToolbox;
 DynamicToolbox.prototype["__destroy__"] = DynamicToolbox.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_DynamicToolbox___destroy__(self);
+    _toy_DynamicToolbox__destroy(self);
 };
 // Editor
 function Editor() { throw "cannot construct a Editor, no constructor in IDL" }
@@ -117,55 +117,55 @@ Module['Editor'] = Editor;
 Object.defineProperty(Editor.prototype, "run_tool", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor_get_run_tool(self), toy::RunTool);
+        return wrapPointer(_toy_Editor__get_run_tool(self), toy::RunTool);
     }});
 Object.defineProperty(Editor.prototype, "play_tool", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor_get_play_tool(self), toy::PlayTool);
+        return wrapPointer(_toy_Editor__get_play_tool(self), toy::PlayTool);
     }});
 Object.defineProperty(Editor.prototype, "frame_view_tool", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor_get_frame_view_tool(self), mud::FrameViewTool);
+        return wrapPointer(_toy_Editor__get_frame_view_tool(self), mud::FrameViewTool);
     }});
 Object.defineProperty(Editor.prototype, "edited_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Editor_get_edited_world(self), toy::World);
+        return wrapPointer(_toy_Editor__get_edited_world(self), toy::World);
     },
     set: function(edited_world) {
         var self = this.ptr;
         /* edited_world <World> [] */
         edited_world = edited_world.ptr;
-        _toy_Editor_set_edited_world(self, edited_world);
+        _toy_Editor__set_edited_world(self, edited_world);
     }
 });
 Object.defineProperty(Editor.prototype, "run_game", {
     get: function() {
         var self = this.ptr;
-        return !!(_toy_Editor_get_run_game(self));
+        return !!(_toy_Editor__get_run_game(self));
     },
     set: function(run_game) {
         var self = this.ptr;
         /* run_game <bool> [] */
-        _toy_Editor_set_run_game(self, run_game);
+        _toy_Editor__set_run_game(self, run_game);
     }
 });
 Object.defineProperty(Editor.prototype, "play_game", {
     get: function() {
         var self = this.ptr;
-        return !!(_toy_Editor_get_play_game(self));
+        return !!(_toy_Editor__get_play_game(self));
     },
     set: function(play_game) {
         var self = this.ptr;
         /* play_game <bool> [] */
-        _toy_Editor_set_play_game(self, play_game);
+        _toy_Editor__set_play_game(self, play_game);
     }
 });
 Editor.prototype["__destroy__"] = Editor.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Editor___destroy__(self);
+    _toy_Editor__destroy(self);
 };
 // PlayTool
 function PlayTool() { throw "cannot construct a PlayTool, no constructor in IDL" }
@@ -176,7 +176,7 @@ PlayTool.__cache__ = {};
 Module['PlayTool'] = PlayTool;
 PlayTool.prototype["__destroy__"] = PlayTool.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_PlayTool___destroy__(self);
+    _toy_PlayTool__destroy(self);
 };
 // RunTool
 function RunTool() { throw "cannot construct a RunTool, no constructor in IDL" }
@@ -187,7 +187,7 @@ RunTool.__cache__ = {};
 Module['RunTool'] = RunTool;
 RunTool.prototype["__destroy__"] = RunTool.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_RunTool___destroy__(self);
+    _toy_RunTool__destroy(self);
 };
 
 (function() {

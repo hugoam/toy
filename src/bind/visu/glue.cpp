@@ -3,27 +3,33 @@
 #include <util/Api.h>
 #include <core/Api.h>
 #include <visu/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 
 extern "C" {
 	
 	// PhysicDebugDraw
-	void EMSCRIPTEN_KEEPALIVE toy_PhysicDebugDraw___destroy__(toy::PhysicDebugDraw* self) {
+	void DECL toy_PhysicDebugDraw__destroy(toy::PhysicDebugDraw* self) {
 		delete self;
 	}
 	// VisuScene
-	void EMSCRIPTEN_KEEPALIVE toy_VisuScene_next_frame_0(toy::VisuScene* self) {
+	void DECL toy_VisuScene_next_frame_0(toy::VisuScene* self) {
 		self->next_frame();
 	}
-	mud::GfxSystem* EMSCRIPTEN_KEEPALIVE toy_VisuScene_get_gfx_system(toy::VisuScene* self) {
+	mud::GfxSystem* DECL toy_VisuScene__get_gfx_system(toy::VisuScene* self) {
 		return &self->m_gfx_system;
 	}
-	mud::Scene* EMSCRIPTEN_KEEPALIVE toy_VisuScene_get_scene(toy::VisuScene* self) {
+	mud::Scene* DECL toy_VisuScene__get_scene(toy::VisuScene* self) {
 		return &self->m_scene;
 	}
-	void EMSCRIPTEN_KEEPALIVE toy_VisuScene___destroy__(toy::VisuScene* self) {
+	void DECL toy_VisuScene__destroy(toy::VisuScene* self) {
 		delete self;
 	}
 	

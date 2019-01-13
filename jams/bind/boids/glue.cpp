@@ -32,77 +32,83 @@
 #include <block/Api.h>
 #include <shell/Api.h>
 #include <boids/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 
 extern "C" {
 	
 	// Boid
-	boids::Boid* EMSCRIPTEN_KEEPALIVE boids_Boid_Boid_0() {
+	boids::Boid* DECL boids_Boid_Boid_0() {
 		return new boids::Boid();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_Boid___destroy__(boids::Boid* self) {
+	void DECL boids_Boid__destroy(boids::Boid* self) {
 		delete self;
 	}
 	// BoidObstacle
-	boids::BoidObstacle* EMSCRIPTEN_KEEPALIVE boids_BoidObstacle_BoidObstacle_0() {
+	boids::BoidObstacle* DECL boids_BoidObstacle_BoidObstacle_0() {
 		return new boids::BoidObstacle();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_BoidObstacle___destroy__(boids::BoidObstacle* self) {
+	void DECL boids_BoidObstacle__destroy(boids::BoidObstacle* self) {
 		delete self;
 	}
 	// BoidTarget
-	boids::BoidTarget* EMSCRIPTEN_KEEPALIVE boids_BoidTarget_BoidTarget_0() {
+	boids::BoidTarget* DECL boids_BoidTarget_BoidTarget_0() {
 		return new boids::BoidTarget();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_BoidTarget___destroy__(boids::BoidTarget* self) {
+	void DECL boids_BoidTarget__destroy(boids::BoidTarget* self) {
 		delete self;
 	}
 	// Heading
-	boids::Heading* EMSCRIPTEN_KEEPALIVE boids_Heading_Heading_0() {
+	boids::Heading* DECL boids_Heading_Heading_0() {
 		return new boids::Heading();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_Heading___destroy__(boids::Heading* self) {
+	void DECL boids_Heading__destroy(boids::Heading* self) {
 		delete self;
 	}
 	// MoveForward
-	boids::MoveForward* EMSCRIPTEN_KEEPALIVE boids_MoveForward_MoveForward_0() {
+	boids::MoveForward* DECL boids_MoveForward_MoveForward_0() {
 		return new boids::MoveForward();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_MoveForward___destroy__(boids::MoveForward* self) {
+	void DECL boids_MoveForward__destroy(boids::MoveForward* self) {
 		delete self;
 	}
 	// MoveSpeed
-	boids::MoveSpeed* EMSCRIPTEN_KEEPALIVE boids_MoveSpeed_MoveSpeed_0() {
+	boids::MoveSpeed* DECL boids_MoveSpeed_MoveSpeed_0() {
 		return new boids::MoveSpeed();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_MoveSpeed___destroy__(boids::MoveSpeed* self) {
+	void DECL boids_MoveSpeed__destroy(boids::MoveSpeed* self) {
 		delete self;
 	}
 	// Player
-	void EMSCRIPTEN_KEEPALIVE boids_Player___destroy__(boids::Player* self) {
+	void DECL boids_Player__destroy(boids::Player* self) {
 		delete self;
 	}
 	// Position
-	boids::Position* EMSCRIPTEN_KEEPALIVE boids_Position_Position_0() {
+	boids::Position* DECL boids_Position_Position_0() {
 		return new boids::Position();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_Position___destroy__(boids::Position* self) {
+	void DECL boids_Position__destroy(boids::Position* self) {
 		delete self;
 	}
 	// Rotation
-	boids::Rotation* EMSCRIPTEN_KEEPALIVE boids_Rotation_Rotation_0() {
+	boids::Rotation* DECL boids_Rotation_Rotation_0() {
 		return new boids::Rotation();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_Rotation___destroy__(boids::Rotation* self) {
+	void DECL boids_Rotation__destroy(boids::Rotation* self) {
 		delete self;
 	}
 	// Transform4
-	boids::Transform4* EMSCRIPTEN_KEEPALIVE boids_Transform4_Transform4_0() {
+	boids::Transform4* DECL boids_Transform4_Transform4_0() {
 		return new boids::Transform4();
 	}
-	void EMSCRIPTEN_KEEPALIVE boids_Transform4___destroy__(boids::Transform4* self) {
+	void DECL boids_Transform4__destroy(boids::Transform4* self) {
 		delete self;
 	}
 	

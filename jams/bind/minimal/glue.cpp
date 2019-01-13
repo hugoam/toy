@@ -32,59 +32,65 @@
 #include <block/Api.h>
 #include <shell/Api.h>
 #include <minimal/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 
 extern "C" {
 	
 	// Bullet
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
+	mud::vec3* DECL Bullet__get_source(Bullet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet_set_source(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_source(Bullet* self, mud::vec3* value) {
 		self->m_source = *value;
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
+	mud::vec3* DECL Bullet__get_velocity(Bullet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_velocity, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet_set_velocity(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_velocity(Bullet* self, mud::vec3* value) {
 		self->m_velocity = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
+	void DECL Bullet__destroy(Bullet* self) {
 		delete self;
 	}
 	// Crate
-	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_0() {
+	Crate* DECL Crate_Crate_0() {
 		return new Crate();
 	}
-	Crate* EMSCRIPTEN_KEEPALIVE Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
+	Crate* DECL Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
 		return new Crate(spatial, movable, *extents);
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
+	mud::vec3* DECL Crate__get_extents(Crate* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_extents, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Crate_set_extents(Crate* self, mud::vec3* value) {
+	void DECL Crate__set_extents(Crate* self, mud::vec3* value) {
 		self->m_extents = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
+	void DECL Crate__destroy(Crate* self) {
 		delete self;
 	}
 	// Human
-	Human* EMSCRIPTEN_KEEPALIVE Human_Human_0() {
+	Human* DECL Human_Human_0() {
 		return new Human();
 	}
-	Human* EMSCRIPTEN_KEEPALIVE Human_Human_2(toy::HSpatial spatial, toy::HMovable movable) {
+	Human* DECL Human_Human_2(toy::HSpatial spatial, toy::HMovable movable) {
 		return new Human(spatial, movable);
 	}
-	void EMSCRIPTEN_KEEPALIVE Human___destroy__(Human* self) {
+	void DECL Human__destroy(Human* self) {
 		delete self;
 	}
 	// Player
-	void EMSCRIPTEN_KEEPALIVE Player___destroy__(Player* self) {
+	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	

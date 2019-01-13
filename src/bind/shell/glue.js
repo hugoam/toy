@@ -12,78 +12,78 @@ Module['Game'] = Game;
 Object.defineProperty(Game.prototype, "user", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game_get_user(self), toy::User);
+        return wrapPointer(_toy_Game__get_user(self), toy::User);
     },
     set: function(user) {
         var self = this.ptr;
         /* user <User> [] */
         user = user.ptr;
-        _toy_Game_set_user(self, user);
+        _toy_Game__set_user(self, user);
     }
 });
 Object.defineProperty(Game.prototype, "mode", {
     get: function() {
         var self = this.ptr;
-        return _toy_Game_get_mode(self);
+        return _toy_Game__get_mode(self);
     },
     set: function(mode) {
         var self = this.ptr;
         /* mode <GameMode> [] */
         if (mode && typeof mode === "object") mode = mode.ptr;
-        _toy_Game_set_mode(self, mode);
+        _toy_Game__set_mode(self, mode);
     }
 });
 Object.defineProperty(Game.prototype, "shell", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game_get_shell(self), toy::GameShell);
+        return wrapPointer(_toy_Game__get_shell(self), toy::GameShell);
     },
     set: function(shell) {
         var self = this.ptr;
         /* shell <GameShell> [] */
         shell = shell.ptr;
-        _toy_Game_set_shell(self, shell);
+        _toy_Game__set_shell(self, shell);
     }
 });
 Object.defineProperty(Game.prototype, "module", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game_get_module(self), toy::GameModule);
+        return wrapPointer(_toy_Game__get_module(self), toy::GameModule);
     },
     set: function(module) {
         var self = this.ptr;
         /* module <GameModule> [] */
         module = module.ptr;
-        _toy_Game_set_module(self, module);
+        _toy_Game__set_module(self, module);
     }
 });
 Object.defineProperty(Game.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game_get_world(self), toy::World);
+        return wrapPointer(_toy_Game__get_world(self), toy::World);
     },
     set: function(world) {
         var self = this.ptr;
         /* world <World> [] */
         world = world.ptr;
-        _toy_Game_set_world(self, world);
+        _toy_Game__set_world(self, world);
     }
 });
 Object.defineProperty(Game.prototype, "screen", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game_get_screen(self), mud::Widget);
+        return wrapPointer(_toy_Game__get_screen(self), mud::Widget);
     },
     set: function(screen) {
         var self = this.ptr;
         /* screen <Widget> [] */
         screen = screen.ptr;
-        _toy_Game_set_screen(self, screen);
+        _toy_Game__set_screen(self, screen);
     }
 });
 Game.prototype["__destroy__"] = Game.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_Game___destroy__(self);
+    _toy_Game__destroy(self);
 };
 // GameModule
 function GameModule() { throw "cannot construct a GameModule, no constructor in IDL" }
@@ -133,7 +133,7 @@ GameModule.prototype["start"] = GameModule.prototype.start = function(shell, gam
 };
 GameModule.prototype["__destroy__"] = GameModule.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_GameModule___destroy__(self);
+    _toy_GameModule__destroy(self);
 };
 // GameShell
 function GameShell() { throw "cannot construct a GameShell, no constructor in IDL" }
@@ -223,58 +223,58 @@ GameShell.prototype["save"] = GameShell.prototype.save = function() {
 Object.defineProperty(GameShell.prototype, "core", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_core(self), toy::Core);
+        return wrapPointer(_toy_GameShell__get_core(self), toy::Core);
     }});
 Object.defineProperty(GameShell.prototype, "lua", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_lua(self), mud::LuaInterpreter);
+        return wrapPointer(_toy_GameShell__get_lua(self), mud::LuaInterpreter);
     }});
 Object.defineProperty(GameShell.prototype, "wren", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_wren(self), mud::WrenInterpreter);
+        return wrapPointer(_toy_GameShell__get_wren(self), mud::WrenInterpreter);
     }});
 Object.defineProperty(GameShell.prototype, "gfx", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_gfx(self), mud::GfxSystem);
+        return wrapPointer(_toy_GameShell__get_gfx(self), mud::GfxSystem);
     }});
 Object.defineProperty(GameShell.prototype, "context", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_context(self), mud::Context);
+        return wrapPointer(_toy_GameShell__get_context(self), mud::Context);
     }});
 Object.defineProperty(GameShell.prototype, "vg", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_vg(self), mud::Vg);
+        return wrapPointer(_toy_GameShell__get_vg(self), mud::Vg);
     }});
 Object.defineProperty(GameShell.prototype, "ui_window", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_ui_window(self), mud::UiWindow);
+        return wrapPointer(_toy_GameShell__get_ui_window(self), mud::UiWindow);
     }});
 Object.defineProperty(GameShell.prototype, "editor", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_editor(self), toy::Editor);
+        return wrapPointer(_toy_GameShell__get_editor(self), toy::Editor);
     }});
 Object.defineProperty(GameShell.prototype, "ui", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell_get_ui(self), mud::Ui);
+        return wrapPointer(_toy_GameShell__get_ui(self), mud::Ui);
     },
     set: function(ui) {
         var self = this.ptr;
         /* ui <Ui> [] */
         ui = ui.ptr;
-        _toy_GameShell_set_ui(self, ui);
+        _toy_GameShell__set_ui(self, ui);
     }
 });
 GameShell.prototype["__destroy__"] = GameShell.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_GameShell___destroy__(self);
+    _toy_GameShell__destroy(self);
 };
 // GameModuleBind
 function GameModuleBind(module, call) {
@@ -291,7 +291,7 @@ GameModuleBind.__cache__ = {};
 Module['GameModuleBind'] = GameModuleBind;
 GameModuleBind.prototype["__destroy__"] = GameModuleBind.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_GameModuleBind___destroy__(self);
+    _toy_GameModuleBind__destroy(self);
 };
 // GameScene
 function GameScene() { throw "cannot construct a GameScene, no constructor in IDL" }
@@ -302,7 +302,7 @@ GameScene.__cache__ = {};
 Module['GameScene'] = GameScene;
 GameScene.prototype["__destroy__"] = GameScene.prototype.__destroy__ = function() {
     var self = this.ptr;
-    _toy_GameScene___destroy__(self);
+    _toy_GameScene__destroy(self);
 };
 
 (function() {

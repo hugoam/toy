@@ -32,964 +32,970 @@
 #include <block/Api.h>
 #include <shell/Api.h>
 #include <space/Api.h>
+
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
+#define DECL EMSCRIPTEN_KEEPALIVE
+#else
+#define DECL
+#endif
 #include <cstdint>
 
 
 extern "C" {
 	
 	// Combat
-	Combat* EMSCRIPTEN_KEEPALIVE Combat_Combat_0() {
+	Combat* DECL Combat_Combat_0() {
 		return new Combat();
 	}
-	void EMSCRIPTEN_KEEPALIVE Combat___destroy__(Combat* self) {
+	void DECL Combat__destroy(Combat* self) {
 		delete self;
 	}
 	// CombatFleet
-	CombatFleet* EMSCRIPTEN_KEEPALIVE CombatFleet_CombatFleet_0() {
+	CombatFleet* DECL CombatFleet_CombatFleet_0() {
 		return new CombatFleet();
 	}
-	void EMSCRIPTEN_KEEPALIVE CombatFleet___destroy__(CombatFleet* self) {
+	void DECL CombatFleet__destroy(CombatFleet* self) {
 		delete self;
 	}
 	// CombatStar
-	CombatStar* EMSCRIPTEN_KEEPALIVE CombatStar_CombatStar_0() {
+	CombatStar* DECL CombatStar_CombatStar_0() {
 		return new CombatStar();
 	}
-	void EMSCRIPTEN_KEEPALIVE CombatStar___destroy__(CombatStar* self) {
+	void DECL CombatStar__destroy(CombatStar* self) {
 		delete self;
 	}
 	// Commander
-	Commander* EMSCRIPTEN_KEEPALIVE Commander_Commander_6(mud::Id id, const char* name, Race race, int command, int commerce, int diplomacy) {
+	Commander* DECL Commander_Commander_6(mud::Id id, const char* name, Race race, int command, int commerce, int diplomacy) {
 		return new Commander(id, name, race, command, commerce, diplomacy);
 	}
-	mud::Id EMSCRIPTEN_KEEPALIVE Commander_get_id(Commander* self) {
+	mud::Id DECL Commander__get_id(Commander* self) {
 		return self->m_id;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_id(Commander* self, mud::Id value) {
+	void DECL Commander__set_id(Commander* self, mud::Id value) {
 		self->m_id = value;
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Commander_get_name(Commander* self) {
+	const char* DECL Commander__get_name(Commander* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_name(Commander* self, const char* value) {
+	void DECL Commander__set_name(Commander* self, const char* value) {
 		self->m_name = value;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Commander_get_race(Commander* self) {
+	Race DECL Commander__get_race(Commander* self) {
 		return self->m_race;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_race(Commander* self, Race value) {
+	void DECL Commander__set_race(Commander* self, Race value) {
 		self->m_race = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Commander_get_command(Commander* self) {
+	int DECL Commander__get_command(Commander* self) {
 		return self->m_command;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_command(Commander* self, int value) {
+	void DECL Commander__set_command(Commander* self, int value) {
 		self->m_command = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Commander_get_commerce(Commander* self) {
+	int DECL Commander__get_commerce(Commander* self) {
 		return self->m_commerce;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_commerce(Commander* self, int value) {
+	void DECL Commander__set_commerce(Commander* self, int value) {
 		self->m_commerce = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Commander_get_diplomacy(Commander* self) {
+	int DECL Commander__get_diplomacy(Commander* self) {
 		return self->m_diplomacy;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_diplomacy(Commander* self, int value) {
+	void DECL Commander__set_diplomacy(Commander* self, int value) {
 		self->m_diplomacy = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Commander_get_reputation(Commander* self) {
+	int DECL Commander__get_reputation(Commander* self) {
 		return self->m_reputation;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_reputation(Commander* self, int value) {
+	void DECL Commander__set_reputation(Commander* self, int value) {
 		self->m_reputation = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Commander_get_victory(Commander* self) {
+	int DECL Commander__get_victory(Commander* self) {
 		return self->m_victory;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_victory(Commander* self, int value) {
+	void DECL Commander__set_victory(Commander* self, int value) {
 		self->m_victory = value;
 	}
-	Star* EMSCRIPTEN_KEEPALIVE Commander_get_capital(Commander* self) {
+	Star* DECL Commander__get_capital(Commander* self) {
 		return self->m_capital;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_capital(Commander* self, Star* value) {
+	void DECL Commander__set_capital(Commander* self, Star* value) {
 		self->m_capital = value;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE Commander_get_regime(Commander* self) {
+	Regime DECL Commander__get_regime(Commander* self) {
 		return self->m_regime;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_regime(Commander* self, Regime value) {
+	void DECL Commander__set_regime(Commander* self, Regime value) {
 		self->m_regime = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Commander_get_power(Commander* self) {
+	float DECL Commander__get_power(Commander* self) {
 		return self->m_power;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_power(Commander* self, float value) {
+	void DECL Commander__set_power(Commander* self, float value) {
 		self->m_power = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Commander_get_centaures(Commander* self) {
+	float DECL Commander__get_centaures(Commander* self) {
 		return self->m_centaures;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_centaures(Commander* self, float value) {
+	void DECL Commander__set_centaures(Commander* self, float value) {
 		self->m_centaures = value;
 	}
-	Scans* EMSCRIPTEN_KEEPALIVE Commander_get_scans(Commander* self) {
+	Scans* DECL Commander__get_scans(Commander* self) {
 		static Scans temp;
 		return (temp = self->m_scans, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander_set_scans(Commander* self, Scans* value) {
+	void DECL Commander__set_scans(Commander* self, Scans* value) {
 		self->m_scans = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Commander___destroy__(Commander* self) {
+	void DECL Commander__destroy(Commander* self) {
 		delete self;
 	}
 	// Construction
-	Construction* EMSCRIPTEN_KEEPALIVE Construction_Construction_0() {
+	Construction* DECL Construction_Construction_0() {
 		return new Construction();
 	}
-	void EMSCRIPTEN_KEEPALIVE Construction___destroy__(Construction* self) {
+	void DECL Construction__destroy(Construction* self) {
 		delete self;
 	}
 	// Fleet
-	Fleet* EMSCRIPTEN_KEEPALIVE Fleet_Fleet_0() {
+	Fleet* DECL Fleet_Fleet_0() {
 		return new Fleet();
 	}
-	Fleet* EMSCRIPTEN_KEEPALIVE Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const char* name) {
+	Fleet* DECL Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const char* name) {
 		return new Fleet(spatial, *galaxy, *commander, *coord, name);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_order_attack_1(Fleet* self, Star* star) {
+	void DECL Fleet_order_attack_1(Fleet* self, Star* star) {
 		self->order_attack(*star);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_order_jump_2(Fleet* self, mud::vec2* coord, FleetStance stance) {
+	void DECL Fleet_order_jump_2(Fleet* self, mud::vec2* coord, FleetStance stance) {
 		self->order_jump(*coord, stance);
 	}
-	Galaxy* EMSCRIPTEN_KEEPALIVE Fleet_get_galaxy(Fleet* self) {
+	Galaxy* DECL Fleet__get_galaxy(Fleet* self) {
 		return self->m_galaxy;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_galaxy(Fleet* self, Galaxy* value) {
+	void DECL Fleet__set_galaxy(Fleet* self, Galaxy* value) {
 		self->m_galaxy = value;
 	}
-	Commander* EMSCRIPTEN_KEEPALIVE Fleet_get_commander(Fleet* self) {
+	Commander* DECL Fleet__get_commander(Fleet* self) {
 		return self->m_commander;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_commander(Fleet* self, Commander* value) {
+	void DECL Fleet__set_commander(Fleet* self, Commander* value) {
 		self->m_commander = value;
 	}
-	mud::uvec2* EMSCRIPTEN_KEEPALIVE Fleet_get_coord(Fleet* self) {
+	mud::uvec2* DECL Fleet__get_coord(Fleet* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_coord(Fleet* self, mud::uvec2* value) {
+	void DECL Fleet__set_coord(Fleet* self, mud::uvec2* value) {
 		self->m_coord = *value;
 	}
-	mud::vec3* EMSCRIPTEN_KEEPALIVE Fleet_get_slot(Fleet* self) {
+	mud::vec3* DECL Fleet__get_slot(Fleet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_slot, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_slot(Fleet* self, mud::vec3* value) {
+	void DECL Fleet__set_slot(Fleet* self, mud::vec3* value) {
 		self->m_slot = *value;
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Fleet_get_name(Fleet* self) {
+	const char* DECL Fleet__get_name(Fleet* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_name(Fleet* self, const char* value) {
+	void DECL Fleet__set_name(Fleet* self, const char* value) {
 		self->m_name = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Fleet_get_experience(Fleet* self) {
+	float DECL Fleet__get_experience(Fleet* self) {
 		return self->m_experience;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_experience(Fleet* self, float value) {
+	void DECL Fleet__set_experience(Fleet* self, float value) {
 		self->m_experience = value;
 	}
-	SpatialPower* EMSCRIPTEN_KEEPALIVE Fleet_get_spatial_power(Fleet* self) {
+	SpatialPower* DECL Fleet__get_spatial_power(Fleet* self) {
 		static SpatialPower temp;
 		return (temp = self->m_spatial_power, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_spatial_power(Fleet* self, SpatialPower* value) {
+	void DECL Fleet__set_spatial_power(Fleet* self, SpatialPower* value) {
 		self->m_spatial_power = *value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Fleet_get_planetary_power(Fleet* self) {
+	float DECL Fleet__get_planetary_power(Fleet* self) {
 		return self->m_planetary_power;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_planetary_power(Fleet* self, float value) {
+	void DECL Fleet__set_planetary_power(Fleet* self, float value) {
 		self->m_planetary_power = value;
 	}
-	uint8_t EMSCRIPTEN_KEEPALIVE Fleet_get_speed(Fleet* self) {
+	uint8_t DECL Fleet__get_speed(Fleet* self) {
 		return self->m_speed;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_speed(Fleet* self, uint8_t value) {
+	void DECL Fleet__set_speed(Fleet* self, uint8_t value) {
 		self->m_speed = value;
 	}
-	uint8_t EMSCRIPTEN_KEEPALIVE Fleet_get_scan(Fleet* self) {
+	uint8_t DECL Fleet__get_scan(Fleet* self) {
 		return self->m_scan;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_scan(Fleet* self, uint8_t value) {
+	void DECL Fleet__set_scan(Fleet* self, uint8_t value) {
 		self->m_scan = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Fleet_get_upkeep(Fleet* self) {
+	float DECL Fleet__get_upkeep(Fleet* self) {
 		return self->m_upkeep;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_upkeep(Fleet* self, float value) {
+	void DECL Fleet__set_upkeep(Fleet* self, float value) {
 		self->m_upkeep = value;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE Fleet_get_stance(Fleet* self) {
+	FleetStance DECL Fleet__get_stance(Fleet* self) {
 		return self->m_stance;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_stance(Fleet* self, FleetStance value) {
+	void DECL Fleet__set_stance(Fleet* self, FleetStance value) {
 		self->m_stance = value;
 	}
-	Jump* EMSCRIPTEN_KEEPALIVE Fleet_get_jump(Fleet* self) {
+	Jump* DECL Fleet__get_jump(Fleet* self) {
 		static Jump temp;
 		return (temp = self->m_jump, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_jump(Fleet* self, Jump* value) {
+	void DECL Fleet__set_jump(Fleet* self, Jump* value) {
 		self->m_jump = *value;
 	}
-	Split* EMSCRIPTEN_KEEPALIVE Fleet_get_split(Fleet* self) {
+	Split* DECL Fleet__get_split(Fleet* self) {
 		static Split temp;
 		return (temp = self->m_split, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_split(Fleet* self, Split* value) {
+	void DECL Fleet__set_split(Fleet* self, Split* value) {
 		self->m_split = *value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE Fleet_get_fought(Fleet* self) {
+	bool DECL Fleet__get_fought(Fleet* self) {
 		return self->m_fought;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_fought(Fleet* self, bool value) {
+	void DECL Fleet__set_fought(Fleet* self, bool value) {
 		self->m_fought = value;
 	}
-	size_t EMSCRIPTEN_KEEPALIVE Fleet_get_ships_updated(Fleet* self) {
+	size_t DECL Fleet__get_ships_updated(Fleet* self) {
 		return self->m_ships_updated;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_set_ships_updated(Fleet* self, size_t value) {
+	void DECL Fleet__set_ships_updated(Fleet* self, size_t value) {
 		self->m_ships_updated = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet___destroy__(Fleet* self) {
+	void DECL Fleet__destroy(Fleet* self) {
 		delete self;
 	}
 	// Galaxy
-	Galaxy* EMSCRIPTEN_KEEPALIVE Galaxy_Galaxy_0() {
+	Galaxy* DECL Galaxy_Galaxy_0() {
 		return new Galaxy();
 	}
-	Galaxy* EMSCRIPTEN_KEEPALIVE Galaxy_Galaxy_2(toy::HSpatial spatial, const mud::uvec2* size) {
+	Galaxy* DECL Galaxy_Galaxy_2(toy::HSpatial spatial, const mud::uvec2* size) {
 		return new Galaxy(spatial, *size);
 	}
-	mud::uvec2* EMSCRIPTEN_KEEPALIVE Galaxy_get_size(Galaxy* self) {
+	mud::uvec2* DECL Galaxy__get_size(Galaxy* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_size, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Galaxy_set_size(Galaxy* self, mud::uvec2* value) {
+	void DECL Galaxy__set_size(Galaxy* self, mud::uvec2* value) {
 		self->m_size = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Galaxy___destroy__(Galaxy* self) {
+	void DECL Galaxy__destroy(Galaxy* self) {
 		delete self;
 	}
 	// Jump
-	Jump* EMSCRIPTEN_KEEPALIVE Jump_Jump_0() {
+	Jump* DECL Jump_Jump_0() {
 		return new Jump();
 	}
-	Fleet* EMSCRIPTEN_KEEPALIVE Jump_get_fleet(Jump* self) {
+	Fleet* DECL Jump__get_fleet(Jump* self) {
 		return self->m_fleet;
 	}
-	void EMSCRIPTEN_KEEPALIVE Jump_set_fleet(Jump* self, Fleet* value) {
+	void DECL Jump__set_fleet(Jump* self, Fleet* value) {
 		self->m_fleet = value;
 	}
-	mud::uvec2* EMSCRIPTEN_KEEPALIVE Jump_get_start(Jump* self) {
+	mud::uvec2* DECL Jump__get_start(Jump* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_start, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Jump_set_start(Jump* self, mud::uvec2* value) {
+	void DECL Jump__set_start(Jump* self, mud::uvec2* value) {
 		self->m_start = *value;
 	}
-	mud::uvec2* EMSCRIPTEN_KEEPALIVE Jump_get_dest(Jump* self) {
+	mud::uvec2* DECL Jump__get_dest(Jump* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_dest, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Jump_set_dest(Jump* self, mud::uvec2* value) {
+	void DECL Jump__set_dest(Jump* self, mud::uvec2* value) {
 		self->m_dest = *value;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE Jump_get_stance(Jump* self) {
+	FleetStance DECL Jump__get_stance(Jump* self) {
 		return self->m_stance;
 	}
-	void EMSCRIPTEN_KEEPALIVE Jump_set_stance(Jump* self, FleetStance value) {
+	void DECL Jump__set_stance(Jump* self, FleetStance value) {
 		self->m_stance = value;
 	}
-	Fleet* EMSCRIPTEN_KEEPALIVE Jump_get_track(Jump* self) {
+	Fleet* DECL Jump__get_track(Jump* self) {
 		return self->m_track;
 	}
-	void EMSCRIPTEN_KEEPALIVE Jump_set_track(Jump* self, Fleet* value) {
+	void DECL Jump__set_track(Jump* self, Fleet* value) {
 		self->m_track = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Jump___destroy__(Jump* self) {
+	void DECL Jump__destroy(Jump* self) {
 		delete self;
 	}
 	// Player
-	void EMSCRIPTEN_KEEPALIVE Player___destroy__(Player* self) {
+	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Scans
-	Scans* EMSCRIPTEN_KEEPALIVE Scans_Scans_0() {
+	Scans* DECL Scans_Scans_0() {
 		return new Scans();
 	}
-	void EMSCRIPTEN_KEEPALIVE Scans___destroy__(Scans* self) {
+	void DECL Scans__destroy(Scans* self) {
 		delete self;
 	}
 	// Schema
-	Schema* EMSCRIPTEN_KEEPALIVE Schema_Schema_0() {
+	Schema* DECL Schema_Schema_0() {
 		return new Schema();
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Schema_get_code(Schema* self) {
+	const char* DECL Schema__get_code(Schema* self) {
 		return self->m_code.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_code(Schema* self, const char* value) {
+	void DECL Schema__set_code(Schema* self, const char* value) {
 		self->m_code = value;
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Schema_get_name(Schema* self) {
+	const char* DECL Schema__get_name(Schema* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_name(Schema* self, const char* value) {
+	void DECL Schema__set_name(Schema* self, const char* value) {
 		self->m_name = value;
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Schema_get_conceptor(Schema* self) {
+	const char* DECL Schema__get_conceptor(Schema* self) {
 		return self->m_conceptor.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_conceptor(Schema* self, const char* value) {
+	void DECL Schema__set_conceptor(Schema* self, const char* value) {
 		self->m_conceptor = value;
 	}
-	uint8_t EMSCRIPTEN_KEEPALIVE Schema_get_level(Schema* self) {
+	uint8_t DECL Schema__get_level(Schema* self) {
 		return self->m_level;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_level(Schema* self, uint8_t value) {
+	void DECL Schema__set_level(Schema* self, uint8_t value) {
 		self->m_level = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Schema_get_cost(Schema* self) {
+	float DECL Schema__get_cost(Schema* self) {
 		return self->m_cost;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_cost(Schema* self, float value) {
+	void DECL Schema__set_cost(Schema* self, float value) {
 		self->m_cost = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Schema_get_minerals(Schema* self) {
+	float DECL Schema__get_minerals(Schema* self) {
 		return self->m_minerals;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_minerals(Schema* self, float value) {
+	void DECL Schema__set_minerals(Schema* self, float value) {
 		self->m_minerals = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Schema_get_andrium(Schema* self) {
+	float DECL Schema__get_andrium(Schema* self) {
 		return self->m_andrium;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_andrium(Schema* self, float value) {
+	void DECL Schema__set_andrium(Schema* self, float value) {
 		self->m_andrium = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Schema_get_resistance(Schema* self) {
+	float DECL Schema__get_resistance(Schema* self) {
 		return self->m_resistance;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_resistance(Schema* self, float value) {
+	void DECL Schema__set_resistance(Schema* self, float value) {
 		self->m_resistance = value;
 	}
-	uint8_t EMSCRIPTEN_KEEPALIVE Schema_get_speed(Schema* self) {
+	uint8_t DECL Schema__get_speed(Schema* self) {
 		return self->m_speed;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_speed(Schema* self, uint8_t value) {
+	void DECL Schema__set_speed(Schema* self, uint8_t value) {
 		self->m_speed = value;
 	}
-	uint8_t EMSCRIPTEN_KEEPALIVE Schema_get_scan(Schema* self) {
+	uint8_t DECL Schema__get_scan(Schema* self) {
 		return self->m_scan;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_scan(Schema* self, uint8_t value) {
+	void DECL Schema__set_scan(Schema* self, uint8_t value) {
 		self->m_scan = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Schema_get_planetary(Schema* self) {
+	float DECL Schema__get_planetary(Schema* self) {
 		return self->m_planetary;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_planetary(Schema* self, float value) {
+	void DECL Schema__set_planetary(Schema* self, float value) {
 		self->m_planetary = value;
 	}
-	SpatialPower* EMSCRIPTEN_KEEPALIVE Schema_get_spatial(Schema* self) {
+	SpatialPower* DECL Schema__get_spatial(Schema* self) {
 		static SpatialPower temp;
 		return (temp = self->m_spatial, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_spatial(Schema* self, SpatialPower* value) {
+	void DECL Schema__set_spatial(Schema* self, SpatialPower* value) {
 		self->m_spatial = *value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Schema_get_upkeep_factor(Schema* self) {
+	float DECL Schema__get_upkeep_factor(Schema* self) {
 		return self->m_upkeep_factor;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema_set_upkeep_factor(Schema* self, float value) {
+	void DECL Schema__set_upkeep_factor(Schema* self, float value) {
 		self->m_upkeep_factor = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Schema___destroy__(Schema* self) {
+	void DECL Schema__destroy(Schema* self) {
 		delete self;
 	}
 	// SpatialPower
-	SpatialPower* EMSCRIPTEN_KEEPALIVE SpatialPower_SpatialPower_0() {
+	SpatialPower* DECL SpatialPower_SpatialPower_0() {
 		return new SpatialPower();
 	}
-	void EMSCRIPTEN_KEEPALIVE SpatialPower___destroy__(SpatialPower* self) {
+	void DECL SpatialPower__destroy(SpatialPower* self) {
 		delete self;
 	}
 	// Split
-	Split* EMSCRIPTEN_KEEPALIVE Split_Split_0() {
+	Split* DECL Split_Split_0() {
 		return new Split();
 	}
-	Fleet* EMSCRIPTEN_KEEPALIVE Split_get_source(Split* self) {
+	Fleet* DECL Split__get_source(Split* self) {
 		return self->m_source;
 	}
-	void EMSCRIPTEN_KEEPALIVE Split_set_source(Split* self, Fleet* value) {
+	void DECL Split__set_source(Split* self, Fleet* value) {
 		self->m_source = value;
 	}
-	Fleet* EMSCRIPTEN_KEEPALIVE Split_get_dest(Split* self) {
+	Fleet* DECL Split__get_dest(Split* self) {
 		return self->m_dest;
 	}
-	void EMSCRIPTEN_KEEPALIVE Split_set_dest(Split* self, Fleet* value) {
+	void DECL Split__set_dest(Split* self, Fleet* value) {
 		self->m_dest = value;
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Split_get_code(Split* self) {
+	const char* DECL Split__get_code(Split* self) {
 		return self->m_code.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Split_set_code(Split* self, const char* value) {
+	void DECL Split__set_code(Split* self, const char* value) {
 		self->m_code = value;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE Split_get_stance(Split* self) {
+	FleetStance DECL Split__get_stance(Split* self) {
 		return self->m_stance;
 	}
-	void EMSCRIPTEN_KEEPALIVE Split_set_stance(Split* self, FleetStance value) {
+	void DECL Split__set_stance(Split* self, FleetStance value) {
 		self->m_stance = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Split___destroy__(Split* self) {
+	void DECL Split__destroy(Split* self) {
 		delete self;
 	}
 	// Star
-	Star* EMSCRIPTEN_KEEPALIVE Star_Star_0() {
+	Star* DECL Star_Star_0() {
 		return new Star();
 	}
-	Star* EMSCRIPTEN_KEEPALIVE Star_Star_4(toy::HSpatial spatial, Galaxy* galaxy, const mud::uvec2* coord, const char* name) {
+	Star* DECL Star_Star_4(toy::HSpatial spatial, Galaxy* galaxy, const mud::uvec2* coord, const char* name) {
 		return new Star(spatial, *galaxy, *coord, name);
 	}
-	Galaxy* EMSCRIPTEN_KEEPALIVE Star_get_galaxy(Star* self) {
+	Galaxy* DECL Star__get_galaxy(Star* self) {
 		return self->m_galaxy;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_galaxy(Star* self, Galaxy* value) {
+	void DECL Star__set_galaxy(Star* self, Galaxy* value) {
 		self->m_galaxy = value;
 	}
-	mud::uvec2* EMSCRIPTEN_KEEPALIVE Star_get_coord(Star* self) {
+	mud::uvec2* DECL Star__get_coord(Star* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_coord(Star* self, mud::uvec2* value) {
+	void DECL Star__set_coord(Star* self, mud::uvec2* value) {
 		self->m_coord = *value;
 	}
-	const char* EMSCRIPTEN_KEEPALIVE Star_get_name(Star* self) {
+	const char* DECL Star__get_name(Star* self) {
 		return self->m_name.c_str();
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_name(Star* self, const char* value) {
+	void DECL Star__set_name(Star* self, const char* value) {
 		self->m_name = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Star_get_stability(Star* self) {
+	int DECL Star__get_stability(Star* self) {
 		return self->m_stability;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_stability(Star* self, int value) {
+	void DECL Star__set_stability(Star* self, int value) {
 		self->m_stability = value;
 	}
-	bool EMSCRIPTEN_KEEPALIVE Star_get_revolt(Star* self) {
+	bool DECL Star__get_revolt(Star* self) {
 		return self->m_revolt;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_revolt(Star* self, bool value) {
+	void DECL Star__set_revolt(Star* self, bool value) {
 		self->m_revolt = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Star_get_environment(Star* self) {
+	int DECL Star__get_environment(Star* self) {
 		return self->m_environment;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_environment(Star* self, int value) {
+	void DECL Star__set_environment(Star* self, int value) {
 		self->m_environment = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Star_get_terraformation(Star* self) {
+	int DECL Star__get_terraformation(Star* self) {
 		return self->m_terraformation;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_terraformation(Star* self, int value) {
+	void DECL Star__set_terraformation(Star* self, int value) {
 		self->m_terraformation = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Star_get_base_population(Star* self) {
+	int DECL Star__get_base_population(Star* self) {
 		return self->m_base_population;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_base_population(Star* self, int value) {
+	void DECL Star__set_base_population(Star* self, int value) {
 		self->m_base_population = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Star_get_max_population(Star* self) {
+	int DECL Star__get_max_population(Star* self) {
 		return self->m_max_population;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_max_population(Star* self, int value) {
+	void DECL Star__set_max_population(Star* self, int value) {
 		self->m_max_population = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Star_get_population(Star* self) {
+	int DECL Star__get_population(Star* self) {
 		return self->m_population;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_population(Star* self, int value) {
+	void DECL Star__set_population(Star* self, int value) {
 		self->m_population = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Star_get_militia(Star* self) {
+	float DECL Star__get_militia(Star* self) {
 		return self->m_militia;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_militia(Star* self, float value) {
+	void DECL Star__set_militia(Star* self, float value) {
 		self->m_militia = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Star_get_defense(Star* self) {
+	float DECL Star__get_defense(Star* self) {
 		return self->m_defense;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_defense(Star* self, float value) {
+	void DECL Star__set_defense(Star* self, float value) {
 		self->m_defense = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE Star_get_revenue(Star* self) {
+	float DECL Star__get_revenue(Star* self) {
 		return self->m_revenue;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_revenue(Star* self, float value) {
+	void DECL Star__set_revenue(Star* self, float value) {
 		self->m_revenue = value;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE Star_get_politic(Star* self) {
+	Politic DECL Star__get_politic(Star* self) {
 		return self->m_politic;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_politic(Star* self, Politic value) {
+	void DECL Star__set_politic(Star* self, Politic value) {
 		self->m_politic = value;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE Star_get_taxation(Star* self) {
+	Taxation DECL Star__get_taxation(Star* self) {
 		return self->m_taxation;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_taxation(Star* self, Taxation value) {
+	void DECL Star__set_taxation(Star* self, Taxation value) {
 		self->m_taxation = value;
 	}
-	Commander* EMSCRIPTEN_KEEPALIVE Star_get_commander(Star* self) {
+	Commander* DECL Star__get_commander(Star* self) {
 		return self->m_commander;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_commander(Star* self, Commander* value) {
+	void DECL Star__set_commander(Star* self, Commander* value) {
 		self->m_commander = value;
 	}
-	int EMSCRIPTEN_KEEPALIVE Star_get_scan(Star* self) {
+	int DECL Star__get_scan(Star* self) {
 		return self->m_scan;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star_set_scan(Star* self, int value) {
+	void DECL Star__set_scan(Star* self, int value) {
 		self->m_scan = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE Star___destroy__(Star* self) {
+	void DECL Star__destroy(Star* self) {
 		delete self;
 	}
 	// TechDomain
-	TechDomain* EMSCRIPTEN_KEEPALIVE TechDomain_TechDomain_0() {
+	TechDomain* DECL TechDomain_TechDomain_0() {
 		return new TechDomain();
 	}
-	void EMSCRIPTEN_KEEPALIVE TechDomain___destroy__(TechDomain* self) {
+	void DECL TechDomain__destroy(TechDomain* self) {
 		delete self;
 	}
 	// Turn
-	Turn* EMSCRIPTEN_KEEPALIVE Turn_Turn_0() {
+	Turn* DECL Turn_Turn_0() {
 		return new Turn();
 	}
-	void EMSCRIPTEN_KEEPALIVE Turn___destroy__(Turn* self) {
+	void DECL Turn__destroy(Turn* self) {
 		delete self;
 	}
 	// BuildingSchema
-	BuildingSchema* EMSCRIPTEN_KEEPALIVE BuildingSchema_BuildingSchema_0() {
+	BuildingSchema* DECL BuildingSchema_BuildingSchema_0() {
 		return new BuildingSchema();
 	}
-	void EMSCRIPTEN_KEEPALIVE BuildingSchema___destroy__(BuildingSchema* self) {
+	void DECL BuildingSchema__destroy(BuildingSchema* self) {
 		delete self;
 	}
 	// CommanderBrush
-	Commander* EMSCRIPTEN_KEEPALIVE CommanderBrush_get_commander(CommanderBrush* self) {
+	Commander* DECL CommanderBrush__get_commander(CommanderBrush* self) {
 		return self->m_commander;
 	}
-	void EMSCRIPTEN_KEEPALIVE CommanderBrush_set_commander(CommanderBrush* self, Commander* value) {
+	void DECL CommanderBrush__set_commander(CommanderBrush* self, Commander* value) {
 		self->m_commander = value;
 	}
-	float EMSCRIPTEN_KEEPALIVE CommanderBrush_get_radius(CommanderBrush* self) {
+	float DECL CommanderBrush__get_radius(CommanderBrush* self) {
 		return self->m_radius;
 	}
-	void EMSCRIPTEN_KEEPALIVE CommanderBrush_set_radius(CommanderBrush* self, float value) {
+	void DECL CommanderBrush__set_radius(CommanderBrush* self, float value) {
 		self->m_radius = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE CommanderBrush___destroy__(CommanderBrush* self) {
+	void DECL CommanderBrush__destroy(CommanderBrush* self) {
 		delete self;
 	}
 	// PlanetaryCombat
-	PlanetaryCombat* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_PlanetaryCombat_0() {
+	PlanetaryCombat* DECL PlanetaryCombat_PlanetaryCombat_0() {
 		return new PlanetaryCombat();
 	}
-	mud::uvec2* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_get_coord(PlanetaryCombat* self) {
+	mud::uvec2* DECL PlanetaryCombat__get_coord(PlanetaryCombat* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE PlanetaryCombat_set_coord(PlanetaryCombat* self, mud::uvec2* value) {
+	void DECL PlanetaryCombat__set_coord(PlanetaryCombat* self, mud::uvec2* value) {
 		self->m_coord = *value;
 	}
-	CombatStar* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_get_defense(PlanetaryCombat* self) {
+	CombatStar* DECL PlanetaryCombat__get_defense(PlanetaryCombat* self) {
 		static CombatStar temp;
 		return (temp = self->m_defense, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE PlanetaryCombat_set_defense(PlanetaryCombat* self, CombatStar* value) {
+	void DECL PlanetaryCombat__set_defense(PlanetaryCombat* self, CombatStar* value) {
 		self->m_defense = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE PlanetaryCombat___destroy__(PlanetaryCombat* self) {
+	void DECL PlanetaryCombat__destroy(PlanetaryCombat* self) {
 		delete self;
 	}
 	// ShipComponent
-	ShipComponent* EMSCRIPTEN_KEEPALIVE ShipComponent_ShipComponent_0() {
+	ShipComponent* DECL ShipComponent_ShipComponent_0() {
 		return new ShipComponent();
 	}
-	void EMSCRIPTEN_KEEPALIVE ShipComponent___destroy__(ShipComponent* self) {
+	void DECL ShipComponent__destroy(ShipComponent* self) {
 		delete self;
 	}
 	// ShipEngine
-	ShipEngine* EMSCRIPTEN_KEEPALIVE ShipEngine_ShipEngine_0() {
+	ShipEngine* DECL ShipEngine_ShipEngine_0() {
 		return new ShipEngine();
 	}
-	void EMSCRIPTEN_KEEPALIVE ShipEngine___destroy__(ShipEngine* self) {
+	void DECL ShipEngine__destroy(ShipEngine* self) {
 		delete self;
 	}
 	// ShipHull
-	ShipHull* EMSCRIPTEN_KEEPALIVE ShipHull_ShipHull_0() {
+	ShipHull* DECL ShipHull_ShipHull_0() {
 		return new ShipHull();
 	}
-	void EMSCRIPTEN_KEEPALIVE ShipHull___destroy__(ShipHull* self) {
+	void DECL ShipHull__destroy(ShipHull* self) {
 		delete self;
 	}
 	// ShipSchema
-	ShipSchema* EMSCRIPTEN_KEEPALIVE ShipSchema_ShipSchema_0() {
+	ShipSchema* DECL ShipSchema_ShipSchema_0() {
 		return new ShipSchema();
 	}
-	uint8_t EMSCRIPTEN_KEEPALIVE ShipSchema_get_size(ShipSchema* self) {
+	uint8_t DECL ShipSchema__get_size(ShipSchema* self) {
 		return self->m_size;
 	}
-	void EMSCRIPTEN_KEEPALIVE ShipSchema_set_size(ShipSchema* self, uint8_t value) {
+	void DECL ShipSchema__set_size(ShipSchema* self, uint8_t value) {
 		self->m_size = value;
 	}
-	uint8_t EMSCRIPTEN_KEEPALIVE ShipSchema_get_class(ShipSchema* self) {
+	uint8_t DECL ShipSchema__get_class(ShipSchema* self) {
 		return self->m_class;
 	}
-	void EMSCRIPTEN_KEEPALIVE ShipSchema_set_class(ShipSchema* self, uint8_t value) {
+	void DECL ShipSchema__set_class(ShipSchema* self, uint8_t value) {
 		self->m_class = value;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE ShipSchema_get_main_weapon(ShipSchema* self) {
+	WeaponType DECL ShipSchema__get_main_weapon(ShipSchema* self) {
 		return self->m_main_weapon;
 	}
-	void EMSCRIPTEN_KEEPALIVE ShipSchema_set_main_weapon(ShipSchema* self, WeaponType value) {
+	void DECL ShipSchema__set_main_weapon(ShipSchema* self, WeaponType value) {
 		self->m_main_weapon = value;
 	}
-	void EMSCRIPTEN_KEEPALIVE ShipSchema___destroy__(ShipSchema* self) {
+	void DECL ShipSchema__destroy(ShipSchema* self) {
 		delete self;
 	}
 	// SpatialCombat
-	SpatialCombat* EMSCRIPTEN_KEEPALIVE SpatialCombat_SpatialCombat_0() {
+	SpatialCombat* DECL SpatialCombat_SpatialCombat_0() {
 		return new SpatialCombat();
 	}
-	mud::uvec2* EMSCRIPTEN_KEEPALIVE SpatialCombat_get_coord(SpatialCombat* self) {
+	mud::uvec2* DECL SpatialCombat__get_coord(SpatialCombat* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE SpatialCombat_set_coord(SpatialCombat* self, mud::uvec2* value) {
+	void DECL SpatialCombat__set_coord(SpatialCombat* self, mud::uvec2* value) {
 		self->m_coord = *value;
 	}
-	void EMSCRIPTEN_KEEPALIVE SpatialCombat___destroy__(SpatialCombat* self) {
+	void DECL SpatialCombat__destroy(SpatialCombat* self) {
 		delete self;
 	}
 	// Universe
-	Universe* EMSCRIPTEN_KEEPALIVE Universe_Universe_2(const char* name, mud::JobSystem* job_system) {
+	Universe* DECL Universe_Universe_2(const char* name, mud::JobSystem* job_system) {
 		return new Universe(name, *job_system);
 	}
-	toy::World* EMSCRIPTEN_KEEPALIVE Universe_get_world(Universe* self) {
+	toy::World* DECL Universe__get_world(Universe* self) {
 		return &self->m_world;
 	}
-	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE Universe_get_bullet_world(Universe* self) {
+	toy::BulletWorld* DECL Universe__get_bullet_world(Universe* self) {
 		return &self->m_bullet_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE Universe___destroy__(Universe* self) {
+	void DECL Universe__destroy(Universe* self) {
 		delete self;
 	}
 	// CombatType
-	CombatType EMSCRIPTEN_KEEPALIVE CombatType_Spatial() {
+	CombatType DECL CombatType_Spatial() {
 		return CombatType::Spatial;
 	}
-	CombatType EMSCRIPTEN_KEEPALIVE CombatType_Planetary() {
+	CombatType DECL CombatType_Planetary() {
 		return CombatType::Planetary;
 	}
 	// Experience
-	Experience EMSCRIPTEN_KEEPALIVE Experience_Inexperienced() {
+	Experience DECL Experience_Inexperienced() {
 		return Experience::Inexperienced;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE Experience_LittleExperienced() {
+	Experience DECL Experience_LittleExperienced() {
 		return Experience::LittleExperienced;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE Experience_Experienced() {
+	Experience DECL Experience_Experienced() {
 		return Experience::Experienced;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE Experience_Superior() {
+	Experience DECL Experience_Superior() {
 		return Experience::Superior;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE Experience_Elite() {
+	Experience DECL Experience_Elite() {
 		return Experience::Elite;
 	}
 	// FleetSize
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Ridicule() {
+	FleetSize DECL FleetSize_Ridicule() {
 		return FleetSize::Ridicule;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Minuscule() {
+	FleetSize DECL FleetSize_Minuscule() {
 		return FleetSize::Minuscule;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Tiny() {
+	FleetSize DECL FleetSize_Tiny() {
 		return FleetSize::Tiny;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Small() {
+	FleetSize DECL FleetSize_Small() {
 		return FleetSize::Small;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Medium() {
+	FleetSize DECL FleetSize_Medium() {
 		return FleetSize::Medium;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Respectable() {
+	FleetSize DECL FleetSize_Respectable() {
 		return FleetSize::Respectable;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Grand() {
+	FleetSize DECL FleetSize_Grand() {
 		return FleetSize::Grand;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_HighGrand() {
+	FleetSize DECL FleetSize_HighGrand() {
 		return FleetSize::HighGrand;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Colossal() {
+	FleetSize DECL FleetSize_Colossal() {
 		return FleetSize::Colossal;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Titanesque() {
+	FleetSize DECL FleetSize_Titanesque() {
 		return FleetSize::Titanesque;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Cyclopean() {
+	FleetSize DECL FleetSize_Cyclopean() {
 		return FleetSize::Cyclopean;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Divine() {
+	FleetSize DECL FleetSize_Divine() {
 		return FleetSize::Divine;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Count() {
+	FleetSize DECL FleetSize_Count() {
 		return FleetSize::Count;
 	}
 	// FleetStance
-	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_Movement() {
+	FleetStance DECL FleetStance_Movement() {
 		return FleetStance::Movement;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_SpatialAttack() {
+	FleetStance DECL FleetStance_SpatialAttack() {
 		return FleetStance::SpatialAttack;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_SpatialDefense() {
+	FleetStance DECL FleetStance_SpatialDefense() {
 		return FleetStance::SpatialDefense;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_PlanetaryAttack() {
+	FleetStance DECL FleetStance_PlanetaryAttack() {
 		return FleetStance::PlanetaryAttack;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_PlanetaryDefense() {
+	FleetStance DECL FleetStance_PlanetaryDefense() {
 		return FleetStance::PlanetaryDefense;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_Pillage() {
+	FleetStance DECL FleetStance_Pillage() {
 		return FleetStance::Pillage;
 	}
 	// GameStage
-	GameStage EMSCRIPTEN_KEEPALIVE GameStage_Empire() {
+	GameStage DECL GameStage_Empire() {
 		return GameStage::Empire;
 	}
-	GameStage EMSCRIPTEN_KEEPALIVE GameStage_Tactics() {
+	GameStage DECL GameStage_Tactics() {
 		return GameStage::Tactics;
 	}
-	GameStage EMSCRIPTEN_KEEPALIVE GameStage_TurnReport() {
+	GameStage DECL GameStage_TurnReport() {
 		return GameStage::TurnReport;
 	}
 	// Politic
-	Politic EMSCRIPTEN_KEEPALIVE Politic_Taxes() {
+	Politic DECL Politic_Taxes() {
 		return Politic::Taxes;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE Politic_Commerce() {
+	Politic DECL Politic_Commerce() {
 		return Politic::Commerce;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE Politic_Construction() {
+	Politic DECL Politic_Construction() {
 		return Politic::Construction;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE Politic_Defense() {
+	Politic DECL Politic_Defense() {
 		return Politic::Defense;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE Politic_Pacification() {
+	Politic DECL Politic_Pacification() {
 		return Politic::Pacification;
 	}
 	// Race
-	Race EMSCRIPTEN_KEEPALIVE Race_Human() {
+	Race DECL Race_Human() {
 		return Race::Human;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Race_Bulvoid() {
+	Race DECL Race_Bulvoid() {
 		return Race::Bulvoid;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Race_Techtulon() {
+	Race DECL Race_Techtulon() {
 		return Race::Techtulon;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Race_Rakrarior() {
+	Race DECL Race_Rakrarior() {
 		return Race::Rakrarior;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Race_Seigneur() {
+	Race DECL Race_Seigneur() {
 		return Race::Seigneur;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Race_Meton() {
+	Race DECL Race_Meton() {
 		return Race::Meton;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Race_Tissinar() {
+	Race DECL Race_Tissinar() {
 		return Race::Tissinar;
 	}
-	Race EMSCRIPTEN_KEEPALIVE Race_Zwiie() {
+	Race DECL Race_Zwiie() {
 		return Race::Zwiie;
 	}
 	// Regime
-	Regime EMSCRIPTEN_KEEPALIVE Regime_Empire() {
+	Regime DECL Regime_Empire() {
 		return Regime::Empire;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE Regime_Dictature() {
+	Regime DECL Regime_Dictature() {
 		return Regime::Dictature;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE Regime_Democracy() {
+	Regime DECL Regime_Democracy() {
 		return Regime::Democracy;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE Regime_Theocracy() {
+	Regime DECL Regime_Theocracy() {
 		return Regime::Theocracy;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE Regime_Technocracy() {
+	Regime DECL Regime_Technocracy() {
 		return Regime::Technocracy;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE Regime_Piratery() {
+	Regime DECL Regime_Piratery() {
 		return Regime::Piratery;
 	}
 	// Resource
-	Resource EMSCRIPTEN_KEEPALIVE Resource_None() {
+	Resource DECL Resource_None() {
 		return Resource::None;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Minerals() {
+	Resource DECL Resource_Minerals() {
 		return Resource::Minerals;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Andrium() {
+	Resource DECL Resource_Andrium() {
 		return Resource::Andrium;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Alcool() {
+	Resource DECL Resource_Alcool() {
 		return Resource::Alcool;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Slaves() {
+	Resource DECL Resource_Slaves() {
 		return Resource::Slaves;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Narcotics() {
+	Resource DECL Resource_Narcotics() {
 		return Resource::Narcotics;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Food() {
+	Resource DECL Resource_Food() {
 		return Resource::Food;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Medicine() {
+	Resource DECL Resource_Medicine() {
 		return Resource::Medicine;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Computers() {
+	Resource DECL Resource_Computers() {
 		return Resource::Computers;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Plastic() {
+	Resource DECL Resource_Plastic() {
 		return Resource::Plastic;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Robot() {
+	Resource DECL Resource_Robot() {
 		return Resource::Robot;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE Resource_Count() {
+	Resource DECL Resource_Count() {
 		return Resource::Count;
 	}
 	// Taxation
-	Taxation EMSCRIPTEN_KEEPALIVE Taxation_None() {
+	Taxation DECL Taxation_None() {
 		return Taxation::None;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Light() {
+	Taxation DECL Taxation_Light() {
 		return Taxation::Light;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Medium() {
+	Taxation DECL Taxation_Medium() {
 		return Taxation::Medium;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Heavy() {
+	Taxation DECL Taxation_Heavy() {
 		return Taxation::Heavy;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Heaviest() {
+	Taxation DECL Taxation_Heaviest() {
 		return Taxation::Heaviest;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Total() {
+	Taxation DECL Taxation_Total() {
 		return Taxation::Total;
 	}
 	// Technology
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Engines() {
+	Technology DECL Technology_Engines() {
 		return Technology::Engines;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_EcoEnergy() {
+	Technology DECL Technology_EcoEnergy() {
 		return Technology::EcoEnergy;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Scanners() {
+	Technology DECL Technology_Scanners() {
 		return Technology::Scanners;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_PlanetaryShields() {
+	Technology DECL Technology_PlanetaryShields() {
 		return Technology::PlanetaryShields;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_SpatialShields() {
+	Technology DECL Technology_SpatialShields() {
 		return Technology::SpatialShields;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_LaserPlasmaIons() {
+	Technology DECL Technology_LaserPlasmaIons() {
 		return Technology::LaserPlasmaIons;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Torpedoes() {
+	Technology DECL Technology_Torpedoes() {
 		return Technology::Torpedoes;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Bombs() {
+	Technology DECL Technology_Bombs() {
 		return Technology::Bombs;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_HullArmor() {
+	Technology DECL Technology_HullArmor() {
 		return Technology::HullArmor;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Mining() {
+	Technology DECL Technology_Mining() {
 		return Technology::Mining;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Terraforming() {
+	Technology DECL Technology_Terraforming() {
 		return Technology::Terraforming;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Construction() {
+	Technology DECL Technology_Construction() {
 		return Technology::Construction;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Piloting() {
+	Technology DECL Technology_Piloting() {
 		return Technology::Piloting;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Commerce() {
+	Technology DECL Technology_Commerce() {
 		return Technology::Commerce;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Personnel() {
+	Technology DECL Technology_Personnel() {
 		return Technology::Personnel;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Administration() {
+	Technology DECL Technology_Administration() {
 		return Technology::Administration;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_CyberCommand() {
+	Technology DECL Technology_CyberCommand() {
 		return Technology::CyberCommand;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_CyberCommerce() {
+	Technology DECL Technology_CyberCommerce() {
 		return Technology::CyberCommerce;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_CyberDiplomacy() {
+	Technology DECL Technology_CyberDiplomacy() {
 		return Technology::CyberDiplomacy;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE Technology_Count() {
+	Technology DECL Technology_Count() {
 		return Technology::Count;
 	}
 	// WeaponType
-	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_None() {
+	WeaponType DECL WeaponType_None() {
 		return WeaponType::None;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Ion() {
+	WeaponType DECL WeaponType_Ion() {
 		return WeaponType::Ion;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Laser() {
+	WeaponType DECL WeaponType_Laser() {
 		return WeaponType::Laser;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Plasma() {
+	WeaponType DECL WeaponType_Plasma() {
 		return WeaponType::Plasma;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Torpedo() {
+	WeaponType DECL WeaponType_Torpedo() {
 		return WeaponType::Torpedo;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Bomb() {
+	WeaponType DECL WeaponType_Bomb() {
 		return WeaponType::Bomb;
 	}
 	
