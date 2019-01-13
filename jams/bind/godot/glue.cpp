@@ -174,9 +174,6 @@ extern "C" {
 	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_0() {
 		return new Stance();
 	}
-	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_0() {
-		return new Stance();
-	}
 	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_2(const char* name, bool loop) {
 		return new Stance(name, loop);
 	}
