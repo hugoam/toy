@@ -78,7 +78,7 @@ extern "C" {
 	}
 	Race EMSCRIPTEN_KEEPALIVE Commander_get_race(Commander* self) {
 		static Race temp;
-		return (temp = &self->m_race, &temp);
+		return (temp = self->m_race, &temp);
 	}
 	int EMSCRIPTEN_KEEPALIVE Commander_get_command(Commander* self) {
 		return self->m_command;
@@ -106,7 +106,7 @@ extern "C" {
 	}
 	Regime EMSCRIPTEN_KEEPALIVE Commander_get_regime(Commander* self) {
 		static Regime temp;
-		return (temp = &self->m_regime, &temp);
+		return (temp = self->m_regime, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Commander_get_power(Commander* self) {
 		return self->m_power;
@@ -116,7 +116,7 @@ extern "C" {
 	}
 	Scans* EMSCRIPTEN_KEEPALIVE Commander_get_scans(Commander* self) {
 		static Scans temp;
-		return (temp = &self->m_scans, &temp);
+		return (temp = self->m_scans, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Commander___destroy__(Commander* self) {
 		delete self;
@@ -149,11 +149,11 @@ extern "C" {
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE Fleet_get_coord(Fleet* self) {
 		static mud::uvec2 temp;
-		return (temp = &self->m_coord, &temp);
+		return (temp = self->m_coord, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Fleet_get_slot(Fleet* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_slot, &temp);
+		return (temp = self->m_slot, &temp);
 	}
 	const char* EMSCRIPTEN_KEEPALIVE Fleet_get_name(Fleet* self) {
 		return self->m_name.c_str();
@@ -163,7 +163,7 @@ extern "C" {
 	}
 	SpatialPower* EMSCRIPTEN_KEEPALIVE Fleet_get_spatial_power(Fleet* self) {
 		static SpatialPower temp;
-		return (temp = &self->m_spatial_power, &temp);
+		return (temp = self->m_spatial_power, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Fleet_get_planetary_power(Fleet* self) {
 		return self->m_planetary_power;
@@ -179,15 +179,15 @@ extern "C" {
 	}
 	FleetStance EMSCRIPTEN_KEEPALIVE Fleet_get_stance(Fleet* self) {
 		static FleetStance temp;
-		return (temp = &self->m_stance, &temp);
+		return (temp = self->m_stance, &temp);
 	}
 	Jump* EMSCRIPTEN_KEEPALIVE Fleet_get_jump(Fleet* self) {
 		static Jump temp;
-		return (temp = &self->m_jump, &temp);
+		return (temp = self->m_jump, &temp);
 	}
 	Split* EMSCRIPTEN_KEEPALIVE Fleet_get_split(Fleet* self) {
 		static Split temp;
-		return (temp = &self->m_split, &temp);
+		return (temp = self->m_split, &temp);
 	}
 	bool EMSCRIPTEN_KEEPALIVE Fleet_get_fought(Fleet* self) {
 		return self->m_fought;
@@ -213,11 +213,11 @@ extern "C" {
 	}
 	std::vector<Commander*>* EMSCRIPTEN_KEEPALIVE Galaxy_get_commanders(Galaxy* self) {
 		static std::vector<Commander*> temp;
-		return (temp = &self->m_commanders, &temp);
+		return (temp = self->m_commanders, &temp);
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE Galaxy_get_size(Galaxy* self) {
 		static mud::uvec2 temp;
-		return (temp = &self->m_size, &temp);
+		return (temp = self->m_size, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Galaxy___destroy__(Galaxy* self) {
 		delete self;
@@ -231,15 +231,15 @@ extern "C" {
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE Jump_get_start(Jump* self) {
 		static mud::uvec2 temp;
-		return (temp = &self->m_start, &temp);
+		return (temp = self->m_start, &temp);
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE Jump_get_dest(Jump* self) {
 		static mud::uvec2 temp;
-		return (temp = &self->m_dest, &temp);
+		return (temp = self->m_dest, &temp);
 	}
 	FleetStance EMSCRIPTEN_KEEPALIVE Jump_get_stance(Jump* self) {
 		static FleetStance temp;
-		return (temp = &self->m_stance, &temp);
+		return (temp = self->m_stance, &temp);
 	}
 	Fleet* EMSCRIPTEN_KEEPALIVE Jump_get_track(Jump* self) {
 		return self->m_track;
@@ -297,7 +297,7 @@ extern "C" {
 	}
 	SpatialPower* EMSCRIPTEN_KEEPALIVE Schema_get_spatial(Schema* self) {
 		static SpatialPower temp;
-		return (temp = &self->m_spatial, &temp);
+		return (temp = self->m_spatial, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Schema_get_upkeep_factor(Schema* self) {
 		return self->m_upkeep_factor;
@@ -327,7 +327,7 @@ extern "C" {
 	}
 	FleetStance EMSCRIPTEN_KEEPALIVE Split_get_stance(Split* self) {
 		static FleetStance temp;
-		return (temp = &self->m_stance, &temp);
+		return (temp = self->m_stance, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Split___destroy__(Split* self) {
 		delete self;
@@ -344,7 +344,7 @@ extern "C" {
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE Star_get_coord(Star* self) {
 		static mud::uvec2 temp;
-		return (temp = &self->m_coord, &temp);
+		return (temp = self->m_coord, &temp);
 	}
 	const char* EMSCRIPTEN_KEEPALIVE Star_get_name(Star* self) {
 		return self->m_name.c_str();
@@ -381,11 +381,11 @@ extern "C" {
 	}
 	Politic EMSCRIPTEN_KEEPALIVE Star_get_politic(Star* self) {
 		static Politic temp;
-		return (temp = &self->m_politic, &temp);
+		return (temp = self->m_politic, &temp);
 	}
 	Taxation EMSCRIPTEN_KEEPALIVE Star_get_taxation(Star* self) {
 		static Taxation temp;
-		return (temp = &self->m_taxation, &temp);
+		return (temp = self->m_taxation, &temp);
 	}
 	Commander* EMSCRIPTEN_KEEPALIVE Star_get_commander(Star* self) {
 		return self->m_commander;
@@ -433,15 +433,15 @@ extern "C" {
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_get_coord(PlanetaryCombat* self) {
 		static mud::uvec2 temp;
-		return (temp = &self->m_coord, &temp);
+		return (temp = self->m_coord, &temp);
 	}
 	std::vector<CombatFleet>* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_get_attack(PlanetaryCombat* self) {
 		static std::vector<CombatFleet> temp;
-		return (temp = &self->m_attack, &temp);
+		return (temp = self->m_attack, &temp);
 	}
 	CombatStar* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_get_defense(PlanetaryCombat* self) {
 		static CombatStar temp;
-		return (temp = &self->m_defense, &temp);
+		return (temp = self->m_defense, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE PlanetaryCombat___destroy__(PlanetaryCombat* self) {
 		delete self;
@@ -479,7 +479,7 @@ extern "C" {
 	}
 	WeaponType EMSCRIPTEN_KEEPALIVE ShipSchema_get_main_weapon(ShipSchema* self) {
 		static WeaponType temp;
-		return (temp = &self->m_main_weapon, &temp);
+		return (temp = self->m_main_weapon, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE ShipSchema___destroy__(ShipSchema* self) {
 		delete self;
@@ -490,15 +490,15 @@ extern "C" {
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE SpatialCombat_get_coord(SpatialCombat* self) {
 		static mud::uvec2 temp;
-		return (temp = &self->m_coord, &temp);
+		return (temp = self->m_coord, &temp);
 	}
 	std::vector<CombatFleet>* EMSCRIPTEN_KEEPALIVE SpatialCombat_get_attack(SpatialCombat* self) {
 		static std::vector<CombatFleet> temp;
-		return (temp = &self->m_attack, &temp);
+		return (temp = self->m_attack, &temp);
 	}
 	std::vector<CombatFleet>* EMSCRIPTEN_KEEPALIVE SpatialCombat_get_defense(SpatialCombat* self) {
 		static std::vector<CombatFleet> temp;
-		return (temp = &self->m_defense, &temp);
+		return (temp = self->m_defense, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE SpatialCombat___destroy__(SpatialCombat* self) {
 		delete self;
@@ -509,11 +509,11 @@ extern "C" {
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Universe_get_world(Universe* self) {
 		static toy::World temp;
-		return (temp = &self->m_world, &temp);
+		return (temp = self->m_world, &temp);
 	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE Universe_get_bullet_world(Universe* self) {
 		static toy::BulletWorld temp;
-		return (temp = &self->m_bullet_world, &temp);
+		return (temp = self->m_bullet_world, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Universe___destroy__(Universe* self) {
 		delete self;

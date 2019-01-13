@@ -51,15 +51,15 @@ extern "C" {
 	}
 	mud::quat* EMSCRIPTEN_KEEPALIVE Aim_get_rotation(Aim* self) {
 		static mud::quat temp;
-		return (temp = &self->rotation, &temp);
+		return (temp = self->rotation, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_start(Aim* self) {
 		static mud::vec3 temp;
-		return (temp = &self->start, &temp);
+		return (temp = self->start, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Aim_get_end(Aim* self) {
 		static mud::vec3 temp;
-		return (temp = &self->end, &temp);
+		return (temp = self->end, &temp);
 	}
 	toy::Spatial* EMSCRIPTEN_KEEPALIVE Aim_get_hit(Aim* self) {
 		return self->hit;
@@ -70,11 +70,11 @@ extern "C" {
 	// Bullet
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_source, &temp);
+		return (temp = self->m_source, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_velocity, &temp);
+		return (temp = self->m_velocity, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
 		delete self;
@@ -88,7 +88,7 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_extents, &temp);
+		return (temp = self->m_extents, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
 		delete self;
@@ -120,7 +120,7 @@ extern "C" {
 	}
 	Faction EMSCRIPTEN_KEEPALIVE Human_get_faction(Human* self) {
 		static Faction temp;
-		return (temp = &self->m_faction, &temp);
+		return (temp = self->m_faction, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_life(Human* self) {
 		return self->m_life;
@@ -145,14 +145,14 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Human_get_dest(Human* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_dest, &temp);
+		return (temp = self->m_dest, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Human_get_cooldown(Human* self) {
 		return self->m_cooldown;
 	}
 	Stance* EMSCRIPTEN_KEEPALIVE Human_get_state(Human* self) {
 		static Stance temp;
-		return (temp = &self->m_state, &temp);
+		return (temp = self->m_state, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Human___destroy__(Human* self) {
 		delete self;
@@ -196,15 +196,15 @@ extern "C" {
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE TileWorld_get_world(TileWorld* self) {
 		static toy::World temp;
-		return (temp = &self->m_world, &temp);
+		return (temp = self->m_world, &temp);
 	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE TileWorld_get_bullet_world(TileWorld* self) {
 		static toy::BulletWorld temp;
-		return (temp = &self->m_bullet_world, &temp);
+		return (temp = self->m_bullet_world, &temp);
 	}
 	toy::Navmesh* EMSCRIPTEN_KEEPALIVE TileWorld_get_navmesh(TileWorld* self) {
 		static toy::Navmesh temp;
-		return (temp = &self->m_navmesh, &temp);
+		return (temp = self->m_navmesh, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE TileWorld___destroy__(TileWorld* self) {
 		delete self;

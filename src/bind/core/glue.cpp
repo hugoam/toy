@@ -76,20 +76,20 @@ extern "C" {
 	}
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE Collider_get_collision_shape(toy::Collider* self) {
 		static toy::CollisionShape temp;
-		return (temp = &self->m_collision_shape, &temp);
+		return (temp = self->m_collision_shape, &temp);
 	}
 	toy::Medium* EMSCRIPTEN_KEEPALIVE Collider_get_medium(toy::Collider* self) {
 		return self->m_medium;
 	}
 	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE Collider_get_group(toy::Collider* self) {
 		static toy::CollisionGroup temp;
-		return (temp = &self->m_group, &temp);
+		return (temp = self->m_group, &temp);
 	}
 	toy::ColliderObject* EMSCRIPTEN_KEEPALIVE Collider_get_object(toy::Collider* self) {
 		return self->m_object;
 	}
 	toy::ColliderImpl* EMSCRIPTEN_KEEPALIVE Collider_get_impl(toy::Collider* self) {
-		return &&self->impl;
+		return &self->impl;
 	}
 	void EMSCRIPTEN_KEEPALIVE Collider___destroy__(toy::Collider* self) {
 		delete self;
@@ -114,7 +114,7 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Collision_get_hit_point(toy::Collision* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_hit_point, &temp);
+		return (temp = self->m_hit_point, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Collision___destroy__(toy::Collision* self) {
 		delete self;
@@ -207,18 +207,18 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Movable_get_linear_velocity(toy::Movable* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_linear_velocity, &temp);
+		return (temp = self->m_linear_velocity, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Movable_get_angular_velocity(toy::Movable* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_angular_velocity, &temp);
+		return (temp = self->m_angular_velocity, &temp);
 	}
 	bool EMSCRIPTEN_KEEPALIVE Movable_get_moving(toy::Movable* self) {
 		return self->m_moving;
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Movable_get_previous_position(toy::Movable* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_previous_position, &temp);
+		return (temp = self->m_previous_position, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Movable___destroy__(toy::Movable* self) {
 		delete self;
@@ -247,7 +247,7 @@ extern "C" {
 		return new toy::Navmesh(*world);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Navmesh_get_world(toy::Navmesh* self) {
-		return &&self->m_world;
+		return &self->m_world;
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Navmesh_get_updated(toy::Navmesh* self) {
 		return self->m_updated;
@@ -285,7 +285,7 @@ extern "C" {
 		return (temp = self->raycast(*ray, mask), &temp);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE PhysicWorld_get_world(toy::PhysicWorld* self) {
-		return &&self->m_world;
+		return &self->m_world;
 	}
 	void EMSCRIPTEN_KEEPALIVE PhysicWorld___destroy__(toy::PhysicWorld* self) {
 		delete self;
@@ -374,7 +374,7 @@ extern "C" {
 		return self->m_id;
 	}
 	mud::Complex* EMSCRIPTEN_KEEPALIVE World_get_complex(toy::World* self) {
-		return &&self->m_complex;
+		return &self->m_complex;
 	}
 	const char* EMSCRIPTEN_KEEPALIVE World_get_name(toy::World* self) {
 		return self->m_name.c_str();
@@ -416,7 +416,7 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE WorldPage_get_extents(toy::WorldPage* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_extents, &temp);
+		return (temp = self->m_extents, &temp);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE WorldPage_get_world(toy::WorldPage* self) {
 		return self->m_world;
@@ -448,15 +448,15 @@ extern "C" {
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_world(toy::DefaultWorld* self) {
 		static toy::World temp;
-		return (temp = &self->m_world, &temp);
+		return (temp = self->m_world, &temp);
 	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_bullet_world(toy::DefaultWorld* self) {
 		static toy::BulletWorld temp;
-		return (temp = &self->m_bullet_world, &temp);
+		return (temp = self->m_bullet_world, &temp);
 	}
 	toy::Navmesh* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_navmesh(toy::DefaultWorld* self) {
 		static toy::Navmesh temp;
-		return (temp = &self->m_navmesh, &temp);
+		return (temp = self->m_navmesh, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE DefaultWorld___destroy__(toy::DefaultWorld* self) {
 		delete self;
@@ -482,7 +482,7 @@ extern "C" {
 	}
 	toy::CollisionShape* EMSCRIPTEN_KEEPALIVE Obstacle_get_shape(toy::Obstacle* self) {
 		static toy::CollisionShape temp;
-		return (temp = &self->m_shape, &temp);
+		return (temp = self->m_shape, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Obstacle_get_throughput(toy::Obstacle* self) {
 		return self->m_throughput;
@@ -532,7 +532,7 @@ extern "C" {
 	}
 	std::vector<toy::HSpatial>* EMSCRIPTEN_KEEPALIVE Spatial_get_contents(toy::Spatial* self) {
 		static std::vector<toy::HSpatial> temp;
-		return (temp = &self->m_contents, &temp);
+		return (temp = self->m_contents, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Spatial___destroy__(toy::Spatial* self) {
 		delete self;

@@ -54,7 +54,7 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Camp_get_position(Camp* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_position, &temp);
+		return (temp = self->m_position, &temp);
 	}
 	Faction* EMSCRIPTEN_KEEPALIVE Camp_get_faction(Camp* self) {
 		return self->m_faction;
@@ -71,7 +71,7 @@ extern "C" {
 	}
 	mud::Colour* EMSCRIPTEN_KEEPALIVE Faction_get_colour(Faction* self) {
 		static mud::Colour temp;
-		return (temp = &self->m_colour, &temp);
+		return (temp = self->m_colour, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Faction___destroy__(Faction* self) {
 		delete self;
@@ -105,11 +105,11 @@ extern "C" {
 	// Slug
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Slug_get_source(Slug* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_source, &temp);
+		return (temp = self->m_source, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Slug_get_velocity(Slug* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_velocity, &temp);
+		return (temp = self->m_velocity, &temp);
 	}
 	float EMSCRIPTEN_KEEPALIVE Slug_get_power(Slug* self) {
 		return self->m_power;
@@ -133,31 +133,31 @@ extern "C" {
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE BlockWorld_get_world(BlockWorld* self) {
 		static toy::World temp;
-		return (temp = &self->m_world, &temp);
+		return (temp = self->m_world, &temp);
 	}
 	toy::BulletWorld* EMSCRIPTEN_KEEPALIVE BlockWorld_get_bullet_world(BlockWorld* self) {
 		static toy::BulletWorld temp;
-		return (temp = &self->m_bullet_world, &temp);
+		return (temp = self->m_bullet_world, &temp);
 	}
 	toy::Navmesh* EMSCRIPTEN_KEEPALIVE BlockWorld_get_navmesh(BlockWorld* self) {
 		static toy::Navmesh temp;
-		return (temp = &self->m_navmesh, &temp);
+		return (temp = self->m_navmesh, &temp);
 	}
 	mud::uvec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_block_subdiv(BlockWorld* self) {
 		static mud::uvec3 temp;
-		return (temp = &self->m_block_subdiv, &temp);
+		return (temp = self->m_block_subdiv, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_tile_scale(BlockWorld* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_tile_scale, &temp);
+		return (temp = self->m_tile_scale, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_block_size(BlockWorld* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_block_size, &temp);
+		return (temp = self->m_block_size, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE BlockWorld_get_world_size(BlockWorld* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_world_size, &temp);
+		return (temp = self->m_world_size, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE BlockWorld___destroy__(BlockWorld* self) {
 		delete self;

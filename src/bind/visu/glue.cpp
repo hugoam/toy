@@ -25,11 +25,11 @@ extern "C" {
 		self->next_frame();
 	}
 	mud::GfxSystem* EMSCRIPTEN_KEEPALIVE VisuScene_get_gfx_system(toy::VisuScene* self) {
-		return &&self->m_gfx_system;
+		return &self->m_gfx_system;
 	}
 	mud::Scene* EMSCRIPTEN_KEEPALIVE VisuScene_get_scene(toy::VisuScene* self) {
 		static mud::Scene temp;
-		return (temp = &self->m_scene, &temp);
+		return (temp = self->m_scene, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE VisuScene___destroy__(toy::VisuScene* self) {
 		delete self;

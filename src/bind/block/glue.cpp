@@ -48,7 +48,7 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Block_get_size(toy::Block* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_size, &temp);
+		return (temp = self->m_size, &temp);
 	}
 	size_t EMSCRIPTEN_KEEPALIVE Block_get_updated(toy::Block* self) {
 		return self->m_updated;
@@ -90,11 +90,11 @@ extern "C" {
 	}
 	toy::MatterState EMSCRIPTEN_KEEPALIVE Element_get_state(toy::Element* self) {
 		static toy::MatterState temp;
-		return (temp = &self->m_state, &temp);
+		return (temp = self->m_state, &temp);
 	}
 	mud::Colour* EMSCRIPTEN_KEEPALIVE Element_get_colour(toy::Element* self) {
 		static mud::Colour temp;
-		return (temp = &self->m_colour, &temp);
+		return (temp = self->m_colour, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Element___destroy__(toy::Element* self) {
 		delete self;
@@ -124,11 +124,11 @@ extern "C" {
 	}
 	mud::uvec3* EMSCRIPTEN_KEEPALIVE Sector_get_coordinate(toy::Sector* self) {
 		static mud::uvec3 temp;
-		return (temp = &self->m_coordinate, &temp);
+		return (temp = self->m_coordinate, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Sector_get_size(toy::Sector* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_size, &temp);
+		return (temp = self->m_size, &temp);
 	}
 	toy::Block* EMSCRIPTEN_KEEPALIVE Sector_get_block(toy::Sector* self) {
 		return self->m_block;
@@ -145,7 +145,7 @@ extern "C" {
 	}
 	mud::WfcBlock* EMSCRIPTEN_KEEPALIVE Tileblock_get_wfc_block(toy::Tileblock* self) {
 		static mud::WfcBlock temp;
-		return (temp = &self->m_wfc_block, &temp);
+		return (temp = self->m_wfc_block, &temp);
 	}
 	bool EMSCRIPTEN_KEEPALIVE Tileblock_get_setup(toy::Tileblock* self) {
 		return self->m_setup;

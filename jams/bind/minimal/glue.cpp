@@ -48,11 +48,11 @@ extern "C" {
 	// Bullet
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_source(Bullet* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_source, &temp);
+		return (temp = self->m_source, &temp);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Bullet_get_velocity(Bullet* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_velocity, &temp);
+		return (temp = self->m_velocity, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Bullet___destroy__(Bullet* self) {
 		delete self;
@@ -66,7 +66,7 @@ extern "C" {
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Crate_get_extents(Crate* self) {
 		static mud::vec3 temp;
-		return (temp = &self->m_extents, &temp);
+		return (temp = self->m_extents, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE Crate___destroy__(Crate* self) {
 		delete self;
