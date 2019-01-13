@@ -57,18 +57,6 @@ Object.defineProperty(Game.prototype, "module", {
         _Game_set_module(self, module);
     }
 });
-Object.defineProperty(Game.prototype, "player", {
-    get: function() {
-        var self = this.ptr;
-        return wrapPointer(_Game_get_player(self), mud::Ref);
-    },
-    set: function(player) {
-        var self = this.ptr;
-        /* player <Ref> [] */
-        player = player.ptr;
-        _Game_set_player(self, player);
-    }
-});
 Object.defineProperty(Game.prototype, "world", {
     get: function() {
         var self = this.ptr;

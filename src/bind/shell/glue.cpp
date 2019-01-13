@@ -52,10 +52,6 @@ extern "C" {
 	toy::GameModule* EMSCRIPTEN_KEEPALIVE Game_get_module(toy::Game* self) {
 		return self->m_module;
 	}
-	mud::Ref* EMSCRIPTEN_KEEPALIVE Game_get_player(toy::Game* self) {
-		static mud::Ref temp;
-		return (temp = self->m_player, &temp);
-	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Game_get_world(toy::Game* self) {
 		return self->m_world;
 	}
