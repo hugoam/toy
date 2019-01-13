@@ -1283,18 +1283,6 @@ Object.defineProperty(Spatial.prototype, "parent", {
         _Spatial_set_parent(self, parent);
     }
 });
-Object.defineProperty(Spatial.prototype, "contents", {
-    get: function() {
-        var self = this.ptr;
-        return wrapPointer(_Spatial_get_contents(self), std::vector<toy::HSpatial>);
-    },
-    set: function(contents) {
-        var self = this.ptr;
-        /* contents <std::vector<toy::HSpatial>> [] */
-        contents = contents.ptr;
-        _Spatial_set_contents(self, contents);
-    }
-});
 Spatial.prototype["__destroy__"] = Spatial.prototype.__destroy__ = function() {
     var self = this.ptr;
     _Spatial___destroy__(self);

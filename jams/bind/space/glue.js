@@ -155,28 +155,6 @@ Object.defineProperty(Commander.prototype, "victory", {
         _Commander_set_victory(self, victory);
     }
 });
-Object.defineProperty(Commander.prototype, "stars", {
-    get: function() {
-        var self = this.ptr;
-        return _Commander_get_stars(self);
-    },
-    set: function(stars) {
-        var self = this.ptr;
-        /* stars <std::vector<HStar>> [] */
-        _Commander_set_stars(self, stars);
-    }
-});
-Object.defineProperty(Commander.prototype, "fleets", {
-    get: function() {
-        var self = this.ptr;
-        return _Commander_get_fleets(self);
-    },
-    set: function(fleets) {
-        var self = this.ptr;
-        /* fleets <std::vector<HFleet>> [] */
-        _Commander_set_fleets(self, fleets);
-    }
-});
 Object.defineProperty(Commander.prototype, "capital", {
     get: function() {
         var self = this.ptr;
@@ -491,40 +469,6 @@ Galaxy.prototype.constructor = Galaxy;
 Galaxy.prototype.__class__ = Galaxy;
 Galaxy.__cache__ = {};
 Module['Galaxy'] = Galaxy;
-Object.defineProperty(Galaxy.prototype, "stars", {
-    get: function() {
-        var self = this.ptr;
-        return _Galaxy_get_stars(self);
-    },
-    set: function(stars) {
-        var self = this.ptr;
-        /* stars <std::vector<HStar>> [] */
-        _Galaxy_set_stars(self, stars);
-    }
-});
-Object.defineProperty(Galaxy.prototype, "fleets", {
-    get: function() {
-        var self = this.ptr;
-        return _Galaxy_get_fleets(self);
-    },
-    set: function(fleets) {
-        var self = this.ptr;
-        /* fleets <std::vector<HFleet>> [] */
-        _Galaxy_set_fleets(self, fleets);
-    }
-});
-Object.defineProperty(Galaxy.prototype, "commanders", {
-    get: function() {
-        var self = this.ptr;
-        return wrapPointer(_Galaxy_get_commanders(self), std::vector<Commander*>);
-    },
-    set: function(commanders) {
-        var self = this.ptr;
-        /* commanders <std::vector<Commander*>> [] */
-        commanders = commanders.ptr;
-        _Galaxy_set_commanders(self, commanders);
-    }
-});
 Object.defineProperty(Galaxy.prototype, "size", {
     get: function() {
         var self = this.ptr;
@@ -1197,18 +1141,6 @@ Object.defineProperty(PlanetaryCombat.prototype, "coord", {
         _PlanetaryCombat_set_coord(self, coord);
     }
 });
-Object.defineProperty(PlanetaryCombat.prototype, "attack", {
-    get: function() {
-        var self = this.ptr;
-        return wrapPointer(_PlanetaryCombat_get_attack(self), std::vector<CombatFleet>);
-    },
-    set: function(attack) {
-        var self = this.ptr;
-        /* attack <std::vector<CombatFleet>> [] */
-        attack = attack.ptr;
-        _PlanetaryCombat_set_attack(self, attack);
-    }
-});
 Object.defineProperty(PlanetaryCombat.prototype, "defense", {
     get: function() {
         var self = this.ptr;
@@ -1335,30 +1267,6 @@ Object.defineProperty(SpatialCombat.prototype, "coord", {
         /* coord <uvec2> [] */
         coord = coord.ptr;
         _SpatialCombat_set_coord(self, coord);
-    }
-});
-Object.defineProperty(SpatialCombat.prototype, "attack", {
-    get: function() {
-        var self = this.ptr;
-        return wrapPointer(_SpatialCombat_get_attack(self), std::vector<CombatFleet>);
-    },
-    set: function(attack) {
-        var self = this.ptr;
-        /* attack <std::vector<CombatFleet>> [] */
-        attack = attack.ptr;
-        _SpatialCombat_set_attack(self, attack);
-    }
-});
-Object.defineProperty(SpatialCombat.prototype, "defense", {
-    get: function() {
-        var self = this.ptr;
-        return wrapPointer(_SpatialCombat_get_defense(self), std::vector<CombatFleet>);
-    },
-    set: function(defense) {
-        var self = this.ptr;
-        /* defense <std::vector<CombatFleet>> [] */
-        defense = defense.ptr;
-        _SpatialCombat_set_defense(self, defense);
     }
 });
 SpatialCombat.prototype["__destroy__"] = SpatialCombat.prototype.__destroy__ = function() {

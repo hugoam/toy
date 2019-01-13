@@ -94,12 +94,6 @@ extern "C" {
 	int EMSCRIPTEN_KEEPALIVE Commander_get_victory(Commander* self) {
 		return self->m_victory;
 	}
-	std::vector<HStar> EMSCRIPTEN_KEEPALIVE Commander_get_stars(Commander* self) {
-		return self->m_stars;
-	}
-	std::vector<HFleet> EMSCRIPTEN_KEEPALIVE Commander_get_fleets(Commander* self) {
-		return self->m_fleets;
-	}
 	Star* EMSCRIPTEN_KEEPALIVE Commander_get_capital(Commander* self) {
 		return self->m_capital;
 	}
@@ -201,16 +195,6 @@ extern "C" {
 	}
 	Galaxy* EMSCRIPTEN_KEEPALIVE Galaxy_Galaxy_2(toy::HSpatial spatial, const mud::uvec2* size) {
 		return new Galaxy(spatial, *size);
-	}
-	std::vector<HStar> EMSCRIPTEN_KEEPALIVE Galaxy_get_stars(Galaxy* self) {
-		return self->m_stars;
-	}
-	std::vector<HFleet> EMSCRIPTEN_KEEPALIVE Galaxy_get_fleets(Galaxy* self) {
-		return self->m_fleets;
-	}
-	std::vector<Commander*>* EMSCRIPTEN_KEEPALIVE Galaxy_get_commanders(Galaxy* self) {
-		static std::vector<Commander*> temp;
-		return (temp = self->m_commanders, &temp);
 	}
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE Galaxy_get_size(Galaxy* self) {
 		static mud::uvec2 temp;
@@ -428,10 +412,6 @@ extern "C" {
 		static mud::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	std::vector<CombatFleet>* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_get_attack(PlanetaryCombat* self) {
-		static std::vector<CombatFleet> temp;
-		return (temp = self->m_attack, &temp);
-	}
 	CombatStar* EMSCRIPTEN_KEEPALIVE PlanetaryCombat_get_defense(PlanetaryCombat* self) {
 		static CombatStar temp;
 		return (temp = self->m_defense, &temp);
@@ -483,14 +463,6 @@ extern "C" {
 	mud::uvec2* EMSCRIPTEN_KEEPALIVE SpatialCombat_get_coord(SpatialCombat* self) {
 		static mud::uvec2 temp;
 		return (temp = self->m_coord, &temp);
-	}
-	std::vector<CombatFleet>* EMSCRIPTEN_KEEPALIVE SpatialCombat_get_attack(SpatialCombat* self) {
-		static std::vector<CombatFleet> temp;
-		return (temp = self->m_attack, &temp);
-	}
-	std::vector<CombatFleet>* EMSCRIPTEN_KEEPALIVE SpatialCombat_get_defense(SpatialCombat* self) {
-		static std::vector<CombatFleet> temp;
-		return (temp = self->m_defense, &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE SpatialCombat___destroy__(SpatialCombat* self) {
 		delete self;

@@ -529,10 +529,6 @@ extern "C" {
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE Spatial_get_parent(toy::Spatial* self) {
 		return self->m_parent;
 	}
-	std::vector<toy::HSpatial>* EMSCRIPTEN_KEEPALIVE Spatial_get_contents(toy::Spatial* self) {
-		static std::vector<toy::HSpatial> temp;
-		return (temp = self->m_contents, &temp);
-	}
 	void EMSCRIPTEN_KEEPALIVE Spatial___destroy__(toy::Spatial* self) {
 		delete self;
 	}
