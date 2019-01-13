@@ -479,14 +479,8 @@ extern "C" {
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE World_get_origin(toy::World* self) {
 		return self->origin();
 	}
-	void EMSCRIPTEN_KEEPALIVE World_set_origin(toy::World* self, toy::HSpatial origin) {
-		self->origin = origin;
-	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE World_get_unworld(toy::World* self) {
 		return self->unworld();
-	}
-	void EMSCRIPTEN_KEEPALIVE World_set_unworld(toy::World* self, toy::HSpatial unworld) {
-		self->unworld = unworld;
 	}
 	void EMSCRIPTEN_KEEPALIVE World___destroy__(toy::World* self) {
 		delete self;

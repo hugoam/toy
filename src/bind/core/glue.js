@@ -861,24 +861,12 @@ Object.defineProperty(World.prototype, "origin", {
     get: function() {
         var self = this.ptr;
         return _World_get_origin(self);
-    },
-    set: function(origin) {
-        var self = this.ptr;
-        /* origin <toy::HSpatial> [] */
-        _World_set_origin(self, origin);
-    }
-});
+    }});
 Object.defineProperty(World.prototype, "unworld", {
     get: function() {
         var self = this.ptr;
         return _World_get_unworld(self);
-    },
-    set: function(unworld) {
-        var self = this.ptr;
-        /* unworld <toy::HSpatial> [] */
-        _World_set_unworld(self, unworld);
-    }
-});
+    }});
 World.prototype["__destroy__"] = World.prototype.__destroy__ = function() {
     var self = this.ptr;
     _World___destroy__(self);
