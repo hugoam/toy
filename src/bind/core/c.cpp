@@ -13,7 +13,6 @@
 #else
 #define DECL
 #endif
-#include <cstdint>
 
 
 extern "C" {
