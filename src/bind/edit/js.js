@@ -1,7 +1,7 @@
-
-// Bindings utilities
-function WrapperObject() {
-}
+Module['glm'] = Module['glm'] || {};
+Module['mud'] = Module['mud'] || {};
+Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 // ActionGroup
 function ActionGroup() {
     this.ptr = _toy_ActionGroup_ActionGroup_0(); getCache(ActionGroup)[this.ptr] = this;

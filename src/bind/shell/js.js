@@ -1,7 +1,7 @@
-
-// Bindings utilities
-function WrapperObject() {
-}
+Module['glm'] = Module['glm'] || {};
+Module['mud'] = Module['mud'] || {};
+Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 // Game
 function Game() { throw "cannot construct a Game, no constructor in IDL" }
 Game.prototype = Object.create(WrapperObject.prototype);

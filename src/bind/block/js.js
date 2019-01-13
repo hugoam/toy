@@ -1,7 +1,7 @@
-
-// Bindings utilities
-function WrapperObject() {
-}
+Module['glm'] = Module['glm'] || {};
+Module['mud'] = Module['mud'] || {};
+Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 // Block
 function Block(spatial, world_page, parentblock, index, size) {
     /* spatial <toy::HSpatial> [] */
@@ -419,7 +419,7 @@ Module['generate_block'] = function(gfx_system, tileset, origin, coord, block_su
     /* tile_scale <vec3> [] */
     tile_scale = tile_scale.ptr;
     /* from_file <bool> [] */
-    if (from_file === undefined) { return _toy_generate_block_6(gfx_system, tileset, origin, coord, block_subdiv, tile_scale); return; }
+    if (from_file === undefined) { return _toy_generate_block_6(gfx_system, tileset, origin, coord, block_subdiv, tile_scale); }
     return _toy_generate_block_7(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file);
 };
 Module['paint_block_height'] = function(block, image, element) {

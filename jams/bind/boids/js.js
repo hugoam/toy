@@ -1,7 +1,9 @@
-
-// Bindings utilities
-function WrapperObject() {
-}
+Module['boids'] = Module['boids'] || {};
+Module['glm'] = Module['glm'] || {};
+Module['mud'] = Module['mud'] || {};
+Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
+Module['toy'] = Module['toy'] || {};
 // Boid
 function Boid() {
     this.ptr = _boids_Boid_Boid_0(); getCache(Boid)[this.ptr] = this;
@@ -10,7 +12,7 @@ Boid.prototype = Object.create(WrapperObject.prototype);
 Boid.prototype.constructor = Boid;
 Boid.prototype.__class__ = Boid;
 Boid.__cache__ = {};
-Module['Boid'] = Boid;
+Module['boids']['Boid'] = Boid;
 Boid.prototype["__destroy__"] = Boid.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_Boid__destroy(self);
@@ -23,7 +25,7 @@ BoidObstacle.prototype = Object.create(WrapperObject.prototype);
 BoidObstacle.prototype.constructor = BoidObstacle;
 BoidObstacle.prototype.__class__ = BoidObstacle;
 BoidObstacle.__cache__ = {};
-Module['BoidObstacle'] = BoidObstacle;
+Module['boids']['BoidObstacle'] = BoidObstacle;
 BoidObstacle.prototype["__destroy__"] = BoidObstacle.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_BoidObstacle__destroy(self);
@@ -36,7 +38,7 @@ BoidTarget.prototype = Object.create(WrapperObject.prototype);
 BoidTarget.prototype.constructor = BoidTarget;
 BoidTarget.prototype.__class__ = BoidTarget;
 BoidTarget.__cache__ = {};
-Module['BoidTarget'] = BoidTarget;
+Module['boids']['BoidTarget'] = BoidTarget;
 BoidTarget.prototype["__destroy__"] = BoidTarget.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_BoidTarget__destroy(self);
@@ -49,7 +51,7 @@ Heading.prototype = Object.create(WrapperObject.prototype);
 Heading.prototype.constructor = Heading;
 Heading.prototype.__class__ = Heading;
 Heading.__cache__ = {};
-Module['Heading'] = Heading;
+Module['boids']['Heading'] = Heading;
 Heading.prototype["__destroy__"] = Heading.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_Heading__destroy(self);
@@ -62,7 +64,7 @@ MoveForward.prototype = Object.create(WrapperObject.prototype);
 MoveForward.prototype.constructor = MoveForward;
 MoveForward.prototype.__class__ = MoveForward;
 MoveForward.__cache__ = {};
-Module['MoveForward'] = MoveForward;
+Module['boids']['MoveForward'] = MoveForward;
 MoveForward.prototype["__destroy__"] = MoveForward.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_MoveForward__destroy(self);
@@ -75,7 +77,7 @@ MoveSpeed.prototype = Object.create(WrapperObject.prototype);
 MoveSpeed.prototype.constructor = MoveSpeed;
 MoveSpeed.prototype.__class__ = MoveSpeed;
 MoveSpeed.__cache__ = {};
-Module['MoveSpeed'] = MoveSpeed;
+Module['boids']['MoveSpeed'] = MoveSpeed;
 MoveSpeed.prototype["__destroy__"] = MoveSpeed.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_MoveSpeed__destroy(self);
@@ -86,7 +88,7 @@ Player.prototype = Object.create(WrapperObject.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.__class__ = Player;
 Player.__cache__ = {};
-Module['Player'] = Player;
+Module['boids']['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_Player__destroy(self);
@@ -99,7 +101,7 @@ Position.prototype = Object.create(WrapperObject.prototype);
 Position.prototype.constructor = Position;
 Position.prototype.__class__ = Position;
 Position.__cache__ = {};
-Module['Position'] = Position;
+Module['boids']['Position'] = Position;
 Position.prototype["__destroy__"] = Position.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_Position__destroy(self);
@@ -112,7 +114,7 @@ Rotation.prototype = Object.create(WrapperObject.prototype);
 Rotation.prototype.constructor = Rotation;
 Rotation.prototype.__class__ = Rotation;
 Rotation.__cache__ = {};
-Module['Rotation'] = Rotation;
+Module['boids']['Rotation'] = Rotation;
 Rotation.prototype["__destroy__"] = Rotation.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_Rotation__destroy(self);
@@ -125,7 +127,7 @@ Transform4.prototype = Object.create(WrapperObject.prototype);
 Transform4.prototype.constructor = Transform4;
 Transform4.prototype.__class__ = Transform4;
 Transform4.__cache__ = {};
-Module['Transform4'] = Transform4;
+Module['boids']['Transform4'] = Transform4;
 Transform4.prototype["__destroy__"] = Transform4.prototype.__destroy__ = function() {
     var self = this.ptr;
     _boids_Transform4__destroy(self);

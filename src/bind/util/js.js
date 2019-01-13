@@ -1,7 +1,7 @@
-
-// Bindings utilities
-function WrapperObject() {
-}
+Module['glm'] = Module['glm'] || {};
+Module['mud'] = Module['mud'] || {};
+Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 // Procedure
 function Procedure() { throw "cannot construct a Procedure, no constructor in IDL" }
 Procedure.prototype = Object.create(WrapperObject.prototype);

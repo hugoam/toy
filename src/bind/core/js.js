@@ -1,7 +1,7 @@
-
-// Bindings utilities
-function WrapperObject() {
-}
+Module['glm'] = Module['glm'] || {};
+Module['mud'] = Module['mud'] || {};
+Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 // BulletMedium
 function BulletMedium() { throw "cannot construct a BulletMedium, no constructor in IDL" }
 BulletMedium.prototype = Object.create(WrapperObject.prototype);
@@ -1225,7 +1225,7 @@ Module['move_2d'] = function(spatial, movable, target, velocity, time_step, marg
     /* velocity <float> [] */
     /* time_step <float> [] */
     /* margin <float> [] */
-    if (margin === undefined) { return !!(_toy_move_2d_5(spatial, movable, target, velocity, time_step)); return; }
+    if (margin === undefined) { return !!(_toy_move_2d_5(spatial, movable, target, velocity, time_step)); }
     return !!(_toy_move_2d_6(spatial, movable, target, velocity, time_step, margin));
 };
 Module['steer_2d'] = function(spatial, movable, target, velocity, time_step, margin) {
@@ -1239,7 +1239,7 @@ Module['steer_2d'] = function(spatial, movable, target, velocity, time_step, mar
     /* velocity <float> [] */
     /* time_step <float> [] */
     /* margin <float> [] */
-    if (margin === undefined) { return !!(_toy_steer_2d_5(spatial, movable, target, velocity, time_step)); return; }
+    if (margin === undefined) { return !!(_toy_steer_2d_5(spatial, movable, target, velocity, time_step)); }
     return !!(_toy_steer_2d_6(spatial, movable, target, velocity, time_step, margin));
 };
 

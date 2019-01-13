@@ -1,7 +1,9 @@
-
-// Bindings utilities
-function WrapperObject() {
-}
+Module['boids'] = Module['boids'] || {};
+Module['glm'] = Module['glm'] || {};
+Module['mud'] = Module['mud'] || {};
+Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
+Module['toy'] = Module['toy'] || {};
 // Aim
 function Aim() {
     this.ptr = _Aim_Aim_0(); getCache(Aim)[this.ptr] = this;
@@ -156,7 +158,7 @@ Human.prototype["shoot"] = Human.prototype.shoot = function(self) {
 Human.prototype["sight"] = Human.prototype.sight = function(self, aiming) {
     var self = this.ptr;
     /* aiming <bool> [] */
-    if (aiming === undefined) { return wrapPointer(_Human_sight_0(self), quat); return; }
+    if (aiming === undefined) { return wrapPointer(_Human_sight_0(self), quat); }
     return wrapPointer(_Human_sight_1(self, aiming), quat);
 };
 Human.prototype["stop"] = Human.prototype.stop = function(self) {
