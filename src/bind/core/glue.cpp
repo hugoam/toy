@@ -192,8 +192,8 @@ extern "C" {
 	toy::Movable* EMSCRIPTEN_KEEPALIVE Movable_Movable_1(toy::HSpatial spatial) {
 		return new toy::Movable(spatial);
 	}
-	void EMSCRIPTEN_KEEPALIVE Movable_set_linear_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
-		self->set_linear_velocity(*velocity);
+	void EMSCRIPTEN_KEEPALIVE Movable_modify_angular_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
+		self->modify_angular_velocity(*velocity);
 	}
 	void EMSCRIPTEN_KEEPALIVE Movable_modify_linear_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
 		self->modify_linear_velocity(*velocity);
@@ -201,8 +201,8 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE Movable_set_angular_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
 		self->set_angular_velocity(*velocity);
 	}
-	void EMSCRIPTEN_KEEPALIVE Movable_modify_angular_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
-		self->modify_angular_velocity(*velocity);
+	void EMSCRIPTEN_KEEPALIVE Movable_set_linear_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
+		self->set_linear_velocity(*velocity);
 	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE Movable_get_linear_velocity(toy::Movable* self) {
 		static mud::vec3 temp;
@@ -328,25 +328,25 @@ extern "C" {
 		delete self;
 	}
 	// SolidImpl
-	mud::vec3* EMSCRIPTEN_KEEPALIVE SolidImpl_linear_velocity_0(toy::SolidImpl* self) {
-		static mud::vec3 temp;
-		return (temp = self->linear_velocity(), &temp);
-	}
 	mud::vec3* EMSCRIPTEN_KEEPALIVE SolidImpl_angular_velocity_0(toy::SolidImpl* self) {
 		static mud::vec3 temp;
 		return (temp = self->angular_velocity(), &temp);
 	}
-	void EMSCRIPTEN_KEEPALIVE SolidImpl_set_linear_velocity_1(toy::SolidImpl* self, const mud::vec3* force) {
-		self->set_linear_velocity(*force);
+	void EMSCRIPTEN_KEEPALIVE SolidImpl_impulse_2(toy::SolidImpl* self, const mud::vec3* force, const mud::vec3* point) {
+		self->impulse(*force, *point);
 	}
-	void EMSCRIPTEN_KEEPALIVE SolidImpl_set_angular_velocity_1(toy::SolidImpl* self, const mud::vec3* torque) {
-		self->set_angular_velocity(*torque);
+	mud::vec3* EMSCRIPTEN_KEEPALIVE SolidImpl_linear_velocity_0(toy::SolidImpl* self) {
+		static mud::vec3 temp;
+		return (temp = self->linear_velocity(), &temp);
 	}
 	void EMSCRIPTEN_KEEPALIVE SolidImpl_set_angular_factor_1(toy::SolidImpl* self, const mud::vec3* factor) {
 		self->set_angular_factor(*factor);
 	}
-	void EMSCRIPTEN_KEEPALIVE SolidImpl_impulse_2(toy::SolidImpl* self, const mud::vec3* force, const mud::vec3* point) {
-		self->impulse(*force, *point);
+	void EMSCRIPTEN_KEEPALIVE SolidImpl_set_angular_velocity_1(toy::SolidImpl* self, const mud::vec3* torque) {
+		self->set_angular_velocity(*torque);
+	}
+	void EMSCRIPTEN_KEEPALIVE SolidImpl_set_linear_velocity_1(toy::SolidImpl* self, const mud::vec3* force) {
+		self->set_linear_velocity(*force);
 	}
 	void EMSCRIPTEN_KEEPALIVE SolidImpl___destroy__(toy::SolidImpl* self) {
 		delete self;
@@ -401,14 +401,14 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE WorldPage_build_geometry_1(toy::WorldPage* self, const toy::Spatial* spatial) {
 		self->build_geometry(*spatial);
 	}
-	void EMSCRIPTEN_KEEPALIVE WorldPage_update_geometry_0(toy::WorldPage* self) {
-		self->update_geometry();
-	}
 	void EMSCRIPTEN_KEEPALIVE WorldPage_ground_point_3(toy::WorldPage* self, const mud::vec3* position, bool relative, mud::vec3* outputPoint) {
 		self->ground_point(*position, relative, *outputPoint);
 	}
 	void EMSCRIPTEN_KEEPALIVE WorldPage_raycast_ground_3(toy::WorldPage* self, const mud::vec3* from, const mud::vec3* to, mud::vec3* ground_point) {
 		self->raycast_ground(*from, *to, *ground_point);
+	}
+	void EMSCRIPTEN_KEEPALIVE WorldPage_update_geometry_0(toy::WorldPage* self) {
+		self->update_geometry();
 	}
 	bool EMSCRIPTEN_KEEPALIVE WorldPage_get_open(toy::WorldPage* self) {
 		return self->m_open;
@@ -513,9 +513,6 @@ extern "C" {
 	}
 	toy::Spatial* EMSCRIPTEN_KEEPALIVE Spatial_Spatial_3(toy::HSpatial parent, const mud::vec3* position, const mud::quat* rotation) {
 		return new toy::Spatial(parent, *position, *rotation);
-	}
-	toy::Spatial* EMSCRIPTEN_KEEPALIVE Spatial_Spatial_4(toy::World* world, toy::HSpatial parent, const mud::vec3* position, const mud::quat* rotation) {
-		return new toy::Spatial(*world, parent, *position, *rotation);
 	}
 	void EMSCRIPTEN_KEEPALIVE Spatial_set_position_1(toy::Spatial* self, const mud::vec3* position) {
 		self->set_position(*position);

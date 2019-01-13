@@ -65,8 +65,8 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameModule_init_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
 		self->init(*shell, *game);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameModule_start_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
-		self->start(*shell, *game);
+	void EMSCRIPTEN_KEEPALIVE GameModule_paint_3(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene, mud::Gnode* graph) {
+		self->paint(*shell, *scene, *graph);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameModule_pump_3(toy::GameModule* self, toy::GameShell* shell, toy::Game* game, mud::Widget* ui) {
 		self->pump(*shell, *game, *ui);
@@ -74,15 +74,27 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameModule_scene_2(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene) {
 		self->scene(*shell, *scene);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameModule_paint_3(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene, mud::Gnode* graph) {
-		self->paint(*shell, *scene, *graph);
+	void EMSCRIPTEN_KEEPALIVE GameModule_start_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
+		self->start(*shell, *game);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameModule___destroy__(toy::GameModule* self) {
 		delete self;
 	}
 	// GameShell
+	toy::GameScene* EMSCRIPTEN_KEEPALIVE GameShell_add_scene_0(toy::GameShell* self) {
+		return &self->add_scene();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_cleanup_0(toy::GameShell* self) {
+		self->cleanup();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_clear_scenes_0(toy::GameShell* self) {
+		self->clear_scenes();
+	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_init_0(toy::GameShell* self) {
 		self->init();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_launch_0(toy::GameShell* self) {
+		self->launch();
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_load_1(toy::GameShell* self, toy::GameModule* module) {
 		self->load(*module);
@@ -90,17 +102,20 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameShell_load_path_1(toy::GameShell* self, const char* module_path) {
 		self->load_path(module_path);
 	}
+	bool EMSCRIPTEN_KEEPALIVE GameShell_pump_0(toy::GameShell* self) {
+		return self->pump();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_reload_0(toy::GameShell* self) {
+		self->reload();
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_remove_scene_1(toy::GameShell* self, toy::GameScene* scene) {
+		self->remove_scene(*scene);
+	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_0(toy::GameShell* self) {
 		self->run();
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_1(toy::GameShell* self, size_t iterations) {
 		self->run(iterations);
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_1(toy::GameShell* self, toy::GameModule* module) {
-		self->run_game(*module);
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
-		self->run_game(*module, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_1(toy::GameShell* self, toy::GameModule* module) {
 		self->run_editor(*module);
@@ -108,41 +123,26 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
 		self->run_editor(*module, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_1(toy::GameShell* self, const char* module_path) {
-		self->run_game_path(module_path);
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
-		self->run_game_path(module_path, iterations);
-	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_1(toy::GameShell* self, const char* module_path) {
 		self->run_editor_path(module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
 		self->run_editor_path(module_path, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_launch_0(toy::GameShell* self) {
-		self->launch();
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_1(toy::GameShell* self, toy::GameModule* module) {
+		self->run_game(*module);
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
+		self->run_game(*module, iterations);
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_1(toy::GameShell* self, const char* module_path) {
+		self->run_game_path(module_path);
+	}
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
+		self->run_game_path(module_path, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_save_0(toy::GameShell* self) {
 		self->save();
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_reload_0(toy::GameShell* self) {
-		self->reload();
-	}
-	bool EMSCRIPTEN_KEEPALIVE GameShell_pump_0(toy::GameShell* self) {
-		return self->pump();
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_cleanup_0(toy::GameShell* self) {
-		self->cleanup();
-	}
-	toy::GameScene* EMSCRIPTEN_KEEPALIVE GameShell_add_scene_0(toy::GameShell* self) {
-		return &self->add_scene();
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_remove_scene_1(toy::GameShell* self, toy::GameScene* scene) {
-		self->remove_scene(*scene);
-	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_clear_scenes_0(toy::GameShell* self) {
-		self->clear_scenes();
 	}
 	toy::Core* EMSCRIPTEN_KEEPALIVE GameShell_get_core(toy::GameShell* self) {
 		return &self->core();

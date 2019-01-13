@@ -127,11 +127,11 @@ extern "C" {
 	Fleet* EMSCRIPTEN_KEEPALIVE Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const char* name) {
 		return new Fleet(spatial, *galaxy, *commander, *coord, name);
 	}
-	void EMSCRIPTEN_KEEPALIVE Fleet_order_jump_2(Fleet* self, mud::vec2* coord, FleetStance stance) {
-		self->order_jump(*coord, stance);
-	}
 	void EMSCRIPTEN_KEEPALIVE Fleet_order_attack_1(Fleet* self, Star* star) {
 		self->order_attack(*star);
+	}
+	void EMSCRIPTEN_KEEPALIVE Fleet_order_jump_2(Fleet* self, mud::vec2* coord, FleetStance stance) {
+		self->order_jump(*coord, stance);
 	}
 	Galaxy* EMSCRIPTEN_KEEPALIVE Fleet_get_galaxy(Fleet* self) {
 		return self->m_galaxy;

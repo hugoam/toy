@@ -25,17 +25,17 @@ extern "C" {
 	toy::Block* EMSCRIPTEN_KEEPALIVE Block_Block_5(toy::HSpatial spatial, toy::HWorldPage world_page, toy::Block* parentblock, size_t index, const mud::vec3* size) {
 		return new toy::Block(spatial, world_page, parentblock, index, *size);
 	}
-	void EMSCRIPTEN_KEEPALIVE Block_subdivide_0(toy::Block* self) {
-		self->subdivide();
-	}
-	void EMSCRIPTEN_KEEPALIVE Block_reset_0(toy::Block* self) {
-		self->reset();
-	}
 	void EMSCRIPTEN_KEEPALIVE Block_chunk_4(toy::Block* self, size_t x, size_t y, size_t z, toy::Element* element) {
 		self->chunk(x, y, z, *element);
 	}
 	void EMSCRIPTEN_KEEPALIVE Block_commit_0(toy::Block* self) {
 		self->commit();
+	}
+	void EMSCRIPTEN_KEEPALIVE Block_reset_0(toy::Block* self) {
+		self->reset();
+	}
+	void EMSCRIPTEN_KEEPALIVE Block_subdivide_0(toy::Block* self) {
+		self->subdivide();
 	}
 	toy::HWorldPage EMSCRIPTEN_KEEPALIVE Block_get_world_page(toy::Block* self) {
 		return self->m_world_page;
