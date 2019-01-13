@@ -66,7 +66,7 @@ extern "C" {
 		return new toy::Collider();
 	}
 	toy::Collider* EMSCRIPTEN_KEEPALIVE Collider_Collider_5(toy::HSpatial spatial, toy::HMovable movable, const toy::CollisionShape* collision_shape, toy::Medium* medium, toy::CollisionGroup group) {
-		return new toy::Collider(spatial, movable, *collision_shape, *medium, group);
+		return new toy::Collider(spatial, movable, *collision_shape, *medium, *group);
 	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE Collider_get_spatial(toy::Collider* self) {
 		return self->m_spatial;
@@ -367,7 +367,7 @@ extern "C" {
 	}
 	// World
 	toy::World* EMSCRIPTEN_KEEPALIVE World_World_4(mud::Id id, mud::Complex* complex, const char* name, mud::JobSystem* job_system) {
-		return new toy::World(id, *complex, *name, *job_system);
+		return new toy::World(id, *complex, name, *job_system);
 	}
 	mud::Id EMSCRIPTEN_KEEPALIVE World_get_id(toy::World* self) {
 		return self->m_id;
@@ -443,7 +443,7 @@ extern "C" {
 	}
 	// DefaultWorld
 	toy::DefaultWorld* EMSCRIPTEN_KEEPALIVE DefaultWorld_DefaultWorld_2(const char* name, mud::JobSystem* job_system) {
-		return new toy::DefaultWorld(*name, *job_system);
+		return new toy::DefaultWorld(name, *job_system);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_world(toy::DefaultWorld* self) {
 		static toy::World temp;

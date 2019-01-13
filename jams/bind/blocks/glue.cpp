@@ -129,7 +129,7 @@ extern "C" {
 	}
 	// BlockWorld
 	BlockWorld* EMSCRIPTEN_KEEPALIVE BlockWorld_BlockWorld_2(const char* name, mud::JobSystem* job_system) {
-		return new BlockWorld(*name, *job_system);
+		return new BlockWorld(name, *job_system);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE BlockWorld_get_world(BlockWorld* self) {
 		static toy::World temp;

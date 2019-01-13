@@ -98,7 +98,7 @@ extern "C" {
 		return new Human();
 	}
 	Human* EMSCRIPTEN_KEEPALIVE Human_Human_6(toy::HSpatial spatial, toy::HMovable movable, toy::HEmitter emitter, toy::HReceptor receptor, toy::HEntityScript script, Faction faction) {
-		return new Human(spatial, movable, emitter, receptor, script, faction);
+		return new Human(spatial, movable, emitter, receptor, script, *faction);
 	}
 	mud::quat* EMSCRIPTEN_KEEPALIVE Human_sight_0(Human* self) {
 		static mud::quat temp;
@@ -178,7 +178,7 @@ extern "C" {
 		return new Stance();
 	}
 	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_2(const char* name, bool loop) {
-		return new Stance(*name, loop);
+		return new Stance(name, loop);
 	}
 	const char* EMSCRIPTEN_KEEPALIVE Stance_get_name(Stance* self) {
 		return self->name.c_str();

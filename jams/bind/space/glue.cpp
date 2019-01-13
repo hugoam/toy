@@ -68,7 +68,7 @@ extern "C" {
 	}
 	// Commander
 	Commander* EMSCRIPTEN_KEEPALIVE Commander_Commander_6(mud::Id id, const char* name, Race race, int command, int commerce, int diplomacy) {
-		return new Commander(id, *name, race, command, commerce, diplomacy);
+		return new Commander(id, name, *race, command, commerce, diplomacy);
 	}
 	mud::Id EMSCRIPTEN_KEEPALIVE Commander_get_id(Commander* self) {
 		return self->m_id;
@@ -125,10 +125,10 @@ extern "C" {
 		return new Fleet();
 	}
 	Fleet* EMSCRIPTEN_KEEPALIVE Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const char* name) {
-		return new Fleet(spatial, *galaxy, *commander, *coord, *name);
+		return new Fleet(spatial, *galaxy, *commander, *coord, name);
 	}
 	void EMSCRIPTEN_KEEPALIVE Fleet_order_jump_2(Fleet* self, mud::vec2* coord, FleetStance stance) {
-		self->order_jump(coord, stance);
+		self->order_jump(*coord, *stance);
 	}
 	void EMSCRIPTEN_KEEPALIVE Fleet_order_attack_1(Fleet* self, Star* star) {
 		self->order_attack(*star);
@@ -316,7 +316,7 @@ extern "C" {
 		return new Star();
 	}
 	Star* EMSCRIPTEN_KEEPALIVE Star_Star_4(toy::HSpatial spatial, Galaxy* galaxy, const mud::uvec2* coord, const char* name) {
-		return new Star(spatial, *galaxy, *coord, *name);
+		return new Star(spatial, *galaxy, *coord, name);
 	}
 	Galaxy* EMSCRIPTEN_KEEPALIVE Star_get_galaxy(Star* self) {
 		return self->m_galaxy;
@@ -469,7 +469,7 @@ extern "C" {
 	}
 	// Universe
 	Universe* EMSCRIPTEN_KEEPALIVE Universe_Universe_2(const char* name, mud::JobSystem* job_system) {
-		return new Universe(*name, *job_system);
+		return new Universe(name, *job_system);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Universe_get_world(Universe* self) {
 		static toy::World temp;

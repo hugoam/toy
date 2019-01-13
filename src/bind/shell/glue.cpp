@@ -88,7 +88,7 @@ extern "C" {
 		self->load(*module);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_load_path_1(toy::GameShell* self, const char* module_path) {
-		self->load_path(*module_path);
+		self->load_path(module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_0(toy::GameShell* self) {
 		self->run();
@@ -109,16 +109,16 @@ extern "C" {
 		self->run_editor(*module, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_1(toy::GameShell* self, const char* module_path) {
-		self->run_game_path(*module_path);
+		self->run_game_path(module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
-		self->run_game_path(*module_path, iterations);
+		self->run_game_path(module_path, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_1(toy::GameShell* self, const char* module_path) {
-		self->run_editor_path(*module_path);
+		self->run_editor_path(module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
-		self->run_editor_path(*module_path, iterations);
+		self->run_editor_path(module_path, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_launch_0(toy::GameShell* self) {
 		self->launch();
@@ -177,7 +177,7 @@ extern "C" {
 	}
 	// GameModuleBind
 	toy::GameModuleBind* EMSCRIPTEN_KEEPALIVE GameModuleBind_GameModuleBind_2(mud::Module* module, const mud::VirtualMethod call) {
-		return new toy::GameModuleBind(*module, *call);
+		return new toy::GameModuleBind(*module, call);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameModuleBind___destroy__(toy::GameModuleBind* self) {
 		delete self;
