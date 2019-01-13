@@ -22,9 +22,6 @@ extern "C" {
 	mud::Type* EMSCRIPTEN_KEEPALIVE ProcedureType_get_type(toy::ProcedureType* self) {
 		return &self->m_type;
 	}
-	void EMSCRIPTEN_KEEPALIVE ProcedureType_set_type(toy::ProcedureType* self, mud::Type* type) {
-		self->m_type = *type;
-	}
 	uint32_t EMSCRIPTEN_KEEPALIVE ProcedureType_get_index(toy::ProcedureType* self) {
 		return self->m_index;
 	}

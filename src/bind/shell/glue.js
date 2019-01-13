@@ -224,86 +224,37 @@ Object.defineProperty(GameShell.prototype, "core", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_core(self), toy::Core);
-    },
-    set: function(core) {
-        var self = this.ptr;
-        /* core <Core> [] */
-        core = core.ptr;
-        _GameShell_set_core(self, core);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "lua", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_lua(self), mud::LuaInterpreter);
-    },
-    set: function(lua) {
-        var self = this.ptr;
-        /* lua <LuaInterpreter> [] */
-        lua = lua.ptr;
-        _GameShell_set_lua(self, lua);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "wren", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_wren(self), mud::WrenInterpreter);
-    },
-    set: function(wren) {
-        var self = this.ptr;
-        /* wren <WrenInterpreter> [] */
-        wren = wren.ptr;
-        _GameShell_set_wren(self, wren);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "gfx", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_gfx(self), mud::GfxSystem);
-    },
-    set: function(gfx) {
-        var self = this.ptr;
-        /* gfx <GfxSystem> [] */
-        gfx = gfx.ptr;
-        _GameShell_set_gfx(self, gfx);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "context", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_context(self), mud::Context);
-    },
-    set: function(context) {
-        var self = this.ptr;
-        /* context <Context> [] */
-        context = context.ptr;
-        _GameShell_set_context(self, context);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "vg", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_vg(self), mud::Vg);
-    },
-    set: function(vg) {
-        var self = this.ptr;
-        /* vg <Vg> [] */
-        vg = vg.ptr;
-        _GameShell_set_vg(self, vg);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "ui_window", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_GameShell_get_ui_window(self), mud::UiWindow);
-    },
-    set: function(ui_window) {
-        var self = this.ptr;
-        /* ui_window <UiWindow> [] */
-        ui_window = ui_window.ptr;
-        _GameShell_set_ui_window(self, ui_window);
-    }
-});
+    }});
 Object.defineProperty(GameShell.prototype, "editor", {
     get: function() {
         var self = this.ptr;

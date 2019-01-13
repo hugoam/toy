@@ -27,14 +27,7 @@ Object.defineProperty(VisuScene.prototype, "gfx_system", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_VisuScene_get_gfx_system(self), mud::GfxSystem);
-    },
-    set: function(gfx_system) {
-        var self = this.ptr;
-        /* gfx_system <GfxSystem> [] */
-        gfx_system = gfx_system.ptr;
-        _VisuScene_set_gfx_system(self, gfx_system);
-    }
-});
+    }});
 Object.defineProperty(VisuScene.prototype, "scene", {
     get: function() {
         var self = this.ptr;

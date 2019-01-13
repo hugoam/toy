@@ -194,14 +194,7 @@ Object.defineProperty(Collider.prototype, "impl", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Collider_get_impl(self), toy::ColliderImpl);
-    },
-    set: function(impl) {
-        var self = this.ptr;
-        /* impl <ColliderImpl> [] */
-        impl = impl.ptr;
-        _Collider_set_impl(self, impl);
-    }
-});
+    }});
 Collider.prototype["__destroy__"] = Collider.prototype.__destroy__ = function() {
     var self = this.ptr;
     _Collider___destroy__(self);
@@ -585,14 +578,7 @@ Object.defineProperty(Navmesh.prototype, "world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_Navmesh_get_world(self), toy::World);
-    },
-    set: function(world) {
-        var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _Navmesh_set_world(self, world);
-    }
-});
+    }});
 Object.defineProperty(Navmesh.prototype, "updated", {
     get: function() {
         var self = this.ptr;
@@ -673,14 +659,7 @@ Object.defineProperty(PhysicWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_PhysicWorld_get_world(self), toy::World);
-    },
-    set: function(world) {
-        var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
-        _PhysicWorld_set_world(self, world);
-    }
-});
+    }});
 PhysicWorld.prototype["__destroy__"] = PhysicWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
     _PhysicWorld___destroy__(self);
@@ -871,14 +850,7 @@ Object.defineProperty(World.prototype, "complex", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_World_get_complex(self), mud::Complex);
-    },
-    set: function(complex) {
-        var self = this.ptr;
-        /* complex <Complex> [] */
-        complex = complex.ptr;
-        _World_set_complex(self, complex);
-    }
-});
+    }});
 Object.defineProperty(World.prototype, "name", {
     get: function() {
         var self = this.ptr;

@@ -122,9 +122,6 @@ extern "C" {
 	toy::ColliderImpl* EMSCRIPTEN_KEEPALIVE Collider_get_impl(toy::Collider* self) {
 		return &self->impl();
 	}
-	void EMSCRIPTEN_KEEPALIVE Collider_set_impl(toy::Collider* self, toy::ColliderImpl* impl) {
-		self->impl = *impl;
-	}
 	void EMSCRIPTEN_KEEPALIVE Collider___destroy__(toy::Collider* self) {
 		delete self;
 	}
@@ -328,9 +325,6 @@ extern "C" {
 	toy::World* EMSCRIPTEN_KEEPALIVE Navmesh_get_world(toy::Navmesh* self) {
 		return &self->m_world;
 	}
-	void EMSCRIPTEN_KEEPALIVE Navmesh_set_world(toy::Navmesh* self, toy::World* world) {
-		self->m_world = *world;
-	}
 	size_t EMSCRIPTEN_KEEPALIVE Navmesh_get_updated(toy::Navmesh* self) {
 		return self->m_updated;
 	}
@@ -374,9 +368,6 @@ extern "C" {
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE PhysicWorld_get_world(toy::PhysicWorld* self) {
 		return &self->m_world;
-	}
-	void EMSCRIPTEN_KEEPALIVE PhysicWorld_set_world(toy::PhysicWorld* self, toy::World* world) {
-		self->m_world = *world;
 	}
 	void EMSCRIPTEN_KEEPALIVE PhysicWorld___destroy__(toy::PhysicWorld* self) {
 		delete self;
@@ -481,9 +472,6 @@ extern "C" {
 	}
 	mud::Complex* EMSCRIPTEN_KEEPALIVE World_get_complex(toy::World* self) {
 		return &self->m_complex;
-	}
-	void EMSCRIPTEN_KEEPALIVE World_set_complex(toy::World* self, mud::Complex* complex) {
-		self->m_complex = *complex;
 	}
 	const char* EMSCRIPTEN_KEEPALIVE World_get_name(toy::World* self) {
 		return self->m_name.c_str();

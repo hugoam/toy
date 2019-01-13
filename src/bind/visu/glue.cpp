@@ -27,9 +27,6 @@ extern "C" {
 	mud::GfxSystem* EMSCRIPTEN_KEEPALIVE VisuScene_get_gfx_system(toy::VisuScene* self) {
 		return &self->m_gfx_system;
 	}
-	void EMSCRIPTEN_KEEPALIVE VisuScene_set_gfx_system(toy::VisuScene* self, mud::GfxSystem* gfx_system) {
-		self->m_gfx_system = *gfx_system;
-	}
 	mud::Scene* EMSCRIPTEN_KEEPALIVE VisuScene_get_scene(toy::VisuScene* self) {
 		return &self->m_scene;
 	}
