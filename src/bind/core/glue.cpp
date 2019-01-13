@@ -66,7 +66,7 @@ extern "C" {
 		return new toy::Collider();
 	}
 	toy::Collider* EMSCRIPTEN_KEEPALIVE Collider_Collider_5(toy::HSpatial spatial, toy::HMovable movable, const toy::CollisionShape* collision_shape, toy::Medium* medium, toy::CollisionGroup group) {
-		return new toy::Collider(spatial, movable, *collision_shape, *medium, *group);
+		return new toy::Collider(spatial, movable, *collision_shape, *medium, group);
 	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE Collider_get_spatial(toy::Collider* self) {
 		return self->m_spatial;

@@ -80,7 +80,7 @@ extern "C" {
 	}
 	// Element
 	toy::Element* EMSCRIPTEN_KEEPALIVE Element_Element_3(const char* name, toy::MatterState state, mud::Colour* colour) {
-		return new toy::Element(name, *state, *colour);
+		return new toy::Element(name, state, *colour);
 	}
 	mud::Id EMSCRIPTEN_KEEPALIVE Element_get_id(toy::Element* self) {
 		return self->m_id;
