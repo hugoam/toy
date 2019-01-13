@@ -134,7 +134,7 @@ extern "C" {
 	void DECL toy_GameShell_remove_scene_1(toy::GameShell* self, toy::GameScene* scene) {
 		self->remove_scene(*scene);
 	}
-	void DECL toy_GameShell_run_0(toy::GameShell* self, ) {
+	void DECL toy_GameShell_run_0(toy::GameShell* self) {
 		self->run();
 	}
 	void DECL toy_GameShell_run_1(toy::GameShell* self, size_t iterations) {
