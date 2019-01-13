@@ -867,8 +867,7 @@ public:
 #ifdef _EX_BLOCKS_EXE
 int main(int argc, char *argv[])
 {
-	cstring example_path = TOY_RESOURCE_PATH "examples/ex_blocks/";
-	GameShell app(carray<cstring, 2>{ TOY_RESOURCE_PATH, example_path }, argc, argv);
+	GameShell app(TOY_RESOURCE_PATH, exec_path(argc, argv).c_str());
 	
 	ExBlocksModule module = { _blocks::m() };
 	app.run_game(module);

@@ -35,6 +35,7 @@
 #include <gfx-edit/Types.h>
 #include <tool/Types.h>
 #include <wfc-gfx/Types.h>
+#include <core/Types.h>
 #endif
 
 #ifndef MUD_CPP_20
@@ -51,13 +52,13 @@ namespace mud
     
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::Game>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModule>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>();
-    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     
     export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::Game*>>;
     export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModule*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameScene*>>;
     export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameShell*>>;
     export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModuleBind*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameScene*>>;
 }

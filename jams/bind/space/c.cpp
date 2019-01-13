@@ -25,6 +25,7 @@
 #include <gfx-edit/Api.h>
 #include <tool/Api.h>
 #include <wfc-gfx/Api.h>
+#include <core/Api.h>
 #include <util/Api.h>
 #include <core/Api.h>
 #include <visu/Api.h>
@@ -700,11 +701,17 @@ extern "C" {
 	Universe* DECL Universe_Universe_2(const char* name, mud::JobSystem* job_system) {
 		return new Universe(name, *job_system);
 	}
-	toy::World* DECL Universe__get_world(Universe* self) {
-		return &self->m_world;
+	toy::World DECL Universe__get_world(Universe* self) {
+		return self->m_world;
 	}
-	toy::BulletWorld* DECL Universe__get_bullet_world(Universe* self) {
-		return &self->m_bullet_world;
+	void DECL Universe__set_world(Universe* self, toy::World value) {
+		self->m_world = value;
+	}
+	toy::BulletWorld DECL Universe__get_bullet_world(Universe* self) {
+		return self->m_bullet_world;
+	}
+	void DECL Universe__set_bullet_world(Universe* self, toy::BulletWorld value) {
+		self->m_bullet_world = value;
 	}
 	void DECL Universe__destroy(Universe* self) {
 		delete self;

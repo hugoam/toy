@@ -35,6 +35,7 @@
 #include <gfx-edit/Types.h>
 #include <tool/Types.h>
 #include <wfc-gfx/Types.h>
+#include <core/Types.h>
 #include <util/Types.h>
 #include <core/Types.h>
 #include <visu/Types.h>

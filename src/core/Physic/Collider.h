@@ -113,15 +113,16 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Solid
 	{
 	public:
-		constr_ Solid() {}
-		constr_ Solid(HSpatial spatial, HMovable movable, OCollider collider, bool isstatic, float mass = 0.f);
+		Solid() {}
+		Solid(HSpatial spatial, HMovable movable, OCollider collider, bool isstatic, float mass = 0.f);
 		virtual ~Solid();
 
 		Solid(Solid&& other) = default;
 		Solid& operator=(Solid&& other) = default;
 
 		attr_ HSpatial m_spatial;
-		attr_ OCollider m_collider;
+		//attr_ nomut_ OCollider m_collider;
+		OCollider m_collider;
 		attr_ bool m_static = false;
 		attr_ float m_mass = 0.f;
 

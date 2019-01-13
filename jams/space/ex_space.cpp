@@ -1087,6 +1087,7 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		app.m_gfx_system->add_resource_path("examples/ex_space/");
+
 		game.m_editor.m_custom_brushes.emplace_back(make_unique<CommanderBrush>(game.m_editor.m_tool_context));
 	}
 
@@ -1146,8 +1147,7 @@ public:
 #ifdef _EX_SPACE_EXE
 int main(int argc, char *argv[])
 {
-	cstring example_path = TOY_RESOURCE_PATH "examples/ex_space/";
-	GameShell app(carray<cstring, 2>{ TOY_RESOURCE_PATH, example_path }, argc, argv);
+	GameShell app(TOY_RESOURCE_PATH, exec_path(argc, argv).c_str());
 
 	ExSpaceModule module = { _space::m() };
 	app.run_game(module);

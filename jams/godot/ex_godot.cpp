@@ -842,7 +842,7 @@ public:
 #ifdef _EX_GODOT_EXE
 int main(int argc, char *argv[])
 {
-	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
+	GameShell app(TOY_RESOURCE_PATH, exec_path(argc, argv).c_str());
 	
 	GodotModule module = { _godot::m() };
 	app.run_game(module);

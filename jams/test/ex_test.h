@@ -15,7 +15,7 @@ namespace test
 class Shell : public NonCopy
 {
 public:
-	Shell(array<cstring> resource_paths, int argc, char *argv[]);
+	Shell(cstring resource_path, int argc, char *argv[]);
 	~Shell();
 
 	void init();

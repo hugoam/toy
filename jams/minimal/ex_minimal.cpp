@@ -314,7 +314,7 @@ public:
 #ifdef _EX_MINIMAL_EXE
 int main(int argc, char *argv[])
 {
-	GameShell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
+	GameShell app(TOY_RESOURCE_PATH, exec_path(argc, argv).c_str());
 	
 	ExMinimal module = { _minimal::m() };
 	app.run_game(module);

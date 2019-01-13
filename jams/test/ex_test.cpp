@@ -32,10 +32,10 @@ string exec_path(int argc, char *argv[])
 	return exec_dir;
 }
 
-Shell::Shell(array<cstring> resource_paths, int argc, char *argv[])
+Shell::Shell(cstring resource_path, int argc, char *argv[])
 	: m_exec_path(exec_path(argc, argv))
-	, m_resource_path(resource_paths[0])
-	, m_gfx_system(resource_paths)
+	, m_resource_path(resource_path)
+	, m_gfx_system(resource_path)
 {
 	System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
 	System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(), &mud_lang::m() });
@@ -145,7 +145,7 @@ void ex_test(Shell& app)
 #ifdef _EX_TEST_EXE
 int main(int argc, char *argv[])
 {
-	test::Shell app(carray<cstring, 1>{ TOY_RESOURCE_PATH }, argc, argv);
+	test::Shell app(TOY_RESOURCE_PATH, argc, argv);
 	
 	app.run(test::ex_test);
 }

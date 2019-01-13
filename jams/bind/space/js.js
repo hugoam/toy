@@ -1292,13 +1292,25 @@ Module['Universe'] = Universe;
 Object.defineProperty(Universe.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Universe__get_world(self), toy::World);
-    }});
+        return _Universe__get_world(self);
+    },
+    set: function(world) {
+        var self = this.ptr;
+        /* world <toy::World> [] */
+        _Universe__set_world(self, world);
+    }
+});
 Object.defineProperty(Universe.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Universe__get_bullet_world(self), toy::BulletWorld);
-    }});
+        return _Universe__get_bullet_world(self);
+    },
+    set: function(bullet_world) {
+        var self = this.ptr;
+        /* bullet_world <toy::BulletWorld> [] */
+        _Universe__set_bullet_world(self, bullet_world);
+    }
+});
 Universe.prototype["__destroy__"] = Universe.prototype.__destroy__ = function() {
     var self = this.ptr;
     _Universe__destroy(self);

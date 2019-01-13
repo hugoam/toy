@@ -248,18 +248,36 @@ Module['BlockWorld'] = BlockWorld;
 Object.defineProperty(BlockWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_BlockWorld__get_world(self), toy::World);
-    }});
+        return _BlockWorld__get_world(self);
+    },
+    set: function(world) {
+        var self = this.ptr;
+        /* world <toy::World> [] */
+        _BlockWorld__set_world(self, world);
+    }
+});
 Object.defineProperty(BlockWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_BlockWorld__get_bullet_world(self), toy::BulletWorld);
-    }});
+        return _BlockWorld__get_bullet_world(self);
+    },
+    set: function(bullet_world) {
+        var self = this.ptr;
+        /* bullet_world <toy::BulletWorld> [] */
+        _BlockWorld__set_bullet_world(self, bullet_world);
+    }
+});
 Object.defineProperty(BlockWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_BlockWorld__get_navmesh(self), toy::Navmesh);
-    }});
+        return _BlockWorld__get_navmesh(self);
+    },
+    set: function(navmesh) {
+        var self = this.ptr;
+        /* navmesh <toy::Navmesh> [] */
+        _BlockWorld__set_navmesh(self, navmesh);
+    }
+});
 Object.defineProperty(BlockWorld.prototype, "block_subdiv", {
     get: function() {
         var self = this.ptr;

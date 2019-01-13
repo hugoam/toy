@@ -12,12 +12,11 @@ Module['Game'] = Game;
 Object.defineProperty(Game.prototype, "user", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game__get_user(self), toy::User);
+        return _toy_Game__get_user(self);
     },
     set: function(user) {
         var self = this.ptr;
-        /* user <User> [] */
-        user = user.ptr;
+        /* user <class User> [] */
         _toy_Game__set_user(self, user);
     }
 });
@@ -60,12 +59,11 @@ Object.defineProperty(Game.prototype, "module", {
 Object.defineProperty(Game.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Game__get_world(self), toy::World);
+        return _toy_Game__get_world(self);
     },
     set: function(world) {
         var self = this.ptr;
-        /* world <World> [] */
-        world = world.ptr;
+        /* world <int> [] */
         _toy_Game__set_world(self, world);
     }
 });
@@ -135,8 +133,25 @@ GameModule.prototype["__destroy__"] = GameModule.prototype.__destroy__ = functio
     var self = this.ptr;
     _toy_GameModule__destroy(self);
 };
+// GameScene
+function GameScene() { throw "cannot construct a GameScene, no constructor in IDL" }
+GameScene.prototype = Object.create(WrapperObject.prototype);
+GameScene.prototype.constructor = GameScene;
+GameScene.prototype.__class__ = GameScene;
+GameScene.__cache__ = {};
+Module['GameScene'] = GameScene;
+GameScene.prototype["__destroy__"] = GameScene.prototype.__destroy__ = function() {
+    var self = this.ptr;
+    _toy_GameScene__destroy(self);
+};
 // GameShell
-function GameShell() { throw "cannot construct a GameShell, no constructor in IDL" }
+function GameShell(resource_path, exec_path) {
+    var self = this.ptr;
+    /* resource_path <const char*> [] */
+    /* exec_path <const char*> [] */
+    if (exec_path === undefined) { this.ptr = _toy_GameShell_GameShell_1(self, resource_path); getCache(GameShell)[this.ptr] = this; return; }
+    this.ptr = _toy_GameShell_GameShell_2(self, resource_path, exec_path); getCache(GameShell)[this.ptr] = this;
+};
 GameShell.prototype = Object.create(WrapperObject.prototype);
 GameShell.prototype.constructor = GameShell;
 GameShell.prototype.__class__ = GameShell;
@@ -223,7 +238,7 @@ GameShell.prototype["save"] = GameShell.prototype.save = function() {
 Object.defineProperty(GameShell.prototype, "core", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_core(self), toy::Core);
+        return _toy_GameShell__get_core(self);
     }});
 Object.defineProperty(GameShell.prototype, "lua", {
     get: function() {
@@ -258,8 +273,14 @@ Object.defineProperty(GameShell.prototype, "ui_window", {
 Object.defineProperty(GameShell.prototype, "editor", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_GameShell__get_editor(self), toy::Editor);
-    }});
+        return _toy_GameShell__get_editor(self);
+    },
+    set: function(editor) {
+        var self = this.ptr;
+        /* editor <toy::Editor> [] */
+        _toy_GameShell__set_editor(self, editor);
+    }
+});
 Object.defineProperty(GameShell.prototype, "ui", {
     get: function() {
         var self = this.ptr;
@@ -292,17 +313,6 @@ Module['GameModuleBind'] = GameModuleBind;
 GameModuleBind.prototype["__destroy__"] = GameModuleBind.prototype.__destroy__ = function() {
     var self = this.ptr;
     _toy_GameModuleBind__destroy(self);
-};
-// GameScene
-function GameScene() { throw "cannot construct a GameScene, no constructor in IDL" }
-GameScene.prototype = Object.create(WrapperObject.prototype);
-GameScene.prototype.constructor = GameScene;
-GameScene.prototype.__class__ = GameScene;
-GameScene.__cache__ = {};
-Module['GameScene'] = GameScene;
-GameScene.prototype["__destroy__"] = GameScene.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _toy_GameScene__destroy(self);
 };
 
 (function() {

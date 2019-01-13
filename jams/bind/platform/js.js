@@ -51,12 +51,11 @@ Object.defineProperty(Aim.prototype, "end", {
 Object.defineProperty(Aim.prototype, "hit", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_Aim__get_hit(self), toy::Spatial);
+        return _Aim__get_hit(self);
     },
     set: function(hit) {
         var self = this.ptr;
-        /* hit <Spatial> [] */
-        hit = hit.ptr;
+        /* hit <toy::Spatial> [] */
         _Aim__set_hit(self, hit);
     }
 });
@@ -381,18 +380,36 @@ Module['TileWorld'] = TileWorld;
 Object.defineProperty(TileWorld.prototype, "world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_TileWorld__get_world(self), toy::World);
-    }});
+        return _TileWorld__get_world(self);
+    },
+    set: function(world) {
+        var self = this.ptr;
+        /* world <toy::World> [] */
+        _TileWorld__set_world(self, world);
+    }
+});
 Object.defineProperty(TileWorld.prototype, "bullet_world", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_TileWorld__get_bullet_world(self), toy::BulletWorld);
-    }});
+        return _TileWorld__get_bullet_world(self);
+    },
+    set: function(bullet_world) {
+        var self = this.ptr;
+        /* bullet_world <toy::BulletWorld> [] */
+        _TileWorld__set_bullet_world(self, bullet_world);
+    }
+});
 Object.defineProperty(TileWorld.prototype, "navmesh", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_TileWorld__get_navmesh(self), toy::Navmesh);
-    }});
+        return _TileWorld__get_navmesh(self);
+    },
+    set: function(navmesh) {
+        var self = this.ptr;
+        /* navmesh <toy::Navmesh> [] */
+        _TileWorld__set_navmesh(self, navmesh);
+    }
+});
 TileWorld.prototype["__destroy__"] = TileWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
     _TileWorld__destroy(self);

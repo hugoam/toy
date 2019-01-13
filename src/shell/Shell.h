@@ -108,7 +108,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_SHELL_EXPORT GameShell : public NonCopy
 	{
 	public:
-		GameShell(array<cstring> resource_paths, int argc, char *argv[]);
+		constr_ GameShell(cstring resource_path, cstring exec_path = nullptr);
 		~GameShell();
 
 		meth_ void init();

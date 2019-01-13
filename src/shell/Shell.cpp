@@ -32,19 +32,6 @@ using namespace mud; namespace toy
 	}
 #endif
 
-	string exec_path(int argc, char *argv[])
-	{
-#ifdef _WIN32
-		UNUSED(argc);
-		string exec_path = argv[0];
-		string exec_dir(exec_path.begin(), exec_path.begin() + exec_path.rfind('\\'));
-#else
-		UNUSED(argc); UNUSED(argv);
-		string exec_dir = "./";
-#endif
-		return exec_dir;
-	}
-
 	struct SmoothTimer : public TimerBx
 	{
 		SmoothTimer(size_t num_frames) : m_num_frames(num_frames) {}
@@ -116,14 +103,14 @@ using namespace mud; namespace toy
 		});
 	}
 
-	GameShell::GameShell(array<cstring> resource_paths, int argc, char *argv[])
-		: m_exec_path(exec_path(argc, argv))
-		, m_resource_path(resource_paths[0])
+	GameShell::GameShell(cstring resource_path, cstring exec_path)
+		: m_exec_path(exec_path ? string(exec_path) : "")
+		, m_resource_path(resource_path)
 		, m_job_system(make_object<JobSystem>())
 		, m_core(make_object<toy::Core>(*m_job_system))
-		, m_gfx_system(make_object<GfxSystem>(resource_paths))
+		, m_gfx_system(make_object<GfxSystem>(resource_path))
 #ifdef TOY_SOUND
-		, m_sound_system(make_object<SoundManager>(resource_paths[0]))
+		, m_sound_system(make_object<SoundManager>(resource_path))
 #endif
 		, m_editor(*m_gfx_system)
 		, m_game(m_user, *m_gfx_system)
