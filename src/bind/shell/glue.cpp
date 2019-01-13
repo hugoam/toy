@@ -92,7 +92,7 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameShell_load_1(toy::GameShell* self, toy::GameModule* module) {
 		self->load(*module);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_load_path_1(toy::GameShell* self, const std::string module_path) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_load_path_1(toy::GameShell* self, const char* module_path) {
 		self->load_path(*module_path);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_0(toy::GameShell* self) {
@@ -113,16 +113,16 @@ extern "C" {
 	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
 		self->run_editor(*module, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_1(toy::GameShell* self, const std::string module_path) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_1(toy::GameShell* self, const char* module_path) {
 		self->run_game_path(*module_path, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_2(toy::GameShell* self, const std::string module_path, size_t iterations) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_game_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
 		self->run_game_path(*module_path, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_1(toy::GameShell* self, const std::string module_path) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_1(toy::GameShell* self, const char* module_path) {
 		self->run_editor_path(*module_path, iterations);
 	}
-	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_2(toy::GameShell* self, const std::string module_path, size_t iterations) {
+	void EMSCRIPTEN_KEEPALIVE GameShell_run_editor_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
 		self->run_editor_path(*module_path, iterations);
 	}
 	void EMSCRIPTEN_KEEPALIVE GameShell_launch_0(toy::GameShell* self) {
@@ -192,13 +192,13 @@ extern "C" {
 		delete self;
 	}
 	// GameMode
-	toy::GameMode EMSCRIPTEN_KEEPALIVE emscripten_enum_GameMode_Play() {
+	toy::GameMode EMSCRIPTEN_KEEPALIVE GameMode_Play() {
 		return toy::GameMode::Play;
 	}
-	toy::GameMode EMSCRIPTEN_KEEPALIVE emscripten_enum_GameMode_PlayEditor() {
+	toy::GameMode EMSCRIPTEN_KEEPALIVE GameMode_PlayEditor() {
 		return toy::GameMode::PlayEditor;
 	}
-	toy::GameMode EMSCRIPTEN_KEEPALIVE emscripten_enum_GameMode_Pause() {
+	toy::GameMode EMSCRIPTEN_KEEPALIVE GameMode_Pause() {
 		return toy::GameMode::Pause;
 	}
 	

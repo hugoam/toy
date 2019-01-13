@@ -376,9 +376,9 @@ GameScene.prototype["__destroy__"] = GameScene.prototype.__destroy__ = function(
 (function() {
     function setupEnums() {
         // GameMode
-        Module['GameMode']['Play'] = _emscripten_enum_GameMode_Play();
-        Module['GameMode']['PlayEditor'] = _emscripten_enum_GameMode_PlayEditor();
-        Module['GameMode']['Pause'] = _emscripten_enum_GameMode_Pause();
+        Module['GameMode']['Play'] = _GameMode_Play();
+        Module['GameMode']['PlayEditor'] = _GameMode_PlayEditor();
+        Module['GameMode']['Pause'] = _GameMode_Pause();
     }
     if (Module['calledRun']) setupEnums();
     else addOnPreMain(setupEnums);

@@ -422,8 +422,8 @@ TileWorld.prototype["__destroy__"] = TileWorld.prototype.__destroy__ = function(
 (function() {
     function setupEnums() {
         // Faction
-        Module['Faction']['Ally'] = _emscripten_enum_Faction_Ally();
-        Module['Faction']['Enemy'] = _emscripten_enum_Faction_Enemy();
+        Module['Faction']['Ally'] = _Faction_Ally();
+        Module['Faction']['Enemy'] = _Faction_Enemy();
     }
     if (Module['calledRun']) setupEnums();
     else addOnPreMain(setupEnums);

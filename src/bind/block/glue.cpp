@@ -85,8 +85,8 @@ extern "C" {
 	mud::Id EMSCRIPTEN_KEEPALIVE Element_get_id(toy::Element* self) {
 		return self->m_id;
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Element_get_name(toy::Element* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE Element_get_name(toy::Element* self) {
+		return self->m_name.c_str();
 	}
 	toy::MatterState EMSCRIPTEN_KEEPALIVE Element_get_state(toy::Element* self) {
 		static toy::MatterState temp;
@@ -164,16 +164,16 @@ extern "C" {
 		delete self;
 	}
 	// MatterState
-	toy::MatterState EMSCRIPTEN_KEEPALIVE emscripten_enum_MatterState_Solid() {
+	toy::MatterState EMSCRIPTEN_KEEPALIVE MatterState_Solid() {
 		return toy::MatterState::Solid;
 	}
-	toy::MatterState EMSCRIPTEN_KEEPALIVE emscripten_enum_MatterState_Liquid() {
+	toy::MatterState EMSCRIPTEN_KEEPALIVE MatterState_Liquid() {
 		return toy::MatterState::Liquid;
 	}
-	toy::MatterState EMSCRIPTEN_KEEPALIVE emscripten_enum_MatterState_Gas() {
+	toy::MatterState EMSCRIPTEN_KEEPALIVE MatterState_Gas() {
 		return toy::MatterState::Gas;
 	}
-	toy::MatterState EMSCRIPTEN_KEEPALIVE emscripten_enum_MatterState_Plasma() {
+	toy::MatterState EMSCRIPTEN_KEEPALIVE MatterState_Plasma() {
 		return toy::MatterState::Plasma;
 	}
 	

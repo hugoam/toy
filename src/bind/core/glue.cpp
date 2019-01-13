@@ -174,8 +174,8 @@ extern "C" {
 		delete self;
 	}
 	// Medium
-	std::string EMSCRIPTEN_KEEPALIVE Medium_get_name(toy::Medium* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE Medium_get_name(toy::Medium* self) {
+		return self->m_name.c_str();
 	}
 	bool EMSCRIPTEN_KEEPALIVE Medium_get_occlusions(toy::Medium* self) {
 		return self->m_occlusions;
@@ -367,7 +367,7 @@ extern "C" {
 		delete self;
 	}
 	// World
-	toy::World* EMSCRIPTEN_KEEPALIVE World_World_4(mud::Id id, mud::Complex* complex, const std::string name, mud::JobSystem* job_system) {
+	toy::World* EMSCRIPTEN_KEEPALIVE World_World_4(mud::Id id, mud::Complex* complex, const char* name, mud::JobSystem* job_system) {
 		return new toy::World(id, *complex, *name, *job_system);
 	}
 	mud::Id EMSCRIPTEN_KEEPALIVE World_get_id(toy::World* self) {
@@ -376,8 +376,8 @@ extern "C" {
 	mud::Complex* EMSCRIPTEN_KEEPALIVE World_get_complex(toy::World* self) {
 		return &&self->m_complex;
 	}
-	std::string EMSCRIPTEN_KEEPALIVE World_get_name(toy::World* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE World_get_name(toy::World* self) {
+		return self->m_name.c_str();
 	}
 	toy::HSpatial EMSCRIPTEN_KEEPALIVE World_get_origin(toy::World* self) {
 		return self->origin;
@@ -443,7 +443,7 @@ extern "C" {
 		delete self;
 	}
 	// DefaultWorld
-	toy::DefaultWorld* EMSCRIPTEN_KEEPALIVE DefaultWorld_DefaultWorld_2(const std::string name, mud::JobSystem* job_system) {
+	toy::DefaultWorld* EMSCRIPTEN_KEEPALIVE DefaultWorld_DefaultWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new toy::DefaultWorld(*name, *job_system);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE DefaultWorld_get_world(toy::DefaultWorld* self) {
@@ -552,37 +552,37 @@ extern "C" {
 		delete self;
 	}
 	// CollisionGroup
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_NOMASK() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_NOMASK() {
 		return toy::CM_NOMASK;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_OBJECT() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_OBJECT() {
 		return toy::CM_OBJECT;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_SOLID() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_SOLID() {
 		return toy::CM_SOLID;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_GROUND() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_GROUND() {
 		return toy::CM_GROUND;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_AREA() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_AREA() {
 		return toy::CM_AREA;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_BUFFER() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_BUFFER() {
 		return toy::CM_BUFFER;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_LIGHT() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_LIGHT() {
 		return toy::CM_LIGHT;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_LIGHTREFLECTOR() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_LIGHTREFLECTOR() {
 		return toy::CM_LIGHTREFLECTOR;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_SOURCE() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_SOURCE() {
 		return toy::CM_SOURCE;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_RECEPTOR() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_RECEPTOR() {
 		return toy::CM_RECEPTOR;
 	}
-	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE emscripten_enum_CollisionGroup_CM_OBSTACLE() {
+	toy::CollisionGroup EMSCRIPTEN_KEEPALIVE CollisionGroup_CM_OBSTACLE() {
 		return toy::CM_OBSTACLE;
 	}
 	

@@ -25,8 +25,8 @@ extern "C" {
 	uint32_t EMSCRIPTEN_KEEPALIVE ProcedureType_get_index(toy::ProcedureType* self) {
 		return self->m_index;
 	}
-	std::string EMSCRIPTEN_KEEPALIVE ProcedureType_get_name(toy::ProcedureType* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE ProcedureType_get_name(toy::ProcedureType* self) {
+		return self->m_name.c_str();
 	}
 	void EMSCRIPTEN_KEEPALIVE ProcedureType___destroy__(toy::ProcedureType* self) {
 		delete self;

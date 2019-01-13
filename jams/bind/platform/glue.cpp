@@ -178,11 +178,11 @@ extern "C" {
 	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_0() {
 		return new Stance();
 	}
-	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_2(const std::string name, bool loop) {
+	Stance* EMSCRIPTEN_KEEPALIVE Stance_Stance_2(const char* name, bool loop) {
 		return new Stance(*name, loop);
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Stance_get_name(Stance* self) {
-		return self->name;
+	const char* EMSCRIPTEN_KEEPALIVE Stance_get_name(Stance* self) {
+		return self->name.c_str();
 	}
 	bool EMSCRIPTEN_KEEPALIVE Stance_get_loop(Stance* self) {
 		return self->loop;
@@ -191,7 +191,7 @@ extern "C" {
 		delete self;
 	}
 	// TileWorld
-	TileWorld* EMSCRIPTEN_KEEPALIVE TileWorld_TileWorld_2(const std::string name, mud::JobSystem* job_system) {
+	TileWorld* EMSCRIPTEN_KEEPALIVE TileWorld_TileWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new TileWorld(*name, *job_system);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE TileWorld_get_world(TileWorld* self) {
@@ -210,10 +210,10 @@ extern "C" {
 		delete self;
 	}
 	// Faction
-	Faction EMSCRIPTEN_KEEPALIVE emscripten_enum_Faction_Ally() {
+	Faction EMSCRIPTEN_KEEPALIVE Faction_Ally() {
 		return Faction::Ally;
 	}
-	Faction EMSCRIPTEN_KEEPALIVE emscripten_enum_Faction_Enemy() {
+	Faction EMSCRIPTEN_KEEPALIVE Faction_Enemy() {
 		return Faction::Enemy;
 	}
 	

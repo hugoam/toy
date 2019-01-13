@@ -67,14 +67,14 @@ extern "C" {
 		delete self;
 	}
 	// Commander
-	Commander* EMSCRIPTEN_KEEPALIVE Commander_Commander_6(mud::Id id, const std::string name, Race race, int command, int commerce, int diplomacy) {
+	Commander* EMSCRIPTEN_KEEPALIVE Commander_Commander_6(mud::Id id, const char* name, Race race, int command, int commerce, int diplomacy) {
 		return new Commander(id, *name, race, command, commerce, diplomacy);
 	}
 	mud::Id EMSCRIPTEN_KEEPALIVE Commander_get_id(Commander* self) {
 		return self->m_id;
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Commander_get_name(Commander* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE Commander_get_name(Commander* self) {
+		return self->m_name.c_str();
 	}
 	Race EMSCRIPTEN_KEEPALIVE Commander_get_race(Commander* self) {
 		static Race temp;
@@ -132,7 +132,7 @@ extern "C" {
 	Fleet* EMSCRIPTEN_KEEPALIVE Fleet_Fleet_0() {
 		return new Fleet();
 	}
-	Fleet* EMSCRIPTEN_KEEPALIVE Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const std::string name) {
+	Fleet* EMSCRIPTEN_KEEPALIVE Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const char* name) {
 		return new Fleet(spatial, *galaxy, *commander, *coord, *name);
 	}
 	void EMSCRIPTEN_KEEPALIVE Fleet_order_jump_2(Fleet* self, mud::vec2* coord, FleetStance stance) {
@@ -155,8 +155,8 @@ extern "C" {
 		static mud::vec3 temp;
 		return (temp = &self->m_slot, &temp);
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Fleet_get_name(Fleet* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE Fleet_get_name(Fleet* self) {
+		return self->m_name.c_str();
 	}
 	float EMSCRIPTEN_KEEPALIVE Fleet_get_experience(Fleet* self) {
 		return self->m_experience;
@@ -262,14 +262,14 @@ extern "C" {
 	Schema* EMSCRIPTEN_KEEPALIVE Schema_Schema_0() {
 		return new Schema();
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Schema_get_code(Schema* self) {
-		return self->m_code;
+	const char* EMSCRIPTEN_KEEPALIVE Schema_get_code(Schema* self) {
+		return self->m_code.c_str();
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Schema_get_name(Schema* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE Schema_get_name(Schema* self) {
+		return self->m_name.c_str();
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Schema_get_conceptor(Schema* self) {
-		return self->m_conceptor;
+	const char* EMSCRIPTEN_KEEPALIVE Schema_get_conceptor(Schema* self) {
+		return self->m_conceptor.c_str();
 	}
 	uint8_t EMSCRIPTEN_KEEPALIVE Schema_get_level(Schema* self) {
 		return self->m_level;
@@ -322,8 +322,8 @@ extern "C" {
 	Fleet* EMSCRIPTEN_KEEPALIVE Split_get_dest(Split* self) {
 		return self->m_dest;
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Split_get_code(Split* self) {
-		return self->m_code;
+	const char* EMSCRIPTEN_KEEPALIVE Split_get_code(Split* self) {
+		return self->m_code.c_str();
 	}
 	FleetStance EMSCRIPTEN_KEEPALIVE Split_get_stance(Split* self) {
 		static FleetStance temp;
@@ -336,7 +336,7 @@ extern "C" {
 	Star* EMSCRIPTEN_KEEPALIVE Star_Star_0() {
 		return new Star();
 	}
-	Star* EMSCRIPTEN_KEEPALIVE Star_Star_4(toy::HSpatial spatial, Galaxy* galaxy, const mud::uvec2* coord, const std::string name) {
+	Star* EMSCRIPTEN_KEEPALIVE Star_Star_4(toy::HSpatial spatial, Galaxy* galaxy, const mud::uvec2* coord, const char* name) {
 		return new Star(spatial, *galaxy, *coord, *name);
 	}
 	Galaxy* EMSCRIPTEN_KEEPALIVE Star_get_galaxy(Star* self) {
@@ -346,8 +346,8 @@ extern "C" {
 		static mud::uvec2 temp;
 		return (temp = &self->m_coord, &temp);
 	}
-	std::string EMSCRIPTEN_KEEPALIVE Star_get_name(Star* self) {
-		return self->m_name;
+	const char* EMSCRIPTEN_KEEPALIVE Star_get_name(Star* self) {
+		return self->m_name.c_str();
 	}
 	int EMSCRIPTEN_KEEPALIVE Star_get_stability(Star* self) {
 		return self->m_stability;
@@ -504,7 +504,7 @@ extern "C" {
 		delete self;
 	}
 	// Universe
-	Universe* EMSCRIPTEN_KEEPALIVE Universe_Universe_2(const std::string name, mud::JobSystem* job_system) {
+	Universe* EMSCRIPTEN_KEEPALIVE Universe_Universe_2(const char* name, mud::JobSystem* job_system) {
 		return new Universe(*name, *job_system);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE Universe_get_world(Universe* self) {
@@ -519,291 +519,291 @@ extern "C" {
 		delete self;
 	}
 	// CombatType
-	CombatType EMSCRIPTEN_KEEPALIVE emscripten_enum_CombatType_Spatial() {
+	CombatType EMSCRIPTEN_KEEPALIVE CombatType_Spatial() {
 		return CombatType::Spatial;
 	}
-	CombatType EMSCRIPTEN_KEEPALIVE emscripten_enum_CombatType_Planetary() {
+	CombatType EMSCRIPTEN_KEEPALIVE CombatType_Planetary() {
 		return CombatType::Planetary;
 	}
 	// Experience
-	Experience EMSCRIPTEN_KEEPALIVE emscripten_enum_Experience_Inexperienced() {
+	Experience EMSCRIPTEN_KEEPALIVE Experience_Inexperienced() {
 		return Experience::Inexperienced;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE emscripten_enum_Experience_LittleExperienced() {
+	Experience EMSCRIPTEN_KEEPALIVE Experience_LittleExperienced() {
 		return Experience::LittleExperienced;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE emscripten_enum_Experience_Experienced() {
+	Experience EMSCRIPTEN_KEEPALIVE Experience_Experienced() {
 		return Experience::Experienced;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE emscripten_enum_Experience_Superior() {
+	Experience EMSCRIPTEN_KEEPALIVE Experience_Superior() {
 		return Experience::Superior;
 	}
-	Experience EMSCRIPTEN_KEEPALIVE emscripten_enum_Experience_Elite() {
+	Experience EMSCRIPTEN_KEEPALIVE Experience_Elite() {
 		return Experience::Elite;
 	}
 	// FleetSize
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Ridicule() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Ridicule() {
 		return FleetSize::Ridicule;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Minuscule() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Minuscule() {
 		return FleetSize::Minuscule;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Tiny() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Tiny() {
 		return FleetSize::Tiny;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Small() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Small() {
 		return FleetSize::Small;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Medium() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Medium() {
 		return FleetSize::Medium;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Respectable() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Respectable() {
 		return FleetSize::Respectable;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Grand() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Grand() {
 		return FleetSize::Grand;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_HighGrand() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_HighGrand() {
 		return FleetSize::HighGrand;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Colossal() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Colossal() {
 		return FleetSize::Colossal;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Titanesque() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Titanesque() {
 		return FleetSize::Titanesque;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Cyclopean() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Cyclopean() {
 		return FleetSize::Cyclopean;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Divine() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Divine() {
 		return FleetSize::Divine;
 	}
-	FleetSize EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetSize_Count() {
+	FleetSize EMSCRIPTEN_KEEPALIVE FleetSize_Count() {
 		return FleetSize::Count;
 	}
 	// FleetStance
-	FleetStance EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetStance_Movement() {
+	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_Movement() {
 		return FleetStance::Movement;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetStance_SpatialAttack() {
+	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_SpatialAttack() {
 		return FleetStance::SpatialAttack;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetStance_SpatialDefense() {
+	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_SpatialDefense() {
 		return FleetStance::SpatialDefense;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetStance_PlanetaryAttack() {
+	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_PlanetaryAttack() {
 		return FleetStance::PlanetaryAttack;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetStance_PlanetaryDefense() {
+	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_PlanetaryDefense() {
 		return FleetStance::PlanetaryDefense;
 	}
-	FleetStance EMSCRIPTEN_KEEPALIVE emscripten_enum_FleetStance_Pillage() {
+	FleetStance EMSCRIPTEN_KEEPALIVE FleetStance_Pillage() {
 		return FleetStance::Pillage;
 	}
 	// GameStage
-	GameStage EMSCRIPTEN_KEEPALIVE emscripten_enum_GameStage_Empire() {
+	GameStage EMSCRIPTEN_KEEPALIVE GameStage_Empire() {
 		return GameStage::Empire;
 	}
-	GameStage EMSCRIPTEN_KEEPALIVE emscripten_enum_GameStage_Tactics() {
+	GameStage EMSCRIPTEN_KEEPALIVE GameStage_Tactics() {
 		return GameStage::Tactics;
 	}
-	GameStage EMSCRIPTEN_KEEPALIVE emscripten_enum_GameStage_TurnReport() {
+	GameStage EMSCRIPTEN_KEEPALIVE GameStage_TurnReport() {
 		return GameStage::TurnReport;
 	}
 	// Politic
-	Politic EMSCRIPTEN_KEEPALIVE emscripten_enum_Politic_Taxes() {
+	Politic EMSCRIPTEN_KEEPALIVE Politic_Taxes() {
 		return Politic::Taxes;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE emscripten_enum_Politic_Commerce() {
+	Politic EMSCRIPTEN_KEEPALIVE Politic_Commerce() {
 		return Politic::Commerce;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE emscripten_enum_Politic_Construction() {
+	Politic EMSCRIPTEN_KEEPALIVE Politic_Construction() {
 		return Politic::Construction;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE emscripten_enum_Politic_Defense() {
+	Politic EMSCRIPTEN_KEEPALIVE Politic_Defense() {
 		return Politic::Defense;
 	}
-	Politic EMSCRIPTEN_KEEPALIVE emscripten_enum_Politic_Pacification() {
+	Politic EMSCRIPTEN_KEEPALIVE Politic_Pacification() {
 		return Politic::Pacification;
 	}
 	// Race
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Human() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Human() {
 		return Race::Human;
 	}
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Bulvoid() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Bulvoid() {
 		return Race::Bulvoid;
 	}
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Techtulon() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Techtulon() {
 		return Race::Techtulon;
 	}
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Rakrarior() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Rakrarior() {
 		return Race::Rakrarior;
 	}
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Seigneur() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Seigneur() {
 		return Race::Seigneur;
 	}
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Meton() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Meton() {
 		return Race::Meton;
 	}
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Tissinar() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Tissinar() {
 		return Race::Tissinar;
 	}
-	Race EMSCRIPTEN_KEEPALIVE emscripten_enum_Race_Zwiie() {
+	Race EMSCRIPTEN_KEEPALIVE Race_Zwiie() {
 		return Race::Zwiie;
 	}
 	// Regime
-	Regime EMSCRIPTEN_KEEPALIVE emscripten_enum_Regime_Empire() {
+	Regime EMSCRIPTEN_KEEPALIVE Regime_Empire() {
 		return Regime::Empire;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE emscripten_enum_Regime_Dictature() {
+	Regime EMSCRIPTEN_KEEPALIVE Regime_Dictature() {
 		return Regime::Dictature;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE emscripten_enum_Regime_Democracy() {
+	Regime EMSCRIPTEN_KEEPALIVE Regime_Democracy() {
 		return Regime::Democracy;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE emscripten_enum_Regime_Theocracy() {
+	Regime EMSCRIPTEN_KEEPALIVE Regime_Theocracy() {
 		return Regime::Theocracy;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE emscripten_enum_Regime_Technocracy() {
+	Regime EMSCRIPTEN_KEEPALIVE Regime_Technocracy() {
 		return Regime::Technocracy;
 	}
-	Regime EMSCRIPTEN_KEEPALIVE emscripten_enum_Regime_Piratery() {
+	Regime EMSCRIPTEN_KEEPALIVE Regime_Piratery() {
 		return Regime::Piratery;
 	}
 	// Resource
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_None() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_None() {
 		return Resource::None;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Minerals() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Minerals() {
 		return Resource::Minerals;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Andrium() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Andrium() {
 		return Resource::Andrium;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Alcool() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Alcool() {
 		return Resource::Alcool;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Slaves() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Slaves() {
 		return Resource::Slaves;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Narcotics() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Narcotics() {
 		return Resource::Narcotics;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Food() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Food() {
 		return Resource::Food;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Medicine() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Medicine() {
 		return Resource::Medicine;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Computers() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Computers() {
 		return Resource::Computers;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Plastic() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Plastic() {
 		return Resource::Plastic;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Robot() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Robot() {
 		return Resource::Robot;
 	}
-	Resource EMSCRIPTEN_KEEPALIVE emscripten_enum_Resource_Count() {
+	Resource EMSCRIPTEN_KEEPALIVE Resource_Count() {
 		return Resource::Count;
 	}
 	// Taxation
-	Taxation EMSCRIPTEN_KEEPALIVE emscripten_enum_Taxation_None() {
+	Taxation EMSCRIPTEN_KEEPALIVE Taxation_None() {
 		return Taxation::None;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE emscripten_enum_Taxation_Light() {
+	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Light() {
 		return Taxation::Light;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE emscripten_enum_Taxation_Medium() {
+	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Medium() {
 		return Taxation::Medium;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE emscripten_enum_Taxation_Heavy() {
+	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Heavy() {
 		return Taxation::Heavy;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE emscripten_enum_Taxation_Heaviest() {
+	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Heaviest() {
 		return Taxation::Heaviest;
 	}
-	Taxation EMSCRIPTEN_KEEPALIVE emscripten_enum_Taxation_Total() {
+	Taxation EMSCRIPTEN_KEEPALIVE Taxation_Total() {
 		return Taxation::Total;
 	}
 	// Technology
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Engines() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Engines() {
 		return Technology::Engines;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_EcoEnergy() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_EcoEnergy() {
 		return Technology::EcoEnergy;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Scanners() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Scanners() {
 		return Technology::Scanners;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_PlanetaryShields() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_PlanetaryShields() {
 		return Technology::PlanetaryShields;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_SpatialShields() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_SpatialShields() {
 		return Technology::SpatialShields;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_LaserPlasmaIons() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_LaserPlasmaIons() {
 		return Technology::LaserPlasmaIons;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Torpedoes() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Torpedoes() {
 		return Technology::Torpedoes;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Bombs() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Bombs() {
 		return Technology::Bombs;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_HullArmor() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_HullArmor() {
 		return Technology::HullArmor;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Mining() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Mining() {
 		return Technology::Mining;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Terraforming() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Terraforming() {
 		return Technology::Terraforming;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Construction() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Construction() {
 		return Technology::Construction;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Piloting() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Piloting() {
 		return Technology::Piloting;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Commerce() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Commerce() {
 		return Technology::Commerce;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Personnel() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Personnel() {
 		return Technology::Personnel;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Administration() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Administration() {
 		return Technology::Administration;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_CyberCommand() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_CyberCommand() {
 		return Technology::CyberCommand;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_CyberCommerce() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_CyberCommerce() {
 		return Technology::CyberCommerce;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_CyberDiplomacy() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_CyberDiplomacy() {
 		return Technology::CyberDiplomacy;
 	}
-	Technology EMSCRIPTEN_KEEPALIVE emscripten_enum_Technology_Count() {
+	Technology EMSCRIPTEN_KEEPALIVE Technology_Count() {
 		return Technology::Count;
 	}
 	// WeaponType
-	WeaponType EMSCRIPTEN_KEEPALIVE emscripten_enum_WeaponType_None() {
+	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_None() {
 		return WeaponType::None;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE emscripten_enum_WeaponType_Ion() {
+	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Ion() {
 		return WeaponType::Ion;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE emscripten_enum_WeaponType_Laser() {
+	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Laser() {
 		return WeaponType::Laser;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE emscripten_enum_WeaponType_Plasma() {
+	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Plasma() {
 		return WeaponType::Plasma;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE emscripten_enum_WeaponType_Torpedo() {
+	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Torpedo() {
 		return WeaponType::Torpedo;
 	}
-	WeaponType EMSCRIPTEN_KEEPALIVE emscripten_enum_WeaponType_Bomb() {
+	WeaponType EMSCRIPTEN_KEEPALIVE WeaponType_Bomb() {
 		return WeaponType::Bomb;
 	}
 	

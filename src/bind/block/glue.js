@@ -169,10 +169,7 @@ Chunk.prototype["__destroy__"] = Chunk.prototype.__destroy__ = function() {
 // Element
 function Element(name, state, colour) {
     var self = this.ptr;
-    ensureCache.prepare();
     /* name <const char*> [] */
-    if (name && typeof name === "object") name = name.ptr;
-    else name = ensureString(name);
     /* state <MatterState> [] */
     if (state && typeof state === "object") state = state.ptr;
     /* colour <Colour> [] */
@@ -412,10 +409,10 @@ Earth.prototype["__destroy__"] = Earth.prototype.__destroy__ = function() {
 (function() {
     function setupEnums() {
         // MatterState
-        Module['MatterState']['Solid'] = _emscripten_enum_MatterState_Solid();
-        Module['MatterState']['Liquid'] = _emscripten_enum_MatterState_Liquid();
-        Module['MatterState']['Gas'] = _emscripten_enum_MatterState_Gas();
-        Module['MatterState']['Plasma'] = _emscripten_enum_MatterState_Plasma();
+        Module['MatterState']['Solid'] = _MatterState_Solid();
+        Module['MatterState']['Liquid'] = _MatterState_Liquid();
+        Module['MatterState']['Gas'] = _MatterState_Gas();
+        Module['MatterState']['Plasma'] = _MatterState_Plasma();
     }
     if (Module['calledRun']) setupEnums();
     else addOnPreMain(setupEnums);

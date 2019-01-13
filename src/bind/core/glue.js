@@ -1331,17 +1331,17 @@ WorldMedium.prototype["__destroy__"] = WorldMedium.prototype.__destroy__ = funct
 (function() {
     function setupEnums() {
         // CollisionGroup
-        Module['CM_NOMASK'] = _emscripten_enum_CollisionGroup_CM_NOMASK();
-        Module['CM_OBJECT'] = _emscripten_enum_CollisionGroup_CM_OBJECT();
-        Module['CM_SOLID'] = _emscripten_enum_CollisionGroup_CM_SOLID();
-        Module['CM_GROUND'] = _emscripten_enum_CollisionGroup_CM_GROUND();
-        Module['CM_AREA'] = _emscripten_enum_CollisionGroup_CM_AREA();
-        Module['CM_BUFFER'] = _emscripten_enum_CollisionGroup_CM_BUFFER();
-        Module['CM_LIGHT'] = _emscripten_enum_CollisionGroup_CM_LIGHT();
-        Module['CM_LIGHTREFLECTOR'] = _emscripten_enum_CollisionGroup_CM_LIGHTREFLECTOR();
-        Module['CM_SOURCE'] = _emscripten_enum_CollisionGroup_CM_SOURCE();
-        Module['CM_RECEPTOR'] = _emscripten_enum_CollisionGroup_CM_RECEPTOR();
-        Module['CM_OBSTACLE'] = _emscripten_enum_CollisionGroup_CM_OBSTACLE();
+        Module['CM_NOMASK'] = _CollisionGroup_CM_NOMASK();
+        Module['CM_OBJECT'] = _CollisionGroup_CM_OBJECT();
+        Module['CM_SOLID'] = _CollisionGroup_CM_SOLID();
+        Module['CM_GROUND'] = _CollisionGroup_CM_GROUND();
+        Module['CM_AREA'] = _CollisionGroup_CM_AREA();
+        Module['CM_BUFFER'] = _CollisionGroup_CM_BUFFER();
+        Module['CM_LIGHT'] = _CollisionGroup_CM_LIGHT();
+        Module['CM_LIGHTREFLECTOR'] = _CollisionGroup_CM_LIGHTREFLECTOR();
+        Module['CM_SOURCE'] = _CollisionGroup_CM_SOURCE();
+        Module['CM_RECEPTOR'] = _CollisionGroup_CM_RECEPTOR();
+        Module['CM_OBSTACLE'] = _CollisionGroup_CM_OBSTACLE();
     }
     if (Module['calledRun']) setupEnums();
     else addOnPreMain(setupEnums);

@@ -128,7 +128,7 @@ extern "C" {
 		delete self;
 	}
 	// BlockWorld
-	BlockWorld* EMSCRIPTEN_KEEPALIVE BlockWorld_BlockWorld_2(const std::string name, mud::JobSystem* job_system) {
+	BlockWorld* EMSCRIPTEN_KEEPALIVE BlockWorld_BlockWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new BlockWorld(*name, *job_system);
 	}
 	toy::World* EMSCRIPTEN_KEEPALIVE BlockWorld_get_world(BlockWorld* self) {
