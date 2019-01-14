@@ -264,7 +264,7 @@ function CollisionShape(shape, center, margin) {
     /* shape <Shape> [] */
     shape = shape.ptr;
     /* center <vec3> [] */
-    center = center.ptr;
+    if(typeof center !== "undefined" && center !== null) { center = center.ptr; }
     /* margin <float> [] */
     if (shape === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_0(); getCache(CollisionShape)[this.ptr] = this; return; }
     if (center === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_1(shape); getCache(CollisionShape)[this.ptr] = this; return; }
