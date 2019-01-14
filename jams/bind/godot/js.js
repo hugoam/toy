@@ -106,7 +106,7 @@ function Crate(spatial, movable, extents) {
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
     /* extents <vec3> [] */
-    extents = extents.ptr;
+    if(typeof extents !== "undefined" && extents !== null) { extents = extents.ptr; }
     if (spatial === undefined) { this.ptr = _Crate_Crate_0(); getCache(Crate)[this.ptr] = this; return; }
     this.ptr = _Crate_Crate_3(spatial, movable, extents); getCache(Crate)[this.ptr] = this;
     this.type = Crate;
@@ -374,7 +374,7 @@ function WorldBlock(spatial, world_page, navblock, extents) {
     /* world_page <toy::HWorldPage> [] */
     /* navblock <toy::HNavblock> [] */
     /* extents <vec3> [] */
-    extents = extents.ptr;
+    if(typeof extents !== "undefined" && extents !== null) { extents = extents.ptr; }
     if (spatial === undefined) { this.ptr = _WorldBlock_WorldBlock_0(); getCache(WorldBlock)[this.ptr] = this; return; }
     this.ptr = _WorldBlock_WorldBlock_4(spatial, world_page, navblock, extents); getCache(WorldBlock)[this.ptr] = this;
     this.type = WorldBlock;

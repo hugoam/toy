@@ -8,9 +8,9 @@ Module['toy'] = Module['toy'] || {};
 function Camp(spatial, position, faction) {
     /* spatial <toy::HSpatial> [] */
     /* position <vec3> [] */
-    position = position.ptr;
+    if(typeof position !== "undefined" && position !== null) { position = position.ptr; }
     /* faction <Faction> [] */
-    faction = faction.ptr;
+    if(typeof faction !== "undefined" && faction !== null) { faction = faction.ptr; }
     if (spatial === undefined) { this.ptr = _Camp_Camp_0(); getCache(Camp)[this.ptr] = this; return; }
     this.ptr = _Camp_Camp_3(spatial, position, faction); getCache(Camp)[this.ptr] = this;
     this.type = Camp;
@@ -104,7 +104,7 @@ function Shield(spatial, emitter, faction, radius) {
     /* spatial <toy::HSpatial> [] */
     /* emitter <toy::HEmitter> [] */
     /* faction <Faction> [] */
-    faction = faction.ptr;
+    if(typeof faction !== "undefined" && faction !== null) { faction = faction.ptr; }
     /* radius <float> [] */
     if (spatial === undefined) { this.ptr = _Shield_Shield_0(); getCache(Shield)[this.ptr] = this; return; }
     this.ptr = _Shield_Shield_4(spatial, emitter, faction, radius); getCache(Shield)[this.ptr] = this;
@@ -217,7 +217,7 @@ function Tank(spatial, movable, emitter, receptor, faction) {
     /* emitter <toy::HEmitter> [] */
     /* receptor <toy::HReceptor> [] */
     /* faction <Faction> [] */
-    faction = faction.ptr;
+    if(typeof faction !== "undefined" && faction !== null) { faction = faction.ptr; }
     if (spatial === undefined) { this.ptr = _Tank_Tank_0(); getCache(Tank)[this.ptr] = this; return; }
     this.ptr = _Tank_Tank_5(spatial, movable, emitter, receptor, faction); getCache(Tank)[this.ptr] = this;
     this.type = Tank;

@@ -106,9 +106,9 @@ function Collider(spatial, movable, collision_shape, medium, group) {
     /* spatial <toy::HSpatial> [] */
     /* movable <toy::HMovable> [] */
     /* collision_shape <CollisionShape> [] */
-    collision_shape = collision_shape.ptr;
+    if(typeof collision_shape !== "undefined" && collision_shape !== null) { collision_shape = collision_shape.ptr; }
     /* medium <Medium> [] */
-    medium = medium.ptr;
+    if(typeof medium !== "undefined" && medium !== null) { medium = medium.ptr; }
     /* group <CollisionGroup> [] */
     if (group && typeof group === "object") group = group.ptr;
     if (spatial === undefined) { this.ptr = _toy_Collider_Collider_0(); getCache(Collider)[this.ptr] = this; return; }
@@ -265,7 +265,7 @@ Collision.prototype["__destroy__"] = Collision.prototype.__destroy__ = function(
 // CollisionShape
 function CollisionShape(shape, center, margin) {
     /* shape <Shape> [] */
-    shape = shape.ptr;
+    if(typeof shape !== "undefined" && shape !== null) { shape = shape.ptr; }
     /* center <vec3> [] */
     if(typeof center !== "undefined" && center !== null) { center = center.ptr; }
     /* margin <float> [] */
@@ -511,7 +511,7 @@ function Navblock(spatial, world_page, navmesh) {
     /* spatial <toy::HSpatial> [] */
     /* world_page <toy::HWorldPage> [] */
     /* navmesh <Navmesh> [] */
-    navmesh = navmesh.ptr;
+    if(typeof navmesh !== "undefined" && navmesh !== null) { navmesh = navmesh.ptr; }
     if (spatial === undefined) { this.ptr = _toy_Navblock_Navblock_0(); getCache(Navblock)[this.ptr] = this; return; }
     this.ptr = _toy_Navblock_Navblock_3(spatial, world_page, navmesh); getCache(Navblock)[this.ptr] = this;
     this.type = Navblock;
@@ -874,7 +874,7 @@ function WorldPage(spatial, open, extents) {
     /* spatial <toy::HSpatial> [] */
     /* open <bool> [] */
     /* extents <vec3> [] */
-    extents = extents.ptr;
+    if(typeof extents !== "undefined" && extents !== null) { extents = extents.ptr; }
     if (spatial === undefined) { this.ptr = _toy_WorldPage_WorldPage_0(); getCache(WorldPage)[this.ptr] = this; return; }
     this.ptr = _toy_WorldPage_WorldPage_3(spatial, open, extents); getCache(WorldPage)[this.ptr] = this;
     this.type = WorldPage;
@@ -1154,9 +1154,9 @@ SoundMedium.prototype["__destroy__"] = SoundMedium.prototype.__destroy__ = funct
 function Spatial(parent, position, rotation) {
     /* parent <toy::HSpatial> [] */
     /* position <vec3> [] */
-    position = position.ptr;
+    if(typeof position !== "undefined" && position !== null) { position = position.ptr; }
     /* rotation <quat> [] */
-    rotation = rotation.ptr;
+    if(typeof rotation !== "undefined" && rotation !== null) { rotation = rotation.ptr; }
     if (parent === undefined) { this.ptr = _toy_Spatial_Spatial_0(); getCache(Spatial)[this.ptr] = this; return; }
     this.ptr = _toy_Spatial_Spatial_3(parent, position, rotation); getCache(Spatial)[this.ptr] = this;
     this.type = Spatial;

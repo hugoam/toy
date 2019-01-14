@@ -7,10 +7,10 @@ function Block(spatial, world_page, parentblock, index, size) {
     /* spatial <toy::HSpatial> [] */
     /* world_page <toy::HWorldPage> [] */
     /* parentblock <Block> [] */
-    parentblock = parentblock.ptr;
+    if(typeof parentblock !== "undefined" && parentblock !== null) { parentblock = parentblock.ptr; }
     /* index <size_t> [] */
     /* size <vec3> [] */
-    size = size.ptr;
+    if(typeof size !== "undefined" && size !== null) { size = size.ptr; }
     if (spatial === undefined) { this.ptr = _toy_Block_Block_0(); getCache(Block)[this.ptr] = this; return; }
     this.ptr = _toy_Block_Block_5(spatial, world_page, parentblock, index, size); getCache(Block)[this.ptr] = this;
     this.type = Block;
@@ -106,10 +106,10 @@ Block.prototype["__destroy__"] = Block.prototype.__destroy__ = function() {
 function Chunk(spatial, block, index, element, size) {
     /* spatial <toy::HSpatial> [] */
     /* block <Block> [] */
-    block = block.ptr;
+    if(typeof block !== "undefined" && block !== null) { block = block.ptr; }
     /* index <size_t> [] */
     /* element <Element> [] */
-    element = element.ptr;
+    if(typeof element !== "undefined" && element !== null) { element = element.ptr; }
     /* size <float> [] */
     if (spatial === undefined) { this.ptr = _toy_Chunk_Chunk_0(); getCache(Chunk)[this.ptr] = this; return; }
     this.ptr = _toy_Chunk_Chunk_5(spatial, block, index, element, size); getCache(Chunk)[this.ptr] = this;
@@ -244,7 +244,7 @@ Element.prototype["__destroy__"] = Element.prototype.__destroy__ = function() {
 function Heap(spatial, element, radius) {
     /* spatial <toy::HSpatial> [] */
     /* element <Element> [] */
-    element = element.ptr;
+    if(typeof element !== "undefined" && element !== null) { element = element.ptr; }
     /* radius <float> [] */
     if (spatial === undefined) { this.ptr = _toy_Heap_Heap_0(); getCache(Heap)[this.ptr] = this; return; }
     this.ptr = _toy_Heap_Heap_3(spatial, element, radius); getCache(Heap)[this.ptr] = this;
@@ -288,9 +288,9 @@ function Sector(spatial, world_page, navblock, coordinate, size) {
     /* world_page <toy::HWorldPage> [] */
     /* navblock <toy::HNavblock> [] */
     /* coordinate <uvec3> [] */
-    coordinate = coordinate.ptr;
+    if(typeof coordinate !== "undefined" && coordinate !== null) { coordinate = coordinate.ptr; }
     /* size <vec3> [] */
-    size = size.ptr;
+    if(typeof size !== "undefined" && size !== null) { size = size.ptr; }
     if (spatial === undefined) { this.ptr = _toy_Sector_Sector_0(); getCache(Sector)[this.ptr] = this; return; }
     this.ptr = _toy_Sector_Sector_5(spatial, world_page, navblock, coordinate, size); getCache(Sector)[this.ptr] = this;
     this.type = Sector;
@@ -346,11 +346,11 @@ function Tileblock(spatial, world_page, navblock, size, tile_scale, tileset) {
     /* world_page <toy::HWorldPage> [] */
     /* navblock <toy::HNavblock> [] */
     /* size <uvec3> [] */
-    size = size.ptr;
+    if(typeof size !== "undefined" && size !== null) { size = size.ptr; }
     /* tile_scale <vec3> [] */
-    tile_scale = tile_scale.ptr;
+    if(typeof tile_scale !== "undefined" && tile_scale !== null) { tile_scale = tile_scale.ptr; }
     /* tileset <WaveTileset> [] */
-    tileset = tileset.ptr;
+    if(typeof tileset !== "undefined" && tileset !== null) { tileset = tileset.ptr; }
     if (spatial === undefined) { this.ptr = _toy_Tileblock_Tileblock_0(); getCache(Tileblock)[this.ptr] = this; return; }
     this.ptr = _toy_Tileblock_Tileblock_6(spatial, world_page, navblock, size, tile_scale, tileset); getCache(Tileblock)[this.ptr] = this;
     this.type = Tileblock;

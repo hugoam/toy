@@ -238,11 +238,11 @@ function Fleet(spatial, galaxy, commander, coord, name) {
     ensureCache.prepare();
     /* spatial <toy::HSpatial> [] */
     /* galaxy <Galaxy> [] */
-    galaxy = galaxy.ptr;
+    if(typeof galaxy !== "undefined" && galaxy !== null) { galaxy = galaxy.ptr; }
     /* commander <Commander> [] */
-    commander = commander.ptr;
+    if(typeof commander !== "undefined" && commander !== null) { commander = commander.ptr; }
     /* coord <uvec2> [] */
-    coord = coord.ptr;
+    if(typeof coord !== "undefined" && coord !== null) { coord = coord.ptr; }
     /* name <std::string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
@@ -463,7 +463,7 @@ Fleet.prototype["__destroy__"] = Fleet.prototype.__destroy__ = function() {
 function Galaxy(spatial, size) {
     /* spatial <toy::HSpatial> [] */
     /* size <uvec2> [] */
-    size = size.ptr;
+    if(typeof size !== "undefined" && size !== null) { size = size.ptr; }
     if (spatial === undefined) { this.ptr = _Galaxy_Galaxy_0(); getCache(Galaxy)[this.ptr] = this; return; }
     this.ptr = _Galaxy_Galaxy_2(spatial, size); getCache(Galaxy)[this.ptr] = this;
     this.type = Galaxy;
@@ -834,9 +834,9 @@ function Star(spatial, galaxy, coord, name) {
     ensureCache.prepare();
     /* spatial <toy::HSpatial> [] */
     /* galaxy <Galaxy> [] */
-    galaxy = galaxy.ptr;
+    if(typeof galaxy !== "undefined" && galaxy !== null) { galaxy = galaxy.ptr; }
     /* coord <uvec2> [] */
-    coord = coord.ptr;
+    if(typeof coord !== "undefined" && coord !== null) { coord = coord.ptr; }
     /* name <std::string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
