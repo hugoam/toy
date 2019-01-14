@@ -143,7 +143,11 @@ GameModule.prototype["__destroy__"] = GameModule.prototype.__destroy__ = functio
 // GameShell
 function GameShell(resource_path, exec_path) {
     /* resource_path <const char*> [] */
+    if (resource_path && typeof resource_path === "object") resource_path = resource_path.ptr;
+    else resource_path = ensureString(resource_path);
     /* exec_path <const char*> [] */
+    if (exec_path && typeof exec_path === "object") exec_path = exec_path.ptr;
+    else exec_path = ensureString(exec_path);
     if (exec_path === undefined) { this.ptr = _toy_GameShell_GameShell_1(resource_path); getCache(GameShell)[this.ptr] = this; return; }
     this.ptr = _toy_GameShell_GameShell_2(resource_path, exec_path); getCache(GameShell)[this.ptr] = this;
 };

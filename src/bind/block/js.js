@@ -171,6 +171,8 @@ Chunk.prototype["__destroy__"] = Chunk.prototype.__destroy__ = function() {
 // Element
 function Element(name, state, colour) {
     /* name <const char*> [] */
+    if (name && typeof name === "object") name = name.ptr;
+    else name = ensureString(name);
     /* state <MatterState> [] */
     if (state && typeof state === "object") state = state.ptr;
     /* colour <Colour> [] */
