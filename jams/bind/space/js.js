@@ -1316,15 +1316,18 @@ Module['generate_system'] = function(galaxy, coord, position) {
 (function() {
     function setupEnums() {
         // CombatType
+        Module['CombatType'] = Module['CombatType'] || {};
         Module['CombatType']['Spatial'] = _CombatType_Spatial();
         Module['CombatType']['Planetary'] = _CombatType_Planetary();
         // Experience
+        Module['Experience'] = Module['Experience'] || {};
         Module['Experience']['Inexperienced'] = _Experience_Inexperienced();
         Module['Experience']['LittleExperienced'] = _Experience_LittleExperienced();
         Module['Experience']['Experienced'] = _Experience_Experienced();
         Module['Experience']['Superior'] = _Experience_Superior();
         Module['Experience']['Elite'] = _Experience_Elite();
         // FleetSize
+        Module['FleetSize'] = Module['FleetSize'] || {};
         Module['FleetSize']['Ridicule'] = _FleetSize_Ridicule();
         Module['FleetSize']['Minuscule'] = _FleetSize_Minuscule();
         Module['FleetSize']['Tiny'] = _FleetSize_Tiny();
@@ -1339,6 +1342,7 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['FleetSize']['Divine'] = _FleetSize_Divine();
         Module['FleetSize']['Count'] = _FleetSize_Count();
         // FleetStance
+        Module['FleetStance'] = Module['FleetStance'] || {};
         Module['FleetStance']['Movement'] = _FleetStance_Movement();
         Module['FleetStance']['SpatialAttack'] = _FleetStance_SpatialAttack();
         Module['FleetStance']['SpatialDefense'] = _FleetStance_SpatialDefense();
@@ -1346,16 +1350,19 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['FleetStance']['PlanetaryDefense'] = _FleetStance_PlanetaryDefense();
         Module['FleetStance']['Pillage'] = _FleetStance_Pillage();
         // GameStage
+        Module['GameStage'] = Module['GameStage'] || {};
         Module['GameStage']['Empire'] = _GameStage_Empire();
         Module['GameStage']['Tactics'] = _GameStage_Tactics();
         Module['GameStage']['TurnReport'] = _GameStage_TurnReport();
         // Politic
+        Module['Politic'] = Module['Politic'] || {};
         Module['Politic']['Taxes'] = _Politic_Taxes();
         Module['Politic']['Commerce'] = _Politic_Commerce();
         Module['Politic']['Construction'] = _Politic_Construction();
         Module['Politic']['Defense'] = _Politic_Defense();
         Module['Politic']['Pacification'] = _Politic_Pacification();
         // Race
+        Module['Race'] = Module['Race'] || {};
         Module['Race']['Human'] = _Race_Human();
         Module['Race']['Bulvoid'] = _Race_Bulvoid();
         Module['Race']['Techtulon'] = _Race_Techtulon();
@@ -1365,6 +1372,7 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['Race']['Tissinar'] = _Race_Tissinar();
         Module['Race']['Zwiie'] = _Race_Zwiie();
         // Regime
+        Module['Regime'] = Module['Regime'] || {};
         Module['Regime']['Empire'] = _Regime_Empire();
         Module['Regime']['Dictature'] = _Regime_Dictature();
         Module['Regime']['Democracy'] = _Regime_Democracy();
@@ -1372,6 +1380,7 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['Regime']['Technocracy'] = _Regime_Technocracy();
         Module['Regime']['Piratery'] = _Regime_Piratery();
         // Resource
+        Module['Resource'] = Module['Resource'] || {};
         Module['Resource']['None'] = _Resource_None();
         Module['Resource']['Minerals'] = _Resource_Minerals();
         Module['Resource']['Andrium'] = _Resource_Andrium();
@@ -1385,6 +1394,7 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['Resource']['Robot'] = _Resource_Robot();
         Module['Resource']['Count'] = _Resource_Count();
         // Taxation
+        Module['Taxation'] = Module['Taxation'] || {};
         Module['Taxation']['None'] = _Taxation_None();
         Module['Taxation']['Light'] = _Taxation_Light();
         Module['Taxation']['Medium'] = _Taxation_Medium();
@@ -1392,6 +1402,7 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['Taxation']['Heaviest'] = _Taxation_Heaviest();
         Module['Taxation']['Total'] = _Taxation_Total();
         // Technology
+        Module['Technology'] = Module['Technology'] || {};
         Module['Technology']['Engines'] = _Technology_Engines();
         Module['Technology']['EcoEnergy'] = _Technology_EcoEnergy();
         Module['Technology']['Scanners'] = _Technology_Scanners();
@@ -1413,6 +1424,7 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['Technology']['CyberDiplomacy'] = _Technology_CyberDiplomacy();
         Module['Technology']['Count'] = _Technology_Count();
         // WeaponType
+        Module['WeaponType'] = Module['WeaponType'] || {};
         Module['WeaponType']['None'] = _WeaponType_None();
         Module['WeaponType']['Ion'] = _WeaponType_Ion();
         Module['WeaponType']['Laser'] = _WeaponType_Laser();

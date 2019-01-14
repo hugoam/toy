@@ -436,6 +436,7 @@ Module['paint_block_height'] = function(block, image, element) {
 (function() {
     function setupEnums() {
         // MatterState
+        Module['MatterState'] = Module['MatterState'] || {};
         Module['MatterState']['Solid'] = _toy_MatterState_Solid();
         Module['MatterState']['Liquid'] = _toy_MatterState_Liquid();
         Module['MatterState']['Gas'] = _toy_MatterState_Gas();

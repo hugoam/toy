@@ -347,6 +347,7 @@ Module['physic_painter'] = function(scene) {
 (function() {
     function setupEnums() {
         // GameMode
+        Module['GameMode'] = Module['GameMode'] || {};
         Module['GameMode']['Play'] = _toy_GameMode_Play();
         Module['GameMode']['PlayEditor'] = _toy_GameMode_PlayEditor();
         Module['GameMode']['Pause'] = _toy_GameMode_Pause();

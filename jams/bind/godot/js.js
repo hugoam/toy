@@ -398,6 +398,7 @@ WorldBlock.prototype["__destroy__"] = WorldBlock.prototype.__destroy__ = functio
 (function() {
     function setupEnums() {
         // Faction
+        Module['Faction'] = Module['Faction'] || {};
         Module['Faction']['Ally'] = _Faction_Ally();
         Module['Faction']['Enemy'] = _Faction_Enemy();
     }
