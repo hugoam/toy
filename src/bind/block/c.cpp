@@ -17,6 +17,9 @@
 extern "C" {
 	
 	// Block
+	mud::Type* DECL toy_Block__type() {
+		return mud::type<toy::Block>();
+	}
 	toy::Block* DECL toy_Block_Block_0() {
 		return new toy::Block();
 	}
@@ -70,6 +73,9 @@ extern "C" {
 		delete self;
 	}
 	// Chunk
+	mud::Type* DECL toy_Chunk__type() {
+		return mud::type<toy::Chunk>();
+	}
 	toy::Chunk* DECL toy_Chunk_Chunk_0() {
 		return new toy::Chunk();
 	}
@@ -104,6 +110,9 @@ extern "C" {
 		delete self;
 	}
 	// Element
+	mud::Type* DECL toy_Element__type() {
+		return mud::type<toy::Element>();
+	}
 	toy::Element* DECL toy_Element_Element_3(const char* name, toy::MatterState state, mud::Colour* colour) {
 		return new toy::Element(name, state, *colour);
 	}
@@ -136,6 +145,9 @@ extern "C" {
 		delete self;
 	}
 	// Heap
+	mud::Type* DECL toy_Heap__type() {
+		return mud::type<toy::Heap>();
+	}
 	toy::Heap* DECL toy_Heap_Heap_0() {
 		return new toy::Heap();
 	}
@@ -158,6 +170,9 @@ extern "C" {
 		delete self;
 	}
 	// Sector
+	mud::Type* DECL toy_Sector__type() {
+		return mud::type<toy::Sector>();
+	}
 	toy::Sector* DECL toy_Sector_Sector_0() {
 		return new toy::Sector();
 	}
@@ -188,6 +203,9 @@ extern "C" {
 		delete self;
 	}
 	// Tileblock
+	mud::Type* DECL toy_Tileblock__type() {
+		return mud::type<toy::Tileblock>();
+	}
 	toy::Tileblock* DECL toy_Tileblock_Tileblock_0() {
 		return new toy::Tileblock();
 	}
@@ -213,6 +231,9 @@ extern "C" {
 		delete self;
 	}
 	// Earth
+	mud::Type* DECL toy_Earth__type() {
+		return mud::type<toy::Earth>();
+	}
 	toy::Earth* DECL toy_Earth_Earth_0() {
 		return new toy::Earth();
 	}

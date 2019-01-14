@@ -45,6 +45,9 @@
 extern "C" {
 	
 	// Aim
+	mud::Type* DECL Aim__type() {
+		return mud::type<Aim>();
+	}
 	Aim* DECL Aim_Aim_0() {
 		return new Aim();
 	}
@@ -79,6 +82,9 @@ extern "C" {
 		delete self;
 	}
 	// Bullet
+	mud::Type* DECL Bullet__type() {
+		return mud::type<Bullet>();
+	}
 	mud::vec3* DECL Bullet__get_source(Bullet* self) {
 		static mud::vec3 temp;
 		return (temp = self->m_source, &temp);
@@ -97,6 +103,9 @@ extern "C" {
 		delete self;
 	}
 	// Crate
+	mud::Type* DECL Crate__type() {
+		return mud::type<Crate>();
+	}
 	Crate* DECL Crate_Crate_0() {
 		return new Crate();
 	}
@@ -114,6 +123,9 @@ extern "C" {
 		delete self;
 	}
 	// Human
+	mud::Type* DECL Human__type() {
+		return mud::type<Human>();
+	}
 	Human* DECL Human_Human_0() {
 		return new Human();
 	}
@@ -210,6 +222,9 @@ extern "C" {
 		delete self;
 	}
 	// Lamp
+	mud::Type* DECL Lamp__type() {
+		return mud::type<Lamp>();
+	}
 	Lamp* DECL Lamp_Lamp_0() {
 		return new Lamp();
 	}
@@ -220,10 +235,16 @@ extern "C" {
 		delete self;
 	}
 	// Player
+	mud::Type* DECL Player__type() {
+		return mud::type<Player>();
+	}
 	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Stance
+	mud::Type* DECL Stance__type() {
+		return mud::type<Stance>();
+	}
 	Stance* DECL Stance_Stance_0() {
 		return new Stance();
 	}
@@ -246,6 +267,9 @@ extern "C" {
 		delete self;
 	}
 	// TileWorld
+	mud::Type* DECL TileWorld__type() {
+		return mud::type<TileWorld>();
+	}
 	TileWorld* DECL TileWorld_TileWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new TileWorld(name, *job_system);
 	}

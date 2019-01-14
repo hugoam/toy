@@ -13,11 +13,13 @@ function Camp(spatial, position, faction) {
     faction = faction.ptr;
     if (spatial === undefined) { this.ptr = _Camp_Camp_0(); getCache(Camp)[this.ptr] = this; return; }
     this.ptr = _Camp_Camp_3(spatial, position, faction); getCache(Camp)[this.ptr] = this;
+    this.type = Camp;
 };
 Camp.prototype = Object.create(WrapperObject.prototype);
 Camp.prototype.constructor = Camp;
 Camp.prototype.__class__ = Camp;
 Camp.__cache__ = {};
+Camp.__type__ = _Camp__type();
 Module['Camp'] = Camp;
 Object.defineProperty(Camp.prototype, "position", {
     get: function() {
@@ -53,11 +55,13 @@ function Faction(id, colour) {
     /* colour <Colour> [] */
     colour = colour.ptr;
     this.ptr = _Faction_Faction_2(id, colour); getCache(Faction)[this.ptr] = this;
+    this.type = Faction;
 };
 Faction.prototype = Object.create(WrapperObject.prototype);
 Faction.prototype.constructor = Faction;
 Faction.prototype.__class__ = Faction;
 Faction.__cache__ = {};
+Faction.__type__ = _Faction__type();
 Module['Faction'] = Faction;
 Object.defineProperty(Faction.prototype, "id", {
     get: function() {
@@ -92,6 +96,7 @@ Player.prototype = Object.create(WrapperObject.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.__class__ = Player;
 Player.__cache__ = {};
+Player.__type__ = _Player__type();
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -106,11 +111,13 @@ function Shield(spatial, emitter, faction, radius) {
     /* radius <float> [] */
     if (spatial === undefined) { this.ptr = _Shield_Shield_0(); getCache(Shield)[this.ptr] = this; return; }
     this.ptr = _Shield_Shield_4(spatial, emitter, faction, radius); getCache(Shield)[this.ptr] = this;
+    this.type = Shield;
 };
 Shield.prototype = Object.create(WrapperObject.prototype);
 Shield.prototype.constructor = Shield;
 Shield.prototype.__class__ = Shield;
 Shield.__cache__ = {};
+Shield.__type__ = _Shield__type();
 Module['Shield'] = Shield;
 Object.defineProperty(Shield.prototype, "faction", {
     get: function() {
@@ -167,6 +174,7 @@ Slug.prototype = Object.create(WrapperObject.prototype);
 Slug.prototype.constructor = Slug;
 Slug.prototype.__class__ = Slug;
 Slug.__cache__ = {};
+Slug.__type__ = _Slug__type();
 Module['Slug'] = Slug;
 Object.defineProperty(Slug.prototype, "source", {
     get: function() {
@@ -217,11 +225,13 @@ function Tank(spatial, movable, emitter, receptor, faction) {
     faction = faction.ptr;
     if (spatial === undefined) { this.ptr = _Tank_Tank_0(); getCache(Tank)[this.ptr] = this; return; }
     this.ptr = _Tank_Tank_5(spatial, movable, emitter, receptor, faction); getCache(Tank)[this.ptr] = this;
+    this.type = Tank;
 };
 Tank.prototype = Object.create(WrapperObject.prototype);
 Tank.prototype.constructor = Tank;
 Tank.prototype.__class__ = Tank;
 Tank.__cache__ = {};
+Tank.__type__ = _Tank__type();
 Module['Tank'] = Tank;
 Tank.prototype["__destroy__"] = Tank.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -236,11 +246,13 @@ function BlockWorld(name, job_system) {
     /* job_system <JobSystem> [] */
     job_system = job_system.ptr;
     this.ptr = _BlockWorld_BlockWorld_2(name, job_system); getCache(BlockWorld)[this.ptr] = this;
+    this.type = BlockWorld;
 };
 BlockWorld.prototype = Object.create(WrapperObject.prototype);
 BlockWorld.prototype.constructor = BlockWorld;
 BlockWorld.prototype.__class__ = BlockWorld;
 BlockWorld.__cache__ = {};
+BlockWorld.__type__ = _BlockWorld__type();
 Module['BlockWorld'] = BlockWorld;
 Object.defineProperty(BlockWorld.prototype, "world", {
     get: function() {

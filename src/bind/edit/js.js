@@ -5,11 +5,13 @@ Module['mud']['ui'] = Module['mud']['ui'] || {};
 // ActionGroup
 function ActionGroup() {
     this.ptr = _toy_ActionGroup_ActionGroup_0(); getCache(ActionGroup)[this.ptr] = this;
+    this.type = ActionGroup;
 };
 ActionGroup.prototype = Object.create(WrapperObject.prototype);
 ActionGroup.prototype.constructor = ActionGroup;
 ActionGroup.prototype.__class__ = ActionGroup;
 ActionGroup.__cache__ = {};
+ActionGroup.__type__ = _toy_ActionGroup__type();
 Module['ActionGroup'] = ActionGroup;
 ActionGroup.prototype["__destroy__"] = ActionGroup.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -21,6 +23,7 @@ Clone.prototype = Object.create(WrapperObject.prototype);
 Clone.prototype.constructor = Clone;
 Clone.prototype.__class__ = Clone;
 Clone.__cache__ = {};
+Clone.__type__ = _toy_Clone__type();
 Module['Clone'] = Clone;
 Clone.prototype["__destroy__"] = Clone.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -32,6 +35,7 @@ Cut.prototype = Object.create(WrapperObject.prototype);
 Cut.prototype.constructor = Cut;
 Cut.prototype.__class__ = Cut;
 Cut.__cache__ = {};
+Cut.__type__ = _toy_Cut__type();
 Module['Cut'] = Cut;
 Cut.prototype["__destroy__"] = Cut.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -43,6 +47,7 @@ Edit.prototype = Object.create(WrapperObject.prototype);
 Edit.prototype.constructor = Edit;
 Edit.prototype.__class__ = Edit;
 Edit.__cache__ = {};
+Edit.__type__ = _toy_Edit__type();
 Module['Edit'] = Edit;
 Edit.prototype["__destroy__"] = Edit.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -51,11 +56,13 @@ Edit.prototype["__destroy__"] = Edit.prototype.__destroy__ = function() {
 // GraphicsDebug
 function GraphicsDebug() {
     this.ptr = _toy_GraphicsDebug_GraphicsDebug_0(); getCache(GraphicsDebug)[this.ptr] = this;
+    this.type = GraphicsDebug;
 };
 GraphicsDebug.prototype = Object.create(WrapperObject.prototype);
 GraphicsDebug.prototype.constructor = GraphicsDebug;
 GraphicsDebug.prototype.__class__ = GraphicsDebug;
 GraphicsDebug.__cache__ = {};
+GraphicsDebug.__type__ = _toy_GraphicsDebug__type();
 Module['GraphicsDebug'] = GraphicsDebug;
 GraphicsDebug.prototype["__destroy__"] = GraphicsDebug.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -67,6 +74,7 @@ Paste.prototype = Object.create(WrapperObject.prototype);
 Paste.prototype.constructor = Paste;
 Paste.prototype.__class__ = Paste;
 Paste.__cache__ = {};
+Paste.__type__ = _toy_Paste__type();
 Module['Paste'] = Paste;
 Paste.prototype["__destroy__"] = Paste.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -78,6 +86,7 @@ Toolbelt.prototype = Object.create(WrapperObject.prototype);
 Toolbelt.prototype.constructor = Toolbelt;
 Toolbelt.prototype.__class__ = Toolbelt;
 Toolbelt.__cache__ = {};
+Toolbelt.__type__ = _toy_Toolbelt__type();
 Module['Toolbelt'] = Toolbelt;
 Toolbelt.prototype["__destroy__"] = Toolbelt.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -89,6 +98,7 @@ Toolbox.prototype = Object.create(WrapperObject.prototype);
 Toolbox.prototype.constructor = Toolbox;
 Toolbox.prototype.__class__ = Toolbox;
 Toolbox.__cache__ = {};
+Toolbox.__type__ = _toy_Toolbox__type();
 Module['Toolbox'] = Toolbox;
 Toolbox.prototype["__destroy__"] = Toolbox.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -100,6 +110,7 @@ DynamicToolbox.prototype = Object.create(WrapperObject.prototype);
 DynamicToolbox.prototype.constructor = DynamicToolbox;
 DynamicToolbox.prototype.__class__ = DynamicToolbox;
 DynamicToolbox.__cache__ = {};
+DynamicToolbox.__type__ = _toy_DynamicToolbox__type();
 Module['DynamicToolbox'] = DynamicToolbox;
 DynamicToolbox.prototype["__destroy__"] = DynamicToolbox.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -111,6 +122,7 @@ Editor.prototype = Object.create(WrapperObject.prototype);
 Editor.prototype.constructor = Editor;
 Editor.prototype.__class__ = Editor;
 Editor.__cache__ = {};
+Editor.__type__ = _toy_Editor__type();
 Module['Editor'] = Editor;
 Object.defineProperty(Editor.prototype, "run_tool", {
     get: function() {
@@ -171,6 +183,7 @@ PlayTool.prototype = Object.create(WrapperObject.prototype);
 PlayTool.prototype.constructor = PlayTool;
 PlayTool.prototype.__class__ = PlayTool;
 PlayTool.__cache__ = {};
+PlayTool.__type__ = _toy_PlayTool__type();
 Module['PlayTool'] = PlayTool;
 PlayTool.prototype["__destroy__"] = PlayTool.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -182,6 +195,7 @@ RunTool.prototype = Object.create(WrapperObject.prototype);
 RunTool.prototype.constructor = RunTool;
 RunTool.prototype.__class__ = RunTool;
 RunTool.__cache__ = {};
+RunTool.__type__ = _toy_RunTool__type();
 Module['RunTool'] = RunTool;
 RunTool.prototype["__destroy__"] = RunTool.prototype.__destroy__ = function() {
     var self = this.ptr;

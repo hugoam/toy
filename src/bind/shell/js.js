@@ -8,6 +8,7 @@ Game.prototype = Object.create(WrapperObject.prototype);
 Game.prototype.constructor = Game;
 Game.prototype.__class__ = Game;
 Game.__cache__ = {};
+Game.__type__ = _toy_Game__type();
 Module['Game'] = Game;
 Object.defineProperty(Game.prototype, "user", {
     get: function() {
@@ -57,6 +58,11 @@ Object.defineProperty(Game.prototype, "module", {
         _toy_Game__set_module(self, value);
     }
 });
+Object.defineProperty(Game.prototype, "player", {
+    get: function() {
+        var self = this.ptr;
+        return wrapPointer(_toy_Game__get_player(self), Ref);
+    }});
 Object.defineProperty(Game.prototype, "world", {
     get: function() {
         var self = this.ptr;
@@ -91,6 +97,7 @@ GameModule.prototype = Object.create(WrapperObject.prototype);
 GameModule.prototype.constructor = GameModule;
 GameModule.prototype.__class__ = GameModule;
 GameModule.__cache__ = {};
+GameModule.__type__ = _toy_GameModule__type();
 Module['GameModule'] = GameModule;
 GameModule.prototype["init"] = GameModule.prototype.init = function(self, shell, game) {
     var self = this.ptr;
@@ -151,11 +158,13 @@ function GameShell(resource_path, exec_path) {
     else exec_path = ensureString(exec_path);
     if (exec_path === undefined) { this.ptr = _toy_GameShell_GameShell_1(resource_path); getCache(GameShell)[this.ptr] = this; return; }
     this.ptr = _toy_GameShell_GameShell_2(resource_path, exec_path); getCache(GameShell)[this.ptr] = this;
+    this.type = GameShell;
 };
 GameShell.prototype = Object.create(WrapperObject.prototype);
 GameShell.prototype.constructor = GameShell;
 GameShell.prototype.__class__ = GameShell;
 GameShell.__cache__ = {};
+GameShell.__type__ = _toy_GameShell__type();
 Module['GameShell'] = GameShell;
 GameShell.prototype["add_scene"] = GameShell.prototype.add_scene = function(self) {
     var self = this.ptr;
@@ -313,11 +322,13 @@ function GameModuleBind(module, call) {
     module = module.ptr;
     /* call <mud::VirtualMethod> [] */
     this.ptr = _toy_GameModuleBind_GameModuleBind_2(module, call); getCache(GameModuleBind)[this.ptr] = this;
+    this.type = GameModuleBind;
 };
 GameModuleBind.prototype = Object.create(WrapperObject.prototype);
 GameModuleBind.prototype.constructor = GameModuleBind;
 GameModuleBind.prototype.__class__ = GameModuleBind;
 GameModuleBind.__cache__ = {};
+GameModuleBind.__type__ = _toy_GameModuleBind__type();
 Module['GameModuleBind'] = GameModuleBind;
 GameModuleBind.prototype["__destroy__"] = GameModuleBind.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -329,6 +340,7 @@ GameScene.prototype = Object.create(WrapperObject.prototype);
 GameScene.prototype.constructor = GameScene;
 GameScene.prototype.__class__ = GameScene;
 GameScene.__cache__ = {};
+GameScene.__type__ = _toy_GameScene__type();
 Module['GameScene'] = GameScene;
 GameScene.prototype["__destroy__"] = GameScene.prototype.__destroy__ = function() {
     var self = this.ptr;

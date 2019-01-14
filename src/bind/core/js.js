@@ -8,6 +8,7 @@ BulletMedium.prototype = Object.create(WrapperObject.prototype);
 BulletMedium.prototype.constructor = BulletMedium;
 BulletMedium.prototype.__class__ = BulletMedium;
 BulletMedium.__cache__ = {};
+BulletMedium.__type__ = _toy_BulletMedium__type();
 Module['BulletMedium'] = BulletMedium;
 BulletMedium.prototype["__destroy__"] = BulletMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -19,6 +20,7 @@ BulletShape.prototype = Object.create(WrapperObject.prototype);
 BulletShape.prototype.constructor = BulletShape;
 BulletShape.prototype.__class__ = BulletShape;
 BulletShape.__cache__ = {};
+BulletShape.__type__ = _toy_BulletShape__type();
 Module['BulletShape'] = BulletShape;
 BulletShape.prototype["__destroy__"] = BulletShape.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -35,11 +37,13 @@ function Camera(spatial, lens_distance, near, far) {
     if (near === undefined) { this.ptr = _toy_Camera_Camera_2(spatial, lens_distance); getCache(Camera)[this.ptr] = this; return; }
     if (far === undefined) { this.ptr = _toy_Camera_Camera_3(spatial, lens_distance, near); getCache(Camera)[this.ptr] = this; return; }
     this.ptr = _toy_Camera_Camera_4(spatial, lens_distance, near, far); getCache(Camera)[this.ptr] = this;
+    this.type = Camera;
 };
 Camera.prototype = Object.create(WrapperObject.prototype);
 Camera.prototype.constructor = Camera;
 Camera.prototype.__class__ = Camera;
 Camera.__cache__ = {};
+Camera.__type__ = _toy_Camera__type();
 Module['Camera'] = Camera;
 Object.defineProperty(Camera.prototype, "lens_distance", {
     get: function() {
@@ -112,11 +116,13 @@ function Collider(spatial, movable, collision_shape, medium, group) {
     if (group && typeof group === "object") group = group.ptr;
     if (spatial === undefined) { this.ptr = _toy_Collider_Collider_0(); getCache(Collider)[this.ptr] = this; return; }
     this.ptr = _toy_Collider_Collider_5(spatial, movable, collision_shape, medium, group); getCache(Collider)[this.ptr] = this;
+    this.type = Collider;
 };
 Collider.prototype = Object.create(WrapperObject.prototype);
 Collider.prototype.constructor = Collider;
 Collider.prototype.__class__ = Collider;
 Collider.__cache__ = {};
+Collider.__type__ = _toy_Collider__type();
 Module['Collider'] = Collider;
 Object.defineProperty(Collider.prototype, "spatial", {
     get: function() {
@@ -196,6 +202,7 @@ ColliderImpl.prototype = Object.create(WrapperObject.prototype);
 ColliderImpl.prototype.constructor = ColliderImpl;
 ColliderImpl.prototype.__class__ = ColliderImpl;
 ColliderImpl.__cache__ = {};
+ColliderImpl.__type__ = _toy_ColliderImpl__type();
 Module['ColliderImpl'] = ColliderImpl;
 ColliderImpl.prototype["__destroy__"] = ColliderImpl.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -207,6 +214,7 @@ ColliderObject.prototype = Object.create(WrapperObject.prototype);
 ColliderObject.prototype.constructor = ColliderObject;
 ColliderObject.prototype.__class__ = ColliderObject;
 ColliderObject.__cache__ = {};
+ColliderObject.__type__ = _toy_ColliderObject__type();
 Module['ColliderObject'] = ColliderObject;
 ColliderObject.prototype["__destroy__"] = ColliderObject.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -215,11 +223,13 @@ ColliderObject.prototype["__destroy__"] = ColliderObject.prototype.__destroy__ =
 // Collision
 function Collision() {
     this.ptr = _toy_Collision_Collision_0(); getCache(Collision)[this.ptr] = this;
+    this.type = Collision;
 };
 Collision.prototype = Object.create(WrapperObject.prototype);
 Collision.prototype.constructor = Collision;
 Collision.prototype.__class__ = Collision;
 Collision.__cache__ = {};
+Collision.__type__ = _toy_Collision__type();
 Module['Collision'] = Collision;
 Object.defineProperty(Collision.prototype, "first", {
     get: function() {
@@ -270,11 +280,13 @@ function CollisionShape(shape, center, margin) {
     if (center === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_1(shape); getCache(CollisionShape)[this.ptr] = this; return; }
     if (margin === undefined) { this.ptr = _toy_CollisionShape_CollisionShape_2(shape, center); getCache(CollisionShape)[this.ptr] = this; return; }
     this.ptr = _toy_CollisionShape_CollisionShape_3(shape, center, margin); getCache(CollisionShape)[this.ptr] = this;
+    this.type = CollisionShape;
 };
 CollisionShape.prototype = Object.create(WrapperObject.prototype);
 CollisionShape.prototype.constructor = CollisionShape;
 CollisionShape.prototype.__class__ = CollisionShape;
 CollisionShape.__cache__ = {};
+CollisionShape.__type__ = _toy_CollisionShape__type();
 Module['CollisionShape'] = CollisionShape;
 CollisionShape.prototype["__destroy__"] = CollisionShape.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -286,6 +298,7 @@ ComponentPool.prototype = Object.create(WrapperObject.prototype);
 ComponentPool.prototype.constructor = ComponentPool;
 ComponentPool.prototype.__class__ = ComponentPool;
 ComponentPool.__cache__ = {};
+ComponentPool.__type__ = _toy_ComponentPool__type();
 Module['ComponentPool'] = ComponentPool;
 ComponentPool.prototype["__destroy__"] = ComponentPool.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -297,6 +310,7 @@ Core.prototype = Object.create(WrapperObject.prototype);
 Core.prototype.constructor = Core;
 Core.prototype.__class__ = Core;
 Core.__cache__ = {};
+Core.__type__ = _toy_Core__type();
 Module['Core'] = Core;
 Core.prototype["__destroy__"] = Core.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -308,6 +322,7 @@ DetourPath.prototype = Object.create(WrapperObject.prototype);
 DetourPath.prototype.constructor = DetourPath;
 DetourPath.prototype.__class__ = DetourPath;
 DetourPath.__cache__ = {};
+DetourPath.__type__ = _toy_DetourPath__type();
 Module['DetourPath'] = DetourPath;
 DetourPath.prototype["__destroy__"] = DetourPath.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -318,11 +333,13 @@ function Emitter(spatial) {
     /* spatial <toy::HSpatial> [] */
     if (spatial === undefined) { this.ptr = _toy_Emitter_Emitter_0(); getCache(Emitter)[this.ptr] = this; return; }
     this.ptr = _toy_Emitter_Emitter_1(spatial); getCache(Emitter)[this.ptr] = this;
+    this.type = Emitter;
 };
 Emitter.prototype = Object.create(WrapperObject.prototype);
 Emitter.prototype.constructor = Emitter;
 Emitter.prototype.__class__ = Emitter;
 Emitter.__cache__ = {};
+Emitter.__type__ = _toy_Emitter__type();
 Module['Emitter'] = Emitter;
 Emitter.prototype["__destroy__"] = Emitter.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -333,11 +350,13 @@ function EntityScript(spatial) {
     /* spatial <toy::HSpatial> [] */
     if (spatial === undefined) { this.ptr = _toy_EntityScript_EntityScript_0(); getCache(EntityScript)[this.ptr] = this; return; }
     this.ptr = _toy_EntityScript_EntityScript_1(spatial); getCache(EntityScript)[this.ptr] = this;
+    this.type = EntityScript;
 };
 EntityScript.prototype = Object.create(WrapperObject.prototype);
 EntityScript.prototype.constructor = EntityScript;
 EntityScript.prototype.__class__ = EntityScript;
 EntityScript.__cache__ = {};
+EntityScript.__type__ = _toy_EntityScript__type();
 Module['EntityScript'] = EntityScript;
 Object.defineProperty(EntityScript.prototype, "logic_script", {
     get: function() {
@@ -373,6 +392,7 @@ Medium.prototype = Object.create(WrapperObject.prototype);
 Medium.prototype.constructor = Medium;
 Medium.prototype.__class__ = Medium;
 Medium.__cache__ = {};
+Medium.__type__ = _toy_Medium__type();
 Module['Medium'] = Medium;
 Object.defineProperty(Medium.prototype, "name", {
     get: function() {
@@ -418,11 +438,13 @@ function Movable(spatial) {
     /* spatial <toy::HSpatial> [] */
     if (spatial === undefined) { this.ptr = _toy_Movable_Movable_0(); getCache(Movable)[this.ptr] = this; return; }
     this.ptr = _toy_Movable_Movable_1(spatial); getCache(Movable)[this.ptr] = this;
+    this.type = Movable;
 };
 Movable.prototype = Object.create(WrapperObject.prototype);
 Movable.prototype.constructor = Movable;
 Movable.prototype.__class__ = Movable;
 Movable.__cache__ = {};
+Movable.__type__ = _toy_Movable__type();
 Module['Movable'] = Movable;
 Movable.prototype["modify_angular_velocity"] = Movable.prototype.modify_angular_velocity = function(self, velocity) {
     var self = this.ptr;
@@ -507,11 +529,13 @@ function Navblock(spatial, world_page, navmesh) {
     navmesh = navmesh.ptr;
     if (spatial === undefined) { this.ptr = _toy_Navblock_Navblock_0(); getCache(Navblock)[this.ptr] = this; return; }
     this.ptr = _toy_Navblock_Navblock_3(spatial, world_page, navmesh); getCache(Navblock)[this.ptr] = this;
+    this.type = Navblock;
 };
 Navblock.prototype = Object.create(WrapperObject.prototype);
 Navblock.prototype.constructor = Navblock;
 Navblock.prototype.__class__ = Navblock;
 Navblock.__cache__ = {};
+Navblock.__type__ = _toy_Navblock__type();
 Module['Navblock'] = Navblock;
 Object.defineProperty(Navblock.prototype, "navmesh", {
     get: function() {
@@ -556,11 +580,13 @@ function Navmesh(world) {
     /* world <World> [] */
     world = world.ptr;
     this.ptr = _toy_Navmesh_Navmesh_1(world); getCache(Navmesh)[this.ptr] = this;
+    this.type = Navmesh;
 };
 Navmesh.prototype = Object.create(WrapperObject.prototype);
 Navmesh.prototype.constructor = Navmesh;
 Navmesh.prototype.__class__ = Navmesh;
 Navmesh.__cache__ = {};
+Navmesh.__type__ = _toy_Navmesh__type();
 Module['Navmesh'] = Navmesh;
 Object.defineProperty(Navmesh.prototype, "world", {
     get: function() {
@@ -598,11 +624,13 @@ function Origin(spatial) {
     /* spatial <toy::HSpatial> [] */
     if (spatial === undefined) { this.ptr = _toy_Origin_Origin_0(); getCache(Origin)[this.ptr] = this; return; }
     this.ptr = _toy_Origin_Origin_1(spatial); getCache(Origin)[this.ptr] = this;
+    this.type = Origin;
 };
 Origin.prototype = Object.create(WrapperObject.prototype);
 Origin.prototype.constructor = Origin;
 Origin.prototype.__class__ = Origin;
 Origin.__cache__ = {};
+Origin.__type__ = _toy_Origin__type();
 Module['Origin'] = Origin;
 Origin.prototype["__destroy__"] = Origin.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -613,11 +641,13 @@ function Pathfinder(navmesh) {
     /* navmesh <Navmesh> [] */
     navmesh = navmesh.ptr;
     this.ptr = _toy_Pathfinder_Pathfinder_1(navmesh); getCache(Pathfinder)[this.ptr] = this;
+    this.type = Pathfinder;
 };
 Pathfinder.prototype = Object.create(WrapperObject.prototype);
 Pathfinder.prototype.constructor = Pathfinder;
 Pathfinder.prototype.__class__ = Pathfinder;
 Pathfinder.__cache__ = {};
+Pathfinder.__type__ = _toy_Pathfinder__type();
 Module['Pathfinder'] = Pathfinder;
 Pathfinder.prototype["__destroy__"] = Pathfinder.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -629,6 +659,7 @@ PhysicWorld.prototype = Object.create(WrapperObject.prototype);
 PhysicWorld.prototype.constructor = PhysicWorld;
 PhysicWorld.prototype.__class__ = PhysicWorld;
 PhysicWorld.__cache__ = {};
+PhysicWorld.__type__ = _toy_PhysicWorld__type();
 Module['PhysicWorld'] = PhysicWorld;
 PhysicWorld.prototype["ground_point"] = PhysicWorld.prototype.ground_point = function(self, ray) {
     var self = this.ptr;
@@ -657,11 +688,13 @@ function Receptor(spatial) {
     /* spatial <toy::HSpatial> [] */
     if (spatial === undefined) { this.ptr = _toy_Receptor_Receptor_0(); getCache(Receptor)[this.ptr] = this; return; }
     this.ptr = _toy_Receptor_Receptor_1(spatial); getCache(Receptor)[this.ptr] = this;
+    this.type = Receptor;
 };
 Receptor.prototype = Object.create(WrapperObject.prototype);
 Receptor.prototype.constructor = Receptor;
 Receptor.prototype.__class__ = Receptor;
 Receptor.__cache__ = {};
+Receptor.__type__ = _toy_Receptor__type();
 Module['Receptor'] = Receptor;
 Receptor.prototype["scope"] = Receptor.prototype.scope = function(self, medium) {
     var self = this.ptr;
@@ -679,6 +712,7 @@ Solid.prototype = Object.create(WrapperObject.prototype);
 Solid.prototype.constructor = Solid;
 Solid.prototype.__class__ = Solid;
 Solid.__cache__ = {};
+Solid.__type__ = _toy_Solid__type();
 Module['Solid'] = Solid;
 Object.defineProperty(Solid.prototype, "spatial", {
     get: function() {
@@ -723,6 +757,7 @@ SolidImpl.prototype = Object.create(WrapperObject.prototype);
 SolidImpl.prototype.constructor = SolidImpl;
 SolidImpl.prototype.__class__ = SolidImpl;
 SolidImpl.__cache__ = {};
+SolidImpl.__type__ = _toy_SolidImpl__type();
 Module['SolidImpl'] = SolidImpl;
 SolidImpl.prototype["angular_velocity"] = SolidImpl.prototype.angular_velocity = function(self) {
     var self = this.ptr;
@@ -768,6 +803,7 @@ User.prototype = Object.create(WrapperObject.prototype);
 User.prototype.constructor = User;
 User.prototype.__class__ = User;
 User.__cache__ = {};
+User.__type__ = _toy_User__type();
 Module['User'] = User;
 User.prototype["__destroy__"] = User.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -778,11 +814,13 @@ function Waypoint(parent) {
     /* parent <toy::HSpatial> [] */
     if (parent === undefined) { this.ptr = _toy_Waypoint_Waypoint_0(); getCache(Waypoint)[this.ptr] = this; return; }
     this.ptr = _toy_Waypoint_Waypoint_1(parent); getCache(Waypoint)[this.ptr] = this;
+    this.type = Waypoint;
 };
 Waypoint.prototype = Object.create(WrapperObject.prototype);
 Waypoint.prototype.constructor = Waypoint;
 Waypoint.prototype.__class__ = Waypoint;
 Waypoint.__cache__ = {};
+Waypoint.__type__ = _toy_Waypoint__type();
 Module['Waypoint'] = Waypoint;
 Waypoint.prototype["__destroy__"] = Waypoint.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -800,11 +838,13 @@ function World(id, complex, name, job_system) {
     /* job_system <JobSystem> [] */
     job_system = job_system.ptr;
     this.ptr = _toy_World_World_4(id, complex, name, job_system); getCache(World)[this.ptr] = this;
+    this.type = World;
 };
 World.prototype = Object.create(WrapperObject.prototype);
 World.prototype.constructor = World;
 World.prototype.__class__ = World;
 World.__cache__ = {};
+World.__type__ = _toy_World__type();
 Module['World'] = World;
 Object.defineProperty(World.prototype, "id", {
     get: function() {
@@ -817,11 +857,6 @@ Object.defineProperty(World.prototype, "id", {
         _toy_World__set_id(self, value);
     }
 });
-Object.defineProperty(World.prototype, "complex", {
-    get: function() {
-        var self = this.ptr;
-        return wrapPointer(_toy_World__get_complex(self), Complex);
-    }});
 Object.defineProperty(World.prototype, "name", {
     get: function() {
         var self = this.ptr;
@@ -855,6 +890,7 @@ WorldClock.prototype = Object.create(WrapperObject.prototype);
 WorldClock.prototype.constructor = WorldClock;
 WorldClock.prototype.__class__ = WorldClock;
 WorldClock.__cache__ = {};
+WorldClock.__type__ = _toy_WorldClock__type();
 Module['WorldClock'] = WorldClock;
 WorldClock.prototype["__destroy__"] = WorldClock.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -868,11 +904,13 @@ function WorldPage(spatial, open, extents) {
     extents = extents.ptr;
     if (spatial === undefined) { this.ptr = _toy_WorldPage_WorldPage_0(); getCache(WorldPage)[this.ptr] = this; return; }
     this.ptr = _toy_WorldPage_WorldPage_3(spatial, open, extents); getCache(WorldPage)[this.ptr] = this;
+    this.type = WorldPage;
 };
 WorldPage.prototype = Object.create(WrapperObject.prototype);
 WorldPage.prototype.constructor = WorldPage;
 WorldPage.prototype.__class__ = WorldPage;
 WorldPage.__cache__ = {};
+WorldPage.__type__ = _toy_WorldPage__type();
 Module['WorldPage'] = WorldPage;
 WorldPage.prototype["build_geometry"] = WorldPage.prototype.build_geometry = function(self, spatial) {
     var self = this.ptr;
@@ -959,6 +997,7 @@ BulletCollider.prototype = Object.create(WrapperObject.prototype);
 BulletCollider.prototype.constructor = BulletCollider;
 BulletCollider.prototype.__class__ = BulletCollider;
 BulletCollider.__cache__ = {};
+BulletCollider.__type__ = _toy_BulletCollider__type();
 Module['BulletCollider'] = BulletCollider;
 BulletCollider.prototype["__destroy__"] = BulletCollider.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -970,6 +1009,7 @@ BulletSolid.prototype = Object.create(WrapperObject.prototype);
 BulletSolid.prototype.constructor = BulletSolid;
 BulletSolid.prototype.__class__ = BulletSolid;
 BulletSolid.__cache__ = {};
+BulletSolid.__type__ = _toy_BulletSolid__type();
 Module['BulletSolid'] = BulletSolid;
 BulletSolid.prototype["__destroy__"] = BulletSolid.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -980,11 +1020,13 @@ function BulletWorld(world) {
     /* world <World> [] */
     world = world.ptr;
     this.ptr = _toy_BulletWorld_BulletWorld_1(world); getCache(BulletWorld)[this.ptr] = this;
+    this.type = BulletWorld;
 };
 BulletWorld.prototype = Object.create(WrapperObject.prototype);
 BulletWorld.prototype.constructor = BulletWorld;
 BulletWorld.prototype.__class__ = BulletWorld;
 BulletWorld.__cache__ = {};
+BulletWorld.__type__ = _toy_BulletWorld__type();
 Module['BulletWorld'] = BulletWorld;
 BulletWorld.prototype["__destroy__"] = BulletWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -999,11 +1041,13 @@ function DefaultWorld(name, job_system) {
     /* job_system <JobSystem> [] */
     job_system = job_system.ptr;
     this.ptr = _toy_DefaultWorld_DefaultWorld_2(name, job_system); getCache(DefaultWorld)[this.ptr] = this;
+    this.type = DefaultWorld;
 };
 DefaultWorld.prototype = Object.create(WrapperObject.prototype);
 DefaultWorld.prototype.constructor = DefaultWorld;
 DefaultWorld.prototype.__class__ = DefaultWorld;
 DefaultWorld.__cache__ = {};
+DefaultWorld.__type__ = _toy_DefaultWorld__type();
 Module['DefaultWorld'] = DefaultWorld;
 Object.defineProperty(DefaultWorld.prototype, "world", {
     get: function() {
@@ -1030,6 +1074,7 @@ PhysicScope.prototype = Object.create(WrapperObject.prototype);
 PhysicScope.prototype.constructor = PhysicScope;
 PhysicScope.prototype.__class__ = PhysicScope;
 PhysicScope.__cache__ = {};
+PhysicScope.__type__ = _toy_PhysicScope__type();
 Module['PhysicScope'] = PhysicScope;
 PhysicScope.prototype["__destroy__"] = PhysicScope.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1041,6 +1086,7 @@ EmitterScope.prototype = Object.create(WrapperObject.prototype);
 EmitterScope.prototype.constructor = EmitterScope;
 EmitterScope.prototype.__class__ = EmitterScope;
 EmitterScope.__cache__ = {};
+EmitterScope.__type__ = _toy_EmitterScope__type();
 Module['EmitterScope'] = EmitterScope;
 EmitterScope.prototype["__destroy__"] = EmitterScope.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1051,11 +1097,13 @@ function NavmeshShape(navmesh) {
     /* navmesh <Navmesh> [] */
     navmesh = navmesh.ptr;
     this.ptr = _toy_NavmeshShape_NavmeshShape_1(navmesh); getCache(NavmeshShape)[this.ptr] = this;
+    this.type = NavmeshShape;
 };
 NavmeshShape.prototype = Object.create(WrapperObject.prototype);
 NavmeshShape.prototype.constructor = NavmeshShape;
 NavmeshShape.prototype.__class__ = NavmeshShape;
 NavmeshShape.__cache__ = {};
+NavmeshShape.__type__ = _toy_NavmeshShape__type();
 Module['NavmeshShape'] = NavmeshShape;
 NavmeshShape.prototype["__destroy__"] = NavmeshShape.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1071,11 +1119,13 @@ function Obstacle(spatial, movable, medium, shape, throughput) {
     shape = shape.ptr;
     /* throughput <float> [] */
     this.ptr = _toy_Obstacle_Obstacle_5(spatial, movable, medium, shape, throughput); getCache(Obstacle)[this.ptr] = this;
+    this.type = Obstacle;
 };
 Obstacle.prototype = Object.create(WrapperObject.prototype);
 Obstacle.prototype.constructor = Obstacle;
 Obstacle.prototype.__class__ = Obstacle;
 Obstacle.__cache__ = {};
+Obstacle.__type__ = _toy_Obstacle__type();
 Module['Obstacle'] = Obstacle;
 Object.defineProperty(Obstacle.prototype, "shape", {
     get: function() {
@@ -1103,6 +1153,7 @@ ReceptorScope.prototype = Object.create(WrapperObject.prototype);
 ReceptorScope.prototype.constructor = ReceptorScope;
 ReceptorScope.prototype.__class__ = ReceptorScope;
 ReceptorScope.__cache__ = {};
+ReceptorScope.__type__ = _toy_ReceptorScope__type();
 Module['ReceptorScope'] = ReceptorScope;
 ReceptorScope.prototype["__destroy__"] = ReceptorScope.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1111,11 +1162,13 @@ ReceptorScope.prototype["__destroy__"] = ReceptorScope.prototype.__destroy__ = f
 // SolidMedium
 function SolidMedium() {
     this.ptr = _toy_SolidMedium_SolidMedium_0(); getCache(SolidMedium)[this.ptr] = this;
+    this.type = SolidMedium;
 };
 SolidMedium.prototype = Object.create(WrapperObject.prototype);
 SolidMedium.prototype.constructor = SolidMedium;
 SolidMedium.prototype.__class__ = SolidMedium;
 SolidMedium.__cache__ = {};
+SolidMedium.__type__ = _toy_SolidMedium__type();
 Module['SolidMedium'] = SolidMedium;
 SolidMedium.prototype["__destroy__"] = SolidMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1124,11 +1177,13 @@ SolidMedium.prototype["__destroy__"] = SolidMedium.prototype.__destroy__ = funct
 // SoundMedium
 function SoundMedium() {
     this.ptr = _toy_SoundMedium_SoundMedium_0(); getCache(SoundMedium)[this.ptr] = this;
+    this.type = SoundMedium;
 };
 SoundMedium.prototype = Object.create(WrapperObject.prototype);
 SoundMedium.prototype.constructor = SoundMedium;
 SoundMedium.prototype.__class__ = SoundMedium;
 SoundMedium.__cache__ = {};
+SoundMedium.__type__ = _toy_SoundMedium__type();
 Module['SoundMedium'] = SoundMedium;
 SoundMedium.prototype["__destroy__"] = SoundMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1143,11 +1198,13 @@ function Spatial(parent, position, rotation) {
     rotation = rotation.ptr;
     if (parent === undefined) { this.ptr = _toy_Spatial_Spatial_0(); getCache(Spatial)[this.ptr] = this; return; }
     this.ptr = _toy_Spatial_Spatial_3(parent, position, rotation); getCache(Spatial)[this.ptr] = this;
+    this.type = Spatial;
 };
 Spatial.prototype = Object.create(WrapperObject.prototype);
 Spatial.prototype.constructor = Spatial;
 Spatial.prototype.__class__ = Spatial;
 Spatial.__cache__ = {};
+Spatial.__type__ = _toy_Spatial__type();
 Module['Spatial'] = Spatial;
 Spatial.prototype["set_position"] = Spatial.prototype.set_position = function(self, position) {
     var self = this.ptr;
@@ -1191,11 +1248,13 @@ Spatial.prototype["__destroy__"] = Spatial.prototype.__destroy__ = function() {
 // VisualMedium
 function VisualMedium() {
     this.ptr = _toy_VisualMedium_VisualMedium_0(); getCache(VisualMedium)[this.ptr] = this;
+    this.type = VisualMedium;
 };
 VisualMedium.prototype = Object.create(WrapperObject.prototype);
 VisualMedium.prototype.constructor = VisualMedium;
 VisualMedium.prototype.__class__ = VisualMedium;
 VisualMedium.__cache__ = {};
+VisualMedium.__type__ = _toy_VisualMedium__type();
 Module['VisualMedium'] = VisualMedium;
 VisualMedium.prototype["__destroy__"] = VisualMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1204,11 +1263,13 @@ VisualMedium.prototype["__destroy__"] = VisualMedium.prototype.__destroy__ = fun
 // WorldMedium
 function WorldMedium() {
     this.ptr = _toy_WorldMedium_WorldMedium_0(); getCache(WorldMedium)[this.ptr] = this;
+    this.type = WorldMedium;
 };
 WorldMedium.prototype = Object.create(WrapperObject.prototype);
 WorldMedium.prototype.constructor = WorldMedium;
 WorldMedium.prototype.__class__ = WorldMedium;
 WorldMedium.__cache__ = {};
+WorldMedium.__type__ = _toy_WorldMedium__type();
 Module['WorldMedium'] = WorldMedium;
 WorldMedium.prototype["__destroy__"] = WorldMedium.prototype.__destroy__ = function() {
     var self = this.ptr;

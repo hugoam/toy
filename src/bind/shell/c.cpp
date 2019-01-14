@@ -39,6 +39,9 @@
 extern "C" {
 	
 	// Game
+	mud::Type* DECL toy_Game__type() {
+		return mud::type<toy::Game>();
+	}
 	toy::User* DECL toy_Game__get_user(toy::Game* self) {
 		return self->m_user;
 	}
@@ -63,6 +66,9 @@ extern "C" {
 	void DECL toy_Game__set_module(toy::Game* self, toy::GameModule* value) {
 		self->m_module = value;
 	}
+	mud::Ref* DECL toy_Game__get_player(toy::Game* self) {
+		return &self->m_player;
+	}
 	toy::World* DECL toy_Game__get_world(toy::Game* self) {
 		return self->m_world;
 	}
@@ -79,6 +85,9 @@ extern "C" {
 		delete self;
 	}
 	// GameModule
+	mud::Type* DECL toy_GameModule__type() {
+		return mud::type<toy::GameModule>();
+	}
 	void DECL toy_GameModule_init_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
 		self->init(*shell, *game);
 	}
@@ -98,6 +107,9 @@ extern "C" {
 		delete self;
 	}
 	// GameShell
+	mud::Type* DECL toy_GameShell__type() {
+		return mud::type<toy::GameShell>();
+	}
 	toy::GameShell* DECL toy_GameShell_GameShell_1(const char* resource_path) {
 		return new toy::GameShell(resource_path);
 	}
@@ -201,6 +213,9 @@ extern "C" {
 		delete self;
 	}
 	// GameModuleBind
+	mud::Type* DECL toy_GameModuleBind__type() {
+		return mud::type<toy::GameModuleBind>();
+	}
 	toy::GameModuleBind* DECL toy_GameModuleBind_GameModuleBind_2(mud::Module* module, const mud::VirtualMethod call) {
 		return new toy::GameModuleBind(*module, call);
 	}
@@ -208,6 +223,9 @@ extern "C" {
 		delete self;
 	}
 	// GameScene
+	mud::Type* DECL toy_GameScene__type() {
+		return mud::type<toy::GameScene>();
+	}
 	void DECL toy_GameScene__destroy(toy::GameScene* self) {
 		delete self;
 	}

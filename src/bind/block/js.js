@@ -13,11 +13,13 @@ function Block(spatial, world_page, parentblock, index, size) {
     size = size.ptr;
     if (spatial === undefined) { this.ptr = _toy_Block_Block_0(); getCache(Block)[this.ptr] = this; return; }
     this.ptr = _toy_Block_Block_5(spatial, world_page, parentblock, index, size); getCache(Block)[this.ptr] = this;
+    this.type = Block;
 };
 Block.prototype = Object.create(WrapperObject.prototype);
 Block.prototype.constructor = Block;
 Block.prototype.__class__ = Block;
 Block.__cache__ = {};
+Block.__type__ = _toy_Block__type();
 Module['Block'] = Block;
 Block.prototype["chunk"] = Block.prototype.chunk = function(self, x, y, z, element) {
     var self = this.ptr;
@@ -112,11 +114,13 @@ function Chunk(spatial, block, index, element, size) {
     /* size <float> [] */
     if (spatial === undefined) { this.ptr = _toy_Chunk_Chunk_0(); getCache(Chunk)[this.ptr] = this; return; }
     this.ptr = _toy_Chunk_Chunk_5(spatial, block, index, element, size); getCache(Chunk)[this.ptr] = this;
+    this.type = Chunk;
 };
 Chunk.prototype = Object.create(WrapperObject.prototype);
 Chunk.prototype.constructor = Chunk;
 Chunk.prototype.__class__ = Chunk;
 Chunk.__cache__ = {};
+Chunk.__type__ = _toy_Chunk__type();
 Module['Chunk'] = Chunk;
 Object.defineProperty(Chunk.prototype, "index", {
     get: function() {
@@ -179,11 +183,13 @@ function Element(name, state, colour) {
     /* colour <Colour> [] */
     colour = colour.ptr;
     this.ptr = _toy_Element_Element_3(name, state, colour); getCache(Element)[this.ptr] = this;
+    this.type = Element;
 };
 Element.prototype = Object.create(WrapperObject.prototype);
 Element.prototype.constructor = Element;
 Element.prototype.__class__ = Element;
 Element.__cache__ = {};
+Element.__type__ = _toy_Element__type();
 Module['Element'] = Element;
 Object.defineProperty(Element.prototype, "id", {
     get: function() {
@@ -245,11 +251,13 @@ function Heap(spatial, element, radius) {
     /* radius <float> [] */
     if (spatial === undefined) { this.ptr = _toy_Heap_Heap_0(); getCache(Heap)[this.ptr] = this; return; }
     this.ptr = _toy_Heap_Heap_3(spatial, element, radius); getCache(Heap)[this.ptr] = this;
+    this.type = Heap;
 };
 Heap.prototype = Object.create(WrapperObject.prototype);
 Heap.prototype.constructor = Heap;
 Heap.prototype.__class__ = Heap;
 Heap.__cache__ = {};
+Heap.__type__ = _toy_Heap__type();
 Module['Heap'] = Heap;
 Object.defineProperty(Heap.prototype, "element", {
     get: function() {
@@ -289,11 +297,13 @@ function Sector(spatial, world_page, navblock, coordinate, size) {
     size = size.ptr;
     if (spatial === undefined) { this.ptr = _toy_Sector_Sector_0(); getCache(Sector)[this.ptr] = this; return; }
     this.ptr = _toy_Sector_Sector_5(spatial, world_page, navblock, coordinate, size); getCache(Sector)[this.ptr] = this;
+    this.type = Sector;
 };
 Sector.prototype = Object.create(WrapperObject.prototype);
 Sector.prototype.constructor = Sector;
 Sector.prototype.__class__ = Sector;
 Sector.__cache__ = {};
+Sector.__type__ = _toy_Sector__type();
 Module['Sector'] = Sector;
 Object.defineProperty(Sector.prototype, "coordinate", {
     get: function() {
@@ -348,11 +358,13 @@ function Tileblock(spatial, world_page, navblock, size, tile_scale, tileset) {
     tileset = tileset.ptr;
     if (spatial === undefined) { this.ptr = _toy_Tileblock_Tileblock_0(); getCache(Tileblock)[this.ptr] = this; return; }
     this.ptr = _toy_Tileblock_Tileblock_6(spatial, world_page, navblock, size, tile_scale, tileset); getCache(Tileblock)[this.ptr] = this;
+    this.type = Tileblock;
 };
 Tileblock.prototype = Object.create(WrapperObject.prototype);
 Tileblock.prototype.constructor = Tileblock;
 Tileblock.prototype.__class__ = Tileblock;
 Tileblock.__cache__ = {};
+Tileblock.__type__ = _toy_Tileblock__type();
 Module['Tileblock'] = Tileblock;
 Object.defineProperty(Tileblock.prototype, "wfc_block", {
     get: function() {
@@ -388,11 +400,13 @@ Tileblock.prototype["__destroy__"] = Tileblock.prototype.__destroy__ = function(
 // Earth
 function Earth() {
     this.ptr = _toy_Earth_Earth_0(); getCache(Earth)[this.ptr] = this;
+    this.type = Earth;
 };
 Earth.prototype = Object.create(WrapperObject.prototype);
 Earth.prototype.constructor = Earth;
 Earth.prototype.__class__ = Earth;
 Earth.__cache__ = {};
+Earth.__type__ = _toy_Earth__type();
 Module['Earth'] = Earth;
 Earth.prototype["__destroy__"] = Earth.prototype.__destroy__ = function() {
     var self = this.ptr;

@@ -7,11 +7,13 @@ Module['toy'] = Module['toy'] || {};
 // Combat
 function Combat() {
     this.ptr = _Combat_Combat_0(); getCache(Combat)[this.ptr] = this;
+    this.type = Combat;
 };
 Combat.prototype = Object.create(WrapperObject.prototype);
 Combat.prototype.constructor = Combat;
 Combat.prototype.__class__ = Combat;
 Combat.__cache__ = {};
+Combat.__type__ = _Combat__type();
 Module['Combat'] = Combat;
 Combat.prototype["__destroy__"] = Combat.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -20,11 +22,13 @@ Combat.prototype["__destroy__"] = Combat.prototype.__destroy__ = function() {
 // CombatFleet
 function CombatFleet() {
     this.ptr = _CombatFleet_CombatFleet_0(); getCache(CombatFleet)[this.ptr] = this;
+    this.type = CombatFleet;
 };
 CombatFleet.prototype = Object.create(WrapperObject.prototype);
 CombatFleet.prototype.constructor = CombatFleet;
 CombatFleet.prototype.__class__ = CombatFleet;
 CombatFleet.__cache__ = {};
+CombatFleet.__type__ = _CombatFleet__type();
 Module['CombatFleet'] = CombatFleet;
 CombatFleet.prototype["__destroy__"] = CombatFleet.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -33,11 +37,13 @@ CombatFleet.prototype["__destroy__"] = CombatFleet.prototype.__destroy__ = funct
 // CombatStar
 function CombatStar() {
     this.ptr = _CombatStar_CombatStar_0(); getCache(CombatStar)[this.ptr] = this;
+    this.type = CombatStar;
 };
 CombatStar.prototype = Object.create(WrapperObject.prototype);
 CombatStar.prototype.constructor = CombatStar;
 CombatStar.prototype.__class__ = CombatStar;
 CombatStar.__cache__ = {};
+CombatStar.__type__ = _CombatStar__type();
 Module['CombatStar'] = CombatStar;
 CombatStar.prototype["__destroy__"] = CombatStar.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -56,11 +62,13 @@ function Commander(id, name, race, command, commerce, diplomacy) {
     /* commerce <int> [] */
     /* diplomacy <int> [] */
     this.ptr = _Commander_Commander_6(id, name, race, command, commerce, diplomacy); getCache(Commander)[this.ptr] = this;
+    this.type = Commander;
 };
 Commander.prototype = Object.create(WrapperObject.prototype);
 Commander.prototype.constructor = Commander;
 Commander.prototype.__class__ = Commander;
 Commander.__cache__ = {};
+Commander.__type__ = _Commander__type();
 Module['Commander'] = Commander;
 Object.defineProperty(Commander.prototype, "id", {
     get: function() {
@@ -218,11 +226,13 @@ Commander.prototype["__destroy__"] = Commander.prototype.__destroy__ = function(
 // Construction
 function Construction() {
     this.ptr = _Construction_Construction_0(); getCache(Construction)[this.ptr] = this;
+    this.type = Construction;
 };
 Construction.prototype = Object.create(WrapperObject.prototype);
 Construction.prototype.constructor = Construction;
 Construction.prototype.__class__ = Construction;
 Construction.__cache__ = {};
+Construction.__type__ = _Construction__type();
 Module['Construction'] = Construction;
 Construction.prototype["__destroy__"] = Construction.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -243,11 +253,13 @@ function Fleet(spatial, galaxy, commander, coord, name) {
     else name = ensureString(name);
     if (spatial === undefined) { this.ptr = _Fleet_Fleet_0(); getCache(Fleet)[this.ptr] = this; return; }
     this.ptr = _Fleet_Fleet_5(spatial, galaxy, commander, coord, name); getCache(Fleet)[this.ptr] = this;
+    this.type = Fleet;
 };
 Fleet.prototype = Object.create(WrapperObject.prototype);
 Fleet.prototype.constructor = Fleet;
 Fleet.prototype.__class__ = Fleet;
 Fleet.__cache__ = {};
+Fleet.__type__ = _Fleet__type();
 Module['Fleet'] = Fleet;
 Fleet.prototype["order_attack"] = Fleet.prototype.order_attack = function(self, star) {
     var self = this.ptr;
@@ -460,11 +472,13 @@ function Galaxy(spatial, size) {
     size = size.ptr;
     if (spatial === undefined) { this.ptr = _Galaxy_Galaxy_0(); getCache(Galaxy)[this.ptr] = this; return; }
     this.ptr = _Galaxy_Galaxy_2(spatial, size); getCache(Galaxy)[this.ptr] = this;
+    this.type = Galaxy;
 };
 Galaxy.prototype = Object.create(WrapperObject.prototype);
 Galaxy.prototype.constructor = Galaxy;
 Galaxy.prototype.__class__ = Galaxy;
 Galaxy.__cache__ = {};
+Galaxy.__type__ = _Galaxy__type();
 Module['Galaxy'] = Galaxy;
 Object.defineProperty(Galaxy.prototype, "size", {
     get: function() {
@@ -485,11 +499,13 @@ Galaxy.prototype["__destroy__"] = Galaxy.prototype.__destroy__ = function() {
 // Jump
 function Jump() {
     this.ptr = _Jump_Jump_0(); getCache(Jump)[this.ptr] = this;
+    this.type = Jump;
 };
 Jump.prototype = Object.create(WrapperObject.prototype);
 Jump.prototype.constructor = Jump;
 Jump.prototype.__class__ = Jump;
 Jump.__cache__ = {};
+Jump.__type__ = _Jump__type();
 Module['Jump'] = Jump;
 Object.defineProperty(Jump.prototype, "fleet", {
     get: function() {
@@ -561,6 +577,7 @@ Player.prototype = Object.create(WrapperObject.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.__class__ = Player;
 Player.__cache__ = {};
+Player.__type__ = _Player__type();
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -569,11 +586,13 @@ Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
 // Scans
 function Scans() {
     this.ptr = _Scans_Scans_0(); getCache(Scans)[this.ptr] = this;
+    this.type = Scans;
 };
 Scans.prototype = Object.create(WrapperObject.prototype);
 Scans.prototype.constructor = Scans;
 Scans.prototype.__class__ = Scans;
 Scans.__cache__ = {};
+Scans.__type__ = _Scans__type();
 Module['Scans'] = Scans;
 Scans.prototype["__destroy__"] = Scans.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -582,11 +601,13 @@ Scans.prototype["__destroy__"] = Scans.prototype.__destroy__ = function() {
 // Schema
 function Schema() {
     this.ptr = _Schema_Schema_0(); getCache(Schema)[this.ptr] = this;
+    this.type = Schema;
 };
 Schema.prototype = Object.create(WrapperObject.prototype);
 Schema.prototype.constructor = Schema;
 Schema.prototype.__class__ = Schema;
 Schema.__cache__ = {};
+Schema.__type__ = _Schema__type();
 Module['Schema'] = Schema;
 Object.defineProperty(Schema.prototype, "code", {
     get: function() {
@@ -745,11 +766,13 @@ Schema.prototype["__destroy__"] = Schema.prototype.__destroy__ = function() {
 // SpatialPower
 function SpatialPower() {
     this.ptr = _SpatialPower_SpatialPower_0(); getCache(SpatialPower)[this.ptr] = this;
+    this.type = SpatialPower;
 };
 SpatialPower.prototype = Object.create(WrapperObject.prototype);
 SpatialPower.prototype.constructor = SpatialPower;
 SpatialPower.prototype.__class__ = SpatialPower;
 SpatialPower.__cache__ = {};
+SpatialPower.__type__ = _SpatialPower__type();
 Module['SpatialPower'] = SpatialPower;
 SpatialPower.prototype["__destroy__"] = SpatialPower.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -758,11 +781,13 @@ SpatialPower.prototype["__destroy__"] = SpatialPower.prototype.__destroy__ = fun
 // Split
 function Split() {
     this.ptr = _Split_Split_0(); getCache(Split)[this.ptr] = this;
+    this.type = Split;
 };
 Split.prototype = Object.create(WrapperObject.prototype);
 Split.prototype.constructor = Split;
 Split.prototype.__class__ = Split;
 Split.__cache__ = {};
+Split.__type__ = _Split__type();
 Module['Split'] = Split;
 Object.defineProperty(Split.prototype, "source", {
     get: function() {
@@ -830,11 +855,13 @@ function Star(spatial, galaxy, coord, name) {
     else name = ensureString(name);
     if (spatial === undefined) { this.ptr = _Star_Star_0(); getCache(Star)[this.ptr] = this; return; }
     this.ptr = _Star_Star_4(spatial, galaxy, coord, name); getCache(Star)[this.ptr] = this;
+    this.type = Star;
 };
 Star.prototype = Object.create(WrapperObject.prototype);
 Star.prototype.constructor = Star;
 Star.prototype.__class__ = Star;
 Star.__cache__ = {};
+Star.__type__ = _Star__type();
 Module['Star'] = Star;
 Object.defineProperty(Star.prototype, "galaxy", {
     get: function() {
@@ -1037,11 +1064,13 @@ Star.prototype["__destroy__"] = Star.prototype.__destroy__ = function() {
 // TechDomain
 function TechDomain() {
     this.ptr = _TechDomain_TechDomain_0(); getCache(TechDomain)[this.ptr] = this;
+    this.type = TechDomain;
 };
 TechDomain.prototype = Object.create(WrapperObject.prototype);
 TechDomain.prototype.constructor = TechDomain;
 TechDomain.prototype.__class__ = TechDomain;
 TechDomain.__cache__ = {};
+TechDomain.__type__ = _TechDomain__type();
 Module['TechDomain'] = TechDomain;
 TechDomain.prototype["__destroy__"] = TechDomain.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1050,11 +1079,13 @@ TechDomain.prototype["__destroy__"] = TechDomain.prototype.__destroy__ = functio
 // Turn
 function Turn() {
     this.ptr = _Turn_Turn_0(); getCache(Turn)[this.ptr] = this;
+    this.type = Turn;
 };
 Turn.prototype = Object.create(WrapperObject.prototype);
 Turn.prototype.constructor = Turn;
 Turn.prototype.__class__ = Turn;
 Turn.__cache__ = {};
+Turn.__type__ = _Turn__type();
 Module['Turn'] = Turn;
 Turn.prototype["__destroy__"] = Turn.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1063,11 +1094,13 @@ Turn.prototype["__destroy__"] = Turn.prototype.__destroy__ = function() {
 // BuildingSchema
 function BuildingSchema() {
     this.ptr = _BuildingSchema_BuildingSchema_0(); getCache(BuildingSchema)[this.ptr] = this;
+    this.type = BuildingSchema;
 };
 BuildingSchema.prototype = Object.create(WrapperObject.prototype);
 BuildingSchema.prototype.constructor = BuildingSchema;
 BuildingSchema.prototype.__class__ = BuildingSchema;
 BuildingSchema.__cache__ = {};
+BuildingSchema.__type__ = _BuildingSchema__type();
 Module['BuildingSchema'] = BuildingSchema;
 BuildingSchema.prototype["__destroy__"] = BuildingSchema.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1079,6 +1112,7 @@ CommanderBrush.prototype = Object.create(WrapperObject.prototype);
 CommanderBrush.prototype.constructor = CommanderBrush;
 CommanderBrush.prototype.__class__ = CommanderBrush;
 CommanderBrush.__cache__ = {};
+CommanderBrush.__type__ = _CommanderBrush__type();
 Module['CommanderBrush'] = CommanderBrush;
 Object.defineProperty(CommanderBrush.prototype, "commander", {
     get: function() {
@@ -1110,11 +1144,13 @@ CommanderBrush.prototype["__destroy__"] = CommanderBrush.prototype.__destroy__ =
 // PlanetaryCombat
 function PlanetaryCombat() {
     this.ptr = _PlanetaryCombat_PlanetaryCombat_0(); getCache(PlanetaryCombat)[this.ptr] = this;
+    this.type = PlanetaryCombat;
 };
 PlanetaryCombat.prototype = Object.create(WrapperObject.prototype);
 PlanetaryCombat.prototype.constructor = PlanetaryCombat;
 PlanetaryCombat.prototype.__class__ = PlanetaryCombat;
 PlanetaryCombat.__cache__ = {};
+PlanetaryCombat.__type__ = _PlanetaryCombat__type();
 Module['PlanetaryCombat'] = PlanetaryCombat;
 Object.defineProperty(PlanetaryCombat.prototype, "coord", {
     get: function() {
@@ -1147,11 +1183,13 @@ PlanetaryCombat.prototype["__destroy__"] = PlanetaryCombat.prototype.__destroy__
 // ShipComponent
 function ShipComponent() {
     this.ptr = _ShipComponent_ShipComponent_0(); getCache(ShipComponent)[this.ptr] = this;
+    this.type = ShipComponent;
 };
 ShipComponent.prototype = Object.create(WrapperObject.prototype);
 ShipComponent.prototype.constructor = ShipComponent;
 ShipComponent.prototype.__class__ = ShipComponent;
 ShipComponent.__cache__ = {};
+ShipComponent.__type__ = _ShipComponent__type();
 Module['ShipComponent'] = ShipComponent;
 ShipComponent.prototype["__destroy__"] = ShipComponent.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1160,11 +1198,13 @@ ShipComponent.prototype["__destroy__"] = ShipComponent.prototype.__destroy__ = f
 // ShipEngine
 function ShipEngine() {
     this.ptr = _ShipEngine_ShipEngine_0(); getCache(ShipEngine)[this.ptr] = this;
+    this.type = ShipEngine;
 };
 ShipEngine.prototype = Object.create(WrapperObject.prototype);
 ShipEngine.prototype.constructor = ShipEngine;
 ShipEngine.prototype.__class__ = ShipEngine;
 ShipEngine.__cache__ = {};
+ShipEngine.__type__ = _ShipEngine__type();
 Module['ShipEngine'] = ShipEngine;
 ShipEngine.prototype["__destroy__"] = ShipEngine.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1173,11 +1213,13 @@ ShipEngine.prototype["__destroy__"] = ShipEngine.prototype.__destroy__ = functio
 // ShipHull
 function ShipHull() {
     this.ptr = _ShipHull_ShipHull_0(); getCache(ShipHull)[this.ptr] = this;
+    this.type = ShipHull;
 };
 ShipHull.prototype = Object.create(WrapperObject.prototype);
 ShipHull.prototype.constructor = ShipHull;
 ShipHull.prototype.__class__ = ShipHull;
 ShipHull.__cache__ = {};
+ShipHull.__type__ = _ShipHull__type();
 Module['ShipHull'] = ShipHull;
 ShipHull.prototype["__destroy__"] = ShipHull.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1186,11 +1228,13 @@ ShipHull.prototype["__destroy__"] = ShipHull.prototype.__destroy__ = function() 
 // ShipSchema
 function ShipSchema() {
     this.ptr = _ShipSchema_ShipSchema_0(); getCache(ShipSchema)[this.ptr] = this;
+    this.type = ShipSchema;
 };
 ShipSchema.prototype = Object.create(WrapperObject.prototype);
 ShipSchema.prototype.constructor = ShipSchema;
 ShipSchema.prototype.__class__ = ShipSchema;
 ShipSchema.__cache__ = {};
+ShipSchema.__type__ = _ShipSchema__type();
 Module['ShipSchema'] = ShipSchema;
 Object.defineProperty(ShipSchema.prototype, "size", {
     get: function() {
@@ -1233,11 +1277,13 @@ ShipSchema.prototype["__destroy__"] = ShipSchema.prototype.__destroy__ = functio
 // SpatialCombat
 function SpatialCombat() {
     this.ptr = _SpatialCombat_SpatialCombat_0(); getCache(SpatialCombat)[this.ptr] = this;
+    this.type = SpatialCombat;
 };
 SpatialCombat.prototype = Object.create(WrapperObject.prototype);
 SpatialCombat.prototype.constructor = SpatialCombat;
 SpatialCombat.prototype.__class__ = SpatialCombat;
 SpatialCombat.__cache__ = {};
+SpatialCombat.__type__ = _SpatialCombat__type();
 Module['SpatialCombat'] = SpatialCombat;
 Object.defineProperty(SpatialCombat.prototype, "coord", {
     get: function() {
@@ -1264,11 +1310,13 @@ function Universe(name, job_system) {
     /* job_system <JobSystem> [] */
     job_system = job_system.ptr;
     this.ptr = _Universe_Universe_2(name, job_system); getCache(Universe)[this.ptr] = this;
+    this.type = Universe;
 };
 Universe.prototype = Object.create(WrapperObject.prototype);
 Universe.prototype.constructor = Universe;
 Universe.prototype.__class__ = Universe;
 Universe.__cache__ = {};
+Universe.__type__ = _Universe__type();
 Module['Universe'] = Universe;
 Object.defineProperty(Universe.prototype, "world", {
     get: function() {

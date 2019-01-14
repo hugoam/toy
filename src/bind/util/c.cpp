@@ -13,10 +13,16 @@
 extern "C" {
 	
 	// Procedure
+	mud::Type* DECL toy_Procedure__type() {
+		return mud::type<toy::Procedure>();
+	}
 	void DECL toy_Procedure__destroy(toy::Procedure* self) {
 		delete self;
 	}
 	// ProcedureType
+	mud::Type* DECL toy_ProcedureType__type() {
+		return mud::type<toy::ProcedureType>();
+	}
 	mud::Type* DECL toy_ProcedureType__get_type(toy::ProcedureType* self) {
 		return &self->m_type;
 	}

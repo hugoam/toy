@@ -45,6 +45,9 @@
 extern "C" {
 	
 	// Combat
+	mud::Type* DECL Combat__type() {
+		return mud::type<Combat>();
+	}
 	Combat* DECL Combat_Combat_0() {
 		return new Combat();
 	}
@@ -52,6 +55,9 @@ extern "C" {
 		delete self;
 	}
 	// CombatFleet
+	mud::Type* DECL CombatFleet__type() {
+		return mud::type<CombatFleet>();
+	}
 	CombatFleet* DECL CombatFleet_CombatFleet_0() {
 		return new CombatFleet();
 	}
@@ -59,6 +65,9 @@ extern "C" {
 		delete self;
 	}
 	// CombatStar
+	mud::Type* DECL CombatStar__type() {
+		return mud::type<CombatStar>();
+	}
 	CombatStar* DECL CombatStar_CombatStar_0() {
 		return new CombatStar();
 	}
@@ -66,6 +75,9 @@ extern "C" {
 		delete self;
 	}
 	// Commander
+	mud::Type* DECL Commander__type() {
+		return mud::type<Commander>();
+	}
 	Commander* DECL Commander_Commander_6(mud::Id id, const char* name, Race race, int command, int commerce, int diplomacy) {
 		return new Commander(id, name, race, command, commerce, diplomacy);
 	}
@@ -152,6 +164,9 @@ extern "C" {
 		delete self;
 	}
 	// Construction
+	mud::Type* DECL Construction__type() {
+		return mud::type<Construction>();
+	}
 	Construction* DECL Construction_Construction_0() {
 		return new Construction();
 	}
@@ -159,6 +174,9 @@ extern "C" {
 		delete self;
 	}
 	// Fleet
+	mud::Type* DECL Fleet__type() {
+		return mud::type<Fleet>();
+	}
 	Fleet* DECL Fleet_Fleet_0() {
 		return new Fleet();
 	}
@@ -276,6 +294,9 @@ extern "C" {
 		delete self;
 	}
 	// Galaxy
+	mud::Type* DECL Galaxy__type() {
+		return mud::type<Galaxy>();
+	}
 	Galaxy* DECL Galaxy_Galaxy_0() {
 		return new Galaxy();
 	}
@@ -293,6 +314,9 @@ extern "C" {
 		delete self;
 	}
 	// Jump
+	mud::Type* DECL Jump__type() {
+		return mud::type<Jump>();
+	}
 	Jump* DECL Jump_Jump_0() {
 		return new Jump();
 	}
@@ -332,10 +356,16 @@ extern "C" {
 		delete self;
 	}
 	// Player
+	mud::Type* DECL Player__type() {
+		return mud::type<Player>();
+	}
 	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Scans
+	mud::Type* DECL Scans__type() {
+		return mud::type<Scans>();
+	}
 	Scans* DECL Scans_Scans_0() {
 		return new Scans();
 	}
@@ -343,6 +373,9 @@ extern "C" {
 		delete self;
 	}
 	// Schema
+	mud::Type* DECL Schema__type() {
+		return mud::type<Schema>();
+	}
 	Schema* DECL Schema_Schema_0() {
 		return new Schema();
 	}
@@ -429,6 +462,9 @@ extern "C" {
 		delete self;
 	}
 	// SpatialPower
+	mud::Type* DECL SpatialPower__type() {
+		return mud::type<SpatialPower>();
+	}
 	SpatialPower* DECL SpatialPower_SpatialPower_0() {
 		return new SpatialPower();
 	}
@@ -436,6 +472,9 @@ extern "C" {
 		delete self;
 	}
 	// Split
+	mud::Type* DECL Split__type() {
+		return mud::type<Split>();
+	}
 	Split* DECL Split_Split_0() {
 		return new Split();
 	}
@@ -467,6 +506,9 @@ extern "C" {
 		delete self;
 	}
 	// Star
+	mud::Type* DECL Star__type() {
+		return mud::type<Star>();
+	}
 	Star* DECL Star_Star_0() {
 		return new Star();
 	}
@@ -580,6 +622,9 @@ extern "C" {
 		delete self;
 	}
 	// TechDomain
+	mud::Type* DECL TechDomain__type() {
+		return mud::type<TechDomain>();
+	}
 	TechDomain* DECL TechDomain_TechDomain_0() {
 		return new TechDomain();
 	}
@@ -587,6 +632,9 @@ extern "C" {
 		delete self;
 	}
 	// Turn
+	mud::Type* DECL Turn__type() {
+		return mud::type<Turn>();
+	}
 	Turn* DECL Turn_Turn_0() {
 		return new Turn();
 	}
@@ -594,6 +642,9 @@ extern "C" {
 		delete self;
 	}
 	// BuildingSchema
+	mud::Type* DECL BuildingSchema__type() {
+		return mud::type<BuildingSchema>();
+	}
 	BuildingSchema* DECL BuildingSchema_BuildingSchema_0() {
 		return new BuildingSchema();
 	}
@@ -601,6 +652,9 @@ extern "C" {
 		delete self;
 	}
 	// CommanderBrush
+	mud::Type* DECL CommanderBrush__type() {
+		return mud::type<CommanderBrush>();
+	}
 	Commander* DECL CommanderBrush__get_commander(CommanderBrush* self) {
 		return self->m_commander;
 	}
@@ -617,6 +671,9 @@ extern "C" {
 		delete self;
 	}
 	// PlanetaryCombat
+	mud::Type* DECL PlanetaryCombat__type() {
+		return mud::type<PlanetaryCombat>();
+	}
 	PlanetaryCombat* DECL PlanetaryCombat_PlanetaryCombat_0() {
 		return new PlanetaryCombat();
 	}
@@ -638,6 +695,9 @@ extern "C" {
 		delete self;
 	}
 	// ShipComponent
+	mud::Type* DECL ShipComponent__type() {
+		return mud::type<ShipComponent>();
+	}
 	ShipComponent* DECL ShipComponent_ShipComponent_0() {
 		return new ShipComponent();
 	}
@@ -645,6 +705,9 @@ extern "C" {
 		delete self;
 	}
 	// ShipEngine
+	mud::Type* DECL ShipEngine__type() {
+		return mud::type<ShipEngine>();
+	}
 	ShipEngine* DECL ShipEngine_ShipEngine_0() {
 		return new ShipEngine();
 	}
@@ -652,6 +715,9 @@ extern "C" {
 		delete self;
 	}
 	// ShipHull
+	mud::Type* DECL ShipHull__type() {
+		return mud::type<ShipHull>();
+	}
 	ShipHull* DECL ShipHull_ShipHull_0() {
 		return new ShipHull();
 	}
@@ -659,6 +725,9 @@ extern "C" {
 		delete self;
 	}
 	// ShipSchema
+	mud::Type* DECL ShipSchema__type() {
+		return mud::type<ShipSchema>();
+	}
 	ShipSchema* DECL ShipSchema_ShipSchema_0() {
 		return new ShipSchema();
 	}
@@ -684,6 +753,9 @@ extern "C" {
 		delete self;
 	}
 	// SpatialCombat
+	mud::Type* DECL SpatialCombat__type() {
+		return mud::type<SpatialCombat>();
+	}
 	SpatialCombat* DECL SpatialCombat_SpatialCombat_0() {
 		return new SpatialCombat();
 	}
@@ -698,6 +770,9 @@ extern "C" {
 		delete self;
 	}
 	// Universe
+	mud::Type* DECL Universe__type() {
+		return mud::type<Universe>();
+	}
 	Universe* DECL Universe_Universe_2(const char* name, mud::JobSystem* job_system) {
 		return new Universe(name, *job_system);
 	}

@@ -45,6 +45,9 @@
 extern "C" {
 	
 	// Boid
+	mud::Type* DECL boids_Boid__type() {
+		return mud::type<boids::Boid>();
+	}
 	boids::Boid* DECL boids_Boid_Boid_0() {
 		return new boids::Boid();
 	}
@@ -52,6 +55,9 @@ extern "C" {
 		delete self;
 	}
 	// BoidObstacle
+	mud::Type* DECL boids_BoidObstacle__type() {
+		return mud::type<boids::BoidObstacle>();
+	}
 	boids::BoidObstacle* DECL boids_BoidObstacle_BoidObstacle_0() {
 		return new boids::BoidObstacle();
 	}
@@ -59,6 +65,9 @@ extern "C" {
 		delete self;
 	}
 	// BoidTarget
+	mud::Type* DECL boids_BoidTarget__type() {
+		return mud::type<boids::BoidTarget>();
+	}
 	boids::BoidTarget* DECL boids_BoidTarget_BoidTarget_0() {
 		return new boids::BoidTarget();
 	}
@@ -66,6 +75,9 @@ extern "C" {
 		delete self;
 	}
 	// Heading
+	mud::Type* DECL boids_Heading__type() {
+		return mud::type<boids::Heading>();
+	}
 	boids::Heading* DECL boids_Heading_Heading_0() {
 		return new boids::Heading();
 	}
@@ -73,6 +85,9 @@ extern "C" {
 		delete self;
 	}
 	// MoveForward
+	mud::Type* DECL boids_MoveForward__type() {
+		return mud::type<boids::MoveForward>();
+	}
 	boids::MoveForward* DECL boids_MoveForward_MoveForward_0() {
 		return new boids::MoveForward();
 	}
@@ -80,6 +95,9 @@ extern "C" {
 		delete self;
 	}
 	// MoveSpeed
+	mud::Type* DECL boids_MoveSpeed__type() {
+		return mud::type<boids::MoveSpeed>();
+	}
 	boids::MoveSpeed* DECL boids_MoveSpeed_MoveSpeed_0() {
 		return new boids::MoveSpeed();
 	}
@@ -87,10 +105,16 @@ extern "C" {
 		delete self;
 	}
 	// Player
+	mud::Type* DECL boids_Player__type() {
+		return mud::type<boids::Player>();
+	}
 	void DECL boids_Player__destroy(boids::Player* self) {
 		delete self;
 	}
 	// Position
+	mud::Type* DECL boids_Position__type() {
+		return mud::type<boids::Position>();
+	}
 	boids::Position* DECL boids_Position_Position_0() {
 		return new boids::Position();
 	}
@@ -98,6 +122,9 @@ extern "C" {
 		delete self;
 	}
 	// Rotation
+	mud::Type* DECL boids_Rotation__type() {
+		return mud::type<boids::Rotation>();
+	}
 	boids::Rotation* DECL boids_Rotation_Rotation_0() {
 		return new boids::Rotation();
 	}
@@ -105,6 +132,9 @@ extern "C" {
 		delete self;
 	}
 	// Transform4
+	mud::Type* DECL boids_Transform4__type() {
+		return mud::type<boids::Transform4>();
+	}
 	boids::Transform4* DECL boids_Transform4_Transform4_0() {
 		return new boids::Transform4();
 	}

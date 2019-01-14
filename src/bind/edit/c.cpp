@@ -17,6 +17,9 @@
 extern "C" {
 	
 	// ActionGroup
+	mud::Type* DECL toy_ActionGroup__type() {
+		return mud::type<toy::ActionGroup>();
+	}
 	toy::ActionGroup* DECL toy_ActionGroup_ActionGroup_0() {
 		return new toy::ActionGroup();
 	}
@@ -24,18 +27,30 @@ extern "C" {
 		delete self;
 	}
 	// Clone
+	mud::Type* DECL toy_Clone__type() {
+		return mud::type<toy::Clone>();
+	}
 	void DECL toy_Clone__destroy(toy::Clone* self) {
 		delete self;
 	}
 	// Cut
+	mud::Type* DECL toy_Cut__type() {
+		return mud::type<toy::Cut>();
+	}
 	void DECL toy_Cut__destroy(toy::Cut* self) {
 		delete self;
 	}
 	// Edit
+	mud::Type* DECL toy_Edit__type() {
+		return mud::type<toy::Edit>();
+	}
 	void DECL toy_Edit__destroy(toy::Edit* self) {
 		delete self;
 	}
 	// GraphicsDebug
+	mud::Type* DECL toy_GraphicsDebug__type() {
+		return mud::type<toy::GraphicsDebug>();
+	}
 	toy::GraphicsDebug* DECL toy_GraphicsDebug_GraphicsDebug_0() {
 		return new toy::GraphicsDebug();
 	}
@@ -43,22 +58,37 @@ extern "C" {
 		delete self;
 	}
 	// Paste
+	mud::Type* DECL toy_Paste__type() {
+		return mud::type<toy::Paste>();
+	}
 	void DECL toy_Paste__destroy(toy::Paste* self) {
 		delete self;
 	}
 	// Toolbelt
+	mud::Type* DECL toy_Toolbelt__type() {
+		return mud::type<toy::Toolbelt>();
+	}
 	void DECL toy_Toolbelt__destroy(toy::Toolbelt* self) {
 		delete self;
 	}
 	// Toolbox
+	mud::Type* DECL toy_Toolbox__type() {
+		return mud::type<toy::Toolbox>();
+	}
 	void DECL toy_Toolbox__destroy(toy::Toolbox* self) {
 		delete self;
 	}
 	// DynamicToolbox
+	mud::Type* DECL toy_DynamicToolbox__type() {
+		return mud::type<toy::DynamicToolbox>();
+	}
 	void DECL toy_DynamicToolbox__destroy(toy::DynamicToolbox* self) {
 		delete self;
 	}
 	// Editor
+	mud::Type* DECL toy_Editor__type() {
+		return mud::type<toy::Editor>();
+	}
 	toy::RunTool* DECL toy_Editor__get_run_tool(toy::Editor* self) {
 		return &self->m_run_tool;
 	}
@@ -90,10 +120,16 @@ extern "C" {
 		delete self;
 	}
 	// PlayTool
+	mud::Type* DECL toy_PlayTool__type() {
+		return mud::type<toy::PlayTool>();
+	}
 	void DECL toy_PlayTool__destroy(toy::PlayTool* self) {
 		delete self;
 	}
 	// RunTool
+	mud::Type* DECL toy_RunTool__type() {
+		return mud::type<toy::RunTool>();
+	}
 	void DECL toy_RunTool__destroy(toy::RunTool* self) {
 		delete self;
 	}
