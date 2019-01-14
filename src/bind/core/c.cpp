@@ -19,21 +19,21 @@ extern "C" {
 	
 	// BulletMedium
 	mud::Type* DECL toy_BulletMedium__type() {
-		return mud::type<toy::BulletMedium>();
+		return &mud::type<toy::BulletMedium>();
 	}
 	void DECL toy_BulletMedium__destroy(toy::BulletMedium* self) {
 		delete self;
 	}
 	// BulletShape
 	mud::Type* DECL toy_BulletShape__type() {
-		return mud::type<toy::BulletShape>();
+		return &mud::type<toy::BulletShape>();
 	}
 	void DECL toy_BulletShape__destroy(toy::BulletShape* self) {
 		delete self;
 	}
 	// Camera
 	mud::Type* DECL toy_Camera__type() {
-		return mud::type<toy::Camera>();
+		return &mud::type<toy::Camera>();
 	}
 	toy::Camera* DECL toy_Camera_Camera_0() {
 		return new toy::Camera();
@@ -85,7 +85,7 @@ extern "C" {
 	}
 	// Collider
 	mud::Type* DECL toy_Collider__type() {
-		return mud::type<toy::Collider>();
+		return &mud::type<toy::Collider>();
 	}
 	toy::Collider* DECL toy_Collider_Collider_0() {
 		return new toy::Collider();
@@ -134,21 +134,21 @@ extern "C" {
 	}
 	// ColliderImpl
 	mud::Type* DECL toy_ColliderImpl__type() {
-		return mud::type<toy::ColliderImpl>();
+		return &mud::type<toy::ColliderImpl>();
 	}
 	void DECL toy_ColliderImpl__destroy(toy::ColliderImpl* self) {
 		delete self;
 	}
 	// ColliderObject
 	mud::Type* DECL toy_ColliderObject__type() {
-		return mud::type<toy::ColliderObject>();
+		return &mud::type<toy::ColliderObject>();
 	}
 	void DECL toy_ColliderObject__destroy(toy::ColliderObject* self) {
 		delete self;
 	}
 	// Collision
 	mud::Type* DECL toy_Collision__type() {
-		return mud::type<toy::Collision>();
+		return &mud::type<toy::Collision>();
 	}
 	toy::Collision* DECL toy_Collision_Collision_0() {
 		return new toy::Collision();
@@ -177,7 +177,7 @@ extern "C" {
 	}
 	// CollisionShape
 	mud::Type* DECL toy_CollisionShape__type() {
-		return mud::type<toy::CollisionShape>();
+		return &mud::type<toy::CollisionShape>();
 	}
 	toy::CollisionShape* DECL toy_CollisionShape_CollisionShape_0() {
 		return new toy::CollisionShape();
@@ -196,28 +196,28 @@ extern "C" {
 	}
 	// ComponentPool
 	mud::Type* DECL toy_ComponentPool__type() {
-		return mud::type<toy::ComponentPool>();
+		return &mud::type<toy::ComponentPool>();
 	}
 	void DECL toy_ComponentPool__destroy(toy::ComponentPool* self) {
 		delete self;
 	}
 	// Core
 	mud::Type* DECL toy_Core__type() {
-		return mud::type<toy::Core>();
+		return &mud::type<toy::Core>();
 	}
 	void DECL toy_Core__destroy(toy::Core* self) {
 		delete self;
 	}
 	// DetourPath
 	mud::Type* DECL toy_DetourPath__type() {
-		return mud::type<toy::DetourPath>();
+		return &mud::type<toy::DetourPath>();
 	}
 	void DECL toy_DetourPath__destroy(toy::DetourPath* self) {
 		delete self;
 	}
 	// Emitter
 	mud::Type* DECL toy_Emitter__type() {
-		return mud::type<toy::Emitter>();
+		return &mud::type<toy::Emitter>();
 	}
 	toy::Emitter* DECL toy_Emitter_Emitter_0() {
 		return new toy::Emitter();
@@ -230,7 +230,7 @@ extern "C" {
 	}
 	// EntityScript
 	mud::Type* DECL toy_EntityScript__type() {
-		return mud::type<toy::EntityScript>();
+		return &mud::type<toy::EntityScript>();
 	}
 	toy::EntityScript* DECL toy_EntityScript_EntityScript_0() {
 		return new toy::EntityScript();
@@ -255,7 +255,7 @@ extern "C" {
 	}
 	// Medium
 	mud::Type* DECL toy_Medium__type() {
-		return mud::type<toy::Medium>();
+		return &mud::type<toy::Medium>();
 	}
 	const char* DECL toy_Medium__get_name(toy::Medium* self) {
 		return self->m_name.c_str();
@@ -280,7 +280,7 @@ extern "C" {
 	}
 	// Movable
 	mud::Type* DECL toy_Movable__type() {
-		return mud::type<toy::Movable>();
+		return &mud::type<toy::Movable>();
 	}
 	toy::Movable* DECL toy_Movable_Movable_0() {
 		return new toy::Movable();
@@ -332,7 +332,7 @@ extern "C" {
 	}
 	// Navblock
 	mud::Type* DECL toy_Navblock__type() {
-		return mud::type<toy::Navblock>();
+		return &mud::type<toy::Navblock>();
 	}
 	toy::Navblock* DECL toy_Navblock_Navblock_0() {
 		return new toy::Navblock();
@@ -363,7 +363,7 @@ extern "C" {
 	}
 	// Navmesh
 	mud::Type* DECL toy_Navmesh__type() {
-		return mud::type<toy::Navmesh>();
+		return &mud::type<toy::Navmesh>();
 	}
 	toy::Navmesh* DECL toy_Navmesh_Navmesh_1(toy::World* world) {
 		return new toy::Navmesh(*world);
@@ -388,7 +388,7 @@ extern "C" {
 	}
 	// Origin
 	mud::Type* DECL toy_Origin__type() {
-		return mud::type<toy::Origin>();
+		return &mud::type<toy::Origin>();
 	}
 	toy::Origin* DECL toy_Origin_Origin_0() {
 		return new toy::Origin();
@@ -401,7 +401,7 @@ extern "C" {
 	}
 	// Pathfinder
 	mud::Type* DECL toy_Pathfinder__type() {
-		return mud::type<toy::Pathfinder>();
+		return &mud::type<toy::Pathfinder>();
 	}
 	toy::Pathfinder* DECL toy_Pathfinder_Pathfinder_1(toy::Navmesh* navmesh) {
 		return new toy::Pathfinder(*navmesh);
@@ -411,7 +411,7 @@ extern "C" {
 	}
 	// PhysicWorld
 	mud::Type* DECL toy_PhysicWorld__type() {
-		return mud::type<toy::PhysicWorld>();
+		return &mud::type<toy::PhysicWorld>();
 	}
 	mud::vec3* DECL toy_PhysicWorld_ground_point_1(toy::PhysicWorld* self, const mud::Ray* ray) {
 		static mud::vec3 temp;
@@ -429,7 +429,7 @@ extern "C" {
 	}
 	// Receptor
 	mud::Type* DECL toy_Receptor__type() {
-		return mud::type<toy::Receptor>();
+		return &mud::type<toy::Receptor>();
 	}
 	toy::Receptor* DECL toy_Receptor_Receptor_0() {
 		return new toy::Receptor();
@@ -445,7 +445,7 @@ extern "C" {
 	}
 	// Solid
 	mud::Type* DECL toy_Solid__type() {
-		return mud::type<toy::Solid>();
+		return &mud::type<toy::Solid>();
 	}
 	toy::HSpatial DECL toy_Solid__get_spatial(toy::Solid* self) {
 		return self->m_spatial;
@@ -470,7 +470,7 @@ extern "C" {
 	}
 	// SolidImpl
 	mud::Type* DECL toy_SolidImpl__type() {
-		return mud::type<toy::SolidImpl>();
+		return &mud::type<toy::SolidImpl>();
 	}
 	mud::vec3* DECL toy_SolidImpl_angular_velocity_0(toy::SolidImpl* self) {
 		static mud::vec3 temp;
@@ -497,14 +497,14 @@ extern "C" {
 	}
 	// User
 	mud::Type* DECL toy_User__type() {
-		return mud::type<toy::User>();
+		return &mud::type<toy::User>();
 	}
 	void DECL toy_User__destroy(toy::User* self) {
 		delete self;
 	}
 	// Waypoint
 	mud::Type* DECL toy_Waypoint__type() {
-		return mud::type<toy::Waypoint>();
+		return &mud::type<toy::Waypoint>();
 	}
 	toy::Waypoint* DECL toy_Waypoint_Waypoint_0() {
 		return new toy::Waypoint();
@@ -517,7 +517,7 @@ extern "C" {
 	}
 	// World
 	mud::Type* DECL toy_World__type() {
-		return mud::type<toy::World>();
+		return &mud::type<toy::World>();
 	}
 	toy::World* DECL toy_World_World_4(mud::Id id, mud::Complex* complex, const char* name, mud::JobSystem* job_system) {
 		return new toy::World(id, *complex, name, *job_system);
@@ -545,14 +545,14 @@ extern "C" {
 	}
 	// WorldClock
 	mud::Type* DECL toy_WorldClock__type() {
-		return mud::type<toy::WorldClock>();
+		return &mud::type<toy::WorldClock>();
 	}
 	void DECL toy_WorldClock__destroy(toy::WorldClock* self) {
 		delete self;
 	}
 	// WorldPage
 	mud::Type* DECL toy_WorldPage__type() {
-		return mud::type<toy::WorldPage>();
+		return &mud::type<toy::WorldPage>();
 	}
 	toy::WorldPage* DECL toy_WorldPage_WorldPage_0() {
 		return new toy::WorldPage();
@@ -602,21 +602,21 @@ extern "C" {
 	}
 	// BulletCollider
 	mud::Type* DECL toy_BulletCollider__type() {
-		return mud::type<toy::BulletCollider>();
+		return &mud::type<toy::BulletCollider>();
 	}
 	void DECL toy_BulletCollider__destroy(toy::BulletCollider* self) {
 		delete self;
 	}
 	// BulletSolid
 	mud::Type* DECL toy_BulletSolid__type() {
-		return mud::type<toy::BulletSolid>();
+		return &mud::type<toy::BulletSolid>();
 	}
 	void DECL toy_BulletSolid__destroy(toy::BulletSolid* self) {
 		delete self;
 	}
 	// BulletWorld
 	mud::Type* DECL toy_BulletWorld__type() {
-		return mud::type<toy::BulletWorld>();
+		return &mud::type<toy::BulletWorld>();
 	}
 	toy::BulletWorld* DECL toy_BulletWorld_BulletWorld_1(toy::World* world) {
 		return new toy::BulletWorld(*world);
@@ -626,7 +626,7 @@ extern "C" {
 	}
 	// DefaultWorld
 	mud::Type* DECL toy_DefaultWorld__type() {
-		return mud::type<toy::DefaultWorld>();
+		return &mud::type<toy::DefaultWorld>();
 	}
 	toy::DefaultWorld* DECL toy_DefaultWorld_DefaultWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new toy::DefaultWorld(name, *job_system);
@@ -645,21 +645,21 @@ extern "C" {
 	}
 	// PhysicScope
 	mud::Type* DECL toy_PhysicScope__type() {
-		return mud::type<toy::PhysicScope>();
+		return &mud::type<toy::PhysicScope>();
 	}
 	void DECL toy_PhysicScope__destroy(toy::PhysicScope* self) {
 		delete self;
 	}
 	// EmitterScope
 	mud::Type* DECL toy_EmitterScope__type() {
-		return mud::type<toy::EmitterScope>();
+		return &mud::type<toy::EmitterScope>();
 	}
 	void DECL toy_EmitterScope__destroy(toy::EmitterScope* self) {
 		delete self;
 	}
 	// NavmeshShape
 	mud::Type* DECL toy_NavmeshShape__type() {
-		return mud::type<toy::NavmeshShape>();
+		return &mud::type<toy::NavmeshShape>();
 	}
 	toy::NavmeshShape* DECL toy_NavmeshShape_NavmeshShape_1(toy::Navmesh* navmesh) {
 		return new toy::NavmeshShape(*navmesh);
@@ -669,7 +669,7 @@ extern "C" {
 	}
 	// Obstacle
 	mud::Type* DECL toy_Obstacle__type() {
-		return mud::type<toy::Obstacle>();
+		return &mud::type<toy::Obstacle>();
 	}
 	toy::Obstacle* DECL toy_Obstacle_Obstacle_5(toy::HSpatial spatial, toy::HMovable movable, toy::Medium* medium, const toy::CollisionShape* shape, float throughput) {
 		return new toy::Obstacle(spatial, movable, *medium, *shape, throughput);
@@ -688,14 +688,14 @@ extern "C" {
 	}
 	// ReceptorScope
 	mud::Type* DECL toy_ReceptorScope__type() {
-		return mud::type<toy::ReceptorScope>();
+		return &mud::type<toy::ReceptorScope>();
 	}
 	void DECL toy_ReceptorScope__destroy(toy::ReceptorScope* self) {
 		delete self;
 	}
 	// SolidMedium
 	mud::Type* DECL toy_SolidMedium__type() {
-		return mud::type<toy::SolidMedium>();
+		return &mud::type<toy::SolidMedium>();
 	}
 	toy::SolidMedium* DECL toy_SolidMedium_SolidMedium_0() {
 		return new toy::SolidMedium();
@@ -705,7 +705,7 @@ extern "C" {
 	}
 	// SoundMedium
 	mud::Type* DECL toy_SoundMedium__type() {
-		return mud::type<toy::SoundMedium>();
+		return &mud::type<toy::SoundMedium>();
 	}
 	toy::SoundMedium* DECL toy_SoundMedium_SoundMedium_0() {
 		return new toy::SoundMedium();
@@ -715,7 +715,7 @@ extern "C" {
 	}
 	// Spatial
 	mud::Type* DECL toy_Spatial__type() {
-		return mud::type<toy::Spatial>();
+		return &mud::type<toy::Spatial>();
 	}
 	toy::Spatial* DECL toy_Spatial_Spatial_0() {
 		return new toy::Spatial();
@@ -746,7 +746,7 @@ extern "C" {
 	}
 	// VisualMedium
 	mud::Type* DECL toy_VisualMedium__type() {
-		return mud::type<toy::VisualMedium>();
+		return &mud::type<toy::VisualMedium>();
 	}
 	toy::VisualMedium* DECL toy_VisualMedium_VisualMedium_0() {
 		return new toy::VisualMedium();
@@ -756,7 +756,7 @@ extern "C" {
 	}
 	// WorldMedium
 	mud::Type* DECL toy_WorldMedium__type() {
-		return mud::type<toy::WorldMedium>();
+		return &mud::type<toy::WorldMedium>();
 	}
 	toy::WorldMedium* DECL toy_WorldMedium_WorldMedium_0() {
 		return new toy::WorldMedium();

@@ -46,7 +46,7 @@ extern "C" {
 	
 	// Bullet
 	mud::Type* DECL Bullet__type() {
-		return mud::type<Bullet>();
+		return &mud::type<Bullet>();
 	}
 	mud::vec3* DECL Bullet__get_source(Bullet* self) {
 		static mud::vec3 temp;
@@ -67,7 +67,7 @@ extern "C" {
 	}
 	// Crate
 	mud::Type* DECL Crate__type() {
-		return mud::type<Crate>();
+		return &mud::type<Crate>();
 	}
 	Crate* DECL Crate_Crate_0() {
 		return new Crate();
@@ -87,7 +87,7 @@ extern "C" {
 	}
 	// Human
 	mud::Type* DECL Human__type() {
-		return mud::type<Human>();
+		return &mud::type<Human>();
 	}
 	Human* DECL Human_Human_0() {
 		return new Human();
@@ -100,7 +100,7 @@ extern "C" {
 	}
 	// Player
 	mud::Type* DECL Player__type() {
-		return mud::type<Player>();
+		return &mud::type<Player>();
 	}
 	void DECL Player__destroy(Player* self) {
 		delete self;

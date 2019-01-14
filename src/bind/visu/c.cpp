@@ -16,14 +16,14 @@ extern "C" {
 	
 	// PhysicDebugDraw
 	mud::Type* DECL toy_PhysicDebugDraw__type() {
-		return mud::type<toy::PhysicDebugDraw>();
+		return &mud::type<toy::PhysicDebugDraw>();
 	}
 	void DECL toy_PhysicDebugDraw__destroy(toy::PhysicDebugDraw* self) {
 		delete self;
 	}
 	// VisuScene
 	mud::Type* DECL toy_VisuScene__type() {
-		return mud::type<toy::VisuScene>();
+		return &mud::type<toy::VisuScene>();
 	}
 	void DECL toy_VisuScene_next_frame_0(toy::VisuScene* self) {
 		self->next_frame();

@@ -46,7 +46,7 @@ extern "C" {
 	
 	// Camp
 	mud::Type* DECL Camp__type() {
-		return mud::type<Camp>();
+		return &mud::type<Camp>();
 	}
 	Camp* DECL Camp_Camp_0() {
 		return new Camp();
@@ -72,7 +72,7 @@ extern "C" {
 	}
 	// Faction
 	mud::Type* DECL Faction__type() {
-		return mud::type<Faction>();
+		return &mud::type<Faction>();
 	}
 	Faction* DECL Faction_Faction_2(uint32_t id, const mud::Colour* colour) {
 		return new Faction(id, *colour);
@@ -95,14 +95,14 @@ extern "C" {
 	}
 	// Player
 	mud::Type* DECL Player__type() {
-		return mud::type<Player>();
+		return &mud::type<Player>();
 	}
 	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Shield
 	mud::Type* DECL Shield__type() {
-		return mud::type<Shield>();
+		return &mud::type<Shield>();
 	}
 	Shield* DECL Shield_Shield_0() {
 		return new Shield();
@@ -139,7 +139,7 @@ extern "C" {
 	}
 	// Slug
 	mud::Type* DECL Slug__type() {
-		return mud::type<Slug>();
+		return &mud::type<Slug>();
 	}
 	mud::vec3* DECL Slug__get_source(Slug* self) {
 		static mud::vec3 temp;
@@ -166,7 +166,7 @@ extern "C" {
 	}
 	// Tank
 	mud::Type* DECL Tank__type() {
-		return mud::type<Tank>();
+		return &mud::type<Tank>();
 	}
 	Tank* DECL Tank_Tank_0() {
 		return new Tank();
@@ -179,7 +179,7 @@ extern "C" {
 	}
 	// BlockWorld
 	mud::Type* DECL BlockWorld__type() {
-		return mud::type<BlockWorld>();
+		return &mud::type<BlockWorld>();
 	}
 	BlockWorld* DECL BlockWorld_BlockWorld_2(const char* name, mud::JobSystem* job_system) {
 		return new BlockWorld(name, *job_system);
