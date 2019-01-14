@@ -411,10 +411,6 @@ WorldBlock.prototype["__destroy__"] = WorldBlock.prototype.__destroy__ = functio
         Player.__type__ = _Player__type();
         Stance.__type__ = _Stance__type();
         WorldBlock.__type__ = _WorldBlock__type();
-        ComponentHandle<Bullet>.__type__ = _mud_ComponentHandle<Bullet>__type();
-        ComponentHandle<Crate>.__type__ = _mud_ComponentHandle<Crate>__type();
-        ComponentHandle<Human>.__type__ = _mud_ComponentHandle<Human>__type();
-        ComponentHandle<Lamp>.__type__ = _mud_ComponentHandle<Lamp>__type();
         // Faction
         Module['Faction'] = Module['Faction'] || {};
         Module['Faction']['Ally'] = _Faction_Ally();

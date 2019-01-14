@@ -104,9 +104,6 @@ Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
         Crate.__type__ = _Crate__type();
         Human.__type__ = _Human__type();
         Player.__type__ = _Player__type();
-        ComponentHandle<Bullet>.__type__ = _mud_ComponentHandle<Bullet>__type();
-        ComponentHandle<Crate>.__type__ = _mud_ComponentHandle<Crate>__type();
-        ComponentHandle<Human>.__type__ = _mud_ComponentHandle<Human>__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);

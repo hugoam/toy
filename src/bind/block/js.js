@@ -448,15 +448,9 @@ Module['paint_block_height'] = function(block, image, element) {
         Block.__type__ = _toy_Block__type();
         Chunk.__type__ = _toy_Chunk__type();
         Element.__type__ = _toy_Element__type();
-        Grid<toy::Block*>.__type__ = _mud_Grid<toy_Block*>__type();
         Heap.__type__ = _toy_Heap__type();
         Sector.__type__ = _toy_Sector__type();
         Tileblock.__type__ = _toy_Tileblock__type();
-        ComponentHandle<toy::Block>.__type__ = _mud_ComponentHandle<toy_Block>__type();
-        ComponentHandle<toy::Chunk>.__type__ = _mud_ComponentHandle<toy_Chunk>__type();
-        ComponentHandle<toy::Heap>.__type__ = _mud_ComponentHandle<toy_Heap>__type();
-        ComponentHandle<toy::Sector>.__type__ = _mud_ComponentHandle<toy_Sector>__type();
-        ComponentHandle<toy::Tileblock>.__type__ = _mud_ComponentHandle<toy_Tileblock>__type();
         Earth.__type__ = _toy_Earth__type();
         // MatterState
         Module['MatterState'] = Module['MatterState'] || {};

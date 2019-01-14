@@ -413,10 +413,6 @@ TileWorld.prototype["__destroy__"] = TileWorld.prototype.__destroy__ = function(
         Lamp.__type__ = _Lamp__type();
         Player.__type__ = _Player__type();
         Stance.__type__ = _Stance__type();
-        ComponentHandle<Bullet>.__type__ = _mud_ComponentHandle<Bullet>__type();
-        ComponentHandle<Crate>.__type__ = _mud_ComponentHandle<Crate>__type();
-        ComponentHandle<Human>.__type__ = _mud_ComponentHandle<Human>__type();
-        ComponentHandle<Lamp>.__type__ = _mud_ComponentHandle<Lamp>__type();
         TileWorld.__type__ = _TileWorld__type();
         // Faction
         Module['Faction'] = Module['Faction'] || {};

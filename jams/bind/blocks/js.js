@@ -324,10 +324,6 @@ BlockWorld.prototype["__destroy__"] = BlockWorld.prototype.__destroy__ = functio
         Slug.__type__ = _Slug__type();
         Tank.__type__ = _Tank__type();
         BlockWorld.__type__ = _BlockWorld__type();
-        ComponentHandle<Camp>.__type__ = _mud_ComponentHandle<Camp>__type();
-        ComponentHandle<Shield>.__type__ = _mud_ComponentHandle<Shield>__type();
-        ComponentHandle<Slug>.__type__ = _mud_ComponentHandle<Slug>__type();
-        ComponentHandle<Tank>.__type__ = _mud_ComponentHandle<Tank>__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);
