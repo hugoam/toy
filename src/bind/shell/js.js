@@ -62,7 +62,16 @@ Object.defineProperty(Game.prototype, "player", {
     get: function() {
         var self = this.ptr;
         return wrapPointer(_toy_Game__get_player(self), Ref);
-    }});
+    },
+    set: function(value) {
+        var self = this.ptr;
+        /* value <Ref> [] */
+        var value_type;
+        if(typeof value !== "undefined" && value !== null) { value = value.ptr; value_type = value.type.__type__; }
+        else { value = 0; value_type = 0; }
+        _toy_Game__set_player(self, value);
+    }
+});
 Object.defineProperty(Game.prototype, "world", {
     get: function() {
         var self = this.ptr;

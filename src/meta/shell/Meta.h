@@ -49,7 +49,7 @@ namespace mud
                 { type<toy::Game>(), member_address(&toy::Game::m_mode), type<toy::GameMode>(), "mode", var(toy::GameMode::Play), Member::Value, nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_shell), type<toy::GameShell>(), "shell", Ref(type<toy::GameShell>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_module), type<toy::GameModule>(), "module", Ref(type<toy::GameModule>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-                { type<toy::Game>(), member_address(&toy::Game::m_player), type<mud::Ref>(), "player", Ref(), Member::NonMutable, nullptr },
+                { type<toy::Game>(), member_address(&toy::Game::m_player), type<mud::Ref>(), "player", Ref(), Member::Value, nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Game>(), member_address(&toy::Game::m_screen), type<mud::Widget>(), "screen", Ref(type<mud::Widget>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
             },

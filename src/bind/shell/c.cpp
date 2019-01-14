@@ -67,7 +67,11 @@ extern "C" {
 		self->m_module = value;
 	}
 	mud::Ref* DECL toy_Game__get_player(toy::Game* self) {
-		return &self->m_player;
+		static mud::Ref temp;
+		return (temp = self->m_player, &temp);
+	}
+	void DECL toy_Game__set_player(toy::Game* self, mud::Ref* value) {
+		self->m_player = *value;
 	}
 	toy::World* DECL toy_Game__get_world(toy::Game* self) {
 		return self->m_world;
