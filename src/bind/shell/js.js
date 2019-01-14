@@ -8,7 +8,6 @@ Game.prototype = Object.create(WrapperObject.prototype);
 Game.prototype.constructor = Game;
 Game.prototype.__class__ = Game;
 Game.__cache__ = {};
-Game.__type__ = _toy_Game__type();
 Module['Game'] = Game;
 Object.defineProperty(Game.prototype, "user", {
     get: function() {
@@ -106,7 +105,6 @@ GameModule.prototype = Object.create(WrapperObject.prototype);
 GameModule.prototype.constructor = GameModule;
 GameModule.prototype.__class__ = GameModule;
 GameModule.__cache__ = {};
-GameModule.__type__ = _toy_GameModule__type();
 Module['GameModule'] = GameModule;
 GameModule.prototype["init"] = GameModule.prototype.init = function(self, shell, game) {
     var self = this.ptr;
@@ -173,7 +171,6 @@ GameShell.prototype = Object.create(WrapperObject.prototype);
 GameShell.prototype.constructor = GameShell;
 GameShell.prototype.__class__ = GameShell;
 GameShell.__cache__ = {};
-GameShell.__type__ = _toy_GameShell__type();
 Module['GameShell'] = GameShell;
 GameShell.prototype["add_scene"] = GameShell.prototype.add_scene = function(self) {
     var self = this.ptr;
@@ -337,7 +334,6 @@ GameModuleBind.prototype = Object.create(WrapperObject.prototype);
 GameModuleBind.prototype.constructor = GameModuleBind;
 GameModuleBind.prototype.__class__ = GameModuleBind;
 GameModuleBind.__cache__ = {};
-GameModuleBind.__type__ = _toy_GameModuleBind__type();
 Module['GameModuleBind'] = GameModuleBind;
 GameModuleBind.prototype["__destroy__"] = GameModuleBind.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -349,7 +345,6 @@ GameScene.prototype = Object.create(WrapperObject.prototype);
 GameScene.prototype.constructor = GameScene;
 GameScene.prototype.__class__ = GameScene;
 GameScene.__cache__ = {};
-GameScene.__type__ = _toy_GameScene__type();
 Module['GameScene'] = GameScene;
 GameScene.prototype["__destroy__"] = GameScene.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -371,13 +366,18 @@ Module['physic_painter'] = function(scene) {
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        Game.__type__ = _toy_Game__type();
+        GameModule.__type__ = _toy_GameModule__type();
+        GameShell.__type__ = _toy_GameShell__type();
+        GameModuleBind.__type__ = _toy_GameModuleBind__type();
+        GameScene.__type__ = _toy_GameScene__type();
         // GameMode
         Module['GameMode'] = Module['GameMode'] || {};
         Module['GameMode']['Play'] = _toy_GameMode_Play();
         Module['GameMode']['PlayEditor'] = _toy_GameMode_PlayEditor();
         Module['GameMode']['Pause'] = _toy_GameMode_Pause();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

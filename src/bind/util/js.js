@@ -8,7 +8,6 @@ Procedure.prototype = Object.create(WrapperObject.prototype);
 Procedure.prototype.constructor = Procedure;
 Procedure.prototype.__class__ = Procedure;
 Procedure.__cache__ = {};
-Procedure.__type__ = _toy_Procedure__type();
 Module['Procedure'] = Procedure;
 Procedure.prototype["__destroy__"] = Procedure.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -20,7 +19,6 @@ ProcedureType.prototype = Object.create(WrapperObject.prototype);
 ProcedureType.prototype.constructor = ProcedureType;
 ProcedureType.prototype.__class__ = ProcedureType;
 ProcedureType.__cache__ = {};
-ProcedureType.__type__ = _toy_ProcedureType__type();
 Module['ProcedureType'] = ProcedureType;
 Object.defineProperty(ProcedureType.prototype, "type", {
     get: function() {
@@ -57,8 +55,10 @@ ProcedureType.prototype["__destroy__"] = ProcedureType.prototype.__destroy__ = f
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        Procedure.__type__ = _toy_Procedure__type();
+        ProcedureType.__type__ = _toy_ProcedureType__type();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

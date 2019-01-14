@@ -13,7 +13,6 @@ Combat.prototype = Object.create(WrapperObject.prototype);
 Combat.prototype.constructor = Combat;
 Combat.prototype.__class__ = Combat;
 Combat.__cache__ = {};
-Combat.__type__ = _Combat__type();
 Module['Combat'] = Combat;
 Combat.prototype["__destroy__"] = Combat.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -28,7 +27,6 @@ CombatFleet.prototype = Object.create(WrapperObject.prototype);
 CombatFleet.prototype.constructor = CombatFleet;
 CombatFleet.prototype.__class__ = CombatFleet;
 CombatFleet.__cache__ = {};
-CombatFleet.__type__ = _CombatFleet__type();
 Module['CombatFleet'] = CombatFleet;
 CombatFleet.prototype["__destroy__"] = CombatFleet.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -43,7 +41,6 @@ CombatStar.prototype = Object.create(WrapperObject.prototype);
 CombatStar.prototype.constructor = CombatStar;
 CombatStar.prototype.__class__ = CombatStar;
 CombatStar.__cache__ = {};
-CombatStar.__type__ = _CombatStar__type();
 Module['CombatStar'] = CombatStar;
 CombatStar.prototype["__destroy__"] = CombatStar.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -68,7 +65,6 @@ Commander.prototype = Object.create(WrapperObject.prototype);
 Commander.prototype.constructor = Commander;
 Commander.prototype.__class__ = Commander;
 Commander.__cache__ = {};
-Commander.__type__ = _Commander__type();
 Module['Commander'] = Commander;
 Object.defineProperty(Commander.prototype, "id", {
     get: function() {
@@ -232,7 +228,6 @@ Construction.prototype = Object.create(WrapperObject.prototype);
 Construction.prototype.constructor = Construction;
 Construction.prototype.__class__ = Construction;
 Construction.__cache__ = {};
-Construction.__type__ = _Construction__type();
 Module['Construction'] = Construction;
 Construction.prototype["__destroy__"] = Construction.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -259,7 +254,6 @@ Fleet.prototype = Object.create(WrapperObject.prototype);
 Fleet.prototype.constructor = Fleet;
 Fleet.prototype.__class__ = Fleet;
 Fleet.__cache__ = {};
-Fleet.__type__ = _Fleet__type();
 Module['Fleet'] = Fleet;
 Fleet.prototype["order_attack"] = Fleet.prototype.order_attack = function(self, star) {
     var self = this.ptr;
@@ -478,7 +472,6 @@ Galaxy.prototype = Object.create(WrapperObject.prototype);
 Galaxy.prototype.constructor = Galaxy;
 Galaxy.prototype.__class__ = Galaxy;
 Galaxy.__cache__ = {};
-Galaxy.__type__ = _Galaxy__type();
 Module['Galaxy'] = Galaxy;
 Object.defineProperty(Galaxy.prototype, "size", {
     get: function() {
@@ -505,7 +498,6 @@ Jump.prototype = Object.create(WrapperObject.prototype);
 Jump.prototype.constructor = Jump;
 Jump.prototype.__class__ = Jump;
 Jump.__cache__ = {};
-Jump.__type__ = _Jump__type();
 Module['Jump'] = Jump;
 Object.defineProperty(Jump.prototype, "fleet", {
     get: function() {
@@ -577,7 +569,6 @@ Player.prototype = Object.create(WrapperObject.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.__class__ = Player;
 Player.__cache__ = {};
-Player.__type__ = _Player__type();
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -592,7 +583,6 @@ Scans.prototype = Object.create(WrapperObject.prototype);
 Scans.prototype.constructor = Scans;
 Scans.prototype.__class__ = Scans;
 Scans.__cache__ = {};
-Scans.__type__ = _Scans__type();
 Module['Scans'] = Scans;
 Scans.prototype["__destroy__"] = Scans.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -607,7 +597,6 @@ Schema.prototype = Object.create(WrapperObject.prototype);
 Schema.prototype.constructor = Schema;
 Schema.prototype.__class__ = Schema;
 Schema.__cache__ = {};
-Schema.__type__ = _Schema__type();
 Module['Schema'] = Schema;
 Object.defineProperty(Schema.prototype, "code", {
     get: function() {
@@ -772,7 +761,6 @@ SpatialPower.prototype = Object.create(WrapperObject.prototype);
 SpatialPower.prototype.constructor = SpatialPower;
 SpatialPower.prototype.__class__ = SpatialPower;
 SpatialPower.__cache__ = {};
-SpatialPower.__type__ = _SpatialPower__type();
 Module['SpatialPower'] = SpatialPower;
 SpatialPower.prototype["__destroy__"] = SpatialPower.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -787,7 +775,6 @@ Split.prototype = Object.create(WrapperObject.prototype);
 Split.prototype.constructor = Split;
 Split.prototype.__class__ = Split;
 Split.__cache__ = {};
-Split.__type__ = _Split__type();
 Module['Split'] = Split;
 Object.defineProperty(Split.prototype, "source", {
     get: function() {
@@ -861,7 +848,6 @@ Star.prototype = Object.create(WrapperObject.prototype);
 Star.prototype.constructor = Star;
 Star.prototype.__class__ = Star;
 Star.__cache__ = {};
-Star.__type__ = _Star__type();
 Module['Star'] = Star;
 Object.defineProperty(Star.prototype, "galaxy", {
     get: function() {
@@ -1070,7 +1056,6 @@ TechDomain.prototype = Object.create(WrapperObject.prototype);
 TechDomain.prototype.constructor = TechDomain;
 TechDomain.prototype.__class__ = TechDomain;
 TechDomain.__cache__ = {};
-TechDomain.__type__ = _TechDomain__type();
 Module['TechDomain'] = TechDomain;
 TechDomain.prototype["__destroy__"] = TechDomain.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1085,7 +1070,6 @@ Turn.prototype = Object.create(WrapperObject.prototype);
 Turn.prototype.constructor = Turn;
 Turn.prototype.__class__ = Turn;
 Turn.__cache__ = {};
-Turn.__type__ = _Turn__type();
 Module['Turn'] = Turn;
 Turn.prototype["__destroy__"] = Turn.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1100,7 +1084,6 @@ BuildingSchema.prototype = Object.create(WrapperObject.prototype);
 BuildingSchema.prototype.constructor = BuildingSchema;
 BuildingSchema.prototype.__class__ = BuildingSchema;
 BuildingSchema.__cache__ = {};
-BuildingSchema.__type__ = _BuildingSchema__type();
 Module['BuildingSchema'] = BuildingSchema;
 BuildingSchema.prototype["__destroy__"] = BuildingSchema.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1112,7 +1095,6 @@ CommanderBrush.prototype = Object.create(WrapperObject.prototype);
 CommanderBrush.prototype.constructor = CommanderBrush;
 CommanderBrush.prototype.__class__ = CommanderBrush;
 CommanderBrush.__cache__ = {};
-CommanderBrush.__type__ = _CommanderBrush__type();
 Module['CommanderBrush'] = CommanderBrush;
 Object.defineProperty(CommanderBrush.prototype, "commander", {
     get: function() {
@@ -1150,7 +1132,6 @@ PlanetaryCombat.prototype = Object.create(WrapperObject.prototype);
 PlanetaryCombat.prototype.constructor = PlanetaryCombat;
 PlanetaryCombat.prototype.__class__ = PlanetaryCombat;
 PlanetaryCombat.__cache__ = {};
-PlanetaryCombat.__type__ = _PlanetaryCombat__type();
 Module['PlanetaryCombat'] = PlanetaryCombat;
 Object.defineProperty(PlanetaryCombat.prototype, "coord", {
     get: function() {
@@ -1189,7 +1170,6 @@ ShipComponent.prototype = Object.create(WrapperObject.prototype);
 ShipComponent.prototype.constructor = ShipComponent;
 ShipComponent.prototype.__class__ = ShipComponent;
 ShipComponent.__cache__ = {};
-ShipComponent.__type__ = _ShipComponent__type();
 Module['ShipComponent'] = ShipComponent;
 ShipComponent.prototype["__destroy__"] = ShipComponent.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1204,7 +1184,6 @@ ShipEngine.prototype = Object.create(WrapperObject.prototype);
 ShipEngine.prototype.constructor = ShipEngine;
 ShipEngine.prototype.__class__ = ShipEngine;
 ShipEngine.__cache__ = {};
-ShipEngine.__type__ = _ShipEngine__type();
 Module['ShipEngine'] = ShipEngine;
 ShipEngine.prototype["__destroy__"] = ShipEngine.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1219,7 +1198,6 @@ ShipHull.prototype = Object.create(WrapperObject.prototype);
 ShipHull.prototype.constructor = ShipHull;
 ShipHull.prototype.__class__ = ShipHull;
 ShipHull.__cache__ = {};
-ShipHull.__type__ = _ShipHull__type();
 Module['ShipHull'] = ShipHull;
 ShipHull.prototype["__destroy__"] = ShipHull.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1234,7 +1212,6 @@ ShipSchema.prototype = Object.create(WrapperObject.prototype);
 ShipSchema.prototype.constructor = ShipSchema;
 ShipSchema.prototype.__class__ = ShipSchema;
 ShipSchema.__cache__ = {};
-ShipSchema.__type__ = _ShipSchema__type();
 Module['ShipSchema'] = ShipSchema;
 Object.defineProperty(ShipSchema.prototype, "size", {
     get: function() {
@@ -1283,7 +1260,6 @@ SpatialCombat.prototype = Object.create(WrapperObject.prototype);
 SpatialCombat.prototype.constructor = SpatialCombat;
 SpatialCombat.prototype.__class__ = SpatialCombat;
 SpatialCombat.__cache__ = {};
-SpatialCombat.__type__ = _SpatialCombat__type();
 Module['SpatialCombat'] = SpatialCombat;
 Object.defineProperty(SpatialCombat.prototype, "coord", {
     get: function() {
@@ -1316,7 +1292,6 @@ Universe.prototype = Object.create(WrapperObject.prototype);
 Universe.prototype.constructor = Universe;
 Universe.prototype.__class__ = Universe;
 Universe.__cache__ = {};
-Universe.__type__ = _Universe__type();
 Module['Universe'] = Universe;
 Object.defineProperty(Universe.prototype, "world", {
     get: function() {
@@ -1362,7 +1337,35 @@ Module['generate_system'] = function(galaxy, coord, position) {
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        Combat.__type__ = _Combat__type();
+        CombatFleet.__type__ = _CombatFleet__type();
+        CombatStar.__type__ = _CombatStar__type();
+        Commander.__type__ = _Commander__type();
+        Construction.__type__ = _Construction__type();
+        Fleet.__type__ = _Fleet__type();
+        Galaxy.__type__ = _Galaxy__type();
+        Jump.__type__ = _Jump__type();
+        Player.__type__ = _Player__type();
+        Scans.__type__ = _Scans__type();
+        Schema.__type__ = _Schema__type();
+        SpatialPower.__type__ = _SpatialPower__type();
+        Split.__type__ = _Split__type();
+        Star.__type__ = _Star__type();
+        TechDomain.__type__ = _TechDomain__type();
+        Turn.__type__ = _Turn__type();
+        BuildingSchema.__type__ = _BuildingSchema__type();
+        CommanderBrush.__type__ = _CommanderBrush__type();
+        ComponentHandle<Fleet>.__type__ = _mud_ComponentHandle<Fleet>__type();
+        ComponentHandle<Galaxy>.__type__ = _mud_ComponentHandle<Galaxy>__type();
+        ComponentHandle<Star>.__type__ = _mud_ComponentHandle<Star>__type();
+        PlanetaryCombat.__type__ = _PlanetaryCombat__type();
+        ShipComponent.__type__ = _ShipComponent__type();
+        ShipEngine.__type__ = _ShipEngine__type();
+        ShipHull.__type__ = _ShipHull__type();
+        ShipSchema.__type__ = _ShipSchema__type();
+        SpatialCombat.__type__ = _SpatialCombat__type();
+        Universe.__type__ = _Universe__type();
         // CombatType
         Module['CombatType'] = Module['CombatType'] || {};
         Module['CombatType']['Spatial'] = _CombatType_Spatial();
@@ -1480,6 +1483,6 @@ Module['generate_system'] = function(galaxy, coord, position) {
         Module['WeaponType']['Torpedo'] = _WeaponType_Torpedo();
         Module['WeaponType']['Bomb'] = _WeaponType_Bomb();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

@@ -13,7 +13,6 @@ Boid.prototype = Object.create(WrapperObject.prototype);
 Boid.prototype.constructor = Boid;
 Boid.prototype.__class__ = Boid;
 Boid.__cache__ = {};
-Boid.__type__ = _boids_Boid__type();
 Module['boids']['Boid'] = Boid;
 Boid.prototype["__destroy__"] = Boid.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -28,7 +27,6 @@ BoidObstacle.prototype = Object.create(WrapperObject.prototype);
 BoidObstacle.prototype.constructor = BoidObstacle;
 BoidObstacle.prototype.__class__ = BoidObstacle;
 BoidObstacle.__cache__ = {};
-BoidObstacle.__type__ = _boids_BoidObstacle__type();
 Module['boids']['BoidObstacle'] = BoidObstacle;
 BoidObstacle.prototype["__destroy__"] = BoidObstacle.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -43,7 +41,6 @@ BoidTarget.prototype = Object.create(WrapperObject.prototype);
 BoidTarget.prototype.constructor = BoidTarget;
 BoidTarget.prototype.__class__ = BoidTarget;
 BoidTarget.__cache__ = {};
-BoidTarget.__type__ = _boids_BoidTarget__type();
 Module['boids']['BoidTarget'] = BoidTarget;
 BoidTarget.prototype["__destroy__"] = BoidTarget.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -58,7 +55,6 @@ Heading.prototype = Object.create(WrapperObject.prototype);
 Heading.prototype.constructor = Heading;
 Heading.prototype.__class__ = Heading;
 Heading.__cache__ = {};
-Heading.__type__ = _boids_Heading__type();
 Module['boids']['Heading'] = Heading;
 Heading.prototype["__destroy__"] = Heading.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -73,7 +69,6 @@ MoveForward.prototype = Object.create(WrapperObject.prototype);
 MoveForward.prototype.constructor = MoveForward;
 MoveForward.prototype.__class__ = MoveForward;
 MoveForward.__cache__ = {};
-MoveForward.__type__ = _boids_MoveForward__type();
 Module['boids']['MoveForward'] = MoveForward;
 MoveForward.prototype["__destroy__"] = MoveForward.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -88,7 +83,6 @@ MoveSpeed.prototype = Object.create(WrapperObject.prototype);
 MoveSpeed.prototype.constructor = MoveSpeed;
 MoveSpeed.prototype.__class__ = MoveSpeed;
 MoveSpeed.__cache__ = {};
-MoveSpeed.__type__ = _boids_MoveSpeed__type();
 Module['boids']['MoveSpeed'] = MoveSpeed;
 MoveSpeed.prototype["__destroy__"] = MoveSpeed.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -100,7 +94,6 @@ Player.prototype = Object.create(WrapperObject.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.__class__ = Player;
 Player.__cache__ = {};
-Player.__type__ = _boids_Player__type();
 Module['boids']['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -115,7 +108,6 @@ Position.prototype = Object.create(WrapperObject.prototype);
 Position.prototype.constructor = Position;
 Position.prototype.__class__ = Position;
 Position.__cache__ = {};
-Position.__type__ = _boids_Position__type();
 Module['boids']['Position'] = Position;
 Position.prototype["__destroy__"] = Position.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -130,7 +122,6 @@ Rotation.prototype = Object.create(WrapperObject.prototype);
 Rotation.prototype.constructor = Rotation;
 Rotation.prototype.__class__ = Rotation;
 Rotation.__cache__ = {};
-Rotation.__type__ = _boids_Rotation__type();
 Module['boids']['Rotation'] = Rotation;
 Rotation.prototype["__destroy__"] = Rotation.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -145,7 +136,6 @@ Transform4.prototype = Object.create(WrapperObject.prototype);
 Transform4.prototype.constructor = Transform4;
 Transform4.prototype.__class__ = Transform4;
 Transform4.__cache__ = {};
-Transform4.__type__ = _boids_Transform4__type();
 Module['boids']['Transform4'] = Transform4;
 Transform4.prototype["__destroy__"] = Transform4.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -153,8 +143,18 @@ Transform4.prototype["__destroy__"] = Transform4.prototype.__destroy__ = functio
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        Boid.__type__ = _boids_Boid__type();
+        BoidObstacle.__type__ = _boids_BoidObstacle__type();
+        BoidTarget.__type__ = _boids_BoidTarget__type();
+        Heading.__type__ = _boids_Heading__type();
+        MoveForward.__type__ = _boids_MoveForward__type();
+        MoveSpeed.__type__ = _boids_MoveSpeed__type();
+        Player.__type__ = _boids_Player__type();
+        Position.__type__ = _boids_Position__type();
+        Rotation.__type__ = _boids_Rotation__type();
+        Transform4.__type__ = _boids_Transform4__type();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

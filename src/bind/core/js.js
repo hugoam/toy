@@ -8,7 +8,6 @@ BulletMedium.prototype = Object.create(WrapperObject.prototype);
 BulletMedium.prototype.constructor = BulletMedium;
 BulletMedium.prototype.__class__ = BulletMedium;
 BulletMedium.__cache__ = {};
-BulletMedium.__type__ = _toy_BulletMedium__type();
 Module['BulletMedium'] = BulletMedium;
 BulletMedium.prototype["__destroy__"] = BulletMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -20,7 +19,6 @@ BulletShape.prototype = Object.create(WrapperObject.prototype);
 BulletShape.prototype.constructor = BulletShape;
 BulletShape.prototype.__class__ = BulletShape;
 BulletShape.__cache__ = {};
-BulletShape.__type__ = _toy_BulletShape__type();
 Module['BulletShape'] = BulletShape;
 BulletShape.prototype["__destroy__"] = BulletShape.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -43,7 +41,6 @@ Camera.prototype = Object.create(WrapperObject.prototype);
 Camera.prototype.constructor = Camera;
 Camera.prototype.__class__ = Camera;
 Camera.__cache__ = {};
-Camera.__type__ = _toy_Camera__type();
 Module['Camera'] = Camera;
 Object.defineProperty(Camera.prototype, "lens_distance", {
     get: function() {
@@ -122,7 +119,6 @@ Collider.prototype = Object.create(WrapperObject.prototype);
 Collider.prototype.constructor = Collider;
 Collider.prototype.__class__ = Collider;
 Collider.__cache__ = {};
-Collider.__type__ = _toy_Collider__type();
 Module['Collider'] = Collider;
 Object.defineProperty(Collider.prototype, "spatial", {
     get: function() {
@@ -202,7 +198,6 @@ ColliderImpl.prototype = Object.create(WrapperObject.prototype);
 ColliderImpl.prototype.constructor = ColliderImpl;
 ColliderImpl.prototype.__class__ = ColliderImpl;
 ColliderImpl.__cache__ = {};
-ColliderImpl.__type__ = _toy_ColliderImpl__type();
 Module['ColliderImpl'] = ColliderImpl;
 ColliderImpl.prototype["__destroy__"] = ColliderImpl.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -214,7 +209,6 @@ ColliderObject.prototype = Object.create(WrapperObject.prototype);
 ColliderObject.prototype.constructor = ColliderObject;
 ColliderObject.prototype.__class__ = ColliderObject;
 ColliderObject.__cache__ = {};
-ColliderObject.__type__ = _toy_ColliderObject__type();
 Module['ColliderObject'] = ColliderObject;
 ColliderObject.prototype["__destroy__"] = ColliderObject.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -229,7 +223,6 @@ Collision.prototype = Object.create(WrapperObject.prototype);
 Collision.prototype.constructor = Collision;
 Collision.prototype.__class__ = Collision;
 Collision.__cache__ = {};
-Collision.__type__ = _toy_Collision__type();
 Module['Collision'] = Collision;
 Object.defineProperty(Collision.prototype, "first", {
     get: function() {
@@ -286,7 +279,6 @@ CollisionShape.prototype = Object.create(WrapperObject.prototype);
 CollisionShape.prototype.constructor = CollisionShape;
 CollisionShape.prototype.__class__ = CollisionShape;
 CollisionShape.__cache__ = {};
-CollisionShape.__type__ = _toy_CollisionShape__type();
 Module['CollisionShape'] = CollisionShape;
 CollisionShape.prototype["__destroy__"] = CollisionShape.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -298,7 +290,6 @@ ComponentPool.prototype = Object.create(WrapperObject.prototype);
 ComponentPool.prototype.constructor = ComponentPool;
 ComponentPool.prototype.__class__ = ComponentPool;
 ComponentPool.__cache__ = {};
-ComponentPool.__type__ = _toy_ComponentPool__type();
 Module['ComponentPool'] = ComponentPool;
 ComponentPool.prototype["__destroy__"] = ComponentPool.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -310,7 +301,6 @@ Core.prototype = Object.create(WrapperObject.prototype);
 Core.prototype.constructor = Core;
 Core.prototype.__class__ = Core;
 Core.__cache__ = {};
-Core.__type__ = _toy_Core__type();
 Module['Core'] = Core;
 Core.prototype["__destroy__"] = Core.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -322,7 +312,6 @@ DetourPath.prototype = Object.create(WrapperObject.prototype);
 DetourPath.prototype.constructor = DetourPath;
 DetourPath.prototype.__class__ = DetourPath;
 DetourPath.__cache__ = {};
-DetourPath.__type__ = _toy_DetourPath__type();
 Module['DetourPath'] = DetourPath;
 DetourPath.prototype["__destroy__"] = DetourPath.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -339,7 +328,6 @@ Emitter.prototype = Object.create(WrapperObject.prototype);
 Emitter.prototype.constructor = Emitter;
 Emitter.prototype.__class__ = Emitter;
 Emitter.__cache__ = {};
-Emitter.__type__ = _toy_Emitter__type();
 Module['Emitter'] = Emitter;
 Emitter.prototype["__destroy__"] = Emitter.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -356,7 +344,6 @@ EntityScript.prototype = Object.create(WrapperObject.prototype);
 EntityScript.prototype.constructor = EntityScript;
 EntityScript.prototype.__class__ = EntityScript;
 EntityScript.__cache__ = {};
-EntityScript.__type__ = _toy_EntityScript__type();
 Module['EntityScript'] = EntityScript;
 Object.defineProperty(EntityScript.prototype, "logic_script", {
     get: function() {
@@ -392,7 +379,6 @@ Medium.prototype = Object.create(WrapperObject.prototype);
 Medium.prototype.constructor = Medium;
 Medium.prototype.__class__ = Medium;
 Medium.__cache__ = {};
-Medium.__type__ = _toy_Medium__type();
 Module['Medium'] = Medium;
 Object.defineProperty(Medium.prototype, "name", {
     get: function() {
@@ -444,7 +430,6 @@ Movable.prototype = Object.create(WrapperObject.prototype);
 Movable.prototype.constructor = Movable;
 Movable.prototype.__class__ = Movable;
 Movable.__cache__ = {};
-Movable.__type__ = _toy_Movable__type();
 Module['Movable'] = Movable;
 Movable.prototype["modify_angular_velocity"] = Movable.prototype.modify_angular_velocity = function(self, velocity) {
     var self = this.ptr;
@@ -535,7 +520,6 @@ Navblock.prototype = Object.create(WrapperObject.prototype);
 Navblock.prototype.constructor = Navblock;
 Navblock.prototype.__class__ = Navblock;
 Navblock.__cache__ = {};
-Navblock.__type__ = _toy_Navblock__type();
 Module['Navblock'] = Navblock;
 Object.defineProperty(Navblock.prototype, "navmesh", {
     get: function() {
@@ -586,7 +570,6 @@ Navmesh.prototype = Object.create(WrapperObject.prototype);
 Navmesh.prototype.constructor = Navmesh;
 Navmesh.prototype.__class__ = Navmesh;
 Navmesh.__cache__ = {};
-Navmesh.__type__ = _toy_Navmesh__type();
 Module['Navmesh'] = Navmesh;
 Object.defineProperty(Navmesh.prototype, "world", {
     get: function() {
@@ -630,7 +613,6 @@ Origin.prototype = Object.create(WrapperObject.prototype);
 Origin.prototype.constructor = Origin;
 Origin.prototype.__class__ = Origin;
 Origin.__cache__ = {};
-Origin.__type__ = _toy_Origin__type();
 Module['Origin'] = Origin;
 Origin.prototype["__destroy__"] = Origin.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -647,7 +629,6 @@ Pathfinder.prototype = Object.create(WrapperObject.prototype);
 Pathfinder.prototype.constructor = Pathfinder;
 Pathfinder.prototype.__class__ = Pathfinder;
 Pathfinder.__cache__ = {};
-Pathfinder.__type__ = _toy_Pathfinder__type();
 Module['Pathfinder'] = Pathfinder;
 Pathfinder.prototype["__destroy__"] = Pathfinder.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -659,7 +640,6 @@ PhysicWorld.prototype = Object.create(WrapperObject.prototype);
 PhysicWorld.prototype.constructor = PhysicWorld;
 PhysicWorld.prototype.__class__ = PhysicWorld;
 PhysicWorld.__cache__ = {};
-PhysicWorld.__type__ = _toy_PhysicWorld__type();
 Module['PhysicWorld'] = PhysicWorld;
 PhysicWorld.prototype["ground_point"] = PhysicWorld.prototype.ground_point = function(self, ray) {
     var self = this.ptr;
@@ -694,7 +674,6 @@ Receptor.prototype = Object.create(WrapperObject.prototype);
 Receptor.prototype.constructor = Receptor;
 Receptor.prototype.__class__ = Receptor;
 Receptor.__cache__ = {};
-Receptor.__type__ = _toy_Receptor__type();
 Module['Receptor'] = Receptor;
 Receptor.prototype["scope"] = Receptor.prototype.scope = function(self, medium) {
     var self = this.ptr;
@@ -712,7 +691,6 @@ Solid.prototype = Object.create(WrapperObject.prototype);
 Solid.prototype.constructor = Solid;
 Solid.prototype.__class__ = Solid;
 Solid.__cache__ = {};
-Solid.__type__ = _toy_Solid__type();
 Module['Solid'] = Solid;
 Object.defineProperty(Solid.prototype, "spatial", {
     get: function() {
@@ -757,7 +735,6 @@ SolidImpl.prototype = Object.create(WrapperObject.prototype);
 SolidImpl.prototype.constructor = SolidImpl;
 SolidImpl.prototype.__class__ = SolidImpl;
 SolidImpl.__cache__ = {};
-SolidImpl.__type__ = _toy_SolidImpl__type();
 Module['SolidImpl'] = SolidImpl;
 SolidImpl.prototype["angular_velocity"] = SolidImpl.prototype.angular_velocity = function(self) {
     var self = this.ptr;
@@ -803,7 +780,6 @@ User.prototype = Object.create(WrapperObject.prototype);
 User.prototype.constructor = User;
 User.prototype.__class__ = User;
 User.__cache__ = {};
-User.__type__ = _toy_User__type();
 Module['User'] = User;
 User.prototype["__destroy__"] = User.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -820,7 +796,6 @@ Waypoint.prototype = Object.create(WrapperObject.prototype);
 Waypoint.prototype.constructor = Waypoint;
 Waypoint.prototype.__class__ = Waypoint;
 Waypoint.__cache__ = {};
-Waypoint.__type__ = _toy_Waypoint__type();
 Module['Waypoint'] = Waypoint;
 Waypoint.prototype["__destroy__"] = Waypoint.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -844,7 +819,6 @@ World.prototype = Object.create(WrapperObject.prototype);
 World.prototype.constructor = World;
 World.prototype.__class__ = World;
 World.__cache__ = {};
-World.__type__ = _toy_World__type();
 Module['World'] = World;
 Object.defineProperty(World.prototype, "id", {
     get: function() {
@@ -890,7 +864,6 @@ WorldClock.prototype = Object.create(WrapperObject.prototype);
 WorldClock.prototype.constructor = WorldClock;
 WorldClock.prototype.__class__ = WorldClock;
 WorldClock.__cache__ = {};
-WorldClock.__type__ = _toy_WorldClock__type();
 Module['WorldClock'] = WorldClock;
 WorldClock.prototype["__destroy__"] = WorldClock.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -910,7 +883,6 @@ WorldPage.prototype = Object.create(WrapperObject.prototype);
 WorldPage.prototype.constructor = WorldPage;
 WorldPage.prototype.__class__ = WorldPage;
 WorldPage.__cache__ = {};
-WorldPage.__type__ = _toy_WorldPage__type();
 Module['WorldPage'] = WorldPage;
 WorldPage.prototype["build_geometry"] = WorldPage.prototype.build_geometry = function(self, spatial) {
     var self = this.ptr;
@@ -997,7 +969,6 @@ BulletCollider.prototype = Object.create(WrapperObject.prototype);
 BulletCollider.prototype.constructor = BulletCollider;
 BulletCollider.prototype.__class__ = BulletCollider;
 BulletCollider.__cache__ = {};
-BulletCollider.__type__ = _toy_BulletCollider__type();
 Module['BulletCollider'] = BulletCollider;
 BulletCollider.prototype["__destroy__"] = BulletCollider.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1009,7 +980,6 @@ BulletSolid.prototype = Object.create(WrapperObject.prototype);
 BulletSolid.prototype.constructor = BulletSolid;
 BulletSolid.prototype.__class__ = BulletSolid;
 BulletSolid.__cache__ = {};
-BulletSolid.__type__ = _toy_BulletSolid__type();
 Module['BulletSolid'] = BulletSolid;
 BulletSolid.prototype["__destroy__"] = BulletSolid.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1026,7 +996,6 @@ BulletWorld.prototype = Object.create(WrapperObject.prototype);
 BulletWorld.prototype.constructor = BulletWorld;
 BulletWorld.prototype.__class__ = BulletWorld;
 BulletWorld.__cache__ = {};
-BulletWorld.__type__ = _toy_BulletWorld__type();
 Module['BulletWorld'] = BulletWorld;
 BulletWorld.prototype["__destroy__"] = BulletWorld.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1047,7 +1016,6 @@ DefaultWorld.prototype = Object.create(WrapperObject.prototype);
 DefaultWorld.prototype.constructor = DefaultWorld;
 DefaultWorld.prototype.__class__ = DefaultWorld;
 DefaultWorld.__cache__ = {};
-DefaultWorld.__type__ = _toy_DefaultWorld__type();
 Module['DefaultWorld'] = DefaultWorld;
 Object.defineProperty(DefaultWorld.prototype, "world", {
     get: function() {
@@ -1074,7 +1042,6 @@ PhysicScope.prototype = Object.create(WrapperObject.prototype);
 PhysicScope.prototype.constructor = PhysicScope;
 PhysicScope.prototype.__class__ = PhysicScope;
 PhysicScope.__cache__ = {};
-PhysicScope.__type__ = _toy_PhysicScope__type();
 Module['PhysicScope'] = PhysicScope;
 PhysicScope.prototype["__destroy__"] = PhysicScope.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1086,7 +1053,6 @@ EmitterScope.prototype = Object.create(WrapperObject.prototype);
 EmitterScope.prototype.constructor = EmitterScope;
 EmitterScope.prototype.__class__ = EmitterScope;
 EmitterScope.__cache__ = {};
-EmitterScope.__type__ = _toy_EmitterScope__type();
 Module['EmitterScope'] = EmitterScope;
 EmitterScope.prototype["__destroy__"] = EmitterScope.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1103,7 +1069,6 @@ NavmeshShape.prototype = Object.create(WrapperObject.prototype);
 NavmeshShape.prototype.constructor = NavmeshShape;
 NavmeshShape.prototype.__class__ = NavmeshShape;
 NavmeshShape.__cache__ = {};
-NavmeshShape.__type__ = _toy_NavmeshShape__type();
 Module['NavmeshShape'] = NavmeshShape;
 NavmeshShape.prototype["__destroy__"] = NavmeshShape.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1125,7 +1090,6 @@ Obstacle.prototype = Object.create(WrapperObject.prototype);
 Obstacle.prototype.constructor = Obstacle;
 Obstacle.prototype.__class__ = Obstacle;
 Obstacle.__cache__ = {};
-Obstacle.__type__ = _toy_Obstacle__type();
 Module['Obstacle'] = Obstacle;
 Object.defineProperty(Obstacle.prototype, "shape", {
     get: function() {
@@ -1153,7 +1117,6 @@ ReceptorScope.prototype = Object.create(WrapperObject.prototype);
 ReceptorScope.prototype.constructor = ReceptorScope;
 ReceptorScope.prototype.__class__ = ReceptorScope;
 ReceptorScope.__cache__ = {};
-ReceptorScope.__type__ = _toy_ReceptorScope__type();
 Module['ReceptorScope'] = ReceptorScope;
 ReceptorScope.prototype["__destroy__"] = ReceptorScope.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1168,7 +1131,6 @@ SolidMedium.prototype = Object.create(WrapperObject.prototype);
 SolidMedium.prototype.constructor = SolidMedium;
 SolidMedium.prototype.__class__ = SolidMedium;
 SolidMedium.__cache__ = {};
-SolidMedium.__type__ = _toy_SolidMedium__type();
 Module['SolidMedium'] = SolidMedium;
 SolidMedium.prototype["__destroy__"] = SolidMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1183,7 +1145,6 @@ SoundMedium.prototype = Object.create(WrapperObject.prototype);
 SoundMedium.prototype.constructor = SoundMedium;
 SoundMedium.prototype.__class__ = SoundMedium;
 SoundMedium.__cache__ = {};
-SoundMedium.__type__ = _toy_SoundMedium__type();
 Module['SoundMedium'] = SoundMedium;
 SoundMedium.prototype["__destroy__"] = SoundMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1204,7 +1165,6 @@ Spatial.prototype = Object.create(WrapperObject.prototype);
 Spatial.prototype.constructor = Spatial;
 Spatial.prototype.__class__ = Spatial;
 Spatial.__cache__ = {};
-Spatial.__type__ = _toy_Spatial__type();
 Module['Spatial'] = Spatial;
 Spatial.prototype["set_position"] = Spatial.prototype.set_position = function(self, position) {
     var self = this.ptr;
@@ -1254,7 +1214,6 @@ VisualMedium.prototype = Object.create(WrapperObject.prototype);
 VisualMedium.prototype.constructor = VisualMedium;
 VisualMedium.prototype.__class__ = VisualMedium;
 VisualMedium.__cache__ = {};
-VisualMedium.__type__ = _toy_VisualMedium__type();
 Module['VisualMedium'] = VisualMedium;
 VisualMedium.prototype["__destroy__"] = VisualMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1269,7 +1228,6 @@ WorldMedium.prototype = Object.create(WrapperObject.prototype);
 WorldMedium.prototype.constructor = WorldMedium;
 WorldMedium.prototype.__class__ = WorldMedium;
 WorldMedium.__cache__ = {};
-WorldMedium.__type__ = _toy_WorldMedium__type();
 Module['WorldMedium'] = WorldMedium;
 WorldMedium.prototype["__destroy__"] = WorldMedium.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -1305,7 +1263,63 @@ Module['steer_2d'] = function(spatial, movable, target, velocity, time_step, mar
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        BulletMedium.__type__ = _toy_BulletMedium__type();
+        BulletShape.__type__ = _toy_BulletShape__type();
+        Camera.__type__ = _toy_Camera__type();
+        Collider.__type__ = _toy_Collider__type();
+        ColliderImpl.__type__ = _toy_ColliderImpl__type();
+        ColliderObject.__type__ = _toy_ColliderObject__type();
+        Collision.__type__ = _toy_Collision__type();
+        CollisionShape.__type__ = _toy_CollisionShape__type();
+        ComponentPool.__type__ = _toy_ComponentPool__type();
+        Core.__type__ = _toy_Core__type();
+        DetourPath.__type__ = _toy_DetourPath__type();
+        Emitter.__type__ = _toy_Emitter__type();
+        EntityScript.__type__ = _toy_EntityScript__type();
+        Medium.__type__ = _toy_Medium__type();
+        Movable.__type__ = _toy_Movable__type();
+        Navblock.__type__ = _toy_Navblock__type();
+        Navmesh.__type__ = _toy_Navmesh__type();
+        Origin.__type__ = _toy_Origin__type();
+        OwnedHandle<toy::Collider>.__type__ = _mud_OwnedHandle<toy_Collider>__type();
+        OwnedHandle<toy::Solid>.__type__ = _mud_OwnedHandle<toy_Solid>__type();
+        Pathfinder.__type__ = _toy_Pathfinder__type();
+        PhysicWorld.__type__ = _toy_PhysicWorld__type();
+        Receptor.__type__ = _toy_Receptor__type();
+        Solid.__type__ = _toy_Solid__type();
+        SolidImpl.__type__ = _toy_SolidImpl__type();
+        SparseHandle<toy::Collider>.__type__ = _mud_SparseHandle<toy_Collider>__type();
+        SparseHandle<toy::Solid>.__type__ = _mud_SparseHandle<toy_Solid>__type();
+        User.__type__ = _toy_User__type();
+        Waypoint.__type__ = _toy_Waypoint__type();
+        World.__type__ = _toy_World__type();
+        WorldClock.__type__ = _toy_WorldClock__type();
+        WorldPage.__type__ = _toy_WorldPage__type();
+        BulletCollider.__type__ = _toy_BulletCollider__type();
+        BulletSolid.__type__ = _toy_BulletSolid__type();
+        BulletWorld.__type__ = _toy_BulletWorld__type();
+        ComponentHandle<toy::Camera>.__type__ = _mud_ComponentHandle<toy_Camera>__type();
+        ComponentHandle<toy::Emitter>.__type__ = _mud_ComponentHandle<toy_Emitter>__type();
+        ComponentHandle<toy::EntityScript>.__type__ = _mud_ComponentHandle<toy_EntityScript>__type();
+        ComponentHandle<toy::Movable>.__type__ = _mud_ComponentHandle<toy_Movable>__type();
+        ComponentHandle<toy::Navblock>.__type__ = _mud_ComponentHandle<toy_Navblock>__type();
+        ComponentHandle<toy::Origin>.__type__ = _mud_ComponentHandle<toy_Origin>__type();
+        ComponentHandle<toy::Receptor>.__type__ = _mud_ComponentHandle<toy_Receptor>__type();
+        ComponentHandle<toy::Spatial>.__type__ = _mud_ComponentHandle<toy_Spatial>__type();
+        ComponentHandle<toy::Waypoint>.__type__ = _mud_ComponentHandle<toy_Waypoint>__type();
+        ComponentHandle<toy::WorldPage>.__type__ = _mud_ComponentHandle<toy_WorldPage>__type();
+        DefaultWorld.__type__ = _toy_DefaultWorld__type();
+        PhysicScope.__type__ = _toy_PhysicScope__type();
+        EmitterScope.__type__ = _toy_EmitterScope__type();
+        NavmeshShape.__type__ = _toy_NavmeshShape__type();
+        Obstacle.__type__ = _toy_Obstacle__type();
+        ReceptorScope.__type__ = _toy_ReceptorScope__type();
+        SolidMedium.__type__ = _toy_SolidMedium__type();
+        SoundMedium.__type__ = _toy_SoundMedium__type();
+        Spatial.__type__ = _toy_Spatial__type();
+        VisualMedium.__type__ = _toy_VisualMedium__type();
+        WorldMedium.__type__ = _toy_WorldMedium__type();
         // CollisionGroup
         Module['CM_NOMASK'] = _toy_CollisionGroup_CM_NOMASK();
         Module['CM_OBJECT'] = _toy_CollisionGroup_CM_OBJECT();
@@ -1319,6 +1333,6 @@ Module['steer_2d'] = function(spatial, movable, target, velocity, time_step, mar
         Module['CM_RECEPTOR'] = _toy_CollisionGroup_CM_RECEPTOR();
         Module['CM_OBSTACLE'] = _toy_CollisionGroup_CM_OBSTACLE();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

@@ -13,7 +13,6 @@ Aim.prototype = Object.create(WrapperObject.prototype);
 Aim.prototype.constructor = Aim;
 Aim.prototype.__class__ = Aim;
 Aim.__cache__ = {};
-Aim.__type__ = _Aim__type();
 Module['Aim'] = Aim;
 Object.defineProperty(Aim.prototype, "rotation", {
     get: function() {
@@ -73,7 +72,6 @@ Bullet.prototype = Object.create(WrapperObject.prototype);
 Bullet.prototype.constructor = Bullet;
 Bullet.prototype.__class__ = Bullet;
 Bullet.__cache__ = {};
-Bullet.__type__ = _Bullet__type();
 Module['Bullet'] = Bullet;
 Object.defineProperty(Bullet.prototype, "source", {
     get: function() {
@@ -117,7 +115,6 @@ Crate.prototype = Object.create(WrapperObject.prototype);
 Crate.prototype.constructor = Crate;
 Crate.prototype.__class__ = Crate;
 Crate.__cache__ = {};
-Crate.__type__ = _Crate__type();
 Module['Crate'] = Crate;
 Object.defineProperty(Crate.prototype, "extents", {
     get: function() {
@@ -152,7 +149,6 @@ Human.prototype = Object.create(WrapperObject.prototype);
 Human.prototype.constructor = Human;
 Human.prototype.__class__ = Human;
 Human.__cache__ = {};
-Human.__type__ = _Human__type();
 Module['Human'] = Human;
 Human.prototype["aim"] = Human.prototype.aim = function(self) {
     var self = this.ptr;
@@ -312,7 +308,6 @@ Lamp.prototype = Object.create(WrapperObject.prototype);
 Lamp.prototype.constructor = Lamp;
 Lamp.prototype.__class__ = Lamp;
 Lamp.__cache__ = {};
-Lamp.__type__ = _Lamp__type();
 Module['Lamp'] = Lamp;
 Lamp.prototype["__destroy__"] = Lamp.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -324,7 +319,6 @@ Player.prototype = Object.create(WrapperObject.prototype);
 Player.prototype.constructor = Player;
 Player.prototype.__class__ = Player;
 Player.__cache__ = {};
-Player.__type__ = _Player__type();
 Module['Player'] = Player;
 Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -345,7 +339,6 @@ Stance.prototype = Object.create(WrapperObject.prototype);
 Stance.prototype.constructor = Stance;
 Stance.prototype.__class__ = Stance;
 Stance.__cache__ = {};
-Stance.__type__ = _Stance__type();
 Module['Stance'] = Stance;
 Object.defineProperty(Stance.prototype, "name", {
     get: function() {
@@ -390,7 +383,6 @@ TileWorld.prototype = Object.create(WrapperObject.prototype);
 TileWorld.prototype.constructor = TileWorld;
 TileWorld.prototype.__class__ = TileWorld;
 TileWorld.__cache__ = {};
-TileWorld.__type__ = _TileWorld__type();
 Module['TileWorld'] = TileWorld;
 Object.defineProperty(TileWorld.prototype, "world", {
     get: function() {
@@ -413,12 +405,24 @@ TileWorld.prototype["__destroy__"] = TileWorld.prototype.__destroy__ = function(
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        Aim.__type__ = _Aim__type();
+        Bullet.__type__ = _Bullet__type();
+        Crate.__type__ = _Crate__type();
+        Human.__type__ = _Human__type();
+        Lamp.__type__ = _Lamp__type();
+        Player.__type__ = _Player__type();
+        Stance.__type__ = _Stance__type();
+        ComponentHandle<Bullet>.__type__ = _mud_ComponentHandle<Bullet>__type();
+        ComponentHandle<Crate>.__type__ = _mud_ComponentHandle<Crate>__type();
+        ComponentHandle<Human>.__type__ = _mud_ComponentHandle<Human>__type();
+        ComponentHandle<Lamp>.__type__ = _mud_ComponentHandle<Lamp>__type();
+        TileWorld.__type__ = _TileWorld__type();
         // Faction
         Module['Faction'] = Module['Faction'] || {};
         Module['Faction']['Ally'] = _Faction_Ally();
         Module['Faction']['Enemy'] = _Faction_Enemy();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

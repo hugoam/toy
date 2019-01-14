@@ -8,7 +8,6 @@ PhysicDebugDraw.prototype = Object.create(WrapperObject.prototype);
 PhysicDebugDraw.prototype.constructor = PhysicDebugDraw;
 PhysicDebugDraw.prototype.__class__ = PhysicDebugDraw;
 PhysicDebugDraw.__cache__ = {};
-PhysicDebugDraw.__type__ = _toy_PhysicDebugDraw__type();
 Module['PhysicDebugDraw'] = PhysicDebugDraw;
 PhysicDebugDraw.prototype["__destroy__"] = PhysicDebugDraw.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -20,7 +19,6 @@ VisuScene.prototype = Object.create(WrapperObject.prototype);
 VisuScene.prototype.constructor = VisuScene;
 VisuScene.prototype.__class__ = VisuScene;
 VisuScene.__cache__ = {};
-VisuScene.__type__ = _toy_VisuScene__type();
 Module['VisuScene'] = VisuScene;
 VisuScene.prototype["next_frame"] = VisuScene.prototype.next_frame = function(self) {
     var self = this.ptr;
@@ -42,8 +40,10 @@ VisuScene.prototype["__destroy__"] = VisuScene.prototype.__destroy__ = function(
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        PhysicDebugDraw.__type__ = _toy_PhysicDebugDraw__type();
+        VisuScene.__type__ = _toy_VisuScene__type();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

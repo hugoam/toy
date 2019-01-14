@@ -6,8 +6,8 @@ Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['toy'] = Module['toy'] || {};
 
 (function() {
-    function setupEnums() {
+    function setup() {
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();

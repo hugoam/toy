@@ -19,7 +19,6 @@ Block.prototype = Object.create(WrapperObject.prototype);
 Block.prototype.constructor = Block;
 Block.prototype.__class__ = Block;
 Block.__cache__ = {};
-Block.__type__ = _toy_Block__type();
 Module['Block'] = Block;
 Block.prototype["chunk"] = Block.prototype.chunk = function(self, x, y, z, element) {
     var self = this.ptr;
@@ -120,7 +119,6 @@ Chunk.prototype = Object.create(WrapperObject.prototype);
 Chunk.prototype.constructor = Chunk;
 Chunk.prototype.__class__ = Chunk;
 Chunk.__cache__ = {};
-Chunk.__type__ = _toy_Chunk__type();
 Module['Chunk'] = Chunk;
 Object.defineProperty(Chunk.prototype, "index", {
     get: function() {
@@ -189,7 +187,6 @@ Element.prototype = Object.create(WrapperObject.prototype);
 Element.prototype.constructor = Element;
 Element.prototype.__class__ = Element;
 Element.__cache__ = {};
-Element.__type__ = _toy_Element__type();
 Module['Element'] = Element;
 Object.defineProperty(Element.prototype, "id", {
     get: function() {
@@ -257,7 +254,6 @@ Heap.prototype = Object.create(WrapperObject.prototype);
 Heap.prototype.constructor = Heap;
 Heap.prototype.__class__ = Heap;
 Heap.__cache__ = {};
-Heap.__type__ = _toy_Heap__type();
 Module['Heap'] = Heap;
 Object.defineProperty(Heap.prototype, "element", {
     get: function() {
@@ -303,7 +299,6 @@ Sector.prototype = Object.create(WrapperObject.prototype);
 Sector.prototype.constructor = Sector;
 Sector.prototype.__class__ = Sector;
 Sector.__cache__ = {};
-Sector.__type__ = _toy_Sector__type();
 Module['Sector'] = Sector;
 Object.defineProperty(Sector.prototype, "coordinate", {
     get: function() {
@@ -364,7 +359,6 @@ Tileblock.prototype = Object.create(WrapperObject.prototype);
 Tileblock.prototype.constructor = Tileblock;
 Tileblock.prototype.__class__ = Tileblock;
 Tileblock.__cache__ = {};
-Tileblock.__type__ = _toy_Tileblock__type();
 Module['Tileblock'] = Tileblock;
 Object.defineProperty(Tileblock.prototype, "wfc_block", {
     get: function() {
@@ -406,7 +400,6 @@ Earth.prototype = Object.create(WrapperObject.prototype);
 Earth.prototype.constructor = Earth;
 Earth.prototype.__class__ = Earth;
 Earth.__cache__ = {};
-Earth.__type__ = _toy_Earth__type();
 Module['Earth'] = Earth;
 Earth.prototype["__destroy__"] = Earth.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -451,7 +444,20 @@ Module['paint_block_height'] = function(block, image, element) {
 };
 
 (function() {
-    function setupEnums() {
+    function setup() {
+        Block.__type__ = _toy_Block__type();
+        Chunk.__type__ = _toy_Chunk__type();
+        Element.__type__ = _toy_Element__type();
+        Grid<toy::Block*>.__type__ = _mud_Grid<toy_Block*>__type();
+        Heap.__type__ = _toy_Heap__type();
+        Sector.__type__ = _toy_Sector__type();
+        Tileblock.__type__ = _toy_Tileblock__type();
+        ComponentHandle<toy::Block>.__type__ = _mud_ComponentHandle<toy_Block>__type();
+        ComponentHandle<toy::Chunk>.__type__ = _mud_ComponentHandle<toy_Chunk>__type();
+        ComponentHandle<toy::Heap>.__type__ = _mud_ComponentHandle<toy_Heap>__type();
+        ComponentHandle<toy::Sector>.__type__ = _mud_ComponentHandle<toy_Sector>__type();
+        ComponentHandle<toy::Tileblock>.__type__ = _mud_ComponentHandle<toy_Tileblock>__type();
+        Earth.__type__ = _toy_Earth__type();
         // MatterState
         Module['MatterState'] = Module['MatterState'] || {};
         Module['MatterState']['Solid'] = _toy_MatterState_Solid();
@@ -459,6 +465,6 @@ Module['paint_block_height'] = function(block, image, element) {
         Module['MatterState']['Gas'] = _toy_MatterState_Gas();
         Module['MatterState']['Plasma'] = _toy_MatterState_Plasma();
     }
-    if (Module['calledRun']) setupEnums();
-    else addOnPreMain(setupEnums);
+    if (Module['calledRun']) setup();
+    else addOnPreMain(setup);
 })();
