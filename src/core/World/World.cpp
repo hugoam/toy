@@ -25,8 +25,8 @@ using namespace mud; namespace toy
         : m_id(complex.m_id)
 		, m_complex(complex)
 		, m_name(name)
-		, m_clock(make_object<WorldClock>(*this))
 		, m_pools(c_max_types)
+		, m_clock(make_object<WorldClock>(*this))
 		, m_job_system(job_system)
     {
 		UNUSED(id);

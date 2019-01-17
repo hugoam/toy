@@ -197,12 +197,12 @@ using namespace mud; namespace toy
 		float m_times[size_t(Step::Count)] = {};
 	};
 
-#if MUD_PLATFORM_EMSCRIPTEN
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 	static GameShell* g_app = nullptr;
 #endif
 }
 
-#if MUD_PLATFORM_EMSCRIPTEN
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 extern "C"
 {
 	void copy(const char* text);
