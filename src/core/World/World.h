@@ -5,21 +5,16 @@
 
 #pragma once
 
+#include <stl/vector.h>
+#include <stl/string.h>
 #include <ecs/Entity.h>
 #include <ecs/Loop.h>
 #include <core/Forward.h>
 #include <core/World/Origin.h>
 #include <core/World/Section.h>
 
-#ifndef MUD_CPP_20
-#include <vector>
-#include <string>
-#endif
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	class refl_ TOY_CORE_EXPORT World
     {
     public:
@@ -68,7 +63,7 @@ using namespace mud; namespace toy
 		}
 
 	public:
-		std::vector<unique_ptr<HandlePool>> m_pools;
+		vector<unique<HandlePool>> m_pools;
 
 		template <class T>
 		inline SparsePool<T>& pool()
@@ -79,7 +74,7 @@ using namespace mud; namespace toy
 		}
 
     private:
-		object_ptr<WorldClock> m_clock;
+		object<WorldClock> m_clock;
 		EntityHandle<Origin> m_origin;
 		EntityHandle<Origin> m_unworld;
 
@@ -93,7 +88,7 @@ using namespace mud; namespace toy
 	inline ComponentHandle<T> construct(HSpatial parent, Types&&... args)
 	{
 		ECS& ecs = parent->m_world->m_ecs;
-		ComponentHandle<T> object = T::create(ecs, parent, std::forward<Types>(args)...);
+		ComponentHandle<T> object = T::create(ecs, parent, static_cast<Types&&>(args)...);
 		parent->m_contents.push_back(object->m_spatial);
 		return object;
 	}
@@ -102,7 +97,7 @@ using namespace mud; namespace toy
 	inline EntityHandle<T> construct_owned(HSpatial parent, Types&&... args)
 	{
 		ECS& ecs = parent->m_world->m_ecs;
-		ComponentHandle<T> object = T::create(ecs, parent, std::forward<Types>(args)...);
+		ComponentHandle<T> object = T::create(ecs, parent, static_cast<Types&&>(args)...);
 		parent->m_contents.push_back(object->m_spatial);
 		return { object.m_handle, object.m_ecs };
 	}

@@ -13,7 +13,7 @@
 #include <util/Forward.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #endif
 
 using namespace mud; namespace toy
@@ -30,7 +30,7 @@ using namespace mud; namespace toy
 
 	protected:
 		DataSource* m_dataSource;
-		std::vector<object_ptr<ObjectLoader>> m_loaders;
+		vector<object_ptr<ObjectLoader>> m_loaders;
 	};
 
 	class refl_ TOY_UTIL_EXPORT Loader : public NonCopy
@@ -51,7 +51,7 @@ using namespace mud; namespace toy
 
 		unique_ptr<DataLoader> m_dataLoader;
 
-		std::vector<Var> m_data;
+		vector<Var> m_data;
 
 		// Loading
 		virtual void select(Id id);
@@ -115,17 +115,17 @@ using namespace mud; namespace toy
 		size_t& batchId() { return m_autoFirstId; }
 
 	protected:
-		std::vector<object_ptr<Loader>> m_subloaders;
-		std::vector<object_ptr<Loader>> m_postloaders;
+		vector<object_ptr<Loader>> m_subloaders;
+		vector<object_ptr<Loader>> m_postloaders;
 
-		std::vector<std::vector<Ref>> m_batch;
+		vector<vector<Ref>> m_batch;
 		size_t m_batchDepth;
 		size_t m_batchCounter;
 		size_t m_autoFirstId;
 
 		size_t m_protoIndex;
 
-		std::vector<Injector> m_injectors;
+		vector<Injector> m_injectors;
 	};
 
 	class refl_ TOY_UTIL_EXPORT PartLoader : public ObjectLoader

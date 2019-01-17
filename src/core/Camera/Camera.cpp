@@ -75,7 +75,7 @@ using namespace mud; namespace toy
 
 	void Camera::calc_lens_rotation(const Spatial& spatial)
 	{
-		m_lens_rotation = spatial.absolute_rotation() * angleAxis(-m_lens_angle, to_vec3(Side::Right));
+		m_lens_rotation = spatial.absolute_rotation() * angle_axis(-m_lens_angle, to_vec3(Side::Right));
 	}
 
 	void Camera::next_frame(const Spatial& spatial, size_t tick, size_t delta)

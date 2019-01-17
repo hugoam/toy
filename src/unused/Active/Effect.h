@@ -8,12 +8,12 @@
 #include <core/Forward.h>
 
 #ifndef MUD_CPP_20
-#include <string>
+#include <stl/string>
 #endif
 
 using namespace mud; namespace toy
 {
-	using string = std::string;
+	using string = string;
 
 	class EffectCallback { public: virtual void effectEnded(Effect& effect) = 0; };
 

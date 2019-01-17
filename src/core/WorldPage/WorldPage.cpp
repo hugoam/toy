@@ -47,32 +47,20 @@ using namespace mud; namespace toy
 	void WorldPage::next_frame(const Spatial& spatial, size_t tick, size_t delta)
 	{
 		UNUSED(tick); UNUSED(delta);
-		if(m_updated > m_last_rebuilt)
-			this->build_geometry(spatial);
 	}
 
-	void WorldPage::build_geometry(const Spatial& spatial)
+	void WorldPage::update_geometry(size_t tick)
 	{
-		if(m_build_geometry)
-		{
-			printf("INFO: Rebuilding WorldPage geometry\n");
-
-			m_build_geometry(*this);
-			this->update_geometry();
-			m_last_rebuilt = spatial.m_last_tick;
-
-			//printf("INFO: Rebuilt WorldPage geometry, %zu vertices\n", m_geom->m_vertices.size());
-		}
-	}
-
-	void WorldPage::update_geometry()
-	{
+		printf("INFO: Updating WorldPage world geometry\n");
+		m_solids.clear();
 		for(Geometry& geom : m_chunks)
 		{
+			printf("INFO: WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
 			m_solids.emplace_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}
 
 		m_chunks.clear();
+		m_last_rebuilt = tick;
 	}
 
 	/*

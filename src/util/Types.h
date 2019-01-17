@@ -13,9 +13,9 @@
 #endif
 
 #ifndef MUD_CPP_20
-#include <string>
+#include <stl/string.h>
 #include <cstdint>
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 
@@ -26,6 +26,6 @@ namespace mud
     export_ template <> TOY_UTIL_EXPORT Type& type<toy::Procedure>();
     export_ template <> TOY_UTIL_EXPORT Type& type<toy::ProcedureType>();
     
-    export_ template struct TOY_UTIL_EXPORT Typed<std::vector<toy::Procedure*>>;
-    export_ template struct TOY_UTIL_EXPORT Typed<std::vector<toy::ProcedureType*>>;
+    export_ template struct TOY_UTIL_EXPORT Typed<vector<toy::Procedure*>>;
+    export_ template struct TOY_UTIL_EXPORT Typed<vector<toy::ProcedureType*>>;
 }

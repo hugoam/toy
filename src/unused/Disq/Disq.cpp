@@ -418,12 +418,12 @@ using namespace mud; namespace toy
 
 	bool Disq::collisions(const vec3& pos)
 	{
-		std::vector<Collision> obstacles;
+		vector<Collision> obstacles;
 		this->collisions(pos, obstacles);
 		return (obstacles.size() > 0);
 	}
 	
-	void Disq::collisions(const vec3& pos, std::vector<Collision>& obstacles)
+	void Disq::collisions(const vec3& pos, vector<Collision>& obstacles)
 	{
 		//this->m_collision_shape.setMargin(0.f);
 		m_impl->project(pos, obstacles, m_group);
@@ -432,7 +432,7 @@ using namespace mud; namespace toy
 
 	vec3 Disq::project(const vec3& pos)
 	{
-		std::vector<Collision> contacts;
+		vector<Collision> contacts;
 		this->collisions(pos, contacts);
 
 		if(contacts.size() >= 1)

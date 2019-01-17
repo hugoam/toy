@@ -58,7 +58,7 @@ using namespace mud; namespace toy
 		attr_ Entity& m_entity;
 		attr_ Behavior* m_controller;
 
-		std::vector<object_ptr<Behavior>> m_behaviors;
+		vector<object_ptr<Behavior>> m_behaviors;
 
 		void add(object_ptr<Behavior> behavior);
 
@@ -75,6 +75,6 @@ using namespace mud; namespace toy
 		void check(Behavior* behavior);
 
 	private:
-		std::vector<Behavior*> m_actives;
+		vector<Behavior*> m_actives;
 	};
 }

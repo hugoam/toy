@@ -22,15 +22,15 @@ using namespace mud; namespace toy
 	RTSCameraController::RTSCameraController(Viewer& viewer, HCamera camera, HMovable movable)
 		: CameraController(viewer, camera, movable)
 	{
-		m_key_down_handlers[Key::Q] = [this] { this->rotate_left(); };
-		m_key_down_handlers[Key::E] = [this] { this->rotate_right(); };
-		m_key_down_handlers[Key::O] = [this] { this->zoom_in(); };
-		m_key_down_handlers[Key::L] = [this] { this->zoom_out(); };
-		m_key_down_handlers[Key::I] = [this] { this->pitch_lens_up(); };
-		m_key_down_handlers[Key::K] = [this] { this->pitch_lens_down(); };
-
-		m_key_up_handlers[Key::Q] = [this] { this->stop_rotate_left(); };
-		m_key_up_handlers[Key::E] = [this] { this->stop_rotate_right(); };
+		//m_key_down_handlers[Key::Q] = [this] { this->rotate_left(); };
+		//m_key_down_handlers[Key::E] = [this] { this->rotate_right(); };
+		//m_key_down_handlers[Key::O] = [this] { this->zoom_in(); };
+		//m_key_down_handlers[Key::L] = [this] { this->zoom_out(); };
+		//m_key_down_handlers[Key::I] = [this] { this->pitch_lens_up(); };
+		//m_key_down_handlers[Key::K] = [this] { this->pitch_lens_down(); };
+		//
+		//m_key_up_handlers[Key::Q] = [this] { this->stop_rotate_left(); };
+		//m_key_up_handlers[Key::E] = [this] { this->stop_rotate_right(); };
 	}
 
 	void RTSCameraController::process(Viewer& viewer)

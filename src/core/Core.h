@@ -13,14 +13,8 @@
 #include <core/Navmesh/Navmesh.h>
 #include <core/Bullet/BulletWorld.h>
 
-#ifndef MUD_CPP_20
-#include <map>
-#endif
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	class refl_ TOY_CORE_EXPORT Core : public NonCopy
 	{
 	public:

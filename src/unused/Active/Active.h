@@ -10,7 +10,7 @@
 #include <core/Forward.h>
 #include <core/Active/Effect.h>
 
-#include <vector>
+#include <stl/vector>
 
 using namespace mud; namespace toy
 {
@@ -33,8 +33,8 @@ using namespace mud; namespace toy
 
 		attr_ Entity& m_entity;
 
-		std::vector<Effect> m_effects;
-		std::vector<State> m_states;
+		vector<Effect> m_effects;
+		vector<State> m_states;
 
 		void addEffect(const string& name, float duration = 0.f, bool loop = true);
 		void removeEffect(const string& name);

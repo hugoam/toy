@@ -43,7 +43,7 @@ Object.defineProperty(ProcedureType.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <stl/string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _toy_ProcedureType__set_name(self, value);

@@ -23,8 +23,12 @@ using namespace mud; namespace toy
 {
 	void paint_world_page(Gnode& parent, WorldPage& page)
 	{
-		if(!page.m_build_geometry)
-			page.m_build_geometry = [&](WorldPage& page) { build_world_page_geometry(*parent.m_scene, page); };
+		if(page.m_updated > page.m_last_rebuilt)
+		{
+			printf("INFO: Rebuilding WorldPage geometry\n");
+			build_world_page_geometry(*parent.m_scene, page);
+			page.update_geometry(page.m_spatial->m_last_tick);
+		}
 		//gfx::shape(parent, Cube(page.m_extents), Symbol(Colour(1.f, 0.f, 1.f, 0.2f)));
 	}
 
@@ -90,7 +94,7 @@ using namespace mud; namespace toy
 	{
 		Spatial& spatial = page.m_spatial;
 
-		std::vector<Item*> items;
+		vector<Item*> items;
 
 		scene.m_pool->pool<Item>().iterate([&](Item& item)
 		{

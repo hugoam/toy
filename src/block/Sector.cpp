@@ -51,9 +51,9 @@ using namespace mud; namespace toy
 		attr_ vec3 m_world_size;
 		attr_ vec3 m_center_offset;
 
-		attr_ std::vector<Element*> m_elements;
+		attr_ vector<Element*> m_elements;
 
-		attr_ std::vector<Sector*> m_sectors;
+		attr_ vector<Sector*> m_sectors;
 		attr_ Grid<Block*> m_blocks;
 
 	};
@@ -65,10 +65,10 @@ using namespace mud; namespace toy
 		grid.m_center_offset = grid.m_world_size * 0.5f;
 		grid.m_center_offset.y = 0.f;
 
-		std::vector<uvec3> coords;
+		vector<uvec3> coords;
 		mud::grid(grid_subdiv, coords);
 
-		std::vector<Block*> blocks;
+		vector<Block*> blocks;
 
 		for(uvec3 coord : coords)
 		{
@@ -89,7 +89,7 @@ using namespace mud; namespace toy
 	{
 		Entity entity = { ecs.CreateEntity<Spatial, WorldPage, Navblock, Tileblock>(), ecs.m_index };
 		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, size));
+		ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, vec3(size)));
 		ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
 		ecs.SetComponent(entity, Tileblock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), size, tile_scale, tileset));
 		return entity;
@@ -142,8 +142,8 @@ using namespace mud; namespace toy
 
 		WfcBlock& tileblock = block.m_wfc_block;
 
-		std::vector<Cube> cubes;
-		std::vector<ProcShape> shapes;
+		vector<Cube> cubes;
+		vector<ProcShape> shapes;
 		cubes.reserve(tileblock.m_tiles.size());
 
 		for(size_t x = 0; x < tileblock.m_tiles.m_x; ++x) for(size_t y = 0; y < tileblock.m_tiles.m_y; ++y) for(size_t z = 0; z < tileblock.m_tiles.m_z; ++z)

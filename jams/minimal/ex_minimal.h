@@ -86,9 +86,9 @@ public:
 
 	bool m_walk = true;
 
-	std::vector<unique_ptr<Bullet>> m_bullets;
+	vector<unique<Bullet>> m_bullets;
 
-	struct State { std::string name; bool loop; };
+	struct State { string name; bool loop; };
 	State m_state = { "IdleAim", true };
 
 	void next_frame(Spatial& spatial, size_t tick, size_t delta);

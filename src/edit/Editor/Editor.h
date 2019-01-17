@@ -13,9 +13,11 @@
 
 #include <uio/Edit/Script.h>
 
+#include <functional>
+
 using namespace mud; namespace toy
 {
-	using Selection = std::vector<Ref>;
+	using Selection = vector<Ref>;
 
 	export_ class refl_ TOY_EDIT_EXPORT PlayTool : public Tool
 	{
@@ -40,7 +42,7 @@ using namespace mud; namespace toy
 	struct refl_ TOY_EDIT_EXPORT ActionGroup
 	{
 		string m_name;
-		std::map<string, std::function<void()>> m_actions;
+		map<string, std::function<void()>> m_actions;
 	};
 
 	struct refl_ TOY_EDIT_EXPORT GraphicsDebug
@@ -60,13 +62,13 @@ using namespace mud; namespace toy
 		
 		attr_ FrameViewTool m_frame_view_tool;
 
-		std::map<string, ActionGroup> m_action_groups;
+		map<string, ActionGroup> m_action_groups;
 
 		attr_ World* m_edited_world = nullptr;
 		attr_ bool m_run_game = false;
 		attr_ bool m_play_game = false;
 
-		std::vector<Scene*> m_scenes;
+		vector<Scene*> m_scenes;
 
 		GraphicsDebug m_graphics_debug;
 

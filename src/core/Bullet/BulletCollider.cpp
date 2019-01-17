@@ -42,11 +42,11 @@
 
 using namespace mud; namespace toy
 {
-	BulletShape::BulletShape(unique_ptr<btCollisionShape> shape)
+	BulletShape::BulletShape(unique<btCollisionShape> shape)
 		: shape(std::move(shape))
 	{}
 
-	BulletShape::BulletShape(unique_ptr<btCollisionShape> shape, unique_ptr<btStridingMeshInterface> mesh)
+	BulletShape::BulletShape(unique<btCollisionShape> shape, unique<btStridingMeshInterface> mesh)
 		: shape(std::move(shape))
 		, mesh(std::move(mesh))
 	{}
@@ -68,7 +68,7 @@ using namespace mud; namespace toy
 
 	BulletShape createGeometryShape(Geometry& geometry)
 	{
-		unique_ptr<btTriangleMesh> trimesh = make_unique<btTriangleMesh>();
+		unique<btTriangleMesh> trimesh = make_unique<btTriangleMesh>();
 
 		btVector3 vertex[3];
 		for(const Tri& triangle : geometry.m_triangles)
@@ -84,14 +84,14 @@ using namespace mud; namespace toy
 		}
 
 		const bool useQuantizedAABB = true;
-		unique_ptr<btCollisionShape> meshShape(make_unique<btBvhTriangleMeshShape>(trimesh.get(), useQuantizedAABB));
+		unique<btCollisionShape> meshShape(make_unique<btBvhTriangleMeshShape>(trimesh.get(), useQuantizedAABB));
 
 		return BulletShape(std::move(meshShape), std::move(trimesh));
 	}
 
 	BulletShape createConvexHullShape(ConvexHull& hull)
 	{
-		unique_ptr<btConvexHullShape> convexHull = make_unique<btConvexHullShape>();
+		unique<btConvexHullShape> convexHull = make_unique<btConvexHullShape>();
 		for(const vec3& point : hull.m_vertices)
 			convexHull->addPoint(to_btvec3(point));
 		return BulletShape(std::move(convexHull));
@@ -99,14 +99,14 @@ using namespace mud; namespace toy
 
 	DispatchBulletShape::DispatchBulletShape()
 	{
-		dispatch_branch<Plane>(*this, [](Plane& plane) -> BulletShape { return{ make_unique<btStaticPlaneShape>(to_btvec3(plane.m_normal), plane.m_distance) }; });
-		dispatch_branch<Quad>(*this, [](Quad& quad) -> BulletShape { Plane plane = { quad.m_vertices[0], quad.m_vertices[1], quad.m_vertices[2] }; return{ make_unique<btStaticPlaneShape>(to_btvec3(plane.m_normal), plane.m_distance) }; });
-		dispatch_branch<Sphere>(*this, [](Sphere& sphere) -> BulletShape { return{ make_unique<btSphereShape>(sphere.m_radius) }; });
-		dispatch_branch<Capsule>(*this, [](Capsule& capsule) -> BulletShape { return{ make_unique<btCapsuleShape>(capsule.m_radius, capsule.m_height) }; });
-		dispatch_branch<Cylinder>(*this, [](Cylinder& cylinder) -> BulletShape { return{ make_unique<btCylinderShape>(btVector3(cylinder.m_radius, cylinder.m_height / 2.f, cylinder.m_radius)) }; });
-		dispatch_branch<Cube>(*this, [](Cube& box) -> BulletShape { return{ make_unique<btBoxShape>(to_btvec3(box.m_extents)) }; });
-		dispatch_branch<ConvexHull>(*this, &createConvexHullShape);
-		dispatch_branch<Geometry>(*this, &createGeometryShape);
+		dispatch_branch<Plane>	    (*this, +[](Plane& plane) -> BulletShape { return{ make_unique<btStaticPlaneShape>(to_btvec3(plane.m_normal), plane.m_distance) }; });
+		dispatch_branch<Quad>	    (*this, +[](Quad& quad) -> BulletShape { Plane plane = { quad.m_vertices[0], quad.m_vertices[1], quad.m_vertices[2] }; return{ make_unique<btStaticPlaneShape>(to_btvec3(plane.m_normal), plane.m_distance) }; });
+		dispatch_branch<Sphere>     (*this, +[](Sphere& sphere) -> BulletShape { return{ make_unique<btSphereShape>(sphere.m_radius) }; });
+		dispatch_branch<Capsule>    (*this, +[](Capsule& capsule) -> BulletShape { return{ make_unique<btCapsuleShape>(capsule.m_radius, capsule.m_height) }; });
+		dispatch_branch<Cylinder>   (*this, +[](Cylinder& cylinder) -> BulletShape { return{ make_unique<btCylinderShape>(btVector3(cylinder.m_radius, cylinder.m_height / 2.f, cylinder.m_radius)) }; });
+		dispatch_branch<Cube>       (*this, +[](Cube& box) -> BulletShape { return{ make_unique<btBoxShape>(to_btvec3(box.m_extents)) }; });
+		dispatch_branch<ConvexHull> (*this, createConvexHullShape);
+		dispatch_branch<Geometry>   (*this, createGeometryShape);
 	};
 
 	BulletShape DispatchBulletShape::dispatch(CollisionShape& collision_shape)
@@ -157,13 +157,13 @@ using namespace mud; namespace toy
 		this->update_transform(spatial.absolute_position(), spatial.absolute_rotation());
 	}
 
-	void BulletCollider::project(const vec3& position, std::vector<Collision>& collisions, short int mask)
+	void BulletCollider::project(const vec3& position, vector<Collision>& collisions, short int mask)
 	{
 		Spatial& spatial = m_spatial;
 		m_bullet_world.project(m_collider, position, spatial.m_rotation, collisions, mask);
 	}
 
-	void BulletCollider::raycast(const vec3& target, std::vector<Collision>& collisions, short int mask)
+	void BulletCollider::raycast(const vec3& target, vector<Collision>& collisions, short int mask)
 	{
 		Spatial& spatial = m_spatial;
 		m_bullet_world.raycast(m_collider, spatial.m_position, target, mask);

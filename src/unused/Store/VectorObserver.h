@@ -12,7 +12,7 @@
 
 #ifndef MUD_CPP_20
 #include <memory>
-#include <vector>
+#include <stl/vector>
 #endif
 
 using namespace mud; namespace toy
@@ -30,7 +30,7 @@ using namespace mud; namespace toy
 	class VectorObserver // : public Observer
 	{
 	public:
-		VectorObserver(std::vector<R>& vector) : m_vector(vector) {}
+		VectorObserver(vector<R>& vector) : m_vector(vector) {}
 
 		void update()
 		{
@@ -81,15 +81,15 @@ using namespace mud; namespace toy
 		virtual void handle_remove(T& object, size_t index) = 0;
 
 	protected:
-		std::vector<R>& m_vector;
-		std::vector<T*> m_copy;
+		vector<R>& m_vector;
+		vector<T*> m_copy;
 	};
 	
 	template <class T_Content, class T_Type = typename type_class<T_Content>::type>
 	class GenVectorObserver : public VectorObserver<T_Content, T_Type>
 	{
 	public:
-		GenVectorObserver(std::vector<T_Content>& vector, GenStoreObserver& observer)
+		GenVectorObserver(vector<T_Content>& vector, GenStoreObserver& observer)
 			: VectorObserver<T_Content, T_Type>(vector)
 			, m_observer(observer)
 		{}

@@ -22,8 +22,8 @@ using namespace mud; namespace toy
 		attr_ Entity& m_entity;
 
 		Array<ProcedureType> m_actions;
-		std::vector<object_ptr<Procedure>> m_queued;
-		std::vector<object_ptr<Procedure>> m_execution;
+		vector<object_ptr<Procedure>> m_queued;
+		vector<object_ptr<Procedure>> m_execution;
 
 		void next_frame(size_t tick, size_t delta);
 
@@ -38,7 +38,7 @@ using namespace mud; namespace toy
 		//Procedure* queue(User* user, const string& action, Entity* target);
 		//Procedure* execute(User* user, const string& action, Entity* target);
 
-		//void queueBatch(Procedure* action, std::vector<Ref> targets);
+		//void queueBatch(Procedure* action, vector<Ref> targets);
 
 	private:
 	};

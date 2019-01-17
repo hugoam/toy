@@ -11,7 +11,7 @@
 #include <core/Path/DetourPath.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 class dtNavMesh;
@@ -28,8 +28,8 @@ using namespace mud; namespace toy
 
 		dtNavMesh& m_navmesh;
 
-		unique_ptr<dtNavMeshQuery> m_query;
-		unique_ptr<dtQueryFilter> m_filter;
+		unique<dtNavMeshQuery> m_query;
+		unique<dtQueryFilter> m_filter;
 
 		size_t m_max_polys = 20;
 		size_t m_max_waypoints = 50;

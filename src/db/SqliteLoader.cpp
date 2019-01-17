@@ -45,7 +45,7 @@ using namespace mud; namespace toy
 			return "INTEGER";
 		else if(type.is<float>())
 			return "FLOAT";
-		else if(type.is<string>())
+		else if(type.is<stl/string>())
 			return "TEXT";
 		else
 			return "INTEGER";
@@ -55,7 +55,7 @@ using namespace mud; namespace toy
 	{
 		dispatch_branch<int>(*this, [](int& value, sqlite3_stmt* stmt, size_t i) { sqlite3_bind_int(stmt, i + 1, value); });
 		dispatch_branch<float>(*this, [](float& value, sqlite3_stmt* stmt, size_t i) { sqlite3_bind_double(stmt, i + 1, value); });
-		dispatch_branch<string>(*this, [](string& value, sqlite3_stmt* stmt, size_t i) { sqlite3_bind_text(stmt, i + 1, value.c_str(), value.size(), SQLITE_TRANSIENT); });
+		dispatch_branch<stl/string>(*this, [](string& value, sqlite3_stmt* stmt, size_t i) { sqlite3_bind_text(stmt, i + 1, value.c_str(), value.size(), SQLITE_TRANSIENT); });
 		dispatch_branch<Id>(*this, [](Id& value, sqlite3_stmt* stmt, size_t i) { sqlite3_bind_int(stmt, i + 1, value); });
 		dispatch_branch<bool>(*this, [](bool& value, sqlite3_stmt* stmt, size_t i) { sqlite3_bind_int(stmt, i + 1, value); });
 	}
@@ -64,7 +64,7 @@ using namespace mud; namespace toy
 	{
 		dispatch_branch<int>(*this, [](int& value, sqlite3_stmt* stmt, size_t i) { value = sqlite3_column_int(stmt, i); });
 		dispatch_branch<float>(*this, [](float& value, sqlite3_stmt* stmt, size_t i) { value = float(sqlite3_column_double(stmt, i)); });
-		dispatch_branch<string>(*this, [](string& value, sqlite3_stmt* stmt, size_t i) { const char* result = reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)); value = result ? result : ""; });
+		dispatch_branch<stl/string>(*this, [](string& value, sqlite3_stmt* stmt, size_t i) { const char* result = reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)); value = result ? result : ""; });
 		dispatch_branch<Id>(*this, [](Id& value, sqlite3_stmt* stmt, size_t i) { value = sqlite3_column_int(stmt, i); });
 		dispatch_branch<bool>(*this, [](bool& value, sqlite3_stmt* stmt, size_t i) { value = sqlite3_column_int(stmt, i) != 0; });
 	}
@@ -74,7 +74,7 @@ using namespace mud; namespace toy
 		return "`" + str + "`";
 	}
 
-	string join(const std::vector<string>& values, string separator, string prefix = "")
+	string join(const vector<stl/string>& values, string separator, string prefix = "")
 	{
 		string str;
 		for(const string& val : values)
@@ -201,9 +201,9 @@ using namespace mud; namespace toy
 		this->prepare();
 	}
 
-	std::vector<Var> SqliteLoader::data()
+	vector<Var> SqliteLoader::data()
 	{
-		return m_model ? m_model->m_argData : std::vector<Var>();
+		return m_model ? m_model->m_argData : vector<Var>();
 	}
 
 	void SqliteLoader::prepare(sqlite3_stmt*& statement, cstring content)
@@ -217,7 +217,7 @@ using namespace mud; namespace toy
 	string SqliteLoader::saveStatement()
 	{
 		string statement = "INSERT OR REPLACE INTO " + m_model->m_table + "(" + join(m_model->m_argNames, ", ") + ")";
-		statement += " VALUES (" + join(std::vector<string>(m_model->m_argNames.size(), "(?)"), ", ") + ");";
+		statement += " VALUES (" + join(vector<stl/string>(m_model->m_argNames.size(), "(?)"), ", ") + ");";
 		return statement;
 	}
 

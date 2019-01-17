@@ -223,7 +223,7 @@ namespace mud
             // constructors
             {
                 { type<Stance>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Stance>(ref)) Stance(  ); }, {} },
-                { type<Stance>(), [](Ref ref, array<Var> args) { new(&val<Stance>(ref)) Stance( val<std::string>(args[0]), val<bool>(args[1]) ); }, { { "name", var(std::string()) }, { "loop", var(bool()) } } }
+                { type<Stance>(), [](Ref ref, array<Var> args) { new(&val<Stance>(ref)) Stance( val<string>(args[0]), val<bool>(args[1]) ); }, { { "name", var(string()) }, { "loop", var(bool()) } } }
             },
             // copy constructor
             {
@@ -231,7 +231,7 @@ namespace mud
             },
             // members
             {
-                { type<Stance>(), member_address(&Stance::name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
+                { type<Stance>(), member_address(&Stance::name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<Stance>(), member_address(&Stance::loop), type<bool>(), "loop", var(bool()), Member::Value, nullptr }
             },
             // methods

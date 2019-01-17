@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <stl/string.h>
 #include <tree/Node.h>
 #include <math/Timer.h>
 #include <visu/Forward.h>
@@ -20,15 +21,12 @@
 
 #ifndef MUD_CPP_20
 #include <functional>
-#include <string>
 #endif
 
 #define TOY_PHYSIC_DEBUG_DRAW
 
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	struct TOY_VISU_EXPORT VisuPainter
 	{
 		VisuPainter(cstring name, size_t index, std::function<void(size_t, VisuScene&, Gnode&)> paint)
@@ -53,7 +51,7 @@ using namespace mud; namespace toy
 		void draw_physics(Gnode& parent, World& world, Medium& medium);
 
 		class Impl;
-		unique_ptr<Impl> m_impl;
+		unique<Impl> m_impl;
 	};
 
 	class refl_ TOY_VISU_EXPORT VisuScene : public NonCopy
@@ -71,9 +69,9 @@ using namespace mud; namespace toy
 		SoundManager& m_snd_manager;
 #endif
 
-		std::vector<Gnode*> m_entities;
+		vector<Gnode*> m_entities;
 
-		std::vector<unique_ptr<VisuPainter>> m_painters;
+		vector<unique<VisuPainter>> m_painters;
 
 		meth_ void next_frame();
 
@@ -81,7 +79,7 @@ using namespace mud; namespace toy
 
 		inline void painter(cstring name, std::function<void(size_t, VisuScene&, Gnode&)> paint)
 		{
-			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
+			m_painters.emplace_back(construct<VisuPainter>(name, m_painters.size(), paint));
 		}
 
 		template <class T>

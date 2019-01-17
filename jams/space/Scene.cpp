@@ -332,17 +332,17 @@ static Cube s_weapon_shape[6] =
 	Cube(vec3(vec2(0.001f), 0.004f))
 };
 
-void scale_down(ParticleGenerator& particles, float factor)
+void scale_down(ParticleFlow& particles, float factor)
 {
 	particles.m_scale.m_value *= factor;
 	particles.m_volume.m_value *= factor;
 	particles.m_speed.m_value *= factor;
 }
 
-unique_ptr<ParticleGenerator> weapon_particles(Gnode& parent, cstring name, WeaponType weapon)
+unique<ParticleFlow> weapon_particles(Gnode& parent, cstring name, WeaponType weapon)
 {
-	ParticleGenerator& original = *parent.m_scene->m_gfx_system.particles().file(name);
-	unique_ptr<ParticleGenerator> particles = make_unique<ParticleGenerator>(original);
+	ParticleFlow& original = *parent.m_scene->m_gfx_system.particles().file(name);
+	unique<ParticleFlow> particles = make_unique<ParticleFlow>(original);
 	particles->m_colour.m_value = s_weapon_colour[size_t(weapon)];
 	//particles->m_scale.m_value = s_weapon_scale[size_t(weapon)];
 	scale_down(*particles, 0.005f);
@@ -351,9 +351,9 @@ unique_ptr<ParticleGenerator> weapon_particles(Gnode& parent, cstring name, Weap
 
 bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
 {
-	static unique_ptr<ParticleGenerator> weapon_flash[4] = {};
-	static unique_ptr<ParticleGenerator> weapon_trail[4] = {};
-	static unique_ptr<ParticleGenerator> weapon_impact[4] = {};
+	static unique<ParticleFlow> weapon_flash[4] = {};
+	static unique<ParticleFlow> weapon_trail[4] = {};
+	static unique<ParticleFlow> weapon_impact[4] = {};
 
 	if(weapon_flash[size_t(weapon)] == nullptr)
 	{
@@ -391,12 +391,12 @@ namespace mud
 }
 
 template <class T>
-T random_element(const std::vector<T>& vec)
+T random_element(const vector<T>& vec)
 {
 	return vec[random_integer<size_t>(0, vec.size() - 1)];
 }
 
-void paint_combat_fleet(Gnode& parent, const std::vector<CombatFleet>& flotilla, const std::vector<CombatFleet>& enemies, float delta, float intensity)
+void paint_combat_fleet(Gnode& parent, const vector<CombatFleet>& flotilla, const vector<CombatFleet>& enemies, float delta, float intensity)
 {
 	for(const CombatFleet& combat_fleet : flotilla)
 	{
@@ -410,7 +410,7 @@ void paint_combat_fleet(Gnode& parent, const std::vector<CombatFleet>& flotilla,
 
 				if(ship.m_destroyed)
 				{
-					static ParticleGenerator& explode = *parent.m_scene->m_gfx_system.particles().file("explode");
+					static ParticleFlow& explode = *parent.m_scene->m_gfx_system.particles().file("explode");
 					static bool once = false;
 					if(!once)
 					{
@@ -507,7 +507,7 @@ void galaxy_grid(Gnode& parent, Galaxy& galaxy)
 {
 	Colour colour = Colour::White * 3.f;
 	Gnode& self = gfx::node(parent, {}, Y3 * 0.5f);
-	gfx::shape(self, Grid2(galaxy.m_size), Symbol::wire(colour));
+	gfx::shape(self, Grid2(vec2(galaxy.m_size)), Symbol::wire(colour));
 }
 
 void highlighted_sector(Gnode& parent, const vec2& coord)

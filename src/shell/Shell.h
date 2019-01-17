@@ -5,6 +5,7 @@
 #include <tree/Node.h>
 #include <refl/System.h>
 #include <refl/Class.h>
+#include <refl/VirtualMethod.h>
 #include <shell/Forward.h>
 #include <core/User.h>
 
@@ -25,7 +26,7 @@ using namespace mud; namespace toy
 {
 	class SqliteDatabase;
 	
-	using Selection = std::vector<Ref>;
+	using Selection = vector<Ref>;
 
 	class refl_ TOY_SHELL_EXPORT GameScene : public VisuScene
 	{
@@ -62,7 +63,7 @@ using namespace mud; namespace toy
 
 		EditContext m_editor;
 
-		std::vector<unique_ptr<GameScene>> m_scenes;
+		vector<unique<GameScene>> m_scenes;
 	};
 
 	using GameCallback = void(*)(GameModule& module, GameShell& shell, Game& game);
@@ -167,25 +168,25 @@ using namespace mud; namespace toy
 
 		User m_user;
 
-		object_ptr<JobSystem> m_job_system;
-		object_ptr<Core> m_core;
-		object_ptr<LuaInterpreter> m_lua;
-		object_ptr<WrenInterpreter> m_wren;
-		object_ptr<GfxSystem> m_gfx_system;
+		object<JobSystem> m_job_system;
+		object<Core> m_core;
+		object<LuaInterpreter> m_lua;
+		object<WrenInterpreter> m_wren;
+		object<GfxSystem> m_gfx_system;
 #ifdef TOY_SOUND
-		object_ptr<SoundManager> m_sound_system;
+		object<SoundManager> m_sound_system;
 #endif
 
 		attr_ Editor m_editor;
 		bool m_mini_editor = false;
 
-		unique_ptr<Context> m_context;
-		unique_ptr<Vg> m_vg;
-		unique_ptr<UiWindow> m_ui_window;
+		unique<Context> m_context;
+		unique<Vg> m_vg;
+		unique<UiWindow> m_ui_window;
 
 		attr_ Ui* m_ui = nullptr;
 
-		unique_ptr<GameModule> m_game_module_alloc;
+		unique<GameModule> m_game_module_alloc;
 
 		GameModule* m_game_module = nullptr;
 		Game m_game;

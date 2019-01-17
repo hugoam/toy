@@ -79,7 +79,7 @@ using namespace mud; namespace toy
 		float m_detailSampleDist = 6.0f;
 		float m_detailSampleMaxError = 1.0f;
 
-		unique_ptr<rcContext> m_ctx;
+		unique<rcContext> m_ctx;
 
 	public:
 		bool m_keepInterResults = false;
@@ -88,14 +88,14 @@ using namespace mud; namespace toy
 
 		Geometry m_geometry;
 		dtNavMesh* m_navmesh = nullptr;
-		unique_ptr<NavGeom> m_navgeom;
+		unique<NavGeom> m_navgeom;
 		unsigned char* m_triareas = nullptr;
 		rcHeightfield* m_solid = nullptr;
 		rcCompactHeightfield* m_chf = nullptr;
 		rcContourSet* m_cset = nullptr;
 		rcPolyMesh* m_pmesh = nullptr;
 		rcPolyMeshDetail* m_dmesh = nullptr;
-		unique_ptr<rcConfig> m_cfg;	
+		unique<rcConfig> m_cfg;	
 
 		int m_maxTiles = 0;
 		int m_maxPolysPerTile = 0;

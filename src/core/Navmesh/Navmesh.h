@@ -73,6 +73,6 @@ using namespace mud; namespace toy
 
 		Navmesh& m_navmesh;
 
-		virtual object_ptr<Shape> clone() const;
+		virtual object<Shape> clone() const;
 	};
 }

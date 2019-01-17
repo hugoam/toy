@@ -39,9 +39,9 @@
 #endif
 
 #ifndef MUD_CPP_20
-#include <string>
+#include <stl/string.h>
 #include <cstdint>
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 
@@ -56,9 +56,9 @@ namespace mud
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     
-    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::Game*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModule*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameShell*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameModuleBind*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<std::vector<toy::GameScene*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::Game*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameModule*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameShell*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameModuleBind*>>;
+    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameScene*>>;
 }

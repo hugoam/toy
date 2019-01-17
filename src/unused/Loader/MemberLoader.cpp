@@ -142,10 +142,10 @@ using namespace mud; namespace toy
 		if(m_member.is_link())
 			return;
 
-		//val<std::vector<object_ptr<Object>>>(arg).clear();
+		//val<vector<object_ptr<Object>>>(arg).clear();
 		//while(m_elementLoader->selectNext())
 		//	m_elementLoader->loadNext();
-		//arg->val<std::vector<object_ptr<Object>>>().push_back(m_memberLoader->construct());*/
+		//arg->val<vector<object_ptr<Object>>>().push_back(m_memberLoader->construct());*/
 	}
 
 	void SequenceLoader::erase(Ref object)

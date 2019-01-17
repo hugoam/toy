@@ -29,7 +29,7 @@ void populate_block(Tileblock& block)
 	generate_lamps(block);
 }
 
-TileWorld::TileWorld(const std::string& name, JobSystem& job_system)
+TileWorld::TileWorld(const string& name, JobSystem& job_system)
 	: Complex(0, type<TileWorld>(), m_bullet_world, m_navmesh, *this)
 	, m_world(0, *this, name, job_system)
 	, m_bullet_world(m_world)
@@ -68,7 +68,7 @@ void TileWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 
 	// @todo why u clang no accept this ?
 	// for(size_t x : { 0U, block.m_wfc_block.m_tiles.m_x - 1 })
-	std::vector<size_t> xs = { 0U, wfc.m_tiles.m_x - 1 };
+	vector<size_t> xs = { 0U, wfc.m_tiles.m_x - 1 };
 	for(size_t x : xs)
 	for(size_t y = 0; y < wfc.m_tiles.m_y; ++y)
 	for(size_t z = 0; z < wfc.m_tiles.m_z; ++z)
@@ -402,8 +402,8 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 {
 	Spatial& spatial = bullet.m_spatial;
 
-	static ParticleGenerator* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleGenerator* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
+	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
 
 	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
 	gfx::particles(source, *flash);
@@ -433,7 +433,7 @@ void paint_lamp(Gnode& parent, Lamp& lamp)
 	gfx::light(parent, LightType::Point, false, Colour(1.f, 0.3f, 0.2f), 10.f);
 }
 
-Material& highlight_material(const std::string& name, const Colour& colour, int factor)
+Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
 	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
 	material.m_pbr_block.m_enabled = true;
@@ -557,8 +557,11 @@ void paint_world_block(Gnode& parent, Tileblock& block, const uvec3* exclude = n
 	if(!block.m_wfc_block.m_wave.m_solved) return;
 	paint_tiles(parent, Ref(&spatial), block.m_wfc_block, uvec3(UINT_MAX), exclude);
 	WorldPage& world_page = block.m_world_page;
-	if(!world_page.m_build_geometry)
-		world_page.m_build_geometry = [&](WorldPage& page) { build_block_geometry(*parent.m_scene, page, block); };
+	if(world_page.m_updated > world_page.m_last_rebuilt)
+	{
+		build_block_geometry(*parent.m_scene, world_page, block);
+		world_page.update_geometry(world_page.m_spatial->m_last_tick);
+	}
 }
 
 void paint_crate(Gnode& parent, Crate& crate)
@@ -579,7 +582,7 @@ void paint_scene(Gnode& parent)
 
 void paint_viewer(Viewer& viewer)
 {
-	if(rect_size(viewer.m_viewport.m_rect) != vec2(0.f) && !viewer.m_camera.m_clusters)
+	if(rect_size(vec4(viewer.m_viewport.m_rect)) != vec2(0.f) && !viewer.m_camera.m_clusters)
 	{
 		viewer.m_camera.m_clustered = true;
 		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
@@ -599,11 +602,11 @@ vec3 find_fitting_player_location(WfcBlock& tileblock)
 	for(size_t i = 0; i < tileblock.m_tiles.size(); ++i)
 		if(tileblock.m_tileset->m_tiles_flip[tileblock.m_tiles[i]].m_name == "empty_covered")
 		{
-			vec3 coord = { tileblock.m_tiles.x(i), tileblock.m_tiles.y(i), tileblock.m_tiles.z(i) };
+			vec3 coord = vec3(uvec3(tileblock.m_tiles.x(i), tileblock.m_tiles.y(i), tileblock.m_tiles.z(i)));
 			if(distance2(coord, center) < distance2(start_coord, center))
 				start_coord = coord;
 		}
-	return tileblock.to_position(start_coord);
+	return tileblock.to_position(uvec3(start_coord));
 }
 
 Style& menu_style()
@@ -894,7 +897,7 @@ public:
 		if(location.m_name != nullptr)
 		{
 			TextScript& script = app.m_editor.m_script_editor.create_script("enemy_ai", Language::Lua);
-			script.m_script = read_text_file(std::string(location.m_location) + location.m_name);
+			script.m_script = read_text_file(string(location.m_location) + location.m_name);
 		}
 #endif
 	}

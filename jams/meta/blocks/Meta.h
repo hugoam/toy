@@ -201,7 +201,7 @@ namespace mud
             { base_offset<BlockWorld, mud::Complex>() },
             // constructors
             {
-                { type<BlockWorld>(), [](Ref ref, array<Var> args) { new(&val<BlockWorld>(ref)) BlockWorld( val<std::string>(args[0]), val<mud::JobSystem>(args[1]) ); }, { { "name", var(std::string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
+                { type<BlockWorld>(), [](Ref ref, array<Var> args) { new(&val<BlockWorld>(ref)) BlockWorld( val<string>(args[0]), val<mud::JobSystem>(args[1]) ); }, { { "name", var(string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
             },
             // copy constructor
             {

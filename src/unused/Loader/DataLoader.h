@@ -10,7 +10,7 @@
 #include <util/Forward.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #endif
 
 using namespace mud; namespace toy
@@ -37,7 +37,7 @@ using namespace mud; namespace toy
 	public:
 		virtual void setup(Type& type, DataLoader* parent = nullptr, Member* meber = nullptr) = 0;
 
-		virtual std::vector<Var> data() = 0;
+		virtual vector<Var> data() = 0;
 
 		virtual bool check(Id& id, cstring field, const Var& value) = 0;
 

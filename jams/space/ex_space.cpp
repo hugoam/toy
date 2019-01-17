@@ -45,7 +45,7 @@ void star_power(Star& star, Combat::Force& force)
 	}
 }
 
-void fleet_power_planetary(const std::vector<CombatFleet>& flotilla, Combat::Force& force)
+void fleet_power_planetary(const vector<CombatFleet>& flotilla, Combat::Force& force)
 {
 	for(const CombatFleet& combat_fleet : flotilla)
 	{
@@ -76,7 +76,7 @@ void fleet_power_planetary(const std::vector<CombatFleet>& flotilla, Combat::For
 	}
 }
 
-void fleet_power_spatial(const std::vector<CombatFleet>& flotilla, Combat::Force& force)
+void fleet_power_spatial(const vector<CombatFleet>& flotilla, Combat::Force& force)
 {
 	for(const CombatFleet& combat_fleet : flotilla)
 	{
@@ -119,7 +119,7 @@ void star_losses(CombatStar& star, float ratio)
 	}
 }
 
-void fleet_losses(std::vector<CombatFleet>& flotilla, float ratio)
+void fleet_losses(vector<CombatFleet>& flotilla, float ratio)
 {
 	for(CombatFleet& combat_fleet : flotilla)
 	{
@@ -214,7 +214,7 @@ void PlanetaryCombat::apply_losses()
 		m_attack[0].m_fleet->m_commander->take_star(*m_defense.m_star);
 }
 
-void gather_allies(Fleet& fleet, CombatType combat_type, std::vector<CombatFleet>& attack)
+void gather_allies(Fleet& fleet, CombatType combat_type, vector<CombatFleet>& attack)
 {
 	UNUSED(combat_type);
 	for(Fleet* other : fleet.galaxy().m_grid.m_fleets[fleet.m_coord])
@@ -224,7 +224,7 @@ void gather_allies(Fleet& fleet, CombatType combat_type, std::vector<CombatFleet
 	}
 }
 
-void gather_allies(Fleet& fleet, CombatType combat_type, std::vector<CombatFleet>& attack, std::vector<CombatFleet>& defense)
+void gather_allies(Fleet& fleet, CombatType combat_type, vector<CombatFleet>& attack, vector<CombatFleet>& defense)
 {
 	UNUSED(combat_type);
 	for(Fleet* other : fleet.galaxy().m_grid.m_fleets[fleet.m_coord])
@@ -511,7 +511,7 @@ ShipDatabase::ShipDatabase()
 	builtin_ships(*this);
 }
 
-Universe::Universe(const std::string& name, JobSystem& job_system)
+Universe::Universe(const string& name, JobSystem& job_system)
 	: Complex(0, type<Universe>(), m_bullet_world, *this)
 	, m_world(0, *this, name, job_system)
 	, m_bullet_world(m_world)
@@ -527,7 +527,7 @@ void GalaxyGrid::update_slots(uvec2 coord)
 {
 	vec3 center = to_xz(vec2(coord)) + 0.5f + Y3;
 
-	std::map<Commander*, std::vector<Fleet*>> fleets;
+	std::map<Commander*, vector<Fleet*>> fleets;
 	for(Fleet* fleet : m_fleets[coord])
 	{
 		fleets[fleet->m_commander].push_back(fleet);
@@ -603,7 +603,7 @@ Quadrant::Quadrant(HSpatial spatial, const vec3& position, const uvec2& coord, f
 
 static size_t star_count = 0;
 
-Entity Star::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const std::string& name)
+Entity Star::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const string& name)
 {
 	Entity entity = { ecs.CreateEntity<Spatial, Star>(), ecs.m_index };
 	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
@@ -611,7 +611,7 @@ Entity Star::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& posit
 	return entity;
 }
 
-Star::Star(HSpatial spatial, Galaxy& galaxy, const uvec2& coord, const std::string& name)
+Star::Star(HSpatial spatial, Galaxy& galaxy, const uvec2& coord, const string& name)
 	: m_spatial(spatial)
 	, m_galaxy(&galaxy)
 	, m_coord(coord)
@@ -655,7 +655,7 @@ void Star::set_buildings(BuildingSchema& schema, uint32_t number)
 		m_extractors[size_t(schema.m_extractor)] = m_buildings[&schema];
 }
 
-void Star::set_buildings(const std::string& code, uint32_t number)
+void Star::set_buildings(const string& code, uint32_t number)
 {
 	this->set_buildings(BuildingDatabase::me.schema(code), number);
 }
@@ -665,14 +665,14 @@ void Star::add_buildings(BuildingSchema& schema, int number)
 	this->set_buildings(schema, m_buildings[&schema] + number);
 }
 
-void Star::add_buildings(const std::string& code, int number)
+void Star::add_buildings(const string& code, int number)
 {
 	this->add_buildings(BuildingDatabase::me.schema(code), number);
 }
 
 static size_t fleet_count = 0;
 
-Entity Fleet::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const std::string& name)
+Entity Fleet::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const string& name)
 {
 	Entity entity = { ecs.CreateEntity<Spatial, Fleet>(), ecs.m_index };
 	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
@@ -680,7 +680,7 @@ Entity Fleet::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& posi
 	return entity;
 }
 
-Fleet::Fleet(HSpatial spatial, Galaxy& galaxy, Commander& commander, const uvec2& coord, const std::string& name)
+Fleet::Fleet(HSpatial spatial, Galaxy& galaxy, Commander& commander, const uvec2& coord, const string& name)
 	: m_spatial(spatial)
 	, m_galaxy(&galaxy)
 	, m_commander(&commander)
@@ -732,12 +732,12 @@ void Fleet::add_ships(ShipSchema& schema, int number)
 	this->set_ships(schema, m_ships[&schema] + number);
 }
 
-void Fleet::set_ships(const std::string& code, uint32_t number)
+void Fleet::set_ships(const string& code, uint32_t number)
 {
 	this->set_ships(ShipDatabase::me.schema(code), number);
 }
 
-void Fleet::add_ships(const std::string& code, int number)
+void Fleet::add_ships(const string& code, int number)
 {
 	this->add_ships(ShipDatabase::me.schema(code), number);
 }
@@ -788,7 +788,7 @@ void Jump::update(Fleet& fleet, size_t tick)
 	m_state_updated = old_state == m_state ? m_state_updated : tick;
 }
 
-void Fleet::order_jump(vec2 coord, FleetStance stance)
+void Fleet::order_jump(uvec2 coord, FleetStance stance)
 {
 	printf("Fleet %s from commander %s : jump to [%i,%i] in directive %s\n", m_name.c_str(), m_commander->m_name.c_str(), int(coord.x), int(coord.y), to_string(stance).c_str());
 	m_jump = { *this, m_coord, coord, stance, m_spatial->m_last_tick };
@@ -839,7 +839,7 @@ void Fleet::destroy()
 		vector_remove(m_commander->m_fleets, HFleet(m_spatial));
 }
 
-Commander::Commander(Id id, const std::string& name, Race race, int command, int commerce, int diplomacy)
+Commander::Commander(Id id, const string& name, Race race, int command, int commerce, int diplomacy)
 	: m_id(index(type<Commander>(), id, Ref(this)))
 	, m_name(name)
 	, m_race(race)
@@ -863,7 +863,7 @@ void Commander::update_scans(Galaxy& galaxy)
 	m_scans.m_fleets.clear();
 	m_scans.m_stars.clear();
 
-	auto scan = [](Galaxy& galaxy, uvec2 coord, uint scan, std::vector<HFleet>& fleets, std::vector<HStar>& stars)
+	auto scan = [](Galaxy& galaxy, uvec2 coord, uint scan, vector<HFleet>& fleets, vector<HStar>& stars)
 	{
 		uvec2 lo = coord - min(uvec2(scan), coord);
 		uvec2 hi = coord + scan;
@@ -1007,7 +1007,7 @@ Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 	static VisuFleet fleet;
 	if(fleet.m_updated == 0)
 	{
-		auto set_ships = [&](const std::string& code, uint32_t number) { ships[&ShipDatabase::me.schema(code)] = number; };
+		auto set_ships = [&](const string& code, uint32_t number) { ships[&ShipDatabase::me.schema(code)] = number; };
 		set_ships("CHA", 80);
 		set_ships("COR", 10);
 

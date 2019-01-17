@@ -38,7 +38,7 @@ using namespace mud; namespace toy
 	{
 		if(m_emitter->m_collider->m_medium->m_occlusions)
 		{
-			std::vector<Collision> occluding;
+			vector<Collision> occluding;
 
 			Spatial& receptor = m_receptor->m_spatial;
 			m_emitter->m_collider->m_impl->raycast(receptor.m_position, occluding, CM_OBSTACLE);

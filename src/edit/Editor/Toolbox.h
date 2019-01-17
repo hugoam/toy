@@ -5,19 +5,15 @@
 
 #pragma once
 
+#include <stl/string.h>
+#include <stl/map.h>
 #include <edit/Forward.h>
 #include <core/Spatial/Spatial.h>
 #include <edit/Types.h>
 
-#ifndef MUD_CPP_20
-#include <map>
-#include <string>
-#endif
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
-	using Selection = std::vector<Ref>;
+	using Selection = vector<Ref>;
 
 	class refl_ Toolbox : public NonCopy
 	{
@@ -26,7 +22,7 @@ using namespace mud; namespace toy
 		virtual ~Toolbox();
 
 		string m_name;
-		std::vector<Tool*> m_tools;
+		vector<Tool*> m_tools;
 	};
 
 	class refl_ DynamicToolbox : public Toolbox
@@ -37,7 +33,7 @@ using namespace mud; namespace toy
 		void update_tools(const Selection& targets);
 
 	protected:
-		std::vector<Tool*> m_current_tools;
+		vector<Tool*> m_current_tools;
 
 		const Selection& m_targets;
 	};
@@ -47,7 +43,7 @@ using namespace mud; namespace toy
 	public:
 		Toolbelt();
 
-		std::map<string, object_ptr<Toolbox>> m_toolboxes;
+		map<string, object<Toolbox>> m_toolboxes;
 
 		Tool* m_activeTool;
 		Brush* m_activeBrush;

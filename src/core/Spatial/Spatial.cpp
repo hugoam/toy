@@ -84,7 +84,7 @@ using namespace mud; namespace toy
 
 	void Spatial::yaw(float value)
 	{
-		vec3 axis(glm::rotate(m_rotation, Y3));			
+		vec3 axis(mud::rotate(m_rotation, Y3));			
 		rotate(axis, value);
 	}
 
@@ -95,13 +95,13 @@ using namespace mud; namespace toy
 
 	void Spatial::pitch(float value)
 	{
-		vec3 axis(glm::rotate(m_rotation, X3));
+		vec3 axis(mud::rotate(m_rotation, X3));
 		rotate(axis, value);
 	}
 
 	void Spatial::roll(float value)
 	{
-		vec3 axis(glm::rotate(m_rotation, Z3));
+		vec3 axis(mud::rotate(m_rotation, Z3));
 		rotate(axis, value);
 	}
 
@@ -145,15 +145,6 @@ using namespace mud; namespace toy
 	{
 		child.m_parent = {};
 		//vector_remove(m_contents, child);
-	}
-
-	void Spatial::visit(const Visitor& visitor)
-	{
-		if(!visitor(*this))
-			return;
-
-		for(HSpatial spatial : m_contents)
-			spatial->visit(visitor);
 	}
 
 	void detach_to(HSpatial self, HSpatial target)

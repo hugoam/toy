@@ -18,15 +18,15 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT BulletShape : public Movabl
 	{
 	public:
-		BulletShape(unique_ptr<btCollisionShape> shape);
-		BulletShape(unique_ptr<btCollisionShape> shape, unique_ptr<btStridingMeshInterface> mesh);
+		BulletShape(unique<btCollisionShape> shape);
+		BulletShape(unique<btCollisionShape> shape, unique<btStridingMeshInterface> mesh);
 		~BulletShape();
 
 		BulletShape(BulletShape&& other);
 		BulletShape& operator=(BulletShape&& other);
 
-		unique_ptr<btCollisionShape> shape;
-		unique_ptr<btStridingMeshInterface> mesh;
+		unique<btCollisionShape> shape;
+		unique<btStridingMeshInterface> mesh;
 	};
 
 	class TOY_CORE_EXPORT DispatchBulletShape : public Dispatch<BulletShape>, public LazyGlobal<DispatchBulletShape>
@@ -47,8 +47,8 @@ using namespace mud; namespace toy
 		virtual void update_transform(const vec3& position, const quat& rotation) override;
 		virtual void update_transform() override;
 
-		virtual void project(const vec3& position, std::vector<Collision>& collisions, short int mask) override;
-		virtual void raycast(const vec3& position, std::vector<Collision>& collisions, short int mask) override;
+		virtual void project(const vec3& position, vector<Collision>& collisions, short int mask) override;
+		virtual void raycast(const vec3& position, vector<Collision>& collisions, short int mask) override;
 		virtual Collision raycast(const vec3& position, short int mask) override;
 
 	public:
@@ -56,6 +56,6 @@ using namespace mud; namespace toy
 		HSpatial m_spatial;
 		HCollider m_collider;
 		BulletShape m_collision_shape;
-		unique_ptr<btCollisionObject> m_collision_object;
+		unique<btCollisionObject> m_collision_object;
     };
 }

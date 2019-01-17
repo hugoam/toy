@@ -201,7 +201,7 @@ GameShell.prototype["load"] = GameShell.prototype.load = function(self, module) 
 GameShell.prototype["load_path"] = GameShell.prototype.load_path = function(self, module_path) {
     var self = this.ptr;
     ensureCache.prepare();
-    /* module_path <std::string> [] */
+    /* module_path <stl/string> [] */
     if (module_path && typeof module_path === "object") module_path = module_path.ptr;
     else module_path = ensureString(module_path);
     _toy_GameShell_load_path_1(self, module_path);
@@ -237,7 +237,7 @@ GameShell.prototype["run_editor"] = GameShell.prototype.run_editor = function(se
 GameShell.prototype["run_editor_path"] = GameShell.prototype.run_editor_path = function(self, module_path, iterations) {
     var self = this.ptr;
     ensureCache.prepare();
-    /* module_path <std::string> [] */
+    /* module_path <stl/string> [] */
     if (module_path && typeof module_path === "object") module_path = module_path.ptr;
     else module_path = ensureString(module_path);
     /* iterations <size_t> [] */
@@ -255,7 +255,7 @@ GameShell.prototype["run_game"] = GameShell.prototype.run_game = function(self, 
 GameShell.prototype["run_game_path"] = GameShell.prototype.run_game_path = function(self, module_path, iterations) {
     var self = this.ptr;
     ensureCache.prepare();
-    /* module_path <std::string> [] */
+    /* module_path <stl/string> [] */
     if (module_path && typeof module_path === "object") module_path = module_path.ptr;
     else module_path = ensureString(module_path);
     /* iterations <size_t> [] */

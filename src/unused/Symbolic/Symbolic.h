@@ -10,7 +10,7 @@
 #include <core/Forward.h> 
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #endif
 
 using namespace mud; namespace toy
@@ -18,10 +18,10 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT Symbolic
 	{
 	public:
-		constr_ Symbolic(Entity& entity, std::vector<Symbol> shapes = {});
+		constr_ Symbolic(Entity& entity, vector<Symbol> shapes = {});
 
 		attr_ Entity& m_entity;
-		attr_ std::vector<Symbol> m_symbols;
+		attr_ vector<Symbol> m_symbols;
 		attr_ size_t m_updated;
 
 		void clearSymbols();

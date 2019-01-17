@@ -11,7 +11,7 @@
 #include <util/Loader/DataLoader.h>
 #include <db/Generated/Forward.h>
 
-#include <string>
+#include <stl/string>
 
 struct sqlite3;
 struct sqlite3_stmt;
@@ -20,7 +20,7 @@ struct sqlite3_stmt;
 
 using namespace mud; namespace toy
 {
-	using string = std::string;
+	using string = string;
 
 	class TOY_DB_EXPORT SqliteGet : public Dispatch<void, sqlite3_stmt*, size_t>, public LazyGlobal<SqliteGet>
 	{
@@ -46,9 +46,9 @@ using namespace mud; namespace toy
 		bool m_dataId;
 
 		string m_table;
-		std::vector<string> m_argNames;
-		std::vector<string> m_argDecls;
-		std::vector<Var> m_argData;
+		vector<stl/string> m_argNames;
+		vector<stl/string> m_argDecls;
+		vector<Var> m_argData;
 
 		bool needSync();
 		void synchronize();
@@ -84,7 +84,7 @@ using namespace mud; namespace toy
 		string selectStatement();
 		string saveStatement();
 
-		virtual std::vector<Var> data();
+		virtual vector<Var> data();
 
 		virtual bool check(Id& id, cstring field, const Var& value);
 
@@ -127,6 +127,6 @@ using namespace mud; namespace toy
 
 		sqlite3_stmt* m_check;
 
-		std::vector<sqlite3_stmt*> m_statements;
+		vector<sqlite3_stmt*> m_statements;
 	};
 }

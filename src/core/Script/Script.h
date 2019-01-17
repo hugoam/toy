@@ -5,16 +5,13 @@
 
 #pragma once
 
+#include <stl/string.h>
 #include <infra/NonCopy.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 
-#include <string>
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	class refl_ TOY_CORE_EXPORT ComponentPool
 	{
 

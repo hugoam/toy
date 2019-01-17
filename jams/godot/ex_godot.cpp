@@ -341,8 +341,8 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 {
 	Spatial& spatial = bullet.m_spatial;
 
-	static ParticleGenerator* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleGenerator* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
+	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
 
 	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
 	gfx::particles(source, *flash);
@@ -372,7 +372,7 @@ void paint_lamp(Gnode& parent, Lamp& lamp)
 	gfx::light(parent, LightType::Point, false, Colour(1.f, 0.3f, 0.2f), 10.f);
 }
 
-Material& highlight_material(const std::string& name, const Colour& colour, int factor)
+Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
 	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
 	material.m_pbr_block.m_enabled = true;
@@ -547,7 +547,7 @@ void paint_level(Gnode& parent)
 void paint_viewer(Viewer& viewer)
 {
 #ifdef CLUSTERED
-	if(rect_size(viewer.m_viewport.m_rect) != vec2(0.f) && !viewer.m_camera.m_clusters)
+	if(rect_size(vec4(viewer.m_viewport.m_rect)) != vec2(0.f) && !viewer.m_camera.m_clusters)
 	{
 		viewer.m_camera.m_clustered = true;
 		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
@@ -655,12 +655,12 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	}
 }
 
-void viewport_item_picker(Viewer& viewer, Widget& widget, std::vector<Item*>& selection)
+void viewport_item_picker(Viewer& viewer, Widget& widget, vector<Item*>& selection)
 {
 	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::Mouse, EventType::Moved, InputMod::None, false))
 	{
-		auto callback = [&](Item* item) { viewer.m_hovered = item; };
-		viewer.picker(0).pick_point(viewer.m_viewport, mouse_event.m_relative, callback, ItemFlag::Static);
+		//auto callback = [&](Item* item) { viewer.m_hovered = item; };
+		//viewer.picker(0).pick_point(viewer.m_viewport, mouse_event.m_relative, callback, ItemFlag::Static);
 	}
 
 	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
@@ -681,7 +681,7 @@ void ex_godot_edit_ui(Viewer& viewer, GameScene& scene)
 	ui::free_orbit_controller(viewer);
 	return;
 
-	static std::vector<Item*> selection;
+	static vector<Item*> selection;
 	viewport_item_picker(viewer, viewer, selection);
 
 	mat4 identity = bxidentity();
@@ -748,12 +748,12 @@ public:
 		config.m_cache_geometry = true;
 		Prefab& collision_world = import_prefab(*app.m_gfx_system, ModelFormat::gltf, "reactor.collision", config);
 
-		std::vector<Item*> items;
+		vector<Item*> items;
 		for(Item& item : collision_world.m_items)
 			items.push_back(&item);
 
 		build_world_page_geometry(block.m_world_page, items);
-		block.m_world_page->update_geometry();
+		block.m_world_page->update_geometry(block.m_spatial->m_last_tick);
 
 		destroy_prefab(*app.m_gfx_system, collision_world);
 #endif

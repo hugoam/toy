@@ -13,7 +13,7 @@
 using namespace mud; namespace toy
 {
 	template <class T>
-	inline void vector_remove_named(std::vector<T>& vector, const string& name)
+	inline void vector_remove_named(vector<T>& vector, const string& name)
 	{
 		vector.erase(std::remove_if(vector.begin(), vector.end(), [=](T& obj) { return obj.m_name == name; }), vector.end());
 	}

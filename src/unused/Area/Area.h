@@ -30,7 +30,7 @@ using namespace mud; namespace toy
 	/*class TOY_CORE_EXPORT GridBoundArea
 	{
 	public:
-		GridBoundArea(const vec3& origin, float gridWidth, float gridLength, const std::vector<int>& indices);
+		GridBoundArea(const vec3& origin, float gridWidth, float gridLength, const vector<int>& indices);
 		bool checkInside(const vec3& position);
 	};*/
 }

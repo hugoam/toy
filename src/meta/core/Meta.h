@@ -9,6 +9,8 @@
 #include <refl/Module.h>
 #endif
 
+#include <geom/Api.h>
+
 namespace mud
 {
     void toy_core_meta(Module& m)
@@ -30,10 +32,10 @@ namespace mud
     
     // Sequences
     {
-        static Meta meta = { type<std::vector<toy::HSpatial>>(), &namspc({}), "std::vector<toy::HSpatial>", sizeof(std::vector<toy::HSpatial>), TypeClass::Sequence };
-        static Class cls = { type<std::vector<toy::HSpatial>>() };
+        static Meta meta = { type<vector<toy::HSpatial>>(), &namspc({}), "vector<toy::HSpatial>", sizeof(vector<toy::HSpatial>), TypeClass::Sequence };
+        static Class cls = { type<vector<toy::HSpatial>>() };
         cls.m_content = &type<toy::HSpatial>();
-        meta_sequence<std::vector<toy::HSpatial>, toy::HSpatial>();
+        meta_sequence<vector<toy::HSpatial>, toy::HSpatial>();
     }
     
     // toy::BulletMedium
@@ -410,7 +412,7 @@ namespace mud
             },
             // members
             {
-                { type<toy::Medium>(), member_address(&toy::Medium::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
+                { type<toy::Medium>(), member_address(&toy::Medium::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<toy::Medium>(), member_address(&toy::Medium::m_occlusions), type<bool>(), "occlusions", var(bool()), Member::Value, nullptr },
                 { type<toy::Medium>(), member_address(&toy::Medium::m_solid), type<bool>(), "solid", var(bool()), Member::Value, nullptr }
             },
@@ -859,7 +861,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::World>(), [](Ref ref, array<Var> args) { new(&val<toy::World>(ref)) toy::World( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<std::string>(args[2]), val<mud::JobSystem>(args[3]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Complex>()) }, { "name", var(std::string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
+                { type<toy::World>(), [](Ref ref, array<Var> args) { new(&val<toy::World>(ref)) toy::World( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<string>(args[2]), val<mud::JobSystem>(args[3]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Complex>()) }, { "name", var(string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
             },
             // copy constructor
             {
@@ -868,7 +870,7 @@ namespace mud
             {
                 { type<toy::World>(), member_address(&toy::World::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
                 { type<toy::World>(), Address(), type<mud::Complex>(), "complex", Ref(type<mud::Complex>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::World>(object).m_complex); } },
-                { type<toy::World>(), member_address(&toy::World::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
+                { type<toy::World>(), member_address(&toy::World::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::origin), type<toy::HSpatial>(), "origin", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), nullptr },
                 { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::unworld), type<toy::HSpatial>(), "unworld", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), nullptr }
             },
@@ -931,8 +933,8 @@ namespace mud
             },
             // methods
             {
-                { type<toy::WorldPage>(), "build_geometry", member_address<void(toy::WorldPage::*)(const toy::Spatial&)>(&toy::WorldPage::build_geometry), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).build_geometry(val<toy::Spatial>(args[0])); }, { { "spatial", Ref(type<toy::Spatial>()) } }, Var() },
-                { type<toy::WorldPage>(), "update_geometry", member_address<void(toy::WorldPage::*)()>(&toy::WorldPage::update_geometry), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::WorldPage>(object).update_geometry(); }, {}, Var() },
+                //{ type<toy::WorldPage>(), "build_geometry", member_address<void(toy::WorldPage::*)(const toy::Spatial&)>(&toy::WorldPage::build_geometry), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).build_geometry(val<toy::Spatial>(args[0])); }, { { "spatial", Ref(type<toy::Spatial>()) } }, Var() },
+                //{ type<toy::WorldPage>(), "update_geometry", member_address<void(toy::WorldPage::*)()>(&toy::WorldPage::update_geometry), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::WorldPage>(object).update_geometry(); }, {}, Var() },
                 { type<toy::WorldPage>(), "ground_point", member_address<void(toy::WorldPage::*)(const mud::vec3&, bool, mud::vec3&)>(&toy::WorldPage::ground_point), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).ground_point(val<mud::vec3>(args[0]), val<bool>(args[1]), val<mud::vec3>(args[2])); }, { { "position", var(mud::vec3()) }, { "relative", var(bool()) }, { "outputPoint", var(mud::vec3()), Param::Output } }, Var() },
                 { type<toy::WorldPage>(), "raycast_ground", member_address<void(toy::WorldPage::*)(const mud::vec3&, const mud::vec3&, mud::vec3&)>(&toy::WorldPage::raycast_ground), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).raycast_ground(val<mud::vec3>(args[0]), val<mud::vec3>(args[1]), val<mud::vec3>(args[2])); }, { { "from", var(mud::vec3()) }, { "to", var(mud::vec3()) }, { "ground_point", var(mud::vec3()) } }, Var() }
             },
@@ -1299,7 +1301,7 @@ namespace mud
             { base_offset<toy::DefaultWorld, mud::Complex>() },
             // constructors
             {
-                { type<toy::DefaultWorld>(), [](Ref ref, array<Var> args) { new(&val<toy::DefaultWorld>(ref)) toy::DefaultWorld( val<std::string>(args[0]), val<mud::JobSystem>(args[1]) ); }, { { "name", var(std::string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
+                { type<toy::DefaultWorld>(), [](Ref ref, array<Var> args) { new(&val<toy::DefaultWorld>(ref)) toy::DefaultWorld( val<string>(args[0]), val<mud::JobSystem>(args[1]) ); }, { { "name", var(string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
             },
             // copy constructor
             {
@@ -1527,7 +1529,7 @@ namespace mud
             {
                 { type<toy::Spatial>(), member_address(&toy::Spatial::m_world), type<toy::World>(), "world", Ref(type<toy::World>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<toy::Spatial>(), member_address(&toy::Spatial::m_parent), type<toy::HSpatial>(), "parent", var(toy::HSpatial()), Member::Flags(Member::Value|Member::Link), nullptr },
-                { type<toy::Spatial>(), member_address(&toy::Spatial::m_contents), type<std::vector<toy::HSpatial>>(), "contents", var(std::vector<toy::HSpatial>()), Member::Flags(Member::Value|Member::Structure), nullptr }
+                { type<toy::Spatial>(), member_address(&toy::Spatial::m_contents), type<vector<toy::HSpatial>>(), "contents", var(vector<toy::HSpatial>()), Member::Flags(Member::Value|Member::Structure), nullptr }
             },
             // methods
             {
@@ -1630,7 +1632,7 @@ namespace mud
         m.m_types.push_back(&type<toy::World>());
         m.m_types.push_back(&type<toy::WorldClock>());
         m.m_types.push_back(&type<toy::WorldPage>());
-        m.m_types.push_back(&type<std::vector<toy::HSpatial>>());
+        m.m_types.push_back(&type<vector<toy::HSpatial>>());
         m.m_types.push_back(&type<toy::BulletCollider>());
         m.m_types.push_back(&type<toy::BulletSolid>());
         m.m_types.push_back(&type<toy::BulletWorld>());
@@ -1657,13 +1659,13 @@ namespace mud
         m.m_types.push_back(&type<toy::WorldMedium>());
         {
             auto func = [](array<Var> args, Var& result) {  val<bool>(result) = toy::move_2d(val<toy::Spatial>(args[0]), val<toy::Movable>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<float>(args[5])); };
-            std::vector<Param> params = { { "spatial", Ref(type<toy::Spatial>()) }, { "movable", Ref(type<toy::Movable>()) }, { "target", var(mud::vec3()) }, { "velocity", var(float()) }, { "time_step", var(float()) }, { "margin", var(float(0.1f)), Param::Default } };
+            vector<Param> params = { { "spatial", Ref(type<toy::Spatial>()) }, { "movable", Ref(type<toy::Movable>()) }, { "target", var(mud::vec3()) }, { "velocity", var(float()) }, { "time_step", var(float()) }, { "margin", var(float(0.1f)), Param::Default } };
             static Function f = { &namspc({ "toy" }), "move_2d", function_id<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(&toy::move_2d), func, params, var(bool()) };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) {  val<bool>(result) = toy::steer_2d(val<toy::Spatial>(args[0]), val<toy::Movable>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<float>(args[5])); };
-            std::vector<Param> params = { { "spatial", Ref(type<toy::Spatial>()) }, { "movable", Ref(type<toy::Movable>()) }, { "target", var(mud::vec3()) }, { "velocity", var(float()) }, { "time_step", var(float()) }, { "margin", var(float(0.1f)), Param::Default } };
+            vector<Param> params = { { "spatial", Ref(type<toy::Spatial>()) }, { "movable", Ref(type<toy::Movable>()) }, { "target", var(mud::vec3()) }, { "velocity", var(float()) }, { "time_step", var(float()) }, { "margin", var(float(0.1f)), Param::Default } };
             static Function f = { &namspc({ "toy" }), "steer_2d", function_id<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(&toy::steer_2d), func, params, var(bool()) };
             m.m_functions.push_back(&f);
         }

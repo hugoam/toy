@@ -11,7 +11,7 @@
 using namespace mud;
 using namespace toy;
 
-Material& highlight_material(const std::string& name, const Colour& colour, int factor)
+Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
 	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
 	material.m_pbr_block.m_enabled = true;
@@ -38,7 +38,7 @@ Faction::~Faction()
 	unindex(type<Faction>(), m_id);
 }
 
-std::vector<Faction> g_factions;
+vector<Faction> g_factions;
 
 /*Entity Well::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
@@ -277,7 +277,7 @@ void Tank::shoot(bool critical)
 	m_slugs.emplace_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
 }
 
-BlockWorld::BlockWorld(const std::string& name, JobSystem& job_system)
+BlockWorld::BlockWorld(const string& name, JobSystem& job_system)
 	: Complex(0, type<BlockWorld>(), m_bullet_world, m_navmesh, *this)
 	, m_world(0, *this, name, job_system)
 	, m_bullet_world(m_world)
@@ -328,7 +328,7 @@ Model& faction_fresnel_material(GfxSystem& gfx_system, Model& model)
 {
 	static Material& material = highlight_material("no_highlight", Colour::Black, 0);
 
-	std::string name = model.m_name + "_dead";
+	string name = model.m_name + "_dead";
 	return model_variant(gfx_system, model, name.c_str(), carray<cstring, 2>{ "Highlight11", "Highlight2" }, 
 														  carray<Material*, 2>{ &material, &material });
 }
@@ -337,7 +337,7 @@ void paint_shield(Gnode& parent, Shield& shield)
 {
 	static Material* discharge = &parent.m_scene->m_gfx_system.fetch_material("shield_discharge", "fresnel");
 
-	static std::vector<Material*> power = std::vector<Material*>(4);
+	static vector<Material*> power = vector<Material*>(4);
 
 	Faction& faction = *shield.m_faction;
 
@@ -381,9 +381,9 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 void paint_shell(Gnode& parent, Slug& shell)
 {
-	static ParticleGenerator* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleGenerator* trail = parent.m_scene->m_gfx_system.particles().file("trail");
-	static ParticleGenerator* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
+	static ParticleFlow* trail = parent.m_scene->m_gfx_system.particles().file("trail");
+	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
 
 	Gnode& source = gfx::node(parent, Ref(&shell), shell.m_source, shell.m_spatial->m_rotation);
 	gfx::particles(source, *flash);
@@ -413,14 +413,14 @@ Model& faction_model_dead_variant(GfxSystem& gfx_system, Model& model)
 {
 	static Material& material = highlight_material("no_highlight", Colour::Black, 0);
 
-	std::string name = model.m_name + "_dead";
+	string name = model.m_name + "_dead";
 	return model_variant(gfx_system, model, name.c_str(), carray<cstring, 2>{ "Highlight11", "Highlight2" }, 
 														  carray<Material*, 2>{ &material, &material });
 }
 
 Model& faction_model_variant(GfxSystem& gfx_system, Faction& faction, Model& model)
 {
-	std::string name = model.m_name + "_faction" + to_string(faction.m_id);
+	string name = model.m_name + "_faction" + to_string(faction.m_id);
 	return model_variant(gfx_system, model, name.c_str(), carray<cstring, 2>{ "Highlight11", "Highlight2" }, 
 														  carray<Material*, 2>{ faction.m_highlight11, faction.m_highlight2 });
 }
@@ -445,8 +445,8 @@ void paint_tank(Gnode& parent, Tank& tank)
 
 	GfxSystem& gfx_system = parent.m_scene->m_gfx_system;
 
-	static std::vector<Model*> tank_base_models = std::vector<Model*>(size_t(Faction::s_max_factions));
-	static std::vector<Model*> tank_turret_models = std::vector<Model*>(size_t(Faction::s_max_factions));
+	static vector<Model*> tank_base_models = vector<Model*>(size_t(Faction::s_max_factions));
+	static vector<Model*> tank_turret_models = vector<Model*>(size_t(Faction::s_max_factions));
 
 	static Model& tank_base_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_base"));
 	static Model& tank_turret_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_turret"));
@@ -503,7 +503,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 	else
 	{
 		Gnode& dead = parent.subx(Dead);
-		static ParticleGenerator* explode = parent.m_scene->m_gfx_system.particles().file("explode");
+		static ParticleFlow* explode = parent.m_scene->m_gfx_system.particles().file("explode");
 
 		gfx::particles(dead, *explode);
 		//toy::sound(dead, "explosion", false, 0.2f);

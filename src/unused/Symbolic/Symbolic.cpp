@@ -10,7 +10,7 @@
 
 using namespace mud; namespace toy
 {
-	Symbolic::Symbolic(Entity& entity, std::vector<Symbol> shapes)
+	Symbolic::Symbolic(Entity& entity, vector<Symbol> shapes)
 		: m_entity(entity)
 		, m_symbols(shapes)
 		, m_updated(0)

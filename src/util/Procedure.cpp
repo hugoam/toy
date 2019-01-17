@@ -20,7 +20,7 @@ using namespace mud; namespace toy
 		unindex(m_type, m_index);
 	}
 
-	Procedure::Procedure(ProcedureType& def, User* user, Ref object, std::vector<Ref> args)
+	Procedure::Procedure(ProcedureType& def, User* user, Ref object, vector<Ref> args)
 		: m_def(def)
 		, m_user(user)
 		, m_object(object)

@@ -9,6 +9,8 @@
 #include <refl/Module.h>
 #endif
 
+#include <math/Api.h>
+
 namespace mud
 {
     void toy_block_meta(Module& m)
@@ -33,19 +35,19 @@ namespace mud
         static Meta meta = { type<array<toy::Element*>>(), &namspc({}), "array<toy::Element*>", sizeof(array<toy::Element*>), TypeClass::Sequence };
         static Class cls = { type<array<toy::Element*>>() };
         cls.m_content = &type<toy::Element>();
-        meta_sequence<array<toy::Element*>, toy::Element*>();
+        //meta_sequence<array<toy::Element*>, toy::Element*>();
     }
     {
-        static Meta meta = { type<std::vector<toy::Block*>>(), &namspc({}), "std::vector<toy::Block*>", sizeof(std::vector<toy::Block*>), TypeClass::Sequence };
-        static Class cls = { type<std::vector<toy::Block*>>() };
+        static Meta meta = { type<vector<toy::Block*>>(), &namspc({}), "vector<toy::Block*>", sizeof(vector<toy::Block*>), TypeClass::Sequence };
+        static Class cls = { type<vector<toy::Block*>>() };
         cls.m_content = &type<toy::Block>();
-        meta_sequence<std::vector<toy::Block*>, toy::Block*>();
+        meta_sequence<vector<toy::Block*>, toy::Block*>();
     }
     {
-        static Meta meta = { type<std::vector<toy::Sector*>>(), &namspc({}), "std::vector<toy::Sector*>", sizeof(std::vector<toy::Sector*>), TypeClass::Sequence };
-        static Class cls = { type<std::vector<toy::Sector*>>() };
+        static Meta meta = { type<vector<toy::Sector*>>(), &namspc({}), "vector<toy::Sector*>", sizeof(vector<toy::Sector*>), TypeClass::Sequence };
+        static Class cls = { type<vector<toy::Sector*>>() };
         cls.m_content = &type<toy::Sector>();
-        meta_sequence<std::vector<toy::Sector*>, toy::Sector*>();
+        meta_sequence<vector<toy::Sector*>, toy::Sector*>();
     }
     
     // toy::Block
@@ -134,7 +136,7 @@ namespace mud
             // members
             {
                 { type<toy::Element>(), member_address(&toy::Element::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
-                { type<toy::Element>(), member_address(&toy::Element::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
+                { type<toy::Element>(), member_address(&toy::Element::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<toy::Element>(), member_address(&toy::Element::m_state), type<toy::MatterState>(), "state", var(toy::MatterState()), Member::Value, nullptr },
                 { type<toy::Element>(), member_address(&toy::Element::m_colour), type<mud::Colour>(), "colour", var(mud::Colour()), Member::Value, nullptr }
             },
@@ -439,8 +441,8 @@ namespace mud
         m.m_types.push_back(&type<toy::Sector>());
         m.m_types.push_back(&type<toy::Tileblock>());
         m.m_types.push_back(&type<array<toy::Element*>>());
-        m.m_types.push_back(&type<std::vector<toy::Block*>>());
-        m.m_types.push_back(&type<std::vector<toy::Sector*>>());
+        m.m_types.push_back(&type<vector<toy::Block*>>());
+        m.m_types.push_back(&type<vector<toy::Sector*>>());
         m.m_types.push_back(&type<mud::ComponentHandle<toy::Block>>());
         m.m_types.push_back(&type<mud::ComponentHandle<toy::Chunk>>());
         m.m_types.push_back(&type<mud::ComponentHandle<toy::Heap>>());
@@ -449,33 +451,33 @@ namespace mud
         m.m_types.push_back(&type<toy::Earth>());
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::paint_block_height(val<toy::Block>(args[0]), val<mud::Image256>(args[1]), val<toy::Element>(args[2])); };
-            std::vector<Param> params = { { "block", Ref(type<toy::Block>()) }, { "image", var(mud::Image256()) }, { "element", Ref(type<toy::Element>()) } };
+            vector<Param> params = { { "block", Ref(type<toy::Block>()) }, { "image", var(mud::Image256()) }, { "element", Ref(type<toy::Element>()) } };
             static Function f = { &namspc({ "toy" }), "paint_block_height", function_id<void(*)(toy::Block&, mud::Image256&, toy::Element&)>(&toy::paint_block_height), func, params, Var() };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::paint_block_elements(val<toy::Block>(args[0]), val<mud::Image256>(args[1]), val<array<toy::Element*>>(args[2])); };
-            std::vector<Param> params = { { "block", Ref(type<toy::Block>()) }, { "image", var(mud::Image256()) }, { "elements", var(array<toy::Element*>()) } };
+            vector<Param> params = { { "block", Ref(type<toy::Block>()) }, { "image", var(mud::Image256()) }, { "elements", var(array<toy::Element*>()) } };
             static Function f = { &namspc({ "toy" }), "paint_block_elements", function_id<void(*)(toy::Block&, mud::Image256&, array<toy::Element*>)>(&toy::paint_block_elements), func, params, Var() };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) {  val<toy::HTileblock>(result) = toy::generate_block(val<mud::GfxSystem>(args[0]), val<mud::WaveTileset>(args[1]), val<toy::HSpatial>(args[2]), val<mud::ivec2>(args[3]), val<mud::uvec3>(args[4]), val<mud::vec3>(args[5]), val<bool>(args[6])); };
-            std::vector<Param> params = { { "gfx_system", Ref(type<mud::GfxSystem>()) }, { "tileset", var(mud::WaveTileset()) }, { "origin", var(toy::HSpatial()) }, { "coord", var(mud::ivec2()) }, { "block_subdiv", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "from_file", var(bool(true)), Param::Default } };
+            vector<Param> params = { { "gfx_system", Ref(type<mud::GfxSystem>()) }, { "tileset", var(mud::WaveTileset()) }, { "origin", var(toy::HSpatial()) }, { "coord", var(mud::ivec2()) }, { "block_subdiv", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "from_file", var(bool(true)), Param::Default } };
             static Function f = { &namspc({ "toy" }), "generate_block", function_id<toy::HTileblock(*)(mud::GfxSystem&, mud::WaveTileset&, toy::HSpatial, const mud::ivec2&, const mud::uvec3&, const mud::vec3&, bool)>(&toy::generate_block), func, params, var(toy::HTileblock()) };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::build_block_geometry(val<mud::Scene>(args[0]), val<toy::WorldPage>(args[1]), val<toy::Tileblock>(args[2])); };
-            std::vector<Param> params = { { "scene", Ref(type<mud::Scene>()) }, { "page", Ref(type<toy::WorldPage>()) }, { "block", Ref(type<toy::Tileblock>()) } };
+            vector<Param> params = { { "scene", Ref(type<mud::Scene>()) }, { "page", Ref(type<toy::WorldPage>()) }, { "block", Ref(type<toy::Tileblock>()) } };
             static Function f = { &namspc({ "toy" }), "build_block_geometry", function_id<void(*)(mud::Scene&, toy::WorldPage&, toy::Tileblock&)>(&toy::build_block_geometry), func, params, Var() };
             m.m_functions.push_back(&f);
         }
-        {
-            auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::index_blocks(val<mud::ivec3>(args[0]), val<mud::Grid<toy::Block*>>(args[1]), val<std::vector<toy::Block*>>(args[2]), val<std::vector<toy::Sector*>>(args[3])); };
-            std::vector<Param> params = { { "grid_size", var(mud::ivec3()) }, { "grid", var(mud::Grid<toy::Block*>()) }, { "blocks", var(std::vector<toy::Block*>()) }, { "sectors", var(std::vector<toy::Sector*>()) } };
-            static Function f = { &namspc({ "toy" }), "index_blocks", function_id<void(*)(const mud::ivec3&, mud::Grid<toy::Block*>&, const std::vector<toy::Block*>&, const std::vector<toy::Sector*>&)>(&toy::index_blocks), func, params, Var() };
-            m.m_functions.push_back(&f);
-        }
+        //{
+        //    auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::index_blocks(val<mud::ivec3>(args[0]), val<mud::Grid<toy::Block*>>(args[1]), val<vector<toy::Block*>>(args[2]), val<vector<toy::Sector*>>(args[3])); };
+        //    vector<Param> params = { { "grid_size", var(mud::ivec3()) }, { "grid", var(mud::Grid<toy::Block*>()) }, { "blocks", var(vector<toy::Block*>()) }, { "sectors", var(vector<toy::Sector*>()) } };
+        //    static Function f = { &namspc({ "toy" }), "index_blocks", function_id<void(*)(const mud::ivec3&, mud::Grid<toy::Block*>&, const vector<toy::Block*>&, const vector<toy::Sector*>&)>(&toy::index_blocks), func, params, Var() };
+        //    m.m_functions.push_back(&f);
+        //}
     }
 }

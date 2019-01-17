@@ -98,12 +98,12 @@ using namespace mud; namespace toy
     BulletMedium::~BulletMedium()
     {}
 
-	object_ptr<ColliderImpl> BulletMedium::make_collider(HCollider collider)
+	object<ColliderImpl> BulletMedium::make_collider(HCollider collider)
 	{
 		return make_object<BulletCollider>(*this, collider->m_spatial, collider, collider->m_collision_shape);
 	}
 
-	object_ptr<SolidImpl> BulletMedium::make_solid(HSolid solid)
+	object<SolidImpl> BulletMedium::make_solid(HSolid solid)
 	{
 		return make_object<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
 	}
@@ -156,7 +156,7 @@ using namespace mud; namespace toy
 			return 0.f;
 		}
 
-		std::vector<Contact> m_contacts;
+		vector<Contact> m_contacts;
 		float m_margin;
 	};
 
@@ -181,7 +181,7 @@ using namespace mud; namespace toy
 		collision_world.rayTest(to_btvec3(start), to_btvec3(end), callback);
 	}
 
-	void BulletMedium::project(HCollider collider, const vec3& position, const quat& rotation, std::vector<Collision>& collisions, short int mask)
+	void BulletMedium::project(HCollider collider, const vec3& position, const quat& rotation, vector<Collision>& collisions, short int mask)
 	{
 		ContactCheck callback;
 		BulletCollider& bullet_collider = as<BulletCollider>(*collider->m_impl);
@@ -197,7 +197,7 @@ using namespace mud; namespace toy
 		}
 	}
 	
-	void BulletMedium::raycast(HCollider collider, const vec3& start, const vec3& end, std::vector<Collision>& collisions, short int mask)
+	void BulletMedium::raycast(HCollider collider, const vec3& start, const vec3& end, vector<Collision>& collisions, short int mask)
 	{
 		btCollisionWorld::AllHitsRayResultCallback callback(to_btvec3(start), to_btvec3(end));
 		ray_test(*m_collision_world, callback, start, end, mask);
@@ -348,7 +348,7 @@ using namespace mud; namespace toy
 	BulletWorld::~BulletWorld()
     {}
 
-	object_ptr<PhysicMedium> BulletWorld::create_sub_world(Medium& medium)
+	object<PhysicMedium> BulletWorld::create_sub_world(Medium& medium)
 	{
 		return make_object<BulletMedium>(m_world, *this, medium);
 	}

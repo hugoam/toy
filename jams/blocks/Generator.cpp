@@ -7,7 +7,7 @@
 
 struct Edge
 {
-	std::vector<vec2> m_points;
+	vector<vec2> m_points;
 };
 
 Material& cliff_material(GfxSystem& gfx_system)
@@ -59,9 +59,9 @@ Edge random_edge(float start, float end, float dv, size_t subdiv)
 	return edge;
 }
 
-std::vector<size_t> range(size_t begin, size_t end)
+vector<size_t> range(size_t begin, size_t end)
 {
-	std::vector<size_t> result;
+	vector<size_t> result;
 	for(size_t i = begin; i < end; ++i)
 		result.push_back(i);
 	return result;
@@ -70,7 +70,7 @@ std::vector<size_t> range(size_t begin, size_t end)
 Grid3 extrude(const vec3& offset, array<Edge> edges, array<size_t> points, const vec3& dir, const vec3& normal)
 {
 	Grid3 grid = { uvec2(edges.size(), points.size()) };
-	array_2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
+	array2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
 
 	vec3 du = dir * 1.f / float(edges.size()-1);
 	for(size_t i = 0; i < edges.size(); ++i)
@@ -87,7 +87,7 @@ Grid3 extrude(const vec3& offset, array<Edge> edges, array<size_t> points, const
 Grid3 revolve(const vec3& center, float radius, float start_angle, float end_angle, array<Edge> edges, array<size_t> points, bool reverse_edge)
 {
 	Grid3 grid = { uvec2(edges.size(), points.size()) };
-	array_2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
+	array2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
 
 	float total_angle = end_angle - start_angle;
 	float increment = total_angle / float(edges.size()-1);
@@ -145,7 +145,7 @@ Cliff random_corner_cliff(Edge &edge0, Edge& edge1, size_t subdiv, bool inner)
 	return cliff;
 }
 
-void cliff_side(GfxSystem& gfx_system, const std::string& name, Edge& edge0, Edge& edge1)
+void cliff_side(GfxSystem& gfx_system, const string& name, Edge& edge0, Edge& edge1)
 {
 	static Material& material_cliff = cliff_material(gfx_system);
 	static Material& material_ground = ground_material(gfx_system);
@@ -153,7 +153,7 @@ void cliff_side(GfxSystem& gfx_system, const std::string& name, Edge& edge0, Edg
 
 	Cliff cliff = random_cliff(edge0, edge1, Cliff::subdiv);
 
-	auto extrusion = [&](std::vector<size_t> points, Material& material)
+	auto extrusion = [&](vector<size_t> points, Material& material)
 	{
 		vec3 offset = Z3 * 0.5f - X3 * 0.5f;
 		Grid3 grid = extrude(offset, { cliff.edges, Cliff::subdiv }, points, X3, -Z3);
@@ -168,7 +168,7 @@ void cliff_side(GfxSystem& gfx_system, const std::string& name, Edge& edge0, Edg
 	model.prepare();
 }
 
-void cliff_corner(GfxSystem& gfx_system, const std::string& name, Edge& edge0, Edge& edge1, bool inner)
+void cliff_corner(GfxSystem& gfx_system, const string& name, Edge& edge0, Edge& edge1, bool inner)
 {
 	static Material& material_cliff = cliff_material(gfx_system);
 	static Material& material_ground = ground_material(gfx_system);
@@ -176,7 +176,7 @@ void cliff_corner(GfxSystem& gfx_system, const std::string& name, Edge& edge0, E
 
 	Cliff cliff = random_corner_cliff(edge0, edge1, Cliff::subdiv, inner);
 
-	auto revolution = [&](std::vector<size_t> points, Material& material)
+	auto revolution = [&](vector<size_t> points, Material& material)
 	{
 		Grid3 grid;
 		if(inner)
@@ -204,7 +204,7 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 {
 	static WaveTileset tileset;
 
-	std::vector<Edge> m_cliff_edges;
+	vector<Edge> m_cliff_edges;
 
 	for(size_t i = 0; i < 1; ++i)
 		m_cliff_edges.push_back(random_edge(0.f, 1.f, 0.1f, Cliff::subdiv));
@@ -224,8 +224,8 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 	for(size_t e0 = 0; e0 < m_cliff_edges.size(); ++e0)
 		for(size_t e1 = 0; e1 < m_cliff_edges.size(); ++e1)
 		{
-			size_t lo = e0 < e1 ? e0 : e1;
-			size_t hi = lo == e0 ? e1 : e0;
+			uint lo = e0 <  e1 ? e0 : e1;
+			uint hi = lo == e0 ? e1 : e0;
 			cliffs.insert({ lo, hi });
 		}
 
@@ -246,7 +246,7 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 
 	tileset.initialize();
 
-	auto connect = [](WaveTileset& tileset, const std::string& left, const std::string& right, int flip_left, int flip_right, bool horizontal = true)
+	auto connect = [](WaveTileset& tileset, const string& left, const string& right, int flip_left, int flip_right, bool horizontal = true)
 	{
 		int L = tileset.flip(tileset.tile(left)->m_index, flip_left);
 		int R = tileset.flip(tileset.tile(right)->m_index, flip_right);
@@ -363,7 +363,7 @@ void generate_camps(BlockWorld& world)
 		construct<Camp>(world.m_world.origin(), camp_position, faction);
 		construct<Shield>(world.m_world.origin(), camp_position, faction, camp_radius);
 		
-		std::vector<vec3> tank_positions = distribute_poisson(vec2(camp_radius), 15.f);
+		vector<vec3> tank_positions = distribute_poisson(vec2(camp_radius), 15.f);
 		for(const vec3& tank_position : tank_positions)
 		{
 			construct<Tank>(world.m_world.origin(), camp_position + tank_position + Y3 * 10.f, faction);

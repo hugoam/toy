@@ -387,7 +387,7 @@ Object.defineProperty(Medium.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <stl/string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _toy_Medium__set_name(self, value);
@@ -807,7 +807,7 @@ function World(id, complex, name, job_system) {
     /* id <mud::Id> [] */
     /* complex <Complex> [] */
     complex = complex.ptr;
-    /* name <std::string> [] */
+    /* name <stl/string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */
@@ -838,7 +838,7 @@ Object.defineProperty(World.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <stl/string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _toy_World__set_name(self, value);
@@ -1004,7 +1004,7 @@ BulletWorld.prototype["__destroy__"] = BulletWorld.prototype.__destroy__ = funct
 // DefaultWorld
 function DefaultWorld(name, job_system) {
     ensureCache.prepare();
-    /* name <std::string> [] */
+    /* name <stl/string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */

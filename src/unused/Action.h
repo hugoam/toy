@@ -29,8 +29,8 @@ using namespace mud; namespace toy
 		TypedAction(User* user, Entity& agent, Entity& target) : Action(T_Action::def(), user, agent, target) {}
 
 		static bool checkObject(Ref object) { return T_Action::checkAgent(val<Entity>(object)); }
-		static bool checkArgs(const std::vector<Ref>& args) { return T_Action::checkTarget(val<Entity>(args[0])); }
-		static object_ptr<Procedure> instance(User* user, Ref object, std::vector<Ref> args) { return make_object<T_Action>(user, val<Entity>(object), val<Entity>(args[0])); }
+		static bool checkArgs(const vector<Ref>& args) { return T_Action::checkTarget(val<Entity>(args[0])); }
+		static object_ptr<Procedure> instance(User* user, Ref object, vector<Ref> args) { return make_object<T_Action>(user, val<Entity>(object), val<Entity>(args[0])); }
 
 		static ProcedureType& def() { static ProcedureDef<T_Action> instance; return instance; }
 	};

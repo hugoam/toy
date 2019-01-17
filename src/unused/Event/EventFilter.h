@@ -10,13 +10,13 @@
 #ifndef MUD_CPP_20
 #include <list>
 #include <set>
-#include <map>
-#include <string>
+#include <stl/map>
+#include <stl/string>
 #endif
 
 using namespace mud; namespace toy
 {
-	using string = std::string;
+	using string = string;
 
 	// The default EventFilter filters a value stored in the event against the value of the mask specified by the subscriber
 	// the value must be equal in order for the event to reach the subscriber
@@ -28,7 +28,7 @@ using namespace mud; namespace toy
 	{
 	public:
 		typedef std::set<EventSubscriber*> SubscriberSet;
-		typedef std::map<void*, SubscriberSet> SubscriberMap;
+		typedef map<void*, SubscriberSet> SubscriberMap;
 		typedef std::list<void*> MaskList;
 
 	public:

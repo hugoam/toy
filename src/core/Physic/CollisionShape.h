@@ -26,7 +26,7 @@ using namespace mud; namespace toy
 		CollisionShape(const CollisionShape& shape);
 		CollisionShape& operator=(const CollisionShape& shape);
 
-		object_ptr<Shape> m_shape;
+		object<Shape> m_shape;
 		vec3 m_center = Zero3;
 		float m_margin = 0.f;
 

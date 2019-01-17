@@ -234,7 +234,7 @@ Tank.prototype["__destroy__"] = Tank.prototype.__destroy__ = function() {
 // BlockWorld
 function BlockWorld(name, job_system) {
     ensureCache.prepare();
-    /* name <std::string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */

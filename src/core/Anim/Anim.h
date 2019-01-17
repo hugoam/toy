@@ -34,7 +34,7 @@ namespace mud
 		void animate(Ref object, Member& member, Var value, float duration);
 
 		Clock m_clock;
-		std::vector<Anim> m_animations;
+		vector<Anim> m_animations;
 
 		static Animator me;
 	};

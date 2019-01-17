@@ -14,7 +14,7 @@
 #endif
 
 #ifndef MUD_CPP_20
-#include <map>
+#include <stl/map.h>
 #endif
 
 using namespace mud; namespace toy
@@ -42,7 +42,7 @@ using namespace mud; namespace toy
 
 #ifdef TOY_SOUND
 		SoundManager& m_soundManager;
-		std::map<State*, Sound*> m_sounds;
+		map<State*, Sound*> m_sounds;
 #endif
 
 		size_t m_updated;

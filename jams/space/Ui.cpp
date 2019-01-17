@@ -124,7 +124,7 @@ struct JumpQuery : public NodeState
 struct SplitQuery : public NodeState
 {
 	SplitQuery() {}
-	std::string m_name;
+	string m_name;
 	std::map<ShipSchema*, uint32_t> m_ships;
 	FleetStance m_stance = FleetStance::Movement;
 };
@@ -186,7 +186,7 @@ void split_query(Widget& parent, Fleet& fleet, uint32_t mode)
 
 	ui::label(self, ("Split Fleet " + fleet.m_name).c_str());
 
-	ui::input_field<std::string>(self, "Name", query.m_name);
+	ui::input_field<string>(self, "Name", query.m_name);
 	ui::enum_field<FleetStance>(self, "Directive", query.m_stance);
 
 	Table& table = ui::table(self, carray<cstring, 4>{ "Code", "Name", "Number", "Split" }, carray<float, 4>{ 0.2f, 0.6f, 0.2f, 0.2f });

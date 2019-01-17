@@ -23,8 +23,8 @@ using namespace mud; namespace toy
 	protected:
 		User m_user;
 
-		object_ptr<Shell> m_shell;
-		object_ptr<Editor> m_editor;
+		object<Shell> m_shell;
+		object<Editor> m_editor;
 	};
 #endif
 }

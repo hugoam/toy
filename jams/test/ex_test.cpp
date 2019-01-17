@@ -19,19 +19,6 @@ static void iterate()
 }
 #endif
 
-string exec_path(int argc, char *argv[])
-{
-#ifdef _WIN32
-	UNUSED(argc);
-	string exec_path = argv[0];
-	string exec_dir(exec_path.begin(), exec_path.begin() + exec_path.rfind('\\'));
-#else
-	UNUSED(argc); UNUSED(argv);
-	string exec_dir = "./";
-#endif
-	return exec_dir;
-}
-
 Shell::Shell(cstring resource_path, int argc, char *argv[])
 	: m_exec_path(exec_path(argc, argv))
 	, m_resource_path(resource_path)
@@ -90,8 +77,9 @@ Viewer::Viewer(GfxContext& context, Scene& scene, const vec4& rect)
 	, m_position(rect_offset(rect))
 	, m_size(rect_size(rect))
 {
-	m_viewport.m_get_size = [&] { return uvec4(this->query_size()); };
-	m_viewport.m_render = [&](Render& render) {};
+	m_viewport.m_rect = uvec4(vec4(m_position, m_size));
+
+	//m_viewport.m_render = [&](Render& render) {};
 
 	//m_custom_draw = [&](const Frame& frame, const vec4& rect, VgRenderer& renderer) { UNUSED(frame); renderer.draw_frame(frame, rect); this->blit(renderer); };
 
@@ -109,14 +97,9 @@ Viewer::~Viewer()
 	vector_remove(m_context.m_viewports, &m_viewport);
 }
 
-vec4 Viewer::query_size()
-{
-	return { m_position, m_size };
-}
-
 void Viewer::resize()
 {
-	m_viewport.m_rect = uvec4(this->query_size());
+	m_viewport.m_rect = uvec4(vec4(m_position, m_size));
 }
 
 SceneViewer::SceneViewer(GfxContext& context, const vec4& rect)

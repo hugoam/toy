@@ -24,8 +24,8 @@ using namespace mud; namespace toy
 
 		HSpatial m_spatial;
 		OCollider m_collider;
-		std::vector<HSpatial> m_scope;
-		std::vector<Observer*> m_observers;
+		vector<HSpatial> m_scope;
+		vector<Observer*> m_observers;
 	};
 
 	class refl_ TOY_CORE_EXPORT EmitterScope : public PhysicScope
@@ -40,7 +40,7 @@ using namespace mud; namespace toy
 		virtual void handle_moved();
 
 	protected:
-		std::vector<Signal> m_signals;
+		vector<Signal> m_signals;
 	};
 
 	class refl_ TOY_CORE_EXPORT ReceptorScope : public PhysicScope
@@ -57,8 +57,8 @@ using namespace mud; namespace toy
 	using HEmitterScope = SparseHandle<EmitterScope>;
 	using HReceptorScope = SparseHandle<ReceptorScope>;
 #else
-	using OEmitterScope = object_ptr<EmitterScope>;
-	using OReceptorScope = object_ptr<ReceptorScope>;
+	using OEmitterScope = object<EmitterScope>;
+	using OReceptorScope = object<ReceptorScope>;
 
 	using HEmitterScope = EmitterScope&;
 	using HReceptorScope = ReceptorScope&;
@@ -80,7 +80,7 @@ using namespace mud; namespace toy
 		HEmitterScope add_sphere(Medium& medium, float radius, CollisionGroup group = CM_SOURCE);
 
 	protected:
-		std::vector<OEmitterScope> m_emitters;
+		vector<OEmitterScope> m_emitters;
 	};
 
 	class refl_ TOY_CORE_EXPORT Receptor : public Movabl
@@ -101,6 +101,6 @@ using namespace mud; namespace toy
 		meth_ ReceptorScope* scope(Medium& medium);
 
 	protected:
-		std::vector<OReceptorScope> m_receptors;
+		vector<OReceptorScope> m_receptors;
 	};
 }

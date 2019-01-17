@@ -27,7 +27,7 @@ public:
 	string m_resource_path;
 
 	GfxSystem m_gfx_system;
-	object_ptr<Context> m_context;
+	object<Context> m_context;
 
 	std::function<void(Shell&)> m_pump;
 };

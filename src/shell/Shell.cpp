@@ -146,13 +146,12 @@ using namespace mud; namespace toy
 	template <class T_Asset>
 	void add_asset_loader(AssetStore<T_Asset>& store, cstring format)
 	{
-		auto loader = [&](GfxSystem& gfx_system, T_Asset& asset, cstring path)
+		auto loader = [](void* user, T_Asset& asset, cstring path)
 		{
-			UNUSED(gfx_system);
-			unpack_json_file(Ref(&asset), string(path) + store.m_cformats[0]);
+			unpack_json_file(Ref(&asset), string(path) + ".ptc"); // store.m_cformats[0]);
 		};
 
-		store.add_format(format, loader);
+		store.add_format(format, { nullptr, loader });
 	}
 
 	void GameShell::init()
@@ -173,7 +172,7 @@ using namespace mud; namespace toy
 #elif defined MUD_VG_NANOVG
 		m_vg = make_object<VgNanoBgfx>(m_resource_path.c_str());
 #endif
-		context.m_reset_vg = [&] { return m_vg->load_texture(context.m_target->m_diffuse.idx); };
+		context.m_reset_vg = [](GfxContext& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.idx); };
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
@@ -263,7 +262,7 @@ using namespace mud; namespace toy
 		Signature signature = { { Param{ "app", Ref(type<GameShell>()) }, Param{ "module", Ref(type<Module>()) } } };
 
 		TextScript& script = m_editor.m_script_editor.create_script(file.c_str(), Language::Wren, signature);
-		script.m_script = read_text_file(std::string(location.m_location) + location.m_name);
+		script.m_script = read_text_file(string(location.m_location) + location.m_name);
 		script.m_dirty = true;
 
 		m_pump = [&]()

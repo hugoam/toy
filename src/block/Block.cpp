@@ -24,19 +24,19 @@
 
 using namespace mud; namespace toy
 {
-	void index_blocks(const ivec3& grid_size, Grid<Block*>& grid, const std::vector<Block*>& blocks, const std::vector<Sector*>& sectors)
+	void index_blocks(const uvec3& grid_size, Grid<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors)
 	{
 		grid.reset(grid_size.x, grid_size.y, grid_size.z);
 
 		for(size_t i = 0; i < blocks.size(); ++i)
 		{
-			ivec3 coord = sectors[i]->m_coordinate;
+			uvec3 coord = sectors[i]->m_coordinate;
 			grid.at(coord.x, coord.y, coord.z) = blocks[i];
 		}
 
 		for(size_t i = 0; i < blocks.size(); ++i)
 		{
-			ivec3 coord = sectors[i]->m_coordinate;
+			uvec3 coord = sectors[i]->m_coordinate;
 			size_t index = grid.index_at(coord.x, coord.y, coord.z);
 			for(Side side : c_sides)
 				blocks[i]->m_neighbours[size_t(side)] = grid.border(index, side) ? nullptr : grid.neighbour_item(index, side);

@@ -15,9 +15,9 @@
 #endif
 
 #ifndef MUD_CPP_20
-#include <string>
+#include <stl/string.h>
 #include <cstdint>
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 
@@ -28,6 +28,6 @@ namespace mud
     export_ template <> TOY_VISU_EXPORT Type& type<toy::PhysicDebugDraw>();
     export_ template <> TOY_VISU_EXPORT Type& type<toy::VisuScene>();
     
-    export_ template struct TOY_VISU_EXPORT Typed<std::vector<toy::PhysicDebugDraw*>>;
-    export_ template struct TOY_VISU_EXPORT Typed<std::vector<toy::VisuScene*>>;
+    export_ template struct TOY_VISU_EXPORT Typed<vector<toy::PhysicDebugDraw*>>;
+    export_ template struct TOY_VISU_EXPORT Typed<vector<toy::VisuScene*>>;
 }

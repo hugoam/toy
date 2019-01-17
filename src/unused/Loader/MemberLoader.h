@@ -46,8 +46,8 @@ using namespace mud; namespace toy
 		void dump(Ref object, Var& darg);
 
 	protected:
-		std::vector<Type*> m_types;
-		std::vector<Id> m_ids;
+		vector<Type*> m_types;
+		vector<Id> m_ids;
 	};
 
 	class refl_ TOY_UTIL_EXPORT LinkedLoader : public MemberLoader

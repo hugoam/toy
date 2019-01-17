@@ -5,17 +5,14 @@
 
 #pragma once
 
+#include <stl/memory.h>
+#include <stl/vector.h>
 #include <ecs/Entity.h>
 #include <pool/ObjectPool.h>
 #include <math/VecOps.h>
 #include <math/Axes.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
-
-#ifndef MUD_CPP_20
-#include <vector>
-#include <memory>
-#endif
 
 using namespace mud; namespace toy
 {
@@ -30,7 +27,7 @@ using namespace mud; namespace toy
 		attr_ World* m_world = nullptr;
 		attr_ link_ HSpatial m_parent;
 
-		attr_ graph_ std::vector<HSpatial> m_contents;
+		attr_ graph_ vector<HSpatial> m_contents;
 
 		size_t m_last_tick = 0;
 		size_t m_last_updated = 0;
@@ -76,8 +73,14 @@ using namespace mud; namespace toy
 		void hook();
 		void unhook();
 
-		typedef std::function<bool(Spatial&)> Visitor;
-		void visit(const Visitor& visitor);
+		template <class T_Visitor>
+		void visit(const T_Visitor& visitor)
+		{
+			if(!visitor(*this))
+				return;
+			for(HSpatial spatial : m_contents)
+				spatial->visit(visitor);
+		}
 
 		void debug_contents(size_t depth = 0);
 	};

@@ -17,9 +17,9 @@
 #endif
 
 #ifndef MUD_CPP_20
-#include <string>
+#include <stl/string.h>
 #include <cstdint>
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 #include <block/Structs.h>
@@ -43,17 +43,17 @@ namespace mud
     export_ template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Tileblock>>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Earth>();
     
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<toy::Block*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<toy::Chunk*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<toy::Element*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<mud::Grid<toy::Block*>*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<toy::Heap*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<toy::Sector*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<toy::Tileblock*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<mud::ComponentHandle<toy::Block>*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<mud::ComponentHandle<toy::Chunk>*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<mud::ComponentHandle<toy::Heap>*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<mud::ComponentHandle<toy::Sector>*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<mud::ComponentHandle<toy::Tileblock>*>>;
-    export_ template struct TOY_BLOCK_EXPORT Typed<std::vector<toy::Earth*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<toy::Block*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<toy::Chunk*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<toy::Element*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<mud::Grid<toy::Block*>*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<toy::Heap*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<toy::Sector*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<toy::Tileblock*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<mud::ComponentHandle<toy::Block>*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<mud::ComponentHandle<toy::Chunk>*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<mud::ComponentHandle<toy::Heap>*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<mud::ComponentHandle<toy::Sector>*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<mud::ComponentHandle<toy::Tileblock>*>>;
+    export_ template struct TOY_BLOCK_EXPORT Typed<vector<toy::Earth*>>;
 }

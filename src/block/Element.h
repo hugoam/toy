@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <stl/vector.h>
+#include <stl/string.h>
 #include <ecs/Proto.h>
 #include <infra/Global.h>
 #include <math/Colour.h>
@@ -14,14 +16,8 @@
 #include <core/Physic/Scope.h>
 #include <block/Forward.h>
 
-/* std */
-#include <vector>
-#include <string>
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	enum class refl_ MatterState : unsigned int
 	{
 		Solid,

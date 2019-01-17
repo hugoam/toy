@@ -11,13 +11,13 @@
 
 #ifndef MUD_CPP_20
 #include <set>
-#include <map>
-#include <string>
+#include <stl/map>
+#include <stl/string>
 #endif
 
 using namespace mud; namespace toy
 {		
-	using string = std::string;
+	using string = string;
 
 	// @ add a Filler discriminating between event types
 	class TOY_CORE_EXPORT EventTube : public NonCopy
@@ -32,7 +32,7 @@ using namespace mud; namespace toy
 
 	protected:
 		std::set<EventSubscriber*> m_subscribers;
-		std::map<string, object_ptr<EventFilter>> m_filters;
+		map<string, object_ptr<EventFilter>> m_filters;
 	};
 
 	class TOY_CORE_EXPORT EventTubeEnd

@@ -11,7 +11,7 @@
 #include <core/Store/StoreObserver.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #include <algorithm>
 #endif
 
@@ -29,8 +29,8 @@ using namespace mud; namespace toy
 
 		inline T& deref(T* const& ref) const { return *ref; }
 
-		inline const std::vector<T*>& store() const { return m_store; }
-		inline std::vector<T*>& store() { return m_store; }
+		inline const vector<T*>& store() const { return m_store; }
+		inline vector<T*>& store() { return m_store; }
 
 		using StoreBase<Array<T>, T>::has;
 		using StoreBase<Array<T>, T>::remove;
@@ -118,7 +118,7 @@ using namespace mud; namespace toy
 		bool empty() const { return m_store.empty(); }
 
 	protected:
-		std::vector<T*> m_store;
+		vector<T*> m_store;
 	};
 
 	template <class T_Array>

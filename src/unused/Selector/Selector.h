@@ -16,7 +16,7 @@ using namespace mud; namespace toy
 	{
 	public:
 		//virtual void init(const ActorList& actors) = 0;
-		virtual void init(const std::vector<Ref>& targets) = 0;
+		virtual void init(const vector<Ref>& targets) = 0;
 		virtual Ref dispatchTarget(Ref agent) = 0;
 	};
 

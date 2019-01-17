@@ -5,21 +5,16 @@
 
 #pragma once
 
+#include <stl/string.h>
 #include <infra/NonCopy.h>
 #include <type/Unique.h>
 #include <core/Forward.h>
 #include <geom/Primitive.h>
 
-#ifndef MUD_CPP_20
-#include <string>
-#endif
-
 class rcContext;
 
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	static const int MAX_CONVEXVOL_PTS = 12;
 	struct ConvexVolume
 	{
@@ -37,7 +32,7 @@ using namespace mud; namespace toy
 
 		Geometry& m_geometry;
 		string m_name;
-		unique_ptr<rcChunkyTriMesh> m_chunkyMesh;
+		unique<rcChunkyTriMesh> m_chunkyMesh;
 
 		bool build();
 
@@ -55,7 +50,7 @@ using namespace mud; namespace toy
 		void deleteConvexVolume(int i);
 
 	protected:
-		unique_ptr<rcContext> m_ctx;
+		unique<rcContext> m_ctx;
 
 	public:
 		// Off-Mesh connections.

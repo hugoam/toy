@@ -13,7 +13,7 @@
 #include <infra/Updatable.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #include <memory>
 #include <list>
 #endif
@@ -45,7 +45,7 @@ using namespace mud; namespace toy
 		vec3 suggestDirection(Disq& movable);
 	};
 
-	typedef std::vector<Movable*> MovableVector;
+	typedef vector<Movable*> MovableVector;
 
 	struct TOY_CORE_EXPORT Contact
 	{
@@ -81,10 +81,10 @@ using namespace mud; namespace toy
 
 		size_t numContacts() { return m_contacts.size(); }
 
-		std::vector<Contact>& contacts() { return m_contacts; }
+		vector<Contact>& contacts() { return m_contacts; }
 
 	protected:
-		std::vector<Contact> m_contacts;
+		vector<Contact> m_contacts;
 	};
 
 	class TOY_CORE_EXPORT Disq : public Belt, public Collider, public ColliderObject
@@ -122,7 +122,7 @@ using namespace mud; namespace toy
 		vec3 nearest(Disq& other);
 		
 		bool collisions(const vec3& spot);
-		void collisions(const vec3& spot, std::vector<Collision>& obstacles);
+		void collisions(const vec3& spot, vector<Collision>& obstacles);
 
 		vec3 project(const vec3& pos);
 

@@ -13,8 +13,8 @@
 #include <core/Spatial/Spatial.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
-#include <memory>
+#include <stl/vector.h>
+#include <stl/memory.h>
 #endif
 
 using namespace mud; namespace toy
@@ -42,9 +42,9 @@ using namespace mud; namespace toy
 		vec3 m_origin;
 		vec3 m_destination;
 
-		std::vector<vec3> m_path;
-		std::vector<vec3> m_waypoints;
-		std::vector<dtPolyRef> m_poly_path;
+		vector<vec3> m_path;
+		vector<vec3> m_waypoints;
+		vector<dtPolyRef> m_poly_path;
 
 		void clear();
 		bool compute();

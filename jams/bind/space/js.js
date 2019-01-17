@@ -50,7 +50,7 @@ CombatStar.prototype["__destroy__"] = CombatStar.prototype.__destroy__ = functio
 function Commander(id, name, race, command, commerce, diplomacy) {
     ensureCache.prepare();
     /* id <mud::Id> [] */
-    /* name <std::string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* race <Race> [] */
@@ -84,7 +84,7 @@ Object.defineProperty(Commander.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Commander__set_name(self, value);
@@ -243,7 +243,7 @@ function Fleet(spatial, galaxy, commander, coord, name) {
     if(typeof commander !== "undefined" && commander !== null) { commander = commander.ptr; }
     /* coord <uvec2> [] */
     if(typeof coord !== "undefined" && coord !== null) { coord = coord.ptr; }
-    /* name <std::string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     if (spatial === undefined) { this.ptr = _Fleet_Fleet_0(); getCache(Fleet)[this.ptr] = this; return; }
@@ -324,7 +324,7 @@ Object.defineProperty(Fleet.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Fleet__set_name(self, value);
@@ -605,7 +605,7 @@ Object.defineProperty(Schema.prototype, "code", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Schema__set_code(self, value);
@@ -618,7 +618,7 @@ Object.defineProperty(Schema.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Schema__set_name(self, value);
@@ -631,7 +631,7 @@ Object.defineProperty(Schema.prototype, "conceptor", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Schema__set_conceptor(self, value);
@@ -807,7 +807,7 @@ Object.defineProperty(Split.prototype, "code", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Split__set_code(self, value);
@@ -837,7 +837,7 @@ function Star(spatial, galaxy, coord, name) {
     if(typeof galaxy !== "undefined" && galaxy !== null) { galaxy = galaxy.ptr; }
     /* coord <uvec2> [] */
     if(typeof coord !== "undefined" && coord !== null) { coord = coord.ptr; }
-    /* name <std::string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     if (spatial === undefined) { this.ptr = _Star_Star_0(); getCache(Star)[this.ptr] = this; return; }
@@ -880,7 +880,7 @@ Object.defineProperty(Star.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Star__set_name(self, value);
@@ -1280,7 +1280,7 @@ SpatialCombat.prototype["__destroy__"] = SpatialCombat.prototype.__destroy__ = f
 // Universe
 function Universe(name, job_system) {
     ensureCache.prepare();
-    /* name <std::string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */

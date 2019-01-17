@@ -44,7 +44,7 @@ using namespace mud; namespace toy
     Collider::~Collider()
     {}
 
-	void Collider::init(object_ptr<ColliderImpl> impl)
+	void Collider::init(object<ColliderImpl> impl)
 	{
 		m_impl = std::move(impl);
 	}
@@ -105,7 +105,7 @@ using namespace mud; namespace toy
 	Solid::~Solid()
 	{}
 
-	void Solid::init(object_ptr<SolidImpl> impl)
+	void Solid::init(object<SolidImpl> impl)
 	{
 		m_impl = std::move(impl);
 	}

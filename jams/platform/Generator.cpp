@@ -8,7 +8,7 @@
 WaveTileset& generator_tileset(GfxSystem& gfx_system)
 {
 	LocatedFile location = gfx_system.locate_file("models/platform/platform.tls");
-	std::string filepath = std::string(location.m_location) + "models/platform/platform.tls";
+	string filepath = string(location.m_location) + "models/platform/platform.tls";
 
 	static WaveTileset tileset;
 	parse_json_wave_tileset(filepath, "", tileset);
@@ -20,7 +20,7 @@ void generate_crates(Tileblock& block)
 	HSpatial origin = block.m_spatial->m_world->origin();
 
 	float crate_radius = 10.f;
-	std::vector<vec3> positions = distribute_poisson(to_xz(block.m_wfc_block.m_aabb.m_extents), crate_radius);
+	vector<vec3> positions = distribute_poisson(to_xz(block.m_wfc_block.m_aabb.m_extents), crate_radius);
 	for(const vec3& position : positions)
 	{
 		construct<Crate>(origin, block.m_spatial->m_position + position + Y3 * 10.f, vec3(0.75f));
@@ -32,7 +32,7 @@ void generate_npcs(Tileblock& block)
 	HSpatial origin = block.m_spatial->m_world->origin();
 
 	float npc_radius = 10.f;
-	std::vector<vec3> positions = distribute_poisson(to_xz(block.m_wfc_block.m_aabb.m_extents), npc_radius);
+	vector<vec3> positions = distribute_poisson(to_xz(block.m_wfc_block.m_aabb.m_extents), npc_radius);
 	for(const vec3& position : positions)
 	{
 		construct<Human>(origin, block.m_spatial->m_position + position + Y3 * 10.f, Faction::Enemy);
@@ -67,8 +67,8 @@ void platform_generator(GameShell& shell, VisualScript& script)
 	Valve* coords = script.function(grid, { &gridSize });
 
 	LocatedFile location = shell.m_gfx_system->locate_file("models/platform/platform.tls");
-	std::string filepath = std::string(location.m_location) + "models/platform/platform.tls";
-	Valve* tileset = script.function(parse_json_wave_tileset, { &script.value(filepath), &script.value(std::string("")) });
+	string filepath = string(location.m_location) + "models/platform/platform.tls";
+	Valve* tileset = script.function(parse_json_wave_tileset, { &script.value(filepath), &script.value(string("")) });
 
 	//Valve& empty_wave = script.create<TileWave>({ &tileset, &tiles, &height, &tiles, &script.value(false) });
 	//Valve& solve_steps = script.value(0);
@@ -100,7 +100,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 		Var* positions = script.function(distribute_poisson, { &script.value(vec2{ 50.f }), &radius }); // .flow(sectors
 
 		Var& crates = script.create<Human>({ &script.value(0), &sectors, positions, &script.value(0.35f), &script.value(2.f),
-											 &script.value(std::string("Human")), &script.value(std::string("X")) });
+											 &script.value(string("Human")), &script.value(string("X")) });
 	}
 #endif
 

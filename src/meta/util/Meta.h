@@ -62,7 +62,7 @@ namespace mud
             {
                 { type<toy::ProcedureType>(), Address(), type<mud::Type>(), "type", Ref(type<mud::Type>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::ProcedureType>(object).m_type); } },
                 { type<toy::ProcedureType>(), member_address(&toy::ProcedureType::m_index), type<uint32_t>(), "index", var(uint32_t()), Member::Value, nullptr },
-                { type<toy::ProcedureType>(), member_address(&toy::ProcedureType::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr }
+                { type<toy::ProcedureType>(), member_address(&toy::ProcedureType::m_name), type<string>(), "name", var(string()), Member::Value, nullptr }
             },
             // methods
             {

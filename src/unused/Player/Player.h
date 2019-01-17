@@ -10,17 +10,17 @@
 #include <core/Forward.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #endif
 
 using namespace mud; namespace toy
 {
-	using string = std::string;
+	using string = string;
 
 	class refl_ TOY_CORE_EXPORT User
 	{
 	public:
-		std::vector<Ref> m_selection;
+		vector<Ref> m_selection;
 	};
 
 #if 0
@@ -31,7 +31,7 @@ using namespace mud; namespace toy
 
 		attr_ Id m_id;
 		attr_ string m_name;
-		attr_ std::vector<Ref> m_selection;
+		attr_ vector<Ref> m_selection;
 	};
 #endif
 }

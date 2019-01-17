@@ -80,15 +80,15 @@ namespace boids
 		Cells(size_t count)
 			: indices(count), hash(count), alignment(count), separation(count), obstacle(count), obstacle_distance(count), target(count), count(count), thread(count)
 		{}
-		std::vector<int>    indices;
-		std::vector<int>	hash;
-		std::vector<int>	thread;
-		std::vector<vec3>	alignment;
-		std::vector<vec3>	separation;
-		std::vector<int>	obstacle;
-		std::vector<float>  obstacle_distance;
-		std::vector<int>    target;
-		std::vector<int>    count;
+		vector<int>   indices;
+		vector<int>	  hash;
+		vector<int>	  thread;
+		vector<vec3>  alignment;
+		vector<vec3>  separation;
+		vector<int>	  obstacle;
+		vector<float> obstacle_distance;
+		vector<int>   target;
+		vector<int>   count;
 		void resize(size_t size)
 		{
 			indices.resize(size); hash.resize(size), alignment.resize(size); separation.resize(size);
@@ -106,10 +106,10 @@ namespace boids
 	struct BoidsData
 	{
 		BoidsData() {}
-		Cells					cells;
-		CellMap					cell_hashes[c_max_threads];
-		std::vector<Position>   targets;
-		std::vector<Position>   obstacles;
+		Cells				cells;
+		CellMap				cell_hashes[c_max_threads];
+		vector<Position>    targets;
+		vector<Position>    obstacles;
 		void resize(size_t num_threads, size_t num_cells, size_t num_targets, size_t num_obstacles)
 		{
 			cells.resize(num_cells); targets.resize(num_targets); obstacles.resize(num_obstacles);
@@ -120,11 +120,11 @@ namespace boids
 
 	struct HashPositions
 	{
-		const std::vector<Position>&	positions;
-		std::vector<int>&				hashes;
-		std::vector<int>&				threads;
-		float                           cell_radius;
-		size_t							num_threads;
+		const vector<Position>&	positions;
+		vector<int>&			hashes;
+		vector<int>&			threads;
+		float                   cell_radius;
+		size_t					num_threads;
 
 		inline void operator()(JobSystem& js, Job* job, uint32_t index) const
 		{
@@ -136,10 +136,10 @@ namespace boids
 	};
 
 
-	void init_cell(Cells& cells, const std::vector<Position>& targets, const std::vector<Position>& obstacles, int index)
+	void init_cell(Cells& cells, const vector<Position>& targets, const vector<Position>& obstacles, int index)
 	{
 		struct Result { size_t index; float distance; };
-		auto nearest = [](const std::vector<Position>& targets, const vec3& position) -> Result
+		auto nearest = [](const vector<Position>& targets, const vec3& position) -> Result
 		{
 			size_t index = 0;
 			float distance = length2(position - targets[0].m_value);
@@ -177,11 +177,11 @@ namespace boids
 	struct MergeCells
 	{
 		Cells& cells;
-		const std::vector<int>& hashes;
-		const std::vector<int>& threads;
+		const vector<int>& hashes;
+		const vector<int>& threads;
 		CellMap* cell_hashes_mt;
-		const std::vector<Position>& targets;
-		const std::vector<Position>& obstacles;
+		const vector<Position>& targets;
+		const vector<Position>& obstacles;
 
 		inline void operator()(JobSystem& js, Job* job, uint32_t start, uint32_t count) const
 		{
@@ -256,13 +256,13 @@ namespace boids
 
 	struct Steer
 	{
-		const BoidParams4&				m_params;
-		const Cells&					m_cells;
-		const std::vector<Position>&	m_targets;
-		const std::vector<Position>&	m_obstacles;
-		const std::vector<Position>&	m_positions;
-		std::vector<Heading>&			m_headings;
-		float                           m_dt;
+		const BoidParams4&		m_params;
+		const Cells&			m_cells;
+		const vector<Position>&	m_targets;
+		const vector<Position>&	m_obstacles;
+		const vector<Position>&	m_positions;
+		vector<Heading>&		m_headings;
+		float                   m_dt;
 
 		uint32_t m_start;
 		uint32_t m_count;
@@ -294,7 +294,7 @@ namespace boids
 	class BoidSystem
 	{
 	public:
-		//std::vector<BoidsData> m_data;
+		//vector<BoidsData> m_data;
 		BoidsData m_data;
 
 		void update(JobSystem& job_system, ECS& ecs, const BoidParams& params, float delta)
@@ -307,7 +307,7 @@ namespace boids
 			ComponentArray<Position> obstacles = ecs.Components<Position, BoidObstacle>();
 			ComponentArray<Position> targets = ecs.Components<Position, BoidTarget>();
 
-			std::vector<ParallelBuffers*> matches = ecs.Match(prototype);
+			vector<ParallelBuffers*> matches = ecs.Match(prototype);
 			for(ParallelBuffers* stream : matches)
 			{
 				const ComponentBuffer<Position>& positions = stream->Buffer<Position>();
@@ -549,11 +549,11 @@ namespace boids
 				Material& material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::White), PLAIN);
 				//Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "boid", Colour::White);
 
-				std::vector<ParallelBuffers*> matches = ecs.Match(prototype);
+				vector<ParallelBuffers*> matches = ecs.Match(prototype);
 				for(ParallelBuffers* stream : matches)
 				{
 					const ComponentBuffer<Transform4>& components = stream->Buffer<Transform4>();
-					std::vector<mat4>& transforms = (std::vector<mat4>&) components.m_data;
+					vector<mat4>& transforms = (vector<mat4>&) components.m_data;
 
 					const size_t size = std::min(m_num_visible, transforms.size());
 					for(size_t i = 0; i < size; i += 4096)

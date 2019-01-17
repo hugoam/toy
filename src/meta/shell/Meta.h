@@ -122,12 +122,12 @@ namespace mud
             {
                 { type<toy::GameShell>(), "init", member_address<void(toy::GameShell::*)()>(&toy::GameShell::init), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::GameShell>(object).init(); }, {}, Var() },
                 { type<toy::GameShell>(), "load", member_address<void(toy::GameShell::*)(toy::GameModule&)>(&toy::GameShell::load), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).load(val<toy::GameModule>(args[0])); }, { { "module", Ref(type<toy::GameModule>()) } }, Var() },
-                { type<toy::GameShell>(), "load_path", member_address<void(toy::GameShell::*)(const std::string&)>(&toy::GameShell::load_path), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).load_path(val<std::string>(args[0])); }, { { "module_path", var(std::string()) } }, Var() },
+                { type<toy::GameShell>(), "load_path", member_address<void(toy::GameShell::*)(const string&)>(&toy::GameShell::load_path), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).load_path(val<string>(args[0])); }, { { "module_path", var(string()) } }, Var() },
                 { type<toy::GameShell>(), "run", member_address<void(toy::GameShell::*)(size_t)>(&toy::GameShell::run), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run(val<size_t>(args[0])); }, { { "iterations", var(size_t(0U)), Param::Default } }, Var() },
                 { type<toy::GameShell>(), "run_game", member_address<void(toy::GameShell::*)(toy::GameModule&, size_t)>(&toy::GameShell::run_game), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_game(val<toy::GameModule>(args[0]), val<size_t>(args[1])); }, { { "module", Ref(type<toy::GameModule>()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
                 { type<toy::GameShell>(), "run_editor", member_address<void(toy::GameShell::*)(toy::GameModule&, size_t)>(&toy::GameShell::run_editor), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_editor(val<toy::GameModule>(args[0]), val<size_t>(args[1])); }, { { "module", Ref(type<toy::GameModule>()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
-                { type<toy::GameShell>(), "run_game_path", member_address<void(toy::GameShell::*)(const std::string&, size_t)>(&toy::GameShell::run_game_path), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_game_path(val<std::string>(args[0]), val<size_t>(args[1])); }, { { "module_path", var(std::string()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
-                { type<toy::GameShell>(), "run_editor_path", member_address<void(toy::GameShell::*)(const std::string&, size_t)>(&toy::GameShell::run_editor_path), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_editor_path(val<std::string>(args[0]), val<size_t>(args[1])); }, { { "module_path", var(std::string()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
+                { type<toy::GameShell>(), "run_game_path", member_address<void(toy::GameShell::*)(const string&, size_t)>(&toy::GameShell::run_game_path), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_game_path(val<string>(args[0]), val<size_t>(args[1])); }, { { "module_path", var(string()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
+                { type<toy::GameShell>(), "run_editor_path", member_address<void(toy::GameShell::*)(const string&, size_t)>(&toy::GameShell::run_editor_path), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::GameShell>(object).run_editor_path(val<string>(args[0]), val<size_t>(args[1])); }, { { "module_path", var(string()) }, { "iterations", var(size_t(0U)), Param::Default } }, Var() },
                 { type<toy::GameShell>(), "launch", member_address<void(toy::GameShell::*)()>(&toy::GameShell::launch), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::GameShell>(object).launch(); }, {}, Var() },
                 { type<toy::GameShell>(), "save", member_address<void(toy::GameShell::*)()>(&toy::GameShell::save), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::GameShell>(object).save(); }, {}, Var() },
                 { type<toy::GameShell>(), "reload", member_address<void(toy::GameShell::*)()>(&toy::GameShell::reload), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::GameShell>(object).reload(); }, {}, Var() },
@@ -204,13 +204,13 @@ namespace mud
         m.m_types.push_back(&type<toy::GameScene>());
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::paint_physics(val<mud::Gnode>(args[0]), val<toy::World>(args[1])); };
-            std::vector<Param> params = { { "parent", Ref(type<mud::Gnode>()) }, { "world", Ref(type<toy::World>()) } };
+            vector<Param> params = { { "parent", Ref(type<mud::Gnode>()) }, { "world", Ref(type<toy::World>()) } };
             static Function f = { &namspc({ "toy" }), "paint_physics", function_id<void(*)(mud::Gnode&, toy::World&)>(&toy::paint_physics), func, params, Var() };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::physic_painter(val<toy::GameScene>(args[0])); };
-            std::vector<Param> params = { { "scene", Ref(type<toy::GameScene>()) } };
+            vector<Param> params = { { "scene", Ref(type<toy::GameScene>()) } };
             static Function f = { &namspc({ "toy" }), "physic_painter", function_id<void(*)(toy::GameScene&)>(&toy::physic_painter), func, params, Var() };
             m.m_functions.push_back(&f);
         }

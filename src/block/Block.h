@@ -14,8 +14,8 @@
 #include <block/Handles.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
-#include <memory>
+#include <stl/vector.h>
+#include <stl/memory.h>
 #endif
 
 namespace mud

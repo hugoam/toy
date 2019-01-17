@@ -5,7 +5,7 @@
 
 #include <block/VisuBlock.h>
 
-#include <infra/StringConvert.h>
+#include <infra/ToString.h>
 
 #include <math/Random.h>
 
@@ -88,7 +88,7 @@ using namespace mud; namespace toy
 		paint_block(parent, block, &material);
 	}
 
-	void voxel_side(Block& block, size_t chunk, Element* element, Side side, std::vector<Quad>& quads, std::vector<ProcShape>& shapes)
+	void voxel_side(Block& block, size_t chunk, Element* element, Side side, vector<Quad>& quads, vector<ProcShape>& shapes)
 	{
 		Quad quad = { to_xz(block.chunk_size()), c_dirs_tangents[size_t(side)], c_dirs_normals[size_t(side)] };
 		quad.m_center = block.chunk_position(chunk) + to_vec3(side) * block.chunk_size() / 2.f;
@@ -108,15 +108,15 @@ using namespace mud; namespace toy
 		if(block.m_subdived)
 			return;
 
-		std::vector<Quad> quads;
+		vector<Quad> quads;
 		//quads.reserve(block.m_chunks.size() * 6 / 2);
 		quads.reserve(block.m_chunks.size() * 6 / 2 * 16);
 
 		state.m_models.clear();
 
-		std::map<Element*, std::vector<ProcShape>> bodies;
+		map<Element*, vector<ProcShape>> bodies;
 
-		std::vector<Element*> elements = { &Earth::me, &Stone::me, &Sand::me, &Air::me, &Gas::me, &Minerals::me, &Fungus::me, &Water::me };
+		vector<Element*> elements = { &Earth::me, &Stone::me, &Sand::me, &Air::me, &Gas::me, &Minerals::me, &Fungus::me, &Water::me };
 
 		size_t index = 0;
 		for(Element* element : block.m_chunks)

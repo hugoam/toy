@@ -5,19 +5,14 @@
 
 #pragma once
 
+#include <stl/vector.h>
+#include <stl/string.h>
+#include <stl/map.h>
 #include <core/Forward.h>
 #include <core/Physic/CollisionGroup.h>
 
-#ifndef MUD_CPP_20
-#include <string>
-#include <map>
-#include <vector>
-#endif
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	//@todo : cleanup, remove references to emitters and receptors since it's not supposed to be specific
 	//			make_unique masks stored in a map based on the group
     class refl_ TOY_CORE_EXPORT Medium
@@ -29,10 +24,10 @@ using namespace mud; namespace toy
 		attr_ bool m_occlusions;
 		attr_ bool m_solid;
 
-		std::map<CollisionGroup, short int> m_masks;
+		map<CollisionGroup, short int> m_masks;
 
 		short int mask(CollisionGroup group);
 
-		virtual float throughput(EmitterScope& emitter, ReceptorScope& receptor, std::vector<Obstacle*>& occluding);
+		virtual float throughput(EmitterScope& emitter, ReceptorScope& receptor, vector<Obstacle*>& occluding);
 	};
 }

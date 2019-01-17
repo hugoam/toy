@@ -83,8 +83,8 @@ struct HumanController
 struct refl_ Stance
 {
 	constr_ Stance() : name(""), loop(false) {}
-	constr_ Stance(const std::string& name, bool loop) : name(name), loop(loop) {}
-	attr_ std::string name;
+	constr_ Stance(const string& name, bool loop) : name(name), loop(loop) {}
+	attr_ string name;
 	attr_ bool loop;
 };
 
@@ -126,7 +126,7 @@ public:
 
 	attr_ Stance m_state = { "IdleAim", true };
 
-	std::vector<EntityHandle<Bullet>> m_bullets;
+	vector<EntityHandle<Bullet>> m_bullets;
 
 	void next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta);
 

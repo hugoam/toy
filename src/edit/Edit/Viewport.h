@@ -12,7 +12,7 @@
 
 using namespace mud; namespace toy
 {
-	using Selection = std::vector<Ref>;
+	using Selection = vector<Ref>;
 
 	TOY_EDIT_EXPORT Viewer& scene_viewport(Widget& parent, VisuScene& scene, HCamera camera, HMovable movable, Selection& selection);
 }

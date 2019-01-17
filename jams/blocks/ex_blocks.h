@@ -7,6 +7,8 @@
 #include <blocks/Forward.h>
 #include <toy/toy.h>
 
+#include <map>
+
 using namespace mud;
 using namespace toy;
 
@@ -75,7 +77,7 @@ public:
 	static const size_t s_max_factions = 10U;
 };
 
-export_ extern _BLOCKS_EXPORT std::vector<Faction> g_factions;
+export_ extern _BLOCKS_EXPORT vector<Faction> g_factions;
 
 class refl_ _BLOCKS_EXPORT Camp
 {
@@ -171,7 +173,7 @@ public:
 
 	bool m_ia = true;
 
-	std::vector<EntityHandle<Slug>> m_slugs;
+	vector<EntityHandle<Slug>> m_slugs;
 
 	void next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta);
 
@@ -184,7 +186,7 @@ public:
 class refl_ _BLOCKS_EXPORT BlockWorld : public Complex
 {
 public:
-	constr_ BlockWorld(const std::string& name, JobSystem& job_system);
+	constr_ BlockWorld(const string& name, JobSystem& job_system);
 	~BlockWorld();
 
 	attr_ World m_world;

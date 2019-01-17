@@ -43,6 +43,6 @@ using namespace mud; namespace toy
 		virtual void impulse_torque(const vec3& torque) override;
 
     public:
-		unique_ptr<BulletMotionState> m_motion_state;
+		unique<BulletMotionState> m_motion_state;
     };
 }

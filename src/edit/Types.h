@@ -17,9 +17,9 @@
 #endif
 
 #ifndef MUD_CPP_20
-#include <string>
+#include <stl/string.h>
 #include <cstdint>
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 
@@ -40,16 +40,16 @@ namespace mud
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::PlayTool>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::RunTool>();
     
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::ActionGroup*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::Clone*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::Cut*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::Edit*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::GraphicsDebug*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::Paste*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::Toolbelt*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::Toolbox*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::DynamicToolbox*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::Editor*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::PlayTool*>>;
-    export_ template struct TOY_EDIT_EXPORT Typed<std::vector<toy::RunTool*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::ActionGroup*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::Clone*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::Cut*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::Edit*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::GraphicsDebug*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::Paste*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::Toolbelt*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::Toolbox*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::DynamicToolbox*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::Editor*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::PlayTool*>>;
+    export_ template struct TOY_EDIT_EXPORT Typed<vector<toy::RunTool*>>;
 }

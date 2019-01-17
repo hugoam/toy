@@ -122,8 +122,8 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 {
 	Spatial& spatial = bullet.m_spatial;
 
-	static ParticleGenerator* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleGenerator* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
+	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
 
 	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
 	gfx::particles(source, *flash);

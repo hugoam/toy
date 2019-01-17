@@ -13,7 +13,7 @@
 #include <core/Movable/MotionState.h>
 
 #ifndef MUD_CPP_20
-#include <memory>
+#include <stl/memory.h>
 #endif
 
 using namespace mud; namespace toy
@@ -35,8 +35,8 @@ using namespace mud; namespace toy
 		virtual void update_transform(const vec3& position, const quat& rotation) = 0;
 		virtual void update_transform() = 0;
 
-		virtual void project(const vec3& position, std::vector<Collision>& collisions, short int mask) = 0;
-		virtual void raycast(const vec3& position, std::vector<Collision>& collisions, short int mask) = 0;
+		virtual void project(const vec3& position, vector<Collision>& collisions, short int mask) = 0;
+		virtual void raycast(const vec3& position, vector<Collision>& collisions, short int mask) = 0;
 		virtual Collision raycast(const vec3& position, short int mask) = 0;
 	};
 
@@ -67,13 +67,13 @@ using namespace mud; namespace toy
 		attr_ ColliderObject* m_object = nullptr;
 
 		PhysicMedium* m_world;
-		object_ptr<ColliderImpl> m_impl;
+		object<ColliderImpl> m_impl;
 
 		attr_ ColliderImpl& impl() { return *m_impl; }
 
 		MotionState m_motion_state;
 
-		void init(object_ptr<ColliderImpl> impl);
+		void init(object<ColliderImpl> impl);
 
 		void next_frame(size_t tick, size_t delta);
 		void next_frame(Spatial& spatial, size_t tick, size_t delta);
@@ -126,9 +126,9 @@ using namespace mud; namespace toy
 		attr_ bool m_static = false;
 		attr_ float m_mass = 0.f;
 
-		void init(object_ptr<SolidImpl> impl);
+		void init(object<SolidImpl> impl);
 
-		object_ptr<SolidImpl> m_impl;
+		object<SolidImpl> m_impl;
 
 		SolidImpl* operator->() { return m_impl.get(); }
 		const SolidImpl* operator->() const { return m_impl.get(); }

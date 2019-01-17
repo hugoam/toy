@@ -51,7 +51,7 @@ using namespace mud; namespace toy
 		float extents[3] = { 0.f, 2.f, 0.f };
 		float result[3];
 		dtPolyRef poly;
-		m_query->findNearestPoly(&pos[0], extents, m_filter.get(), &poly, &result[0]);
+		m_query->findNearestPoly(value_ptr(pos), extents, m_filter.get(), &poly, &result[0]);
 
 		return (poly != 0);
 	}

@@ -5,19 +5,15 @@
 
 #pragma once
 
+#include <stl/string.h>
 #include <type/Ref.h>
 #include <type/Indexer.h>
 #include <util/Forward.h>
 #include <util/Executable.h>
 #include <refl/Meta.h>
 
-#ifndef MUD_CPP_20
-#include <string>
-#endif
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
 	class User;
 
 	class refl_ TOY_UTIL_EXPORT ProcedureType
@@ -33,19 +29,19 @@ using namespace mud; namespace toy
 		Meta& meta() { return mud::meta(m_type); }
 
 		virtual bool checkObject(Ref object) = 0;
-		virtual bool checkArgs(const std::vector<Ref>& args) = 0;
-		virtual object_ptr<Procedure> instance(User* user, Ref object, std::vector<Ref> args) = 0;
+		virtual bool checkArgs(const vector<Ref>& args) = 0;
+		virtual object<Procedure> instance(User* user, Ref object, vector<Ref> args) = 0;
 	};
 
 	class refl_ TOY_UTIL_EXPORT Procedure : public Executable
 	{
 	public:
-		Procedure(ProcedureType& def, User* user, Ref object, std::vector<Ref> args = {});
+		Procedure(ProcedureType& def, User* user, Ref object, vector<Ref> args = {});
 
 		ProcedureType& m_def;
 		User* m_user;
 		Ref m_object;
-		std::vector<Ref> m_args;
+		vector<Ref> m_args;
 	};
 
 	template <class T_Procedure>
@@ -55,19 +51,19 @@ using namespace mud; namespace toy
 		ProcedureDef() : ProcedureType(type<T_Procedure>()) {}
 
 		bool checkObject(Ref object) { return T_Procedure::checkObject(object); }
-		bool checkArgs(const std::vector<Ref>& args) { return T_Procedure::checkArgs(args); }
-		object_ptr<Procedure> instance(User* user, Ref object, std::vector<Ref> args) { return T_Procedure::instance(user, object, args); }
+		bool checkArgs(const vector<Ref>& args) { return T_Procedure::checkArgs(args); }
+		object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return T_Procedure::instance(user, object, args); }
 	};
 
 	template <class T_Procedure>
 	class TypedProcedure : public Procedure
 	{
 	public:
-		TypedProcedure(User* user, Ref object, std::vector<Ref> args = {}) : Procedure(T_Procedure::def(), user, object, args) {}
+		TypedProcedure(User* user, Ref object, vector<Ref> args = {}) : Procedure(T_Procedure::def(), user, object, args) {}
 
 		static bool checkObject(Ref object) { UNUSED(object); return true; }
-		static bool checkArgs(const std::vector<Ref>& args) { UNUSED(args); return true; }
-		static object_ptr<Procedure> instance(User* user, Ref object, std::vector<Ref> args) { return make_object<T_Procedure>(user, object, args); }
+		static bool checkArgs(const vector<Ref>& args) { UNUSED(args); return true; }
+		static object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return make_object<T_Procedure>(user, object, args); }
 
 		static ProcedureType& def() { static ProcedureDef<T_Procedure> df; return df; }
 	};

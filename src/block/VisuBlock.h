@@ -13,7 +13,7 @@
 #include <gfx/Light.h>
 
 #ifndef MUD_CPP_20
-#include <map>
+#include <stl/map.h>
 #endif
 
 using namespace mud; namespace toy
@@ -26,7 +26,7 @@ using namespace mud; namespace toy
 	struct BlockState : public NodeState
 	{
 		size_t m_updated = 0;
-		std::map<Element*, object_ptr<Model>> m_models;
+		map<Element*, object<Model>> m_models;
 	};
 
 	export_ TOY_BLOCK_EXPORT void update_block_geometry(GfxSystem& gfx_system, Block& block, BlockState& state);

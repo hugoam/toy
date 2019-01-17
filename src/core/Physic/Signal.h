@@ -8,7 +8,7 @@
 #include <core/Forward.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 using namespace mud; namespace toy
@@ -29,6 +29,6 @@ using namespace mud; namespace toy
 		void off();
 
 	private:
-		std::vector<Obstacle*> m_occluding;
+		vector<Obstacle*> m_occluding;
 	};
 }

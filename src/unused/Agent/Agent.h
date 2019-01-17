@@ -13,7 +13,7 @@
 #include <infra/Updatable.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #include <memory>
 #endif
 
@@ -30,7 +30,7 @@ using namespace mud; namespace toy
 		virtual bool validity(const vec3& pos) = 0;
 		virtual void nearestValid(vec3& destination, float margin) = 0;
 	};
-	typedef std::vector<Movable*> MovableVector;
+	typedef vector<Movable*> MovableVector;
 
 	class refl_ TOY_CORE_EXPORT Agent : public NonCopy
 	{

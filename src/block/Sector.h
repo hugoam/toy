@@ -15,12 +15,12 @@
 #include <block/Structs.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector.h>
 #endif
 
 using namespace mud; namespace toy
 {
-	typedef std::vector<Chunk*> ChunkVector;
+	typedef vector<Chunk*> ChunkVector;
 
 	class refl_ TOY_BLOCK_EXPORT Sector
 	{
@@ -39,7 +39,7 @@ using namespace mud; namespace toy
 
 		attr_ Block* m_block;
 
-		std::vector<Heap*> m_heaps;
+		vector<Heap*> m_heaps;
 	};
 
 	class refl_ TOY_BLOCK_EXPORT Tileblock
@@ -70,5 +70,5 @@ using namespace mud; namespace toy
 
 	TOY_BLOCK_EXPORT func_ void build_block_geometry(Scene& scene, WorldPage& page, Tileblock& block);
 
-	TOY_BLOCK_EXPORT func_ void index_blocks(const ivec3& grid_size, Grid<Block*>& grid, const std::vector<Block*>& blocks, const std::vector<Sector*>& sectors);
+	TOY_BLOCK_EXPORT func_ void index_blocks(const uvec3& grid_size, Grid<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors);
 }

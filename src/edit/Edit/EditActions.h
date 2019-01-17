@@ -13,7 +13,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_EDIT_EXPORT Edit : public TypedProcedure<Edit>
 	{
 	public:
-		Edit(User* user, Ref object, std::vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
+		Edit(User* user, Ref object, vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
 
 		static bool checkObject(Ref object) { UNUSED(object); return true; }
 
@@ -23,7 +23,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_EDIT_EXPORT Clone : public TypedProcedure<Clone>
 	{
 	public:
-		Clone(User* user, Ref object, std::vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
+		Clone(User* user, Ref object, vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
 
 		static bool checkObject(Ref object) { UNUSED(object); return true; }
 
@@ -33,7 +33,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_EDIT_EXPORT Cut : public TypedProcedure<Cut>
 	{
 	public:
-		Cut(User* user, Ref object, std::vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
+		Cut(User* user, Ref object, vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
 
 		void begin() {}
 	};
@@ -41,7 +41,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_EDIT_EXPORT Paste : public TypedProcedure<Paste>
 	{
 	public:
-		Paste(User* user, Ref object, std::vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
+		Paste(User* user, Ref object, vector<Ref> args) : TypedProcedure(user, object) { UNUSED(args); }
 
 		void begin() {}
 	};

@@ -13,7 +13,7 @@
 #include <core/Store/StoreObserver.h>
 
 #include <algorithm>
-#include <vector>
+#include <stl/vector>
 
 using namespace mud; namespace toy
 {
@@ -58,9 +58,9 @@ using namespace mud; namespace toy
 		virtual void iterate(const std::function<void(Ref)>& callback) const { self().iterate([callback](T& object) { return callback(Ref(&object)); }); }
 		virtual bool has(Ref object) const { return self().has(val<T>(object)); }
 
-		std::vector<T*> copy() const
+		vector<T*> copy() const
 		{
-			std::vector<T*> vec;
+			vector<T*> vec;
 			for(auto& pt : self().store())
 				vec.push_back(&self().deref(pt));
 			return vec;
@@ -123,6 +123,6 @@ using namespace mud; namespace toy
 		inline const T_Array& self() const { return as<T_Array>(*this); }
 
 	protected:
-		std::vector<StoreObserver<T>*> m_observers;
+		vector<StoreObserver<T>*> m_observers;
 	};
 }

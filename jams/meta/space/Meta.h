@@ -140,16 +140,16 @@ namespace mud
     
     // Sequences
     {
-        static Meta meta = { type<std::vector<CombatFleet>>(), &namspc({}), "std::vector<CombatFleet>", sizeof(std::vector<CombatFleet>), TypeClass::Sequence };
-        static Class cls = { type<std::vector<CombatFleet>>() };
+        static Meta meta = { type<vector<CombatFleet>>(), &namspc({}), "vector<CombatFleet>", sizeof(vector<CombatFleet>), TypeClass::Sequence };
+        static Class cls = { type<vector<CombatFleet>>() };
         cls.m_content = &type<CombatFleet>();
-        meta_sequence<std::vector<CombatFleet>, CombatFleet>();
+        meta_sequence<vector<CombatFleet>, CombatFleet>();
     }
     {
-        static Meta meta = { type<std::vector<Commander*>>(), &namspc({}), "std::vector<Commander*>", sizeof(std::vector<Commander*>), TypeClass::Sequence };
-        static Class cls = { type<std::vector<Commander*>>() };
+        static Meta meta = { type<vector<Commander*>>(), &namspc({}), "vector<Commander*>", sizeof(vector<Commander*>), TypeClass::Sequence };
+        static Class cls = { type<vector<Commander*>>() };
         cls.m_content = &type<Commander>();
-        meta_sequence<std::vector<Commander*>, Commander*>();
+        meta_sequence<vector<Commander*>, Commander*>();
     }
     
     // Combat
@@ -242,7 +242,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<Commander>(), [](Ref ref, array<Var> args) { new(&val<Commander>(ref)) Commander( val<mud::Id>(args[0]), val<std::string>(args[1]), val<Race>(args[2]), val<int>(args[3]), val<int>(args[4]), val<int>(args[5]) ); }, { { "id", var(mud::Id()) }, { "name", var(std::string()) }, { "race", var(Race()) }, { "command", var(int()) }, { "commerce", var(int()) }, { "diplomacy", var(int()) } } }
+                { type<Commander>(), [](Ref ref, array<Var> args) { new(&val<Commander>(ref)) Commander( val<mud::Id>(args[0]), val<string>(args[1]), val<Race>(args[2]), val<int>(args[3]), val<int>(args[4]), val<int>(args[5]) ); }, { { "id", var(mud::Id()) }, { "name", var(string()) }, { "race", var(Race()) }, { "command", var(int()) }, { "commerce", var(int()) }, { "diplomacy", var(int()) } } }
             },
             // copy constructor
             {
@@ -250,15 +250,15 @@ namespace mud
             // members
             {
                 { type<Commander>(), member_address(&Commander::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
-                { type<Commander>(), member_address(&Commander::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
+                { type<Commander>(), member_address(&Commander::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_race), type<Race>(), "race", var(Race()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_command), type<int>(), "command", var(int()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_commerce), type<int>(), "commerce", var(int()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_diplomacy), type<int>(), "diplomacy", var(int()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_reputation), type<int>(), "reputation", var(int()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_victory), type<int>(), "victory", var(int()), Member::Value, nullptr },
-                { type<Commander>(), member_address(&Commander::m_stars), type<std::vector<HStar>>(), "stars", var(std::vector<HStar>()), Member::Value, nullptr },
-                { type<Commander>(), member_address(&Commander::m_fleets), type<std::vector<HFleet>>(), "fleets", var(std::vector<HFleet>()), Member::Value, nullptr },
+                { type<Commander>(), member_address(&Commander::m_stars), type<vector<HStar>>(), "stars", var(vector<HStar>()), Member::Value, nullptr },
+                { type<Commander>(), member_address(&Commander::m_fleets), type<vector<HFleet>>(), "fleets", var(vector<HFleet>()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_capital), type<Star>(), "capital", Ref(type<Star>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<Commander>(), member_address(&Commander::m_regime), type<Regime>(), "regime", var(Regime::Empire), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_power), type<float>(), "power", var(float(0.f)), Member::Value, nullptr },
@@ -312,7 +312,7 @@ namespace mud
             // constructors
             {
                 { type<Fleet>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Fleet>(ref)) Fleet(  ); }, {} },
-                { type<Fleet>(), [](Ref ref, array<Var> args) { new(&val<Fleet>(ref)) Fleet( val<toy::HSpatial>(args[0]), val<Galaxy>(args[1]), val<Commander>(args[2]), val<mud::uvec2>(args[3]), val<std::string>(args[4]) ); }, { { "spatial", var(toy::HSpatial()) }, { "galaxy", Ref(type<Galaxy>()) }, { "commander", Ref(type<Commander>()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
+                { type<Fleet>(), [](Ref ref, array<Var> args) { new(&val<Fleet>(ref)) Fleet( val<toy::HSpatial>(args[0]), val<Galaxy>(args[1]), val<Commander>(args[2]), val<mud::uvec2>(args[3]), val<string>(args[4]) ); }, { { "spatial", var(toy::HSpatial()) }, { "galaxy", Ref(type<Galaxy>()) }, { "commander", Ref(type<Commander>()) }, { "coord", var(mud::uvec2()) }, { "name", var(string()) } } }
             },
             // copy constructor
             {
@@ -323,7 +323,7 @@ namespace mud
                 { type<Fleet>(), member_address(&Fleet::m_commander), type<Commander>(), "commander", Ref(type<Commander>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<Fleet>(), member_address(&Fleet::m_coord), type<mud::uvec2>(), "coord", var(mud::uvec2()), Member::Value, nullptr },
                 { type<Fleet>(), member_address(&Fleet::m_slot), type<mud::vec3>(), "slot", var(mud::vec3()), Member::Value, nullptr },
-                { type<Fleet>(), member_address(&Fleet::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
+                { type<Fleet>(), member_address(&Fleet::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<Fleet>(), member_address(&Fleet::m_experience), type<float>(), "experience", var(float(0.f)), Member::Value, nullptr },
                 { type<Fleet>(), member_address(&Fleet::m_spatial_power), type<SpatialPower>(), "spatial_power", var(SpatialPower{}), Member::Value, nullptr },
                 { type<Fleet>(), member_address(&Fleet::m_planetary_power), type<float>(), "planetary_power", var(float(0.f)), Member::Value, nullptr },
@@ -338,7 +338,7 @@ namespace mud
             },
             // methods
             {
-                { type<Fleet>(), "order_jump", member_address<void(Fleet::*)(mud::vec2, FleetStance)>(&Fleet::order_jump), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<Fleet>(object).order_jump(val<mud::vec2>(args[0]), val<FleetStance>(args[1])); }, { { "coord", var(mud::vec2()) }, { "stance", var(FleetStance()) } }, Var() },
+                { type<Fleet>(), "order_jump", member_address<void(Fleet::*)(mud::uvec2, FleetStance)>(&Fleet::order_jump), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<Fleet>(object).order_jump(val<mud::uvec2>(args[0]), val<FleetStance>(args[1])); }, { { "coord", var(mud::uvec2()) }, { "stance", var(FleetStance()) } }, Var() },
                 { type<Fleet>(), "order_attack", member_address<void(Fleet::*)(Star&)>(&Fleet::order_attack), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<Fleet>(object).order_attack(val<Star>(args[0])); }, { { "star", Ref(type<Star>()) } }, Var() }
             },
             // static members
@@ -365,9 +365,9 @@ namespace mud
             },
             // members
             {
-                { type<Galaxy>(), member_address(&Galaxy::m_stars), type<std::vector<HStar>>(), "stars", var(std::vector<HStar>()), Member::Value, nullptr },
-                { type<Galaxy>(), member_address(&Galaxy::m_fleets), type<std::vector<HFleet>>(), "fleets", var(std::vector<HFleet>()), Member::Value, nullptr },
-                { type<Galaxy>(), member_address(&Galaxy::m_commanders), type<std::vector<Commander*>>(), "commanders", var(std::vector<Commander*>()), Member::Value, nullptr },
+                { type<Galaxy>(), member_address(&Galaxy::m_stars), type<vector<HStar>>(), "stars", var(vector<HStar>()), Member::Value, nullptr },
+                { type<Galaxy>(), member_address(&Galaxy::m_fleets), type<vector<HFleet>>(), "fleets", var(vector<HFleet>()), Member::Value, nullptr },
+                { type<Galaxy>(), member_address(&Galaxy::m_commanders), type<vector<Commander*>>(), "commanders", var(vector<Commander*>()), Member::Value, nullptr },
                 { type<Galaxy>(), member_address(&Galaxy::m_size), type<mud::uvec2>(), "size", var(mud::uvec2()), Member::Value, nullptr }
             },
             // methods
@@ -481,9 +481,9 @@ namespace mud
             },
             // members
             {
-                { type<Schema>(), member_address(&Schema::m_code), type<std::string>(), "code", var(std::string()), Member::Value, nullptr },
-                { type<Schema>(), member_address(&Schema::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
-                { type<Schema>(), member_address(&Schema::m_conceptor), type<std::string>(), "conceptor", var(std::string()), Member::Value, nullptr },
+                { type<Schema>(), member_address(&Schema::m_code), type<string>(), "code", var(string()), Member::Value, nullptr },
+                { type<Schema>(), member_address(&Schema::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
+                { type<Schema>(), member_address(&Schema::m_conceptor), type<string>(), "conceptor", var(string()), Member::Value, nullptr },
                 { type<Schema>(), member_address(&Schema::m_level), type<uint8_t>(), "level", var(uint8_t(1)), Member::Value, nullptr },
                 { type<Schema>(), member_address(&Schema::m_cost), type<float>(), "cost", var(float(0.f)), Member::Value, nullptr },
                 { type<Schema>(), member_address(&Schema::m_minerals), type<float>(), "minerals", var(float(0.f)), Member::Value, nullptr },
@@ -550,7 +550,7 @@ namespace mud
             {
                 { type<Split>(), member_address(&Split::m_source), type<Fleet>(), "source", Ref(type<Fleet>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<Split>(), member_address(&Split::m_dest), type<Fleet>(), "dest", Ref(type<Fleet>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-                { type<Split>(), member_address(&Split::m_code), type<std::string>(), "code", var(std::string()), Member::Value, nullptr },
+                { type<Split>(), member_address(&Split::m_code), type<string>(), "code", var(string()), Member::Value, nullptr },
                 { type<Split>(), member_address(&Split::m_stance), type<FleetStance>(), "stance", var(FleetStance()), Member::Value, nullptr }
             },
             // methods
@@ -572,7 +572,7 @@ namespace mud
             // constructors
             {
                 { type<Star>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<Star>(ref)) Star(  ); }, {} },
-                { type<Star>(), [](Ref ref, array<Var> args) { new(&val<Star>(ref)) Star( val<toy::HSpatial>(args[0]), val<Galaxy>(args[1]), val<mud::uvec2>(args[2]), val<std::string>(args[3]) ); }, { { "spatial", var(toy::HSpatial()) }, { "galaxy", Ref(type<Galaxy>()) }, { "coord", var(mud::uvec2()) }, { "name", var(std::string()) } } }
+                { type<Star>(), [](Ref ref, array<Var> args) { new(&val<Star>(ref)) Star( val<toy::HSpatial>(args[0]), val<Galaxy>(args[1]), val<mud::uvec2>(args[2]), val<string>(args[3]) ); }, { { "spatial", var(toy::HSpatial()) }, { "galaxy", Ref(type<Galaxy>()) }, { "coord", var(mud::uvec2()) }, { "name", var(string()) } } }
             },
             // copy constructor
             {
@@ -581,7 +581,7 @@ namespace mud
             {
                 { type<Star>(), member_address(&Star::m_galaxy), type<Galaxy>(), "galaxy", Ref(type<Galaxy>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
                 { type<Star>(), member_address(&Star::m_coord), type<mud::uvec2>(), "coord", var(mud::uvec2()), Member::Value, nullptr },
-                { type<Star>(), member_address(&Star::m_name), type<std::string>(), "name", var(std::string()), Member::Value, nullptr },
+                { type<Star>(), member_address(&Star::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<Star>(), member_address(&Star::m_stability), type<int>(), "stability", var(int(100)), Member::Value, nullptr },
                 { type<Star>(), member_address(&Star::m_revolt), type<bool>(), "revolt", var(bool(false)), Member::Value, nullptr },
                 { type<Star>(), member_address(&Star::m_environment), type<int>(), "environment", var(int(10)), Member::Value, nullptr },
@@ -814,7 +814,7 @@ namespace mud
             // members
             {
                 { type<PlanetaryCombat>(), member_address(&PlanetaryCombat::m_coord), type<mud::uvec2>(), "coord", var(mud::uvec2()), Member::Value, nullptr },
-                { type<PlanetaryCombat>(), member_address(&PlanetaryCombat::m_attack), type<std::vector<CombatFleet>>(), "attack", var(std::vector<CombatFleet>()), Member::Value, nullptr },
+                { type<PlanetaryCombat>(), member_address(&PlanetaryCombat::m_attack), type<vector<CombatFleet>>(), "attack", var(vector<CombatFleet>()), Member::Value, nullptr },
                 { type<PlanetaryCombat>(), member_address(&PlanetaryCombat::m_defense), type<CombatStar>(), "defense", var(CombatStar()), Member::Value, nullptr }
             },
             // methods
@@ -955,8 +955,8 @@ namespace mud
             // members
             {
                 { type<SpatialCombat>(), member_address(&SpatialCombat::m_coord), type<mud::uvec2>(), "coord", var(mud::uvec2()), Member::Value, nullptr },
-                { type<SpatialCombat>(), member_address(&SpatialCombat::m_attack), type<std::vector<CombatFleet>>(), "attack", var(std::vector<CombatFleet>()), Member::Value, nullptr },
-                { type<SpatialCombat>(), member_address(&SpatialCombat::m_defense), type<std::vector<CombatFleet>>(), "defense", var(std::vector<CombatFleet>()), Member::Value, nullptr }
+                { type<SpatialCombat>(), member_address(&SpatialCombat::m_attack), type<vector<CombatFleet>>(), "attack", var(vector<CombatFleet>()), Member::Value, nullptr },
+                { type<SpatialCombat>(), member_address(&SpatialCombat::m_defense), type<vector<CombatFleet>>(), "defense", var(vector<CombatFleet>()), Member::Value, nullptr }
             },
             // methods
             {
@@ -976,7 +976,7 @@ namespace mud
             { base_offset<Universe, mud::Complex>() },
             // constructors
             {
-                { type<Universe>(), [](Ref ref, array<Var> args) { new(&val<Universe>(ref)) Universe( val<std::string>(args[0]), val<mud::JobSystem>(args[1]) ); }, { { "name", var(std::string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
+                { type<Universe>(), [](Ref ref, array<Var> args) { new(&val<Universe>(ref)) Universe( val<string>(args[0]), val<mud::JobSystem>(args[1]) ); }, { { "name", var(string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
             },
             // copy constructor
             {
@@ -1024,8 +1024,8 @@ namespace mud
         m.m_types.push_back(&type<Technology>());
         m.m_types.push_back(&type<Turn>());
         m.m_types.push_back(&type<WeaponType>());
-        m.m_types.push_back(&type<std::vector<CombatFleet>>());
-        m.m_types.push_back(&type<std::vector<Commander*>>());
+        m.m_types.push_back(&type<vector<CombatFleet>>());
+        m.m_types.push_back(&type<vector<Commander*>>());
         m.m_types.push_back(&type<BuildingSchema>());
         m.m_types.push_back(&type<CommanderBrush>());
         m.m_types.push_back(&type<mud::ComponentHandle<Fleet>>());
@@ -1040,26 +1040,26 @@ namespace mud
         m.m_types.push_back(&type<Universe>());
         {
             auto func = [](array<Var> args, Var& result) {  val<HStar>(result) = generate_system(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2])); };
-            std::vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
+            vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
             static Function f = { &namspc({}), "generate_system", function_id<HStar(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&generate_system), func, params, var(HStar()) };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) {  val<HFleet>(result) = generate_fleet(val<Galaxy>(args[0]), val<mud::uvec3>(args[1]), val<mud::vec3>(args[2])); };
-            std::vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
+            vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "coord", var(mud::uvec3()) }, { "position", var(mud::vec3()) } };
             static Function f = { &namspc({}), "generate_fleet", function_id<HFleet(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(&generate_fleet), func, params, var(HFleet()) };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) {  result = Ref(generate_commander(val<Galaxy>(args[0]), val<Star>(args[1]))); };
-            std::vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "star", Ref(type<Star>()) } };
+            vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "star", Ref(type<Star>()) } };
             static Function f = { &namspc({}), "generate_commander", function_id<Commander*(*)(Galaxy&, Star&)>(&generate_commander), func, params, Ref(type<Commander>()) };
             m.m_functions.push_back(&f);
         }
         {
-            auto func = [](array<Var> args, Var& result) { UNUSED(result);  assign_system(val<Galaxy>(args[0]), val<Star>(args[1]), val<std::vector<Commander*>>(args[2])); };
-            std::vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "star", Ref(type<Star>()) }, { "commanders", var(std::vector<Commander*>()) } };
-            static Function f = { &namspc({}), "assign_system", function_id<void(*)(Galaxy&, Star&, std::vector<Commander*>)>(&assign_system), func, params, Var() };
+            auto func = [](array<Var> args, Var& result) { UNUSED(result);  assign_system(val<Galaxy>(args[0]), val<Star>(args[1]), val<vector<Commander*>>(args[2])); };
+            vector<Param> params = { { "galaxy", Ref(type<Galaxy>()) }, { "star", Ref(type<Star>()) }, { "commanders", var(vector<Commander*>()) } };
+            static Function f = { &namspc({}), "assign_system", function_id<void(*)(Galaxy&, Star&, vector<Commander*>)>(&assign_system), func, params, Var() };
             m.m_functions.push_back(&f);
         }
     }

@@ -10,7 +10,7 @@
 
 namespace mud
 {
-	export_ template <> inline void from_string(const string& str, toy::CollisionGroup& val) { val = toy::CollisionGroup(enu<toy::CollisionGroup>().value(str.c_str())); };
+	export_ template <> inline void to_value(const string& str, toy::CollisionGroup& val) { val = toy::CollisionGroup(enu<toy::CollisionGroup>().value(str.c_str())); };
 	export_ template <> inline void to_string(const toy::CollisionGroup& val, string& str) { str = enu<toy::CollisionGroup>().name(uint32_t(val)); };
 	
 	

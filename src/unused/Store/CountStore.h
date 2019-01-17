@@ -12,7 +12,7 @@
 #include <core/Store/Store.h>
 
 #ifndef MUD_CPP_20
-#include <vector>
+#include <stl/vector>
 #include <unordered_map>
 #include <unordered_set>
 #endif
@@ -23,7 +23,7 @@ using namespace mud; namespace toy
 	class CountStore : public StoreBase<CountStore<T>, T>
 	{
 	public:
-		typedef std::vector<std::pair<T*, size_t>> StoreContainer;
+		typedef vector<std::pair<T*, size_t>> StoreContainer;
 
 	public:
 		CountStore() {}

@@ -327,7 +327,7 @@ Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
 // Stance
 function Stance(name, loop) {
     ensureCache.prepare();
-    /* name <std::string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* loop <bool> [] */
@@ -347,7 +347,7 @@ Object.defineProperty(Stance.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <std::string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _Stance__set_name(self, value);

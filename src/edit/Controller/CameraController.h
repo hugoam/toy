@@ -18,7 +18,7 @@ using namespace mud; namespace toy
 		CameraController(Viewer& viewer, HCamera camera, HMovable movable);
 
 		void default_velocities();
-		void set_velocities(const std::map<Key, vec3>& velocities);
+		void set_velocities(const map<Key, vec3>& velocities);
 
 		void rotate_left();
 		void rotate_right();

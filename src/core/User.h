@@ -5,21 +5,16 @@
 
 #pragma once
 
+#include <stl/vector.h>
 #include <type/Ref.h>
 #include <type/Indexer.h>
 #include <core/Forward.h>
 
-#ifndef MUD_CPP_20
-#include <vector>
-#endif
-
 using namespace mud; namespace toy
 {
-	using string = std::string;
-
 	class refl_ TOY_CORE_EXPORT User
 	{
 	public:
-		std::vector<Ref> m_selection;
+		vector<Ref> m_selection;
 	};
 }

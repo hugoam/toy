@@ -46,8 +46,8 @@ using namespace mud; namespace toy
 
         virtual void next_frame(size_t tick, size_t delta) override final;
 
-		virtual object_ptr<ColliderImpl> make_collider(HCollider collider) override final;
-		virtual object_ptr<SolidImpl> make_solid(HSolid solid) override final;
+		virtual object<ColliderImpl> make_collider(HCollider collider) override final;
+		virtual object<SolidImpl> make_solid(HSolid solid) override final;
 
 		virtual void add_solid(HCollider collider, HSolid solid) override final;
 		virtual void remove_solid(HCollider collider, HSolid solid) override final;
@@ -55,8 +55,8 @@ using namespace mud; namespace toy
 		virtual void add_collider(HCollider collider) override final;
 		virtual void remove_collider(HCollider collider) override final;
 
-		virtual void project(HCollider collider, const vec3& position, const quat& rotation, std::vector<Collision>& collisions, short int mask) override final;
-		virtual void raycast(HCollider collider, const vec3& start, const vec3& end, std::vector<Collision>& collisions, short int mask) override final;
+		virtual void project(HCollider collider, const vec3& position, const quat& rotation, vector<Collision>& collisions, short int mask) override final;
+		virtual void raycast(HCollider collider, const vec3& start, const vec3& end, vector<Collision>& collisions, short int mask) override final;
 		virtual Collision raycast(HCollider collider, const vec3& start, const vec3& end, short int mask) override final;
 
 		void remove_contacts(uint32_t collider);
@@ -65,11 +65,11 @@ using namespace mud; namespace toy
 		BulletWorld& m_bullet_world;
 
 		size_t m_last_tick;
-        unique_ptr<btCollisionDispatcher> m_collision_dispatcher;
-        unique_ptr<btBroadphaseInterface> m_broadphase_interface;
+        unique<btCollisionDispatcher> m_collision_dispatcher;
+        unique<btBroadphaseInterface> m_broadphase_interface;
 
-		unique_ptr<btCollisionWorld> m_collision_world;
-        unique_ptr<btConstraintSolver> m_constraint_solver;
+		unique<btCollisionWorld> m_collision_world;
+        unique<btConstraintSolver> m_constraint_solver;
 
 		btDynamicsWorld* m_dynamics_world = nullptr;
 
@@ -88,7 +88,7 @@ using namespace mud; namespace toy
 		};
 
 		std::unordered_map<uint64_t, Contact> m_hash_contacts;
-		std::vector<Contact*> m_contacts;
+		vector<Contact*> m_contacts;
 
 		void remove_contact(Contact& contact, size_t index);
 
@@ -103,7 +103,7 @@ using namespace mud; namespace toy
 		constr_ BulletWorld(World& world);
         ~BulletWorld();
 
-		object_ptr<PhysicMedium> create_sub_world(Medium& medium);
+		object<PhysicMedium> create_sub_world(Medium& medium);
 
 		vec3 ground_point(const Ray& ray);
 		Collision raycast(const Ray& ray, short int mask);

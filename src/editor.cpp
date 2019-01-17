@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 	if(argc > 1)
 	{
-		std::string game = argv[1];
+		string game = argv[1];
 		app.run_editor_path(game);
 	}
 

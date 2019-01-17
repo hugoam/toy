@@ -12,7 +12,7 @@
 
 #include <core/Spatial/Spatial.h>
 
-#include <vector>
+#include <stl/vector.h>
 
 using namespace mud; namespace toy
 {
@@ -39,7 +39,7 @@ using namespace mud; namespace toy
 				//m_logic_script->m_signature.m_params.push_back({ "entity", Ref(type<Spatial>()) });
 			}
 
-			//std::vector<Var> args = { Ref(spatial.m_handle), Ref(&spatial) };
+			//vector<Var> args = { Ref(spatial.m_handle), Ref(&spatial) };
 			//(*m_logic_script)(args);
 		}
 	}
@@ -49,7 +49,7 @@ using namespace mud; namespace toy
 		if(m_render_script)
 		{
 			Spatial& spatial = m_spatial;
-			std::vector<Var> args = { Ref(&spatial) };
+			vector<Var> args = { Ref(&spatial) };
 			(*m_render_script)(args);
 		}
 	}

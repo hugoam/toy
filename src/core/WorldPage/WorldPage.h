@@ -12,7 +12,7 @@
 #include <core/Physic/Collider.h>
 
 #ifndef MUD_CPP_20
-#include <memory>
+#include <stl/memory.h>
 //#include <atomic>
 #endif
 
@@ -52,19 +52,16 @@ using namespace mud; namespace toy
 		size_t m_updated = 0;
 		//std::atomic<size_t> m_updated = 0;
 
-		std::vector<string> m_geometry_filter;
-
-		std::function<void(WorldPage&)> m_build_geometry;
+		vector<string> m_geometry_filter;
 
 		//EmitterScope& m_scope;
 
-		std::vector<Geometry> m_chunks;
-		std::vector<OSolid> m_solids;
+		vector<Geometry> m_chunks;
+		vector<OSolid> m_solids;
 
 		void next_frame(const Spatial& spatial, size_t tick, size_t delta);
 
-		meth_ void build_geometry(const Spatial& spatial);
-		meth_ void update_geometry();
+		meth_ void update_geometry(size_t tick);
 
 		meth_ void ground_point(const vec3& position, bool relative, vec3& outputPoint);
 		meth_ void raycast_ground(const vec3& from, const vec3& to, vec3& ground_point);

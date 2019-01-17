@@ -9,21 +9,21 @@ uvec2 to_coord(uvec3 coord)
 	return{ coord.x, coord.z };
 }
 
-static const std::string consonnants = "bcdfghjklmnpqrstvwxz";
-static const std::string vowels = "aeiouy";
+static const string consonnants = "bcdfghjklmnpqrstvwxz";
+static const string vowels = "aeiouy";
 
-std::string generate_name()
+string generate_name()
 {
-	std::string name = "";
+	string name = "";
 
 	size_t length = random_integer(3U, 8U);
 	bool vowel = false;
 	for(size_t i = 0; i < length; ++i)
 	{
 		vowel = random_scalar(0.f, 1.f) > (vowel ? 0.8f : 0.2f);
-		const std::string& chars = vowel ? consonnants : vowels;
+		const string& chars = vowel ? consonnants : vowels;
 		size_t c = random_integer(size_t(0U), chars.size() - size_t(1U));
-		name += char(toupper(chars[c]));
+		name += string(1, char(toupper(chars[c])));
 	}
 
 	return name;
@@ -129,7 +129,7 @@ Commander* generate_commander(Galaxy& galaxy, Star& star)
 	return &commander;
 }
 
-void assign_system(Galaxy& galaxy, Star& star, std::vector<Commander*> commanders)
+void assign_system(Galaxy& galaxy, Star& star, vector<Commander*> commanders)
 {
 	UNUSED(galaxy); UNUSED(star); UNUSED(commanders);
 }
@@ -142,14 +142,14 @@ void space_generate(HSpatial origin)
 
 	as<Universe>(origin->m_world->m_complex).m_galaxies.push_back(galaxy);
 
-	std::vector<uvec3> coords;
+	vector<uvec3> coords;
 	grid(uvec3(galaxy_size, 1, galaxy_size), coords);
 
-	std::vector<vec3> positions;
+	vector<vec3> positions;
 	for(uvec3& coord : coords)
 		positions.push_back(grid_center(coord, vec3(1.f)));
 
-	std::vector<HStar> systems;
+	vector<HStar> systems;
 	for(size_t i = 0; i < coords.size(); ++i)
 		if(HStar star = generate_system(galaxy, coords[i], positions[i]))
 		{
@@ -166,7 +166,7 @@ void space_generator(GameShell& shell, VisualScript& script)
 	script.lock();
 
 	// Sectors
-	Valve& parsecs_per_sector = script.value(uvec3(20));
+	Valve& parsecs_per_sector = script.value(uvec3(20U));
 	Valve& sectors_per_galaxy = script.value(2);
 	Valve& parsecs_per_galaxy = script.value(20 * 2);
 	UNUSED(parsecs_per_sector);

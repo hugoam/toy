@@ -9,7 +9,7 @@
 #include <tool//EditContext.h>
 #include <edit/Editor/Editor.h>
 
-#include <infra/StringConvert.h>
+#include <infra/ToString.h>
 #include <type/Indexer.h>
 #include <refl/System.h>
 #include <refl/Class.h>
@@ -113,7 +113,7 @@ using namespace mud; namespace toy
 		UNUSED(parent); UNUSED(world);
 	}
 
-	std::vector<Type*> entity_types()
+	vector<Type*> entity_types()
 	{
 		auto has_component = [](Class& cls, Type& component)
 		{
@@ -123,7 +123,7 @@ using namespace mud; namespace toy
 			return false;
 		};
 
-		std::vector<Type*> types;
+		vector<Type*> types;
 		for(Type* type : system().m_types)
 			if(g_class[type->m_id])
 			{
@@ -142,14 +142,14 @@ using namespace mud; namespace toy
 
 		if(ui::modal_button(self, *self.m_toolbar, "Create", CREATE))
 		{
-			static std::vector<Type*> types = entity_types();
+			static vector<Type*> types = entity_types();
 
 			Widget& modal = ui::auto_modal(self, CREATE); //, { 600, 400 });
 			object_switch_creator(modal, types);
 		}
 	}
 
-	void library(Widget& parent, const std::vector<Type*>& types, Selection& selection)
+	void library(Widget& parent, const vector<Type*>& types, Selection& selection)
 	{
 		Tabber& self = ui::tabber(parent);
 
@@ -160,7 +160,7 @@ using namespace mud; namespace toy
 			}
 	}
 
-	void library_section(Widget& parent, const std::vector<Type*>& types, Selection& selection)
+	void library_section(Widget& parent, const vector<Type*>& types, Selection& selection)
 	{
 		Section& self = section(parent, "Library");
 		library(*self.m_body, types, selection);
@@ -196,7 +196,7 @@ using namespace mud; namespace toy
 		return "(" + string(entity_prototype({ entity, 0 })) + ")";
 	}
 
-	void outliner_node(Widget& parent, uint32_t entity, HSpatial spatial, std::vector<Ref>& selection)
+	void outliner_node(Widget& parent, uint32_t entity, HSpatial spatial, vector<Ref>& selection)
 	{
 		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
 
@@ -214,7 +214,7 @@ using namespace mud; namespace toy
 			}
 	}
 
-	void outliner_graph(Widget& parent, HSpatial spatial, std::vector<Ref>& selection)
+	void outliner_graph(Widget& parent, HSpatial spatial, vector<Ref>& selection)
 	{
 		ScrollSheet& sheet = ui::scroll_sheet(parent);
 		Widget& tree = ui::tree(*sheet.m_body);
@@ -268,7 +268,7 @@ using namespace mud; namespace toy
 		static Docksystem& docksystem = editor_docksystem();
 		Dockspace& dockspace = ui::dockspace(parent, docksystem);
 
-		std::vector<Type*> library_types = { &type<Spatial>(), &type<World>() };
+		vector<Type*> library_types = { &type<Spatial>(), &type<World>() };
 		if(Widget* dock = ui::dockitem(dockspace, "Outliner", carray<uint16_t, 2>{ 0U, 0U }))
 			editor_graph(*dock, editor, editor.m_selection);
 		if(Widget* dock = ui::dockitem(dockspace, "Library", carray<uint16_t, 2>{ 0U, 0U }))

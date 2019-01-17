@@ -6,7 +6,7 @@
 #include <core/Types.h>
 #include <core/Navmesh/Navmesh.h>
 
-#include <infra/StringConvert.h>
+#include <infra/ToString.h>
 #include <geom/Shape/ProcShape.h>
 #include <geom/Shape/DrawShape.h>
 #include <math/Random.h>
@@ -137,7 +137,7 @@ using namespace mud; namespace toy
 						  .colour(colour);
 				}
 
-				center /= tile->polys[p].vertCount;
+				center /= float(tile->polys[p].vertCount);
 				
 				writer.position(center)
 					  .colour(colour);
@@ -376,5 +376,5 @@ using namespace mud; namespace toy
 		, m_navmesh(navmesh)
 	{}
 
-	object_ptr<Shape> NavmeshShape::clone() const { return make_object<NavmeshShape>(m_navmesh); }
+	object<Shape> NavmeshShape::clone() const { return make_object<NavmeshShape>(m_navmesh); }
 }
