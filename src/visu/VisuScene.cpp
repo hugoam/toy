@@ -40,17 +40,29 @@
 
 #include <math/Timer.h>
 
-#define TOY_PRIVATE
-#include <core/Bullet.h>
-
 #include <gfx/Material.h>
 #include <gfx/Item.h>
 #include <bgfx/bgfx.h>
 #include <core/Bullet/BulletWorld.h>
 #include <core/Physic/Solid.h>
 
+#if _MSC_VER
+#	pragma warning (push)
+#	pragma warning (disable : 4127)
+#	pragma warning (disable : 4100)
+#	pragma warning (disable : 4305)
+#	pragma warning (disable : 5033) // @todo deal with this ?
+#endif
+
+#define TOY_PRIVATE
+#include <core/Bullet.h>
+
 #include <LinearMath/btIDebugDraw.h>
 #include <btBulletCollisionCommon.h>
+
+#if _MSC_VER
+#	pragma warning (pop)
+#endif
 
 #ifdef TOY_SOUND
 #include <snd/SoundManager.h>

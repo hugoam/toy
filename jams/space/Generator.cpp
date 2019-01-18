@@ -170,7 +170,7 @@ void space_generator(GameShell& shell, VisualScript& script)
 	Valve& sectors_per_galaxy = script.value(2);
 	Valve& parsecs_per_galaxy = script.value(20 * 2);
 	UNUSED(parsecs_per_sector);
-
+	
 	Valve& galaxy_sectors = script.create<uvec3>({ &sectors_per_galaxy, &script.value(1), &sectors_per_galaxy });
 	Valve& galaxy_size = script.create<uvec3>({ &parsecs_per_galaxy, &script.value(1), &parsecs_per_galaxy });
 	Valve& galaxy_size2 = script.create<uvec2>({ &parsecs_per_galaxy, &parsecs_per_galaxy });

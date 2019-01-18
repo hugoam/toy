@@ -13,8 +13,6 @@
 #include <geom/Mesh.h>
 #include <geom/Geom.h>
 #include <geom/Primitive.h>
-#define TOY_PRIVATE
-#include <core/Bullet.h>
 
 #include <core/World/World.h>
 #include <core/Spatial/Spatial.h>
@@ -22,13 +20,16 @@
 #include <core/Physic/PhysicWorld.h>
 #include <core/Physic/Medium.h>
 
-/* bullet */
-
 #if _MSC_VER
 #	pragma warning (push)
 #	pragma warning (disable : 4127)
 #	pragma warning (disable : 4100)
+#	pragma warning (disable : 4305)
+#	pragma warning (disable : 5033) // @todo deal with this ?
 #endif
+
+#define TOY_PRIVATE
+#include <core/Bullet.h>
 
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
 #include <BulletCollision/CollisionShapes/btConvexHullShape.h>

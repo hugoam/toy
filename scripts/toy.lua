@@ -6,6 +6,7 @@
 
 group "3rdparty"
 dofile(path.join(TOY_DIR, "scripts/3rdparty/bullet.lua"))
+dofile(path.join(TOY_DIR, "scripts/3rdparty/detour.lua"))
 
 dofile(path.join(MUD_DIR, "scripts/mud.lua"))
 
@@ -16,14 +17,6 @@ function toy_core()
         path.join(TOY_3RDPARTY_DIR, "bullet", "src"),
 	}
 
-	files {
-        path.join(TOY_3RDPARTY_DIR, "recast", "Recast", "Include", "*.h"),
-        path.join(TOY_3RDPARTY_DIR, "recast", "Recast", "Source", "*.cpp"),
-        
-        path.join(TOY_3RDPARTY_DIR, "recast", "Detour", "Include", "*.h"),
-        path.join(TOY_3RDPARTY_DIR, "recast", "Detour", "Source", "*.cpp"),
-	}
-    
     links {
         "LinearMath",
         "BulletCollision",
@@ -69,7 +62,7 @@ toy = {}
 
 --                           base   name        root path    sub path   self decl       usage decl      reflect     dependencies
 toy.util        = mud_module("toy", "util",     TOY_SRC_DIR, "util",    nil,            nil,            true,       { mud.type, mud.math })
-toy.core        = mud_module("toy", "core",     TOY_SRC_DIR, "core",    toy_core,       uses_toy_core,  true,       { mud.type, mud.jobs, mud.ecs, mud.math, mud.geom, mud.lang, toy.util })
+toy.core        = mud_module("toy", "core",     TOY_SRC_DIR, "core",    toy_core,       uses_toy_core,  true,       { detour, mud.type, mud.jobs, mud.ecs, mud.math, mud.geom, mud.lang, toy.util })
 if _OPTIONS["sound"] then
     toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    toy_visu,       uses_toy_visu,  true,       { mud.type, mud.snd, mud.gfx, toy.util, toy.core })
 else
