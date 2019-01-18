@@ -46,7 +46,7 @@ using namespace mud; namespace toy
 
 	void WorldPage::next_frame(const Spatial& spatial, size_t tick, size_t delta)
 	{
-		UNUSED(tick); UNUSED(delta);
+		UNUSED(spatial); UNUSED(tick); UNUSED(delta);
 	}
 
 	void WorldPage::update_geometry(size_t tick)

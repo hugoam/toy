@@ -723,16 +723,19 @@ struct refl_ _SPACE_EXPORT Schema
 
 struct refl_ _SPACE_EXPORT ShipHull : public Schema
 {
+	ShipHull() {}
 	using Schema::Schema;
 };
 
 struct refl_ _SPACE_EXPORT ShipEngine : public Schema
 {
+	ShipEngine() {}
 	using Schema::Schema;
 };
 
 struct refl_ _SPACE_EXPORT ShipComponent : public Schema
 {
+	ShipComponent() {}
 	using Schema::Schema;
 };
 
@@ -767,12 +770,14 @@ struct refl_ _SPACE_EXPORT ShipSchema : public Schema
 
 struct refl_  _SPACE_EXPORT BuildingSchema : public Schema
 {
-	using Schema::Schema;
+	BuildingSchema() {}
 
 	BuildingSchema(string code, string name, string conceptor, uint8_t level, float cost, float minerals, Resource extractor)
 		: Schema(code, name, conceptor, level, cost, minerals, 0.f)
 		, m_extractor(extractor)
 	{}
+
+	using Schema::Schema;
 
 	Resource m_extractor = Resource::None;
 };

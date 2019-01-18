@@ -10,9 +10,6 @@
 #include <geom/Geom.h>
 #include <geom/Shape.h>
 
-#define TOY_PRIVATE
-#include <core/Bullet.h>
-
 #include <core/World/World.h>
 #include <core/Bullet/BulletSolid.h>
 #include <core/Bullet/BulletCollider.h>
@@ -23,7 +20,13 @@
 #ifdef _MSC_VER
 #	pragma warning (push)
 #	pragma warning (disable : 4127) // members are private, so there's no risk them being accessed by the user
+#	pragma warning (disable : 4100)
+#	pragma warning (disable : 4305)
+#	pragma warning (disable : 5033) // @todo deal with this ?
 #endif
+
+#define TOY_PRIVATE
+#include <core/Bullet.h>
 
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>

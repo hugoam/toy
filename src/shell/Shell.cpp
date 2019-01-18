@@ -172,6 +172,7 @@ using namespace mud; namespace toy
 #elif defined MUD_VG_NANOVG
 		m_vg = make_object<VgNanoBgfx>(m_resource_path.c_str());
 #endif
+		m_gfx_system->m_vg = &*m_vg;
 		context.m_reset_vg = [](GfxContext& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.idx); };
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);

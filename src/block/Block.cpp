@@ -150,7 +150,7 @@ using namespace mud; namespace toy
 
 	vec3 Block::local_block_coord(size_t index)
 	{
-		return vec3(m_subblocks.x(index), m_subblocks.y(index), m_subblocks.z(index));
+		return vec3(float(m_subblocks.x(index)), float(m_subblocks.y(index)), float(m_subblocks.z(index)));
 	}
 
 	vec3 Block::block_coord(Block& subblock)
