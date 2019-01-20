@@ -4,24 +4,26 @@
 -- glfw3 on ubuntu is installed as libglfw.so (and not libglfw3.so)
 -- if yacc is not found it will generate an empty glcpp-lexer.c file
 
-group "3rdparty"
-dofile(path.join(TOY_DIR, "scripts/3rdparty/bullet.lua"))
-dofile(path.join(TOY_DIR, "scripts/3rdparty/detour.lua"))
+if not _OPTIONS["compile-only"] then
+    group "3rdparty"
+    dofile(path.join(TOY_DIR, "scripts/3rdparty/bullet.lua"))
+    dofile(path.join(TOY_DIR, "scripts/3rdparty/detour.lua"))
+end
 
 dofile(path.join(MUD_DIR, "scripts/mud.lua"))
 
 function toy_core()
-	includedirs {
+    includedirs {
         path.join(TOY_3RDPARTY_DIR, "recast", "Recast", "Include"),
         path.join(TOY_3RDPARTY_DIR, "recast", "Detour", "Include"),
         path.join(TOY_3RDPARTY_DIR, "bullet", "src"),
-	}
+    }
 
     links {
         "LinearMath",
         "BulletCollision",
         "BulletDynamics",
-	}
+    }
 end
 
 function uses_toy_core()
@@ -82,7 +84,11 @@ if _OPTIONS["as-libs"] then
         mud_libs(toy.toy, "StaticLib")
     group "lib"
 else
-    toy.lib = mud_lib("toy", toy.toy, "SharedLib")
+    if _OPTIONS["compile-only"] then
+        toy.lib = mud_lib("toy", toy.toy, "StaticLib")
+    else
+        toy.lib = mud_lib("toy", toy.toy, "SharedLib")
+    end
         
         files {
             path.join(TOY_SRC_DIR, "toy",    "**.h"),

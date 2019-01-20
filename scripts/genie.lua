@@ -30,4 +30,5 @@ end
 --dofile "editor.lua"
 --dofile "example.lua"
 
---dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))
+dofile(path.join(MUD_DIR, "scripts/mud_example.lua"))
+
