@@ -89,7 +89,7 @@ else
     else
         toy.lib = mud_lib("toy", toy.toy, "SharedLib")
     end
-        
+    
         files {
             path.join(TOY_SRC_DIR, "toy",    "**.h"),
         }
