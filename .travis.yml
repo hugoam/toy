@@ -23,7 +23,7 @@ install:
 script:
   - bin/$GENIE_FOLDER/genie --compile-only --gcc=$TOOLCHAIN gmake
   - cd build/projects/$GMAKE_FOLDER
-  - make config=debug64 toy
+  - time make config=debug64 toy
 
 os:
   - linux
