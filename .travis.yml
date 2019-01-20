@@ -23,12 +23,12 @@ compiler:
 
 install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export GENIE_FOLDER="linux"; fi
-  - if [ "$CXX" = "g++" ]; then export CXX="g++" CC="gcc" COMPILER="gcc" TOOLCHAIN="linux-gcc" GMAKE_FOLDER="gmake-linux"; fi
-  - if [ "$CXX" = "clang++" ]; then export CXX="clang++" CC="clang" COMPILER="clang" TOOLCHAIN="linux-clang" GMAKE_FOLDER="gmake-linux-clang"; fi
+  - if [ "$CXX" = "g++" ]; then export TOOLCHAIN="linux-gcc" GMAKE_FOLDER="gmake-linux"; fi
+  - if [ "$CXX" = "clang++" ]; then export TOOLCHAIN="linux-clang" GMAKE_FOLDER="gmake-linux-clang"; fi
 
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export GENIE_FOLDER="darwin" TOOLCHAIN="osx" GMAKE_FOLDER="gmake-osx"; fi
   
 script:
-  - bin/$GENIE_FOLDER/genie --compile-only --use-stl --use-glm --gcc=$TOOLCHAIN gmake
+  - bin/$GENIE_FOLDER/genie --compile-only --gcc=$TOOLCHAIN gmake
   - cd build/projects/$GMAKE_FOLDER
   - time make config=debug64 toy
