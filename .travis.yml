@@ -9,7 +9,7 @@ addons:
       - gcc-5
       - xorg-dev
       
-dist: trusty
+dist: xenial
 os:
   - linux
   - osx
