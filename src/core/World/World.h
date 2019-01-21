@@ -36,9 +36,9 @@ using namespace mud; namespace toy
 		{
 			auto loop = [&](size_t tick, size_t delta)
 			{
-				m_ecs.Loop<T_Component, T_Args...>([tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
+				m_ecs.Loop<T_Component, T_Args...>([tick, delta](T_Component& component, T_Args&... args)
 				{
-					UNUSED(entity); component.next_frame(args..., tick, delta);
+					component.next_frame(args..., tick, delta);
 				});
 			};
 
@@ -50,9 +50,9 @@ using namespace mud; namespace toy
 		{
 			auto loop = [&](size_t tick, size_t delta)
 			{
-				auto process = [tick, delta](uint32_t entity, T_Component& component, T_Args&... args)
+				auto process = [tick, delta](T_Component& component, T_Args&... args)
 				{
-					UNUSED(entity); component.next_frame(args..., tick, delta);
+					component.next_frame(args..., tick, delta);
 				};
 
 				Job* job = for_components<T_Component, T_Args...>(m_job_system, nullptr, m_ecs, process);

@@ -76,7 +76,7 @@ using namespace mud; namespace toy
 	ActionGroup& Editor::action_group(const string& name)
 	{
 		if(m_action_groups.find(name) == m_action_groups.end())
-			m_action_groups[name] = { name };
+			m_action_groups[name] = { name, {} };
 		return m_action_groups[name];
 	}
 }

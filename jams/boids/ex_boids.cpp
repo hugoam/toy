@@ -389,18 +389,16 @@ namespace boids
 
 			Job* job_move = job_system.job();
 
-			auto move_forward_rotation = [delta](uint32_t handle, Position& position, const Rotation& rotation, const MoveSpeed& move_speed)
+			auto move_forward_rotation = [delta](Position& position, const Rotation& rotation, const MoveSpeed& move_speed)
 			{
-				UNUSED(handle);
 				position = position.m_value + (delta * move_speed.m_value * rotate(rotation.m_value, -Z3), 0.f);
 			};
 
 			Job* job_move_rotation = for_components<Position, Rotation, MoveSpeed>(job_system, job_move, ecs, move_forward_rotation);
 			job_system.run(job_move_rotation);
 
-			auto move_forward_heading = [delta](uint32_t handle, Position& position, const Heading& heading, const MoveSpeed& move_speed)
+			auto move_forward_heading = [delta](Position& position, const Heading& heading, const MoveSpeed& move_speed)
 			{
-				UNUSED(handle);
 				position = position.m_value + (delta * move_speed.m_value * heading.m_value);
 			};
 
@@ -418,9 +416,9 @@ namespace boids
 		{
 			ZoneScopedNC("transform", tracy::Color::SteelBlue);
 
-			auto transform_heading = [delta](uint32_t handle, const Position& position, const Heading& heading, Transform4& transform)
+			auto transform_heading = [delta](const Position& position, const Heading& heading, Transform4& transform)
 			{
-				UNUSED(handle); UNUSED(heading);
+				UNUSED(heading);
 #ifdef BOIDS_SIMD
 				static vec3 up = vec3(0.f, 1.f, 0.f);
 				lookat(transform, position.m_value, heading.m_value, up);
@@ -574,16 +572,14 @@ namespace boids
 				Material& target_material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::Red), PLAIN);
 				Material& obstacle_material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::Black), PLAIN);
 
-				ecs.Loop<Position, BoidObstacle>([&](uint32_t entity, Position& position, BoidObstacle& obstacle)
+				ecs.Loop<Position, BoidObstacle>([&](Position& position, BoidObstacle&)
 				{
-					UNUSED(entity); UNUSED(obstacle);
 					Gnode& node = gfx::node(parent, {}, position.m_value);
 					gfx::item(node, model, 0U, &obstacle_material);
 				});
 
-				ecs.Loop<Position, BoidTarget>([&](uint32_t entity, Position& position, BoidTarget& target)
+				ecs.Loop<Position, BoidTarget>([&](Position& position, BoidTarget&)
 				{
-					UNUSED(entity); UNUSED(target);
 					Gnode& node = gfx::node(parent, {}, position.m_value);
 					gfx::item(node, model, 0U, &target_material);
 				});

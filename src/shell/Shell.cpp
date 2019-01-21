@@ -8,7 +8,7 @@
 
 #include <edit/Edit/Viewport.h>
 
-#if MUD_PLATFORM_EMSCRIPTEN
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 #include <emscripten/emscripten.h>
 #endif
 
@@ -25,7 +25,7 @@ class WrenVM;
 
 using namespace mud; namespace toy
 {
-#if MUD_PLATFORM_EMSCRIPTEN
+#ifdef MUD_PLATFORM_EMSCRIPTEN
 	static void iterate()
 	{
 		g_app->pump();
