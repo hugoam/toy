@@ -18,6 +18,7 @@
 
 #include <jobs/JobLoop.h>
 #include <ecs/Loop.h>
+#include <math/Random.h>
 
 #include <Tracy.hpp>
 
@@ -557,10 +558,10 @@ namespace boids
 					const ComponentBuffer<Transform4>& components = stream->Buffer<Transform4>();
 					vector<mat4>& transforms = (vector<mat4>&) components.m_data;
 
-					const size_t size = std::min(m_num_visible, transforms.size());
+					const size_t size = min(m_num_visible, transforms.size());
 					for(size_t i = 0; i < size; i += 4096)
 					{
-						const size_t count = std::min(size - i, size_t(4096U));
+						const size_t count = min(size - i, size_t(4096U));
 						gfx::item(parent, model, ItemFlag::Default | ItemFlag::NoUpdate, &material, count, { transforms.data() + i, count });
 					}
 				}
