@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <stl/function.h>
 #include <ecs/Proto.h>
 #include <math/Math.h>
 #include <math/Vec.h>
@@ -14,7 +15,6 @@
 #include <core/Physic/Scope.h>
 
 #ifndef MUD_CPP_20
-#include <functional>
 #include <array>
 #endif
 

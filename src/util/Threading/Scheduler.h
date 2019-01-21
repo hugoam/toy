@@ -5,19 +5,16 @@
 
 #pragma once
 
+#include <stl/function.h>
 #include <util/Forward.h>
 #include <type/Util/LocklessQueue.h>
-
-#ifndef MUD_CPP_20
-#include <functional>
-#endif
 
 using namespace mud; namespace toy
 {
 	class TOY_UTIL_EXPORT Scheduler
 	{
 	public:
-		typedef std::function<void ()> ProcedureType;
+		typedef function<void()> ProcedureType;
 
 	public:
 		Scheduler(size_t queueSize);

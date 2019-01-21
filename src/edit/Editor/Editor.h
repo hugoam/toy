@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <stl/map.h>
+#include <stl/function.h>
 #include <tool/Tool.h>
 #include <tool/ActionStack.h>
 #include <tool/EditContext.h>
@@ -12,8 +14,6 @@
 #include <edit/Editor/Toolbox.h>
 
 #include <uio/Edit/Script.h>
-
-#include <functional>
 
 using namespace mud; namespace toy
 {
@@ -42,7 +42,7 @@ using namespace mud; namespace toy
 	struct refl_ TOY_EDIT_EXPORT ActionGroup
 	{
 		string m_name;
-		map<string, std::function<void()>> m_actions;
+		map<string, function<void()>> m_actions;
 	};
 
 	struct refl_ TOY_EDIT_EXPORT GraphicsDebug

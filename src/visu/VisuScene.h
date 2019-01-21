@@ -6,6 +6,7 @@
 #pragma once
 
 #include <stl/string.h>
+#include <stl/function.h>
 #include <tree/Node.h>
 #include <math/Timer.h>
 #include <visu/Forward.h>
@@ -18,10 +19,6 @@
 #include <core/Selector/Selection.h>
 
 #include <gfx/Scene.h>
-
-#ifndef MUD_CPP_20
-#include <functional>
-#endif
 
 #define TOY_PHYSIC_DEBUG_DRAW
 

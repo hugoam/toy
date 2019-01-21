@@ -5,13 +5,10 @@
 
 #pragma once
 
+#include <stl/vector.h>
+#include <stl/function.h>
 #include <core/Forward.h>
 #include <math/Timer.h>
-
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#include <functional>
-#endif
 
 using namespace mud; namespace toy
 {
@@ -42,7 +39,7 @@ using namespace mud; namespace toy
 		struct Entry
 		{
 			Task m_task;
-			std::function<void(size_t tick, size_t delta)> m_handler;
+			function<void(size_t tick, size_t delta)> m_handler;
 		};
 
 		void add_step(Entry entry);

@@ -187,7 +187,7 @@ using namespace mud; namespace toy
 		for(Sound* sound : reverse_adapt(m_scene.m_orphan_sounds))
 			if(sound->m_loop || sound->m_state == Sound::STOPPED)
 			{
-				m_snd_manager.destroySound(sound);
+				m_snd_manager.destroySound(*sound);
 				vector_remove(m_scene.m_orphan_sounds, sound);
 			}
 

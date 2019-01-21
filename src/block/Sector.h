@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <stl/vector.h>
+#include <stl/function.h>
 #include <ecs/Proto.h>
 #include <wfc-gfx/Wfc/Tileblock.h>
 #include <core/WorldPage/WorldPage.h>
@@ -13,10 +15,6 @@
 #include <block/Forward.h>
 #include <block/Element.h>
 #include <block/Structs.h>
-
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#endif
 
 using namespace mud; namespace toy
 {
@@ -59,7 +57,7 @@ using namespace mud; namespace toy
 		attr_ bool m_setup = false;
 		attr_ bool m_populated = false;
 
-		std::function<void(Tileblock&)> m_on_setup;
+		function<void(Tileblock&)> m_on_setup;
 
 		void next_frame(WorldPage& world_page, size_t frame, size_t delta);
 
