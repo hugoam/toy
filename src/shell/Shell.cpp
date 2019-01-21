@@ -146,12 +146,12 @@ using namespace mud; namespace toy
 	template <class T_Asset>
 	void add_asset_loader(AssetStore<T_Asset>& store, cstring format)
 	{
-		auto loader = [](void* user, T_Asset& asset, cstring path)
+		auto loader = [&](T_Asset& asset, cstring path)
 		{
-			unpack_json_file(Ref(&asset), string(path) + ".ptc"); // store.m_cformats[0]);
+			unpack_json_file(Ref(&asset), string(path) + store.m_cformats[0]);
 		};
 
-		store.add_format(format, { nullptr, loader });
+		store.add_format(format, loader);
 	}
 
 	void GameShell::init()

@@ -659,8 +659,8 @@ void viewport_item_picker(Viewer& viewer, Widget& widget, vector<Item*>& selecti
 {
 	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::Mouse, EventType::Moved, InputMod::None, false))
 	{
-		//auto callback = [&](Item* item) { viewer.m_hovered = item; };
-		//viewer.picker(0).pick_point(viewer.m_viewport, mouse_event.m_relative, callback, ItemFlag::Static);
+		auto callback = [&](Item* item) { viewer.m_hovered = item; };
+		viewer.picker(0).pick_point(viewer.m_viewport, mouse_event.m_relative, callback, ItemFlag::Static);
 	}
 
 	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::MouseLeft, EventType::Stroked))

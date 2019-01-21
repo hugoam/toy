@@ -1660,13 +1660,13 @@ namespace mud
         {
             auto func = [](array<Var> args, Var& result) {  val<bool>(result) = toy::move_2d(val<toy::Spatial>(args[0]), val<toy::Movable>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<float>(args[5])); };
             vector<Param> params = { { "spatial", Ref(type<toy::Spatial>()) }, { "movable", Ref(type<toy::Movable>()) }, { "target", var(mud::vec3()) }, { "velocity", var(float()) }, { "time_step", var(float()) }, { "margin", var(float(0.1f)), Param::Default } };
-            static Function f = { &namspc({ "toy" }), "move_2d", function_id<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(&toy::move_2d), func, params, var(bool()) };
+            static Function f = { &namspc({ "toy" }), "move_2d", funcptr<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(&toy::move_2d), func, params, var(bool()) };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) {  val<bool>(result) = toy::steer_2d(val<toy::Spatial>(args[0]), val<toy::Movable>(args[1]), val<mud::vec3>(args[2]), val<float>(args[3]), val<float>(args[4]), val<float>(args[5])); };
             vector<Param> params = { { "spatial", Ref(type<toy::Spatial>()) }, { "movable", Ref(type<toy::Movable>()) }, { "target", var(mud::vec3()) }, { "velocity", var(float()) }, { "time_step", var(float()) }, { "margin", var(float(0.1f)), Param::Default } };
-            static Function f = { &namspc({ "toy" }), "steer_2d", function_id<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(&toy::steer_2d), func, params, var(bool()) };
+            static Function f = { &namspc({ "toy" }), "steer_2d", funcptr<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(&toy::steer_2d), func, params, var(bool()) };
             m.m_functions.push_back(&f);
         }
     }

@@ -205,13 +205,13 @@ namespace mud
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::paint_physics(val<mud::Gnode>(args[0]), val<toy::World>(args[1])); };
             vector<Param> params = { { "parent", Ref(type<mud::Gnode>()) }, { "world", Ref(type<toy::World>()) } };
-            static Function f = { &namspc({ "toy" }), "paint_physics", function_id<void(*)(mud::Gnode&, toy::World&)>(&toy::paint_physics), func, params, Var() };
+            static Function f = { &namspc({ "toy" }), "paint_physics", funcptr<void(*)(mud::Gnode&, toy::World&)>(&toy::paint_physics), func, params, Var() };
             m.m_functions.push_back(&f);
         }
         {
             auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::physic_painter(val<toy::GameScene>(args[0])); };
             vector<Param> params = { { "scene", Ref(type<toy::GameScene>()) } };
-            static Function f = { &namspc({ "toy" }), "physic_painter", function_id<void(*)(toy::GameScene&)>(&toy::physic_painter), func, params, Var() };
+            static Function f = { &namspc({ "toy" }), "physic_painter", funcptr<void(*)(toy::GameScene&)>(&toy::physic_painter), func, params, Var() };
             m.m_functions.push_back(&f);
         }
     }

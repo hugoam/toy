@@ -1,3 +1,5 @@
+#define STD_HASHMAP
+
 #if !defined STD_HASHMAP && !defined FLAT_HASHMAP
 #define STD_HASHMAP
 #endif
