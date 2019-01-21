@@ -16,6 +16,8 @@
 #include <gfx/Model.h>
 #include <gfx/GfxSystem.h>
 
+#include <cstdio>
+
 #define DEBUG_NAVMESH_GEOM 0
 #define DEBUG_NAVMESH 0
 
