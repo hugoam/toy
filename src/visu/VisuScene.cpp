@@ -191,11 +191,11 @@ using namespace mud; namespace toy
 		for(Sound* sound : reverse_adapt(m_scene.m_orphan_sounds))
 			if(sound->m_loop || sound->m_state == Sound::STOPPED)
 			{
-				m_snd_manager.destroySound(*sound);
+				m_snd_manager.destroy_sound(*sound);
 				vector_remove(m_scene.m_orphan_sounds, sound);
 			}
 
-		m_snd_manager.threadUpdate();
+		m_snd_manager.update();
 #endif
 
 		for(size_t i = 0; i < m_entities.size(); ++i)
@@ -332,7 +332,7 @@ using namespace mud; namespace toy
 
 		string file = "sounds/" + sound + ".ogg";
 		LocatedFile location = parent.m_scene->m_gfx_system.locate_file(file.c_str());
-		self.m_sound = parent.m_sound_manager->createSound((location.m_location + file).c_str(), loop, false, [](Sound&) {});
+		self.m_sound = parent.m_sound_manager->create_sound((location.m_location + file).c_str(), loop, false, [](Sound&) {});
 
 		if(self.m_sound)
 		{
