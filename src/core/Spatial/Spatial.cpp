@@ -5,17 +5,17 @@
 
 #include <core/Spatial/Spatial.h>
 
+#include <ecs/Proto.h>
 #include <type/Indexer.h>
 #include <math/Timer.h>
 #include <math/Math.h>
 
-#include <core/World/World.h>
+#include <refl/Meta.h>
 
+#include <core/World/World.h>
 #include <core/World/Section.h>
 
-#include <ecs/Proto.h>
-
-#include <refl/Meta.h>
+#include <cstdio>
 
 using namespace mud; namespace toy
 {
