@@ -21,6 +21,8 @@
 #include <core/Physic/Collider.h>
 #include <core/Physic/Solid.h>
 
+#include <cstdio>
+
 using namespace mud; namespace toy
 {
 	WorldMedium WorldMedium::me;
