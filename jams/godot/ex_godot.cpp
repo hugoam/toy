@@ -5,6 +5,8 @@
 #include <godot/Api.h>
 #include <meta/godot/Module.h>
 
+#include <math/Random.h>
+
 //#define _GODOT_TOOLS
 #ifndef MUD_PLATFORM_EMSCRIPTEN
 //#define GI_PROBE

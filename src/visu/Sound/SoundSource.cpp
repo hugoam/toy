@@ -62,7 +62,7 @@ using namespace mud; namespace toy
 		if(sound)
 		{
 			sound->play();
-			sound->enable3D();
+			sound->enable_3D();
 			m_sounds[&effect] = sound;
 		}
 #else

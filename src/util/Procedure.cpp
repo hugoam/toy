@@ -24,6 +24,6 @@ using namespace mud; namespace toy
 		: m_def(def)
 		, m_user(user)
 		, m_object(object)
-		, m_args(std::move(args))
+		, m_args(move(args))
 	{}
 }

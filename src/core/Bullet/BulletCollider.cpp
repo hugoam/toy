@@ -44,23 +44,23 @@
 using namespace mud; namespace toy
 {
 	BulletShape::BulletShape(unique<btCollisionShape> shape)
-		: shape(std::move(shape))
+		: shape(move(shape))
 	{}
 
 	BulletShape::BulletShape(unique<btCollisionShape> shape, unique<btStridingMeshInterface> mesh)
-		: shape(std::move(shape))
-		, mesh(std::move(mesh))
+		: shape(move(shape))
+		, mesh(move(mesh))
 	{}
 
 	BulletShape::BulletShape(BulletShape&& other)
-		: shape(std::move(other.shape))
-		, mesh(std::move(other.mesh))
+		: shape(move(other.shape))
+		, mesh(move(other.mesh))
 	{}
 
 	BulletShape& BulletShape::operator=(BulletShape&& other)
 	{
-		this->shape = std::move(other.shape);
-		this->mesh = std::move(other.mesh);
+		this->shape = move(other.shape);
+		this->mesh = move(other.mesh);
 		return *this;
 	}
 
@@ -87,7 +87,7 @@ using namespace mud; namespace toy
 		const bool useQuantizedAABB = true;
 		unique<btCollisionShape> meshShape(make_unique<btBvhTriangleMeshShape>(trimesh.get(), useQuantizedAABB));
 
-		return BulletShape(std::move(meshShape), std::move(trimesh));
+		return BulletShape(move(meshShape), move(trimesh));
 	}
 
 	BulletShape createConvexHullShape(ConvexHull& hull)
@@ -95,7 +95,7 @@ using namespace mud; namespace toy
 		unique<btConvexHullShape> convexHull = make_unique<btConvexHullShape>();
 		for(const vec3& point : hull.m_vertices)
 			convexHull->addPoint(to_btvec3(point));
-		return BulletShape(std::move(convexHull));
+		return BulletShape(move(convexHull));
 	}
 
 	DispatchBulletShape::DispatchBulletShape()

@@ -191,7 +191,7 @@ using namespace mud; namespace toy
 		GameModule* m_game_module = nullptr;
 		Game m_game;
 
-		std::function<void()> m_pump;
+		function<void()> m_pump;
 
 		enum class Step : unsigned int { Input = 0, Core, World, Game, Scene, UiRender, GfxRender, Count };
 		float m_times[size_t(Step::Count)] = {};

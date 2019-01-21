@@ -86,13 +86,13 @@ using namespace mud; namespace toy
 #if 0
 			static const float threshold = 4.f;
 
-			if(std::abs(mouse_event.posX - m_inputWidget->frame().left()) < threshold)
+			if(abs(mouse_event.posX - m_inputWidget->frame().left()) < threshold)
 				this->moveLeft();
-			else if(std::abs(mouse_event.posX - m_inputWidget->frame().right()) < threshold)
+			else if(abs(mouse_event.posX - m_inputWidget->frame().right()) < threshold)
 				this->moveRight();
-			else if(std::abs(mouse_event.posY - m_inputWidget->frame().top()) < threshold)
+			else if(abs(mouse_event.posY - m_inputWidget->frame().top()) < threshold)
 				this->moveForward();
-			else if(std::abs(mouse_event.posY - m_inputWidget->frame().bottom()) < threshold)
+			else if(abs(mouse_event.posY - m_inputWidget->frame().bottom()) < threshold)
 				this->moveBackward();
 #endif
 		}

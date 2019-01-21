@@ -26,7 +26,7 @@ using namespace mud; namespace toy
 {
 	struct TOY_VISU_EXPORT VisuPainter
 	{
-		VisuPainter(cstring name, size_t index, std::function<void(size_t, VisuScene&, Gnode&)> paint)
+		VisuPainter(cstring name, size_t index, function<void(size_t, VisuScene&, Gnode&)> paint)
 			: m_name(name)
 			, m_index(index)
 			, m_paint(paint)
@@ -36,7 +36,7 @@ using namespace mud; namespace toy
 		size_t m_index;
 		bool m_enabled = true;
 
-		std::function<void(size_t, VisuScene&, Gnode&)> m_paint;
+		function<void(size_t, VisuScene&, Gnode&)> m_paint;
 	};
 
 	class refl_ TOY_VISU_EXPORT PhysicDebugDraw
@@ -74,7 +74,7 @@ using namespace mud; namespace toy
 
 		Gnode& entity_node(Gnode& parent, uint32_t entity, Spatial& spatial, size_t painter);
 
-		inline void painter(cstring name, std::function<void(size_t, VisuScene&, Gnode&)> paint)
+		inline void painter(cstring name, function<void(size_t, VisuScene&, Gnode&)> paint)
 		{
 			m_painters.emplace_back(construct<VisuPainter>(name, m_painters.size(), paint));
 		}

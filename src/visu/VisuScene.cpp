@@ -36,6 +36,8 @@
 #include <gfx/Camera.h>
 #include <gfx/Frustum.h>
 
+#include <cctype>
+
 #include <snd/SoundManager.h>
 
 #include <math/Timer.h>
@@ -76,7 +78,9 @@ using namespace mud; namespace toy
 	{
 	public:
 		Impl(ImmediateDraw& immediate) : m_immediate(immediate)
-		{}
+		{
+			//std::function<void()> f;
+		}
 
 		virtual void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) final
 		{
@@ -333,8 +337,8 @@ using namespace mud; namespace toy
 		if(self.m_sound)
 		{
 			self.m_sound->play();
-			self.m_sound->enable3D();
-			self.m_sound->setVolume(volume);
+			self.m_sound->enable_3D();
+			self.m_sound->set_volume(volume);
 			return true;
 		}
 

@@ -46,7 +46,7 @@ using namespace mud; namespace toy
 
 	void Collider::init(object<ColliderImpl> impl)
 	{
-		m_impl = std::move(impl);
+		m_impl = move(impl);
 	}
 
 	void Collider::next_frame(size_t tick, size_t delta)
@@ -75,7 +75,7 @@ using namespace mud; namespace toy
 		SparsePool<Solid>& solids = spatial->m_world->pool<Solid>();
 
 		OCollider collider = colliders.construct(spatial, movable, collision_shape, medium, group);
-		OSolid solid = solids.construct(spatial, movable, std::move(collider), isstatic, mass);
+		OSolid solid = solids.construct(spatial, movable, move(collider), isstatic, mass);
 
 		HCollider hcollider = solid->m_collider;
 		hcollider->m_world->add_solid(hcollider, solid);
@@ -95,7 +95,7 @@ using namespace mud; namespace toy
 
 	Solid::Solid(HSpatial spatial, HMovable movable, OCollider collider, bool isstatic, float mass)
 		: m_spatial(spatial)
-		, m_collider(std::move(collider))
+		, m_collider(move(collider))
 		, m_static(isstatic)
 		, m_mass(mass)
 	{
@@ -107,6 +107,6 @@ using namespace mud; namespace toy
 
 	void Solid::init(object<SolidImpl> impl)
 	{
-		m_impl = std::move(impl);
+		m_impl = move(impl);
 	}
 }

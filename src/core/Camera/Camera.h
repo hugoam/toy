@@ -14,10 +14,6 @@
 #include <core/Movable/Movable.h>
 #include <core/Physic/Scope.h>
 
-#ifndef MUD_CPP_20
-#include <array>
-#endif
-
 using namespace mud; namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Camera

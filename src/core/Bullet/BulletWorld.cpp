@@ -60,7 +60,7 @@ using namespace mud; namespace toy
 
 		if (col0->m_object && col1->m_object)
 		{
-			// printf << "Remove contact " << col0->m_spatial.m_id << " : " << col1->m_spatial.m_id << std::endl;
+			// printf << "Remove contact " << col0->m_spatial.m_id << " : " << col1->m_spatial.m_id << endl;
 			col0->m_object->remove_contact(*col1);
 			col1->m_object->remove_contact(*col0); // @todo : replace this with buffered action (set a flag on bullet object ?) to not loop infinitely from bullet code
 		}
@@ -248,7 +248,7 @@ using namespace mud; namespace toy
 		}
 
 		m_contacts.back()->m_index = index;
-		std::swap(m_contacts[index], m_contacts.back());
+		swap(m_contacts[index], m_contacts.back());
 		m_contacts.pop_back();
 
 		remove_contact(contact.m_col0, contact.m_col1);
