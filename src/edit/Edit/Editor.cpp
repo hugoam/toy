@@ -24,6 +24,7 @@
 
 #include <gfx/Item.h>
 #include <gfx/GfxSystem.h>
+#include <gfx-pbr/Light.h>
 #include <gfx-ui/Viewport.h>
 #include <gfx-edit/GfxEdit.h>
 
