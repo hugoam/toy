@@ -103,7 +103,7 @@ using namespace mud; namespace toy
 		});
 	}
 
-	GameShell::GameShell(cstring resource_path, cstring exec_path)
+	GameShell::GameShell(const string& resource_path, cstring exec_path)
 		: m_exec_path(exec_path ? string(exec_path) : "")
 		, m_resource_path(resource_path)
 		, m_job_system(make_object<JobSystem>())
@@ -146,9 +146,9 @@ using namespace mud; namespace toy
 	template <class T_Asset>
 	void add_asset_loader(AssetStore<T_Asset>& store, cstring format)
 	{
-		auto loader = [&](T_Asset& asset, cstring path)
+		auto loader = [&](T_Asset& asset, const string& path)
 		{
-			unpack_json_file(Ref(&asset), string(path) + store.m_cformats[0]);
+			unpack_json_file(Ref(&asset), path + store.m_formats[0]);
 		};
 
 		store.add_format(format, loader);
@@ -253,16 +253,13 @@ using namespace mud; namespace toy
 
 	void GameShell::run_script(Module& module, const string& file, bool run)
 	{
-		string path = "scripts/" + file;
-		LocatedFile location = m_gfx_system->locate_file(path.c_str());
-
-		if(location.m_name == nullptr)
-			return;
+		LocatedFile location = m_gfx_system->locate_file("scripts/" + file);
+		if(!location) return;
 
 		Signature signature = { { Param{ "app", Ref(type<GameShell>()) }, Param{ "module", Ref(type<Module>()) } } };
 
 		TextScript& script = m_editor.m_script_editor.create_script(file.c_str(), Language::Wren, signature);
-		script.m_script = read_text_file(string(location.m_location) + location.m_name);
+		script.m_script = read_text_file(location.path(false));
 		script.m_dirty = true;
 
 		m_pump = [&]()

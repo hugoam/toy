@@ -132,13 +132,6 @@ extern "C" {
 	Human* DECL Human_Human_6(toy::HSpatial spatial, toy::HMovable movable, toy::HEmitter emitter, toy::HReceptor receptor, toy::HEntityScript script, Faction faction) {
 		return new Human(spatial, movable, emitter, receptor, script, faction);
 	}
-	Aim* DECL Human_aim_0(Human* self) {
-		static Aim temp;
-		return (temp = self->aim(), &temp);
-	}
-	void DECL Human_shoot_0(Human* self) {
-		self->shoot();
-	}
 	mud::quat* DECL Human_sight_0(Human* self) {
 		static mud::quat temp;
 		return (temp = self->sight(), &temp);
@@ -146,6 +139,13 @@ extern "C" {
 	mud::quat* DECL Human_sight_1(Human* self, bool aiming) {
 		static mud::quat temp;
 		return (temp = self->sight(aiming), &temp);
+	}
+	Aim* DECL Human_aim_0(Human* self) {
+		static Aim temp;
+		return (temp = self->aim(), &temp);
+	}
+	void DECL Human_shoot_0(Human* self) {
+		self->shoot();
 	}
 	void DECL Human_stop_0(Human* self) {
 		self->stop();

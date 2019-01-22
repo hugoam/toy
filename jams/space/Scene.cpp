@@ -145,7 +145,7 @@ void paint_scan_star(Gnode& parent, Star& star)
 
 static float spaceship_sizes[8] = { 0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.08f, 0.1f };
 
-void fill_fleet(VisuFleet& visu, const std::map<ShipSchema*, uint32_t>& ships)
+void fill_fleet(VisuFleet& visu, const Ships& ships)
 {
 	for(size_t i = 0; i < 8; ++i)
 		visu.m_ships[i].clear();
@@ -346,7 +346,7 @@ unique<ParticleFlow> weapon_particles(Gnode& parent, cstring name, WeaponType we
 	particles->m_colour.m_value = s_weapon_colour[size_t(weapon)];
 	//particles->m_scale.m_value = s_weapon_scale[size_t(weapon)];
 	scale_down(*particles, 0.005f);
-	return std::move(particles);
+	return move(particles);
 }
 
 bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
@@ -490,9 +490,9 @@ void paint_combat(Gnode& parent, SpatialCombat& combat)
 	vec3 center = to_xz(vec2(combat.m_coord)) + 0.5f + Y3;;
 
 	for(CombatFleet& fleet : combat.m_attack)
-		destroy_ships(*fleet.m_fleet, fleet.m_hull_losses.data());
+		destroy_ships(*fleet.m_fleet, fleet.m_hull_losses);
 	for(CombatFleet& fleet : combat.m_defense)
-		destroy_ships(*fleet.m_fleet, fleet.m_hull_losses.data());
+		destroy_ships(*fleet.m_fleet, fleet.m_hull_losses);
 
 	for(CombatFleet& fleet : combat.m_attack)
 		fleet.m_fleet->m_spatial->m_position = lerp(fleet.m_fleet->m_slot, center, combat.m_t_position);

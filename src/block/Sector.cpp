@@ -7,6 +7,7 @@
 #include <block/Types.h>
 #include <block/Sector.h>
 
+#include <ecs/Complex.h>
 #include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
 

@@ -324,15 +324,6 @@ void paint_well(Gnode& parent, Well& well)
 	UNUSED(parent); UNUSED(well);
 }
 
-Model& faction_fresnel_material(GfxSystem& gfx_system, Model& model)
-{
-	static Material& material = highlight_material("no_highlight", Colour::Black, 0);
-
-	string name = model.m_name + "_dead";
-	return model_variant(gfx_system, model, name.c_str(), carray<cstring, 2>{ "Highlight11", "Highlight2" }, 
-														  carray<Material*, 2>{ &material, &material });
-}
-
 void paint_shield(Gnode& parent, Shield& shield)
 {
 	static Material* discharge = &parent.m_scene->m_gfx_system.fetch_material("shield_discharge", "fresnel");
@@ -414,14 +405,14 @@ Model& faction_model_dead_variant(GfxSystem& gfx_system, Model& model)
 	static Material& material = highlight_material("no_highlight", Colour::Black, 0);
 
 	string name = model.m_name + "_dead";
-	return model_variant(gfx_system, model, name.c_str(), carray<cstring, 2>{ "Highlight11", "Highlight2" }, 
+	return model_variant(gfx_system, model, name.c_str(), carray<string, 2>{ "Highlight11", "Highlight2" }, 
 														  carray<Material*, 2>{ &material, &material });
 }
 
 Model& faction_model_variant(GfxSystem& gfx_system, Faction& faction, Model& model)
 {
 	string name = model.m_name + "_faction" + to_string(faction.m_id);
-	return model_variant(gfx_system, model, name.c_str(), carray<cstring, 2>{ "Highlight11", "Highlight2" }, 
+	return model_variant(gfx_system, model, name.c_str(), carray<string, 2>{ "Highlight11", "Highlight2" }, 
 														  carray<Material*, 2>{ faction.m_highlight11, faction.m_highlight2 });
 }
 
@@ -589,6 +580,7 @@ Style& screen_style()
 
 Style& right_panel_style(UiWindow& ui_window)
 {
+	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
 	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Right, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
@@ -598,6 +590,7 @@ Style& right_panel_style(UiWindow& ui_window)
 
 Style& center_panel_style(UiWindow& ui_window)
 {
+	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
 	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { CENTER, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
@@ -607,6 +600,7 @@ Style& center_panel_style(UiWindow& ui_window)
 
 Style& left_panel_style(UiWindow& ui_window)
 {
+	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
 	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
@@ -786,7 +780,7 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		app.m_gfx_system->add_resource_path("examples/ex_blocks/");
+		app.m_gfx_system->add_resource_path("examples/ex_blocks");
 
 		g_factions.emplace_back(0, Colour::Red);
 		g_factions.emplace_back(0, Colour::Pink);

@@ -11,7 +11,7 @@
 #include <math/Timer.h>
 #include <visu/Forward.h>
 
-#include <ecs/Registry.h>
+#include <ecs/ECS.h>
 
 #include <core/World/World.h>
 #include <core/Spatial/Spatial.h>

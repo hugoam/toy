@@ -6,15 +6,10 @@
 #pragma once
 
 #include <stl/memory.h>
-#include <ecs/Entity.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Physic/Medium.h>
 #include <core/Physic/Collider.h>
-
-#ifndef MUD_CPP_20
-//#include <atomic>
-#endif
 
 using namespace mud; namespace toy
 {

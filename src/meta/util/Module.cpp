@@ -3,12 +3,13 @@
 #ifdef MUD_MODULES
 module toy.util;
 #else
+#include <meta/type/Module.h>
+#include <meta/math/Module.h>
 #include <meta/util/Module.h>
-#endif
-
-#ifndef MUD_MODULES
 #include <meta/util/Convert.h>
 #endif
+
+#include <util/Api.h>
 #define TOY_UTIL_REFLECTION_IMPL
 #include <meta/util/Meta.h>
 

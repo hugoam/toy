@@ -6,7 +6,6 @@
 #if 0
 #pragma once
 
-#include <ecs/Entity.h>
 #include <visu/Forward.h>
 
 #ifdef TOY_SOUND

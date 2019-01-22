@@ -18,7 +18,6 @@
 
 #include <jobs/JobLoop.h>
 #include <ecs/Loop.h>
-#include <math/Random.h>
 
 #include <Tracy.hpp>
 
@@ -302,7 +301,7 @@ namespace boids
 
 		void update(JobSystem& job_system, ECS& ecs, const BoidParams& params, float delta)
 		{
-			EntFlags prototype = (1ULL << TypedBuffer<Position>::index()) | (1ULL << TypedBuffer<Heading>::index()) | (1ULL << TypedBuffer<Boid>::index());
+			uint64_t prototype = (1ULL << TypedBuffer<Position>::index()) | (1ULL << TypedBuffer<Heading>::index()) | (1ULL << TypedBuffer<Boid>::index());
 
 			BoidsData& data = m_data;
 			BoidParams4 params4 = params;
@@ -489,7 +488,7 @@ namespace boids
 		virtual void init(GameShell& app, Game& game) final
 		{
 			UNUSED(game);
-			app.m_gfx_system->add_resource_path("examples/ex_boids/");
+			app.m_gfx_system->add_resource_path("examples/ex_boids");
 		}
 
 		vec3 random_vec3(float ext)
@@ -544,7 +543,7 @@ namespace boids
 			auto paint_boids = [&](size_t index, VisuScene& scene, Gnode& parent)
 			{
 				UNUSED(index); UNUSED(scene);
-				EntFlags prototype = (1ULL << TypedBuffer<Transform4>::index()) | (1ULL << TypedBuffer<Boid>::index());
+				uint64_t prototype = (1ULL << TypedBuffer<Transform4>::index()) | (1ULL << TypedBuffer<Boid>::index());
 
 				Model& model = parent.m_scene->m_gfx_system.fetch_symbol({ Colour::White, Colour::White }, Sphere(0.01f), PLAIN);
 				Material& material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::White), PLAIN);
@@ -658,6 +657,7 @@ int main(int argc, char *argv[])
 {
 	GameShell app(TOY_RESOURCE_PATH, exec_path(argc, argv).c_str());
 
+	Var test = var(boids::Heading());
 	boids::ExBoids module = { _boids::m() };
 	app.run_game(module);
 }

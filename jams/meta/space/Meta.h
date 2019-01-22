@@ -13,6 +13,7 @@ namespace mud
 {
     void _space_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     
@@ -143,13 +144,13 @@ namespace mud
         static Meta meta = { type<vector<CombatFleet>>(), &namspc({}), "vector<CombatFleet>", sizeof(vector<CombatFleet>), TypeClass::Sequence };
         static Class cls = { type<vector<CombatFleet>>() };
         cls.m_content = &type<CombatFleet>();
-        meta_sequence<vector<CombatFleet>, CombatFleet>();
+        meta_vector<vector<CombatFleet>, CombatFleet>();
     }
     {
         static Meta meta = { type<vector<Commander*>>(), &namspc({}), "vector<Commander*>", sizeof(vector<Commander*>), TypeClass::Sequence };
         static Class cls = { type<vector<Commander*>>() };
         cls.m_content = &type<Commander>();
-        meta_sequence<vector<Commander*>, Commander*>();
+        meta_vector<vector<Commander*>, Commander*>();
     }
     
     // Combat

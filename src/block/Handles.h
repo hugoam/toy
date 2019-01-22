@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <ecs/Registry.h>
+#include <ecs/ECS.h>
 #include <block/Forward.h>
 
 namespace mud

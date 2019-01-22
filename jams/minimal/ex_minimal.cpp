@@ -272,8 +272,8 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		app.m_gfx_system->add_resource_path("examples/ex_minimal/");
-		app.m_gfx_system->add_resource_path("examples/05_character/");
+		app.m_gfx_system->add_resource_path("examples/ex_minimal");
+		app.m_gfx_system->add_resource_path("examples/05_character");
 	}
 
 	virtual void start(GameShell& app, Game& game) final

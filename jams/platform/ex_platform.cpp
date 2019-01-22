@@ -448,7 +448,7 @@ Model& human_model_glow(GfxSystem& gfx_system)
 	//Material& glow_material = highlight_material("JointsGlow", Colour(0.2f, 0.8f, 2.4f), 2);
 	static Material& glow_material = highlight_material("JointsGlow", Colour::Red, 4);
 	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_glow", carray<cstring, 1>{ "Joints" },
+	static Model& model = model_variant(gfx_system, human, "human_glow", carray<string, 1>{ "Joints" },
 																		 carray<Material*, 1>{ &glow_material });
 	return model;
 }
@@ -457,7 +457,7 @@ Model& human_model_stealth(GfxSystem& gfx_system)
 {
 	static Material& stealth_material = highlight_material("JointsStealth", Colour(0.2f, 0.2f, 0.2f), 2);
 	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_stealth", carray<cstring, 1>{ "Joints" },
+	static Model& model = model_variant(gfx_system, human, "human_stealth", carray<string, 1>{ "Joints" },
 																		    carray<Material*, 1>{ &stealth_material });
 	return model;
 }
@@ -887,17 +887,17 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		app.m_gfx_system->add_resource_path("examples/ex_platform/");
-		app.m_gfx_system->add_resource_path("examples/05_character/");
-		app.m_gfx_system->add_resource_path("examples/17_wfc/");
+		app.m_gfx_system->add_resource_path("examples/ex_platform");
+		app.m_gfx_system->add_resource_path("examples/05_character");
+		app.m_gfx_system->add_resource_path("examples/17_wfc");
 
 #ifdef SCRIPTED_IA
 		LocatedFile location = app.m_gfx_system->locate_file("scripts/enemy_ai.lua");
 
-		if(location.m_name != nullptr)
+		if(location)
 		{
 			TextScript& script = app.m_editor.m_script_editor.create_script("enemy_ai", Language::Lua);
-			script.m_script = read_text_file(string(location.m_location) + location.m_name);
+			script.m_script = read_text_file(location.path(false));
 		}
 #endif
 	}

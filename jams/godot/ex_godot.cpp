@@ -5,8 +5,6 @@
 #include <godot/Api.h>
 #include <meta/godot/Module.h>
 
-#include <math/Random.h>
-
 //#define _GODOT_TOOLS
 #ifndef MUD_PLATFORM_EMSCRIPTEN
 //#define GI_PROBE
@@ -389,7 +387,7 @@ Model& human_model_glow(GfxSystem& gfx_system)
 	//Material& glow_material = highlight_material("JointsGlow", Colour(0.2f, 0.8f, 2.4f), 2);
 	static Material& glow_material = highlight_material("JointsGlow", Colour::Red, 4);
 	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_glow", carray<cstring, 1>{ "Joints" },
+	static Model& model = model_variant(gfx_system, human, "human_glow", carray<string, 1>{ "Joints" },
 																		 carray<Material*, 1>{ &glow_material });
 	return model;
 }
@@ -398,7 +396,7 @@ Model& human_model_stealth(GfxSystem& gfx_system)
 {
 	static Material& stealth_material = highlight_material("JointsStealth", Colour(0.2f, 0.2f, 0.2f), 2);
 	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_stealth", carray<cstring, 1>{ "Joints" },
+	static Model& model = model_variant(gfx_system, human, "human_stealth", carray<string, 1>{ "Joints" },
 																		    carray<Material*, 1>{ &stealth_material });
 	return model;
 }
@@ -510,16 +508,18 @@ void paint_scene(Gnode& parent)
 
 void paint_level(Gnode& parent)
 {
+	GfxSystem& gfx_system = parent.m_scene->m_gfx_system;
+
 #ifdef REPACK
 	ImportConfig config;
 	config.m_optimize_geometry = true;
 	config.m_cache_geometry = true;
 	config.m_flags = ItemFlag::Static;
-	static Prefab& reactor = import_prefab(parent.m_scene->m_gfx_system, ModelFormat::gltf, "reactor", config);
+	static Prefab& reactor = import_prefab(gfx_system, ModelFormat::gltf, "reactor", config);
 #else
 	ImportConfig config;
 	config.m_flags = ItemFlag::Static;
-	static Prefab& reactor = import_prefab(parent.m_scene->m_gfx_system, ModelFormat::gltf, "reactor.repack", config);
+	static Prefab& reactor = import_prefab(gfx_system, ModelFormat::gltf, "reactor.repack", config);
 #endif
 	gfx::prefab(parent, reactor, false, ItemFlag::NoUpdate);
 
@@ -534,9 +534,9 @@ void paint_level(Gnode& parent)
 
 #ifdef LIGHTMAPS
 #ifdef MUD_PLATFORM_EMSCRIPTEN
-		string path = parent.m_scene->m_gfx_system.m_resource_path + "lightmaps/";
+		string path = gfx_system.m_resource_path + "/lightmaps/";
 #else
-		string path = parent.m_scene->m_gfx_system.m_resource_path + "examples/ex_godot/lightmaps/";
+		string path = gfx_system.m_resource_path + "/examples/ex_godot/lightmaps/";
 #endif
 
 		LightmapAtlas& lightmap = gfx::lightmap(parent, 4096U, 4.f, path);
@@ -729,10 +729,10 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		//app.m_gfx_system->add_resource_path("examples/ex_godot_hd/");
-		app.m_gfx_system->add_resource_path("examples/ex_godot/");
-		app.m_gfx_system->add_resource_path("examples/05_character/");
-		app.m_gfx_system->add_resource_path("examples/17_wfc/");
+		//app.m_gfx_system->add_resource_path("examples/ex_godot_hd");
+		app.m_gfx_system->add_resource_path("examples/ex_godot");
+		app.m_gfx_system->add_resource_path("examples/05_character");
+		app.m_gfx_system->add_resource_path("examples/17_wfc");
 
 		this->start(app, game);
 	}
@@ -821,7 +821,7 @@ public:
 		{
 			LocatedFile location = app.m_gfx_system->locate_file("models/reactor", carray<cstring, 1>{ ".gltf" });
 			Importer& importer = *app.m_gfx_system->importer(ModelFormat::gltf);
-			importer.repack((string(location.m_location) + location.m_name).c_str(), ImportConfig());
+			importer.repack(location.path(false), ImportConfig());
 			repacked = true;
 		}
 #endif

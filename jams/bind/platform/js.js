@@ -1,8 +1,8 @@
-Module['boids'] = Module['boids'] || {};
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
+Module['boids'] = Module['boids'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['toy'] = Module['toy'] || {};
 // Aim
 function Aim() {
@@ -150,6 +150,12 @@ Human.prototype.constructor = Human;
 Human.prototype.__class__ = Human;
 Human.__cache__ = {};
 Module['Human'] = Human;
+Human.prototype["sight"] = Human.prototype.sight = function(self, aiming) {
+    var self = this.ptr;
+    /* aiming <bool> [] */
+    if (aiming === undefined) { return wrapPointer(_Human_sight_0(self), quat); }
+    return wrapPointer(_Human_sight_1(self, aiming), quat);
+};
 Human.prototype["aim"] = Human.prototype.aim = function(self) {
     var self = this.ptr;
     return wrapPointer(_Human_aim_0(self), Aim);
@@ -157,12 +163,6 @@ Human.prototype["aim"] = Human.prototype.aim = function(self) {
 Human.prototype["shoot"] = Human.prototype.shoot = function(self) {
     var self = this.ptr;
     _Human_shoot_0(self);
-};
-Human.prototype["sight"] = Human.prototype.sight = function(self, aiming) {
-    var self = this.ptr;
-    /* aiming <bool> [] */
-    if (aiming === undefined) { return wrapPointer(_Human_sight_0(self), quat); }
-    return wrapPointer(_Human_sight_1(self, aiming), quat);
 };
 Human.prototype["stop"] = Human.prototype.stop = function(self) {
     var self = this.ptr;

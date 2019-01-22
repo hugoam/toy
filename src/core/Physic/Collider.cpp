@@ -6,6 +6,7 @@
 #include <core/Types.h>
 #include <core/Physic/Collider.h>
 
+#include <ecs/Complex.h>
 #include <core/Spatial/Spatial.h>
 #include <core/World/Section.h>
 #include <core/World/World.h>

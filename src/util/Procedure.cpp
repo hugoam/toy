@@ -6,7 +6,6 @@
 #include <util/Types.h>
 #include <util/Procedure.h>
 
-#include <ecs/Entity.h>
 #include <refl/Method.h>
 
 using namespace mud; namespace toy

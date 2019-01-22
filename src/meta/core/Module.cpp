@@ -3,12 +3,18 @@
 #ifdef MUD_MODULES
 module toy.core;
 #else
+#include <meta/type/Module.h>
+#include <meta/jobs/Module.h>
+#include <meta/ecs/Module.h>
+#include <meta/math/Module.h>
+#include <meta/geom/Module.h>
+#include <meta/lang/Module.h>
+#include <meta/util/Module.h>
 #include <meta/core/Module.h>
-#endif
-
-#ifndef MUD_MODULES
 #include <meta/core/Convert.h>
 #endif
+
+#include <core/Api.h>
 #define TOY_CORE_REFLECTION_IMPL
 #include <meta/core/Meta.h>
 

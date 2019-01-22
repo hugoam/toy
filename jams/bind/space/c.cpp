@@ -183,11 +183,11 @@ extern "C" {
 	Fleet* DECL Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const char* name) {
 		return new Fleet(spatial, *galaxy, *commander, *coord, name);
 	}
+	void DECL Fleet_order_jump_2(Fleet* self, mud::uvec2* coord, FleetStance stance) {
+		self->order_jump(*coord, stance);
+	}
 	void DECL Fleet_order_attack_1(Fleet* self, Star* star) {
 		self->order_attack(*star);
-	}
-	void DECL Fleet_order_jump_2(Fleet* self, mud::vec2* coord, FleetStance stance) {
-		self->order_jump(*coord, stance);
 	}
 	Galaxy* DECL Fleet__get_galaxy(Fleet* self) {
 		return self->m_galaxy;
@@ -785,14 +785,14 @@ extern "C" {
 	void DECL Universe__destroy(Universe* self) {
 		delete self;
 	}
-	Commander* DECL _generate_commander_2(Galaxy* galaxy, Star* star) {
-		return generate_commander(*galaxy, *star);
+	HStar DECL _generate_system_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {
+		return generate_system(*galaxy, *coord, *position);
 	}
 	HFleet DECL _generate_fleet_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {
 		return generate_fleet(*galaxy, *coord, *position);
 	}
-	HStar DECL _generate_system_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {
-		return generate_system(*galaxy, *coord, *position);
+	Commander* DECL _generate_commander_2(Galaxy* galaxy, Star* star) {
+		return generate_commander(*galaxy, *star);
 	}
 	// CombatType
 	CombatType DECL CombatType_Spatial() {

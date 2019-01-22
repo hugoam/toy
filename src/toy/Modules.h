@@ -6,4 +6,5 @@
 #include <meta/snd/Module.h>
 #include <meta/visu/Module.h>
 #include <meta/block/Module.h>
+#include <meta/edit/Module.h>
 #include <meta/shell/Module.h>

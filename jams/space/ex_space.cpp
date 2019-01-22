@@ -527,7 +527,7 @@ void GalaxyGrid::update_slots(uvec2 coord)
 {
 	vec3 center = to_xz(vec2(coord)) + 0.5f + Y3;
 
-	std::map<Commander*, vector<Fleet*>> fleets;
+	map<Commander*, vector<Fleet*>> fleets;
 	for(Fleet* fleet : m_fleets[coord])
 	{
 		fleets[fleet->m_commander].push_back(fleet);
@@ -801,9 +801,9 @@ void Split::update(Fleet& fleet, size_t tick)
 	m_state = Split::None;
 }
 
-void Fleet::order_split(cstring code, FleetStance stance, std::map<ShipSchema*, uint32_t> ships)
+void Fleet::order_split(const string& code, FleetStance stance, Ships ships)
 {
-	printf("Fleet %s from commander %s : split fleet %s in directive %s\n", m_name.c_str(), m_commander->m_name.c_str(), code, to_string(stance).c_str());
+	printf("Fleet %s from commander %s : split fleet %s in directive %s\n", m_name.c_str(), m_commander->m_name.c_str(), code.c_str(), to_string(stance).c_str());
 	Fleet& divided = construct<Fleet>(m_galaxy->m_spatial, *m_galaxy, m_spatial->m_position, *m_commander, m_coord, code);
 	m_split = { *this, divided, code, stance, ships, m_spatial->m_last_tick };
 
@@ -1003,7 +1003,7 @@ Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 
 	viewer.m_camera.m_eye = Z3;
 
-	static std::map<ShipSchema*, uint32_t> ships;
+	static Ships ships;
 	static VisuFleet fleet;
 	if(fleet.m_updated == 0)
 	{
@@ -1086,7 +1086,7 @@ public:
 
 	virtual void init(GameShell& app, Game& game) final
 	{
-		app.m_gfx_system->add_resource_path("examples/ex_space/");
+		app.m_gfx_system->add_resource_path("examples/ex_space");
 
 		game.m_editor.m_custom_brushes.emplace_back(make_unique<CommanderBrush>(game.m_editor.m_tool_context));
 	}

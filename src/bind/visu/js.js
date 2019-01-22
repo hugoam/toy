@@ -1,7 +1,7 @@
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 // PhysicDebugDraw
 function PhysicDebugDraw() { throw "cannot construct a PhysicDebugDraw, no constructor in IDL" }
 PhysicDebugDraw.prototype = Object.create(WrapperObject.prototype);

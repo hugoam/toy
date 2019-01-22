@@ -3,12 +3,15 @@
 #ifdef MUD_MODULES
 module toy.visu;
 #else
+#include <meta/type/Module.h>
+#include <meta/gfx/Module.h>
+#include <meta/util/Module.h>
+#include <meta/core/Module.h>
 #include <meta/visu/Module.h>
-#endif
-
-#ifndef MUD_MODULES
 #include <meta/visu/Convert.h>
 #endif
+
+#include <visu/Api.h>
 #define TOY_VISU_REFLECTION_IMPL
 #include <meta/visu/Meta.h>
 

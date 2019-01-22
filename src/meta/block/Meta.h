@@ -9,12 +9,11 @@
 #include <refl/Module.h>
 #endif
 
-#include <math/Api.h>
-
 namespace mud
 {
     void toy_block_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     
@@ -35,19 +34,19 @@ namespace mud
         static Meta meta = { type<array<toy::Element*>>(), &namspc({}), "array<toy::Element*>", sizeof(array<toy::Element*>), TypeClass::Sequence };
         static Class cls = { type<array<toy::Element*>>() };
         cls.m_content = &type<toy::Element>();
-        //meta_sequence<array<toy::Element*>, toy::Element*>();
+        meta_sequence<array<toy::Element*>, toy::Element*>();
     }
     {
         static Meta meta = { type<vector<toy::Block*>>(), &namspc({}), "vector<toy::Block*>", sizeof(vector<toy::Block*>), TypeClass::Sequence };
         static Class cls = { type<vector<toy::Block*>>() };
         cls.m_content = &type<toy::Block>();
-        meta_sequence<vector<toy::Block*>, toy::Block*>();
+        meta_vector<vector<toy::Block*>, toy::Block*>();
     }
     {
         static Meta meta = { type<vector<toy::Sector*>>(), &namspc({}), "vector<toy::Sector*>", sizeof(vector<toy::Sector*>), TypeClass::Sequence };
         static Class cls = { type<vector<toy::Sector*>>() };
         cls.m_content = &type<toy::Sector>();
-        meta_sequence<vector<toy::Sector*>, toy::Sector*>();
+        meta_vector<vector<toy::Sector*>, toy::Sector*>();
     }
     
     // toy::Block
@@ -473,11 +472,11 @@ namespace mud
             static Function f = { &namspc({ "toy" }), "build_block_geometry", funcptr<void(*)(mud::Scene&, toy::WorldPage&, toy::Tileblock&)>(&toy::build_block_geometry), func, params, Var() };
             m.m_functions.push_back(&f);
         }
-        //{
-        //    auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::index_blocks(val<mud::ivec3>(args[0]), val<mud::Grid<toy::Block*>>(args[1]), val<vector<toy::Block*>>(args[2]), val<vector<toy::Sector*>>(args[3])); };
-        //    vector<Param> params = { { "grid_size", var(mud::ivec3()) }, { "grid", var(mud::Grid<toy::Block*>()) }, { "blocks", var(vector<toy::Block*>()) }, { "sectors", var(vector<toy::Sector*>()) } };
-        //    static Function f = { &namspc({ "toy" }), "index_blocks", funcptr<void(*)(const mud::ivec3&, mud::Grid<toy::Block*>&, const vector<toy::Block*>&, const vector<toy::Sector*>&)>(&toy::index_blocks), func, params, Var() };
-        //    m.m_functions.push_back(&f);
-        //}
+        {
+            auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::index_blocks(val<mud::uvec3>(args[0]), val<mud::Grid<toy::Block*>>(args[1]), val<vector<toy::Block*>>(args[2]), val<vector<toy::Sector*>>(args[3])); };
+            vector<Param> params = { { "grid_size", var(mud::uvec3()) }, { "grid", var(mud::Grid<toy::Block*>()) }, { "blocks", var(vector<toy::Block*>()) }, { "sectors", var(vector<toy::Sector*>()) } };
+            static Function f = { &namspc({ "toy" }), "index_blocks", funcptr<void(*)(const mud::uvec3&, mud::Grid<toy::Block*>&, const vector<toy::Block*>&, const vector<toy::Sector*>&)>(&toy::index_blocks), func, params, Var() };
+            m.m_functions.push_back(&f);
+        }
     }
 }

@@ -95,8 +95,8 @@ extern "C" {
 	void DECL toy_GameModule_init_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
 		self->init(*shell, *game);
 	}
-	void DECL toy_GameModule_paint_3(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene, mud::Gnode* graph) {
-		self->paint(*shell, *scene, *graph);
+	void DECL toy_GameModule_start_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
+		self->start(*shell, *game);
 	}
 	void DECL toy_GameModule_pump_3(toy::GameModule* self, toy::GameShell* shell, toy::Game* game, mud::Widget* ui) {
 		self->pump(*shell, *game, *ui);
@@ -104,8 +104,8 @@ extern "C" {
 	void DECL toy_GameModule_scene_2(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene) {
 		self->scene(*shell, *scene);
 	}
-	void DECL toy_GameModule_start_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
-		self->start(*shell, *game);
+	void DECL toy_GameModule_paint_3(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene, mud::Gnode* graph) {
+		self->paint(*shell, *scene, *graph);
 	}
 	void DECL toy_GameModule__destroy(toy::GameModule* self) {
 		delete self;
@@ -120,20 +120,8 @@ extern "C" {
 	toy::GameShell* DECL toy_GameShell_GameShell_2(const char* resource_path, const char* exec_path) {
 		return new toy::GameShell(resource_path, exec_path);
 	}
-	toy::GameScene* DECL toy_GameShell_add_scene_0(toy::GameShell* self) {
-		return &self->add_scene();
-	}
-	void DECL toy_GameShell_cleanup_0(toy::GameShell* self) {
-		self->cleanup();
-	}
-	void DECL toy_GameShell_clear_scenes_0(toy::GameShell* self) {
-		self->clear_scenes();
-	}
 	void DECL toy_GameShell_init_0(toy::GameShell* self) {
 		self->init();
-	}
-	void DECL toy_GameShell_launch_0(toy::GameShell* self) {
-		self->launch();
 	}
 	void DECL toy_GameShell_load_1(toy::GameShell* self, toy::GameModule* module) {
 		self->load(*module);
@@ -141,32 +129,11 @@ extern "C" {
 	void DECL toy_GameShell_load_path_1(toy::GameShell* self, const char* module_path) {
 		self->load_path(module_path);
 	}
-	bool DECL toy_GameShell_pump_0(toy::GameShell* self) {
-		return self->pump();
-	}
-	void DECL toy_GameShell_reload_0(toy::GameShell* self) {
-		self->reload();
-	}
-	void DECL toy_GameShell_remove_scene_1(toy::GameShell* self, toy::GameScene* scene) {
-		self->remove_scene(*scene);
-	}
 	void DECL toy_GameShell_run_0(toy::GameShell* self) {
 		self->run();
 	}
 	void DECL toy_GameShell_run_1(toy::GameShell* self, size_t iterations) {
 		self->run(iterations);
-	}
-	void DECL toy_GameShell_run_editor_1(toy::GameShell* self, toy::GameModule* module) {
-		self->run_editor(*module);
-	}
-	void DECL toy_GameShell_run_editor_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
-		self->run_editor(*module, iterations);
-	}
-	void DECL toy_GameShell_run_editor_path_1(toy::GameShell* self, const char* module_path) {
-		self->run_editor_path(module_path);
-	}
-	void DECL toy_GameShell_run_editor_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
-		self->run_editor_path(module_path, iterations);
 	}
 	void DECL toy_GameShell_run_game_1(toy::GameShell* self, toy::GameModule* module) {
 		self->run_game(*module);
@@ -174,14 +141,47 @@ extern "C" {
 	void DECL toy_GameShell_run_game_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
 		self->run_game(*module, iterations);
 	}
+	void DECL toy_GameShell_run_editor_1(toy::GameShell* self, toy::GameModule* module) {
+		self->run_editor(*module);
+	}
+	void DECL toy_GameShell_run_editor_2(toy::GameShell* self, toy::GameModule* module, size_t iterations) {
+		self->run_editor(*module, iterations);
+	}
 	void DECL toy_GameShell_run_game_path_1(toy::GameShell* self, const char* module_path) {
 		self->run_game_path(module_path);
 	}
 	void DECL toy_GameShell_run_game_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
 		self->run_game_path(module_path, iterations);
 	}
+	void DECL toy_GameShell_run_editor_path_1(toy::GameShell* self, const char* module_path) {
+		self->run_editor_path(module_path);
+	}
+	void DECL toy_GameShell_run_editor_path_2(toy::GameShell* self, const char* module_path, size_t iterations) {
+		self->run_editor_path(module_path, iterations);
+	}
+	void DECL toy_GameShell_launch_0(toy::GameShell* self) {
+		self->launch();
+	}
 	void DECL toy_GameShell_save_0(toy::GameShell* self) {
 		self->save();
+	}
+	void DECL toy_GameShell_reload_0(toy::GameShell* self) {
+		self->reload();
+	}
+	bool DECL toy_GameShell_pump_0(toy::GameShell* self) {
+		return self->pump();
+	}
+	void DECL toy_GameShell_cleanup_0(toy::GameShell* self) {
+		self->cleanup();
+	}
+	toy::GameScene* DECL toy_GameShell_add_scene_0(toy::GameShell* self) {
+		return &self->add_scene();
+	}
+	void DECL toy_GameShell_remove_scene_1(toy::GameShell* self, toy::GameScene* scene) {
+		self->remove_scene(*scene);
+	}
+	void DECL toy_GameShell_clear_scenes_0(toy::GameShell* self) {
+		self->clear_scenes();
 	}
 	toy::Core* DECL toy_GameShell__get_core(toy::GameShell* self) {
 		return &self->core();

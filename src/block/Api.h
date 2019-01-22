@@ -1,3 +1,4 @@
+#include <math/Image256.h>
 #include <block/Block.h>
 #include <block/Chunk.h>
 #include <block/Element.h>

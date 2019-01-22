@@ -3,12 +3,45 @@
 #ifdef MUD_MODULES
 module ._platform;
 #else
+#include <meta/infra/Module.h>
+#include <meta/jobs/Module.h>
+#include <meta/type/Module.h>
+#include <meta/tree/Module.h>
+#include <meta/pool/Module.h>
+#include <meta/refl/Module.h>
+#include <meta/ecs/Module.h>
+#include <meta/srlz/Module.h>
+#include <meta/math/Module.h>
+#include <meta/geom/Module.h>
+#include <meta/noise/Module.h>
+#include <meta/wfc/Module.h>
+#include <meta/fract/Module.h>
+#include <meta/lang/Module.h>
+#include <meta/ctx/Module.h>
+#include <meta/ui/Module.h>
+#include <meta/uio/Module.h>
+#include <meta/bgfx/Module.h>
+#include <meta/gfx/Module.h>
+#include <meta/gfx-pbr/Module.h>
+#include <meta/gfx-obj/Module.h>
+#include <meta/gltf/Module.h>
+#include <meta/gfx-gltf/Module.h>
+#include <meta/gfx-ui/Module.h>
+#include <meta/gfx-edit/Module.h>
+#include <meta/tool/Module.h>
+#include <meta/wfc-gfx/Module.h>
+#include <meta/frame/Module.h>
+#include <meta/util/Module.h>
+#include <meta/core/Module.h>
+#include <meta/visu/Module.h>
+#include <meta/edit/Module.h>
+#include <meta/block/Module.h>
+#include <meta/shell/Module.h>
 #include <meta/platform/Module.h>
-#endif
-
-#ifndef MUD_MODULES
 #include <meta/platform/Convert.h>
 #endif
+
+#include <platform/Api.h>
 #define _PLATFORM_REFLECTION_IMPL
 #include <meta/platform/Meta.h>
 

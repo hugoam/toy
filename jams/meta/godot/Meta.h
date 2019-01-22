@@ -13,6 +13,7 @@ namespace mud
 {
     void _godot_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     

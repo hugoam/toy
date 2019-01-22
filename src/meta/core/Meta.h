@@ -9,12 +9,11 @@
 #include <refl/Module.h>
 #endif
 
-#include <geom/Api.h>
-
 namespace mud
 {
     void toy_core_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     
@@ -35,7 +34,7 @@ namespace mud
         static Meta meta = { type<vector<toy::HSpatial>>(), &namspc({}), "vector<toy::HSpatial>", sizeof(vector<toy::HSpatial>), TypeClass::Sequence };
         static Class cls = { type<vector<toy::HSpatial>>() };
         cls.m_content = &type<toy::HSpatial>();
-        meta_sequence<vector<toy::HSpatial>, toy::HSpatial>();
+        meta_vector<vector<toy::HSpatial>, toy::HSpatial>();
     }
     
     // toy::BulletMedium
@@ -871,8 +870,8 @@ namespace mud
                 { type<toy::World>(), member_address(&toy::World::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
                 { type<toy::World>(), Address(), type<mud::Complex>(), "complex", Ref(type<mud::Complex>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::World>(object).m_complex); } },
                 { type<toy::World>(), member_address(&toy::World::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
-                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::origin), type<toy::HSpatial>(), "origin", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), nullptr },
-                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::unworld), type<toy::HSpatial>(), "unworld", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), nullptr }
+                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::origin), type<toy::HSpatial>(), "origin", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), [](Ref object) { return Ref(&val<toy::World>(object).origin()); } },
+                { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::unworld), type<toy::HSpatial>(), "unworld", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), [](Ref object) { return Ref(&val<toy::World>(object).unworld()); } }
             },
             // methods
             {
@@ -933,8 +932,7 @@ namespace mud
             },
             // methods
             {
-                //{ type<toy::WorldPage>(), "build_geometry", member_address<void(toy::WorldPage::*)(const toy::Spatial&)>(&toy::WorldPage::build_geometry), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).build_geometry(val<toy::Spatial>(args[0])); }, { { "spatial", Ref(type<toy::Spatial>()) } }, Var() },
-                //{ type<toy::WorldPage>(), "update_geometry", member_address<void(toy::WorldPage::*)()>(&toy::WorldPage::update_geometry), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::WorldPage>(object).update_geometry(); }, {}, Var() },
+                { type<toy::WorldPage>(), "update_geometry", member_address<void(toy::WorldPage::*)(size_t)>(&toy::WorldPage::update_geometry), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).update_geometry(val<size_t>(args[0])); }, { { "tick", var(size_t()) } }, Var() },
                 { type<toy::WorldPage>(), "ground_point", member_address<void(toy::WorldPage::*)(const mud::vec3&, bool, mud::vec3&)>(&toy::WorldPage::ground_point), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).ground_point(val<mud::vec3>(args[0]), val<bool>(args[1]), val<mud::vec3>(args[2])); }, { { "position", var(mud::vec3()) }, { "relative", var(bool()) }, { "outputPoint", var(mud::vec3()), Param::Output } }, Var() },
                 { type<toy::WorldPage>(), "raycast_ground", member_address<void(toy::WorldPage::*)(const mud::vec3&, const mud::vec3&, mud::vec3&)>(&toy::WorldPage::raycast_ground), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::WorldPage>(object).raycast_ground(val<mud::vec3>(args[0]), val<mud::vec3>(args[1]), val<mud::vec3>(args[2])); }, { { "from", var(mud::vec3()) }, { "to", var(mud::vec3()) }, { "ground_point", var(mud::vec3()) } }, Var() }
             },

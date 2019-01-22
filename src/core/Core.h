@@ -7,6 +7,7 @@
 
 #include <infra/NonCopy.h>
 #include <ecs/Loop.h>
+#include <ecs/Complex.h>
 #include <core/Forward.h>
 #include <core/World/Section.h>
 #include <core/World/World.h>

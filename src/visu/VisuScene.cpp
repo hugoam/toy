@@ -8,6 +8,7 @@
 #include <visu/VisuPage.h>
 
 #include <infra/Reverse.h>
+#include <ecs/Complex.h>
 #include <refl/Member.h>
 #include <geom/Shapes.h>
 #include <geom/ShapesComplex.h>
@@ -330,9 +331,8 @@ using namespace mud; namespace toy
 			return self.m_sound->m_state != Sound::STOPPED;
 		}
 
-		string file = "sounds/" + sound + ".ogg";
-		LocatedFile location = parent.m_scene->m_gfx_system.locate_file(file.c_str());
-		self.m_sound = parent.m_sound_manager->create_sound((location.m_location + file).c_str(), loop, false, [](Sound&) {});
+		LocatedFile location = parent.m_scene->m_gfx_system.locate_file("sounds/" + sound + ".ogg");
+		self.m_sound = parent.m_sound_manager->create_sound(location.path(true), loop, false, [](Sound&) {});
 
 		if(self.m_sound)
 		{

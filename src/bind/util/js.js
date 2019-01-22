@@ -1,7 +1,7 @@
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 // Procedure
 function Procedure() { throw "cannot construct a Procedure, no constructor in IDL" }
 Procedure.prototype = Object.create(WrapperObject.prototype);
@@ -43,7 +43,7 @@ Object.defineProperty(ProcedureType.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <stl/string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _toy_ProcedureType__set_name(self, value);

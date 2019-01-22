@@ -13,6 +13,7 @@ namespace mud
 {
     void toy_shell_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     
@@ -101,7 +102,7 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::GameShell>(), [](Ref ref, array<Var> args) { new(&val<toy::GameShell>(ref)) toy::GameShell( val<const char*>(args[0]), val<const char*>(args[1]) ); }, { { "resource_path", Ref(type<const char*>()), Param::Nullable }, { "exec_path", Ref(type<const char*>()), Param::Flags(Param::Nullable|Param::Default) } } }
+                { type<toy::GameShell>(), [](Ref ref, array<Var> args) { new(&val<toy::GameShell>(ref)) toy::GameShell( val<string>(args[0]), val<const char*>(args[1]) ); }, { { "resource_path", var(string()) }, { "exec_path", Ref(type<const char*>()), Param::Flags(Param::Nullable|Param::Default) } } }
             },
             // copy constructor
             {

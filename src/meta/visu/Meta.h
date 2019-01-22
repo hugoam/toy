@@ -13,6 +13,7 @@ namespace mud
 {
     void toy_visu_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     

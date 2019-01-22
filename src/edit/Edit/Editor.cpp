@@ -137,7 +137,7 @@ using namespace mud; namespace toy
 	{
 		enum Modes { CREATE = 1 << 0 };
 
-		Section& self = section(parent, (string(indexer.m_type.m_name) + " Registry").c_str());
+		Section& self = section(parent, string(indexer.m_type.m_name) + " Registry");
 		complex_indexer(*self.m_body, indexer, &selection);
 
 		if(ui::modal_button(self, *self.m_toolbar, "Create", CREATE))

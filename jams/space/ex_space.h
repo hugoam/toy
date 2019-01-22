@@ -7,6 +7,10 @@
 #include <space/Forward.h>
 #include <toy/toy.h>
 
+#include <infra/Copy.h>
+
+#include <map>
+
 using namespace mud;
 using namespace toy;
 
@@ -32,6 +36,10 @@ namespace mud
 using HGalaxy = ComponentHandle<Galaxy>;
 using HStar = ComponentHandle<Star>;
 using HFleet = ComponentHandle<Fleet>;
+
+using Buildings = std::map<BuildingSchema*, uint32_t>;
+using Ships = std::map<ShipSchema*, uint32_t>;
+using Flotilla = vector<Fleet*>;
 
 struct Turn;
 _SPACE_EXPORT void next_turn(Turn& turn);
@@ -438,7 +446,7 @@ struct refl_ _SPACE_EXPORT Turn
 		m_events[&commander].m_items[size_t(stage)].push_back({ summary });
 	}
 
-	std::map<Commander*, TurnEvents> m_events;
+	map<Commander*, TurnEvents> m_events;
 
 	vector<Split*> m_divisions;
 	vector<Jump*> m_jumps;
@@ -480,9 +488,9 @@ public:
 struct refl_ _SPACE_EXPORT SpatialPower
 {
 	SpatialPower() : m_values{ 0.f } {}
-	SpatialPower(std::array<float, 8> values) : m_values(values) { this->update(); }
+	SpatialPower(carray<float, 8> values) { copy<float>(m_values, values); this->update(); }
 	
-	std::array<float, 8> m_values;
+	float m_values[8];
 	float m_average = 0.f;
 
 	void update()
@@ -530,7 +538,7 @@ public:
 
 	enum_array<Resource, uint32_t> m_extractors = {};
 
-	std::map<BuildingSchema*, uint32_t> m_buildings;
+	map<BuildingSchema*, uint32_t> m_buildings;
 
 	vector<Construction> m_constructions;
 
@@ -603,7 +611,7 @@ struct refl_ _SPACE_EXPORT Jump
 struct refl_ _SPACE_EXPORT Split
 {
 	Split() : m_state(None) {}
-	Split(Fleet& source, Fleet& dest, const string& code, FleetStance stance, std::map<ShipSchema*, uint32_t> ships, size_t tick)
+	Split(Fleet& source, Fleet& dest, const string& code, FleetStance stance, Ships ships, size_t tick)
 		: m_source(&source), m_dest(&dest), m_code(code), m_stance(stance), m_ships(ships), m_state(Ordered), m_state_updated(tick)
 	{}
 
@@ -621,7 +629,7 @@ struct refl_ _SPACE_EXPORT Split
 
 	attr_ string m_code;
 	attr_ FleetStance m_stance;
-	std::map<ShipSchema*, uint32_t> m_ships;
+	Ships m_ships;
 
 	State m_state;
 	size_t m_state_updated = 0;
@@ -663,7 +671,7 @@ public:
 
 	attr_ size_t m_ships_updated = 0;
 
-	/*attr_ mut_*/ std::map<ShipSchema*, uint32_t> m_ships;
+	/*attr_ mut_*/ Ships m_ships;
 
 	VisuFleet m_visu;
 
@@ -683,7 +691,7 @@ public:
 	void destroy();
 
 	meth_ void order_jump(uvec2 coord, FleetStance stance);
-	/*meth_*/ void order_split(cstring name, FleetStance stance, std::map<ShipSchema*, uint32_t> ships);
+	/*meth_*/ void order_split(const string& name, FleetStance stance, Ships ships);
 	meth_ void order_attack(Star& star);
 
 	void next_frame(Spatial& spatial, size_t tick, size_t delta);
@@ -693,7 +701,7 @@ struct refl_ _SPACE_EXPORT Schema
 {
 	Schema() {}
 	Schema(string code, string name, string conceptor, uint8_t level, float cost, float minerals,
-		   float andrium, float resistance = 0.f, uint8_t speed = 0, uint8_t scan = 0, float planetary = 0.f, std::array<float, 8> spatial = {})
+		   float andrium, float resistance = 0.f, uint8_t speed = 0, uint8_t scan = 0, float planetary = 0.f, carray<float, 8> spatial = {})
 		: m_code(code), m_name(name), m_conceptor(conceptor), m_level(level), m_cost(cost), m_minerals(minerals)
 		, m_andrium(andrium), m_resistance(resistance), m_speed(speed), m_scan(scan), m_planetary(planetary), m_spatial(spatial)
 	{}
@@ -740,10 +748,11 @@ struct refl_ _SPACE_EXPORT ShipSchema : public Schema
 {
 	ShipSchema() {}
 	ShipSchema(uint8_t size, string code, string name, string conceptor, uint8_t level, float cost, float minerals,
-			   float andrium, float resistance, uint8_t speed, uint8_t scan, float planetary, std::array<float, 8> spatial, std::array<uint, 6> weapon_count = {})
+			   float andrium, float resistance, uint8_t speed, uint8_t scan, float planetary, carray<float, 8> spatial, carray<uint, 6> weapon_count = {})
 		: Schema(code, name, conceptor, level, cost, minerals, andrium, resistance, speed, scan, planetary, spatial)
-		, m_size(size), m_class(size - 1), m_weapon_count(weapon_count)
+		, m_size(size), m_class(size - 1)
 	{
+		copy<uint>(m_weapon_count, weapon_count);
 		uint max_weapon = 0;
 		for(size_t i = 0; i < 4; ++i)
 			if(m_weapon_count[i] > max_weapon)
@@ -756,7 +765,7 @@ struct refl_ _SPACE_EXPORT ShipSchema : public Schema
 	attr_ uint8_t m_size;
 	attr_ uint8_t m_class;
 
-	std::array<uint, 6> m_weapon_count;
+	uint m_weapon_count[6];
 
 	attr_ WeaponType m_main_weapon = WeaponType::None;
 
@@ -901,10 +910,6 @@ struct GalaxyGrid
 	std::map<uvec2, Star*> m_stars;
 };
 
-using Buildings = std::map<BuildingSchema*, uint32_t>;
-using Ships = std::map<ShipSchema*, uint32_t>;
-using Flotilla = vector<Fleet*>;
-
 struct refl_ _SPACE_EXPORT Combat
 {
 	enum State : unsigned int
@@ -944,7 +949,7 @@ struct refl_ _SPACE_EXPORT CombatFleet
 	Fleet* m_fleet;
 	float m_damage = 0.f;
 	Ships m_losses = {};
-	std::array<uint32_t, 8> m_hull_losses = {};
+	uint32_t m_hull_losses[8] = {};
 };
 
 struct refl_ _SPACE_EXPORT CombatStar

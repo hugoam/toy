@@ -3,12 +3,17 @@
 #ifdef MUD_MODULES
 module toy.edit;
 #else
+#include <meta/type/Module.h>
+#include <meta/ui/Module.h>
+#include <meta/tool/Module.h>
+#include <meta/util/Module.h>
+#include <meta/core/Module.h>
+#include <meta/visu/Module.h>
 #include <meta/edit/Module.h>
-#endif
-
-#ifndef MUD_MODULES
 #include <meta/edit/Convert.h>
 #endif
+
+#include <edit/Api.h>
 #define TOY_EDIT_REFLECTION_IMPL
 #include <meta/edit/Meta.h>
 

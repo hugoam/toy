@@ -6,6 +6,7 @@
 #include <core/Types.h>
 #include <core/WorldPage/WorldPage.h>
 
+#include <ecs/Complex.h>
 #include <geom/Shapes.h>
 #include <geom/Mesh.h>
 #include <geom/Geom.h>
@@ -57,6 +58,8 @@ using namespace mud; namespace toy
 		m_solids.clear();
 		for(Geometry& geom : m_chunks)
 		{
+			if (geom.m_vertices.empty() || geom.m_triangles.empty())
+				continue;
 			printf("INFO: WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
 			m_solids.emplace_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}

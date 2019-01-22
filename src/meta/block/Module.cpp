@@ -3,12 +3,17 @@
 #ifdef MUD_MODULES
 module toy.block;
 #else
+#include <meta/type/Module.h>
+#include <meta/math/Module.h>
+#include <meta/wfc-gfx/Module.h>
+#include <meta/core/Module.h>
+#include <meta/visu/Module.h>
+#include <meta/edit/Module.h>
 #include <meta/block/Module.h>
-#endif
-
-#ifndef MUD_MODULES
 #include <meta/block/Convert.h>
 #endif
+
+#include <block/Api.h>
 #define TOY_BLOCK_REFLECTION_IMPL
 #include <meta/block/Meta.h>
 

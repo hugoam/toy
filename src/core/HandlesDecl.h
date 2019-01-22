@@ -7,7 +7,7 @@
 
 #include <core/Forward.h>
 #include <pool/Pool.h>
-#include <ecs/Registry.h>
+#include <ecs/ECS.h>
 
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>

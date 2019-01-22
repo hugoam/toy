@@ -1,7 +1,7 @@
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['toy'] = Module['toy'] || {};
 // Bullet
 function Bullet() { throw "cannot construct a Bullet, no constructor in IDL" }

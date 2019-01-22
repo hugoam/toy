@@ -1,8 +1,8 @@
-Module['boids'] = Module['boids'] || {};
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
+Module['boids'] = Module['boids'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['toy'] = Module['toy'] || {};
 // Boid
 function Boid() {

@@ -1,7 +1,7 @@
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 // Block
 function Block(spatial, world_page, parentblock, index, size) {
     /* spatial <toy::HSpatial> [] */
@@ -20,6 +20,14 @@ Block.prototype.constructor = Block;
 Block.prototype.__class__ = Block;
 Block.__cache__ = {};
 Module['Block'] = Block;
+Block.prototype["subdivide"] = Block.prototype.subdivide = function(self) {
+    var self = this.ptr;
+    _toy_Block_subdivide_0(self);
+};
+Block.prototype["reset"] = Block.prototype.reset = function(self) {
+    var self = this.ptr;
+    _toy_Block_reset_0(self);
+};
 Block.prototype["chunk"] = Block.prototype.chunk = function(self, x, y, z, element) {
     var self = this.ptr;
     /* x <size_t> [] */
@@ -32,14 +40,6 @@ Block.prototype["chunk"] = Block.prototype.chunk = function(self, x, y, z, eleme
 Block.prototype["commit"] = Block.prototype.commit = function(self) {
     var self = this.ptr;
     _toy_Block_commit_0(self);
-};
-Block.prototype["reset"] = Block.prototype.reset = function(self) {
-    var self = this.ptr;
-    _toy_Block_reset_0(self);
-};
-Block.prototype["subdivide"] = Block.prototype.subdivide = function(self) {
-    var self = this.ptr;
-    _toy_Block_subdivide_0(self);
 };
 Object.defineProperty(Block.prototype, "world_page", {
     get: function() {
@@ -206,7 +206,7 @@ Object.defineProperty(Element.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <stl/string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _toy_Element__set_name(self, value);
@@ -405,15 +405,15 @@ Earth.prototype["__destroy__"] = Earth.prototype.__destroy__ = function() {
     var self = this.ptr;
     _toy_Earth__destroy(self);
 };
-Module['build_block_geometry'] = function(scene, page, block) {
+Module['paint_block_height'] = function(block, image, element) {
     var self = this.ptr;
-    /* scene <Scene> [] */
-    scene = scene.ptr;
-    /* page <WorldPage> [] */
-    page = page.ptr;
-    /* block <Tileblock> [] */
+    /* block <Block> [] */
     block = block.ptr;
-    _toy_build_block_geometry_3(scene, page, block);
+    /* image <Image256> [] */
+    image = image.ptr;
+    /* element <Element> [] */
+    element = element.ptr;
+    _toy_paint_block_height_3(block, image, element);
 };
 Module['generate_block'] = function(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file) {
     var self = this.ptr;
@@ -432,15 +432,15 @@ Module['generate_block'] = function(gfx_system, tileset, origin, coord, block_su
     if (from_file === undefined) { return _toy_generate_block_6(gfx_system, tileset, origin, coord, block_subdiv, tile_scale); }
     return _toy_generate_block_7(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file);
 };
-Module['paint_block_height'] = function(block, image, element) {
+Module['build_block_geometry'] = function(scene, page, block) {
     var self = this.ptr;
-    /* block <Block> [] */
+    /* scene <Scene> [] */
+    scene = scene.ptr;
+    /* page <WorldPage> [] */
+    page = page.ptr;
+    /* block <Tileblock> [] */
     block = block.ptr;
-    /* image <Image256> [] */
-    image = image.ptr;
-    /* element <Element> [] */
-    element = element.ptr;
-    _toy_paint_block_height_3(block, image, element);
+    _toy_build_block_geometry_3(scene, page, block);
 };
 
 (function() {

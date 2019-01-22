@@ -7,7 +7,6 @@
 
 #include <stl/memory.h>
 #include <stl/vector.h>
-#include <ecs/Entity.h>
 #include <pool/ObjectPool.h>
 #include <math/VecOps.h>
 #include <math/Axes.h>

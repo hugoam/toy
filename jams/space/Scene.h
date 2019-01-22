@@ -8,7 +8,9 @@
 using namespace mud;
 using namespace toy;
 
-void fill_fleet(VisuFleet& visu, const std::map<ShipSchema*, uint32_t>& ships);
+using Ships = std::map<ShipSchema*, uint32_t>;
+
+void fill_fleet(VisuFleet& visu, const Ships& ships);
 
 void paint_fleet_ships(Gnode& parent, VisuFleet& visu, float radius = 0.4f, float ship_scale = 0.05f);
 

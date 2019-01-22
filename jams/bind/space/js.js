@@ -1,8 +1,8 @@
-Module['boids'] = Module['boids'] || {};
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
+Module['boids'] = Module['boids'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['toy'] = Module['toy'] || {};
 // Combat
 function Combat() {
@@ -255,19 +255,19 @@ Fleet.prototype.constructor = Fleet;
 Fleet.prototype.__class__ = Fleet;
 Fleet.__cache__ = {};
 Module['Fleet'] = Fleet;
+Fleet.prototype["order_jump"] = Fleet.prototype.order_jump = function(self, coord, stance) {
+    var self = this.ptr;
+    /* coord <uvec2> [] */
+    coord = coord.ptr;
+    /* stance <FleetStance> [] */
+    if (stance && typeof stance === "object") stance = stance.ptr;
+    _Fleet_order_jump_2(self, coord, stance);
+};
 Fleet.prototype["order_attack"] = Fleet.prototype.order_attack = function(self, star) {
     var self = this.ptr;
     /* star <Star> [] */
     star = star.ptr;
     _Fleet_order_attack_1(self, star);
-};
-Fleet.prototype["order_jump"] = Fleet.prototype.order_jump = function(self, coord, stance) {
-    var self = this.ptr;
-    /* coord <vec2> [] */
-    coord = coord.ptr;
-    /* stance <FleetStance> [] */
-    if (stance && typeof stance === "object") stance = stance.ptr;
-    _Fleet_order_jump_2(self, coord, stance);
 };
 Object.defineProperty(Fleet.prototype, "galaxy", {
     get: function() {
@@ -1307,13 +1307,15 @@ Universe.prototype["__destroy__"] = Universe.prototype.__destroy__ = function() 
     var self = this.ptr;
     _Universe__destroy(self);
 };
-Module['generate_commander'] = function(galaxy, star) {
+Module['generate_system'] = function(galaxy, coord, position) {
     var self = this.ptr;
     /* galaxy <Galaxy> [] */
     galaxy = galaxy.ptr;
-    /* star <Star> [] */
-    star = star.ptr;
-    return wrapPointer(__generate_commander_2(galaxy, star), Commander);
+    /* coord <uvec3> [] */
+    coord = coord.ptr;
+    /* position <vec3> [] */
+    position = position.ptr;
+    return __generate_system_3(galaxy, coord, position);
 };
 Module['generate_fleet'] = function(galaxy, coord, position) {
     var self = this.ptr;
@@ -1325,15 +1327,13 @@ Module['generate_fleet'] = function(galaxy, coord, position) {
     position = position.ptr;
     return __generate_fleet_3(galaxy, coord, position);
 };
-Module['generate_system'] = function(galaxy, coord, position) {
+Module['generate_commander'] = function(galaxy, star) {
     var self = this.ptr;
     /* galaxy <Galaxy> [] */
     galaxy = galaxy.ptr;
-    /* coord <uvec3> [] */
-    coord = coord.ptr;
-    /* position <vec3> [] */
-    position = position.ptr;
-    return __generate_system_3(galaxy, coord, position);
+    /* star <Star> [] */
+    star = star.ptr;
+    return wrapPointer(__generate_commander_2(galaxy, star), Commander);
 };
 
 (function() {

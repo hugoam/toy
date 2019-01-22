@@ -13,6 +13,7 @@ namespace mud
 {
     void _boids_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     

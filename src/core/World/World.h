@@ -7,7 +7,7 @@
 
 #include <stl/vector.h>
 #include <stl/string.h>
-#include <ecs/Entity.h>
+#include <ecs/ECS.h>
 #include <ecs/Loop.h>
 #include <core/Forward.h>
 #include <core/World/Origin.h>

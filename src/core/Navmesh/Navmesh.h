@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <ecs/Entity.h>
 #include <geom/Shape/ProcShape.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>

@@ -1,3 +1,4 @@
+#include <geom/Geom.h>
 #include <core/Anim/Anim.h>
 #include <core/Bullet.h>
 #include <core/Core.h>

@@ -13,6 +13,7 @@ namespace mud
 {
     void _blocks_meta(Module& m)
     {
+    UNUSED(m);
     
     // Base Types
     
@@ -212,7 +213,7 @@ namespace mud
                 { type<BlockWorld>(), member_address(&BlockWorld::m_bullet_world), type<toy::BulletWorld>(), "bullet_world", Ref(type<toy::BulletWorld>()), Member::Flags(Member::NonMutable|Member::Component), nullptr },
                 { type<BlockWorld>(), member_address(&BlockWorld::m_navmesh), type<toy::Navmesh>(), "navmesh", Ref(type<toy::Navmesh>()), Member::Flags(Member::NonMutable|Member::Component), nullptr },
                 { type<BlockWorld>(), member_address(&BlockWorld::m_block_subdiv), type<mud::uvec3>(), "block_subdiv", var(mud::uvec3(20,4,20)), Member::Value, nullptr },
-                { type<BlockWorld>(), member_address(&BlockWorld::m_tile_scale), type<mud::vec3>(), "tile_scale", var(mud::vec3(4.f)), Member::Value, nullptr },
+                { type<BlockWorld>(), member_address(&BlockWorld::m_tile_scale), type<mud::vec3>(), "tile_scale", var(mud::vec3()), Member::Value, nullptr },
                 { type<BlockWorld>(), member_address(&BlockWorld::m_block_size), type<mud::vec3>(), "block_size", var(mud::vec3()), Member::Value, nullptr },
                 { type<BlockWorld>(), member_address(&BlockWorld::m_world_size), type<mud::vec3>(), "world_size", var(mud::vec3()), Member::Value, nullptr }
             },

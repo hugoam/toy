@@ -15,11 +15,11 @@ namespace test
 class Shell : public NonCopy
 {
 public:
-	Shell(cstring resource_path, int argc, char *argv[]);
+	Shell(const string& resource_path, int argc, char *argv[]);
 	~Shell();
 
 	void init();
-	void run(const std::function<void(Shell&)>& func, size_t iterations = 0U);
+	void run(const function<void(Shell&)>& func, size_t iterations = 0U);
 	bool pump();
 
 public:
@@ -29,7 +29,7 @@ public:
 	GfxSystem m_gfx_system;
 	object<Context> m_context;
 
-	std::function<void(Shell&)> m_pump;
+	function<void(Shell&)> m_pump;
 };
 
 class Viewer

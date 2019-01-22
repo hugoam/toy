@@ -8,10 +8,8 @@
 WaveTileset& generator_tileset(GfxSystem& gfx_system)
 {
 	LocatedFile location = gfx_system.locate_file("models/platform/platform.tls");
-	string filepath = string(location.m_location) + "models/platform/platform.tls";
-
 	static WaveTileset tileset;
-	parse_json_wave_tileset(filepath, "", tileset);
+	parse_json_wave_tileset(location.path(true), "", tileset);
 	return tileset;
 }
 
@@ -67,8 +65,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 	Valve* coords = script.function(grid, { &gridSize });
 
 	LocatedFile location = shell.m_gfx_system->locate_file("models/platform/platform.tls");
-	string filepath = string(location.m_location) + "models/platform/platform.tls";
-	Valve* tileset = script.function(parse_json_wave_tileset, { &script.value(filepath), &script.value(string("")) });
+	Valve* tileset = script.function(parse_json_wave_tileset, { &script.value(location.path(true)), &script.value(string("")) });
 
 	//Valve& empty_wave = script.create<TileWave>({ &tileset, &tiles, &height, &tiles, &script.value(false) });
 	//Valve& solve_steps = script.value(0);
@@ -80,6 +77,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 	Valve& scale = script.value(vec3(4.f));
 	Valve& empty_world = script.create<Tileblock>({ &script.value(0U), &script.input("origin"), &script.value(Zero3), &gridSize, &scale, tileset });
 	//Valve& world = script.method(&Tileblock::update, { &empty_world, &wave });
+	UNUSED(empty_world);
 
 #if 0
 	// Create crates

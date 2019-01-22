@@ -5,6 +5,8 @@
 
 #include <toy/toy.h>
 
+#include <set>
+
 struct Edge
 {
 	vector<vec2> m_points;
@@ -221,8 +223,8 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 
 	std::set<uvec2> cliffs;
 
-	for(size_t e0 = 0; e0 < m_cliff_edges.size(); ++e0)
-		for(size_t e1 = 0; e1 < m_cliff_edges.size(); ++e1)
+	for(uint e0 = 0; e0 < uint(m_cliff_edges.size()); ++e0)
+		for(uint e1 = 0; e1 < uint(m_cliff_edges.size()); ++e1)
 		{
 			uint lo = e0 <  e1 ? e0 : e1;
 			uint hi = lo == e0 ? e1 : e0;
@@ -246,7 +248,7 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 
 	tileset.initialize();
 
-	auto connect = [](WaveTileset& tileset, const string& left, const string& right, int flip_left, int flip_right, bool horizontal = true)
+	auto connect = [](WaveTileset& tileset, const string& left, const string& right, uint8_t flip_left, uint8_t flip_right, bool horizontal = true)
 	{
 		int L = tileset.flip(tileset.tile(left)->m_index, flip_left);
 		int R = tileset.flip(tileset.tile(right)->m_index, flip_right);

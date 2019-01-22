@@ -7,7 +7,7 @@
 
 #include <core/Forward.h>
 #include <pool/Pool.h>
-#include <ecs/Registry.h>
+#include <ecs/ECS.h>
 
 namespace mud
 {

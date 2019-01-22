@@ -288,8 +288,8 @@ extern "C" {
 	toy::Movable* DECL toy_Movable_Movable_1(toy::HSpatial spatial) {
 		return new toy::Movable(spatial);
 	}
-	void DECL toy_Movable_modify_angular_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
-		self->modify_angular_velocity(*velocity);
+	void DECL toy_Movable_set_linear_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
+		self->set_linear_velocity(*velocity);
 	}
 	void DECL toy_Movable_modify_linear_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
 		self->modify_linear_velocity(*velocity);
@@ -297,8 +297,8 @@ extern "C" {
 	void DECL toy_Movable_set_angular_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
 		self->set_angular_velocity(*velocity);
 	}
-	void DECL toy_Movable_set_linear_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
-		self->set_linear_velocity(*velocity);
+	void DECL toy_Movable_modify_angular_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
+		self->modify_angular_velocity(*velocity);
 	}
 	mud::vec3* DECL toy_Movable__get_linear_velocity(toy::Movable* self) {
 		static mud::vec3 temp;
@@ -472,25 +472,25 @@ extern "C" {
 	mud::Type* DECL toy_SolidImpl__type() {
 		return &mud::type<toy::SolidImpl>();
 	}
-	mud::vec3* DECL toy_SolidImpl_angular_velocity_0(toy::SolidImpl* self) {
-		static mud::vec3 temp;
-		return (temp = self->angular_velocity(), &temp);
-	}
-	void DECL toy_SolidImpl_impulse_2(toy::SolidImpl* self, const mud::vec3* force, const mud::vec3* point) {
-		self->impulse(*force, *point);
-	}
 	mud::vec3* DECL toy_SolidImpl_linear_velocity_0(toy::SolidImpl* self) {
 		static mud::vec3 temp;
 		return (temp = self->linear_velocity(), &temp);
 	}
-	void DECL toy_SolidImpl_set_angular_factor_1(toy::SolidImpl* self, const mud::vec3* factor) {
-		self->set_angular_factor(*factor);
+	mud::vec3* DECL toy_SolidImpl_angular_velocity_0(toy::SolidImpl* self) {
+		static mud::vec3 temp;
+		return (temp = self->angular_velocity(), &temp);
+	}
+	void DECL toy_SolidImpl_set_linear_velocity_1(toy::SolidImpl* self, const mud::vec3* force) {
+		self->set_linear_velocity(*force);
 	}
 	void DECL toy_SolidImpl_set_angular_velocity_1(toy::SolidImpl* self, const mud::vec3* torque) {
 		self->set_angular_velocity(*torque);
 	}
-	void DECL toy_SolidImpl_set_linear_velocity_1(toy::SolidImpl* self, const mud::vec3* force) {
-		self->set_linear_velocity(*force);
+	void DECL toy_SolidImpl_set_angular_factor_1(toy::SolidImpl* self, const mud::vec3* factor) {
+		self->set_angular_factor(*factor);
+	}
+	void DECL toy_SolidImpl_impulse_2(toy::SolidImpl* self, const mud::vec3* force, const mud::vec3* point) {
+		self->impulse(*force, *point);
 	}
 	void DECL toy_SolidImpl__destroy(toy::SolidImpl* self) {
 		delete self;
@@ -560,17 +560,14 @@ extern "C" {
 	toy::WorldPage* DECL toy_WorldPage_WorldPage_3(toy::HSpatial spatial, bool open, const mud::vec3* extents) {
 		return new toy::WorldPage(spatial, open, *extents);
 	}
-	void DECL toy_WorldPage_build_geometry_1(toy::WorldPage* self, const toy::Spatial* spatial) {
-		self->build_geometry(*spatial);
+	void DECL toy_WorldPage_update_geometry_1(toy::WorldPage* self, size_t tick) {
+		self->update_geometry(tick);
 	}
 	void DECL toy_WorldPage_ground_point_3(toy::WorldPage* self, const mud::vec3* position, bool relative, mud::vec3* outputPoint) {
 		self->ground_point(*position, relative, *outputPoint);
 	}
 	void DECL toy_WorldPage_raycast_ground_3(toy::WorldPage* self, const mud::vec3* from, const mud::vec3* to, mud::vec3* ground_point) {
 		self->raycast_ground(*from, *to, *ground_point);
-	}
-	void DECL toy_WorldPage_update_geometry_0(toy::WorldPage* self) {
-		self->update_geometry();
 	}
 	bool DECL toy_WorldPage__get_open(toy::WorldPage* self) {
 		return self->m_open;

@@ -26,17 +26,17 @@ extern "C" {
 	toy::Block* DECL toy_Block_Block_5(toy::HSpatial spatial, toy::HWorldPage world_page, toy::Block* parentblock, size_t index, const mud::vec3* size) {
 		return new toy::Block(spatial, world_page, parentblock, index, *size);
 	}
+	void DECL toy_Block_subdivide_0(toy::Block* self) {
+		self->subdivide();
+	}
+	void DECL toy_Block_reset_0(toy::Block* self) {
+		self->reset();
+	}
 	void DECL toy_Block_chunk_4(toy::Block* self, size_t x, size_t y, size_t z, toy::Element* element) {
 		self->chunk(x, y, z, *element);
 	}
 	void DECL toy_Block_commit_0(toy::Block* self) {
 		self->commit();
-	}
-	void DECL toy_Block_reset_0(toy::Block* self) {
-		self->reset();
-	}
-	void DECL toy_Block_subdivide_0(toy::Block* self) {
-		self->subdivide();
 	}
 	toy::HWorldPage DECL toy_Block__get_world_page(toy::Block* self) {
 		return self->m_world_page;
@@ -240,8 +240,8 @@ extern "C" {
 	void DECL toy_Earth__destroy(toy::Earth* self) {
 		delete self;
 	}
-	void DECL toy_build_block_geometry_3(mud::Scene* scene, toy::WorldPage* page, toy::Tileblock* block) {
-		toy::build_block_geometry(*scene, *page, *block);
+	void DECL toy_paint_block_height_3(toy::Block* block, mud::Image256* image, toy::Element* element) {
+		toy::paint_block_height(*block, *image, *element);
 	}
 	toy::HTileblock DECL toy_generate_block_6(mud::GfxSystem* gfx_system, mud::WaveTileset* tileset, toy::HSpatial origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale) {
 		return toy::generate_block(*gfx_system, *tileset, origin, *coord, *block_subdiv, *tile_scale);
@@ -249,8 +249,8 @@ extern "C" {
 	toy::HTileblock DECL toy_generate_block_7(mud::GfxSystem* gfx_system, mud::WaveTileset* tileset, toy::HSpatial origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale, bool from_file) {
 		return toy::generate_block(*gfx_system, *tileset, origin, *coord, *block_subdiv, *tile_scale, from_file);
 	}
-	void DECL toy_paint_block_height_3(toy::Block* block, mud::Image256* image, toy::Element* element) {
-		toy::paint_block_height(*block, *image, *element);
+	void DECL toy_build_block_geometry_3(mud::Scene* scene, toy::WorldPage* page, toy::Tileblock* block) {
+		toy::build_block_geometry(*scene, *page, *block);
 	}
 	// MatterState
 	toy::MatterState DECL toy_MatterState_Solid() {

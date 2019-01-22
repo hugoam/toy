@@ -109,7 +109,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_SHELL_EXPORT GameShell : public NonCopy
 	{
 	public:
-		constr_ GameShell(cstring resource_path, cstring exec_path = nullptr);
+		constr_ GameShell(const string& resource_path, cstring exec_path = nullptr);
 		~GameShell();
 
 		meth_ void init();

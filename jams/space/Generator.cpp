@@ -4,6 +4,8 @@
 #include <space/ex_space.h>
 #include <toy/toy.h>
 
+#include <cctype>
+
 uvec2 to_coord(uvec3 coord)
 {
 	return{ coord.x, coord.z };

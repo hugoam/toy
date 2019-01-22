@@ -1,7 +1,7 @@
 Module['glm'] = Module['glm'] || {};
+Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
-Module['mud']['ui'] = Module['mud']['ui'] || {};
 // BulletMedium
 function BulletMedium() { throw "cannot construct a BulletMedium, no constructor in IDL" }
 BulletMedium.prototype = Object.create(WrapperObject.prototype);
@@ -387,7 +387,7 @@ Object.defineProperty(Medium.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <stl/string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _toy_Medium__set_name(self, value);
@@ -431,11 +431,11 @@ Movable.prototype.constructor = Movable;
 Movable.prototype.__class__ = Movable;
 Movable.__cache__ = {};
 Module['Movable'] = Movable;
-Movable.prototype["modify_angular_velocity"] = Movable.prototype.modify_angular_velocity = function(self, velocity) {
+Movable.prototype["set_linear_velocity"] = Movable.prototype.set_linear_velocity = function(self, velocity) {
     var self = this.ptr;
     /* velocity <vec3> [] */
     velocity = velocity.ptr;
-    _toy_Movable_modify_angular_velocity_1(self, velocity);
+    _toy_Movable_set_linear_velocity_1(self, velocity);
 };
 Movable.prototype["modify_linear_velocity"] = Movable.prototype.modify_linear_velocity = function(self, velocity) {
     var self = this.ptr;
@@ -449,11 +449,11 @@ Movable.prototype["set_angular_velocity"] = Movable.prototype.set_angular_veloci
     velocity = velocity.ptr;
     _toy_Movable_set_angular_velocity_1(self, velocity);
 };
-Movable.prototype["set_linear_velocity"] = Movable.prototype.set_linear_velocity = function(self, velocity) {
+Movable.prototype["modify_angular_velocity"] = Movable.prototype.modify_angular_velocity = function(self, velocity) {
     var self = this.ptr;
     /* velocity <vec3> [] */
     velocity = velocity.ptr;
-    _toy_Movable_set_linear_velocity_1(self, velocity);
+    _toy_Movable_modify_angular_velocity_1(self, velocity);
 };
 Object.defineProperty(Movable.prototype, "linear_velocity", {
     get: function() {
@@ -736,9 +736,31 @@ SolidImpl.prototype.constructor = SolidImpl;
 SolidImpl.prototype.__class__ = SolidImpl;
 SolidImpl.__cache__ = {};
 Module['SolidImpl'] = SolidImpl;
+SolidImpl.prototype["linear_velocity"] = SolidImpl.prototype.linear_velocity = function(self) {
+    var self = this.ptr;
+    return wrapPointer(_toy_SolidImpl_linear_velocity_0(self), vec3);
+};
 SolidImpl.prototype["angular_velocity"] = SolidImpl.prototype.angular_velocity = function(self) {
     var self = this.ptr;
     return wrapPointer(_toy_SolidImpl_angular_velocity_0(self), vec3);
+};
+SolidImpl.prototype["set_linear_velocity"] = SolidImpl.prototype.set_linear_velocity = function(self, force) {
+    var self = this.ptr;
+    /* force <vec3> [] */
+    force = force.ptr;
+    _toy_SolidImpl_set_linear_velocity_1(self, force);
+};
+SolidImpl.prototype["set_angular_velocity"] = SolidImpl.prototype.set_angular_velocity = function(self, torque) {
+    var self = this.ptr;
+    /* torque <vec3> [] */
+    torque = torque.ptr;
+    _toy_SolidImpl_set_angular_velocity_1(self, torque);
+};
+SolidImpl.prototype["set_angular_factor"] = SolidImpl.prototype.set_angular_factor = function(self, factor) {
+    var self = this.ptr;
+    /* factor <vec3> [] */
+    factor = factor.ptr;
+    _toy_SolidImpl_set_angular_factor_1(self, factor);
 };
 SolidImpl.prototype["impulse"] = SolidImpl.prototype.impulse = function(self, force, point) {
     var self = this.ptr;
@@ -747,28 +769,6 @@ SolidImpl.prototype["impulse"] = SolidImpl.prototype.impulse = function(self, fo
     /* point <vec3> [] */
     point = point.ptr;
     _toy_SolidImpl_impulse_2(self, force, point);
-};
-SolidImpl.prototype["linear_velocity"] = SolidImpl.prototype.linear_velocity = function(self) {
-    var self = this.ptr;
-    return wrapPointer(_toy_SolidImpl_linear_velocity_0(self), vec3);
-};
-SolidImpl.prototype["set_angular_factor"] = SolidImpl.prototype.set_angular_factor = function(self, factor) {
-    var self = this.ptr;
-    /* factor <vec3> [] */
-    factor = factor.ptr;
-    _toy_SolidImpl_set_angular_factor_1(self, factor);
-};
-SolidImpl.prototype["set_angular_velocity"] = SolidImpl.prototype.set_angular_velocity = function(self, torque) {
-    var self = this.ptr;
-    /* torque <vec3> [] */
-    torque = torque.ptr;
-    _toy_SolidImpl_set_angular_velocity_1(self, torque);
-};
-SolidImpl.prototype["set_linear_velocity"] = SolidImpl.prototype.set_linear_velocity = function(self, force) {
-    var self = this.ptr;
-    /* force <vec3> [] */
-    force = force.ptr;
-    _toy_SolidImpl_set_linear_velocity_1(self, force);
 };
 SolidImpl.prototype["__destroy__"] = SolidImpl.prototype.__destroy__ = function() {
     var self = this.ptr;
@@ -807,7 +807,7 @@ function World(id, complex, name, job_system) {
     /* id <mud::Id> [] */
     /* complex <Complex> [] */
     complex = complex.ptr;
-    /* name <stl/string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */
@@ -838,7 +838,7 @@ Object.defineProperty(World.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <stl/string> [] */
+        /* value <string> [] */
         if (value && typeof value === "object") value = value.ptr;
         else value = ensureString(value);
         _toy_World__set_name(self, value);
@@ -884,11 +884,10 @@ WorldPage.prototype.constructor = WorldPage;
 WorldPage.prototype.__class__ = WorldPage;
 WorldPage.__cache__ = {};
 Module['WorldPage'] = WorldPage;
-WorldPage.prototype["build_geometry"] = WorldPage.prototype.build_geometry = function(self, spatial) {
+WorldPage.prototype["update_geometry"] = WorldPage.prototype.update_geometry = function(self, tick) {
     var self = this.ptr;
-    /* spatial <Spatial> [] */
-    spatial = spatial.ptr;
-    _toy_WorldPage_build_geometry_1(self, spatial);
+    /* tick <size_t> [] */
+    _toy_WorldPage_update_geometry_1(self, tick);
 };
 WorldPage.prototype["ground_point"] = WorldPage.prototype.ground_point = function(self, position, relative, outputPoint) {
     var self = this.ptr;
@@ -908,10 +907,6 @@ WorldPage.prototype["raycast_ground"] = WorldPage.prototype.raycast_ground = fun
     /* ground_point <vec3> [] */
     ground_point = ground_point.ptr;
     _toy_WorldPage_raycast_ground_3(self, from, to, ground_point);
-};
-WorldPage.prototype["update_geometry"] = WorldPage.prototype.update_geometry = function(self) {
-    var self = this.ptr;
-    _toy_WorldPage_update_geometry_0(self);
 };
 Object.defineProperty(WorldPage.prototype, "open", {
     get: function() {
@@ -1004,7 +999,7 @@ BulletWorld.prototype["__destroy__"] = BulletWorld.prototype.__destroy__ = funct
 // DefaultWorld
 function DefaultWorld(name, job_system) {
     ensureCache.prepare();
-    /* name <stl/string> [] */
+    /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
     /* job_system <JobSystem> [] */

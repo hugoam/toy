@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <ecs/Entity.h>
 #include <core/Forward.h>
 #include <core/Bullet/BulletCollider.h>
 #include <core/Spatial/Spatial.h>

@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <ecs/Entity.h>
 #include <infra/Global.h>
 #include <core/Forward.h>
 #include <core/Physic/Medium.h>

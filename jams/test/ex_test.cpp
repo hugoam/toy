@@ -19,7 +19,7 @@ static void iterate()
 }
 #endif
 
-Shell::Shell(cstring resource_path, int argc, char *argv[])
+Shell::Shell(const string& resource_path, int argc, char *argv[])
 	: m_exec_path(exec_path(argc, argv))
 	, m_resource_path(resource_path)
 	, m_gfx_system(resource_path)
@@ -39,7 +39,7 @@ Shell::Shell(cstring resource_path, int argc, char *argv[])
 Shell::~Shell()
 {}
 
-void Shell::run(const std::function<void(Shell&)>& func, size_t iterations)
+void Shell::run(const function<void(Shell&)>& func, size_t iterations)
 {
 	m_pump = func;
 

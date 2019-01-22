@@ -6,9 +6,10 @@
 #include <edit/Types.h>
 #include <edit/Edit/Viewport.h>
 
+#include <ecs/Complex.h>
+#include <gfx/Item.h>
 #include <gfx-ui/Viewport.h>
 #include <gfx-ui/Viewer.h>
-#include <gfx/Item.h>
 
 #include <core/Camera/Camera.h>
 #include <core/Selector/Selection.h>
