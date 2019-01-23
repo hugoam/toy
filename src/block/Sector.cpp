@@ -20,11 +20,11 @@ using namespace mud; namespace toy
 {
 	Entity Sector::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
 	{
-		Entity entity = { ecs.CreateEntity<Spatial, WorldPage, Navblock, Sector>(), ecs.m_index };
-		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, size));
-		ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
-		ecs.SetComponent(entity, Sector(HSpatial(entity), HWorldPage(entity), HNavblock(entity), coordinate, size));
+		Entity entity = { ecs.create<Spatial, WorldPage, Navblock, Sector>(), ecs.m_index };
+		ecs.set(entity, Spatial(parent, position, ZeroQuat));
+		ecs.set(entity, WorldPage(HSpatial(entity), true, size));
+		ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
+		ecs.set(entity, Sector(HSpatial(entity), HWorldPage(entity), HNavblock(entity), coordinate, size));
 		return entity;
 	}
 
@@ -88,11 +88,11 @@ using namespace mud; namespace toy
 
 	Entity Tileblock::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset)
 	{
-		Entity entity = { ecs.CreateEntity<Spatial, WorldPage, Navblock, Tileblock>(), ecs.m_index };
-		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, vec3(size)));
-		ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
-		ecs.SetComponent(entity, Tileblock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), size, tile_scale, tileset));
+		Entity entity = { ecs.create<Spatial, WorldPage, Navblock, Tileblock>(), ecs.m_index };
+		ecs.set(entity, Spatial(parent, position, ZeroQuat));
+		ecs.set(entity, WorldPage(HSpatial(entity), true, vec3(size)));
+		ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
+		ecs.set(entity, Tileblock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), size, tile_scale, tileset));
 		return entity;
 	}
 

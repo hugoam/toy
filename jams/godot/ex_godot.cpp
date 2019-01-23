@@ -34,9 +34,9 @@ float spot_attenuation(vec3 ray, vec3 light, float range, float attenuation_fact
 
 Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Bullet>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, source, rotation));
-	ecs.SetComponent(entity, Bullet(HSpatial(entity), source, rotation, velocity));
+	Entity entity = { ecs.create<Spatial, Bullet>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, source, rotation));
+	ecs.set(entity, Bullet(HSpatial(entity), source, rotation, velocity));
 	return entity;
 }
 
@@ -98,13 +98,13 @@ float Human::headlight_angle = 40.f;
 
 Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position, Faction faction)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Emitter, Receptor, EntityScript, Human>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
-	ecs.SetComponent(entity, Receptor(HSpatial(entity)));
-	ecs.SetComponent(entity, EntityScript(entity));
-	ecs.SetComponent(entity, Human(entity, entity, entity, entity, entity, faction));
+	Entity entity = { ecs.create<Spatial, Movable, Emitter, Receptor, EntityScript, Human>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Emitter(HSpatial(entity)));
+	ecs.set(entity, Receptor(HSpatial(entity)));
+	ecs.set(entity, EntityScript(entity));
+	ecs.set(entity, Human(entity, entity, entity, entity, entity, faction));
 	return entity;
 }
 
@@ -131,7 +131,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 
 	m_visor = this->aim();
 
-	for(int i = m_bullets.size() - 1; i >= 0; --i)
+	for(llong i = m_bullets.size() - 1; i >= 0; --i)
 	{
 		m_bullets[i]->update();
 		if(m_bullets[i]->m_destroy)
@@ -278,10 +278,10 @@ void Human::damage(float amount)
 
 Entity Lamp::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Lamp>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Lamp(HSpatial(entity), HMovable(entity)));
+	Entity entity = { ecs.create<Spatial, Movable, Lamp>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Lamp(HSpatial(entity), HMovable(entity)));
 	return entity;
 }
 
@@ -292,10 +292,10 @@ Lamp::Lamp(HSpatial spatial, HMovable movable)
 
 Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Crate>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
+	Entity entity = { ecs.create<Spatial, Movable, Crate>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }
 
@@ -308,11 +308,11 @@ Crate::Crate(HSpatial spatial, HMovable movable, const vec3& extents)
 
 Entity WorldBlock::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, WorldPage, Navblock, WorldBlock>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, WorldPage(HSpatial(entity), true, extents));
-	ecs.SetComponent(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
-	ecs.SetComponent(entity, WorldBlock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), extents));
+	Entity entity = { ecs.create<Spatial, WorldPage, Navblock, WorldBlock>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, WorldPage(HSpatial(entity), true, extents));
+	ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
+	ecs.set(entity, WorldBlock(HSpatial(entity), HWorldPage(entity), HNavblock(entity), extents));
 	return entity;
 }
 
@@ -551,17 +551,18 @@ void paint_viewer(Viewer& viewer)
 #ifdef CLUSTERED
 	if(rect_size(vec4(viewer.m_viewport.m_rect)) != vec2(0.f) && !viewer.m_camera.m_clusters)
 	{
-		viewer.m_camera.m_clustered = true;
-		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
-		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
+		mud::Camera& camera = viewer.m_camera;
+		camera.m_clustered = true;
+		camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
+		camera.m_clusters->prepare(viewer.m_viewport, camera.m_projection, camera.m_near, camera.m_far);
 	}
 #endif
 
-	//viewer.m_filters.m_tonemap.m_mode = TonemapMode::ACES;
+	//viewer.comp<Tonemap>().m_mode = TonemapMode::ACES;
 
-	//viewer.m_filters.m_glow.m_enabled = true;
+	//viewer.comp<Glow>().m_enabled = true;
 #ifndef MUD_GODOT_EMSCRIPTEN
-	//viewer.m_filters.m_glow.m_bicubic_filter = true;
+	//viewer.comp<Glow>().m_bicubic_filter = true;
 #endif
 }
 
@@ -759,13 +760,6 @@ public:
 
 		destroy_prefab(*app.m_gfx_system, collision_world);
 #endif
-
-		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
-
-		world.m_ecs.AddBuffers<Spatial, Bullet>("Bullet");
-		world.m_ecs.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human>("Human");
-		world.m_ecs.AddBuffers<Spatial, Movable, Crate>("Crate");
-		world.m_ecs.AddBuffers<Spatial, Movable, Lamp>("Lamp");
 
 		world.add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);
 

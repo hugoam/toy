@@ -30,11 +30,6 @@ using namespace mud; namespace toy
 		UNUSED(id);
 		s_ecs[0] = &m_ecs;
 
-		//m_ecs.AddBuffers<Spatial>();
-		m_ecs.AddBuffers<Spatial, Origin>("Origin");
-		m_ecs.AddBuffers<Spatial, Waypoint>("Waypoint");
-		m_ecs.AddBuffers<Spatial, Movable, Camera>("Camera");
-
 		m_origin = { Origin::create(m_ecs, *this), 0 };
 		m_unworld = { Origin::create(m_ecs, *this), 0 };
 

@@ -11,19 +11,19 @@
 
 namespace mud
 {
-	template <> struct TypedBuffer<toy::Spatial>		{ static size_t index() { return 0; } };
-	template <> struct TypedBuffer<toy::Movable>		{ static size_t index() { return 1; } };
-	template <> struct TypedBuffer<toy::Camera>			{ static size_t index() { return 2; } };
-	template <> struct TypedBuffer<toy::Emitter>		{ static size_t index() { return 3; } };
-	template <> struct TypedBuffer<toy::Receptor>		{ static size_t index() { return 4; } };
-	template <> struct TypedBuffer<toy::EntityScript>	{ static size_t index() { return 5; } };
-	template <> struct TypedBuffer<toy::WorldPage>		{ static size_t index() { return 6; } };
-	template <> struct TypedBuffer<toy::Navblock>		{ static size_t index() { return 7; } };
-	//template <> struct TypedBuffer<toy::Collider>		{ static size_t index() { return 8; } };
-	//template <> struct TypedBuffer<toy::Solid>			{ static size_t index() { return 9; } };
+	template <> struct TypedBuffer<toy::Spatial>		{ static uint32_t index() { return 0; } };
+	template <> struct TypedBuffer<toy::Movable>		{ static uint32_t index() { return 1; } };
+	template <> struct TypedBuffer<toy::Camera>			{ static uint32_t index() { return 2; } };
+	template <> struct TypedBuffer<toy::Emitter>		{ static uint32_t index() { return 3; } };
+	template <> struct TypedBuffer<toy::Receptor>		{ static uint32_t index() { return 4; } };
+	template <> struct TypedBuffer<toy::EntityScript>	{ static uint32_t index() { return 5; } };
+	template <> struct TypedBuffer<toy::WorldPage>		{ static uint32_t index() { return 6; } };
+	template <> struct TypedBuffer<toy::Navblock>		{ static uint32_t index() { return 7; } };
+	//template <> struct TypedBuffer<toy::Collider>		{ static uint32_t index() { return 8; } };
+	//template <> struct TypedBuffer<toy::Solid>			{ static uint32_t index() { return 9; } };
 
-	template <> struct TypedBuffer<toy::Origin>			{ static size_t index() { return 10; } };
-	template <> struct TypedBuffer<toy::Waypoint>		{ static size_t index() { return 11; } };
+	template <> struct TypedBuffer<toy::Origin>			{ static uint32_t index() { return 10; } };
+	template <> struct TypedBuffer<toy::Waypoint>		{ static uint32_t index() { return 11; } };
 }
 
 using namespace mud; namespace toy

@@ -41,7 +41,7 @@ using namespace mud; namespace toy
 		{
 			auto loop = [&](size_t tick, size_t delta)
 			{
-				m_ecs.Loop<T_Component, T_Args...>([tick, delta](T_Component& component, T_Args&... args)
+				m_ecs.loop<T_Component, T_Args...>([tick, delta](T_Component& component, T_Args&... args)
 				{
 					component.next_frame(args..., tick, delta);
 				});

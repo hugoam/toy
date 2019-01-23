@@ -21,9 +21,9 @@ extern "C"
 
 namespace mud
 {
-	template <> struct TypedBuffer<Galaxy>	{ static size_t index() { return 20; } };
-	template <> struct TypedBuffer<Star>	{ static size_t index() { return 21; } };
-	template <> struct TypedBuffer<Fleet>	{ static size_t index() { return 22; } };
+	template <> struct TypedBuffer<Galaxy>	{ static uint32_t index() { return 20; } };
+	template <> struct TypedBuffer<Star>	{ static uint32_t index() { return 21; } };
+	template <> struct TypedBuffer<Fleet>	{ static uint32_t index() { return 22; } };
 }
 
 namespace mud

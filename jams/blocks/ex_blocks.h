@@ -19,11 +19,11 @@ extern "C"
 
 namespace mud
 {
-//	template <> struct TypedBuffer<Well>	{ static size_t index() { return 20; } };
-	template <> struct TypedBuffer<Camp>	{ static size_t index() { return 21; } };
-	template <> struct TypedBuffer<Shield>	{ static size_t index() { return 22; } };
-	template <> struct TypedBuffer<Slug>	{ static size_t index() { return 23; } };
-	template <> struct TypedBuffer<Tank>	{ static size_t index() { return 24; } };
+//	template <> struct TypedBuffer<Well>	{ static uint32_t index() { return 20; } };
+	template <> struct TypedBuffer<Camp>	{ static uint32_t index() { return 21; } };
+	template <> struct TypedBuffer<Shield>	{ static uint32_t index() { return 22; } };
+	template <> struct TypedBuffer<Slug>	{ static uint32_t index() { return 23; } };
+	template <> struct TypedBuffer<Tank>	{ static uint32_t index() { return 24; } };
 }
 
 namespace mud

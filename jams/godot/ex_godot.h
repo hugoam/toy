@@ -17,11 +17,11 @@ extern "C"
 
 namespace mud
 {
-	template <> struct TypedBuffer<Bullet> { static size_t index() { return 20; } };
-	template <> struct TypedBuffer<Human>  { static size_t index() { return 21; } };
-	template <> struct TypedBuffer<Lamp>   { static size_t index() { return 22; } };
-	template <> struct TypedBuffer<Crate>  { static size_t index() { return 23; } };
-	template <> struct TypedBuffer<WorldBlock>  { static size_t index() { return 24; } };
+	template <> struct TypedBuffer<Bullet> { static uint32_t index() { return 20; } };
+	template <> struct TypedBuffer<Human>  { static uint32_t index() { return 21; } };
+	template <> struct TypedBuffer<Lamp>   { static uint32_t index() { return 22; } };
+	template <> struct TypedBuffer<Crate>  { static uint32_t index() { return 23; } };
+	template <> struct TypedBuffer<WorldBlock>  { static uint32_t index() { return 24; } };
 }
 
 namespace mud

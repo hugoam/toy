@@ -17,9 +17,9 @@ using namespace mud; namespace toy
 {
 	Entity Chunk::create(ECS& ecs, HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
 	{
-		Entity entity = { ecs.CreateEntity<Spatial, Chunk>(), ecs.m_index };
-		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		ecs.SetComponent(entity, Chunk(entity, block, index, element, size));
+		Entity entity = { ecs.create<Spatial, Chunk>(), ecs.m_index };
+		ecs.set(entity, Spatial(parent, position, ZeroQuat));
+		ecs.set(entity, Chunk(entity, block, index, element, size));
 		return entity;
 	}
 

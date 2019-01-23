@@ -24,7 +24,9 @@ using namespace mud; namespace toy
 {
 	Core::Core(JobSystem& job_system)
 		: m_job_system(job_system)
-	{}
+	{
+		static Prototype default_world = { type<DefaultWorld>(), { &type<World>(), &type<BulletWorld>() } };
+	}
 
 	Core::~Core()
 	{}

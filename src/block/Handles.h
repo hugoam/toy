@@ -10,11 +10,11 @@
 
 namespace mud
 {
-	template <> struct TypedBuffer<toy::Sector>		{ static size_t index() { return 12; } };
-	template <> struct TypedBuffer<toy::Tileblock>	{ static size_t index() { return 13; } };
-	template <> struct TypedBuffer<toy::Block>		{ static size_t index() { return 14; } };
-	template <> struct TypedBuffer<toy::Chunk>		{ static size_t index() { return 15; } };
-	template <> struct TypedBuffer<toy::Heap>		{ static size_t index() { return 16; } };
+	template <> struct TypedBuffer<toy::Sector>		{ static uint32_t index() { return 12; } };
+	template <> struct TypedBuffer<toy::Tileblock>	{ static uint32_t index() { return 13; } };
+	template <> struct TypedBuffer<toy::Block>		{ static uint32_t index() { return 14; } };
+	template <> struct TypedBuffer<toy::Chunk>		{ static uint32_t index() { return 15; } };
+	template <> struct TypedBuffer<toy::Heap>		{ static uint32_t index() { return 16; } };
 }
 
 using namespace mud; namespace toy

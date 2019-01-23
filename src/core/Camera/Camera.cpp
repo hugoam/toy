@@ -6,6 +6,7 @@
 #include <core/Types.h>
 #include <core/Camera/Camera.h>
 
+#include <type/Any.h>
 #include <refl/Class.h>
 #include <math/Random.h>
 
@@ -19,10 +20,10 @@ using namespace mud; namespace toy
 {
 	Entity Camera::create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near, float far)
 	{
-		Entity entity = { ecs.CreateEntity<Spatial, Movable, toy::Camera>(), ecs.m_index };
-		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		ecs.SetComponent(entity, Movable(HSpatial(entity)));
-		ecs.SetComponent(entity, toy::Camera(HSpatial(entity), lens_distance, near, far));
+		Entity entity = { ecs.create<Spatial, Movable, toy::Camera>(), ecs.m_index };
+		ecs.set(entity, Spatial(parent, position, ZeroQuat));
+		ecs.set(entity, Movable(HSpatial(entity)));
+		ecs.set(entity, toy::Camera(HSpatial(entity), lens_distance, near, far));
 		return entity;
 	}
 

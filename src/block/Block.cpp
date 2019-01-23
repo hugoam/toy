@@ -74,7 +74,7 @@ using namespace mud; namespace toy
 
 	Entity Block::create(ECS& ecs, HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size)
 	{
-		Entity entity = { ecs.CreateEntity<Spatial, Block>(), ecs.m_index };
+		Entity entity = { ecs.create<Spatial, Block>(), ecs.m_index };
 		asa<Spatial>(entity) = Spatial(parent, position, ZeroQuat);
 		asa<Block>(entity) = Block(HSpatial(entity), world_page, parentblock, index, size);
 		//, m_emitter(*this, m_spatial, m_movable)
@@ -109,9 +109,9 @@ using namespace mud; namespace toy
 		return self.absolute_position() + half_size;
 	}
 
-	vec3 Block::coordinates()
+	uvec3 Block::coordinates()
 	{
-		return m_parentblock ? m_parentblock->block_coord(*this) : vec3(0, 0, 0);
+		return m_parentblock ? m_parentblock->block_coord(*this) : uvec3(0U);
 	}
 
 	uint16_t Block::subdiv()
@@ -142,45 +142,45 @@ using namespace mud; namespace toy
 		page.m_updated++;
 	}
 
-	vec3 Block::local_block_coord(Block& child)
+	uvec3 Block::local_block_coord(Block& child)
 	{
 		size_t index = child.m_index;
 		return this->local_block_coord(index);
 	}
 
-	vec3 Block::local_block_coord(size_t index)
+	uvec3 Block::local_block_coord(size_t index)
 	{
-		return vec3(float(m_subblocks.x(index)), float(m_subblocks.y(index)), float(m_subblocks.z(index)));
+		return uvec3(uint(m_subblocks.x(index)), uint(m_subblocks.y(index)), uint(m_subblocks.z(index)));
 	}
 
-	vec3 Block::block_coord(Block& subblock)
+	uvec3 Block::block_coord(Block& subblock)
 	{
-		vec3 coordinates = this->local_block_coord(subblock);
+		uvec3 coordinates = this->local_block_coord(subblock);
 
 		if(m_parentblock)
-			coordinates += m_parentblock->block_coord(*this) * 2.f;
+			coordinates += m_parentblock->block_coord(*this) * 2U;
 
 		return coordinates;
 	}
 
-	vec3 Block::local_chunk_coord(size_t index)
+	uvec3 Block::local_chunk_coord(size_t index)
 	{
-		return vec3(m_chunks.x(index), m_chunks.y(index), m_chunks.z(index));
+		return uvec3(m_chunks.x(index), m_chunks.y(index), m_chunks.z(index));
 	}
 
-	vec3 Block::chunk_coord(size_t index)
+	uvec3 Block::chunk_coord(size_t index)
 	{
-		vec3 coordinates = this->local_chunk_coord(index);
+		uvec3 coordinates = this->local_chunk_coord(index);
 
 		if(m_parentblock)
-			coordinates += m_parentblock->block_coord(*this) * float(this->subdiv());
+			coordinates += m_parentblock->block_coord(*this) * uint(this->subdiv());
 
 		return coordinates;
 	}
 
 	vec3 Block::chunk_position(size_t index)
 	{
-		vec3 coordinates = this->local_chunk_coord(index) * this->chunk_size() + this->chunk_size() / 2.f - m_size / 2.f;
+		vec3 coordinates = vec3(this->local_chunk_coord(index)) * this->chunk_size() + this->chunk_size() / 2.f - m_size / 2.f;
 		return coordinates;
 	}
 
@@ -197,7 +197,7 @@ using namespace mud; namespace toy
 		{
 			vec3 half_size = m_size / 2.f;
 			vec3 half_subdiv_size = half_size / 2.f;
-			vec3 position = this->local_block_coord(index) * half_size - half_size + half_subdiv_size;
+			vec3 position = vec3(this->local_block_coord(index)) * half_size - half_size + half_subdiv_size;
 
 			HBlock block = construct<Block>(m_spatial, m_world_page, position, this, index, m_size / 2.f);
 

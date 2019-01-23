@@ -78,17 +78,17 @@ using namespace mud; namespace toy
 
 		vec3 min(Spatial& self);
 		vec3 max(Spatial& self);
-		vec3 coordinates();
+		uvec3 coordinates();
 
 		uint16_t subdiv();
 		vec3 chunk_size();
 
-		vec3 local_block_coord(size_t index);
-		vec3 local_block_coord(Block& child);
-		vec3 block_coord(Block& child);
-
-		vec3 local_chunk_coord(size_t index);
-		vec3 chunk_coord(size_t index);
+		uvec3 local_block_coord(size_t index);
+		uvec3 local_block_coord(Block& child);
+		uvec3 block_coord(Block& child);
+		
+		uvec3 local_chunk_coord(size_t index);
+		uvec3 chunk_coord(size_t index);
 
 		vec3 chunk_position(size_t index);
 

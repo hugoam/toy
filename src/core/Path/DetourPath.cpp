@@ -15,9 +15,9 @@ using namespace mud; namespace toy
 {
 	Entity Waypoint::create(ECS& ecs, HSpatial parent, const vec3& position)
 	{
-		Entity entity = { ecs.CreateEntity<Spatial, Waypoint>(), ecs.m_index };
-		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		ecs.SetComponent(entity, Waypoint(HSpatial(entity)));
+		Entity entity = { ecs.create<Spatial, Waypoint>(), ecs.m_index };
+		ecs.set(entity, Spatial(parent, position, ZeroQuat));
+		ecs.set(entity, Waypoint(HSpatial(entity)));
 		return entity;
 	}
 

@@ -42,9 +42,9 @@ vector<Faction> g_factions;
 
 /*Entity Well::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Emitter, Well>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
+	Entity entity = { ecs.create<Spatial, Emitter, Well>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Emitter(HSpatial(entity)));
 	return entity;
 }
 
@@ -60,9 +60,9 @@ void Well::next_frame(size_t tick, size_t delta)
 
 Entity Camp::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Camp>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Camp(HSpatial(entity), position, faction));
+	Entity entity = { ecs.create<Spatial, Camp>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Camp(HSpatial(entity), position, faction));
 	return entity;
 }
 
@@ -74,10 +74,10 @@ Camp::Camp(HSpatial spatial, const vec3& position, Faction& faction)
 
 Entity Shield::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction, float radius)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Emitter, Shield>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
-	ecs.SetComponent(entity, Shield(HSpatial(entity), HEmitter(entity), faction, radius));
+	Entity entity = { ecs.create<Spatial, Emitter, Shield>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Emitter(HSpatial(entity)));
+	ecs.set(entity, Shield(HSpatial(entity), HEmitter(entity), faction, radius));
 	return entity;
 }
 
@@ -105,9 +105,9 @@ void Shield::next_frame(size_t tick, size_t delta)
 
 Entity Slug::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Slug>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, source, rotation));
-	ecs.SetComponent(entity, Slug(HSpatial(entity), source, velocity, power));
+	Entity entity = { ecs.create<Spatial, Slug>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, source, rotation));
+	ecs.set(entity, Slug(HSpatial(entity), source, velocity, power));
 	return entity;
 }
 
@@ -170,12 +170,12 @@ void Slug::update(Spatial& spatial)
 
 Entity Tank::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Emitter, Receptor, Tank>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
-	ecs.SetComponent(entity, Receptor(HSpatial(entity)));
-	ecs.SetComponent(entity, Tank(HSpatial(entity), HMovable(entity), HEmitter(entity), HReceptor(entity), faction));
+	Entity entity = { ecs.create<Spatial, Movable, Emitter, Receptor, Tank>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Emitter(HSpatial(entity)));
+	ecs.set(entity, Receptor(HSpatial(entity)));
+	ecs.set(entity, Tank(HSpatial(entity), HMovable(entity), HEmitter(entity), HReceptor(entity), faction));
 	return entity;
 }
 
@@ -276,6 +276,8 @@ void Tank::shoot(bool critical)
 	Spatial& spatial = m_spatial;
 	m_slugs.emplace_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
 }
+
+Prototype block_world = { type<BlockWorld>(), { &type<World>(), &type<BulletWorld>(), &type<Navmesh>() } };
 
 BlockWorld::BlockWorld(const string& name, JobSystem& job_system)
 	: Complex(0, type<BlockWorld>(), m_bullet_world, m_navmesh, *this)
@@ -527,11 +529,11 @@ void paint_viewer(Viewer& viewer)
 {
 	viewer.m_camera.m_far = 500.f;
 
-	//viewer.m_filters.m_glow.m_enabled = true;
-	//viewer.m_filters.m_glow.m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
-	//viewer.m_filters.m_glow.m_intensity = 0.8f;
+	viewer.comp<Glow>().m_enabled = true;
+	viewer.comp<Glow>().m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
+	viewer.comp<Glow>().m_intensity = 0.8f;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	//viewer.m_filters.m_glow.m_bicubic_filter = true;
+	viewer.comp<Glow>().m_bicubic_filter = true;
 #endif
 }
 
@@ -794,15 +796,6 @@ public:
 		BlockWorld& block_world = global_pool<BlockWorld>().construct("Arcadia", *app.m_job_system);
 		World& world = block_world.m_world;
 		game.m_world = &world;
-
-		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
-		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
-
-		//world.m_ecs.AddBuffers<Spatial, Emitter, Well>("Well");
-		world.m_ecs.AddBuffers<Spatial, Camp>("Camp");
-		world.m_ecs.AddBuffers<Spatial, Emitter, Shield>("Shield");
-		world.m_ecs.AddBuffers<Spatial, Slug>("Slug");
-		world.m_ecs.AddBuffers<Spatial, Movable, Emitter, Receptor, Tank>("Tank");
 
 		world.add_loop<Tileblock, WorldPage>(Task::Spatial);
 		world.add_loop<Shield>(Task::GameObject);

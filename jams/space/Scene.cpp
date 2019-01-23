@@ -557,9 +557,9 @@ void paint_viewer(Viewer& viewer)
 {
 	viewer.m_camera.m_near = 0.0001f;
 
-	//viewer.m_filters.m_glow.m_enabled = true;
-	//viewer.m_filters.m_glow.m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
+	viewer.comp<Glow>().m_enabled = true;
+	viewer.comp<Glow>().m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	//viewer.m_filters.m_glow.m_bicubic_filter = true;
+	viewer.comp<Glow>().m_bicubic_filter = true;
 #endif
 }

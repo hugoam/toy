@@ -84,7 +84,7 @@ using namespace mud; namespace toy
 		{
 			auto paint = [this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
-				world.m_ecs.LoopH<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+				world.m_ecs.loop_ent<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
 				{
 					paint_func(this->entity_node(parent, entity, spatial, index), component);
 				});
@@ -99,7 +99,7 @@ using namespace mud; namespace toy
 			auto paint = [reference, range2, this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
 			{
 				vec3 position = reference->m_position;
-				world.m_ecs.LoopH<Spatial, T>([&position, range2, this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+				world.m_ecs.loop_ent<Spatial, T>([&position, range2, this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
 				{
 					float dist2 = distance2(spatial.m_position, position);
 					if(dist2 < range2)

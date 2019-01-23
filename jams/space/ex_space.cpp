@@ -511,6 +511,8 @@ ShipDatabase::ShipDatabase()
 	builtin_ships(*this);
 }
 
+Prototype universe = { type<Universe>(), { &type<World>(), &type<BulletWorld>() } };
+
 Universe::Universe(const string& name, JobSystem& job_system)
 	: Complex(0, type<Universe>(), m_bullet_world, *this)
 	, m_world(0, *this, name, job_system)
@@ -566,9 +568,9 @@ void GalaxyGrid::move_fleet(Fleet& fleet, uvec2 start, uvec2 dest)
 
 Entity Galaxy::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec2& size)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Galaxy>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Galaxy(HSpatial(entity), size));
+	Entity entity = { ecs.create<Spatial, Galaxy>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Galaxy(HSpatial(entity), size));
 	return entity;
 }
 
@@ -595,7 +597,7 @@ Quadrant::Quadrant(HSpatial spatial, const vec3& position, const uvec2& coord, f
 	, m_coord(coord)
 	, m_size(size)
 {
-	ecs.SetComponent<Quadrant*>(m_handle, this);
+	ecs.set<Quadrant*>(m_handle, this);
 
 	galaxy.m_quadrants.push_back(this);
 }
@@ -605,9 +607,9 @@ static size_t star_count = 0;
 
 Entity Star::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const string& name)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Star>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Star(HSpatial(entity), galaxy, coord, name));
+	Entity entity = { ecs.create<Spatial, Star>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Star(HSpatial(entity), galaxy, coord, name));
 	return entity;
 }
 
@@ -674,9 +676,9 @@ static size_t fleet_count = 0;
 
 Entity Fleet::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const string& name)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Fleet>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Fleet(HSpatial(entity), galaxy, commander, coord, name));
+	Entity entity = { ecs.create<Spatial, Fleet>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Fleet(HSpatial(entity), galaxy, commander, coord, name));
 	return entity;
 }
 
@@ -1096,11 +1098,6 @@ public:
 		Universe& universe = global_pool<Universe>().construct("Arcadia", *app.m_job_system);
 		World& world = universe.m_world;
 		game.m_world = &world;
-
-		world.m_ecs.AddBuffers<Spatial, Galaxy>("Galaxy");
-		//world.m_ecs.AddBuffers<Spatial, Quadrant>("Quadrant");
-		world.m_ecs.AddBuffers<Spatial, Star>("Star");
-		world.m_ecs.AddBuffers<Spatial, Fleet>("Fleet");
 
 		world.add_loop<Star, Spatial>(Task::GameObject);
 		world.add_loop<Fleet, Spatial>(Task::GameObject);

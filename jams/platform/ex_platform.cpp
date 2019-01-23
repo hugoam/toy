@@ -29,6 +29,8 @@ void populate_block(Tileblock& block)
 	generate_lamps(block);
 }
 
+Prototype tile_world = { type<TileWorld>(), { &type<World>(), &type<BulletWorld>(), &type<Navmesh>() } };
+
 TileWorld::TileWorld(const string& name, JobSystem& job_system)
 	: Complex(0, type<TileWorld>(), m_bullet_world, m_navmesh, *this)
 	, m_world(0, *this, name, job_system)
@@ -116,9 +118,9 @@ void TileWorld::open_blocks(GfxSystem& gfx_system, const vec3& position, const i
 
 Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Bullet>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, source, rotation));
-	ecs.SetComponent(entity, Bullet(HSpatial(entity), source, rotation, velocity));
+	Entity entity = { ecs.create<Spatial, Bullet>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, source, rotation));
+	ecs.set(entity, Bullet(HSpatial(entity), source, rotation, velocity));
 	return entity;
 }
 
@@ -180,13 +182,13 @@ float Human::headlight_angle = 40.f;
 
 Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position, Faction faction)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Emitter, Receptor, EntityScript, Human>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Emitter(HSpatial(entity)));
-	ecs.SetComponent(entity, Receptor(HSpatial(entity)));
-	ecs.SetComponent(entity, EntityScript(entity));
-	ecs.SetComponent(entity, Human(entity, entity, entity, entity, entity, faction));
+	Entity entity = { ecs.create<Spatial, Movable, Emitter, Receptor, EntityScript, Human>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Emitter(HSpatial(entity)));
+	ecs.set(entity, Receptor(HSpatial(entity)));
+	ecs.set(entity, EntityScript(entity));
+	ecs.set(entity, Human(entity, entity, entity, entity, entity, faction));
 	return entity;
 }
 
@@ -355,10 +357,10 @@ void Human::damage(float amount)
 
 Entity Lamp::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Lamp>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Lamp(HSpatial(entity), HMovable(entity)));
+	Entity entity = { ecs.create<Spatial, Movable, Lamp>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Lamp(HSpatial(entity), HMovable(entity)));
 	return entity;
 }
 
@@ -369,10 +371,10 @@ Lamp::Lamp(HSpatial spatial, HMovable movable)
 
 Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Crate>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
+	Entity entity = { ecs.create<Spatial, Movable, Crate>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }
 
@@ -589,9 +591,9 @@ void paint_viewer(Viewer& viewer)
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
 
-	//viewer.m_filters.m_glow.m_enabled = true;
+	viewer.comp<Glow>().m_enabled = true;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	//viewer.m_filters.m_glow.m_bicubic_filter = true;
+	viewer.comp<Glow>().m_bicubic_filter = true;
 #endif
 }
 
@@ -907,14 +909,6 @@ public:
 		TileWorld& tileworld = global_pool<TileWorld>().construct("Arcadia", *app.m_job_system);
 		World& world = tileworld.m_world;
 		game.m_world = &world;
-
-		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Sector>("Sector");
-		world.m_ecs.AddBuffers<Spatial, WorldPage, Navblock, Tileblock>("Tileblock");
-
-		world.m_ecs.AddBuffers<Spatial, Bullet>("Bullet");
-		world.m_ecs.AddBuffers<Spatial, Movable, Emitter, Receptor, EntityScript, Human>("Human");
-		world.m_ecs.AddBuffers<Spatial, Movable, Crate>("Crate");
-		world.m_ecs.AddBuffers<Spatial, Movable, Lamp>("Lamp");
 
 		world.add_loop<Tileblock, WorldPage>(Task::Spatial);
 		world.add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);

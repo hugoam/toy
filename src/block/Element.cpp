@@ -29,9 +29,9 @@ using namespace mud; namespace toy
 
 	Entity Heap::create(ECS& ecs, HSpatial parent, const vec3& position, Element& element, float radius)
 	{
-		Entity entity = { ecs.CreateEntity<Spatial, Heap>(), ecs.m_index };
-		ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-		ecs.SetComponent(entity, Heap(entity, element, radius));
+		Entity entity = { ecs.create<Spatial, Heap>(), ecs.m_index };
+		ecs.set(entity, Spatial(parent, position, ZeroQuat));
+		ecs.set(entity, Heap(entity, element, radius));
 		return entity;
 	}
 

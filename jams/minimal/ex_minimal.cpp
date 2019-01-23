@@ -7,7 +7,7 @@
 
 Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Bullet>(), ecs.m_index };
+	Entity entity = { ecs.create<Spatial, Bullet>(), ecs.m_index };
 	asa<Spatial>(entity) = Spatial(parent, source, rotation);
 	asa<Bullet>(entity) = Bullet(HSpatial(entity), source, rotation, velocity);
 	return entity;
@@ -46,10 +46,10 @@ float Human::headlight_angle = 40.f;
 
 Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Human>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Human(entity, entity));
+	Entity entity = { ecs.create<Spatial, Movable, Human>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Human(entity, entity));
 	return entity;
 }
 
@@ -97,10 +97,10 @@ void Human::shoot()
 
 Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.CreateEntity<Spatial, Movable, Crate>(), ecs.m_index };
-	ecs.SetComponent(entity, Spatial(parent, position, ZeroQuat));
-	ecs.SetComponent(entity, Movable(HSpatial(entity)));
-	ecs.SetComponent(entity, Crate(HSpatial(entity), HMovable(entity), extents));
+	Entity entity = { ecs.create<Spatial, Movable, Crate>(), ecs.m_index };
+	ecs.set(entity, Spatial(parent, position, ZeroQuat));
+	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }
 
@@ -283,10 +283,6 @@ public:
 		World& world = default_world.m_world;
 		game.m_world = &world;
 
-		world.m_ecs.AddBuffers<Spatial, Bullet>("Bullet");
-		world.m_ecs.AddBuffers<Spatial, Movable, Human>("Human");
-		world.m_ecs.AddBuffers<Spatial, Movable, Crate>("Crate");
-
 		static Player player = { *game.m_world };
 		game.m_player = Ref(&player);
 	}
@@ -301,7 +297,7 @@ public:
 			UNUSED(dockbar);
 			static GameScene& scene = app.add_scene();
 			Viewer& viewer = ui::viewer(parent, scene.m_scene);
-			//viewer.m_filters.m_glow.m_enabled = true;
+			viewer.comp<Glow>().m_enabled = true;
 
 			Player& player = val<Player>(game.m_player);
 			ex_minimal_game_hud(viewer, scene, *player.m_human);

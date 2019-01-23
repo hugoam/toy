@@ -7,6 +7,7 @@
 #include <boids/Forward.h>
 #include <toy/toy.h>
 
+//#undef BOIDS_SIMD
 #ifdef BOIDS_SIMD
 #include <immintrin.h>
 #endif
@@ -86,7 +87,8 @@ namespace boids
 	inline float dot(const vec3& a, const vec3& b) { return dot_simd(a.value, b.value); }
 	inline vec3 cross(const vec3& a, const vec3& b) { return vec3(cross_simd(a.value, b.value)); }
 #else
-	using vec3 = glm::vec4;
+	using vec3 = mud::vec4;
+	//using vec3 = mud::vec3;
 #endif
 
 	template <class T>
@@ -166,13 +168,13 @@ namespace boids
 
 namespace mud
 {
-	template <> struct TypedBuffer<boids::Position> { static size_t index() { return 12; } };
-	template <> struct TypedBuffer<boids::Heading> { static size_t index() { return 13; } };
-	template <> struct TypedBuffer<boids::Rotation> { static size_t index() { return 14; } };
-	template <> struct TypedBuffer<boids::MoveForward> { static size_t index() { return 15; } };
-	template <> struct TypedBuffer<boids::MoveSpeed> { static size_t index() { return 16; } };
-	template <> struct TypedBuffer<boids::Boid> { static size_t index() { return 17; } };
-	template <> struct TypedBuffer<boids::BoidObstacle> { static size_t index() { return 18; } };
-	template <> struct TypedBuffer<boids::BoidTarget> { static size_t index() { return 19; } };
-	template <> struct TypedBuffer<boids::Transform4> { static size_t index() { return 20; } };
+	template <> struct TypedBuffer<boids::Position> { static uint32_t index() { return 12; } };
+	template <> struct TypedBuffer<boids::Heading> { static uint32_t index() { return 13; } };
+	template <> struct TypedBuffer<boids::Rotation> { static uint32_t index() { return 14; } };
+	template <> struct TypedBuffer<boids::MoveForward> { static uint32_t index() { return 15; } };
+	template <> struct TypedBuffer<boids::MoveSpeed> { static uint32_t index() { return 16; } };
+	template <> struct TypedBuffer<boids::Boid> { static uint32_t index() { return 17; } };
+	template <> struct TypedBuffer<boids::BoidObstacle> { static uint32_t index() { return 18; } };
+	template <> struct TypedBuffer<boids::BoidTarget> { static uint32_t index() { return 19; } };
+	template <> struct TypedBuffer<boids::Transform4> { static uint32_t index() { return 20; } };
 }
