@@ -10,7 +10,7 @@
 #include <core/Movable/Movable.h>
 #include <core/Bullet/BulletWorld.h>
 
-#if _MSC_VER
+#ifdef _MSC_VER
 #	pragma warning (push)
 #	pragma warning (disable : 4127)
 #	pragma warning (disable : 4100)
@@ -25,7 +25,7 @@
 #include <LinearMath/btMotionState.h>
 #include <btBulletDynamicsCommon.h>
 
-#if _MSC_VER
+#ifdef _MSC_VER
 #	pragma warning (pop)
 #endif
 
