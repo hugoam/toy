@@ -13,13 +13,13 @@ function toy_binary_config()
     
     configuration { "not osx", "not asmjs" }
         defines {
-            "TOY_RESOURCE_PATH=\"" .. path.join(TOY_DIR, "data") .. "/\"",
+            "TOY_RESOURCE_PATH=\"" .. path.join(TOY_DIR, "data") .. "\"",
         }
 
     configuration { "osx", "not asmjs" }
         defines {
             -- might need to update GENie to remove that special case
-            "TOY_RESOURCE_PATH=\\\"" .. path.join(TOY_DIR, "data") .. "/\\\"",
+            "TOY_RESOURCE_PATH=\\\"" .. path.join(TOY_DIR, "data") .. "\\\"",
         }
 
 	configuration {}
