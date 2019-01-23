@@ -58,10 +58,10 @@ using namespace mud; namespace toy
 
 		vec3 lens_direction(const Spatial& spatial);
 
-	private:
-		bool m_planar;
-		float m_vertical_angle;
-		float m_plane_distance;
+	//private:
+		//bool m_planar;
+		//float m_vertical_angle;
+		//float m_plane_distance;
 
 #ifdef TOY_THREADED
 		TransfomReceiver m_receiver;

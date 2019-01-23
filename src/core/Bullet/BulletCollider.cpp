@@ -167,7 +167,8 @@ using namespace mud; namespace toy
 	void BulletCollider::raycast(const vec3& target, vector<Collision>& collisions, short int mask)
 	{
 		Spatial& spatial = m_spatial;
-		m_bullet_world.raycast(m_collider, spatial.m_position, target, mask);
+		Collision coll = m_bullet_world.raycast(m_collider, spatial.m_position, target, mask);
+		collisions.push_back(coll);
 	}
 
 	Collision BulletCollider::raycast(const vec3& target, short int mask)

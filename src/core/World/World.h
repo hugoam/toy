@@ -12,6 +12,7 @@
 #include <core/Forward.h>
 #include <core/World/Origin.h>
 #include <core/World/Section.h>
+#include <core/World/WorldClock.h>
 
 using namespace mud; namespace toy
 {
@@ -24,10 +25,14 @@ using namespace mud; namespace toy
 		attr_ Id m_id;
 		attr_ Complex& m_complex;
 		attr_ string m_name;
+
+		ECS m_ecs;
+		JobSystem& m_job_system;
+		JobPump m_pump;
+		WorldClock m_clock;
+
 		attr_ graph_ HSpatial origin() { return m_origin->m_spatial; }
 		attr_ graph_ HSpatial unworld() { return m_unworld->m_spatial; }
-
-		WorldClock& clock() { return *m_clock; }
 
 		void next_frame();
 
@@ -74,14 +79,8 @@ using namespace mud; namespace toy
 		}
 
     private:
-		object<WorldClock> m_clock;
 		EntityHandle<Origin> m_origin;
 		EntityHandle<Origin> m_unworld;
-
-	public:
-		JobSystem& m_job_system;
-		ECS m_ecs;
-		JobPump m_pump;
     };
 
 	template <class T, class... Types>

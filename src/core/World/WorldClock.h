@@ -13,23 +13,19 @@ using namespace mud; namespace toy
     class refl_ TOY_CORE_EXPORT WorldClock
     {
     public:
-        WorldClock(World& world);
-        ~WorldClock();
+        WorldClock();
 
-		double stepClock();
+		double step();
+        double step(double step);
 
-		void setSpeed(float speed);
-        double stepClock(double realStep);
-		double readClock();
-
-		double readSymbolic();
+		double read();
+		double symbolic();
 
     private:
-		World& m_world;
 		Clock m_clock;
 
-		float m_speed;
-		double m_time;
-		double m_symbolicTime;
+		float m_speed = 1.f;
+		double m_time = 0.f;
+		double m_symbolic_time = 0.f;
     };
 }

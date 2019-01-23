@@ -16,7 +16,6 @@
 #include <ecs/Proto.h>
 #include <math/Vec.h>
 #include <core/Spatial/Spatial.h>
-#include <core/World/WorldClock.h>
 #include <core/World/Section.h>
 
 using namespace mud; namespace toy
@@ -25,9 +24,8 @@ using namespace mud; namespace toy
         : m_id(complex.m_id)
 		, m_complex(complex)
 		, m_name(name)
-		, m_pools(c_max_types)
-		, m_clock(make_object<WorldClock>(*this))
 		, m_job_system(job_system)
+		, m_pools(c_max_types)
     {
 		UNUSED(id);
 		s_ecs[0] = &m_ecs;

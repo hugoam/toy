@@ -11,44 +11,30 @@
 
 using namespace mud; namespace toy
 {
-    WorldClock::WorldClock(World& world)
-		: m_world(world)
-		, m_clock()
-		, m_speed(1.f)
-		, m_time(0.f)
-		, m_symbolicTime(0.f)
+    WorldClock::WorldClock()
 	{}
 
-	WorldClock::~WorldClock()
-	{}
-
-	void WorldClock::setSpeed(float speed)
-	{
-		m_speed = speed;
-	}
-
-	double WorldClock::stepClock()
+	double WorldClock::step()
 	{
         double timeStep = m_clock.read();
         m_clock.update();
-
-		return this->stepClock(timeStep);
+		return this->step(timeStep);
 	}
 
-    double WorldClock::stepClock(double realStep)
+    double WorldClock::step(double step)
 	{
-		m_symbolicTime += realStep * m_speed;
-		m_time += realStep;
-		return realStep * m_speed;
+		m_symbolic_time += step * m_speed;
+		m_time += step;
+		return step * m_speed;
 	}
 
-	double WorldClock::readClock()
+	double WorldClock::read()
 	{
 		return m_time;
 	}
 
-	double WorldClock::readSymbolic()
+	double WorldClock::symbolic()
 	{
-		return m_symbolicTime;
+		return m_symbolic_time;
 	}
 }

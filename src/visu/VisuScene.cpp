@@ -49,7 +49,7 @@
 #include <core/Bullet/BulletWorld.h>
 #include <core/Physic/Solid.h>
 
-#if _MSC_VER
+#ifdef _MSC_VER
 #	pragma warning (push)
 #	pragma warning (disable : 4127)
 #	pragma warning (disable : 4100)
@@ -63,7 +63,7 @@
 #include <LinearMath/btIDebugDraw.h>
 #include <btBulletCollisionCommon.h>
 
-#if _MSC_VER
+#ifdef _MSC_VER
 #	pragma warning (pop)
 #endif
 

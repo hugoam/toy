@@ -207,7 +207,7 @@ using namespace mud; namespace toy
 
 		SparsePool<Collider>& pool = m_bullet_world.m_world.pool<Collider>();
 
-		for(size_t i = 0; i < callback.m_collisionObjects.size(); ++i)
+		for(int i = 0; i < callback.m_collisionObjects.size(); ++i)
 		{
 			HCollider collision = { pool, uint32_t((uintptr_t)callback.m_collisionObjects[i]->getUserPointer()) };
 			collisions.push_back({ collider, collision, to_vec3(callback.m_hitPointWorld[i]) });
