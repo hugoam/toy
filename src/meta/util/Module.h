@@ -11,7 +11,7 @@
 #define TOY_UTIL_REFL_EXPORT MUD_IMPORT
 #endif
 
-namespace toy
+using namespace mud; namespace toy
 {
 	export_ class TOY_UTIL_REFL_EXPORT toy_util : public Module
 	{
