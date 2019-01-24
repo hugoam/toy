@@ -144,12 +144,12 @@ namespace mud
 	template <>
 	struct DestroyHandle<toy::Collider>
 	{
-		static void destroy(const OwnedHandle<toy::Collider>& handle) { toy::Collider::destroy(handle); }
+		static void destroy(const SparseHandle<toy::Collider>& handle) { toy::Collider::destroy(handle); }
 	};
 
 	template <>
 	struct DestroyHandle<toy::Solid>
 	{
-		static void destroy(const OwnedHandle<toy::Solid>& handle) { toy::Solid::destroy(handle); }
+		static void destroy(const SparseHandle<toy::Solid>& handle) { toy::Solid::destroy(handle); }
 	};
 }

@@ -213,11 +213,11 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 
 	m_visor = this->aim();
 
-	for(auto& bullet : reverse_adapt(m_bullets))
+	for(llong i = m_bullets.size() - 1; i >= 0; --i)
 	{
-		bullet->update();
-		//if(bullet->m_destroy)
-		//	vector_remove_pt(m_bullets, *bullet);
+		m_bullets[i]->update();
+		if(m_bullets[i]->m_destroy)
+			m_bullets.erase(m_bullets.begin() + i);
 	}
 
 	m_energy = min(1.f, m_energy + delta * 0.01f);
@@ -591,9 +591,11 @@ void paint_viewer(Viewer& viewer)
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
 
-	viewer.comp<Glow>().m_enabled = true;
+	viewer.m_viewport.comp<Tonemap>().m_enabled = true;
+
+	viewer.m_viewport.comp<Glow>().m_enabled = true;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	viewer.comp<Glow>().m_bicubic_filter = true;
+	viewer.m_viewport.comp<Glow>().m_bicubic_filter = true;
 #endif
 }
 

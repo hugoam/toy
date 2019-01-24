@@ -558,11 +558,12 @@ void paint_viewer(Viewer& viewer)
 	}
 #endif
 
-	//viewer.comp<Tonemap>().m_mode = TonemapMode::ACES;
+	viewer.m_viewport.comp<Tonemap>().m_enabled = true;
+	viewer.m_viewport.comp<Tonemap>().m_mode = TonemapMode::ACES;
 
-	//viewer.comp<Glow>().m_enabled = true;
+	viewer.m_viewport.comp<Glow>().m_enabled = true;
 #ifndef MUD_GODOT_EMSCRIPTEN
-	//viewer.comp<Glow>().m_bicubic_filter = true;
+	viewer.m_viewport.comp<Glow>().m_bicubic_filter = true;
 #endif
 }
 

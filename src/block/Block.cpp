@@ -165,7 +165,7 @@ using namespace mud; namespace toy
 
 	uvec3 Block::local_chunk_coord(size_t index)
 	{
-		return uvec3(m_chunks.x(index), m_chunks.y(index), m_chunks.z(index));
+		return uvec3(uint(m_chunks.x(index)), uint(m_chunks.y(index)), uint(m_chunks.z(index)));
 	}
 
 	uvec3 Block::chunk_coord(size_t index)

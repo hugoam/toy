@@ -69,7 +69,7 @@ using namespace mud; namespace toy
 
 		array<Vertex> vertices = geometry.vertices();
 		array<uint32_t> indices = geometry.indices();
-		MeshAdapter data(Vertex::vertex_format, vertices.data(), vertices.size(), indices.data(), indices.size(), true);
+		MeshAdapter data(Vertex::vertex_format, vertices.data(), uint32_t(vertices.size()), indices.data(), uint32_t(indices.size()), true);
 
 		for(Item* item : items)
 			for(const ModelItem& model_item : item->m_model->m_items)
