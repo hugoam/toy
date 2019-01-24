@@ -5,8 +5,6 @@
 
 #pragma once
 
-#ifdef TOY_PRIVATE
-
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Movable/MotionState.h>
@@ -29,5 +27,3 @@ using namespace mud; namespace toy
 		virtual void setWorldTransform(const btTransform& worldTransform);
     };
 }
-
-#endif

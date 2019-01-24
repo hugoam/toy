@@ -1,6 +1,5 @@
 #include <geom/Geom.h>
 #include <core/Anim/Anim.h>
-#include <core/Bullet.h>
 #include <core/Core.h>
 #include <core/Forward.h>
 #include <core/Handles.h>
@@ -9,7 +8,6 @@
 #include <core/Types.h>
 #include <core/User.h>
 #include <core/Bullet/BulletCollider.h>
-#include <core/Bullet/BulletMotionState.h>
 #include <core/Bullet/BulletSolid.h>
 #include <core/Bullet/BulletWorld.h>
 #include <core/Camera/Camera.h>

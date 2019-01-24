@@ -18,9 +18,8 @@
 #	pragma warning (disable : 5033) // @todo deal with this ?
 #endif
 
-#define TOY_PRIVATE
-#include <core/Bullet.h>
-#include <core/Bullet/BulletMotionState.h>
+#include <core/Bullet/Bullet.h.inl>
+#include <core/Bullet/BulletMotionState.h.inl>
 
 #include <LinearMath/btMotionState.h>
 #include <btBulletDynamicsCommon.h>

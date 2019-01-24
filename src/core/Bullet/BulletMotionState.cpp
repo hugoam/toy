@@ -3,12 +3,11 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#define TOY_PRIVATE
-#include <core/Bullet/BulletMotionState.h>
+#include <core/Bullet/BulletMotionState.h.inl>
 
 #include <core/Spatial/Spatial.h>
 #include <core/Physic/Collider.h>
-#include <core/Bullet.h>
+#include <core/Bullet/Bullet.h.inl>
 
 using namespace mud; namespace toy
 {

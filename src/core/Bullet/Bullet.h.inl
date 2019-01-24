@@ -9,9 +9,6 @@
 #include <math/Vec.h>
 #include <math/Colour.h>
 
-#ifdef TOY_PRIVATE
-
-/* bullet */
 #include <LinearMath/btScalar.h>
 #include <LinearMath/btVector3.h>
 #include <LinearMath/btQuaternion.h>
@@ -28,5 +25,3 @@ using namespace mud; namespace toy
 
 	inline Colour to_colour(const btVector3& col) { return { col.x(), col.y(), col.z() }; }
 }
-
-#endif

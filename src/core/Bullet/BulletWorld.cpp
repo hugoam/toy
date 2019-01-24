@@ -25,8 +25,7 @@
 #	pragma warning (disable : 5033) // @todo deal with this ?
 #endif
 
-#define TOY_PRIVATE
-#include <core/Bullet.h>
+#include <core/Bullet/Bullet.h.inl>
 
 #include <BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
 #include <BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>

@@ -8,8 +8,7 @@
 #include <math/VecOps.h>
 #include <math/Timer.h>
 
-#define TOY_PRIVATE
-#include <core/Bullet.h>
+#include <core/Bullet/Bullet.h.inl>
 
 #include <core/World/World.h>
 #include <core/Spatial/Spatial.h>
