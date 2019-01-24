@@ -803,7 +803,7 @@ Waypoint.prototype["__destroy__"] = Waypoint.prototype.__destroy__ = function() 
 // World
 function World(id, complex, name, job_system) {
     ensureCache.prepare();
-    /* id <mud::Id> [] */
+    /* id <uint32_t> [] */
     /* complex <Complex> [] */
     complex = complex.ptr;
     /* name <string> [] */
@@ -826,7 +826,7 @@ Object.defineProperty(World.prototype, "id", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::Id> [] */
+        /* value <uint32_t> [] */
         _toy_World__set_id(self, value);
     }
 });

@@ -519,13 +519,13 @@ extern "C" {
 	mud::Type* DECL toy_World__type() {
 		return &mud::type<toy::World>();
 	}
-	toy::World* DECL toy_World_World_4(mud::Id id, mud::Complex* complex, const char* name, mud::JobSystem* job_system) {
+	toy::World* DECL toy_World_World_4(uint32_t id, mud::Complex* complex, const char* name, mud::JobSystem* job_system) {
 		return new toy::World(id, *complex, name, *job_system);
 	}
-	mud::Id DECL toy_World__get_id(toy::World* self) {
+	uint32_t DECL toy_World__get_id(toy::World* self) {
 		return self->m_id;
 	}
-	void DECL toy_World__set_id(toy::World* self, mud::Id value) {
+	void DECL toy_World__set_id(toy::World* self, uint32_t value) {
 		self->m_id = value;
 	}
 	const char* DECL toy_World__get_name(toy::World* self) {

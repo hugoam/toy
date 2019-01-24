@@ -194,7 +194,7 @@ Object.defineProperty(Element.prototype, "id", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::Id> [] */
+        /* value <uint32_t> [] */
         _toy_Element__set_id(self, value);
     }
 });

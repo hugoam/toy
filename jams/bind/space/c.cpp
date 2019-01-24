@@ -78,13 +78,13 @@ extern "C" {
 	mud::Type* DECL Commander__type() {
 		return &mud::type<Commander>();
 	}
-	Commander* DECL Commander_Commander_6(mud::Id id, const char* name, Race race, int command, int commerce, int diplomacy) {
+	Commander* DECL Commander_Commander_6(uint32_t id, const char* name, Race race, int command, int commerce, int diplomacy) {
 		return new Commander(id, name, race, command, commerce, diplomacy);
 	}
-	mud::Id DECL Commander__get_id(Commander* self) {
+	uint32_t DECL Commander__get_id(Commander* self) {
 		return self->m_id;
 	}
-	void DECL Commander__set_id(Commander* self, mud::Id value) {
+	void DECL Commander__set_id(Commander* self, uint32_t value) {
 		self->m_id = value;
 	}
 	const char* DECL Commander__get_name(Commander* self) {

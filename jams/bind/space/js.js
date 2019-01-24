@@ -48,7 +48,7 @@ CombatStar.prototype["__destroy__"] = CombatStar.prototype.__destroy__ = functio
 // Commander
 function Commander(id, name, race, command, commerce, diplomacy) {
     ensureCache.prepare();
-    /* id <mud::Id> [] */
+    /* id <uint32_t> [] */
     /* name <string> [] */
     if (name && typeof name === "object") name = name.ptr;
     else name = ensureString(name);
@@ -72,7 +72,7 @@ Object.defineProperty(Commander.prototype, "id", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::Id> [] */
+        /* value <uint32_t> [] */
         _Commander__set_id(self, value);
     }
 });

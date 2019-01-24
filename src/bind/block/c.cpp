@@ -116,10 +116,10 @@ extern "C" {
 	toy::Element* DECL toy_Element_Element_3(const char* name, toy::MatterState state, mud::Colour* colour) {
 		return new toy::Element(name, state, *colour);
 	}
-	mud::Id DECL toy_Element__get_id(toy::Element* self) {
+	uint32_t DECL toy_Element__get_id(toy::Element* self) {
 		return self->m_id;
 	}
-	void DECL toy_Element__set_id(toy::Element* self, mud::Id value) {
+	void DECL toy_Element__set_id(toy::Element* self, uint32_t value) {
 		self->m_id = value;
 	}
 	const char* DECL toy_Element__get_name(toy::Element* self) {
