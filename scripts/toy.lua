@@ -78,6 +78,15 @@ toy.core.aliases = { ['toy::string'] = 'std::string' }
 
 toy.toy = { toy.util, toy.core, toy.visu, toy.edit, toy.block, toy.shell }
 
+if _OPTIONS["unity"] then
+    for _, m in pairs(toy.toy) do
+        m.unity = true
+        if m.refl then
+            m.refl.unity = true
+        end
+    end
+end
+
 group "lib"
 if _OPTIONS["as-libs"] then
     group "lib/toy"
