@@ -1,4 +1,3 @@
-Module['glm'] = Module['glm'] || {};
 Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['mud'] = Module['mud'] || {};
 Module['mud']['gfx'] = Module['mud']['gfx'] || {};
@@ -1031,17 +1030,6 @@ DefaultWorld.prototype["__destroy__"] = DefaultWorld.prototype.__destroy__ = fun
     var self = this.ptr;
     _toy_DefaultWorld__destroy(self);
 };
-// PhysicScope
-function PhysicScope() { throw "cannot construct a PhysicScope, no constructor in IDL" }
-PhysicScope.prototype = Object.create(WrapperObject.prototype);
-PhysicScope.prototype.constructor = PhysicScope;
-PhysicScope.prototype.__class__ = PhysicScope;
-PhysicScope.__cache__ = {};
-Module['PhysicScope'] = PhysicScope;
-PhysicScope.prototype["__destroy__"] = PhysicScope.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _toy_PhysicScope__destroy(self);
-};
 // EmitterScope
 function EmitterScope() { throw "cannot construct a EmitterScope, no constructor in IDL" }
 EmitterScope.prototype = Object.create(WrapperObject.prototype);
@@ -1105,6 +1093,17 @@ Object.defineProperty(Obstacle.prototype, "throughput", {
 Obstacle.prototype["__destroy__"] = Obstacle.prototype.__destroy__ = function() {
     var self = this.ptr;
     _toy_Obstacle__destroy(self);
+};
+// PhysicScope
+function PhysicScope() { throw "cannot construct a PhysicScope, no constructor in IDL" }
+PhysicScope.prototype = Object.create(WrapperObject.prototype);
+PhysicScope.prototype.constructor = PhysicScope;
+PhysicScope.prototype.__class__ = PhysicScope;
+PhysicScope.__cache__ = {};
+Module['PhysicScope'] = PhysicScope;
+PhysicScope.prototype["__destroy__"] = PhysicScope.prototype.__destroy__ = function() {
+    var self = this.ptr;
+    _toy_PhysicScope__destroy(self);
 };
 // ReceptorScope
 function ReceptorScope() { throw "cannot construct a ReceptorScope, no constructor in IDL" }
@@ -1291,10 +1290,10 @@ Module['steer_2d'] = function(spatial, movable, target, velocity, time_step, mar
         BulletSolid.__type__ = _toy_BulletSolid__type();
         BulletWorld.__type__ = _toy_BulletWorld__type();
         DefaultWorld.__type__ = _toy_DefaultWorld__type();
-        PhysicScope.__type__ = _toy_PhysicScope__type();
         EmitterScope.__type__ = _toy_EmitterScope__type();
         NavmeshShape.__type__ = _toy_NavmeshShape__type();
         Obstacle.__type__ = _toy_Obstacle__type();
+        PhysicScope.__type__ = _toy_PhysicScope__type();
         ReceptorScope.__type__ = _toy_ReceptorScope__type();
         SolidMedium.__type__ = _toy_SolidMedium__type();
         SoundMedium.__type__ = _toy_SoundMedium__type();

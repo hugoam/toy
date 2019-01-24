@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include <infra/Config.h>
@@ -44,127 +42,54 @@
 
 #include <cstdint>
 
-    enum class GameStage : uint32_t;
-    enum class Race : unsigned int;
-    enum class Regime : unsigned int;
-    enum class Politic : unsigned int;
-    enum class Taxation : unsigned int;
-    enum class Resource : unsigned int;
-    enum class FleetSize : unsigned int;
-    enum class Experience : unsigned int;
-    enum class FleetStance : unsigned int;
-    enum class WeaponType : unsigned int;
-    enum class Technology : unsigned int;
-    enum class CombatType : unsigned int;
-    enum class TurnStage : unsigned int;
+enum class GameStage : uint32_t;
+enum class Race : unsigned int;
+enum class Regime : unsigned int;
+enum class Politic : unsigned int;
+enum class Taxation : unsigned int;
+enum class Resource : unsigned int;
+enum class FleetSize : unsigned int;
+enum class Experience : unsigned int;
+enum class FleetStance : unsigned int;
+enum class WeaponType : unsigned int;
+enum class Technology : unsigned int;
+enum class CombatType : unsigned int;
+enum class TurnStage : unsigned int;
     
     
-    struct RacialFactors;
-    struct VisuPlanet;
-    struct VisuStar;
-    struct WeaponRay;
-    struct VisuShip;
-    struct VisuFleet;
-    struct TurnEvents;
-    struct Turn;
-    class Player;
-    struct SpatialPower;
-    struct Construction;
-    class Star;
-    struct Jump;
-    struct Split;
-    class Fleet;
-    struct Schema;
-    struct ShipHull;
-    struct ShipEngine;
-    struct ShipComponent;
-    struct ShipSchema;
-    struct BuildingSchema;
-    class ShipDatabase;
-    class BuildingDatabase;
-    struct Scans;
-    struct TechDomain;
-    class Commander;
-    class Quadrant;
-    struct GalaxyGrid;
-    struct Combat;
-    struct CombatFleet;
-    struct CombatStar;
-    struct PlanetaryCombat;
-    struct SpatialCombat;
-    class Galaxy;
-    class Universe;
-    class CommanderBrush;
-
-namespace std {
-
-    
-    
-}
-
-namespace mud {
-namespace ui {
-
-    
-    
-}
-}
-
-namespace glm {
-
-    
-    
-}
-
-namespace mud {
-namespace gfx {
-
-    
-    
-}
-}
-
-namespace json11 {
-
-    
-    
-}
-
-namespace mud {
-
-    
-    
-}
-
-namespace mud {
-namespace detail {
-
-    
-    
-}
-}
-
-namespace bgfx {
-
-    
-    
-}
-
-namespace bimg {
-
-    
-    
-}
-
-namespace toy {
-
-    
-    
-}
-
-namespace bx {
-
-    
-    
-}
-
+struct RacialFactors;
+struct VisuPlanet;
+struct VisuStar;
+struct WeaponRay;
+struct VisuShip;
+struct VisuFleet;
+struct TurnEvents;
+struct Turn;
+class Player;
+struct SpatialPower;
+struct Construction;
+class Star;
+struct Jump;
+struct Split;
+class Fleet;
+struct Schema;
+struct ShipHull;
+struct ShipEngine;
+struct ShipComponent;
+struct ShipSchema;
+struct BuildingSchema;
+class ShipDatabase;
+class BuildingDatabase;
+struct Scans;
+struct TechDomain;
+class Commander;
+class Quadrant;
+struct GalaxyGrid;
+struct Combat;
+struct CombatFleet;
+struct CombatStar;
+struct PlanetaryCombat;
+struct SpatialCombat;
+class Galaxy;
+class Universe;
+class CommanderBrush;

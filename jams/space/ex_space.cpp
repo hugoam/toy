@@ -841,7 +841,7 @@ void Fleet::destroy()
 		vector_remove(m_commander->m_fleets, HFleet(m_spatial));
 }
 
-Commander::Commander(Id id, const string& name, Race race, int command, int commerce, int diplomacy)
+Commander::Commander(uint32_t id, const string& name, Race race, int command, int commerce, int diplomacy)
 	: m_id(index(type<Commander>(), id, Ref(this)))
 	, m_name(name)
 	, m_race(race)

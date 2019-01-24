@@ -640,13 +640,6 @@ extern "C" {
 	void DECL toy_DefaultWorld__destroy(toy::DefaultWorld* self) {
 		delete self;
 	}
-	// PhysicScope
-	mud::Type* DECL toy_PhysicScope__type() {
-		return &mud::type<toy::PhysicScope>();
-	}
-	void DECL toy_PhysicScope__destroy(toy::PhysicScope* self) {
-		delete self;
-	}
 	// EmitterScope
 	mud::Type* DECL toy_EmitterScope__type() {
 		return &mud::type<toy::EmitterScope>();
@@ -681,6 +674,13 @@ extern "C" {
 		self->m_throughput = value;
 	}
 	void DECL toy_Obstacle__destroy(toy::Obstacle* self) {
+		delete self;
+	}
+	// PhysicScope
+	mud::Type* DECL toy_PhysicScope__type() {
+		return &mud::type<toy::PhysicScope>();
+	}
+	void DECL toy_PhysicScope__destroy(toy::PhysicScope* self) {
 		delete self;
 	}
 	// ReceptorScope

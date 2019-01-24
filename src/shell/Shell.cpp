@@ -439,7 +439,7 @@ using namespace mud; namespace toy
 		pack_json_file(Ref(m_game.m_world), "");
 	}
 
-	World& GameShell::load_world(Id id)
+	World& GameShell::load_world(uint32_t id)
 	{
 		UNUSED(id);
 		Ref world;
@@ -457,7 +457,7 @@ using namespace mud; namespace toy
 
 	void GameShell::reload()
 	{
-		Id id = m_game.m_world->m_id;
+		uint32_t id = m_game.m_world->m_id;
 		this->save();
 		this->destroy_world();
 

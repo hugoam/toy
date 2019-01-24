@@ -76,10 +76,10 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Waypoint>>();
     export_ template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::WorldPage>>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>();
-    export_ template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::EmitterScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>();
+    export_ template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::ReceptorScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::SolidMedium>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::SoundMedium>();
@@ -133,10 +133,10 @@ namespace mud
     export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Waypoint>*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::WorldPage>*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<toy::DefaultWorld*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::PhysicScope*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<toy::EmitterScope*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<toy::NavmeshShape*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Obstacle*>>;
+    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::PhysicScope*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<toy::ReceptorScope*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<toy::SolidMedium*>>;
     export_ template struct TOY_CORE_EXPORT Typed<vector<toy::SoundMedium*>>;

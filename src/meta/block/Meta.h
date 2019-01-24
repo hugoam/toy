@@ -134,7 +134,7 @@ namespace mud
             },
             // members
             {
-                { type<toy::Element>(), member_address(&toy::Element::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
+                { type<toy::Element>(), member_address(&toy::Element::m_id), type<uint32_t>(), "id", var(uint32_t()), Member::Value, nullptr },
                 { type<toy::Element>(), member_address(&toy::Element::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<toy::Element>(), member_address(&toy::Element::m_state), type<toy::MatterState>(), "state", var(toy::MatterState()), Member::Value, nullptr },
                 { type<toy::Element>(), member_address(&toy::Element::m_colour), type<mud::Colour>(), "colour", var(mud::Colour()), Member::Value, nullptr }

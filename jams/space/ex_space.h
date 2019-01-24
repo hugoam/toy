@@ -838,12 +838,12 @@ struct refl_ _SPACE_EXPORT TechDomain
 class refl_ _SPACE_EXPORT Commander
 {
 public:
-	constr_ Commander(Id id, const string& name, Race race, int command, int commerce, int diplomacy);
+	constr_ Commander(uint32_t id, const string& name, Race race, int command, int commerce, int diplomacy);
 	~Commander();
 
 	//attr_ Entity m_spatial;
 
-	attr_ Id m_id;
+	attr_ uint32_t m_id;
 	attr_ string m_name;
 	attr_ Race m_race;
 	attr_ int m_command;

@@ -145,7 +145,7 @@ using namespace mud; namespace toy
 		meth_ void remove_scene(GameScene& scene);
 		meth_ void clear_scenes();
 
-		World& load_world(Id id);
+		World& load_world(uint32_t id);
 		void destroy_world();
 
 		void time_entries(Widget& parent);

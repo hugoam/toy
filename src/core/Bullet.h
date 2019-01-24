@@ -23,14 +23,10 @@ using namespace mud; namespace toy
 	inline vec3 to_vec3(const btVector3& vec) { return { vec.x(), vec.y(), vec.z() }; }
 	inline btVector3 to_btvec3(const vec3& vec) { return { vec.x, vec.y, vec.z }; }
 	
-	inline Colour to_colour(const btVector3& col) { return { col.x(), col.y(), col.z() }; }
-
-#ifdef MUD_NO_GLM
 	inline quat to_quat(const btQuaternion& q) { return { q.x(), q.y(), q.z(), q.w() }; }
-#else
-	inline quat to_quat(const btQuaternion& q) { return { q.w(), q.x(), q.y(), q.z() }; }
-#endif
 	inline btQuaternion to_btquat(const quat& q) { return { q.x, q.y, q.z, q.w }; }
+
+	inline Colour to_colour(const btVector3& col) { return { col.x(), col.y(), col.z() }; }
 }
 
 #endif

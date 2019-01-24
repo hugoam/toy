@@ -243,14 +243,14 @@ namespace mud
             {  },
             // constructors
             {
-                { type<Commander>(), [](Ref ref, array<Var> args) { new(&val<Commander>(ref)) Commander( val<mud::Id>(args[0]), val<string>(args[1]), val<Race>(args[2]), val<int>(args[3]), val<int>(args[4]), val<int>(args[5]) ); }, { { "id", var(mud::Id()) }, { "name", var(string()) }, { "race", var(Race()) }, { "command", var(int()) }, { "commerce", var(int()) }, { "diplomacy", var(int()) } } }
+                { type<Commander>(), [](Ref ref, array<Var> args) { new(&val<Commander>(ref)) Commander( val<uint32_t>(args[0]), val<string>(args[1]), val<Race>(args[2]), val<int>(args[3]), val<int>(args[4]), val<int>(args[5]) ); }, { { "id", var(uint32_t()) }, { "name", var(string()) }, { "race", var(Race()) }, { "command", var(int()) }, { "commerce", var(int()) }, { "diplomacy", var(int()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<Commander>(), member_address(&Commander::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
+                { type<Commander>(), member_address(&Commander::m_id), type<uint32_t>(), "id", var(uint32_t()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_race), type<Race>(), "race", var(Race()), Member::Value, nullptr },
                 { type<Commander>(), member_address(&Commander::m_command), type<int>(), "command", var(int()), Member::Value, nullptr },

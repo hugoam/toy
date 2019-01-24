@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include <infra/Config.h>
@@ -15,74 +13,8 @@
 #define TOY_EDIT_EXPORT MUD_IMPORT
 #endif
 
-
-    
-    
-
-namespace std {
-
-    
-    
-}
-
-namespace mud {
-namespace ui {
-
-    
-    
-}
-}
-
-namespace glm {
-
-    
-    
-}
-
-namespace bx {
-
-    
-    
-}
-
-namespace json11 {
-
-    
-    
-}
-
-namespace mud {
-
-    
-    
-}
-
-namespace mud {
-namespace detail {
-
-    
-    
-}
-}
-
-namespace mud {
-namespace gfx {
-
-    
-    
-}
-}
-
-namespace bimg {
-
-    
-    
-}
-
-namespace toy {
-
-    
-    
+namespace toy
+{
     class CameraController;
     class FPSCameraController;
     class RTSCameraController;
@@ -99,10 +31,3 @@ namespace toy {
     struct GraphicsDebug;
     class Editor;
 }
-
-namespace bgfx {
-
-    
-    
-}
-

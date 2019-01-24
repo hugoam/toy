@@ -20,7 +20,7 @@
 
 using namespace mud; namespace toy
 {
-	World::World(Id id, Complex& complex, const string& name, JobSystem& job_system)
+	World::World(uint32_t id, Complex& complex, const string& name, JobSystem& job_system)
         : m_id(complex.m_id)
 		, m_complex(complex)
 		, m_name(name)

@@ -59,10 +59,10 @@ namespace mud
     template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Waypoint>>() { static Type ty("ComponentHandle<toy::Waypoint>", type<mud::Entity>(), sizeof(mud::ComponentHandle<toy::Waypoint>)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::WorldPage>>() { static Type ty("ComponentHandle<toy::WorldPage>", type<mud::Entity>(), sizeof(mud::ComponentHandle<toy::WorldPage>)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>() { static Type ty("DefaultWorld", type<mud::Complex>(), sizeof(toy::DefaultWorld)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>() { static Type ty("PhysicScope", type<toy::ColliderObject>(), sizeof(toy::PhysicScope)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::EmitterScope>() { static Type ty("EmitterScope", type<toy::PhysicScope>(), sizeof(toy::EmitterScope)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>() { static Type ty("NavmeshShape", type<mud::Shape>(), sizeof(toy::NavmeshShape)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>() { static Type ty("Obstacle", type<toy::Collider>(), sizeof(toy::Obstacle)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>() { static Type ty("PhysicScope", type<toy::ColliderObject>(), sizeof(toy::PhysicScope)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::ReceptorScope>() { static Type ty("ReceptorScope", type<toy::PhysicScope>(), sizeof(toy::ReceptorScope)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::SolidMedium>() { static Type ty("SolidMedium", type<toy::Medium>(), sizeof(toy::SolidMedium)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::SoundMedium>() { static Type ty("SoundMedium", type<toy::Medium>(), sizeof(toy::SoundMedium)); return ty; }

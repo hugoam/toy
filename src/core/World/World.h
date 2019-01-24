@@ -19,10 +19,10 @@ using namespace mud; namespace toy
 	class refl_ TOY_CORE_EXPORT World
     {
     public:
-		constr_ World(Id id, Complex& complex, const string& name, JobSystem& job_system);
+		constr_ World(uint32_t id, Complex& complex, const string& name, JobSystem& job_system);
         ~World();
 
-		attr_ Id m_id;
+		attr_ uint32_t m_id;
 		attr_ Complex& m_complex;
 		attr_ string m_name;
 

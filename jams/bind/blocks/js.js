@@ -1,4 +1,3 @@
-Module['glm'] = Module['glm'] || {};
 Module['mud']['ui'] = Module['mud']['ui'] || {};
 Module['boids'] = Module['boids'] || {};
 Module['mud'] = Module['mud'] || {};

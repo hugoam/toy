@@ -31,7 +31,7 @@ using namespace mud; namespace toy
 	public:
 		constr_ Element(cstring name, MatterState state, Colour colour);
 
-		attr_ Id m_id;
+		attr_ uint32_t m_id;
 		attr_ string m_name;
 		attr_ MatterState m_state;
 		attr_ Colour m_colour;

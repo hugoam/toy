@@ -860,14 +860,14 @@ namespace mud
             {  },
             // constructors
             {
-                { type<toy::World>(), [](Ref ref, array<Var> args) { new(&val<toy::World>(ref)) toy::World( val<mud::Id>(args[0]), val<mud::Complex>(args[1]), val<string>(args[2]), val<mud::JobSystem>(args[3]) ); }, { { "id", var(mud::Id()) }, { "complex", Ref(type<mud::Complex>()) }, { "name", var(string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
+                { type<toy::World>(), [](Ref ref, array<Var> args) { new(&val<toy::World>(ref)) toy::World( val<uint32_t>(args[0]), val<mud::Complex>(args[1]), val<string>(args[2]), val<mud::JobSystem>(args[3]) ); }, { { "id", var(uint32_t()) }, { "complex", Ref(type<mud::Complex>()) }, { "name", var(string()) }, { "job_system", Ref(type<mud::JobSystem>()) } } }
             },
             // copy constructor
             {
             },
             // members
             {
-                { type<toy::World>(), member_address(&toy::World::m_id), type<mud::Id>(), "id", var(mud::Id()), Member::Value, nullptr },
+                { type<toy::World>(), member_address(&toy::World::m_id), type<uint32_t>(), "id", var(uint32_t()), Member::Value, nullptr },
                 { type<toy::World>(), Address(), type<mud::Complex>(), "complex", Ref(type<mud::Complex>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::World>(object).m_complex); } },
                 { type<toy::World>(), member_address(&toy::World::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
                 { type<toy::World>(), member_address<toy::HSpatial(toy::World::*)()>(&toy::World::origin), type<toy::HSpatial>(), "origin", var(toy::HSpatial()), Member::Flags(Member::Value|Member::NonMutable|Member::Structure), nullptr },
@@ -1320,31 +1320,6 @@ namespace mud
         init_pool<toy::DefaultWorld>();
         meta_class<toy::DefaultWorld>();
     }
-    // toy::PhysicScope
-    {
-        static Meta meta = { type<toy::PhysicScope>(), &namspc({ "toy" }), "PhysicScope", sizeof(toy::PhysicScope), TypeClass::Object };
-        static Class cls = { type<toy::PhysicScope>(),
-            // bases
-            { &type<toy::ColliderObject>() },
-            { base_offset<toy::PhysicScope, toy::ColliderObject>() },
-            // constructors
-            {
-            },
-            // copy constructor
-            {
-            },
-            // members
-            {
-            },
-            // methods
-            {
-            },
-            // static members
-            {
-            }
-        };
-        meta_class<toy::PhysicScope>();
-    }
     // toy::EmitterScope
     {
         static Meta meta = { type<toy::EmitterScope>(), &namspc({ "toy" }), "EmitterScope", sizeof(toy::EmitterScope), TypeClass::Object };
@@ -1425,6 +1400,31 @@ namespace mud
         };
         init_pool<toy::Obstacle>();
         meta_class<toy::Obstacle>();
+    }
+    // toy::PhysicScope
+    {
+        static Meta meta = { type<toy::PhysicScope>(), &namspc({ "toy" }), "PhysicScope", sizeof(toy::PhysicScope), TypeClass::Object };
+        static Class cls = { type<toy::PhysicScope>(),
+            // bases
+            { &type<toy::ColliderObject>() },
+            { base_offset<toy::PhysicScope, toy::ColliderObject>() },
+            // constructors
+            {
+            },
+            // copy constructor
+            {
+            },
+            // members
+            {
+            },
+            // methods
+            {
+            },
+            // static members
+            {
+            }
+        };
+        meta_class<toy::PhysicScope>();
     }
     // toy::ReceptorScope
     {
@@ -1645,10 +1645,10 @@ namespace mud
         m.m_types.push_back(&type<mud::ComponentHandle<toy::Waypoint>>());
         m.m_types.push_back(&type<mud::ComponentHandle<toy::WorldPage>>());
         m.m_types.push_back(&type<toy::DefaultWorld>());
+        m.m_types.push_back(&type<toy::Obstacle>());
         m.m_types.push_back(&type<toy::PhysicScope>());
         m.m_types.push_back(&type<toy::EmitterScope>());
         m.m_types.push_back(&type<toy::NavmeshShape>());
-        m.m_types.push_back(&type<toy::Obstacle>());
         m.m_types.push_back(&type<toy::ReceptorScope>());
         m.m_types.push_back(&type<toy::SolidMedium>());
         m.m_types.push_back(&type<toy::SoundMedium>());
