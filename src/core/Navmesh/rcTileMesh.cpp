@@ -25,19 +25,18 @@
 #include <stdio.h>
 #include <string.h>
 
-
 #include <geom/Primitive.h>
+
 #include <core/Navmesh/rcTileMesh.h>
 #include <core/Navmesh/NavGeom.h>
+#include <core/Navmesh/ChunkyTriMesh.h>
 
-#include "ChunkyTriMesh.h"
-
-#include "Recast.h"
-#include "DetourNavMesh.h"
-#include "DetourNavMeshBuilder.h"
-#include "DetourCommon.h"
-#include "DetourAlloc.h"
-#include "DetourAssert.h"
+#include <Recast.h>
+#include <DetourNavMesh.h>
+#include <DetourNavMeshBuilder.h>
+#include <DetourCommon.h>
+#include <DetourAlloc.h>
+#include <DetourAssert.h>
 
 #ifdef WIN32
 #	define snprintf _snprintf

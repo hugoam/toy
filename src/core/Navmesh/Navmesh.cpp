@@ -21,9 +21,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "Recast.h"
-#include "DetourNavMesh.h"
-#include "DetourNavMeshBuilder.h"
+#include <Recast.h>
+#include <DetourNavMesh.h>
+#include <DetourNavMeshBuilder.h>
 
 using namespace mud; namespace toy
 {

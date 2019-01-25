@@ -4,6 +4,7 @@
 //  This notice and the license may not be removed or altered from any source distribution.
 
 #include <core/Navmesh/NavGeom.h>
+#include <core/Navmesh/ChunkyTriMesh.h>
 
 #include <geom/Intersect.h>
 #include <geom/Mesh.h>
@@ -13,10 +14,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "Recast.h"
-#include "DetourNavMesh.h"
-#include "DetourNavMeshBuilder.h"
-#include "ChunkyTriMesh.h"
+#include <Recast.h>
+#include <DetourNavMesh.h>
+#include <DetourNavMeshBuilder.h>
 
 using namespace mud; namespace toy
 {
