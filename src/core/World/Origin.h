@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include <ecs/Proto.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Origin
 	{

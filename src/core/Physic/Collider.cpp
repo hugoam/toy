@@ -15,7 +15,7 @@
 #include <core/Physic/CollisionShape.h>
 #include <core/Physic/Solid.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	OCollider Collider::create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group)
 	{

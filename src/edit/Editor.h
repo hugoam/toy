@@ -2,10 +2,10 @@
 
 #include <edit/Forward.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 #if 0
-	class EditorApp : public NonCopy
+	class EditorApp
 	{
 	public:
 		EditorApp(const string& execPath, const string& resourcePath);

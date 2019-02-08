@@ -5,7 +5,7 @@
 
 #include <visu/Ogre/OgreViewport.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	OgreViewport::OgreViewport(Widget* parent, void* identity, Scene& scene)
 		: Viewer(parent, identity, scene)
@@ -21,7 +21,7 @@ using namespace mud; namespace toy
 
 	void OgreViewport::removeFocusObject(VisuEntity* object)
 	{
-		vector_remove(mFocusObjects, object);
+		remove(mFocusObjects, object);
 		object->removeFocusObserver(this);
 	}*/
 
@@ -61,10 +61,10 @@ using namespace mud; namespace toy
 		uint32_t queryMask = SHADEABLE_OGRE_MASK;
 
 		float f = 0.f;
-		if (mCollisionTools->raycast(ray, result, object, f, queryMask))
+		if(mCollisionTools->raycast(ray, result, object, f, queryMask))
 		{
 			const Ogre::Any& any = object->getUserObjectBindings().getUserAny();
-			if (!any.isEmpty())
+			if(!any.isEmpty())
 				return Ogre::any_cast<VisuEntity*> (any);
 		}
 

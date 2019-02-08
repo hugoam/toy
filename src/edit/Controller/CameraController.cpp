@@ -10,7 +10,7 @@
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	CameraController::CameraController(Viewer& viewer, HCamera camera, HMovable movable)
 		: m_viewer(viewer)

@@ -8,7 +8,7 @@
 #include <block/Forward.h>
 #include <block/Element.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_BLOCK_EXPORT Earth : public Element
 	{

@@ -16,6 +16,5 @@ namespace toy
     struct VisuPainter;
     class PhysicDebugDraw;
     class VisuScene;
-    class OgreViewport;
     class SoundSource;
 }

@@ -4,6 +4,7 @@
 
 #include <infra/Config.h>
 
+#include <jobs/Forward.h>
 #include <type/Forward.h>
 #include <ecs/Forward.h>
 #include <math/Forward.h>
@@ -17,13 +18,15 @@
 
 namespace toy
 {
+	using namespace mud;
+
     enum class Task : unsigned int;
     enum SamplePolyAreas : unsigned int;
     enum SamplePolyFlags : unsigned int;
     enum CollisionGroup : short;
     
     template <class T> class Array;
-    
+
     class Observer;
     class GenStoreObserver;
     class GenStore;
@@ -86,4 +89,29 @@ namespace toy
     class WorldClock;
     class WorldMedium;
     class WorldPage;
+
+	using HCollider = SparseHandle<Collider>;
+	using OCollider = OwnedHandle<Collider>;
+	using HSolid = SparseHandle<Solid>;
+	using OSolid = OwnedHandle<Solid>;
+
+	using HSpatial = ComponentHandle<Spatial>;
+	using HMovable = ComponentHandle<Movable>;
+	using HCamera = ComponentHandle<Camera>;
+	using HEmitter = ComponentHandle<Emitter>;
+	using HReceptor = ComponentHandle<Receptor>;
+	using HEntityScript = ComponentHandle<EntityScript>;
+	using HWorldPage = ComponentHandle<WorldPage>;
+	using HNavblock = ComponentHandle<Navblock>;
+
+	using HOrigin = ComponentHandle<Origin>;
+	using HWaypoint = ComponentHandle<Waypoint>;
 }
+
+#ifdef MUD_META_GENERATOR
+#include <stl/vector.h>
+namespace stl
+{
+	export_ extern template class refl_ seque_ vector<toy::HSpatial>;
+}
+#endif

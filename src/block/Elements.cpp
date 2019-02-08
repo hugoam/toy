@@ -5,7 +5,7 @@
 
 #include <block/Elements.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Earth Earth::me;
 	Stone Stone::me;

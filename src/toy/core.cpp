@@ -1,5 +1,3 @@
-#pragma once
-
 #include <mud/pool.h>
 #include <mud/geom.h>
 #include <toy/core.h>
@@ -152,7 +150,7 @@ namespace mud
 		vector_prune(m_animations, [](Anim& anim) { return anim.m_cursor >= anim.m_duration; });
 	}
 
-	void Animator::animate(Ref object, Member& member, Var value, float duration)
+	void Animator::animate(Ref object, Member& member, const Var& value, float duration)
 	{
 		m_animations.push_back({ object, &member, member.get_value(object), value, duration, 0.f });
 	}
@@ -598,12 +596,12 @@ using namespace mud; namespace toy
 
 	object<ColliderImpl> BulletMedium::make_collider(HCollider collider)
 	{
-		return make_object<BulletCollider>(*this, collider->m_spatial, collider, collider->m_collision_shape);
+		return oconstruct<BulletCollider>(*this, collider->m_spatial, collider, collider->m_collision_shape);
 	}
 
 	object<SolidImpl> BulletMedium::make_solid(HSolid solid)
 	{
-		return make_object<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
+		return oconstruct<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
 	}
 
 	void BulletMedium::add_solid(HCollider collider, HSolid solid)
@@ -848,7 +846,7 @@ using namespace mud; namespace toy
 
 	object<PhysicMedium> BulletWorld::create_sub_world(Medium& medium)
 	{
-		return make_object<BulletMedium>(m_world, *this, medium);
+		return oconstruct<BulletMedium>(m_world, *this, medium);
 	}
 
 	vec3 BulletWorld::ground_point(const Ray& ray)
@@ -1796,10 +1794,10 @@ using namespace mud; namespace toy
 			ShapeIndex offset = ShapeIndex(m_geometry.m_vertices.size());
 
 			for(const Vertex& vertex : geom.m_vertices)
-				m_geometry.m_vertices.emplace_back(Vertex{ spatial.m_position + vertex.m_position });
+				m_geometry.m_vertices.push_back({ spatial.m_position + vertex.m_position });
 
 			for(const Tri& tri : geom.m_triangles)
-				m_geometry.m_triangles.push_back(Tri{ ShapeIndex(offset + tri.a), ShapeIndex(offset + tri.b), ShapeIndex(offset + tri.c) });
+				m_geometry.m_triangles.push_back({ ShapeIndex(offset + tri.a), ShapeIndex(offset + tri.b), ShapeIndex(offset + tri.c) });
 
 			m_dirty = true;
 		}
@@ -1959,7 +1957,7 @@ using namespace mud; namespace toy
 		, m_navmesh(navmesh)
 	{}
 
-	object<Shape> NavmeshShape::clone() const { return make_object<NavmeshShape>(m_navmesh); }
+	object<Shape> NavmeshShape::clone() const { return oconstruct<NavmeshShape>(m_navmesh); }
 }
 //
 // Copyright (c) 2009-2010 Mikko Mononen memon@inside.org
@@ -2971,7 +2969,7 @@ using namespace mud; namespace toy
 		//: m_areaStore()
 	{
 		UNUSED(spatial);
-		//as<Emitter>(spatial).addEmitter(AreaMedium::me, make_object<SphereShape>(0.1f), CM_OBJECT);
+		//as<Emitter>(spatial).addEmitter(AreaMedium::me, oconstruct<SphereShape>(0.1f), CM_OBJECT);
 	}
 
     /*void Physic::handle_add(Collider& object)
@@ -3046,7 +3044,7 @@ using namespace mud; namespace toy
 	{
 		if(collider.m_spatial == m_spatial) return;
 		ReceptorScope& receptor = static_cast<ReceptorScope&>(object);
-		m_signals.emplace_back(*this, receptor);
+		m_signals.push_back({ *this, receptor });
 	}
 
     void EmitterScope::remove_contact(Collider& collider, ColliderObject& object)
@@ -3080,8 +3078,8 @@ using namespace mud; namespace toy
 	HEmitterScope Emitter::add_scope(Medium& medium, const CollisionShape& collision_shape, CollisionGroup group)
 	{
 		//SparsePool<EmitterScope>& pool = m_spatial->m_world->pool<EmitterScope>();
-		//m_emitters.emplace_back(pool.construct(m_spatial, medium, collision_shape, group));
-		m_emitters.emplace_back(make_object<EmitterScope>(m_spatial, medium, collision_shape, group));
+		//m_emitters.push_back(pool.construct(m_spatial, medium, collision_shape, group));
+		m_emitters.push_back(construct<EmitterScope>(m_spatial, medium, collision_shape, group));
 		return *m_emitters.back();
 	}
 
@@ -3100,8 +3098,8 @@ using namespace mud; namespace toy
 	HReceptorScope Receptor::add_scope(Medium& medium, const CollisionShape& collision_shape, CollisionGroup group)
 	{
 		//SparsePool<ReceptorScope>& pool = m_spatial->m_world->pool<ReceptorScope>();
-		//m_receptors.emplace_back(pool.construct(m_spatial, medium, collision_shape, group));
-		m_receptors.emplace_back(make_object<ReceptorScope>(m_spatial, medium, collision_shape, group));
+		//m_receptors.push_back(pool.construct(m_spatial, medium, collision_shape, group));
+		m_receptors.push_back(oconstruct<ReceptorScope>(m_spatial, medium, collision_shape, group));
 		return *m_receptors.back();
 	}
 
@@ -3562,7 +3560,7 @@ using namespace mud; namespace toy
 			if (geom.m_vertices.empty() || geom.m_triangles.empty())
 				continue;
 			printf("INFO: WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
-			m_solids.emplace_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
+			m_solids.push_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}
 
 		m_chunks.clear();

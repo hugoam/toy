@@ -16,7 +16,7 @@
 
 #include <core/World/Section.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Camera::create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near, float far)
 	{

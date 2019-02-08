@@ -6,15 +6,13 @@
 #pragma once
 
 #include <stl/function.h>
-#include <ecs/Proto.h>
-#include <math/Math.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 #include <core/Physic/Scope.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Camera
 	{

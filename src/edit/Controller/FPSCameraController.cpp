@@ -11,12 +11,12 @@
 #include <ui/Frame/Frame.h>
 #include <ui/Widget.h>
 #include <ui/Cursor.h>
-#include <ui/Structs/RootSheet.h>
+#include <ui/UiRoot.h>
 #include <ctx/InputDevice.h>
 
 #include <gfx-ui/Viewer.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	FPSCameraController::FPSCameraController(Viewer& viewer, HCamera camera, HMovable movable)
 		: CameraController(viewer, camera, movable)

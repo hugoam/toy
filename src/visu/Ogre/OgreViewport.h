@@ -8,7 +8,7 @@
 #include <visu/Forward.h>
 #include <gfx-ui/Viewer.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_VISU_EXPORT OgreViewport : public Viewer
 	{

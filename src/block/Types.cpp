@@ -16,7 +16,7 @@ namespace mud
     template <> TOY_BLOCK_EXPORT Type& type<toy::Block>() { static Type ty("Block", sizeof(toy::Block)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Chunk>() { static Type ty("Chunk", sizeof(toy::Chunk)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Element>() { static Type ty("Element", sizeof(toy::Element)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<mud::Grid<toy::Block*>>() { static Type ty("Grid<toy::Block*>", sizeof(mud::Grid<toy::Block*>)); return ty; }
+    template <> TOY_BLOCK_EXPORT Type& type<mud::vector2d<toy::Block*>>() { static Type ty("vector2d<toy::Block*>", sizeof(mud::vector2d<toy::Block*>)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Heap>() { static Type ty("Heap", sizeof(toy::Heap)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Sector>() { static Type ty("Sector", sizeof(toy::Sector)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Tileblock>() { static Type ty("Tileblock", sizeof(toy::Tileblock)); return ty; }

@@ -1,5 +1,3 @@
-#pragma once
-
 #include <toy/util.h>
 #include <mud/refl.h>
 #include <mud/infra.h>

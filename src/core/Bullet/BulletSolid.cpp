@@ -28,7 +28,7 @@
 #	pragma warning (pop)
 #endif
 
-using namespace mud; namespace toy
+namespace toy
 {
     BulletSolid::BulletSolid(BulletMedium& bullet_world, BulletCollider& bullet_collider, HSpatial spatial, HCollider collider, HSolid solid)
 		: m_rigid_body(nullptr)

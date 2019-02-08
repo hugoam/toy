@@ -6,6 +6,6 @@
 
 #include <core/Selector/Selection.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 }

@@ -6,16 +6,16 @@
 
 #pragma once
 
-#include <infra/NonCopy.h>
+#include <infra/Global.h>
 #include <type/Dispatch.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
 #include <core/Physic/Collider.h>
 #include <core/Physic/CollisionShape.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
-	class refl_ TOY_CORE_EXPORT BulletShape : public Movabl
+	class refl_ TOY_CORE_EXPORT BulletShape
 	{
 	public:
 		BulletShape(unique<btCollisionShape> shape);
@@ -24,6 +24,9 @@ using namespace mud; namespace toy
 
 		BulletShape(BulletShape&& other);
 		BulletShape& operator=(BulletShape&& other);
+
+		BulletShape(const BulletShape& other) = delete;
+		BulletShape& operator=(const BulletShape& other) = delete;
 
 		unique<btCollisionShape> shape;
 		unique<btStridingMeshInterface> mesh;
@@ -36,7 +39,7 @@ using namespace mud; namespace toy
 		BulletShape dispatch(CollisionShape& collision_shape);
 	};
 
-    class refl_ TOY_CORE_EXPORT BulletCollider : public NonCopy, public ColliderImpl
+    class refl_ TOY_CORE_EXPORT BulletCollider : public ColliderImpl
     {
 	public:
         BulletCollider(BulletMedium& bulletWorld, HSpatial spatial, HCollider collider, CollisionShape& collision_shape, bool create = true);

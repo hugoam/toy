@@ -39,3 +39,14 @@ namespace toy
     class Tileblock;
     struct BlockState;
 }
+
+#ifdef MUD_META_GENERATOR
+#include <stl/span.h>
+#include <stl/vector.h>
+namespace stl
+{
+	export_ extern template struct refl_ seque_ span<toy::Element*>;
+	export_ extern template struct refl_ seque_ vector<toy::Block*>;
+	export_ extern template struct refl_ seque_ vector<toy::Sector*>;
+}
+#endif

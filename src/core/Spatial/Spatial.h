@@ -8,12 +8,12 @@
 #include <stl/memory.h>
 #include <stl/vector.h>
 #include <pool/ObjectPool.h>
-#include <math/VecOps.h>
+#include <math/Vec.hpp>
 #include <math/Axes.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Spatial : public Transform
     {
@@ -72,8 +72,8 @@ using namespace mud; namespace toy
 		void hook();
 		void unhook();
 
-		template <class T_Visitor>
-		void visit(const T_Visitor& visitor)
+		template <class Visitor>
+		void visit(const Visitor& visitor)
 		{
 			if(!visitor(*this))
 				return;

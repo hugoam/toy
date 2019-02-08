@@ -15,7 +15,7 @@
 #include <snd/Sound.h>
 #endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 #ifdef TOY_SOUND
 	SoundSource::SoundSource(HSpatial spatial, SoundManager& soundManager)

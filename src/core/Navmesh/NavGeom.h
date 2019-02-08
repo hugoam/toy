@@ -6,15 +6,16 @@
 #pragma once
 
 #include <stl/string.h>
-#include <infra/NonCopy.h>
 #include <type/Unique.h>
 #include <core/Forward.h>
 #include <geom/Primitive.h>
 
 class rcContext;
 
-using namespace mud; namespace toy
+namespace toy
 {
+	using cstring = const char*;
+
 	static const int MAX_CONVEXVOL_PTS = 12;
 	struct ConvexVolume
 	{
@@ -24,7 +25,7 @@ using namespace mud; namespace toy
 		int area;
 	};
 
-	class TOY_CORE_EXPORT NavGeom : public NonCopy
+	class TOY_CORE_EXPORT NavGeom
 	{
 	public:
 		NavGeom(Geometry& geom, cstring name);

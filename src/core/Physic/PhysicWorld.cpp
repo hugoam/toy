@@ -8,7 +8,7 @@
 #include <core/World/Section.h>
 #include <core/World/World.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	PhysicMedium::PhysicMedium(World& world, Medium& medium)
 		: m_world(world)

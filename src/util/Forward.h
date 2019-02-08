@@ -16,6 +16,8 @@ namespace mud
 
 namespace toy
 {
+	using namespace mud;
+
 	class ProcedureType;
     class Procedure;
     class Scheduler;

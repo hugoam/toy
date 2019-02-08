@@ -23,7 +23,7 @@ class WrenVM;
 
 //#define MUD_GFX_DEFERRED
 
-using namespace mud; namespace toy
+namespace toy
 {
 #ifdef MUD_PLATFORM_EMSCRIPTEN
 	static void iterate()
@@ -65,9 +65,9 @@ using namespace mud; namespace toy
 	GameScene& Game::add_scene()
 	{
 #ifdef TOY_SOUND
-		m_scenes.emplace_back(make_unique<GameScene>(*m_user, *m_shell->m_gfx_system, m_shell->m_sound_system.get(), *this, m_player));
+		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx_system, m_shell->m_sound_system.get(), *this, m_player));
 #else
-		m_scenes.emplace_back(make_unique<GameScene>(*m_user, *m_shell->m_gfx_system, nullptr, *this, m_player));
+		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx_system, nullptr, *this, m_player));
 #endif
 		return *m_scenes.back();
 	}
@@ -106,22 +106,22 @@ using namespace mud; namespace toy
 	GameShell::GameShell(const string& resource_path, cstring exec_path)
 		: m_exec_path(exec_path ? string(exec_path) : "")
 		, m_resource_path(resource_path)
-		, m_job_system(make_object<JobSystem>())
-		, m_core(make_object<toy::Core>(*m_job_system))
-		, m_gfx_system(make_object<GfxSystem>(resource_path))
+		, m_job_system(oconstruct<JobSystem>())
+		, m_core(oconstruct<toy::Core>(*m_job_system))
+		, m_gfx_system(oconstruct<GfxSystem>(resource_path))
 #ifdef TOY_SOUND
-		, m_sound_system(make_object<SoundManager>(resource_path))
+		, m_sound_system(oconstruct<SoundManager>(resource_path))
 #endif
 		, m_editor(*m_gfx_system)
 		, m_game(m_user, *m_gfx_system)
 	{
 		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
-		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(), &mud_lang::m() });
+		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m() });
 		System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
 
 		static Meta m = { type<VirtualMethod>(), &namspc({}), "VirtualMethod", sizeof(VirtualMethod), TypeClass::Object };
 		static Class c = { type<VirtualMethod>(), {}, {}, {}, {}, {}, {}, {} };
-		meta_class<VirtualMethod>();
+		//meta_class<VirtualMethod>();
 
 		System::instance().load_modules({ &toy_util::m(), &toy_core::m(), &toy_visu::m(), &toy_block::m(), &toy_edit::m(), &toy_shell::m() });
 
@@ -168,9 +168,9 @@ using namespace mud; namespace toy
 		GfxContext& context = as<GfxContext>(*m_context);
 
 #if defined MUD_VG_VG
-		m_vg = make_object<VgVg>(m_resource_path.c_str(), &m_gfx_system->m_allocator);
+		m_vg = oconstruct<VgVg>(m_resource_path.c_str(), &m_gfx_system->allocator());
 #elif defined MUD_VG_NANOVG
-		m_vg = make_object<VgNanoBgfx>(m_resource_path.c_str());
+		m_vg = oconstruct<VgNanoBgfx>(m_resource_path.c_str());
 #endif
 		m_gfx_system->m_vg = &*m_vg;
 		context.m_reset_vg = [](GfxContext& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.idx); };
@@ -198,8 +198,8 @@ using namespace mud; namespace toy
 
 	void GameShell::reset_interpreters(bool reflect)
 	{
-		m_lua = make_object<LuaInterpreter>(false);
-		m_wren = make_object<WrenInterpreter>(false);
+		m_lua = oconstruct<LuaInterpreter>(false);
+		m_wren = oconstruct<WrenInterpreter>(false);
 
 		m_editor.m_script_editor.reset_interpreters(*m_lua, *m_wren);
 		m_game.m_editor.m_script_editor.reset_interpreters(*m_lua, *m_wren);
@@ -256,7 +256,7 @@ using namespace mud; namespace toy
 		LocatedFile location = m_gfx_system->locate_file("scripts/" + file);
 		if(!location) return;
 
-		Signature signature = { { Param{ "app", Ref(type<GameShell>()) }, Param{ "module", Ref(type<Module>()) } } };
+		Signature signature = { vector<Param>{ { "app", type<GameShell>() }, { "module", type<Module>() } } };
 
 		TextScript& script = m_editor.m_script_editor.create_script(file.c_str(), Language::Wren, signature);
 		script.m_script = read_text_file(location.path(false));
@@ -273,8 +273,8 @@ using namespace mud; namespace toy
 				if(m_editor.m_viewer)
 					m_editor.m_viewer->m_viewport.m_active = false;
 
-				Var args[2] = { Ref(this), Ref(&module) };
-				script({ args, 2 });
+				//Var args[2] = { Ref(this), Ref(&module) };
+				//script({ args, 2 });
 
 				GameModuleBind* game_module = m_wren->tget<GameModuleBind>("game");
 				if(game_module)

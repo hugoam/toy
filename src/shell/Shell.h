@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include <jobs/Job.h>
-#include <tree/Node.h>
+#include <jobs/JobSystem.h>
+#include <tree/Graph.h>
 #include <refl/System.h>
 #include <refl/Class.h>
 #include <refl/VirtualMethod.h>
@@ -15,14 +15,14 @@
 
 #include <visu/VisuScene.h>
 
-#include <uio/Edit/Script.h>
+#include <uio/ScriptEdit.h>
 
 namespace mud
 {
 	class Shell;
 }
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class SqliteDatabase;
 	
@@ -45,7 +45,7 @@ using namespace mud; namespace toy
 		Pause,
 	};
 
-	class refl_ TOY_SHELL_EXPORT Game : public NonCopy
+	class refl_ TOY_SHELL_EXPORT Game
 	{
 	public:
 		Game(User& user, GfxSystem& gfx_system);
@@ -69,7 +69,7 @@ using namespace mud; namespace toy
 	using GameCallback = void(*)(GameModule& module, GameShell& shell, Game& game);
 	using SceneCallback = void(*)(GameModule& module, GameShell& shell, GameScene& scene);
 
-	class refl_ TOY_SHELL_EXPORT GameModule : public NonCopy
+	class refl_ TOY_SHELL_EXPORT GameModule
 	{
 	public:
 		GameModule(Module& module) : m_module(&module) {}
@@ -106,7 +106,7 @@ using namespace mud; namespace toy
 	TOY_SHELL_EXPORT func_ void paint_physics(Gnode& parent, World& world);
 	TOY_SHELL_EXPORT func_ void physic_painter(GameScene& scene);
 
-	class refl_ TOY_SHELL_EXPORT GameShell : public NonCopy
+	class refl_ TOY_SHELL_EXPORT GameShell
 	{
 	public:
 		constr_ GameShell(const string& resource_path, cstring exec_path = nullptr);

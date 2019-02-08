@@ -4,19 +4,21 @@
 //  This notice and the license may not be removed or altered from any source distribution.
 
 
-#include <block/Types.h>
-#include <block/Sector.h>
-
+#ifdef MUD_MODULES
+module toy.block
+#else
+#include <geom/Shapes.h>
 #include <ecs/Complex.h>
 #include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
-
+#include <core/World/Section.h>
+#include <block/Types.h>
+#include <block/Sector.h>
 #include <block/Element.h>
 #include <block/Block.h>
+#endif
 
-#include <core/World/Section.h>
-
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Sector::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
 	{
@@ -55,7 +57,7 @@ using namespace mud; namespace toy
 		attr_ vector<Element*> m_elements;
 
 		attr_ vector<Sector*> m_sectors;
-		attr_ Grid<Block*> m_blocks;
+		attr_ vector2d<Block*> m_blocks;
 
 	};
 
@@ -172,8 +174,8 @@ using namespace mud; namespace toy
 
 		geometry.allocate(size.vertex_count, size.index_count);
 
-		array<Vertex> vertices = geometry.vertices();
-		array<uint32_t> indices = geometry.indices();
+		span<Vertex> vertices = geometry.vertices();
+		span<uint32_t> indices = geometry.indices();
 		MeshAdapter data(Vertex::vertex_format, vertices.data(), vertices.size(), indices.data(), indices.size(), true);
 
 		for(const ProcShape& shape : shapes)

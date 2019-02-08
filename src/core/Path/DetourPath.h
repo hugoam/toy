@@ -5,19 +5,13 @@
 
 #pragma once
 
-#include <ecs/Proto.h>
-#include <math/Math.h>
+#include <stl/vector.h>
+#include <stl/memory.h>
 #include <math/Vec.h>
-#include <infra/NonCopy.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#include <stl/memory.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	typedef unsigned int dtPolyRef;
 

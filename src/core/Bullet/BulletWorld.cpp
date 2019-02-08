@@ -42,7 +42,7 @@ extern CollisionStartedCallback gCollisionStartedCallback;
 extern CollisionEndedCallback gCollisionEndedCallback;
 #endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 #ifdef TRIGGER_COLLISIONS
 	static void collisionStarted(btPersistentManifold* manifold)
@@ -57,7 +57,7 @@ using namespace mud; namespace toy
 		if(&col0->m_spatial == &col1->m_spatial)
 			return;
 
-		if (col0->m_object && col1->m_object)
+		if(col0->m_object && col1->m_object)
 		{
 			// printf << "Remove contact " << col0->m_spatial.m_id << " : " << col1->m_spatial.m_id << endl;
 			col0->m_object->remove_contact(*col1);
@@ -102,12 +102,12 @@ using namespace mud; namespace toy
 
 	object<ColliderImpl> BulletMedium::make_collider(HCollider collider)
 	{
-		return make_object<BulletCollider>(*this, collider->m_spatial, collider, collider->m_collision_shape);
+		return oconstruct<BulletCollider>(*this, collider->m_spatial, collider, collider->m_collision_shape);
 	}
 
 	object<SolidImpl> BulletMedium::make_solid(HSolid solid)
 	{
-		return make_object<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
+		return oconstruct<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
 	}
 
 	void BulletMedium::add_solid(HCollider collider, HSolid solid)
@@ -352,7 +352,7 @@ using namespace mud; namespace toy
 
 	object<PhysicMedium> BulletWorld::create_sub_world(Medium& medium)
 	{
-		return make_object<BulletMedium>(m_world, *this, medium);
+		return oconstruct<BulletMedium>(m_world, *this, medium);
 	}
 
 	vec3 BulletWorld::ground_point(const Ray& ray)

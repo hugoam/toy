@@ -5,7 +5,7 @@
 
 #include <core/Movable/Movable.h>
 
-#include <math/VecOps.h>
+#include <math/Vec.hpp>
 #include <math/Timer.h>
 
 #include <core/Bullet/Bullet.h.inl>
@@ -16,7 +16,7 @@
 
 #include <core/World/Section.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	vec3 to_2d(const vec3& vec) { return { vec.x, 0.f, vec.z }; }
 

@@ -1,4 +1,6 @@
 #include <geom/Geom.h>
+#include <jobs/JobSystem.h>
+#include <lang/Script.h>
 #include <core/Anim/Anim.h>
 #include <core/Core.h>
 #include <core/Forward.h>

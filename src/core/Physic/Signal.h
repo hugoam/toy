@@ -5,13 +5,10 @@
 
 #pragma once
 
+#include <stl/vector.h>
 #include <core/Forward.h>
 
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_CORE_EXPORT Signal
 	{

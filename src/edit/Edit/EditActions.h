@@ -8,7 +8,7 @@
 #include <util/Procedure.h>
 #include <edit/Types.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_EDIT_EXPORT Edit : public TypedProcedure<Edit>
 	{

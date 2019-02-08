@@ -10,7 +10,7 @@
 #include <gfx-ui/Viewer.h>
 #include <edit/Forward.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_EDIT_EXPORT CameraController : public ViewerController, public EventDispatch
 	{

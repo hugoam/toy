@@ -5,16 +5,11 @@
 
 #pragma once
 
-#include <infra/NonCopy.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 
-#ifndef MUD_CPP_20
-#include <atomic>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	TOY_CORE_EXPORT func_ bool move_2d(Spatial& spatial, Movable& movable, const vec3& target, float velocity, float time_step, float margin = 0.1f);
 	TOY_CORE_EXPORT func_ bool steer_2d(Spatial& spatial, Movable& movable, const vec3& target, float velocity, float time_step, float margin = 0.1f);

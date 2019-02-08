@@ -8,7 +8,7 @@
 
 #include <geom/Shape.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	CollisionShape::CollisionShape()
 	{}

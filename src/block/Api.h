@@ -1,4 +1,6 @@
 #include <math/Image256.h>
+#include <gfx/GfxSystem.h>
+#include <core/HandlesDecl.h>
 #include <block/Block.h>
 #include <block/Chunk.h>
 #include <block/Element.h>

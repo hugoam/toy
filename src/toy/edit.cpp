@@ -1,5 +1,3 @@
-#pragma once
-
 #include <mud/gfx.h>
 #include <toy/visu.h>
 #include <mud/ui.h>
@@ -24,7 +22,7 @@ using namespace mud; namespace toy
 	/*EditorUser& EditorCore::connect(const string& name, EditorApp& frontApp)
 	{
 		if(m_users.find(name) == m_users.end())
-			m_users[name] = make_object<EditorUser>(*this, frontApp);
+			m_users[name] = oconstruct<EditorUser>(*this, frontApp);
 
 		return *m_users[name];
 	}*/
@@ -33,7 +31,7 @@ using namespace mud; namespace toy
 
 	EditorApp::EditorApp(const string& execPath, const string& resourcePath)
 		: m_user(0, "admin")
-		, m_shell(make_object<Shell>(execPath, resourcePath))
+		, m_shell(oconstruct<Shell>(execPath, resourcePath))
 		, m_editor(nullptr)
 	{
 		System::instance().loadModules({ &toyobj::module(), &toymath::module(), &toyutil::module(), &toycore::module(),
@@ -67,7 +65,7 @@ using namespace mud; namespace toy
 	{
 		printf("Starting Editor\n");
 
-		m_editor = make_object<Editor>(m_user, *m_shell->m_visuSystem);
+		m_editor = oconstruct<Editor>(m_user, *m_shell->m_visuSystem);
 
 		//m_editorUi = &m_shell->m_rootDevice->emplace<DEditor>(*m_editor, *m_shell->m_visuSystem);
 		
@@ -515,7 +513,7 @@ using namespace mud; namespace toy
 
 	void outliner_node(Widget& parent, uint32_t entity, HSpatial spatial, vector<Ref>& selection)
 	{
-		TreeNode& self = ui::tree_node(parent, carray<cstring, 2>{ entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
+		TreeNode& self = ui::tree_node(parent, { entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
 
 		self.m_header->set_state(SELECTED, vector_has(selection, ent_ref(entity)));
 
@@ -558,7 +556,7 @@ using namespace mud; namespace toy
 			editor.m_graphics_debug.m_debug_draw_csm = true;
 			if(editor.m_graphics_debug.m_debug_draw_csm)
 			{
-				//Widget* dock = ui::dockitem(dockspace, "Screen", carray<uint16_t, 2>{ 0U, 1U });
+				//Widget* dock = ui::dockitem(dockspace, "Screen", { 0U, 1U });
 				//if(dock)
 				{
 					//Viewer& viewer = ui::viewer(*dock, *scene);
@@ -586,21 +584,21 @@ using namespace mud; namespace toy
 		Dockspace& dockspace = ui::dockspace(parent, docksystem);
 
 		vector<Type*> library_types = { &type<Spatial>(), &type<World>() };
-		if(Widget* dock = ui::dockitem(dockspace, "Outliner", carray<uint16_t, 2>{ 0U, 0U }))
+		if(Widget* dock = ui::dockitem(dockspace, "Outliner", { 0U, 0U }))
 			editor_graph(*dock, editor, editor.m_selection);
-		if(Widget* dock = ui::dockitem(dockspace, "Library", carray<uint16_t, 2>{ 0U, 0U }))
+		if(Widget* dock = ui::dockitem(dockspace, "Library", { 0U, 0U }))
 			library_section(*dock, library_types, editor.m_selection);
-		if(Widget* dock = ui::dockitem(dockspace, "Inspector", carray<uint16_t, 2>{ 0U, 2U }))
+		if(Widget* dock = ui::dockitem(dockspace, "Inspector", { 0U, 2U }))
 			object_editor(*dock, editor.m_selection);
 		//edit_selector(self, editor.m_selection); // dockid { 0, 2 }
-		if(Widget* dock = ui::dockitem(dockspace, "Script", carray<uint16_t, 2>{ 0U, 2U }))
+		if(Widget* dock = ui::dockitem(dockspace, "Script", { 0U, 2U }))
 			script_editor(*dock, editor.m_script_editor);
 		//current_brush_edit(self, editor); // dockid { 0, 0 }
 		//ui_edit(self, editor.m_selection); // dockid { 0, 2 }
-		if (Widget* dock = ui::dockitem(dockspace, "Graphics", carray<uint16_t, 2>{ 0U, 2U }))
+		if (Widget* dock = ui::dockitem(dockspace, "Graphics", { 0U, 2U }))
 			edit_gfx_system(*dock, editor.m_gfx_system);
 
-		editor.m_screen = ui::dockitem(dockspace, "Screen", carray<uint16_t, 2>{ 0U, 1U }, 4.f);
+		editor.m_screen = ui::dockitem(dockspace, "Screen", { 0U, 1U }, 4.f);
 		
 		//if(editor.m_editedScene)
 		{
@@ -803,8 +801,8 @@ using namespace mud; namespace toy
 		//vector_extend(m_toolbelt.toolbox("View").m_tools, { &m_view_tools.m_top, &m_view_tools.m_bottom, &m_view_tools.m_front, &m_view_tools.m_back, &m_view_tools.m_left, &m_view_tools.m_right });
 		//vector_extend(m_toolbelt.toolbox("View").m_tools, { &m_frame_view_tool });
 
-		//m_toolbelt.toolbox("Brushes").m_tools.add(make_object<PlaceBrush>(*this));
-		//m_toolbelt.toolbox("Brushes").m_tools.add(make_object<CircleBrush>(*this));
+		//m_toolbelt.toolbox("Brushes").m_tools.add(oconstruct<PlaceBrush>(*this));
+		//m_toolbelt.toolbox("Brushes").m_tools.add(oconstruct<CircleBrush>(*this));
 
 		//m_toolbox->updateTools();
 	}
@@ -825,7 +823,7 @@ using namespace mud; namespace toy
 		Signature signature({ Param("position", var(Zero3)) });
 		VisualScript& script = global_pool<VisualScript>().construct("Brush VisualScript", signature);
 
-		//m_toolbelt.toolbox("Brushes").m_tools.add(make_object<ScriptedBrush>(*this, m_editedWorld->origin(), script));
+		//m_toolbelt.toolbox("Brushes").m_tools.add(oconstruct<ScriptedBrush>(*this, m_editedWorld->origin(), script));
 #endif
 	}
 
@@ -878,7 +876,7 @@ using namespace mud; namespace toy
 	Toolbox& Toolbelt::toolbox(cstring name)
 	{
 		if(!m_toolboxes[name])
-			m_toolboxes[name] = make_object<Toolbox>(name);
+			m_toolboxes[name] = oconstruct<Toolbox>(name);
 		return *m_toolboxes[name];
 	}
 

@@ -5,21 +5,17 @@
 
 #pragma once
 
-#include <math/Math.h>
+#include <stl/vector.h>
 #include <core/Forward.h>
 #include <core/Path/DetourPath.h>
-
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#endif
 
 class dtNavMesh;
 class dtNavMeshQuery;
 class dtQueryFilter;
 
-using namespace mud; namespace toy
+namespace toy
 {
-	class refl_ TOY_CORE_EXPORT Pathfinder : public NonCopy
+	class refl_ TOY_CORE_EXPORT Pathfinder
     {
 	public:
 		constr_ Pathfinder(Navmesh& navmesh);

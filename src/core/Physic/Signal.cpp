@@ -13,7 +13,7 @@
 #include <core/Physic/PhysicWorld.h>
 #include <core/Physic/Obstacle.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Signal::Signal(EmitterScope& emitter, ReceptorScope& receptor)
 		: m_emitter(&emitter)

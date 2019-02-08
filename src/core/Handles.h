@@ -25,23 +25,3 @@ namespace mud
 	template <> struct TypedBuffer<toy::Origin>			{ static uint32_t index() { return 10; } };
 	template <> struct TypedBuffer<toy::Waypoint>		{ static uint32_t index() { return 11; } };
 }
-
-using namespace mud; namespace toy
-{
-	export_ using HCollider = SparseHandle<Collider>;
-	export_ using OCollider = OwnedHandle<Collider>;
-	export_ using HSolid = SparseHandle<Solid>;
-	export_ using OSolid = OwnedHandle<Solid>;
-
-	export_ using HSpatial = ComponentHandle<Spatial>;
-	export_ using HMovable = ComponentHandle<Movable>;
-	export_ using HCamera = ComponentHandle<Camera>;
-	export_ using HEmitter = ComponentHandle<Emitter>;
-	export_ using HReceptor = ComponentHandle<Receptor>;
-	export_ using HEntityScript = ComponentHandle<EntityScript>;
-	export_ using HWorldPage = ComponentHandle<WorldPage>;
-	export_ using HNavblock = ComponentHandle<Navblock>;
-
-	export_ using HOrigin = ComponentHandle<Origin>;
-	export_ using HWaypoint = ComponentHandle<Waypoint>;
-}

@@ -11,9 +11,6 @@
 #include <srlz/Forward.h>
 #include <math/Forward.h>
 #include <geom/Forward.h>
-#include <noise/Forward.h>
-#include <wfc/Forward.h>
-#include <fract/Forward.h>
 #include <lang/Forward.h>
 #include <ctx/Forward.h>
 #include <ui/Forward.h>

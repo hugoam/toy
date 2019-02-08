@@ -10,7 +10,7 @@
 #include <core/Forward.h>
 #include <math/Timer.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	enum class Task : unsigned int
 	{

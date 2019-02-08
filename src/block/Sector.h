@@ -7,7 +7,7 @@
 
 #include <stl/vector.h>
 #include <stl/function.h>
-#include <ecs/Proto.h>
+#include <type/Proto.h>
 #include <wfc-gfx/Wfc/Tileblock.h>
 #include <core/WorldPage/WorldPage.h>
 //#include <core/WorldPage/BufferPage.h>
@@ -16,7 +16,7 @@
 #include <block/Element.h>
 #include <block/Structs.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	typedef vector<Chunk*> ChunkVector;
 
@@ -68,5 +68,5 @@ using namespace mud; namespace toy
 
 	TOY_BLOCK_EXPORT func_ void build_block_geometry(Scene& scene, WorldPage& page, Tileblock& block);
 
-	TOY_BLOCK_EXPORT func_ void index_blocks(const uvec3& grid_size, Grid<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors);
+	TOY_BLOCK_EXPORT func_ void index_blocks(const uvec3& grid_size, vector2d<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors);
 }

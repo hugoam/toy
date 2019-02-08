@@ -31,7 +31,7 @@ namespace mud
 		Animator();
 
 		void next_frame(size_t tick, size_t delta);
-		void animate(Ref object, Member& member, Var value, float duration);
+		void animate(Ref object, Member& member, const Var& value, float duration);
 
 		Clock m_clock;
 		vector<Anim> m_animations;
@@ -39,7 +39,7 @@ namespace mud
 		static Animator me;
 	};
 
-	inline void animate(Ref object, Member& member, Var value, float duration)
+	inline void animate(Ref object, Member& member, const Var& value, float duration)
 	{
 		Animator::me.animate(object, member, value, duration);
 	}

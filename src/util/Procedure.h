@@ -12,7 +12,7 @@
 #include <util/Executable.h>
 #include <refl/Meta.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class User;
 
@@ -63,7 +63,7 @@ using namespace mud; namespace toy
 
 		static bool checkObject(Ref object) { UNUSED(object); return true; }
 		static bool checkArgs(const vector<Ref>& args) { UNUSED(args); return true; }
-		static object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return make_object<T_Procedure>(user, object, args); }
+		static object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return oconstruct<T_Procedure>(user, object, args); }
 
 		static ProcedureType& def() { static ProcedureDef<T_Procedure> df; return df; }
 	};

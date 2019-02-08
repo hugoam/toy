@@ -13,7 +13,7 @@
 #include <core/Spatial/Spatial.h>
 #include <core/WorldPage/WorldPage.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Chunk::create(ECS& ecs, HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
 	{

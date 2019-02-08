@@ -8,7 +8,7 @@
 
 #include <ecs/Complex.h>
 #include <geom/Shapes.h>
-#include <geom/Mesh.h>
+#include <geom/Geometry.h>
 #include <geom/Geom.h>
 
 #include <core/Spatial/Spatial.h>
@@ -24,7 +24,7 @@
 
 #include <cstdio>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	WorldMedium WorldMedium::me;
 
@@ -58,10 +58,10 @@ using namespace mud; namespace toy
 		m_solids.clear();
 		for(Geometry& geom : m_chunks)
 		{
-			if (geom.m_vertices.empty() || geom.m_triangles.empty())
+			if(geom.m_vertices.empty() || geom.m_triangles.empty())
 				continue;
 			printf("INFO: WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
-			m_solids.emplace_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
+			m_solids.push_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}
 
 		m_chunks.clear();

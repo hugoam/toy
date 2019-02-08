@@ -4,7 +4,6 @@
 module toy.util;
 #else
 #include <type/Vector.h>
-#include <type/Any.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
 #include <meta/type/Module.h>
@@ -14,6 +13,10 @@ module toy.util;
 #endif
 
 #include <util/Api.h>
+
+using namespace mud;
+
+void* toy_ProcedureType__get_type(void* object) { return &(*static_cast<toy::ProcedureType*>(object)).m_type; }
 
 namespace mud
 {
@@ -29,56 +32,34 @@ namespace mud
 	
 	// toy::Procedure
 	{
-		static Meta meta = { type<toy::Procedure>(), &namspc({ "toy" }), "Procedure", sizeof(toy::Procedure), TypeClass::Object };
-		static Class cls = { type<toy::Procedure>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
-		};
-		meta_class<toy::Procedure>();
+		Type& t = type<toy::Procedure>();
+		static Meta meta = { t, &namspc({ "toy" }), "Procedure", sizeof(toy::Procedure), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, {}, {}, {}, {}, {}, };
 	}
 	// toy::ProcedureType
 	{
-		static Meta meta = { type<toy::ProcedureType>(), &namspc({ "toy" }), "ProcedureType", sizeof(toy::ProcedureType), TypeClass::Object };
-		static Class cls = { type<toy::ProcedureType>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::ProcedureType>(), Address(), type<mud::Type>(), "type", Ref(type<mud::Type>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::ProcedureType>(object).m_type); } },
-				{ type<toy::ProcedureType>(), member_address(&toy::ProcedureType::m_index), type<uint32_t>(), "index", var(uint32_t()), Member::Value, nullptr },
-				{ type<toy::ProcedureType>(), member_address(&toy::ProcedureType::m_name), type<string>(), "name", var(string()), Member::Value, nullptr }
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::ProcedureType>();
+		static Meta meta = { t, &namspc({ "toy" }), "ProcedureType", sizeof(toy::ProcedureType), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, SIZE_MAX, type<mud::Type>(), "type", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_ProcedureType__get_type },
+			{ t, offsetof(toy::ProcedureType, m_index), type<uint32_t>(), "index", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::ProcedureType, m_name), type<string>(), "name", nullptr, Member::Value, nullptr }
 		};
-		meta_class<toy::ProcedureType>();
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, {}, {}, members, {}, {}, };
 	}
 		m.m_types.push_back(&type<toy::Procedure>());
 		m.m_types.push_back(&type<toy::ProcedureType>());

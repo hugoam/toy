@@ -1,5 +1,3 @@
-#pragma once
-
 #include <toy/visu.h>
 #include <toy/core.refl.h>
 #include <mud/gfx.refl.h>
@@ -16,6 +14,11 @@ module toy.visu;
 #endif
 
 
+using namespace mud;
+
+void* toy_VisuScene__get_gfx_system(void* object) { return &(*static_cast<toy::VisuScene*>(object)).m_gfx_system; }
+void toy_VisuScene_next_frame(void* object, array<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::VisuScene*>(object)).next_frame(); }
+
 namespace mud
 {
 	void toy_visu_meta(Module& m)
@@ -30,56 +33,36 @@ namespace mud
 	
 	// toy::PhysicDebugDraw
 	{
-		static Meta meta = { type<toy::PhysicDebugDraw>(), &namspc({ "toy" }), "PhysicDebugDraw", sizeof(toy::PhysicDebugDraw), TypeClass::Object };
-		static Class cls = { type<toy::PhysicDebugDraw>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
-		};
-		meta_class<toy::PhysicDebugDraw>();
+		Type& t = type<toy::PhysicDebugDraw>();
+		static Meta meta = { t, &namspc({ "toy" }), "PhysicDebugDraw", sizeof(toy::PhysicDebugDraw), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, {}, {}, {}, {}, {}, };
 	}
 	// toy::VisuScene
 	{
-		static Meta meta = { type<toy::VisuScene>(), &namspc({ "toy" }), "VisuScene", sizeof(toy::VisuScene), TypeClass::Object };
-		static Class cls = { type<toy::VisuScene>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::VisuScene>(), Address(), type<mud::GfxSystem>(), "gfx_system", Ref(type<mud::GfxSystem>()), Member::Flags(Member::NonMutable|Member::Link), [](Ref object) { return Ref(&val<toy::VisuScene>(object).m_gfx_system); } },
-				{ type<toy::VisuScene>(), member_address(&toy::VisuScene::m_scene), type<mud::Scene>(), "scene", Ref(type<mud::Scene>()), Member::NonMutable, nullptr }
-			},
-			// methods
-			{
-				{ type<toy::VisuScene>(), "next_frame", member_address<void(toy::VisuScene::*)()>(&toy::VisuScene::next_frame), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::VisuScene>(object).next_frame(); }, {}, Var() }
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::VisuScene>();
+		static Meta meta = { t, &namspc({ "toy" }), "VisuScene", sizeof(toy::VisuScene), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, SIZE_MAX, type<mud::GfxSystem>(), "gfx_system", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_VisuScene__get_gfx_system },
+			{ t, offsetof(toy::VisuScene, m_scene), type<mud::Scene>(), "scene", nullptr, Member::NonMutable, nullptr }
 		};
-		meta_class<toy::VisuScene>();
+		// methods
+		static Method methods[] = {
+			{ t, "next_frame", Address(), toy_VisuScene_next_frame, {}, g_qvoid }
+		};
+		// static members
+		static Class cls = { t, {}, {}, {}, {}, members, methods, {}, };
 	}
 		m.m_types.push_back(&type<toy::PhysicDebugDraw>());
 		m.m_types.push_back(&type<toy::VisuScene>());

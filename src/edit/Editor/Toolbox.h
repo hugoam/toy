@@ -11,11 +11,11 @@
 #include <core/Spatial/Spatial.h>
 #include <edit/Types.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	using Selection = vector<Ref>;
 
-	class refl_ Toolbox : public NonCopy
+	class refl_ Toolbox
 	{
 	public:
 		Toolbox(cstring name);
@@ -38,7 +38,7 @@ using namespace mud; namespace toy
 		const Selection& m_targets;
 	};
 
-	class refl_ Toolbelt : public NonCopy
+	class refl_ Toolbelt
 	{
 	public:
 		Toolbelt();

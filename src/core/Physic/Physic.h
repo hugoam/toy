@@ -10,7 +10,7 @@
 #include <core/Physic/Medium.h>
 #include <core/Physic/Scope.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_CORE_EXPORT AreaMedium final : public Medium
 	{

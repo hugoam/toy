@@ -1,3 +1,4 @@
+#include <core/World/World.h>
 #include <edit/Editor.h>
 #include <edit/Forward.h>
 #include <edit/Types.h>

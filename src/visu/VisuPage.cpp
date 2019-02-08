@@ -3,6 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#include <stl/algorithm.h>
 #include <visu/Types.h>
 #include <visu/VisuPage.h>
 
@@ -21,7 +22,7 @@
 #define DEBUG_NAVMESH_GEOM 0
 #define DEBUG_NAVMESH 0
 
-using namespace mud; namespace toy
+namespace toy
 {
 	void paint_world_page(Gnode& parent, WorldPage& page)
 	{
@@ -47,7 +48,7 @@ using namespace mud; namespace toy
 #endif
 	}
 
-	void build_geometry(Geometry& geometry, array<Item*> items)
+	void build_geometry(Geometry& geometry, span<Item*> items)
 	{
 		size_t vertex_count = 0;
 		size_t index_count = 0;
@@ -67,8 +68,8 @@ using namespace mud; namespace toy
 
 		geometry.allocate(vertex_count, index_count / 3);
 
-		array<Vertex> vertices = geometry.vertices();
-		array<uint32_t> indices = geometry.indices();
+		span<Vertex> vertices = geometry.vertices();
+		span<uint32_t> indices = geometry.indices();
 		MeshAdapter data(Vertex::vertex_format, vertices.data(), uint32_t(vertices.size()), indices.data(), uint32_t(indices.size()), true);
 
 		for(Item* item : items)
@@ -85,7 +86,7 @@ using namespace mud; namespace toy
 			}
 	}
 
-	void build_world_page_geometry(WorldPage& page, array<Item*> items)
+	void build_world_page_geometry(WorldPage& page, span<Item*> items)
 	{
 		page.m_chunks.emplace_back();
 		Geometry& geom = page.m_chunks.back();
@@ -106,7 +107,7 @@ using namespace mud; namespace toy
 			//}
 			//else
 			{
-				bool add = vector_has(page.m_geometry_filter, string(item.m_model->m_name))
+				bool add = has(page.m_geometry_filter, string(item.m_model->m_name))
 						&& item.m_node->m_object && item.m_node->m_object.m_type->is<EntityRef>();
 				if(add)
 				{

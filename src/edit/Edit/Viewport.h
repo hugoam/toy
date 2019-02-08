@@ -6,11 +6,10 @@
 #pragma once
 
 #include <math/Vec.h>
-#include <uio/Unode.h>
 #include <edit/Forward.h>
 #include <edit/Controller/CameraController.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	using Selection = vector<Ref>;
 

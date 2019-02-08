@@ -6,17 +6,14 @@
 #if 0
 #pragma once
 
+#include <stl/map.h>
 #include <visu/Forward.h>
 
 #ifdef TOY_SOUND
 #include <snd/Forward.h>
 #endif
 
-#ifndef MUD_CPP_20
-#include <stl/map.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_VISU_EXPORT SoundSource : public StoreObserver<State>
 	{

@@ -13,7 +13,7 @@
 #include <block/Sector.h>
 #include <block/Chunk.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	bool GroundChunk::filter(Chunk& chunk)
 	{

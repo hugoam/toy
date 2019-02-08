@@ -8,6 +8,7 @@
 #include <visu/VisuPage.h>
 
 #include <infra/Reverse.h>
+#include <tree/Graph.hpp>
 #include <ecs/Complex.h>
 #include <refl/Member.h>
 #include <geom/Shapes.h>
@@ -71,7 +72,7 @@
 #include <snd/Sound.h>
 #endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 #ifdef TOY_PHYSIC_DEBUG_DRAW
 	class PhysicDebugDraw::Impl : public btIDebugDraw
@@ -190,7 +191,7 @@ using namespace mud; namespace toy
 			if(sound->m_loop || sound->m_state == Sound::STOPPED)
 			{
 				m_snd_manager.destroy_sound(*sound);
-				vector_remove(m_scene.m_orphan_sounds, sound);
+				remove(m_scene.m_orphan_sounds, sound);
 			}
 
 		m_snd_manager.update();
@@ -226,8 +227,8 @@ using namespace mud; namespace toy
 				hover_bounds.mergeSafe(item.m_aabb);
 		});
 
-		gfx::draw(parent, select_bounds, Symbol(Colour::White));
-		gfx::draw(parent, hover_bounds, Symbol(Colour::AlphaGrey));
+		gfx::draw(parent, Cube(select_bounds), Symbol(Colour::White));
+		gfx::draw(parent, Cube(hover_bounds), Symbol(Colour::AlphaGrey));
 	}
 
 	void update_camera(Camera& camera, mud::Camera& gfx_camera)

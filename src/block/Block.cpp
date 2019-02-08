@@ -3,28 +3,27 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <block/Types.h>
-#include <block/Block.h>
-
-#include <geom/Shapes.h>
+#ifdef MUD_MODULES
+module toy.block
+#else
+#include <math/Grid.hpp>
 #include <math/Image256.h>
-
+#include <geom/Shapes.h>
 #include <core/World/World.h>
 #include <core/Spatial/Spatial.h>
-
 #include <core/Physic/Scope.h>
 #include <core/Physic/CollisionShape.h>
-
 #include <core/WorldPage/WorldPage.h>
-
+#include <block/Types.h>
+#include <block/Block.h>
 #include <block/Sector.h>
+#endif
 
 #define BLOCK_SUBDIV 20U
 
-using namespace mud; namespace toy
+namespace toy
 {
-	void index_blocks(const uvec3& grid_size, Grid<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors)
+	void index_blocks(const uvec3& grid_size, vector2d<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors)
 	{
 		grid.reset(grid_size.x, grid_size.y, grid_size.z);
 
@@ -57,7 +56,7 @@ using namespace mud; namespace toy
 			}
 	}
 
-	void paint_block_elements(Block& block, Image256& image, array<Element*> elements)
+	void paint_block_elements(Block& block, Image256& image, span<Element*> elements)
 	{
 		uint16_t subdiv = block.subdiv();
 		for(uint16_t y = 0; y < subdiv; ++y)

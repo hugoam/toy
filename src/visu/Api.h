@@ -1,3 +1,4 @@
+#include <gfx/GfxSystem.h>
 #include <visu/Forward.h>
 #include <visu/Types.h>
 #include <visu/VisuPage.h>

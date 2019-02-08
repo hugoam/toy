@@ -10,7 +10,7 @@
 
 #include <geom/Shapes.h>
 #include <geom/ShapesComplex.h>
-#include <geom/Mesh.h>
+#include <geom/Geometry.h>
 #include <geom/Geom.h>
 #include <geom/Primitive.h>
 
@@ -40,7 +40,7 @@
 #	pragma warning (pop)
 #endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 	BulletShape::BulletShape(unique<btCollisionShape> shape)
 		: shape(move(shape))

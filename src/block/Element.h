@@ -7,16 +7,15 @@
 
 #include <stl/vector.h>
 #include <stl/string.h>
-#include <ecs/Proto.h>
 #include <infra/Global.h>
+#include <type/Proto.h>
 #include <math/Colour.h>
 #include <math/Grid.h>
-#include <math/Math.h>
 #include <core/Spatial/Spatial.h>
 #include <core/Physic/Scope.h>
 #include <block/Forward.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	enum class refl_ MatterState : unsigned int
 	{

@@ -13,9 +13,9 @@
 #include <edit/Forward.h>
 #include <edit/Editor/Toolbox.h>
 
-#include <uio/Edit/Script.h>
+#include <uio/ScriptEdit.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	using Selection = vector<Ref>;
 

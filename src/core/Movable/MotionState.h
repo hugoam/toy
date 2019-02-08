@@ -5,11 +5,10 @@
 
 #pragma once
 
-#include <math/Math.h>
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_CORE_EXPORT TransformSource
 	{

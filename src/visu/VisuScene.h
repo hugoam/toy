@@ -7,7 +7,7 @@
 
 #include <stl/string.h>
 #include <stl/function.h>
-#include <tree/Node.h>
+#include <tree/Graph.h>
 #include <math/Timer.h>
 #include <visu/Forward.h>
 
@@ -22,7 +22,7 @@
 
 #define TOY_PHYSIC_DEBUG_DRAW
 
-using namespace mud; namespace toy
+namespace toy
 {
 	struct TOY_VISU_EXPORT VisuPainter
 	{
@@ -51,7 +51,7 @@ using namespace mud; namespace toy
 		unique<Impl> m_impl;
 	};
 
-	class refl_ TOY_VISU_EXPORT VisuScene : public NonCopy
+	class refl_ TOY_VISU_EXPORT VisuScene
     {
     public:
         VisuScene(GfxSystem& gfx_system, SoundManager* sound_system = nullptr);
@@ -76,49 +76,17 @@ using namespace mud; namespace toy
 
 		inline void painter(cstring name, function<void(size_t, VisuScene&, Gnode&)> paint)
 		{
-			m_painters.emplace_back(construct<VisuPainter>(name, m_painters.size(), paint));
+			m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
 		}
 
 		template <class T>
-		inline void entity_painter(cstring name, World& world, void (*paint_func)(Gnode&, T&))
-		{
-			auto paint = [this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
-			{
-				world.m_ecs.loop_ent<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
-				{
-					paint_func(this->entity_node(parent, entity, spatial, index), component);
-				});
-			};
-			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
-		}
+		inline void entity_painter(cstring name, World& world, void(*paint_func)(Gnode&, T&));
 
 		template <class T, class T_PaintFunc>
-		inline void range_entity_painter(HSpatial reference, float range, cstring name, World& world, T_PaintFunc paint_func)
-		{
-			float range2 = range * range;
-			auto paint = [reference, range2, this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
-			{
-				vec3 position = reference->m_position;
-				world.m_ecs.loop_ent<Spatial, T>([&position, range2, this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
-				{
-					float dist2 = distance2(spatial.m_position, position);
-					if(dist2 < range2)
-						paint_func(this->entity_node(parent, entity, spatial, index), component);
-				});
-			};
-			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
-		}
+		inline void range_entity_painter(HSpatial reference, float range, cstring name, World& world, T_PaintFunc paint_func);
 
 		template <class T, class T_Container>
-		inline void object_painter(cstring name, T_Container& objects, void (*paint_func)(Gnode&, T&))
-		{
-			auto paint = [this, &objects, paint_func](size_t index, VisuScene&, Gnode& parent)
-			{
-				for(auto object : objects)
-					paint_func(this->entity_node(parent, object->m_spatial.m_handle, object->m_spatial, index), *object);
-			};
-			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
-		}
+		inline void object_painter(cstring name, T_Container& objects, void(*paint_func)(Gnode&, T&));
 
 	private:
 		Clock m_clock;

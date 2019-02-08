@@ -31,7 +31,7 @@ namespace toy
 
 #ifndef MUD_CPP_20
 #include <atomic>
-#include <cstddef>
+#include <stl/stddef.h>
 #endif
 
 namespace mud
@@ -109,7 +109,7 @@ using namespace mud; namespace toy
 
 		static bool checkObject(Ref object) { UNUSED(object); return true; }
 		static bool checkArgs(const vector<Ref>& args) { UNUSED(args); return true; }
-		static object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return make_object<T_Procedure>(user, object, args); }
+		static object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return oconstruct<T_Procedure>(user, object, args); }
 
 		static ProcedureType& def() { static ProcedureDef<T_Procedure> df; return df; }
 	};
@@ -124,8 +124,8 @@ using namespace mud; namespace toy
 
 #ifndef MUD_CPP_20
 #include <stl/string.h>
-#include <cstdint>
 #include <stl/vector.h>
+#include <stdint.h>
 #endif
 
 
@@ -136,8 +136,8 @@ namespace mud
     export_ template <> TOY_UTIL_EXPORT Type& type<toy::Procedure>();
     export_ template <> TOY_UTIL_EXPORT Type& type<toy::ProcedureType>();
     
-    export_ template struct TOY_UTIL_EXPORT Typed<vector<toy::Procedure*>>;
-    export_ template struct TOY_UTIL_EXPORT Typed<vector<toy::ProcedureType*>>;
+    export_ template <> TOY_UTIL_EXPORT Type& type<vector<toy::Procedure*>>();
+    export_ template <> TOY_UTIL_EXPORT Type& type<vector<toy::ProcedureType*>>();
 }
 
 

@@ -4,7 +4,6 @@
 module toy.block;
 #else
 #include <type/Vector.h>
-#include <type/Any.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
 #include <meta/type/Module.h>
@@ -19,6 +18,54 @@ module toy.block;
 
 #include <block/Api.h>
 
+using namespace mud;
+
+void toy_MatterState__to_string(void* val, string& str) { str = g_enu[type<toy::MatterState>().m_id]->name(uint32_t((*static_cast<toy::MatterState*>(val)))); }
+void toy_MatterState__to_value(const string& str, void* val) { (*static_cast<toy::MatterState*>(val)) = toy::MatterState(g_enu[type<toy::MatterState>().m_id]->value(str.c_str())); }
+size_t array_toy_Element____size(void* vec) { return (*static_cast<array<toy::Element*>*>(vec)).size(); }
+void* array_toy_Element____at(void* vec, size_t i) { return &(*static_cast<array<toy::Element*>*>(vec))[i]; }
+size_t vector_toy_Block____size(void* vec) { return (*static_cast<vector<toy::Block*>*>(vec)).size(); }
+void* vector_toy_Block____at(void* vec, size_t i) { return &(*static_cast<vector<toy::Block*>*>(vec))[i]; }
+void vector_toy_Block____add(void* vec, void* value) { (*static_cast<vector<toy::Block*>*>(vec)).push_back(static_cast<toy::Block*>(value)); }
+void vector_toy_Block____remove(void* vec, void* value) { vector_remove_any((*static_cast<vector<toy::Block*>*>(vec)), static_cast<toy::Block*>(value)); }
+size_t vector_toy_Sector____size(void* vec) { return (*static_cast<vector<toy::Sector*>*>(vec)).size(); }
+void* vector_toy_Sector____at(void* vec, size_t i) { return &(*static_cast<vector<toy::Sector*>*>(vec))[i]; }
+void vector_toy_Sector____add(void* vec, void* value) { (*static_cast<vector<toy::Sector*>*>(vec)).push_back(static_cast<toy::Sector*>(value)); }
+void vector_toy_Sector____remove(void* vec, void* value) { vector_remove_any((*static_cast<vector<toy::Sector*>*>(vec)), static_cast<toy::Sector*>(value)); }
+void toy_Block__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::Block*>(ref))) toy::Block(  ); }
+void toy_Block__construct_1(void* ref, array<void*> args) { new(stl::placeholder(), &(*static_cast<toy::Block*>(ref))) toy::Block( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HWorldPage*>(args[1]), static_cast<toy::Block*>(args[2]), *static_cast<size_t*>(args[3]), *static_cast<mud::vec3*>(args[4]) ); }
+void toy_Block_subdivide(void* object, array<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::Block*>(object)).subdivide(); }
+void toy_Block_reset(void* object, array<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::Block*>(object)).reset(); }
+void toy_Block_chunk(void* object, array<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Block*>(object)).chunk(*static_cast<size_t*>(args[0]), *static_cast<size_t*>(args[1]), *static_cast<size_t*>(args[2]), *static_cast<toy::Element*>(args[3])); }
+void toy_Block_commit(void* object, array<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::Block*>(object)).commit(); }
+void toy_Chunk__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::Chunk*>(ref))) toy::Chunk(  ); }
+void toy_Chunk__construct_1(void* ref, array<void*> args) { new(stl::placeholder(), &(*static_cast<toy::Chunk*>(ref))) toy::Chunk( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::Block*>(args[1]), *static_cast<size_t*>(args[2]), *static_cast<toy::Element*>(args[3]), *static_cast<float*>(args[4]) ); }
+void toy_Element__construct_0(void* ref, array<void*> args) { new(stl::placeholder(), &(*static_cast<toy::Element*>(ref))) toy::Element( static_cast<const char*>(args[0]), *static_cast<toy::MatterState*>(args[1]), *static_cast<mud::Colour*>(args[2]) ); }
+void mud_Grid_toy_Block____construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<mud::Grid<toy::Block*>*>(ref))) mud::Grid<toy::Block*>(  ); }
+void mud_Grid_toy_Block____copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<mud::Grid<toy::Block*>*>(ref))) mud::Grid<toy::Block*>((*static_cast<mud::Grid<toy::Block*>*>(other))); }
+void toy_Heap__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::Heap*>(ref))) toy::Heap(  ); }
+void toy_Heap__construct_1(void* ref, array<void*> args) { new(stl::placeholder(), &(*static_cast<toy::Heap*>(ref))) toy::Heap( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::Element*>(args[1]), *static_cast<float*>(args[2]) ); }
+void toy_Sector__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::Sector*>(ref))) toy::Sector(  ); }
+void toy_Sector__construct_1(void* ref, array<void*> args) { new(stl::placeholder(), &(*static_cast<toy::Sector*>(ref))) toy::Sector( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HWorldPage*>(args[1]), *static_cast<toy::HNavblock*>(args[2]), *static_cast<mud::uvec3*>(args[3]), *static_cast<mud::vec3*>(args[4]) ); }
+void toy_Tileblock__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::Tileblock*>(ref))) toy::Tileblock(  ); }
+void toy_Tileblock__construct_1(void* ref, array<void*> args) { new(stl::placeholder(), &(*static_cast<toy::Tileblock*>(ref))) toy::Tileblock( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HWorldPage*>(args[1]), *static_cast<toy::HNavblock*>(args[2]), *static_cast<mud::uvec3*>(args[3]), *static_cast<mud::vec3*>(args[4]), *static_cast<mud::WaveTileset*>(args[5]) ); }
+void mud_ComponentHandle_toy_Block___construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Block>*>(ref))) mud::ComponentHandle<toy::Block>(  ); }
+void mud_ComponentHandle_toy_Block___copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Block>*>(ref))) mud::ComponentHandle<toy::Block>((*static_cast<mud::ComponentHandle<toy::Block>*>(other))); }
+void mud_ComponentHandle_toy_Chunk___construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Chunk>*>(ref))) mud::ComponentHandle<toy::Chunk>(  ); }
+void mud_ComponentHandle_toy_Chunk___copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Chunk>*>(ref))) mud::ComponentHandle<toy::Chunk>((*static_cast<mud::ComponentHandle<toy::Chunk>*>(other))); }
+void mud_ComponentHandle_toy_Heap___construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Heap>*>(ref))) mud::ComponentHandle<toy::Heap>(  ); }
+void mud_ComponentHandle_toy_Heap___copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Heap>*>(ref))) mud::ComponentHandle<toy::Heap>((*static_cast<mud::ComponentHandle<toy::Heap>*>(other))); }
+void mud_ComponentHandle_toy_Sector___construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Sector>*>(ref))) mud::ComponentHandle<toy::Sector>(  ); }
+void mud_ComponentHandle_toy_Sector___copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Sector>*>(ref))) mud::ComponentHandle<toy::Sector>((*static_cast<mud::ComponentHandle<toy::Sector>*>(other))); }
+void mud_ComponentHandle_toy_Tileblock___construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Tileblock>*>(ref))) mud::ComponentHandle<toy::Tileblock>(  ); }
+void mud_ComponentHandle_toy_Tileblock___copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<mud::ComponentHandle<toy::Tileblock>*>(ref))) mud::ComponentHandle<toy::Tileblock>((*static_cast<mud::ComponentHandle<toy::Tileblock>*>(other))); }
+void toy_Earth__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::Earth*>(ref))) toy::Earth(  ); }
+void toy_paint_block_height_0(array<void*> args, void*& result) { UNUSED(result);  toy::paint_block_height(*static_cast<toy::Block*>(args[0]), *static_cast<mud::Image256*>(args[1]), *static_cast<toy::Element*>(args[2])); }
+void toy_paint_block_elements_1(array<void*> args, void*& result) { UNUSED(result);  toy::paint_block_elements(*static_cast<toy::Block*>(args[0]), *static_cast<mud::Image256*>(args[1]), *static_cast<array<toy::Element*>*>(args[2])); }
+void toy_generate_block_2(array<void*> args, void*& result) { (*static_cast<toy::HTileblock*>(result)) = toy::generate_block(*static_cast<mud::GfxSystem*>(args[0]), *static_cast<mud::WaveTileset*>(args[1]), *static_cast<toy::HSpatial*>(args[2]), *static_cast<mud::ivec2*>(args[3]), *static_cast<mud::uvec3*>(args[4]), *static_cast<mud::vec3*>(args[5]), *static_cast<bool*>(args[6])); }
+void toy_build_block_geometry_3(array<void*> args, void*& result) { UNUSED(result);  toy::build_block_geometry(*static_cast<mud::Scene*>(args[0]), *static_cast<toy::WorldPage*>(args[1]), *static_cast<toy::Tileblock*>(args[2])); }
+void toy_index_blocks_4(array<void*> args, void*& result) { UNUSED(result);  toy::index_blocks(*static_cast<mud::uvec3*>(args[0]), *static_cast<mud::Grid<toy::Block*>*>(args[1]), *static_cast<vector<toy::Block*>*>(args[2]), *static_cast<vector<toy::Sector*>*>(args[3])); }
+
 namespace mud
 {
 	void toy_block_meta(Module& m)
@@ -29,417 +76,341 @@ namespace mud
 	
 	// Enums
 	{
-		static Meta meta = { type<toy::MatterState>(), &namspc({ "toy" }), "MatterState", sizeof(toy::MatterState), TypeClass::Enum };
-		static Enum enu = { type<toy::MatterState>(),
-			true,
-			{ "Solid", "Liquid", "Gas", "Plasma" },
-			{ 0, 1, 2, 3 },
-			{ var(toy::MatterState::Solid), var(toy::MatterState::Liquid), var(toy::MatterState::Gas), var(toy::MatterState::Plasma) }
-		};
-		meta_enum<toy::MatterState>();
+		Type& t = type<toy::MatterState>();
+		static Meta meta = { t, &namspc({ "toy" }), "MatterState", sizeof(toy::MatterState), TypeClass::Enum };
+		static cstring ids[] = { "Solid", "Liquid", "Gas", "Plasma" };
+		static uint32_t values[] = { 0, 1, 2, 3 };
+		static toy::MatterState vars[] = { toy::MatterState::Solid, toy::MatterState::Liquid, toy::MatterState::Gas, toy::MatterState::Plasma};
+		static void* refs[] = { &vars[0], &vars[1], &vars[2], &vars[3]};
+		static Enum enu = { t, true, ids, values, refs };
+		static Convert convert = { toy_MatterState__to_string,
+		                           toy_MatterState__to_value };
+		g_convert[t.m_id] = &convert;
 	}
 	
 	// Sequences
 	{
-		static Meta meta = { type<array<toy::Element*>>(), &namspc({}), "array<toy::Element*>", sizeof(array<toy::Element*>), TypeClass::Sequence };
-		static Class cls = { type<array<toy::Element*>>() };
-		cls.m_content = &type<toy::Element>();
-		meta_sequence<array<toy::Element*>, toy::Element*>();
+		Type& t = type<array<toy::Element*>>();
+		static Meta meta = { t, &namspc({}), "array<toy::Element*>", sizeof(array<toy::Element*>), TypeClass::Sequence };
+		static Class cls = { t };
+		static Iterable iterable = { &type<toy::Element>(),
+		                             array_toy_Element____size,
+		                             array_toy_Element____at};
+		g_iterable[t.m_id] = &iterable;
 	}
 	{
-		static Meta meta = { type<vector<toy::Block*>>(), &namspc({}), "vector<toy::Block*>", sizeof(vector<toy::Block*>), TypeClass::Sequence };
-		static Class cls = { type<vector<toy::Block*>>() };
-		cls.m_content = &type<toy::Block>();
-		meta_vector<vector<toy::Block*>, toy::Block*>();
+		Type& t = type<vector<toy::Block*>>();
+		static Meta meta = { t, &namspc({}), "vector<toy::Block*>", sizeof(vector<toy::Block*>), TypeClass::Sequence };
+		static Class cls = { t };
+		static Iterable iterable = { &type<toy::Block>(),
+		                             vector_toy_Block____size,
+		                             vector_toy_Block____at};
+		g_iterable[t.m_id] = &iterable;
+		static Sequence sequence = { vector_toy_Block____add,
+		                             vector_toy_Block____remove };
+		g_sequence[t.m_id] = &sequence;
 	}
 	{
-		static Meta meta = { type<vector<toy::Sector*>>(), &namspc({}), "vector<toy::Sector*>", sizeof(vector<toy::Sector*>), TypeClass::Sequence };
-		static Class cls = { type<vector<toy::Sector*>>() };
-		cls.m_content = &type<toy::Sector>();
-		meta_vector<vector<toy::Sector*>, toy::Sector*>();
+		Type& t = type<vector<toy::Sector*>>();
+		static Meta meta = { t, &namspc({}), "vector<toy::Sector*>", sizeof(vector<toy::Sector*>), TypeClass::Sequence };
+		static Class cls = { t };
+		static Iterable iterable = { &type<toy::Sector>(),
+		                             vector_toy_Sector____size,
+		                             vector_toy_Sector____at};
+		g_iterable[t.m_id] = &iterable;
+		static Sequence sequence = { vector_toy_Sector____add,
+		                             vector_toy_Sector____remove };
+		g_sequence[t.m_id] = &sequence;
 	}
 	
 	// toy::Block
 	{
-		static Meta meta = { type<toy::Block>(), &namspc({ "toy" }), "Block", sizeof(toy::Block), TypeClass::Object };
-		static Class cls = { type<toy::Block>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-				{ type<toy::Block>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Block>(ref)) toy::Block(  ); }, {} },
-				{ type<toy::Block>(), [](Ref ref, array<Var> args) { new(&val<toy::Block>(ref)) toy::Block( val<toy::HSpatial>(args[0]), val<toy::HWorldPage>(args[1]), &val<toy::Block>(args[2]), val<size_t>(args[3]), val<mud::vec3>(args[4]) ); }, { { "spatial", var(toy::HSpatial()) }, { "world_page", var(toy::HWorldPage()) }, { "parentblock", Ref(type<toy::Block>()), Param::Nullable }, { "index", var(size_t()) }, { "size", var(mud::vec3()) } } }
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::Block>(), member_address(&toy::Block::m_world_page), type<toy::HWorldPage>(), "world_page", var(toy::HWorldPage()), Member::Value, nullptr },
-				{ type<toy::Block>(), member_address(&toy::Block::m_parentblock), type<toy::Block>(), "parentblock", Ref(type<toy::Block>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-				{ type<toy::Block>(), member_address(&toy::Block::m_index), type<size_t>(), "index", var(size_t()), Member::Value, nullptr },
-				{ type<toy::Block>(), member_address(&toy::Block::m_size), type<mud::vec3>(), "size", var(mud::vec3()), Member::Value, nullptr },
-				{ type<toy::Block>(), member_address(&toy::Block::m_updated), type<size_t>(), "updated", var(size_t(0)), Member::Value, nullptr }
-			},
-			// methods
-			{
-				{ type<toy::Block>(), "subdivide", member_address<void(toy::Block::*)()>(&toy::Block::subdivide), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::Block>(object).subdivide(); }, {}, Var() },
-				{ type<toy::Block>(), "reset", member_address<void(toy::Block::*)()>(&toy::Block::reset), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::Block>(object).reset(); }, {}, Var() },
-				{ type<toy::Block>(), "chunk", member_address<void(toy::Block::*)(size_t, size_t, size_t, toy::Element&)>(&toy::Block::chunk), [](Ref object, array<Var> args, Var& result) { UNUSED(result); val<toy::Block>(object).chunk(val<size_t>(args[0]), val<size_t>(args[1]), val<size_t>(args[2]), val<toy::Element>(args[3])); }, { { "x", var(size_t()) }, { "y", var(size_t()) }, { "z", var(size_t()) }, { "element", Ref(type<toy::Element>()) } }, Var() },
-				{ type<toy::Block>(), "commit", member_address<void(toy::Block::*)()>(&toy::Block::commit), [](Ref object, array<Var> args, Var& result) { UNUSED(result); UNUSED(args); val<toy::Block>(object).commit(); }, {}, Var() }
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::Block>();
+		static Meta meta = { t, &namspc({ "toy" }), "Block", sizeof(toy::Block), TypeClass::Object };
+		// bases
+		// defaults
+		static toy::Block* parentblock_default = nullptr;
+		static size_t updated_default = 0;
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Block__construct_0, {} },
+			{ t, toy_Block__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "world_page", type<toy::HWorldPage>(),  }, { "parentblock", type<toy::Block>(), Param::Nullable }, { "index", type<size_t>(),  }, { "size", type<mud::vec3>(),  } } }
 		};
-		init_pool<toy::Block>();
-		meta_class<toy::Block>();
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Block, m_world_page), type<toy::HWorldPage>(), "world_page", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Block, m_parentblock), type<toy::Block>(), "parentblock", parentblock_default, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(toy::Block, m_index), type<size_t>(), "index", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Block, m_size), type<mud::vec3>(), "size", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Block, m_updated), type<size_t>(), "updated", &updated_default, Member::Value, nullptr }
+		};
+		// methods
+		static Method methods[] = {
+			{ t, "subdivide", Address(), toy_Block_subdivide, {}, g_qvoid },
+			{ t, "reset", Address(), toy_Block_reset, {}, g_qvoid },
+			{ t, "chunk", Address(), toy_Block_chunk, { { "x", type<size_t>(),  }, { "y", type<size_t>(),  }, { "z", type<size_t>(),  }, { "element", type<toy::Element>(),  } }, g_qvoid },
+			{ t, "commit", Address(), toy_Block_commit, {}, g_qvoid }
+		};
+		// static members
+		static Class cls = { t, {}, {}, constructors, {}, members, methods, {}, };
 	}
 	// toy::Chunk
 	{
-		static Meta meta = { type<toy::Chunk>(), &namspc({ "toy" }), "Chunk", sizeof(toy::Chunk), TypeClass::Object };
-		static Class cls = { type<toy::Chunk>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-				{ type<toy::Chunk>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Chunk>(ref)) toy::Chunk(  ); }, {} },
-				{ type<toy::Chunk>(), [](Ref ref, array<Var> args) { new(&val<toy::Chunk>(ref)) toy::Chunk( val<toy::HSpatial>(args[0]), val<toy::Block>(args[1]), val<size_t>(args[2]), val<toy::Element>(args[3]), val<float>(args[4]) ); }, { { "spatial", var(toy::HSpatial()) }, { "block", Ref(type<toy::Block>()) }, { "index", var(size_t()) }, { "element", Ref(type<toy::Element>()) }, { "size", var(float()) } } }
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::Chunk>(), member_address(&toy::Chunk::m_index), type<size_t>(), "index", var(size_t()), Member::Value, nullptr },
-				{ type<toy::Chunk>(), member_address(&toy::Chunk::m_block), type<toy::Block>(), "block", Ref(type<toy::Block>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-				{ type<toy::Chunk>(), member_address(&toy::Chunk::m_element), type<toy::Element>(), "element", Ref(type<toy::Element>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-				{ type<toy::Chunk>(), member_address(&toy::Chunk::m_size), type<float>(), "size", var(float()), Member::Value, nullptr }
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::Chunk>();
+		static Meta meta = { t, &namspc({ "toy" }), "Chunk", sizeof(toy::Chunk), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Chunk__construct_0, {} },
+			{ t, toy_Chunk__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "block", type<toy::Block>(),  }, { "index", type<size_t>(),  }, { "element", type<toy::Element>(),  }, { "size", type<float>(),  } } }
 		};
-		init_pool<toy::Chunk>();
-		meta_class<toy::Chunk>();
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Chunk, m_index), type<size_t>(), "index", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Chunk, m_block), type<toy::Block>(), "block", nullptr, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(toy::Chunk, m_element), type<toy::Element>(), "element", nullptr, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(toy::Chunk, m_size), type<float>(), "size", nullptr, Member::Value, nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
 	}
 	// toy::Element
 	{
-		static Meta meta = { type<toy::Element>(), &namspc({ "toy" }), "Element", sizeof(toy::Element), TypeClass::Object };
-		static Class cls = { type<toy::Element>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-				{ type<toy::Element>(), [](Ref ref, array<Var> args) { new(&val<toy::Element>(ref)) toy::Element( val<const char*>(args[0]), val<toy::MatterState>(args[1]), val<mud::Colour>(args[2]) ); }, { { "name", Ref(type<const char*>()), Param::Nullable }, { "state", var(toy::MatterState()) }, { "colour", var(mud::Colour()) } } }
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::Element>(), member_address(&toy::Element::m_id), type<uint32_t>(), "id", var(uint32_t()), Member::Value, nullptr },
-				{ type<toy::Element>(), member_address(&toy::Element::m_name), type<string>(), "name", var(string()), Member::Value, nullptr },
-				{ type<toy::Element>(), member_address(&toy::Element::m_state), type<toy::MatterState>(), "state", var(toy::MatterState()), Member::Value, nullptr },
-				{ type<toy::Element>(), member_address(&toy::Element::m_colour), type<mud::Colour>(), "colour", var(mud::Colour()), Member::Value, nullptr }
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::Element>();
+		static Meta meta = { t, &namspc({ "toy" }), "Element", sizeof(toy::Element), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Element__construct_0, { { "name", type<const char*>(), Param::Nullable }, { "state", type<toy::MatterState>(),  }, { "colour", type<mud::Colour>(),  } } }
 		};
-		init_pool<toy::Element>();
-		meta_class<toy::Element>();
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Element, m_id), type<uint32_t>(), "id", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Element, m_name), type<string>(), "name", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Element, m_state), type<toy::MatterState>(), "state", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Element, m_colour), type<mud::Colour>(), "colour", nullptr, Member::Value, nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
 	}
 	// mud::Grid<toy::Block*>
 	{
-		static Meta meta = { type<mud::Grid<toy::Block*>>(), &namspc({ "mud" }), "Grid<toy::Block*>", sizeof(mud::Grid<toy::Block*>), TypeClass::Struct };
-		static Class cls = { type<mud::Grid<toy::Block*>>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-				{ type<mud::Grid<toy::Block*>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::Grid<toy::Block*>>(ref)) mud::Grid<toy::Block*>(  ); }, {} }
-			},
-			// copy constructor
-			{
-				{ type<mud::Grid<toy::Block*>>(), [](Ref ref, Ref other) { new(&val<mud::Grid<toy::Block*>>(ref)) mud::Grid<toy::Block*>(val<mud::Grid<toy::Block*>>(other)); } }
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<mud::Grid<toy::Block*>>();
+		static Meta meta = { t, &namspc({ "mud" }), "Grid<toy::Block*>", sizeof(mud::Grid<toy::Block*>), TypeClass::Struct };
+		// bases
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, mud_Grid_toy_Block____construct_0, {} }
 		};
-		meta_class<mud::Grid<toy::Block*>>();
+		// copy constructor
+		static CopyConstructor copy_constructor[] = {
+			{ t, mud_Grid_toy_Block____copy_construct }
+		};
+		// members
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, constructors, copy_constructor, {}, {}, {}, };
 	}
 	// toy::Heap
 	{
-		static Meta meta = { type<toy::Heap>(), &namspc({ "toy" }), "Heap", sizeof(toy::Heap), TypeClass::Object };
-		static Class cls = { type<toy::Heap>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-				{ type<toy::Heap>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Heap>(ref)) toy::Heap(  ); }, {} },
-				{ type<toy::Heap>(), [](Ref ref, array<Var> args) { new(&val<toy::Heap>(ref)) toy::Heap( val<toy::HSpatial>(args[0]), val<toy::Element>(args[1]), val<float>(args[2]) ); }, { { "spatial", var(toy::HSpatial()) }, { "element", Ref(type<toy::Element>()) }, { "radius", var(float()) } } }
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::Heap>(), member_address(&toy::Heap::m_element), type<toy::Element>(), "element", Ref(type<toy::Element>()), Member::Flags(Member::Pointer|Member::Link), nullptr },
-				{ type<toy::Heap>(), member_address(&toy::Heap::m_radius), type<float>(), "radius", var(float()), Member::Value, nullptr }
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::Heap>();
+		static Meta meta = { t, &namspc({ "toy" }), "Heap", sizeof(toy::Heap), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Heap__construct_0, {} },
+			{ t, toy_Heap__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "element", type<toy::Element>(),  }, { "radius", type<float>(),  } } }
 		};
-		init_pool<toy::Heap>();
-		meta_class<toy::Heap>();
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Heap, m_element), type<toy::Element>(), "element", nullptr, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(toy::Heap, m_radius), type<float>(), "radius", nullptr, Member::Value, nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
 	}
 	// toy::Sector
 	{
-		static Meta meta = { type<toy::Sector>(), &namspc({ "toy" }), "Sector", sizeof(toy::Sector), TypeClass::Object };
-		static Class cls = { type<toy::Sector>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-				{ type<toy::Sector>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Sector>(ref)) toy::Sector(  ); }, {} },
-				{ type<toy::Sector>(), [](Ref ref, array<Var> args) { new(&val<toy::Sector>(ref)) toy::Sector( val<toy::HSpatial>(args[0]), val<toy::HWorldPage>(args[1]), val<toy::HNavblock>(args[2]), val<mud::uvec3>(args[3]), val<mud::vec3>(args[4]) ); }, { { "spatial", var(toy::HSpatial()) }, { "world_page", var(toy::HWorldPage()) }, { "navblock", var(toy::HNavblock()) }, { "coordinate", var(mud::uvec3()) }, { "size", var(mud::vec3()) } } }
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::Sector>(), member_address(&toy::Sector::m_coordinate), type<mud::uvec3>(), "coordinate", var(mud::uvec3()), Member::Value, nullptr },
-				{ type<toy::Sector>(), member_address(&toy::Sector::m_size), type<mud::vec3>(), "size", var(mud::vec3()), Member::Value, nullptr },
-				{ type<toy::Sector>(), member_address(&toy::Sector::m_block), type<toy::Block>(), "block", Ref(type<toy::Block>()), Member::Flags(Member::Pointer|Member::Link), nullptr }
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::Sector>();
+		static Meta meta = { t, &namspc({ "toy" }), "Sector", sizeof(toy::Sector), TypeClass::Object };
+		// bases
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Sector__construct_0, {} },
+			{ t, toy_Sector__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "world_page", type<toy::HWorldPage>(),  }, { "navblock", type<toy::HNavblock>(),  }, { "coordinate", type<mud::uvec3>(),  }, { "size", type<mud::vec3>(),  } } }
 		};
-		init_pool<toy::Sector>();
-		meta_class<toy::Sector>();
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Sector, m_coordinate), type<mud::uvec3>(), "coordinate", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Sector, m_size), type<mud::vec3>(), "size", nullptr, Member::Value, nullptr },
+			{ t, offsetof(toy::Sector, m_block), type<toy::Block>(), "block", nullptr, Member::Flags(Member::Pointer|Member::Link), nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
 	}
 	// toy::Tileblock
 	{
-		static Meta meta = { type<toy::Tileblock>(), &namspc({ "toy" }), "Tileblock", sizeof(toy::Tileblock), TypeClass::Object };
-		static Class cls = { type<toy::Tileblock>(),
-			// bases
-			{  },
-			{  },
-			// constructors
-			{
-				{ type<toy::Tileblock>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Tileblock>(ref)) toy::Tileblock(  ); }, {} },
-				{ type<toy::Tileblock>(), [](Ref ref, array<Var> args) { new(&val<toy::Tileblock>(ref)) toy::Tileblock( val<toy::HSpatial>(args[0]), val<toy::HWorldPage>(args[1]), val<toy::HNavblock>(args[2]), val<mud::uvec3>(args[3]), val<mud::vec3>(args[4]), val<mud::WaveTileset>(args[5]) ); }, { { "spatial", var(toy::HSpatial()) }, { "world_page", var(toy::HWorldPage()) }, { "navblock", var(toy::HNavblock()) }, { "size", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "tileset", var(mud::WaveTileset()) } } }
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-				{ type<toy::Tileblock>(), member_address(&toy::Tileblock::m_wfc_block), type<mud::WfcBlock>(), "wfc_block", Ref(type<mud::WfcBlock>()), Member::NonMutable, nullptr },
-				{ type<toy::Tileblock>(), member_address(&toy::Tileblock::m_setup), type<bool>(), "setup", var(bool(false)), Member::Value, nullptr },
-				{ type<toy::Tileblock>(), member_address(&toy::Tileblock::m_populated), type<bool>(), "populated", var(bool(false)), Member::Value, nullptr }
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<toy::Tileblock>();
+		static Meta meta = { t, &namspc({ "toy" }), "Tileblock", sizeof(toy::Tileblock), TypeClass::Object };
+		// bases
+		// defaults
+		static bool setup_default = false;
+		static bool populated_default = false;
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Tileblock__construct_0, {} },
+			{ t, toy_Tileblock__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "world_page", type<toy::HWorldPage>(),  }, { "navblock", type<toy::HNavblock>(),  }, { "size", type<mud::uvec3>(),  }, { "tile_scale", type<mud::vec3>(),  }, { "tileset", type<mud::WaveTileset>(),  } } }
 		};
-		init_pool<toy::Tileblock>();
-		meta_class<toy::Tileblock>();
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Tileblock, m_wfc_block), type<mud::WfcBlock>(), "wfc_block", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(toy::Tileblock, m_setup), type<bool>(), "setup", &setup_default, Member::Value, nullptr },
+			{ t, offsetof(toy::Tileblock, m_populated), type<bool>(), "populated", &populated_default, Member::Value, nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
 	}
 	// mud::ComponentHandle<toy::Block>
 	{
-		static Meta meta = { type<mud::ComponentHandle<toy::Block>>(), &namspc({ "mud" }), "ComponentHandle<toy::Block>", sizeof(mud::ComponentHandle<toy::Block>), TypeClass::Struct };
-		static Class cls = { type<mud::ComponentHandle<toy::Block>>(),
-			// bases
-			{ &type<mud::Entity>() },
-			{ base_offset<mud::ComponentHandle<toy::Block>, mud::Entity>() },
-			// constructors
-			{
-				{ type<mud::ComponentHandle<toy::Block>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Block>>(ref)) mud::ComponentHandle<toy::Block>(  ); }, {} }
-			},
-			// copy constructor
-			{
-				{ type<mud::ComponentHandle<toy::Block>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<toy::Block>>(ref)) mud::ComponentHandle<toy::Block>(val<mud::ComponentHandle<toy::Block>>(other)); } }
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<mud::ComponentHandle<toy::Block>>();
+		static Meta meta = { t, &namspc({ "mud" }), "ComponentHandle<toy::Block>", sizeof(mud::ComponentHandle<toy::Block>), TypeClass::Struct };
+		// bases
+		static Type* bases[] = { &type<mud::Entity>() };
+		static size_t bases_offsets[] = { base_offset<mud::ComponentHandle<toy::Block>, mud::Entity>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, mud_ComponentHandle_toy_Block___construct_0, {} }
 		};
-		meta_class<mud::ComponentHandle<toy::Block>>();
+		// copy constructor
+		static CopyConstructor copy_constructor[] = {
+			{ t, mud_ComponentHandle_toy_Block___copy_construct }
+		};
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, copy_constructor, {}, {}, {}, };
 	}
 	// mud::ComponentHandle<toy::Chunk>
 	{
-		static Meta meta = { type<mud::ComponentHandle<toy::Chunk>>(), &namspc({ "mud" }), "ComponentHandle<toy::Chunk>", sizeof(mud::ComponentHandle<toy::Chunk>), TypeClass::Struct };
-		static Class cls = { type<mud::ComponentHandle<toy::Chunk>>(),
-			// bases
-			{ &type<mud::Entity>() },
-			{ base_offset<mud::ComponentHandle<toy::Chunk>, mud::Entity>() },
-			// constructors
-			{
-				{ type<mud::ComponentHandle<toy::Chunk>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Chunk>>(ref)) mud::ComponentHandle<toy::Chunk>(  ); }, {} }
-			},
-			// copy constructor
-			{
-				{ type<mud::ComponentHandle<toy::Chunk>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<toy::Chunk>>(ref)) mud::ComponentHandle<toy::Chunk>(val<mud::ComponentHandle<toy::Chunk>>(other)); } }
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<mud::ComponentHandle<toy::Chunk>>();
+		static Meta meta = { t, &namspc({ "mud" }), "ComponentHandle<toy::Chunk>", sizeof(mud::ComponentHandle<toy::Chunk>), TypeClass::Struct };
+		// bases
+		static Type* bases[] = { &type<mud::Entity>() };
+		static size_t bases_offsets[] = { base_offset<mud::ComponentHandle<toy::Chunk>, mud::Entity>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, mud_ComponentHandle_toy_Chunk___construct_0, {} }
 		};
-		meta_class<mud::ComponentHandle<toy::Chunk>>();
+		// copy constructor
+		static CopyConstructor copy_constructor[] = {
+			{ t, mud_ComponentHandle_toy_Chunk___copy_construct }
+		};
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, copy_constructor, {}, {}, {}, };
 	}
 	// mud::ComponentHandle<toy::Heap>
 	{
-		static Meta meta = { type<mud::ComponentHandle<toy::Heap>>(), &namspc({ "mud" }), "ComponentHandle<toy::Heap>", sizeof(mud::ComponentHandle<toy::Heap>), TypeClass::Struct };
-		static Class cls = { type<mud::ComponentHandle<toy::Heap>>(),
-			// bases
-			{ &type<mud::Entity>() },
-			{ base_offset<mud::ComponentHandle<toy::Heap>, mud::Entity>() },
-			// constructors
-			{
-				{ type<mud::ComponentHandle<toy::Heap>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Heap>>(ref)) mud::ComponentHandle<toy::Heap>(  ); }, {} }
-			},
-			// copy constructor
-			{
-				{ type<mud::ComponentHandle<toy::Heap>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<toy::Heap>>(ref)) mud::ComponentHandle<toy::Heap>(val<mud::ComponentHandle<toy::Heap>>(other)); } }
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<mud::ComponentHandle<toy::Heap>>();
+		static Meta meta = { t, &namspc({ "mud" }), "ComponentHandle<toy::Heap>", sizeof(mud::ComponentHandle<toy::Heap>), TypeClass::Struct };
+		// bases
+		static Type* bases[] = { &type<mud::Entity>() };
+		static size_t bases_offsets[] = { base_offset<mud::ComponentHandle<toy::Heap>, mud::Entity>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, mud_ComponentHandle_toy_Heap___construct_0, {} }
 		};
-		meta_class<mud::ComponentHandle<toy::Heap>>();
+		// copy constructor
+		static CopyConstructor copy_constructor[] = {
+			{ t, mud_ComponentHandle_toy_Heap___copy_construct }
+		};
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, copy_constructor, {}, {}, {}, };
 	}
 	// mud::ComponentHandle<toy::Sector>
 	{
-		static Meta meta = { type<mud::ComponentHandle<toy::Sector>>(), &namspc({ "mud" }), "ComponentHandle<toy::Sector>", sizeof(mud::ComponentHandle<toy::Sector>), TypeClass::Struct };
-		static Class cls = { type<mud::ComponentHandle<toy::Sector>>(),
-			// bases
-			{ &type<mud::Entity>() },
-			{ base_offset<mud::ComponentHandle<toy::Sector>, mud::Entity>() },
-			// constructors
-			{
-				{ type<mud::ComponentHandle<toy::Sector>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Sector>>(ref)) mud::ComponentHandle<toy::Sector>(  ); }, {} }
-			},
-			// copy constructor
-			{
-				{ type<mud::ComponentHandle<toy::Sector>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<toy::Sector>>(ref)) mud::ComponentHandle<toy::Sector>(val<mud::ComponentHandle<toy::Sector>>(other)); } }
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<mud::ComponentHandle<toy::Sector>>();
+		static Meta meta = { t, &namspc({ "mud" }), "ComponentHandle<toy::Sector>", sizeof(mud::ComponentHandle<toy::Sector>), TypeClass::Struct };
+		// bases
+		static Type* bases[] = { &type<mud::Entity>() };
+		static size_t bases_offsets[] = { base_offset<mud::ComponentHandle<toy::Sector>, mud::Entity>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, mud_ComponentHandle_toy_Sector___construct_0, {} }
 		};
-		meta_class<mud::ComponentHandle<toy::Sector>>();
+		// copy constructor
+		static CopyConstructor copy_constructor[] = {
+			{ t, mud_ComponentHandle_toy_Sector___copy_construct }
+		};
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, copy_constructor, {}, {}, {}, };
 	}
 	// mud::ComponentHandle<toy::Tileblock>
 	{
-		static Meta meta = { type<mud::ComponentHandle<toy::Tileblock>>(), &namspc({ "mud" }), "ComponentHandle<toy::Tileblock>", sizeof(mud::ComponentHandle<toy::Tileblock>), TypeClass::Struct };
-		static Class cls = { type<mud::ComponentHandle<toy::Tileblock>>(),
-			// bases
-			{ &type<mud::Entity>() },
-			{ base_offset<mud::ComponentHandle<toy::Tileblock>, mud::Entity>() },
-			// constructors
-			{
-				{ type<mud::ComponentHandle<toy::Tileblock>>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<mud::ComponentHandle<toy::Tileblock>>(ref)) mud::ComponentHandle<toy::Tileblock>(  ); }, {} }
-			},
-			// copy constructor
-			{
-				{ type<mud::ComponentHandle<toy::Tileblock>>(), [](Ref ref, Ref other) { new(&val<mud::ComponentHandle<toy::Tileblock>>(ref)) mud::ComponentHandle<toy::Tileblock>(val<mud::ComponentHandle<toy::Tileblock>>(other)); } }
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-			}
+		Type& t = type<mud::ComponentHandle<toy::Tileblock>>();
+		static Meta meta = { t, &namspc({ "mud" }), "ComponentHandle<toy::Tileblock>", sizeof(mud::ComponentHandle<toy::Tileblock>), TypeClass::Struct };
+		// bases
+		static Type* bases[] = { &type<mud::Entity>() };
+		static size_t bases_offsets[] = { base_offset<mud::ComponentHandle<toy::Tileblock>, mud::Entity>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, mud_ComponentHandle_toy_Tileblock___construct_0, {} }
 		};
-		meta_class<mud::ComponentHandle<toy::Tileblock>>();
+		// copy constructor
+		static CopyConstructor copy_constructor[] = {
+			{ t, mud_ComponentHandle_toy_Tileblock___copy_construct }
+		};
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, copy_constructor, {}, {}, {}, };
 	}
 	// toy::Earth
 	{
-		static Meta meta = { type<toy::Earth>(), &namspc({ "toy" }), "Earth", sizeof(toy::Earth), TypeClass::Object };
-		static Class cls = { type<toy::Earth>(),
-			// bases
-			{ &type<toy::Element>() },
-			{ base_offset<toy::Earth, toy::Element>() },
-			// constructors
-			{
-				{ type<toy::Earth>(), [](Ref ref, array<Var> args) { UNUSED(args); new(&val<toy::Earth>(ref)) toy::Earth(  ); }, {} }
-			},
-			// copy constructor
-			{
-			},
-			// members
-			{
-			},
-			// methods
-			{
-			},
-			// static members
-			{
-				{ type<toy::Earth>(), "me", Ref(&toy::Earth::me) }
-			}
+		Type& t = type<toy::Earth>();
+		static Meta meta = { t, &namspc({ "toy" }), "Earth", sizeof(toy::Earth), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<toy::Element>() };
+		static size_t bases_offsets[] = { base_offset<toy::Earth, toy::Element>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Earth__construct_0, {} }
 		};
-		init_pool<toy::Earth>();
-		meta_class<toy::Earth>();
+		// copy constructor
+		// members
+		// methods
+		// static members
+		static Static statics[] = {
+			{ t, "me", Ref(&toy::Earth::me) }
+		}
+		static Class cls = { t, bases, bases_offsets, constructors, {}, {}, {}, statics, };
 	}
 		m.m_types.push_back(&type<toy::Block>());
 		m.m_types.push_back(&type<toy::Chunk>());
@@ -459,33 +430,23 @@ namespace mud
 		m.m_types.push_back(&type<mud::ComponentHandle<toy::Tileblock>>());
 		m.m_types.push_back(&type<toy::Earth>());
 		{
-			auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::paint_block_height(val<toy::Block>(args[0]), val<mud::Image256>(args[1]), val<toy::Element>(args[2])); };
-			vector<Param> params = { { "block", Ref(type<toy::Block>()) }, { "image", var(mud::Image256()) }, { "element", Ref(type<toy::Element>()) } };
-			static Function f = { &namspc({ "toy" }), "paint_block_height", funcptr<void(*)(toy::Block&, mud::Image256&, toy::Element&)>(&toy::paint_block_height), func, params, Var() };
+			static Function f = { &namspc({ "toy" }), "paint_block_height", nullptr, toy_paint_block_height_0, { { "block", type<toy::Block>(),  }, { "image", type<mud::Image256>(),  }, { "element", type<toy::Element>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 		{
-			auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::paint_block_elements(val<toy::Block>(args[0]), val<mud::Image256>(args[1]), val<array<toy::Element*>>(args[2])); };
-			vector<Param> params = { { "block", Ref(type<toy::Block>()) }, { "image", var(mud::Image256()) }, { "elements", var(array<toy::Element*>()) } };
-			static Function f = { &namspc({ "toy" }), "paint_block_elements", funcptr<void(*)(toy::Block&, mud::Image256&, array<toy::Element*>)>(&toy::paint_block_elements), func, params, Var() };
+			static Function f = { &namspc({ "toy" }), "paint_block_elements", nullptr, toy_paint_block_elements_1, { { "block", type<toy::Block>(),  }, { "image", type<mud::Image256>(),  }, { "elements", type<array<toy::Element*>>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 		{
-			auto func = [](array<Var> args, Var& result) {  val<toy::HTileblock>(result) = toy::generate_block(val<mud::GfxSystem>(args[0]), val<mud::WaveTileset>(args[1]), val<toy::HSpatial>(args[2]), val<mud::ivec2>(args[3]), val<mud::uvec3>(args[4]), val<mud::vec3>(args[5]), val<bool>(args[6])); };
-			vector<Param> params = { { "gfx_system", Ref(type<mud::GfxSystem>()) }, { "tileset", var(mud::WaveTileset()) }, { "origin", var(toy::HSpatial()) }, { "coord", var(mud::ivec2()) }, { "block_subdiv", var(mud::uvec3()) }, { "tile_scale", var(mud::vec3()) }, { "from_file", var(bool(true)), Param::Default } };
-			static Function f = { &namspc({ "toy" }), "generate_block", funcptr<toy::HTileblock(*)(mud::GfxSystem&, mud::WaveTileset&, toy::HSpatial, const mud::ivec2&, const mud::uvec3&, const mud::vec3&, bool)>(&toy::generate_block), func, params, var(toy::HTileblock()) };
+			static Function f = { &namspc({ "toy" }), "generate_block", nullptr, toy_generate_block_2, { { "gfx_system", type<mud::GfxSystem>(),  }, { "tileset", type<mud::WaveTileset>(),  }, { "origin", type<toy::HSpatial>(),  }, { "coord", type<mud::ivec2>(),  }, { "block_subdiv", type<mud::uvec3>(),  }, { "tile_scale", type<mud::vec3>(),  }, { "from_file", type<bool>(), Param::Default } }, { &type<toy::HTileblock>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 		{
-			auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::build_block_geometry(val<mud::Scene>(args[0]), val<toy::WorldPage>(args[1]), val<toy::Tileblock>(args[2])); };
-			vector<Param> params = { { "scene", Ref(type<mud::Scene>()) }, { "page", Ref(type<toy::WorldPage>()) }, { "block", Ref(type<toy::Tileblock>()) } };
-			static Function f = { &namspc({ "toy" }), "build_block_geometry", funcptr<void(*)(mud::Scene&, toy::WorldPage&, toy::Tileblock&)>(&toy::build_block_geometry), func, params, Var() };
+			static Function f = { &namspc({ "toy" }), "build_block_geometry", nullptr, toy_build_block_geometry_3, { { "scene", type<mud::Scene>(),  }, { "page", type<toy::WorldPage>(),  }, { "block", type<toy::Tileblock>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 		{
-			auto func = [](array<Var> args, Var& result) { UNUSED(result);  toy::index_blocks(val<mud::uvec3>(args[0]), val<mud::Grid<toy::Block*>>(args[1]), val<vector<toy::Block*>>(args[2]), val<vector<toy::Sector*>>(args[3])); };
-			vector<Param> params = { { "grid_size", var(mud::uvec3()) }, { "grid", var(mud::Grid<toy::Block*>()) }, { "blocks", var(vector<toy::Block*>()) }, { "sectors", var(vector<toy::Sector*>()) } };
-			static Function f = { &namspc({ "toy" }), "index_blocks", funcptr<void(*)(const mud::uvec3&, mud::Grid<toy::Block*>&, const vector<toy::Block*>&, const vector<toy::Sector*>&)>(&toy::index_blocks), func, params, Var() };
+			static Function f = { &namspc({ "toy" }), "index_blocks", nullptr, toy_index_blocks_4, { { "grid_size", type<mud::uvec3>(),  }, { "grid", type<mud::Grid<toy::Block*>>(),  }, { "blocks", type<vector<toy::Block*>>(),  }, { "sectors", type<vector<toy::Sector*>>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 	}

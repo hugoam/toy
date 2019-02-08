@@ -5,7 +5,9 @@
 
 #pragma once
 
-#include <ecs/Proto.h>
+#include <stl/vector.h>
+#include <stl/memory.h>
+#include <type/Proto.h>
 #include <math/Vec.h>
 #include <math/Grid.h>
 #include <core/Spatial/Spatial.h>
@@ -13,17 +15,12 @@
 #include <block/Forward.h>
 #include <block/Handles.h>
 
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#include <stl/memory.h>
-#endif
-
 namespace mud
 {
-	template struct refl_ TOY_BLOCK_EXPORT Grid<toy::Block*>;
+	extern template class refl_ vector2d<toy::Block*>;
 }
 
-using namespace mud; namespace toy
+namespace toy
 {
 	struct Hunk
 	{
@@ -38,7 +35,7 @@ using namespace mud; namespace toy
 	};
 
 	TOY_BLOCK_EXPORT func_ void paint_block_height(Block& block, Image256& image, Element& element);
-	TOY_BLOCK_EXPORT func_ void paint_block_elements(Block& block, Image256& image, array<Element*> elements);
+	TOY_BLOCK_EXPORT func_ void paint_block_elements(Block& block, Image256& image, span<Element*> elements);
 
 	class refl_ TOY_BLOCK_EXPORT Block
 	{
@@ -61,8 +58,8 @@ using namespace mud; namespace toy
 
 		bool m_subdived = false;
 
-		Grid<Element*> m_chunks;
-		Grid<HBlock> m_subblocks;
+		vector2d<Element*> m_chunks;
+		vector2d<HBlock> m_subblocks;
 
 		Block* m_neighbours[6] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
 

@@ -11,7 +11,7 @@
 
 #include <DetourNavMeshQuery.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Waypoint::create(ECS& ecs, HSpatial parent, const vec3& position)
 	{

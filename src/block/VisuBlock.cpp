@@ -8,13 +8,14 @@
 #include <infra/ToString.h>
 
 #include <math/Random.h>
+#include <geom/Shapes.h>
 
 #include <block/Block.h>
 #include <block/Element.h>
 #include <block/Sector.h>
 #include <block/Elements.h>
 
-#include <meta/math/Convert.h>
+#include <meta/math.conv.h>
 
 #include <gfx/Scene.h>
 #include <gfx/Item.h>
@@ -29,10 +30,12 @@
 
 #include <core/Spatial/Spatial.h>
 
+#include <cstdio>
+
 #define DEBUG_BLOCK 0
 #define BLOCK_WIREFRAME 1
 
-using namespace mud; namespace toy
+namespace toy
 {
 	void paint_heap(Gnode& parent, Heap& heap)
 	{

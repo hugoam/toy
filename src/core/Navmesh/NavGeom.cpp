@@ -7,7 +7,7 @@
 #include <core/Navmesh/ChunkyTriMesh.h>
 
 #include <geom/Intersect.h>
-#include <geom/Mesh.h>
+#include <geom/Geometry.h>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -18,7 +18,7 @@
 #include <DetourNavMesh.h>
 #include <DetourNavMeshBuilder.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	NavGeom::NavGeom(Geometry& geometry, cstring name)
 		: m_geometry(geometry)
@@ -55,7 +55,7 @@ using namespace mud; namespace toy
 
 		// Prune hit ray.
 		float btmin, btmax;
-		if (!segment_aabb_intersection(src, dst, m_geometry.m_bounds_min, m_geometry.m_bounds_max, btmin, btmax))
+		if(!segment_aabb_intersection(src, dst, m_geometry.m_bounds_min, m_geometry.m_bounds_max, btmin, btmax))
 			return false;
 		vec2 p, q;
 		p[0] = src[0] + (dst[0]-src[0])*btmin;
@@ -65,27 +65,27 @@ using namespace mud; namespace toy
 	
 		int cid[512];
 		const int ncid = rcGetChunksOverlappingSegment(m_chunkyMesh.get(), p, q, cid, 512);
-		if (!ncid)
+		if(!ncid)
 			return false;
 	
 		tmin = 1.0f;
 		bool hit = false;
 		//const float* verts = value_ptr(m_geometry.m_vertices[0].m_position);
 	
-		for (int i = 0; i < ncid; ++i)
+		for(int i = 0; i < ncid; ++i)
 		{
 			const rcChunkyTriMeshNode& node = m_chunkyMesh->nodes[cid[i]];
 			const int* tris = &m_chunkyMesh->tris[node.i*3];
 			const int ntris = node.n;
 
-			for (int j = 0; j < ntris*3; j += 3)
+			for(int j = 0; j < ntris*3; j += 3)
 			{
 				float t = 1;
-				if (segment_triangle_intersection(src, dst, m_geometry.m_vertices[tris[j]].m_position,
+				if(segment_triangle_intersection(src, dst, m_geometry.m_vertices[tris[j]].m_position,
 															m_geometry.m_vertices[tris[j+1]].m_position,
 															m_geometry.m_vertices[tris[j+2]].m_position, t))
 				{
-					if (t < tmin)
+					if(t < tmin)
 						tmin = t;
 					hit = true;
 				}
@@ -98,7 +98,7 @@ using namespace mud; namespace toy
 	void NavGeom::addOffMeshConnection(const float* spos, const float* epos, const float rad,
 										 unsigned char bidir, unsigned char area, unsigned short flags)
 	{
-		if (m_offMeshConCount >= MAX_OFFMESH_CONNECTIONS) return;
+		if(m_offMeshConCount >= MAX_OFFMESH_CONNECTIONS) return;
 		float* v = &m_offMeshConVerts[m_offMeshConCount*3*2];
 		m_offMeshConRads[m_offMeshConCount] = rad;
 		m_offMeshConDirs[m_offMeshConCount] = bidir;
@@ -126,7 +126,7 @@ using namespace mud; namespace toy
 	void NavGeom::addConvexVolume(const float* verts, const int nverts,
 									const float minh, const float maxh, unsigned char area)
 	{
-		if (m_volumeCount >= MAX_VOLUMES) return;
+		if(m_volumeCount >= MAX_VOLUMES) return;
 		ConvexVolume* vol = &m_volumes[m_volumeCount++];
 		memset(vol, 0, sizeof(ConvexVolume));
 		memcpy(vol->verts, verts, sizeof(float)*3*nverts);

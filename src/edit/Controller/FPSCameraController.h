@@ -7,7 +7,7 @@
 
 #include <edit/Controller/CameraController.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_EDIT_EXPORT FPSCameraController : public CameraController
 	{

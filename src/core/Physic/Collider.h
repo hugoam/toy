@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <stl/memory.h>
 #include <math/Vec.h>
 #include <pool/Pool.h>
 #include <core/Forward.h>
@@ -12,11 +13,7 @@
 #include <core/Physic/CollisionShape.h>
 #include <core/Movable/MotionState.h>
 
-#ifndef MUD_CPP_20
-#include <stl/memory.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	struct refl_ TOY_CORE_EXPORT Collision
 	{

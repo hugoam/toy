@@ -6,7 +6,7 @@
 #include <core/Types.h>
 #include <core/World/Origin.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Origin::create(ECS& ecs, World& world)
 	{

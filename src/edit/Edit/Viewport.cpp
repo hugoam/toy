@@ -6,9 +6,9 @@
 #include <edit/Types.h>
 #include <edit/Edit/Viewport.h>
 
+#include <tree/Graph.hpp>
 #include <ecs/Complex.h>
 #include <gfx/Item.h>
-#include <gfx-ui/Viewport.h>
 #include <gfx-ui/Viewer.h>
 
 #include <core/Camera/Camera.h>
@@ -17,11 +17,12 @@
 #include <core/Physic/PhysicWorld.h>
 
 #include <ui/Section.h>
+#include <ui/Style/Styles.h>
 #include <visu/VisuScene.h>
 
 #include <edit/Controller/RTSCameraController.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	vec3 pick_terrain(Viewer& viewer, World& world, vec2 position)
 	{
@@ -41,7 +42,7 @@ using namespace mud; namespace toy
 		update_camera(camera, viewer.m_camera);
 
 		viewer.m_controller->process(viewer);
-		viewport_picker(viewer, viewer, selection);
+		ui::viewport_picker(viewer, viewer, selection);
 		return viewer;
 	}
 }

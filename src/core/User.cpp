@@ -5,6 +5,6 @@
 
 #include <core/User.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 }

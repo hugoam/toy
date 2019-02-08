@@ -20,22 +20,22 @@
 
 namespace mud
 {
-	export_ template struct refl_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Collider>;
-	export_ template struct refl_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Solid>;
-	export_ template struct refl_ TOY_CORE_EXPORT SparseHandle<toy::Collider>;
-	export_ template struct refl_ TOY_CORE_EXPORT SparseHandle<toy::Solid>;
+	export_ extern template struct refl_ nocopy_ OwnedHandle<toy::Collider>;
+	export_ extern template struct refl_ nocopy_ OwnedHandle<toy::Solid>;
+	export_ extern template struct refl_ SparseHandle<toy::Collider>;
+	export_ extern template struct refl_ SparseHandle<toy::Solid>;
 
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Spatial>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Movable>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Camera>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Emitter>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Receptor>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::EntityScript>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::WorldPage>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Navblock>;
-	//export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Collider>;
-	//export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Solid>;
+	export_ extern template struct refl_ ComponentHandle<toy::Spatial>;
+	export_ extern template struct refl_ ComponentHandle<toy::Movable>;
+	export_ extern template struct refl_ ComponentHandle<toy::Camera>;
+	export_ extern template struct refl_ ComponentHandle<toy::Emitter>;
+	export_ extern template struct refl_ ComponentHandle<toy::Receptor>;
+	export_ extern template struct refl_ ComponentHandle<toy::EntityScript>;
+	export_ extern template struct refl_ ComponentHandle<toy::WorldPage>;
+	export_ extern template struct refl_ ComponentHandle<toy::Navblock>;
+	//export_ extern template struct refl_ ComponentHandle<toy::Collider>;
+	//export_ extern template struct refl_ ComponentHandle<toy::Solid>;
 
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Origin>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Waypoint>;
+	export_ extern template struct refl_ ComponentHandle<toy::Origin>;
+	export_ extern template struct refl_ ComponentHandle<toy::Waypoint>;
 }

@@ -9,7 +9,7 @@
 #include <core/Physic/Physic.h>
 #include <core/Physic/CollisionShape.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	AreaMedium AreaMedium::me;
 
@@ -25,7 +25,7 @@ using namespace mud; namespace toy
 		//: m_areaStore()
 	{
 		UNUSED(spatial);
-		//as<Emitter>(spatial).addEmitter(AreaMedium::me, make_object<SphereShape>(0.1f), CM_OBJECT);
+		//as<Emitter>(spatial).addEmitter(AreaMedium::me, oconstruct<SphereShape>(0.1f), CM_OBJECT);
 	}
 
     /*void Physic::handle_add(Collider& object)

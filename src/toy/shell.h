@@ -260,8 +260,8 @@ extern "C"
 
 #ifndef MUD_CPP_20
 #include <stl/string.h>
-#include <cstdint>
 #include <stl/vector.h>
+#include <stdint.h>
 #endif
 
 
@@ -276,10 +276,10 @@ namespace mud
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     
-    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::Game*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameModule*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameShell*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameModuleBind*>>;
-    export_ template struct TOY_SHELL_EXPORT Typed<vector<toy::GameScene*>>;
+    export_ template <> TOY_SHELL_EXPORT Type& type<vector<toy::Game*>>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<vector<toy::GameModule*>>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<vector<toy::GameShell*>>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<vector<toy::GameModuleBind*>>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<vector<toy::GameScene*>>();
 }
 

@@ -35,8 +35,8 @@ namespace toy
 
 #ifndef MUD_CPP_20
 #include <stl/string.h>
-#include <cstdint>
 #include <stl/vector.h>
+#include <stdint.h>
 #endif
 
 
@@ -47,8 +47,8 @@ namespace mud
     export_ template <> TOY_VISU_EXPORT Type& type<toy::PhysicDebugDraw>();
     export_ template <> TOY_VISU_EXPORT Type& type<toy::VisuScene>();
     
-    export_ template struct TOY_VISU_EXPORT Typed<vector<toy::PhysicDebugDraw*>>;
-    export_ template struct TOY_VISU_EXPORT Typed<vector<toy::VisuScene*>>;
+    export_ template <> TOY_VISU_EXPORT Type& type<vector<toy::PhysicDebugDraw*>>();
+    export_ template <> TOY_VISU_EXPORT Type& type<vector<toy::VisuScene*>>();
 }
 
 
@@ -116,7 +116,7 @@ using namespace mud; namespace toy
 
 		inline void painter(cstring name, function<void(size_t, VisuScene&, Gnode&)> paint)
 		{
-			m_painters.emplace_back(construct<VisuPainter>(name, m_painters.size(), paint));
+			m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
 		}
 
 		template <class T>
@@ -129,7 +129,7 @@ using namespace mud; namespace toy
 					paint_func(this->entity_node(parent, entity, spatial, index), component);
 				});
 			};
-			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
+			m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
 		}
 
 		template <class T, class T_PaintFunc>
@@ -146,7 +146,7 @@ using namespace mud; namespace toy
 						paint_func(this->entity_node(parent, entity, spatial, index), component);
 				});
 			};
-			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
+			m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
 		}
 
 		template <class T, class T_Container>
@@ -157,7 +157,7 @@ using namespace mud; namespace toy
 				for(auto object : objects)
 					paint_func(this->entity_node(parent, object->m_spatial.m_handle, object->m_spatial, index), *object);
 			};
-			m_painters.emplace_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
+			m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
 		}
 
 	private:

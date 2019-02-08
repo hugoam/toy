@@ -1,10 +1,10 @@
 #pragma once
 
 #include <mud/Modules.h>
-#include <meta/util/Module.h>
-#include <meta/core/Module.h>
-#include <meta/snd/Module.h>
-#include <meta/visu/Module.h>
-#include <meta/block/Module.h>
-#include <meta/edit/Module.h>
-#include <meta/shell/Module.h>
+#include <meta/util.meta.h>
+#include <meta/core.meta.h>
+#include <meta/snd.meta.h>
+#include <meta/visu.meta.h>
+#include <meta/block.meta.h>
+#include <meta/edit.meta.h>
+#include <meta/shell.meta.h>

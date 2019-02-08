@@ -9,7 +9,7 @@
 
 #include <algorithm>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	JobPump::JobPump()
 	{}

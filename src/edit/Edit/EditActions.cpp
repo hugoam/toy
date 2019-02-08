@@ -6,7 +6,7 @@
 
 #include <edit/Edit/EditActions.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	void Edit::begin()
 	{

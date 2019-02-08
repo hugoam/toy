@@ -115,7 +115,7 @@ namespace mud
 		Animator();
 
 		void next_frame(size_t tick, size_t delta);
-		void animate(Ref object, Member& member, Var value, float duration);
+		void animate(Ref object, Member& member, const Var& value, float duration);
 
 		Clock m_clock;
 		vector<Anim> m_animations;
@@ -123,7 +123,7 @@ namespace mud
 		static Animator me;
 	};
 
-	inline void animate(Ref object, Member& member, Var value, float duration)
+	inline void animate(Ref object, Member& member, const Var& value, float duration)
 	{
 		Animator::me.animate(object, member, value, duration);
 	}
@@ -1569,24 +1569,24 @@ using namespace mud; namespace toy
 
 namespace mud
 {
-	export_ template struct refl_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Collider>;
-	export_ template struct refl_ nocopy_ TOY_CORE_EXPORT OwnedHandle<toy::Solid>;
-	export_ template struct refl_ TOY_CORE_EXPORT SparseHandle<toy::Collider>;
-	export_ template struct refl_ TOY_CORE_EXPORT SparseHandle<toy::Solid>;
+	export_ extern template struct refl_ nocopy_ OwnedHandle<toy::Collider>;
+	export_ extern template struct refl_ nocopy_ OwnedHandle<toy::Solid>;
+	export_ extern template struct refl_ SparseHandle<toy::Collider>;
+	export_ extern template struct refl_ SparseHandle<toy::Solid>;
 
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Spatial>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Movable>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Camera>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Emitter>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Receptor>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::EntityScript>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::WorldPage>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Navblock>;
-	//export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Collider>;
-	//export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Solid>;
+	export_ extern template struct refl_ ComponentHandle<toy::Spatial>;
+	export_ extern template struct refl_ ComponentHandle<toy::Movable>;
+	export_ extern template struct refl_ ComponentHandle<toy::Camera>;
+	export_ extern template struct refl_ ComponentHandle<toy::Emitter>;
+	export_ extern template struct refl_ ComponentHandle<toy::Receptor>;
+	export_ extern template struct refl_ ComponentHandle<toy::EntityScript>;
+	export_ extern template struct refl_ ComponentHandle<toy::WorldPage>;
+	export_ extern template struct refl_ ComponentHandle<toy::Navblock>;
+	//export_ extern template struct refl_ ComponentHandle<toy::Collider>;
+	//export_ extern template struct refl_ ComponentHandle<toy::Solid>;
 
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Origin>;
-	export_ template struct refl_ TOY_CORE_EXPORT ComponentHandle<toy::Waypoint>;
+	export_ extern template struct refl_ ComponentHandle<toy::Origin>;
+	export_ extern template struct refl_ ComponentHandle<toy::Waypoint>;
 }
 
 
@@ -1598,8 +1598,8 @@ namespace mud
 
 #ifndef MUD_CPP_20
 #include <stl/string.h>
-#include <cstdint>
 #include <stl/vector.h>
+#include <stdint.h>
 #endif
 
 
@@ -1665,62 +1665,62 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::VisualMedium>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::WorldMedium>();
     
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::BulletMedium*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::BulletShape*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Camera*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Collider*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::ColliderImpl*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::ColliderObject*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Collision*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::CollisionShape*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::ComponentPool*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Core*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::DetourPath*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Emitter*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::EntityScript*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Medium*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Movable*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Navblock*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Navmesh*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Origin*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::OwnedHandle<toy::Collider>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::OwnedHandle<toy::Solid>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Pathfinder*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::PhysicWorld*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Receptor*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Solid*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::SolidImpl*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::SparseHandle<toy::Collider>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::SparseHandle<toy::Solid>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::User*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Waypoint*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::World*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::WorldClock*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::WorldPage*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::BulletCollider*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::BulletSolid*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::BulletWorld*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Camera>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Emitter>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::EntityScript>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Movable>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Navblock>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Origin>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Receptor>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Spatial>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::Waypoint>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<mud::ComponentHandle<toy::WorldPage>*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::DefaultWorld*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::EmitterScope*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::NavmeshShape*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Obstacle*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::PhysicScope*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::ReceptorScope*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::SolidMedium*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::SoundMedium*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::Spatial*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::VisualMedium*>>;
-    export_ template struct TOY_CORE_EXPORT Typed<vector<toy::WorldMedium*>>;
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::BulletMedium*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::BulletShape*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Camera*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Collider*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::ColliderImpl*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::ColliderObject*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Collision*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::CollisionShape*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::ComponentPool*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Core*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::DetourPath*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Emitter*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::EntityScript*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Medium*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Movable*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Navblock*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Navmesh*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Origin*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::OwnedHandle<toy::Collider>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::OwnedHandle<toy::Solid>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Pathfinder*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::PhysicWorld*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Receptor*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Solid*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::SolidImpl*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::SparseHandle<toy::Collider>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::SparseHandle<toy::Solid>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::User*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Waypoint*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::World*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::WorldClock*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::WorldPage*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::BulletCollider*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::BulletSolid*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::BulletWorld*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Camera>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Emitter>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::EntityScript>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Movable>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Navblock>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Origin>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Receptor>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Spatial>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::Waypoint>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<mud::ComponentHandle<toy::WorldPage>*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::DefaultWorld*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::EmitterScope*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::NavmeshShape*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Obstacle*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::PhysicScope*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::ReceptorScope*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::SolidMedium*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::SoundMedium*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::Spatial*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::VisualMedium*>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<vector<toy::WorldMedium*>>();
 }
 
 

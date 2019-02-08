@@ -26,7 +26,7 @@ class btPersistentManifold;
 class btCollisionConfiguration;
 class btCollisionDispatcher;
 
-using namespace mud; namespace toy
+namespace toy
 {
 #ifdef TRIGGER_COLLISIONS
 	static void collisionStarted(btPersistentManifold* manifold);

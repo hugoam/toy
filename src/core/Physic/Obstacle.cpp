@@ -11,7 +11,7 @@
 #include <core/Physic/Collider.h>
 #include <core/Physic/Medium.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Obstacle::Obstacle(HSpatial spatial, HMovable movable, Medium& medium, const CollisionShape& shape, float throughput)
 		: Collider(spatial, movable, shape, medium, CM_OBSTACLE)

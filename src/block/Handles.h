@@ -17,7 +17,7 @@ namespace mud
 	template <> struct TypedBuffer<toy::Heap>		{ static uint32_t index() { return 16; } };
 }
 
-using namespace mud; namespace toy
+namespace toy
 {
 	using HBlock = ComponentHandle<Block>;
 	using HChunk = ComponentHandle<Chunk>;

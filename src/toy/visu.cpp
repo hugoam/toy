@@ -1,5 +1,3 @@
-#pragma once
-
 #include <toy/visu.h>
 #include <mud/gfx.h>
 #include <mud/snd.h>
@@ -184,11 +182,11 @@ using namespace mud; namespace toy
 		virtual void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) final
 		{
 			ImmediateDraw::Batch* batch = m_immediate.batch(OUTLINE, 2);
-			uint32_t abgr = to_abgr(Colour(color.x(), color.y(), color.z()));
+			uint32_t abgr = to_abgr(to_colour(color));
 			uint16_t index = uint16_t(batch->m_vertices.size());
 
-			batch->m_vertices.push_back({ vec3(from.x(), from.y(), from.z()), abgr });
-			batch->m_vertices.push_back({ vec3(to.x(), to.y(), to.z()), abgr });
+			batch->m_vertices.push_back({ to_vec3(from), abgr });
+			batch->m_vertices.push_back({ to_vec3(to), abgr });
 
 			batch->m_indices.push_back(index);
 			batch->m_indices.push_back(index + 1);

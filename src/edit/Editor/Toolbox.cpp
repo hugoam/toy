@@ -12,7 +12,7 @@
 
 #include <core/Selector/Selection.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Toolbox::Toolbox(cstring name)
 		: m_name(name)
@@ -37,7 +37,7 @@ using namespace mud; namespace toy
 
 		for(auto& tool : m_tools)
 			if(tool->enabled(targets))
-				vector_add(m_current_tools, tool);
+				add(m_current_tools, tool);
 	}
 
 	Toolbelt::Toolbelt()
@@ -49,7 +49,7 @@ using namespace mud; namespace toy
 	Toolbox& Toolbelt::toolbox(cstring name)
 	{
 		if(!m_toolboxes[name])
-			m_toolboxes[name] = make_object<Toolbox>(name);
+			m_toolboxes[name] = oconstruct<Toolbox>(name);
 		return *m_toolboxes[name];
 	}
 

@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include <infra/NonCopy.h>
-#include <ecs/Loop.h>
 #include <ecs/Complex.h>
 #include <core/Forward.h>
 #include <core/World/Section.h>
@@ -14,9 +12,9 @@
 #include <core/Navmesh/Navmesh.h>
 #include <core/Bullet/BulletWorld.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
-	class refl_ TOY_CORE_EXPORT Core : public NonCopy
+	class refl_ TOY_CORE_EXPORT Core
 	{
 	public:
 		Core(JobSystem& job_system);

@@ -5,13 +5,12 @@
 
 #pragma once
 
-#include <infra/NonCopy.h>
 #include <type/Unique.h>
 #include <math/Vec.h>
 #include <geom/Shape.h>
 #include <core/Forward.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT CollisionShape
 	{
