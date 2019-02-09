@@ -107,8 +107,8 @@ void toy_Waypoint__construct_0(void* ref, span<void*> args) { UNUSED(args); new(
 void toy_Waypoint__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Waypoint( *static_cast<mud::ComponentHandle<toy::Spatial>*>(args[0]) ); }
 void toy_World__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::World( *static_cast<uint32_t*>(args[0]), *static_cast<mud::Complex*>(args[1]), *static_cast<stl::string*>(args[2]), *static_cast<mud::JobSystem*>(args[3]) ); }
 void* toy_World__get_complex(void* object) { return &(*static_cast<toy::World*>(object)).m_complex; }
-void* toy_World__get_origin(void* object) { return &(*static_cast<toy::World*>(object)).origin(); }
-void* toy_World__get_unworld(void* object) { return &(*static_cast<toy::World*>(object)).unworld(); }
+//void* toy_World__get_origin(void* object) { return &(*static_cast<toy::World*>(object)).origin(); }
+//void* toy_World__get_unworld(void* object) { return &(*static_cast<toy::World*>(object)).unworld(); }
 void toy_WorldPage__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::WorldPage(  ); }
 void toy_WorldPage__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::WorldPage( *static_cast<mud::ComponentHandle<toy::Spatial>*>(args[0]), *static_cast<bool*>(args[1]), *static_cast<mud::vec3*>(args[2]) ); }
 void toy_WorldPage_update_geometry(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::WorldPage*>(object)).update_geometry(*static_cast<size_t*>(args[0])); }
@@ -979,8 +979,8 @@ namespace mud
 			{ t, offsetof(toy::World, m_id), type<uint32_t>(), "id", nullptr, Member::Value, nullptr },
 			{ t, SIZE_MAX, type<mud::Complex>(), "complex", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_World__get_complex },
 			{ t, offsetof(toy::World, m_name), type<stl::string>(), "name", nullptr, Member::Value, nullptr },
-			{ t, SIZE_MAX, type<mud::ComponentHandle<toy::Spatial>>(), "origin", nullptr, Member::Flags(Member::Value|Member::NonMutable|Member::Structure), toy_World__get_origin },
-			{ t, SIZE_MAX, type<mud::ComponentHandle<toy::Spatial>>(), "unworld", nullptr, Member::Flags(Member::Value|Member::NonMutable|Member::Structure), toy_World__get_unworld }
+			//{ t, SIZE_MAX, type<mud::ComponentHandle<toy::Spatial>>(), "origin", nullptr, Member::Flags(Member::Value|Member::NonMutable|Member::Structure), toy_World__get_origin },
+			//{ t, SIZE_MAX, type<mud::ComponentHandle<toy::Spatial>>(), "unworld", nullptr, Member::Flags(Member::Value|Member::NonMutable|Member::Structure), toy_World__get_unworld }
 		};
 		// methods
 		// static members
