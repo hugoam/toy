@@ -10,10 +10,10 @@ module toy.shell;
 #include <type/Vector.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
-#include <meta/core.meta.h>
-#include <meta/visu.meta.h>
-#include <meta/edit.meta.h>
-#include <meta/block.meta.h>
+#include <meta/infra.meta.h>
+#include <meta/jobs.meta.h>
+#include <meta/type.meta.h>
+#include <meta/tree.meta.h>
 #include <meta/pool.meta.h>
 #include <meta/refl.meta.h>
 #include <meta/ecs.meta.h>
@@ -26,15 +26,12 @@ module toy.shell;
 #include <meta/uio.meta.h>
 #include <meta/bgfx.meta.h>
 #include <meta/gfx.meta.h>
-#include <meta/gfx.pbr.meta.h>
-#include <meta/gfx.obj.meta.h>
-#include <meta/gltf.meta.h>
-#include <meta/gfx.gltf.meta.h>
 #include <meta/gfx.ui.meta.h>
-#include <meta/gfx.edit.meta.h>
-#include <meta/tool.meta.h>
-#include <meta/wfc.gfx.meta.h>
 #include <meta/frame.meta.h>
+#include <meta/core.meta.h>
+#include <meta/visu.meta.h>
+#include <meta/edit.meta.h>
+#include <meta/block.meta.h>
 #include <meta/shell.meta.h>
 #include <meta/shell.conv.h>
 #endif
@@ -74,7 +71,7 @@ void toy_GameShell_cleanup(void* object, span<void*> args, void*& result) { UNUS
 void toy_GameShell_add_scene(void* object, span<void*> args, void*& result) { UNUSED(args); result = &(*static_cast<toy::GameShell*>(object)).add_scene(); }
 void toy_GameShell_remove_scene(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::GameShell*>(object)).remove_scene(*static_cast<toy::GameScene*>(args[0])); }
 void toy_GameShell_clear_scenes(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::GameShell*>(object)).clear_scenes(); }
-void toy_GameModuleBind__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::GameModuleBind( *static_cast<mud::Module*>(args[0]), *static_cast<const mud::VirtualMethod*>(args[1]) ); }
+void toy_GameModuleBind__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::GameModuleBind( *static_cast<mud::Module*>(args[0]), *static_cast<mud::VirtualMethod*>(args[1]) ); }
 void toy_paint_physics_0(span<void*> args, void*& result) { UNUSED(result);  toy::paint_physics(*static_cast<mud::Gnode*>(args[0]), *static_cast<toy::World*>(args[1])); }
 void toy_physic_painter_1(span<void*> args, void*& result) { UNUSED(result);  toy::physic_painter(*static_cast<toy::GameScene*>(args[0])); }
 
@@ -262,7 +259,7 @@ namespace mud
 namespace toy
 {
 	toy_shell::toy_shell()
-		: Module("toy::shell", { &toy_core::m(), &toy_visu::m(), &toy_edit::m(), &toy_block::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m(), &mud_ctx::m(), &mud_ui::m(), &mud_uio::m(), &mud_bgfx::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gltf::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_gfx_edit::m(), &mud_tool::m(), &mud_wfc_gfx::m(), &mud_frame::m() })
+		: Module("toy::shell", { &mud_infra::m(), &mud_jobs::m(), &mud_type::m(), &mud_tree::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m(), &mud_ctx::m(), &mud_ui::m(), &mud_uio::m(), &mud_bgfx::m(), &mud_gfx::m(), &mud_gfx_ui::m(), &mud_frame::m(), &toy_core::m(), &toy_visu::m(), &toy_edit::m(), &toy_block::m() })
 	{
 		// setup reflection meta data
 		toy_shell_meta(*this);

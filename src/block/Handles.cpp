@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <ecs/ECS.h>
+#include <ecs/ECS.hpp>
 #include <block/Forward.h>
 #include <block/Block.h>
 #include <block/Chunk.h>
@@ -13,9 +13,9 @@
 
 namespace mud
 {
-	export_ extern template struct refl_ ComponentHandle<toy::Block>;
-	export_ extern template struct refl_ ComponentHandle<toy::Chunk>;
-	export_ extern template struct refl_ ComponentHandle<toy::Heap>;
-	export_ extern template struct refl_ ComponentHandle<toy::Sector>;
-	export_ extern template struct refl_ ComponentHandle<toy::Tileblock>;
+	template struct ComponentHandle<toy::Block>;
+	template struct ComponentHandle<toy::Chunk>;
+	template struct ComponentHandle<toy::Heap>;
+	template struct ComponentHandle<toy::Sector>;
+	template struct ComponentHandle<toy::Tileblock>;
 }

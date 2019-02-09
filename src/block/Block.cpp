@@ -9,7 +9,8 @@ module toy.block
 #include <math/Grid.hpp>
 #include <math/Image256.h>
 #include <geom/Shapes.h>
-#include <core/World/World.h>
+#include <ecs/ECS.hpp>
+#include <core/World/World.hpp>
 #include <core/Spatial/Spatial.h>
 #include <core/Physic/Scope.h>
 #include <core/Physic/CollisionShape.h>
@@ -80,6 +81,7 @@ namespace toy
 		return entity;
 	}
 
+	Block::Block() {}
 	Block::Block(HSpatial spatial, HWorldPage world_page, Block* parentblock, size_t index, const vec3& size)
 		: m_spatial(spatial)
 		, m_world_page(world_page)

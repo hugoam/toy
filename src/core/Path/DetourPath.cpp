@@ -3,11 +3,15 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#ifdef MUD_MODULES
+module toy.core
+#else
+#include <ecs/ECS.hpp>
 #include <core/Types.h>
 #include <core/Path/DetourPath.h>
-
 #include <core/Spatial/Spatial.h>
 #include <core/Path/Pathfinder.h>
+#endif
 
 #include <DetourNavMeshQuery.h>
 

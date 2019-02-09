@@ -3,17 +3,18 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <edit/Controller/RTSCameraController.h>
-
-#include <core/Spatial/Spatial.h>
-
+#ifdef MUD_MODULES
+module toy.edit
+#else
+#include <geom/Geom.hpp>
+#include <ctx/InputDevice.h>
 #include <ui/Frame/Frame.h>
 #include <ui/Widget.h>
 #include <ui/UiRoot.h>
-#include <ctx/InputDevice.h>
-
 #include <gfx-ui/Viewer.h>
+#include <core/Spatial/Spatial.h>
+#include <edit/Controller/RTSCameraController.h>
+#endif
 
 #define DRAG_BY_GRAB 1
 

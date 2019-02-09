@@ -3,43 +3,41 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <edit/Edit/Editor.h>
-
-#include <tool//EditContext.h>
-#include <edit/Editor/Editor.h>
-
+#ifdef MUD_MODULES
+module toy.edit
+#else
+#include <stl/hash_base.hpp>
 #include <infra/ToString.h>
 #include <type/Indexer.h>
+#include <pool/Pool.hpp>
+#include <ecs/ECS.hpp>
 #include <refl/System.h>
 #include <refl/Class.h>
 #include <refl/Meta.h>
-
-#include <edit/Editor/Editor.h>
-#include <edit/Editor/Toolbox.h>
-
-#include <core/Spatial/Spatial.h>
-#include <core/World/World.h>
-//#include <core/Selector/Selector.h>
-
-#include <gfx/Item.h>
-#include <gfx/GfxSystem.h>
-#include <gfx-pbr/Lighting.h>
-#include <gfx-ui/Viewer.h>
-#include <gfx-edit/GfxEdit.h>
-
 #include <ui/Section.h>
+#include <ui/Style/Layout.h>
+#include <ui/ContainerStruct.h>
+#include <ui/DockStruct.h>
 #include <uio/InjectorEdit.h>
 #include <uio/IndexerEdit.h>
 #include <uio/GraphEdit.h>
 #include <uio/Inspector.h>
 #include <uio/Object.h>
-
-#include <ui/Style/Layout.h>
-#include <ui/ContainerStruct.h>
-#include <ui/DockStruct.h>
-
+#include <gfx/Item.h>
+#include <gfx/GfxSystem.h>
+#include <gfx-pbr/Lighting.h>
+#include <gfx-ui/Viewer.h>
+#include <gfx-edit/GfxEdit.h>
+#include <tool//EditContext.h>
+#include <core/Spatial/Spatial.h>
+#include <core/World/World.h>
 #include <visu/VisuScene.h>
+#include <edit/Edit/Editor.h>
+#include <edit/Editor/Editor.h>
+#include <edit/Editor/Editor.h>
+#include <edit/Editor/Toolbox.h>
+//#include <core/Selector/Selector.h>
+#endif
 
 namespace toy
 {

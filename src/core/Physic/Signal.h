@@ -13,13 +13,14 @@ namespace toy
 	class TOY_CORE_EXPORT Signal
 	{
 	public:
+		Signal() {}
 		Signal(EmitterScope& emitter, ReceptorScope& receptor);
 		~Signal();
 
-		EmitterScope* m_emitter;
-		ReceptorScope* m_receptor;
-		float m_strength;
-		bool m_on;
+		EmitterScope* m_emitter = nullptr;
+		ReceptorScope* m_receptor = nullptr;
+		float m_strength = 0.f;
+		bool m_on = false;
 
 		void update();
 		void on();

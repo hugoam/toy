@@ -3,19 +3,18 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <core/Types.h>
-#include <core/Bullet/BulletWorld.h>
-
+#ifndef USE_STL
+#include <stl/vector.hpp>
+#endif
+#include <math/Timer.h>
 #include <geom/Geom.h>
 #include <geom/Shape.h>
-
+#include <core/Types.h>
+#include <core/Bullet/BulletWorld.h>
 #include <core/World/World.h>
 #include <core/Bullet/BulletSolid.h>
 #include <core/Bullet/BulletCollider.h>
 #include <core/Physic/Solid.h>
-
-#include <math/Timer.h>
 
 #ifdef _MSC_VER
 #	pragma warning (push)

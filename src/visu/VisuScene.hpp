@@ -23,7 +23,7 @@ using namespace mud; namespace toy
 				paint_func(this->entity_node(parent, entity, spatial, index), component);
 			});
 		};
-		m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
+		m_painters.push_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 	}
 
 	template <class T, class T_PaintFunc>
@@ -40,7 +40,7 @@ using namespace mud; namespace toy
 					paint_func(this->entity_node(parent, entity, spatial, index), component);
 			});
 		};
-		m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
+		m_painters.push_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 	}
 
 	template <class T, class T_Container>
@@ -51,6 +51,6 @@ using namespace mud; namespace toy
 			for(auto object : objects)
 				paint_func(this->entity_node(parent, object->m_spatial.m_handle, object->m_spatial, index), *object);
 		};
-		m_painters.push_back(construct<VisuPainter>(name, m_painters.size(), paint));
+		m_painters.push_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 	}
 }

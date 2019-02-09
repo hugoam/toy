@@ -3,12 +3,14 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <edit/Controller/CameraController.h>
-
-#include <core/Spatial/Spatial.h>
+#ifdef MUD_MODULES
+module toy.edit
+#else
+#include <stl/hash_base.hpp>
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
+#include <edit/Controller/CameraController.h>
+#endif
 
 namespace toy
 {

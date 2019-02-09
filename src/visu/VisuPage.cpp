@@ -3,19 +3,23 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#ifdef MUD_MODULES
+module toy.visu
+#else
 #include <stl/algorithm.h>
-#include <visu/Types.h>
-#include <visu/VisuPage.h>
-
-#include <core/Movable/Movable.h>
-#include <core/Navmesh/Navmesh.h>
-#include <core/WorldPage/WorldPage.h>
-
+#include <pool/Pool.hpp>
+#include <ecs/ECS.hpp>
 #include <gfx/Node3.h>
 #include <gfx/Item.h>
 #include <gfx/Mesh.h>
 #include <gfx/Model.h>
 #include <gfx/GfxSystem.h>
+#include <core/Movable/Movable.h>
+#include <core/Navmesh/Navmesh.h>
+#include <core/WorldPage/WorldPage.h>
+#include <visu/Types.h>
+#include <visu/VisuPage.h>
+#endif
 
 #include <cstdio>
 

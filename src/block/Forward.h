@@ -49,4 +49,21 @@ namespace stl
 	export_ extern template struct refl_ seque_ vector<toy::Block*>;
 	export_ extern template struct refl_ seque_ vector<toy::Sector*>;
 }
+namespace mud
+{
+	export_ extern template struct refl_ ComponentHandle<toy::Block>;
+	export_ extern template struct refl_ ComponentHandle<toy::Chunk>;
+	export_ extern template struct refl_ ComponentHandle<toy::Heap>;
+	export_ extern template struct refl_ ComponentHandle<toy::Sector>;
+	export_ extern template struct refl_ ComponentHandle<toy::Tileblock>;
+}
 #endif
+
+namespace toy
+{
+	using HBlock = ComponentHandle<Block>;
+	using HChunk = ComponentHandle<Chunk>;
+	using HHeap = ComponentHandle<Heap>;
+	using HSector = ComponentHandle<Sector>;
+	using HTileblock = ComponentHandle<Tileblock>;
+}

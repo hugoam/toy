@@ -3,10 +3,14 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#include <core/Physic/PhysicWorld.h>
-
+#ifdef MUD_MODULES
+module toy.core
+#else
+#include <stl/hash_base.hpp>
 #include <core/World/Section.h>
 #include <core/World/World.h>
+#include <core/Physic/PhysicWorld.h>
+#endif
 
 namespace toy
 {

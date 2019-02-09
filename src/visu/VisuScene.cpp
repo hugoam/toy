@@ -3,52 +3,46 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#include <visu/Types.h>
-#include <visu/VisuScene.h>
-#include <visu/VisuPage.h>
-
+#ifdef MUD_MODULES
+module toy.visu
+#else
 #include <infra/Reverse.h>
 #include <tree/Graph.hpp>
+#include <pool/Pool.hpp>
 #include <ecs/Complex.h>
 #include <refl/Member.h>
+#include <math/Timer.h>
 #include <geom/Shapes.h>
 #include <geom/ShapesComplex.h>
-
-#include <core/World/Section.h>
-#include <core/World/World.h>
-#include <core/Spatial/Spatial.h>
-#include <core/Physic/Obstacle.h>
-#include <core/WorldPage/WorldPage.h>
-//#include <core/Symbolic/Symbolic.h>
-//#include <core/Light/Light.h>
-//#include <core/Active/Active.h>
-//#include <core/Active/Effect.h>
-
-#include <core/Selector/Selection.h>
-
-//#include <core/Buffer/BufferView.h>
-
-#include <core/Navmesh/Navmesh.h>
-//#include <visu/Ogre/FacetNavmesh/OgreNavmesh.h>
-
 #include <gfx/Gfx.h>
 #include <gfx/Item.h>
 #include <gfx/GfxSystem.h>
 #include <gfx/Draw.h>
 #include <gfx/Camera.h>
 #include <gfx/Frustum.h>
+#include <gfx/Material.h>
+#ifdef TOY_SOUND
+#include <snd/SoundManager.h>
+#include <snd/Sound.h>
+#endif
+#include <core/World/Section.h>
+#include <core/World/World.h>
+#include <core/Spatial/Spatial.h>
+#include <core/Physic/Obstacle.h>
+#include <core/WorldPage/WorldPage.h>
+#include <core/Selector/Selection.h>
+#include <core/Navmesh/Navmesh.h>
+#include <core/Bullet/BulletWorld.h>
+#include <core/Physic/Solid.h>
+#include <visu/Types.h>
+#include <visu/VisuScene.h>
+#include <visu/VisuScene.hpp>
+#include <visu/VisuPage.h>
+#endif
 
 #include <cctype>
 
-#include <snd/SoundManager.h>
-
-#include <math/Timer.h>
-
-#include <gfx/Material.h>
-#include <gfx/Item.h>
 #include <bgfx/bgfx.h>
-#include <core/Bullet/BulletWorld.h>
-#include <core/Physic/Solid.h>
 
 #ifdef _MSC_VER
 #	pragma warning (push)
@@ -67,10 +61,6 @@
 #	pragma warning (pop)
 #endif
 
-#ifdef TOY_SOUND
-#include <snd/SoundManager.h>
-#include <snd/Sound.h>
-#endif
 
 namespace toy
 {

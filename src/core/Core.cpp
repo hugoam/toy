@@ -6,7 +6,7 @@
 #include <core/Types.h>
 #include <core/Core.h>
 
-#include <core/HandlesDecl.h>
+#include <core/Handles.h>
 #include <core/World/Section.h>
 #include <core/Anim/Anim.h>
 

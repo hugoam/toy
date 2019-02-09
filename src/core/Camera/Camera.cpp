@@ -3,18 +3,20 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#ifdef MUD_MODULES
+module toy.core
+#else
+#include <math/Random.h>
+#include <type/Any.h>
+#include <ecs/ECS.hpp>
+#include <refl/Class.h>
 #include <core/Types.h>
 #include <core/Camera/Camera.h>
-
-#include <type/Any.h>
-#include <refl/Class.h>
-#include <math/Random.h>
-
 #include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
 #include <core/Anim/Anim.h>
-
 #include <core/World/Section.h>
+#endif
 
 namespace toy
 {

@@ -8,7 +8,7 @@
 #include <stl/vector.h>
 #include <stl/function.h>
 #include <type/Proto.h>
-#include <wfc-gfx/Wfc/Tileblock.h>
+#include <wfc-gfx/Tileblock.h>
 #include <core/WorldPage/WorldPage.h>
 //#include <core/WorldPage/BufferPage.h>
 #include <core/Navmesh/Navmesh.h>

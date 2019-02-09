@@ -3,32 +3,30 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#include <block/VisuBlock.h>
-
+#ifdef MUD_MODULES
+module toy.block
+#else
+#include <stl/hash_base.hpp>
 #include <infra/ToString.h>
-
+#include <tree/Graph.hpp>
 #include <math/Random.h>
-#include <geom/Shapes.h>
-
-#include <block/Block.h>
-#include <block/Element.h>
-#include <block/Sector.h>
-#include <block/Elements.h>
-
 #include <meta/math.conv.h>
-
+#include <geom/Shapes.h>
+#include <geom/Shape/Quad.h>
+#include <geom/Shape/Cube.h>
 #include <gfx/Scene.h>
 #include <gfx/Item.h>
 #include <gfx/Model.h>
 #include <gfx/GfxSystem.h>
-
 #include <gfx/Draw.h>
 #include <gfx/Gfx.h>
-
-#include <geom/Shape/Quad.h>
-#include <geom/Shape/Cube.h>
-
 #include <core/Spatial/Spatial.h>
+#include <block/VisuBlock.h>
+#include <block/Block.h>
+#include <block/Element.h>
+#include <block/Sector.h>
+#include <block/Elements.h>
+#endif
 
 #include <cstdio>
 

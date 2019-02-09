@@ -40,7 +40,7 @@ namespace toy
 	class refl_ TOY_BLOCK_EXPORT Block
 	{
 	public:
-		constr_ Block() {}
+		constr_ Block();
 		constr_ Block(HSpatial spatial, HWorldPage world_page, Block* parentblock, size_t index, const vec3& size);
 
 		static Entity create(ECS& ecs, HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size);

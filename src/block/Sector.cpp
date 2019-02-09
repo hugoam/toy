@@ -3,14 +3,15 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
 #ifdef MUD_MODULES
 module toy.block
 #else
+#include <math/Grid.hpp>
 #include <geom/Shapes.h>
 #include <ecs/Complex.h>
+#include <ecs/ECS.hpp>
 #include <core/Spatial/Spatial.h>
-#include <core/World/World.h>
+#include <core/World/World.hpp>
 #include <core/World/Section.h>
 #include <block/Types.h>
 #include <block/Sector.h>
