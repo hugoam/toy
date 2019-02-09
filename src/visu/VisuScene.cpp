@@ -9,6 +9,7 @@ module toy.visu
 #include <infra/Reverse.h>
 #include <tree/Graph.hpp>
 #include <pool/Pool.hpp>
+#include <pool/ObjectPool.hpp>
 #include <ecs/Complex.h>
 #include <refl/Member.h>
 #include <math/Timer.h>

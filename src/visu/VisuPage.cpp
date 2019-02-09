@@ -8,6 +8,7 @@ module toy.visu
 #else
 #include <stl/algorithm.h>
 #include <pool/Pool.hpp>
+#include <pool/ObjectPool.hpp>
 #include <ecs/ECS.hpp>
 #include <gfx/Node3.h>
 #include <gfx/Item.h>

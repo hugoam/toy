@@ -11,7 +11,7 @@
 #include <geom/Shape.h>
 #include <core/Types.h>
 #include <core/Bullet/BulletWorld.h>
-#include <core/World/World.h>
+#include <core/World/World.hpp>
 #include <core/Bullet/BulletSolid.h>
 #include <core/Bullet/BulletCollider.h>
 #include <core/Physic/Solid.h>
