@@ -20,9 +20,6 @@ uniform vec4 u_screen_size_pixel_size;
 #define u_screen_size u_screen_size_pixel_size.xy
 #define u_pixel_size u_screen_size_pixel_size.zw
 
-//#define ZONES_BUFFER
-#define ZONES_TEXTURE_WIDTH 1024
-
 #ifdef MATERIALS_BUFFER
 uniform vec4 u_state;
 #define u_state_zone u_state.x
