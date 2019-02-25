@@ -52,8 +52,8 @@ namespace toy
 
 	void CameraController::stop()
 	{
-		m_movable->set_linear_velocity(Zero3);
-		m_movable->set_angular_velocity(Zero3);
+		m_movable->set_linear_velocity(vec3(0.f));
+		m_movable->set_angular_velocity(vec3(0.f));
 	}
 
 	void CameraController::rotate_left()

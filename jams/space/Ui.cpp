@@ -7,8 +7,8 @@
 #include <space/Ui.h>
 #include <space/Scene.h>
 
-#include <meta/math/Convert.h>
-#include <meta/space/Convert.h>
+#include <meta/math.conv.h>
+#include <meta/_space.conv.h>
 
 #include <toy/toy.h>
 
@@ -42,27 +42,27 @@ static Colour dark_grey = Colour(0.07f, 0.07f, 0.07f, 0.5f);
 
 Style& panel_style()
 {
-	static Style style("SpacePanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, SHRINK, WRAP }; l.m_align = { CENTER, CENTER }; l.m_padding = vec4(15.f); l.m_spacing = vec2(10.f); },
+	static Style style("SpacePanel", styles().wedge, [](Layout& l) { l.m_space = { FlowAxis::Paragraph, Sizing::Shrink, Sizing::Wrap }; l.m_align = { Align::Center, Align::Center }; l.m_padding = vec4(15.f); l.m_spacing = vec2(10.f); },
 													 [](InkStyle& s) { s.m_empty = false; s.m_background_colour = dark_grey; s.m_border_colour = light_grey; s.m_border_width = vec4(1.f); });
 	return style;
 }
 
 Style& sheet_style()
 {
-	static Style style("SpaceSheet", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, WRAP, WRAP }; l.m_align = { CENTER, CENTER }; l.m_spacing = vec2(40.f); });
+	static Style style("SpaceSheet", styles().wedge, [](Layout& l) { l.m_space = { FlowAxis::Paragraph, Sizing::Wrap, Sizing::Wrap }; l.m_align = { Align::Center, Align::Center }; l.m_spacing = vec2(40.f); });
 	return style;
 }
 
 Style& orders_panel_style()
 {
-	static Style style("OrdersPanel", styles().wedge, [](Layout& l) { l.m_space = { PARAGRAPH, SHRINK, WRAP }; l.m_align = { CENTER, Right }; l.m_padding = vec4(15.f); l.m_spacing = vec2(10.f); },
+	static Style style("OrdersPanel", styles().wedge, [](Layout& l) { l.m_space = { FlowAxis::Paragraph, Sizing::Shrink, Sizing::Wrap }; l.m_align = { Align::Center, Align::Right }; l.m_padding = vec4(15.f); l.m_spacing = vec2(10.f); },
 													  [](InkStyle& s) { s.m_empty = false; s.m_background_colour = dark_grey; s.m_border_colour = light_grey; s.m_border_width = vec4(1.f); });
 	return style;
 }
 
 Style& order_label_style()
 {
-	static Style style("OrderLabel", styles().label, [](Layout& l) { l.m_align = { CENTER, CENTER }; }, [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::Red; s.m_text_size = 18.f; });
+	static Style style("OrderLabel", styles().label, [](Layout& l) { l.m_align = { Align::Center, Align::Center }; }, [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::Red; s.m_text_size = 18.f; });
 	return style;
 }
 
@@ -70,7 +70,7 @@ static Colour active_blue = { 0.145f, 0.5f, 1.f, 1.f };
 
 Style& order_button_style()
 {
-	static Style style("OrderButton", styles().button, [](Layout& l) { l.m_space = BLOCK; l.m_align = { CENTER, CENTER }; }, 
+	static Style style("OrderButton", styles().button, [](Layout& l) { l.m_space = Preset::Block; l.m_align = { Align::Center, Align::Center }; }, 
 													   [](InkStyle& s) { s.m_empty = false; s.m_text_colour = Colour::White; s.m_text_size = 18.f; s.m_padding = vec4(8.f); s.m_border_width = vec4(1.f); s.m_border_colour = light_grey; },
 													   [](Style& s) { s.decline_skin(HOVERED).m_background_colour = active_blue; });
 	return style;
@@ -189,7 +189,7 @@ void split_query(Widget& parent, Fleet& fleet, uint32_t mode)
 	ui::input_field<string>(self, "Name", query.m_name);
 	ui::enum_field<FleetStance>(self, "Directive", query.m_stance);
 
-	Table& table = ui::table(self, carray<cstring, 4>{ "Code", "Name", "Number", "Split" }, carray<float, 4>{ 0.2f, 0.6f, 0.2f, 0.2f });
+	Table& table = ui::table(self, { "Code", "Name", "Number", "Split" }, { 0.2f, 0.6f, 0.2f, 0.2f });
 
 	for(auto& kv : fleet.m_ships)
 	{
@@ -233,8 +233,8 @@ void fleet_orders(Widget& parent, Viewer& viewer, Fleet& fleet)
 void fleet_summary(Widget& parent, Fleet& fleet)
 {
 	Widget& self = ui::row(parent);
-	Table& left = ui::columns(self, carray<float, 2>{ 0.6f, 0.4f });
-	Table& right = ui::columns(self, carray<float, 2>{ 0.6f, 0.4f });
+	Table& left = ui::columns(self, { 0.6f, 0.4f });
+	Table& right = ui::columns(self, { 0.6f, 0.4f });
 
 	number_entry(left, "Speed", fleet.m_speed);
 	number_entry(left, "Scan", fleet.m_scan);
@@ -253,7 +253,7 @@ void fleet_scan_sheet(Widget& parent, Fleet& fleet)
 
 	commander_emblem(self, *fleet.m_commander);
 
-	Table& table = ui::columns(self, carray<float, 2>{ 0.6f, 0.4f });
+	Table& table = ui::columns(self, { 0.6f, 0.4f });
 
 	label_entry(table, "Code", fleet.m_name);
 	label_entry(table, "Size", to_string(fleet_size(float(fleet.m_spatial_power) + fleet.m_planetary_power)));
@@ -273,7 +273,7 @@ void fleet_sheet(Widget& parent, Fleet& fleet)
 	{
 		Widget& spaceships = ui::widget(self, panel_style());
 
-		Table& table = ui::table(spaceships, carray<cstring, 3>{ "Code", "Name", "Number" }, carray<float, 3>{ 0.2f, 0.6f, 0.2f });
+		Table& table = ui::table(spaceships, { "Code", "Name", "Number" }, { 0.2f, 0.6f, 0.2f });
 
 		for(auto& kv : fleet.m_ships)
 		{
@@ -305,8 +305,8 @@ void launch_build_sheet(Widget& parent, Star& star, uint32_t mode)
 	Widget& self = ui::auto_modal(parent, mode, { 800.f, 600.f });
 	Widget& sheet = ui::scroll_sheet(*self.m_body);
 
-	Table& table = ui::table(*sheet.m_body, carray<cstring, 6>{ "Code", "Name", "Kind", "Level", "Cost", "Stats" }, 
-											carray<float, 6>  {  0.15f,  0.3f,   0.1f,   0.05f,   0.15f,  0.25f  });
+	Table& table = ui::table(*sheet.m_body, { "Code", "Name", "Kind", "Level", "Cost", "Stats" }, 
+											{  0.15f,  0.3f,   0.1f,   0.05f,   0.15f,  0.25f  });
 
 	BuildQuery& query = self.state<BuildQuery>();
 
@@ -352,10 +352,10 @@ void star_scan_sheet(Widget& parent, Star& star)
 	if(star.m_commander)
 		commander_emblem(self, *star.m_commander, "Star " + star.m_name);
 
-	Table& table = ui::columns(self, carray<float, 2>{ 0.6f, 0.4f });
+	Table& table = ui::columns(self, { 0.6f, 0.4f });
 
 	label_entry(table, "Population", (to_string(star.m_population) + "/" + to_string(star.m_max_population)));
-	number_entry(table, "Environment", star.m_environment);
+	number_entry(table, "Zone", star.m_env);
 }
 
 void star_sheet(Widget& parent, Star& star)
@@ -369,11 +369,11 @@ void star_sheet(Widget& parent, Star& star)
 			commander_emblem(info, *star.m_commander, ("Star " + star.m_name));
 
 		Widget& row = ui::row(info);
-		Table& left = ui::columns(row, carray<float, 2>{ 0.6f, 0.4f });
-		Table& right = ui::columns(row, carray<float, 2>{ 0.6f, 0.4f });
+		Table& left = ui::columns(row, { 0.6f, 0.4f });
+		Table& right = ui::columns(row, { 0.6f, 0.4f });
 
 		label_entry(right, "Population", (to_string(star.m_population) + "/" + to_string(star.m_max_population)));
-		number_entry(right, "Environment", star.m_environment);
+		number_entry(right, "Zone", star.m_env);
 		number_entry(right, "Terraformation", star.m_terraformation);
 		number_entry(right, "Defense", int(star.m_defense));
 
@@ -386,29 +386,29 @@ void star_sheet(Widget& parent, Star& star)
 	{
 		Widget& resources = ui::widget(self, panel_style());
 
-		Table& table = ui::columns(resources, carray<float, 2>{ 1.f, 1.f});
+		Table& table = ui::columns(resources, { 1.f, 1.f});
 		for(Resource resource = Resource(0); resource != Resource::Count; resource = Resource(size_t(resource) + 1))
-			if(star.m_resources[size_t(resource)] > 0)
+			if(star.m_resources[resource] > 0)
 			{
-				number_entry(table, to_string(resource), star.m_resources[size_t(resource)]);
+				number_entry(table, to_string(resource), star.m_resources[resource]);
 			}
 	}
 
 	{
 		Widget& stocks = ui::widget(self, panel_style());
 
-		Table& table = ui::columns(stocks, carray<float, 2>{ 1.f, 1.f});
+		Table& table = ui::columns(stocks, { 1.f, 1.f});
 		for(Resource resource = Resource(0); resource != Resource::Count; resource = Resource(size_t(resource) + 1))
-			if(star.m_stocks[size_t(resource)] > 0)
+			if(star.m_stocks[resource] > 0)
 			{
-				number_entry(table, to_string(resource), star.m_stocks[size_t(resource)]);
+				number_entry(table, to_string(resource), star.m_stocks[resource]);
 			}
 	}
 
 	{
 		Widget& buildings = ui::widget(self, panel_style());
 
-		Table& table = ui::columns(buildings, carray<float, 2>{ 1.f, 1.f});
+		Table& table = ui::columns(buildings, { 1.f, 1.f});
 		for(auto& kv : star.m_buildings)
 			number_entry(table, kv.first->m_code, kv.second);
 	}
@@ -416,7 +416,7 @@ void star_sheet(Widget& parent, Star& star)
 	{
 		Widget& constructing = ui::widget(self, panel_style());
 
-		Table& table = ui::table(constructing, carray<cstring, 3>{ "Code", "Number", "ETA" }, carray<float, 3>{ 1.f, 1.f, 1.f });
+		Table& table = ui::table(constructing, { "Code", "Number", "ETA" }, { 1.f, 1.f, 1.f });
 		for(Construction& construction : star.m_constructions)
 		{
 			Widget& row = ui::table_row(table);
@@ -440,7 +440,7 @@ void commander_sheet(Widget& parent, Commander& commander)
 
 	commander_emblem(self, commander);
 
-	Table& table = ui::columns(self, carray<float, 2>{ 1.f, 1.f});
+	Table& table = ui::columns(self, { 1.f, 1.f});
 	label_entry(table, "Race", to_string(commander.m_race));
 	number_entry(table, "Command", commander.m_command);
 	number_entry(table, "Commerce", commander.m_commerce);
@@ -451,7 +451,7 @@ void empire_sheet(Widget& parent, Commander& commander)
 {
 	Widget& self = sheet(parent, "Government");
 
-	Table& statistics = ui::columns(self, carray<float, 2>{ 1.f, 1.f});
+	Table& statistics = ui::columns(self, { 1.f, 1.f});
 	label_entry(statistics, "Regime", to_string(commander.m_regime));
 	number_entry(statistics, "Systems", commander.m_stars.size());
 	number_entry(statistics, "Fleets", commander.m_fleets.size());
@@ -463,12 +463,12 @@ void technology_sheet(Widget& parent, Commander& commander)
 {
 	Widget& self = sheet(parent, "Technology");
 
-	Table& technology = ui::table(self, carray<cstring, 4>("Name", "Level", "Points", "Budget"), carray<float, 4>{ 0.45f, 0.15f, 0.2f, 0.2f });
-	for(size_t i = 0; i != size_t(Technology::Count); ++i)
+	Table& technology = ui::table(self, { "Name", "Level", "Points", "Budget" }, { 0.45f, 0.15f, 0.2f, 0.2f });
+	for(Technology t = Technology(0); t != Technology::Count; t = Technology(size_t(t) + 1))
 	{
-		TechDomain& techno = commander.m_technology[i];
+		TechDomain& techno = commander.m_technology[t];
 		Widget& row = ui::table_row(technology);
-		ui::label(row, to_string(Technology(i)));
+		ui::label(row, to_string(t));
 		ui::label(row, to_string(techno.m_level));
 		ui::label(row, to_string(techno.m_points));
 		ui::number_input<float>(row, { techno.m_budget, StatDef<float>{} });
@@ -477,7 +477,7 @@ void technology_sheet(Widget& parent, Commander& commander)
 
 void turn_report_stage_events(Widget& parent, Turn& turn, Commander& commander, TurnStage stage)
 {
-	for(const TurnEvents::Item& item : turn.m_events[&commander].m_items[size_t(stage)])
+	for(const TurnEvents::Item& item : turn.m_events[&commander].m_items[stage])
 	{
 		ui::item(parent, event_style(), item.m_summary);
 	}
@@ -525,7 +525,7 @@ void turn_report_movements(Widget& parent, GameScene& scene, Turn& turn)
 		{
 			quat rotation = look_at(jump.m_start_pos, jump.m_dest_pos);
 
-			float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
+			float size = c_fleet_visu_sizes[fleet.estimated_size()];
 
 			if(jump.m_state == Jump::Start)
 				jump_camera_to(player.m_camera->m_spatial, player.m_camera, jump.m_start_pos, rotation, 2.f * size, c_pi / 8.f, 3.f);
@@ -550,7 +550,7 @@ void fleet_losses_sheet(Widget& parent, const CombatFleet& combat_fleet, float t
 	Fleet& fleet = *combat_fleet.m_fleet;
 	ui::label(parent, ("Fleet " + fleet.m_name + " of commander " + fleet.m_commander->m_name));
 
-	Table& table = ui::table(parent, carray<cstring, 3>{ "Code", "Name", "Losses" }, carray<float, 3>{ 0.2f, 0.6f, 0.2f });
+	Table& table = ui::table(parent, { "Code", "Name", "Losses" }, { 0.2f, 0.6f, 0.2f });
 
 	for(auto& kv : fleet.m_ships)
 	{
@@ -570,7 +570,7 @@ void system_losses_sheet(Widget& parent, const CombatStar& combat_star, float t)
 	Star& star = *combat_star.m_star;
 	ui::label(parent, ("System " + star.m_name + " of commander " + (star.m_commander ? star.m_commander->m_name : "NEUTRAL")));
 
-	Table& table = ui::table(parent, carray<cstring, 3>{ "Code", "Name", "Losses" }, carray<float, 3>{ 0.2f, 0.6f, 0.2f });
+	Table& table = ui::table(parent, { "Code", "Name", "Losses" }, { 0.2f, 0.6f, 0.2f });
 
 	for(auto& kv : combat_star.m_losses)
 	{
@@ -727,14 +727,14 @@ Widget& division(Widget& parent, float span)
 	static Style style("GameDivision", styles().layout, [](Layout& l) { l.m_padding = vec4(40.f); l.m_spacing = vec2(40.f); });
 
 	Widget& self = ui::widget(parent, style);
-	self.m_frame.set_span(DIM_X, span);
-	self.m_frame.set_span(DIM_Y, span);
+	self.m_frame.set_span(Axis::X, span);
+	self.m_frame.set_span(Axis::Y, span);
 	return self;
 }
 
-void shrink_switch(Widget& parent, array<cstring> labels, uint32_t& value)
+void shrink_switch(Widget& parent, span<cstring> labels, uint32_t& value)
 {
-	static Style style("ShrinkSwitch", styles().wedge, [](Layout& l) { l.m_space = { READING, SHRINK, SHRINK }; l.m_align = { CENTER, CENTER }; });
+	static Style style("ShrinkSwitch", styles().wedge, [](Layout& l) { l.m_space = { FlowAxis::Reading, Sizing::Shrink, Sizing::Shrink }; l.m_align = { Align::Center, Align::Center }; });
 
 	Widget& middlebox = ui::widget(parent, style);
 	ui::radio_switch(middlebox, labels, value);
@@ -746,7 +746,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 
 	Widget& header = ui::header(self);
 	GameStage game_mode = player.m_mode;
-	shrink_switch(header, carray<cstring, 3>{ "Empire", "Tactics", "Turn Report" }, (uint32_t&) player.m_mode);
+	shrink_switch(header, { "Empire", "Tactics", "Turn Report" }, (uint32_t&) player.m_mode);
 	
 	if(game_mode == GameStage::TurnReport || (player.m_mode == GameStage::TurnReport && game_mode != player.m_mode))
 		player.m_mode = game_mode;
@@ -768,7 +768,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 	{
 		enum Modes : uint32_t { Overview, Technology };
 		static Modes mode = Overview;
-		shrink_switch(divs.left, carray<cstring, 2>{ "Overview", "Technology" }, (uint32_t&) mode);
+		shrink_switch(divs.left, { "Overview", "Technology" }, (uint32_t&) mode);
 
 		if(mode == Overview)
 		{

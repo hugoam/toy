@@ -7,9 +7,9 @@
 
 #include <visu/Forward.h>
 #include <visu/VisuScene.h>
+#include <core/World/World.h>
 
 #include <ecs/ECS.hpp>
-#include <core/World/World.hpp>
 
 using namespace mud; namespace toy
 {

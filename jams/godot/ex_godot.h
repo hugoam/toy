@@ -5,6 +5,17 @@
 #pragma once
 
 #include <godot/Forward.h>
+
+#include <ecs/ECS.hpp>
+#include <stl/vector.hpp>
+#include <stl/string.hpp>
+#include <pool/SparsePool.hpp>
+#include <pool/ObjectPool.hpp>
+#include <pool/Pool.hpp>
+#include <core/World/World.hpp>
+#include <visu/VisuScene.hpp>
+#include <tree/Graph.hpp>
+
 #include <toy/toy.h>
 
 using namespace mud;
@@ -52,7 +63,7 @@ public:
 
 	bool m_impacted = false;
 	bool m_destroy = false;
-	vec3 m_impact = Zero3;
+	vec3 m_impact = vec3(0.f);
 
 	//OSolid m_solid;
 	OCollider m_collider;
@@ -76,8 +87,8 @@ struct refl_ Aim
 
 struct HumanController
 {
-	vec3 m_force = Zero3;
-	vec3 m_torque = Zero3;
+	vec3 m_force = vec3(0.f);
+	vec3 m_torque = vec3(0.f);
 };
 
 struct refl_ Stance
@@ -106,7 +117,7 @@ public:
 
 	attr_ Faction m_faction;
 
-	vec2 m_angles = Zero2;
+	vec2 m_angles = vec2(0.f);
 	bool m_aiming = false;
 	Aim m_visor;
 
@@ -121,7 +132,7 @@ public:
 	bool m_stealth = false;
 
 	attr_ HHuman m_target = {};
-	attr_ vec3 m_dest = Zero3;
+	attr_ vec3 m_dest = vec3(0.f);
 	attr_ float m_cooldown = 0.f;
 
 	attr_ Stance m_state = { "IdleAim", true };

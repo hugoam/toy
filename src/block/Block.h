@@ -15,10 +15,12 @@
 #include <block/Forward.h>
 #include <block/Handles.h>
 
+#ifdef MUD_META_GENERATOR
 namespace mud
 {
 	extern template class refl_ vector2d<toy::Block*>;
 }
+#endif
 
 namespace toy
 {
@@ -61,7 +63,7 @@ namespace toy
 		vector2d<Element*> m_chunks;
 		vector2d<HBlock> m_subblocks;
 
-		Block* m_neighbours[6] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+		table<Side, Block*> m_neighbours = {};
 
 		meth_ void subdivide();
 

@@ -3,7 +3,36 @@
 #include <toy/toy.h>
 
 #include <test/Api.h>
-#include <meta/test/Module.h>
+
+#include <meta/infra.meta.h>
+#include <meta/jobs.meta.h>
+#include <meta/type.meta.h>
+#include <meta/tree.meta.h>
+#include <meta/pool.meta.h>
+#include <meta/refl.meta.h>
+#include <meta/ecs.meta.h>
+#include <meta/srlz.meta.h>
+#include <meta/math.meta.h>
+#include <meta/geom.meta.h>
+#include <meta/lang.meta.h>
+#include <meta/ctx.meta.h>
+#include <meta/ui.meta.h>
+#include <meta/uio.meta.h>
+#include <meta/tool.meta.h>
+#include <meta/bgfx.meta.h>
+#include <meta/gfx.meta.h>
+#include <meta/gfx.ui.meta.h>
+#include <meta/frame.meta.h>
+#include <meta/core.meta.h>
+#include <meta/visu.meta.h>
+#include <meta/edit.meta.h>
+#include <meta/block.meta.h>
+#include <meta/shell.meta.h>
+
+#include <meta/_test.meta.h>
+
+using namespace mud;
+using namespace toy;
 
 namespace test
 {
@@ -25,8 +54,8 @@ Shell::Shell(const string& resource_path, int argc, char *argv[])
 	, m_gfx_system(resource_path)
 {
 	System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
-	System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(), &mud_lang::m() });
-	System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
+	System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m() });
+	System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_ui::m(), &mud_tool::m() });
 
 	// @todo this should be automatically done by math module
 	register_math_conversions();
@@ -62,7 +91,7 @@ bool Shell::pump()
 
 void Shell::init()
 {
-	m_context = m_gfx_system.create_context("mud EditorCore", 1600, 900, false);
+	m_context = m_gfx_system.create_context("mud EditorCore", { 1600, 900 }, false);
 	GfxContext& context = as<GfxContext>(*m_context);
 
 	m_gfx_system.init_pipeline(pipeline_pbr);
@@ -83,18 +112,18 @@ Viewer::Viewer(GfxContext& context, Scene& scene, const vec4& rect)
 
 	//m_custom_draw = [&](const Frame& frame, const vec4& rect, VgRenderer& renderer) { UNUSED(frame); renderer.draw_frame(frame, rect); this->blit(renderer); };
 
-	m_context.m_viewports.push_back(&m_viewport);
+	//m_viewports.push_back(&m_viewport);
 
 	//this->take_focus();
 }
 
 Viewer::Viewer(GfxContext& context, Scene& scene)
-	: Viewer(context, scene, { 0.f, 0.f, float(context.m_width), float(context.m_height) })
+	: Viewer(context, scene, { 0.f, 0.f, float(context.m_size.x), float(context.m_size.y) })
 {}
 
 Viewer::~Viewer()
 {
-	vector_remove(m_context.m_viewports, &m_viewport);
+	//remove(m_viewports, &m_viewport);
 }
 
 void Viewer::resize()
@@ -118,8 +147,8 @@ void ex_test(Shell& app)
 	SceneViewer viewer = { app.m_gfx_system.context() };
 	Gnode& scene = viewer.m_scene->begin();
 
-	static vec3 position = Zero3;
-	static vec3 speed = Zero3;
+	static vec3 position = vec3(0.f);
+	static vec3 speed = vec3(0.f);
 
 	Gnode& node = gfx::node(scene, {}, position);
 	gfx::shape(node, Cube(), Symbol::wire(Colour::Red));

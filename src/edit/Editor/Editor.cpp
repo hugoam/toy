@@ -66,7 +66,7 @@ namespace toy
 	void Editor::create_scripted_brush()
 	{
 #if 0
-		Signature signature({ Param("position", var(Zero3)) });
+		Signature signature({ Param("position", var(vec3(0.f))) });
 		VisualScript& script = global_pool<VisualScript>().construct("Brush VisualScript", signature);
 
 		//m_toolbelt.toolbox("Brushes").m_tools.add(oconstruct<ScriptedBrush>(*this, m_editedWorld->origin(), script));

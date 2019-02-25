@@ -5,9 +5,15 @@ module toy.block;
 #include <stl/vector.hpp>
 #include <stl/unordered_map.hpp>
 #include <block/Api.h>
+#include <math/Grid.hpp>
 #include <geom/Shapes.h>
 #include <gfx/Model.h>
 #endif
+
+namespace mud
+{
+	template class TOY_BLOCK_EXPORT vector2d<toy::Block*>;
+}
 
 namespace stl
 {

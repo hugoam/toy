@@ -1,43 +1,28 @@
 Module['stl'] = Module['stl'] || {};
 Module['mud'] = Module['mud'] || {};
 // Block
-function Block(spatial, world_page, parentblock, index, size) {
-    /* spatial <mud::ComponentHandle<toy::Spatial>> [] */
-    if (typeof spatial !== "undefined" && spatial !== null) { spatial = spatial.ptr; }
-    /* world_page <mud::ComponentHandle<toy::WorldPage>> [] */
-    if (typeof world_page !== "undefined" && world_page !== null) { world_page = world_page.ptr; }
-    /* parentblock <toy::Block> [] */
-    if (typeof parentblock !== "undefined" && parentblock !== null) { parentblock = parentblock.ptr; }
-    /* index <size_t> [] */
-    /* size <mud::vec3> [] */
-    if (typeof size !== "undefined" && size !== null) { size = size.ptr; }
-    if (spatial === undefined) { this.ptr = _toy_Block__construct_0(); getCache(Block)[this.ptr] = this; return; }
-    this.ptr = _toy_Block__construct_5(spatial, world_page, parentblock, index, size); getCache(Block)[this.ptr] = this;
-    this.type = Block;
+function Block(a0, a1, a2, a3, a4) {
+    if (a0 === undefined) { this.ptr = _toy_Block__construct_0(); this.type = Block; getCache(Block)[this.ptr] = this; return; }
+    this.ptr = _toy_Block__construct_5(/*spatial*/a0.ptr, /*world_page*/a1.ptr, /*parentblock*/a2.ptr, /*index*/a3, /*size*/a4.ptr); this.type = Block; getCache(Block)[this.ptr] = this;
 };
 Block.prototype = Object.create(WrapperObject.prototype);
 Block.prototype.constructor = Block;
 Block.prototype.__class__ = Block;
 Block.__cache__ = {};
 Module['Block'] = Block;
-Block.prototype["subdivide"] = Block.prototype.subdivide = function(self) {
+Block.prototype["subdivide"] = Block.prototype.subdivide = function() {
     var self = this.ptr;
     _toy_Block_subdivide_0(self);
 };
-Block.prototype["reset"] = Block.prototype.reset = function(self) {
+Block.prototype["reset"] = Block.prototype.reset = function() {
     var self = this.ptr;
     _toy_Block_reset_0(self);
 };
-Block.prototype["chunk"] = Block.prototype.chunk = function(self, x, y, z, element) {
+Block.prototype["chunk"] = Block.prototype.chunk = function(a0, a1, a2, a3) {
     var self = this.ptr;
-    /* x <size_t> [] */
-    /* y <size_t> [] */
-    /* z <size_t> [] */
-    /* element <toy::Element> [] */
-    element = element.ptr;
-    _toy_Block_chunk_4(self, x, y, z, element);
+    _toy_Block_chunk_4(self, /*x*/a0, /*y*/a1, /*z*/a2, /*element*/a3.ptr);
 };
-Block.prototype["commit"] = Block.prototype.commit = function(self) {
+Block.prototype["commit"] = Block.prototype.commit = function() {
     var self = this.ptr;
     _toy_Block_commit_0(self);
 };
@@ -48,9 +33,7 @@ Object.defineProperty(Block.prototype, "world_page", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::ComponentHandle<toy::WorldPage>> [] */
-        value = value.ptr;
-        _toy_Block__set_world_page(self, value);
+        _toy_Block__set_world_page(self, value.ptr);
     }
 });
 Object.defineProperty(Block.prototype, "parentblock", {
@@ -60,9 +43,7 @@ Object.defineProperty(Block.prototype, "parentblock", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <toy::Block> [] */
-        value = value.ptr;
-        _toy_Block__set_parentblock(self, value);
+        _toy_Block__set_parentblock(self, value.ptr);
     }
 });
 Object.defineProperty(Block.prototype, "index", {
@@ -72,7 +53,6 @@ Object.defineProperty(Block.prototype, "index", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <size_t> [] */
         _toy_Block__set_index(self, value);
     }
 });
@@ -83,9 +63,7 @@ Object.defineProperty(Block.prototype, "size", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::vec3> [] */
-        value = value.ptr;
-        _toy_Block__set_size(self, value);
+        _toy_Block__set_size(self, value.ptr);
     }
 });
 Object.defineProperty(Block.prototype, "updated", {
@@ -95,7 +73,6 @@ Object.defineProperty(Block.prototype, "updated", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <size_t> [] */
         _toy_Block__set_updated(self, value);
     }
 });
@@ -104,18 +81,9 @@ Block.prototype["__destroy__"] = Block.prototype.__destroy__ = function() {
     _toy_Block__destroy(self);
 };
 // Chunk
-function Chunk(spatial, block, index, element, size) {
-    /* spatial <mud::ComponentHandle<toy::Spatial>> [] */
-    if (typeof spatial !== "undefined" && spatial !== null) { spatial = spatial.ptr; }
-    /* block <toy::Block> [] */
-    if (typeof block !== "undefined" && block !== null) { block = block.ptr; }
-    /* index <size_t> [] */
-    /* element <toy::Element> [] */
-    if (typeof element !== "undefined" && element !== null) { element = element.ptr; }
-    /* size <float> [] */
-    if (spatial === undefined) { this.ptr = _toy_Chunk__construct_0(); getCache(Chunk)[this.ptr] = this; return; }
-    this.ptr = _toy_Chunk__construct_5(spatial, block, index, element, size); getCache(Chunk)[this.ptr] = this;
-    this.type = Chunk;
+function Chunk(a0, a1, a2, a3, a4) {
+    if (a0 === undefined) { this.ptr = _toy_Chunk__construct_0(); this.type = Chunk; getCache(Chunk)[this.ptr] = this; return; }
+    this.ptr = _toy_Chunk__construct_5(/*spatial*/a0.ptr, /*block*/a1.ptr, /*index*/a2, /*element*/a3.ptr, /*size*/a4); this.type = Chunk; getCache(Chunk)[this.ptr] = this;
 };
 Chunk.prototype = Object.create(WrapperObject.prototype);
 Chunk.prototype.constructor = Chunk;
@@ -129,7 +97,6 @@ Object.defineProperty(Chunk.prototype, "index", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <size_t> [] */
         _toy_Chunk__set_index(self, value);
     }
 });
@@ -140,9 +107,7 @@ Object.defineProperty(Chunk.prototype, "block", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <toy::Block> [] */
-        value = value.ptr;
-        _toy_Chunk__set_block(self, value);
+        _toy_Chunk__set_block(self, value.ptr);
     }
 });
 Object.defineProperty(Chunk.prototype, "element", {
@@ -152,9 +117,7 @@ Object.defineProperty(Chunk.prototype, "element", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <toy::Element> [] */
-        value = value.ptr;
-        _toy_Chunk__set_element(self, value);
+        _toy_Chunk__set_element(self, value.ptr);
     }
 });
 Object.defineProperty(Chunk.prototype, "size", {
@@ -164,7 +127,6 @@ Object.defineProperty(Chunk.prototype, "size", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <float> [] */
         _toy_Chunk__set_size(self, value);
     }
 });
@@ -174,8 +136,7 @@ Chunk.prototype["__destroy__"] = Chunk.prototype.__destroy__ = function() {
 };
 // ComponentHandle<toy::Block>
 function ComponentHandle_toy_Block() {
-    this.ptr = _mud_ComponentHandle_toy_Block__construct_0(); getCache(ComponentHandle_toy_Block)[this.ptr] = this;
-    this.type = ComponentHandle_toy_Block;
+    this.ptr = _mud_ComponentHandle_toy_Block__construct_0(); this.type = ComponentHandle_toy_Block; getCache(ComponentHandle_toy_Block)[this.ptr] = this;
 };
 ComponentHandle_toy_Block.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_toy_Block.prototype.constructor = ComponentHandle_toy_Block;
@@ -188,8 +149,7 @@ ComponentHandle_toy_Block.prototype["__destroy__"] = ComponentHandle_toy_Block.p
 };
 // ComponentHandle<toy::Chunk>
 function ComponentHandle_toy_Chunk() {
-    this.ptr = _mud_ComponentHandle_toy_Chunk__construct_0(); getCache(ComponentHandle_toy_Chunk)[this.ptr] = this;
-    this.type = ComponentHandle_toy_Chunk;
+    this.ptr = _mud_ComponentHandle_toy_Chunk__construct_0(); this.type = ComponentHandle_toy_Chunk; getCache(ComponentHandle_toy_Chunk)[this.ptr] = this;
 };
 ComponentHandle_toy_Chunk.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_toy_Chunk.prototype.constructor = ComponentHandle_toy_Chunk;
@@ -202,8 +162,7 @@ ComponentHandle_toy_Chunk.prototype["__destroy__"] = ComponentHandle_toy_Chunk.p
 };
 // ComponentHandle<toy::Heap>
 function ComponentHandle_toy_Heap() {
-    this.ptr = _mud_ComponentHandle_toy_Heap__construct_0(); getCache(ComponentHandle_toy_Heap)[this.ptr] = this;
-    this.type = ComponentHandle_toy_Heap;
+    this.ptr = _mud_ComponentHandle_toy_Heap__construct_0(); this.type = ComponentHandle_toy_Heap; getCache(ComponentHandle_toy_Heap)[this.ptr] = this;
 };
 ComponentHandle_toy_Heap.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_toy_Heap.prototype.constructor = ComponentHandle_toy_Heap;
@@ -216,8 +175,7 @@ ComponentHandle_toy_Heap.prototype["__destroy__"] = ComponentHandle_toy_Heap.pro
 };
 // ComponentHandle<toy::Sector>
 function ComponentHandle_toy_Sector() {
-    this.ptr = _mud_ComponentHandle_toy_Sector__construct_0(); getCache(ComponentHandle_toy_Sector)[this.ptr] = this;
-    this.type = ComponentHandle_toy_Sector;
+    this.ptr = _mud_ComponentHandle_toy_Sector__construct_0(); this.type = ComponentHandle_toy_Sector; getCache(ComponentHandle_toy_Sector)[this.ptr] = this;
 };
 ComponentHandle_toy_Sector.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_toy_Sector.prototype.constructor = ComponentHandle_toy_Sector;
@@ -230,8 +188,7 @@ ComponentHandle_toy_Sector.prototype["__destroy__"] = ComponentHandle_toy_Sector
 };
 // ComponentHandle<toy::Tileblock>
 function ComponentHandle_toy_Tileblock() {
-    this.ptr = _mud_ComponentHandle_toy_Tileblock__construct_0(); getCache(ComponentHandle_toy_Tileblock)[this.ptr] = this;
-    this.type = ComponentHandle_toy_Tileblock;
+    this.ptr = _mud_ComponentHandle_toy_Tileblock__construct_0(); this.type = ComponentHandle_toy_Tileblock; getCache(ComponentHandle_toy_Tileblock)[this.ptr] = this;
 };
 ComponentHandle_toy_Tileblock.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_toy_Tileblock.prototype.constructor = ComponentHandle_toy_Tileblock;
@@ -243,17 +200,9 @@ ComponentHandle_toy_Tileblock.prototype["__destroy__"] = ComponentHandle_toy_Til
     _mud_ComponentHandle_toy_Tileblock__destroy(self);
 };
 // Element
-function Element(name, state, colour) {
+function Element(a0, a1, a2) {
     ensureCache.prepare();
-    /* name <const char*> [] */
-    if (name && typeof name === "object") name = name.ptr;
-    else name = ensureString(name);
-    /* state <toy::MatterState> [] */
-    if (state && typeof state === "object") state = state.ptr;
-    /* colour <mud::Colour> [] */
-    colour = colour.ptr;
-    this.ptr = _toy_Element__construct_3(name, state, colour); getCache(Element)[this.ptr] = this;
-    this.type = Element;
+    this.ptr = _toy_Element__construct_3(ensureString(/*name*/a0), /*state*/a1, /*colour*/a2.ptr); this.type = Element; getCache(Element)[this.ptr] = this;
 };
 Element.prototype = Object.create(WrapperObject.prototype);
 Element.prototype.constructor = Element;
@@ -267,7 +216,6 @@ Object.defineProperty(Element.prototype, "id", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <uint32_t> [] */
         _toy_Element__set_id(self, value);
     }
 });
@@ -278,10 +226,7 @@ Object.defineProperty(Element.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <stl::string> [] */
-        if (value && typeof value === "object") value = value.ptr;
-        else value = ensureString(value);
-        _toy_Element__set_name(self, value);
+        _toy_Element__set_name(self, ensureString(value));
     }
 });
 Object.defineProperty(Element.prototype, "state", {
@@ -291,8 +236,6 @@ Object.defineProperty(Element.prototype, "state", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <toy::MatterState> [] */
-        if (value && typeof value === "object") value = value.ptr;
         _toy_Element__set_state(self, value);
     }
 });
@@ -303,9 +246,7 @@ Object.defineProperty(Element.prototype, "colour", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::Colour> [] */
-        value = value.ptr;
-        _toy_Element__set_colour(self, value);
+        _toy_Element__set_colour(self, value.ptr);
     }
 });
 Element.prototype["__destroy__"] = Element.prototype.__destroy__ = function() {
@@ -313,15 +254,9 @@ Element.prototype["__destroy__"] = Element.prototype.__destroy__ = function() {
     _toy_Element__destroy(self);
 };
 // Heap
-function Heap(spatial, element, radius) {
-    /* spatial <mud::ComponentHandle<toy::Spatial>> [] */
-    if (typeof spatial !== "undefined" && spatial !== null) { spatial = spatial.ptr; }
-    /* element <toy::Element> [] */
-    if (typeof element !== "undefined" && element !== null) { element = element.ptr; }
-    /* radius <float> [] */
-    if (spatial === undefined) { this.ptr = _toy_Heap__construct_0(); getCache(Heap)[this.ptr] = this; return; }
-    this.ptr = _toy_Heap__construct_3(spatial, element, radius); getCache(Heap)[this.ptr] = this;
-    this.type = Heap;
+function Heap(a0, a1, a2) {
+    if (a0 === undefined) { this.ptr = _toy_Heap__construct_0(); this.type = Heap; getCache(Heap)[this.ptr] = this; return; }
+    this.ptr = _toy_Heap__construct_3(/*spatial*/a0.ptr, /*element*/a1.ptr, /*radius*/a2); this.type = Heap; getCache(Heap)[this.ptr] = this;
 };
 Heap.prototype = Object.create(WrapperObject.prototype);
 Heap.prototype.constructor = Heap;
@@ -335,9 +270,7 @@ Object.defineProperty(Heap.prototype, "element", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <toy::Element> [] */
-        value = value.ptr;
-        _toy_Heap__set_element(self, value);
+        _toy_Heap__set_element(self, value.ptr);
     }
 });
 Object.defineProperty(Heap.prototype, "radius", {
@@ -347,7 +280,6 @@ Object.defineProperty(Heap.prototype, "radius", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <float> [] */
         _toy_Heap__set_radius(self, value);
     }
 });
@@ -356,20 +288,9 @@ Heap.prototype["__destroy__"] = Heap.prototype.__destroy__ = function() {
     _toy_Heap__destroy(self);
 };
 // Sector
-function Sector(spatial, world_page, navblock, coordinate, size) {
-    /* spatial <mud::ComponentHandle<toy::Spatial>> [] */
-    if (typeof spatial !== "undefined" && spatial !== null) { spatial = spatial.ptr; }
-    /* world_page <mud::ComponentHandle<toy::WorldPage>> [] */
-    if (typeof world_page !== "undefined" && world_page !== null) { world_page = world_page.ptr; }
-    /* navblock <mud::ComponentHandle<toy::Navblock>> [] */
-    if (typeof navblock !== "undefined" && navblock !== null) { navblock = navblock.ptr; }
-    /* coordinate <mud::uvec3> [] */
-    if (typeof coordinate !== "undefined" && coordinate !== null) { coordinate = coordinate.ptr; }
-    /* size <mud::vec3> [] */
-    if (typeof size !== "undefined" && size !== null) { size = size.ptr; }
-    if (spatial === undefined) { this.ptr = _toy_Sector__construct_0(); getCache(Sector)[this.ptr] = this; return; }
-    this.ptr = _toy_Sector__construct_5(spatial, world_page, navblock, coordinate, size); getCache(Sector)[this.ptr] = this;
-    this.type = Sector;
+function Sector(a0, a1, a2, a3, a4) {
+    if (a0 === undefined) { this.ptr = _toy_Sector__construct_0(); this.type = Sector; getCache(Sector)[this.ptr] = this; return; }
+    this.ptr = _toy_Sector__construct_5(/*spatial*/a0.ptr, /*world_page*/a1.ptr, /*navblock*/a2.ptr, /*coordinate*/a3.ptr, /*size*/a4.ptr); this.type = Sector; getCache(Sector)[this.ptr] = this;
 };
 Sector.prototype = Object.create(WrapperObject.prototype);
 Sector.prototype.constructor = Sector;
@@ -379,13 +300,11 @@ Module['Sector'] = Sector;
 Object.defineProperty(Sector.prototype, "coordinate", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_Sector__get_coordinate(self), v3_stl_uint);
+        return wrapPointer(_toy_Sector__get_coordinate(self), v3_uint);
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::uvec3> [] */
-        value = value.ptr;
-        _toy_Sector__set_coordinate(self, value);
+        _toy_Sector__set_coordinate(self, value.ptr);
     }
 });
 Object.defineProperty(Sector.prototype, "size", {
@@ -395,9 +314,7 @@ Object.defineProperty(Sector.prototype, "size", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <mud::vec3> [] */
-        value = value.ptr;
-        _toy_Sector__set_size(self, value);
+        _toy_Sector__set_size(self, value.ptr);
     }
 });
 Object.defineProperty(Sector.prototype, "block", {
@@ -407,9 +324,7 @@ Object.defineProperty(Sector.prototype, "block", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <toy::Block> [] */
-        value = value.ptr;
-        _toy_Sector__set_block(self, value);
+        _toy_Sector__set_block(self, value.ptr);
     }
 });
 Sector.prototype["__destroy__"] = Sector.prototype.__destroy__ = function() {
@@ -417,22 +332,9 @@ Sector.prototype["__destroy__"] = Sector.prototype.__destroy__ = function() {
     _toy_Sector__destroy(self);
 };
 // Tileblock
-function Tileblock(spatial, world_page, navblock, size, tile_scale, tileset) {
-    /* spatial <mud::ComponentHandle<toy::Spatial>> [] */
-    if (typeof spatial !== "undefined" && spatial !== null) { spatial = spatial.ptr; }
-    /* world_page <mud::ComponentHandle<toy::WorldPage>> [] */
-    if (typeof world_page !== "undefined" && world_page !== null) { world_page = world_page.ptr; }
-    /* navblock <mud::ComponentHandle<toy::Navblock>> [] */
-    if (typeof navblock !== "undefined" && navblock !== null) { navblock = navblock.ptr; }
-    /* size <mud::uvec3> [] */
-    if (typeof size !== "undefined" && size !== null) { size = size.ptr; }
-    /* tile_scale <mud::vec3> [] */
-    if (typeof tile_scale !== "undefined" && tile_scale !== null) { tile_scale = tile_scale.ptr; }
-    /* tileset <mud::WaveTileset> [] */
-    if (typeof tileset !== "undefined" && tileset !== null) { tileset = tileset.ptr; }
-    if (spatial === undefined) { this.ptr = _toy_Tileblock__construct_0(); getCache(Tileblock)[this.ptr] = this; return; }
-    this.ptr = _toy_Tileblock__construct_6(spatial, world_page, navblock, size, tile_scale, tileset); getCache(Tileblock)[this.ptr] = this;
-    this.type = Tileblock;
+function Tileblock(a0, a1, a2, a3, a4, a5) {
+    if (a0 === undefined) { this.ptr = _toy_Tileblock__construct_0(); this.type = Tileblock; getCache(Tileblock)[this.ptr] = this; return; }
+    this.ptr = _toy_Tileblock__construct_6(/*spatial*/a0.ptr, /*world_page*/a1.ptr, /*navblock*/a2.ptr, /*size*/a3.ptr, /*tile_scale*/a4.ptr, /*tileset*/a5.ptr); this.type = Tileblock; getCache(Tileblock)[this.ptr] = this;
 };
 Tileblock.prototype = Object.create(WrapperObject.prototype);
 Tileblock.prototype.constructor = Tileblock;
@@ -451,7 +353,6 @@ Object.defineProperty(Tileblock.prototype, "setup", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <bool> [] */
         _toy_Tileblock__set_setup(self, value);
     }
 });
@@ -462,7 +363,6 @@ Object.defineProperty(Tileblock.prototype, "populated", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <bool> [] */
         _toy_Tileblock__set_populated(self, value);
     }
 });
@@ -472,10 +372,9 @@ Tileblock.prototype["__destroy__"] = Tileblock.prototype.__destroy__ = function(
 };
 // Earth
 function Earth() {
-    this.ptr = _toy_Earth__construct_0(); getCache(Earth)[this.ptr] = this;
-    this.type = Earth;
+    this.ptr = _toy_Earth__construct_0(); this.type = Earth; getCache(Earth)[this.ptr] = this;
 };
-Earth.prototype = Object.create(WrapperObject.prototype);
+Earth.prototype = Object.create(Element.prototype);
 Earth.prototype.constructor = Earth;
 Earth.prototype.__class__ = Earth;
 Earth.__cache__ = {};
@@ -484,44 +383,21 @@ Earth.prototype["__destroy__"] = Earth.prototype.__destroy__ = function() {
     var self = this.ptr;
     _toy_Earth__destroy(self);
 };
-Module['paint_block_height'] = function(block, image, element) {
-    var self = this.ptr;
-    /* block <toy::Block> [] */
-    block = block.ptr;
-    /* image <mud::Image256> [] */
-    image = image.ptr;
-    /* element <toy::Element> [] */
-    element = element.ptr;
-    _toy_paint_block_height_3(block, image, element);
+Module['paint_block_height'] = function(a0, a1, a2) {
+    _toy_paint_block_height_3(/*block*/a0.ptr, /*image*/a1.ptr, /*element*/a2.ptr);
 };
-Module['generate_block'] = function(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file) {
-    var self = this.ptr;
-    /* gfx_system <mud::GfxSystem> [] */
-    gfx_system = gfx_system.ptr;
-    /* tileset <mud::WaveTileset> [] */
-    tileset = tileset.ptr;
-    /* origin <mud::ComponentHandle<toy::Spatial>> [] */
-    origin = origin.ptr;
-    /* coord <mud::ivec2> [] */
-    coord = coord.ptr;
-    /* block_subdiv <mud::uvec3> [] */
-    block_subdiv = block_subdiv.ptr;
-    /* tile_scale <mud::vec3> [] */
-    tile_scale = tile_scale.ptr;
-    /* from_file <bool> [] */
-    if (from_file === undefined) { return wrapPointer(_toy_generate_block_6(gfx_system, tileset, origin, coord, block_subdiv, tile_scale), ComponentHandle_toy_Tileblock); }
-    return wrapPointer(_toy_generate_block_7(gfx_system, tileset, origin, coord, block_subdiv, tile_scale, from_file), ComponentHandle_toy_Tileblock);
+Module['generate_block'] = function(a0, a1, a2, a3, a4, a5, a6) {
+    if (a6 === undefined) { return wrapPointer(_toy_generate_block_6(/*gfx_system*/a0.ptr, /*tileset*/a1.ptr, /*origin*/a2.ptr, /*coord*/a3.ptr, /*block_subdiv*/a4.ptr, /*tile_scale*/a5.ptr), ComponentHandle_toy_Tileblock); }
+    return wrapPointer(_toy_generate_block_7(/*gfx_system*/a0.ptr, /*tileset*/a1.ptr, /*origin*/a2.ptr, /*coord*/a3.ptr, /*block_subdiv*/a4.ptr, /*tile_scale*/a5.ptr, /*from_file*/a6), ComponentHandle_toy_Tileblock);
 };
-Module['build_block_geometry'] = function(scene, page, block) {
-    var self = this.ptr;
-    /* scene <mud::Scene> [] */
-    scene = scene.ptr;
-    /* page <toy::WorldPage> [] */
-    page = page.ptr;
-    /* block <toy::Tileblock> [] */
-    block = block.ptr;
-    _toy_build_block_geometry_3(scene, page, block);
+Module['build_block_geometry'] = function(a0, a1, a2) {
+    _toy_build_block_geometry_3(/*scene*/a0.ptr, /*page*/a1.ptr, /*block*/a2.ptr);
 };
+Module['HBlock'] = ComponentHandle_toy_Block;
+Module['HChunk'] = ComponentHandle_toy_Chunk;
+Module['HHeap'] = ComponentHandle_toy_Heap;
+Module['HSector'] = ComponentHandle_toy_Sector;
+Module['HTileblock'] = ComponentHandle_toy_Tileblock;
 
 (function() {
     function setup() {

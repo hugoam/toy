@@ -16,7 +16,7 @@ namespace toy
 	Entity Origin::create(ECS& ecs, World& world)
 	{
 		Entity entity = { ecs.create<Spatial, Origin>(), ecs.m_index };
-		ecs.set(entity, Spatial(world, HSpatial(), Zero3, ZeroQuat));
+		ecs.set(entity, Spatial(world, HSpatial(), vec3(0.f), ZeroQuat));
 		ecs.set(entity, Origin(entity));
 		return entity;
 	}

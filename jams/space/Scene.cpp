@@ -24,7 +24,7 @@ void fill_star(VisuStar& visu, Star& star)
 mat4 planet_transform(VisuPlanet& planet, const mat4& transform)
 {
 	vec2 coord = vec2{ cos(planet.m_period), sin(planet.m_period) } * planet.m_ellipsis;
-	mat4 planet_mat = bxSRT(Unit3, Zero3, rotate(planet.m_rotation, vec3{ coord.x, 0.f, coord.y }));
+	mat4 planet_mat = bxSRT(vec3(1.f), vec3(0.f), rotate(planet.m_rotation, vec3{ coord.x, 0.f, coord.y }));
 	return bxmul(planet_mat, transform);
 }
 
@@ -95,7 +95,7 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 	vec3 end = rotate(X3 * length, angle, Y3);
 
 	Gnode& projected = gfx::node(parent, {}, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
-	gfx::draw(projected, Line(Zero3, end), Symbol::wire(colour));
+	gfx::draw(projected, Line(vec3(0.f), end), Symbol::wire(colour));
 }
 
 void paint_scan_star(Gnode& parent, Star& star, Player& player)
@@ -200,8 +200,8 @@ void update_fleet_positions(VisuFleet& visu, float radius)
 
 mat4 ship_transform(VisuShip& ship, const mat4& transform, const vec3& position, float ship_scale)
 {
-	vec3 scale = ship.m_destroyed ? Zero3 : vec3{ ship.m_radius  * ship_scale };
-	mat4 ship_mat = bxSRT(scale, Zero3, position);
+	vec3 scale = ship.m_destroyed ? vec3(0.f) : vec3{ ship.m_radius  * ship_scale };
+	mat4 ship_mat = bxSRT(scale, vec3(0.f), position);
 	return bxmul(ship_mat, transform);
 }
 
@@ -233,7 +233,7 @@ void paint_fleet_orders(Gnode& parent, Fleet& fleet, const Colour& colour)
 
 void paint_fleet_jumping(Gnode& parent, Fleet& fleet, const Colour& colour)
 {
-	float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
+	float size = c_fleet_visu_sizes[fleet.estimated_size()];
 	gfx::shape(parent, Circle(0.4f * size, Axis::Z), Symbol::wire(colour), ItemFlag::Render | ItemFlag::Billboard);
 }
 
@@ -244,7 +244,7 @@ void paint_fleet_warp(Gnode& parent, VisuFleet& visu)
 
 void paint_fleet_stationary(Gnode& parent, Fleet& fleet, VisuFleet& visu, const Colour& colour)
 {
-	float size = c_fleet_visu_sizes[size_t(fleet.estimated_size())];
+	float size = c_fleet_visu_sizes[fleet.estimated_size()];
 	vec2 triangle = { 0.4f * size, 0.6f * size };
 	gfx::shape(parent, Triangle(triangle), Symbol::wire(colour), ItemFlag::Render | ItemFlag::Billboard);
 	gfx::shape(parent, Triangle(triangle * 1.2f), Symbol(Colour::Invisible), ItemFlag::Render | ItemFlag::Billboard | ItemFlag::Selectable);
@@ -304,15 +304,15 @@ void paint_scan_fleet(Gnode& parent, Fleet& fleet)
 	paint_scan_fleet(parent, fleet, player);
 }
 
-static float s_weapon_rate[6]  = { 0.f, 2.f,   1.2f,  1.f,    0.7f,  1.f };
-static float s_weapon_speed[6] = { 0.f, 2.f,   1.2f,  1.f,    0.7f,  1.f };
-static float s_weapon_scale[6] = { 0.f, 0.01f, 0.01f, 0.03f,  0.05f, 0.05f };
+static table<WeaponType, float> s_weapon_rate  = { 0.f, 2.f,   1.2f,  1.f,    0.7f,  1.f };
+static table<WeaponType, float> s_weapon_speed = { 0.f, 2.f,   1.2f,  1.f,    0.7f,  1.f };
+static table<WeaponType, float> s_weapon_scale = { 0.f, 0.01f, 0.01f, 0.03f,  0.05f, 0.05f };
 
-static float s_weapon_hue[6]   = { 0.f, 0.55f, 1.f,   0.305f, 0.f,   0.f };
-static float s_weapon_sat[6]   = { 0.f, 1.f,   1.f,   1.f,    0.f,   0.f };
-static float s_weapon_value[6] = { 0.f, 0.7f,  0.6f,  0.6f,   0.8f,  0.8f };
+static table<WeaponType, float> s_weapon_hue   = { 0.f, 0.55f, 1.f,   0.305f, 0.f,   0.f };
+static table<WeaponType, float> s_weapon_sat   = { 0.f, 1.f,   1.f,   1.f,    0.f,   0.f };
+static table<WeaponType, float> s_weapon_value = { 0.f, 0.7f,  0.6f,  0.6f,   0.8f,  0.8f };
 
-static Colour s_weapon_colour[6] =
+static table<WeaponType, Colour> s_weapon_colour =
 {
 	Colour(),
 	Colour::hsl(0.55f, 1.f, 0.7f),
@@ -322,7 +322,7 @@ static Colour s_weapon_colour[6] =
 	Colour::hsl(0.f, 0.f, 0.8f)
 };
 
-static Cube s_weapon_shape[6] =
+static table<WeaponType, Cube> s_weapon_shape =
 {
 	Cube(),
 	Cube(vec3(vec2(0.001f), 0.004f)),
@@ -332,37 +332,37 @@ static Cube s_weapon_shape[6] =
 	Cube(vec3(vec2(0.001f), 0.004f))
 };
 
-void scale_down(ParticleFlow& particles, float factor)
+void scale_down(Flow& particles, float factor)
 {
 	particles.m_scale.m_value *= factor;
 	particles.m_volume.m_value *= factor;
 	particles.m_speed.m_value *= factor;
 }
 
-unique<ParticleFlow> weapon_particles(Gnode& parent, cstring name, WeaponType weapon)
+unique<Flow> weapon_particles(Gnode& parent, cstring name, WeaponType weapon)
 {
-	ParticleFlow& original = *parent.m_scene->m_gfx_system.particles().file(name);
-	unique<ParticleFlow> particles = make_unique<ParticleFlow>(original);
-	particles->m_colour.m_value = s_weapon_colour[size_t(weapon)];
-	//particles->m_scale.m_value = s_weapon_scale[size_t(weapon)];
+	Flow& original = *parent.m_scene->m_gfx_system.flows().file(name);
+	unique<Flow> particles = make_unique<Flow>(original);
+	particles->m_colour.m_value = s_weapon_colour[weapon];
+	//particles->m_scale.m_value = s_weapon_scale[weapon];
 	scale_down(*particles, 0.005f);
 	return move(particles);
 }
 
 bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
 {
-	static unique<ParticleFlow> weapon_flash[4] = {};
-	static unique<ParticleFlow> weapon_trail[4] = {};
-	static unique<ParticleFlow> weapon_impact[4] = {};
+	static table<WeaponType, unique<Flow>> weapon_flash = {};
+	static table<WeaponType, unique<Flow>> weapon_trail = {};
+	static table<WeaponType, unique<Flow>> weapon_impact = {};
 
-	if(weapon_flash[size_t(weapon)] == nullptr)
+	if(weapon_flash[weapon] == nullptr)
 	{
-		weapon_flash[size_t(weapon)] = weapon_particles(parent, "flash", weapon);
-		weapon_trail[size_t(weapon)] = weapon_particles(parent, "impact", weapon);
-		weapon_impact[size_t(weapon)] = weapon_particles(parent, "impact", weapon);
+		weapon_flash[weapon] = weapon_particles(parent, "flash", weapon);
+		weapon_trail[weapon] = weapon_particles(parent, "impact", weapon);
+		weapon_impact[weapon] = weapon_particles(parent, "impact", weapon);
 	}
 
-	Colour colour = s_weapon_colour[size_t(weapon)] * 3.f;
+	Colour colour = s_weapon_colour[weapon] * 3.f;
 
 	vec3 current = ray.m_start + ray.m_dir * ray.m_d;
 
@@ -370,17 +370,17 @@ bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
 	Gnode& projectile = gfx::node(parent, {}, current, ray.m_angle);
 	//Gnode& hit = gfx::node(parent, {}, ray.m_end, ray.m_angle);
 
-	//gfx::particles(out, flash);
+	//gfx::flows(out, flash);
 
 	if(ray.m_d < ray.m_length)
 	{
-		gfx::shape(projectile, s_weapon_shape[size_t(weapon)], Symbol::wire(colour));
-		//gfx::particles(projectile, trail);
+		gfx::shape(projectile, s_weapon_shape[weapon], Symbol::wire(colour));
+		//gfx::flows(projectile, trail);
 		return false;
 	}
 	else
 	{
-		//return gfx::particles(hit, *weapon_impact[size_t(weapon)]).m_ended;
+		//return gfx::flows(hit, *weapon_impact[weapon]).m_ended;
 		return true;
 	}
 }
@@ -410,14 +410,14 @@ void paint_combat_fleet(Gnode& parent, const vector<CombatFleet>& flotilla, cons
 
 				if(ship.m_destroyed)
 				{
-					static ParticleFlow& explode = *parent.m_scene->m_gfx_system.particles().file("explode");
+					static Flow& explode = *parent.m_scene->m_gfx_system.flows().file("explode");
 					static bool once = false;
 					if(!once)
 					{
 						scale_down(explode, 0.1f);
 						once = true;
 					}
-					gfx::particles(node, explode);
+					gfx::flows(node, explode);
 				}
 
 				if(ship.m_destroyed || ship.m_weapon == WeaponType::None)
@@ -426,7 +426,7 @@ void paint_combat_fleet(Gnode& parent, const vector<CombatFleet>& flotilla, cons
 				ship.m_cooldown -= intensity * 100.f;
 				if(ship.m_cooldown < 0.f)
 				{
-					if(ship.m_ray.m_end == Zero3)
+					if(ship.m_ray.m_end == vec3(0.f))
 					{
 						vec3 source = fleet->m_spatial->m_position + ship.m_position;
 						vec3 target = target_fleet->m_spatial->m_position + random_element(target_fleet->m_visu.m_points.m_points);
@@ -434,12 +434,12 @@ void paint_combat_fleet(Gnode& parent, const vector<CombatFleet>& flotilla, cons
 						ship.m_ray = { source, target, normalize(target - source), length(target - source), angle, 0.f };
 					}
 
-					ship.m_ray.m_d += delta * s_weapon_speed[size_t(ship.m_weapon)];
+					ship.m_ray.m_d += delta * s_weapon_speed[ship.m_weapon];
 
 					if(paint_weapon_ray(node, ship.m_ray, ship.m_weapon))
 					{
 						ship.m_ray = {};
-						ship.m_cooldown = 2.f / s_weapon_rate[size_t(ship.m_weapon)];
+						ship.m_cooldown = 2.f / s_weapon_rate[ship.m_weapon];
 					}
 				}
 			}

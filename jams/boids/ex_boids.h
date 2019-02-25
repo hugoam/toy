@@ -65,7 +65,7 @@ namespace boids
 		vec3(__m128 v) : value(v) {}
 		vec3(float v) : value(_mm_set_ps1(v)) {}
 		vec3(float* v) : value(_mm_load_ps(v)) {}
-		//vec3(float x, float y, float z, float w = 0.f) : vec3(std::array<float, 4>{ x, y, z, w }.data()) {}
+		//vec3(float x, float y, float z, float w = 0.f) : vec3(std::span<float, 4>{ x, y, z, w }.data()) {}
 		//vec3(float x, float y, float z, float w = 0.f) : value(_mm_set_ps(x, y, z, w)) {}
 		vec3(float x, float y, float z, float w = 0.f) : value(_mm_setr_ps(x, y, z, w)) {}
 		operator float3() const { float3 result; _mm_store_ps(result.m_f, value); return result; }

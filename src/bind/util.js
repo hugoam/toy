@@ -28,7 +28,6 @@ Object.defineProperty(ProcedureType.prototype, "index", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <uint32_t> [] */
         _toy_ProcedureType__set_index(self, value);
     }
 });
@@ -39,10 +38,7 @@ Object.defineProperty(ProcedureType.prototype, "name", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <stl::string> [] */
-        if (value && typeof value === "object") value = value.ptr;
-        else value = ensureString(value);
-        _toy_ProcedureType__set_name(self, value);
+        _toy_ProcedureType__set_name(self, ensureString(value));
     }
 });
 ProcedureType.prototype["__destroy__"] = ProcedureType.prototype.__destroy__ = function() {

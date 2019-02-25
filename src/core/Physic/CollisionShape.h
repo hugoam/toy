@@ -16,7 +16,7 @@ namespace toy
 	{
 	public:
 		constr_ CollisionShape();
-		constr_ CollisionShape(const Shape& shape, const vec3& center = Zero3, float margin = 0.f);
+		constr_ CollisionShape(const Shape& shape, const vec3& center = vec3(0.f), float margin = 0.f);
 		~CollisionShape();
 
 		CollisionShape(CollisionShape&& other) = default;
@@ -26,7 +26,7 @@ namespace toy
 		CollisionShape& operator=(const CollisionShape& shape);
 
 		object<Shape> m_shape;
-		vec3 m_center = Zero3;
+		vec3 m_center = vec3(0.f);
 		float m_margin = 0.f;
 
 		bool checkInside(const vec3& position) { UNUSED(position); return true; }

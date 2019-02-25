@@ -62,8 +62,7 @@ namespace toy
 	Material& plain_material(GfxSystem& gfx_system, cstring name)
 	{
 		Material& material = gfx_system.fetch_material(name, "pbr/pbr");
-		material.m_base_block.m_geometry_filter = 1 << PLAIN;
-		material.m_pbr_block.m_enabled = true;
+		material.m_base.m_geometry_filter = 1 << PLAIN;
 		return material;
 	}
 
@@ -71,9 +70,8 @@ namespace toy
 	{
 		string variant_name = string(name) + "_" + to_string(to_rgba(colour));
 		Material& material = gfx_system.fetch_material(variant_name.c_str(), "unshaded");
-		material.m_base_block.m_geometry_filter = 1 << OUTLINE;
-		material.m_unshaded_block.m_enabled = true;
-		material.m_unshaded_block.m_colour.m_value = colour;
+		material.m_base.m_geometry_filter = 1 << OUTLINE;
+		material.m_unshaded.m_colour.m_value = colour;
 		return material;
 	}
 
@@ -91,7 +89,8 @@ namespace toy
 
 	void voxel_side(Block& block, size_t chunk, Element* element, Side side, vector<Quad>& quads, vector<ProcShape>& shapes)
 	{
-		Quad quad = { to_xz(block.chunk_size()), c_dirs_tangents[size_t(side)], c_dirs_normals[size_t(side)] };
+		SignedAxis axis = SignedAxis(side);
+		Quad quad = { to_xz(block.chunk_size()), c_dirs_tangents[axis], c_dirs_normals[axis] };
 		quad.m_center = block.chunk_position(chunk) + to_vec3(side) * block.chunk_size() / 2.f;
 
 		quads.push_back(quad);
@@ -152,8 +151,8 @@ namespace toy
 
 				/*
 				Material& plain = gfx_system.fetch_material(element->m_name.c_str(), "pbr/pbr");
-				plain.m_base_block.m_geometry_filter = 1 << PLAIN;
-				plain.m_pbr_block.m_enabled = true;
+				plain.m_base.m_geometry_filter = 1 << PLAIN;
+				plain.m_pbr.m_enabled = true;
 
 				state.m_models[element]->m_meshes[0]->m_material = &wireframe;
 				state.m_models[element]->m_meshes[1]->m_material = &wireframe;

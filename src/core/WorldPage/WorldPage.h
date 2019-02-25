@@ -40,7 +40,7 @@ namespace toy
 		comp_ HSpatial m_spatial;
 
 		attr_ bool m_open = true;
-		attr_ vec3 m_extents = Zero3;
+		attr_ vec3 m_extents = vec3(0.f);
 		attr_ World* m_world = nullptr;
 		attr_ size_t m_last_rebuilt = 0;
 

@@ -71,7 +71,6 @@ void toy_GameShell_cleanup(void* object, span<void*> args, void*& result) { UNUS
 void toy_GameShell_add_scene(void* object, span<void*> args, void*& result) { UNUSED(args); result = &(*static_cast<toy::GameShell*>(object)).add_scene(); }
 void toy_GameShell_remove_scene(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::GameShell*>(object)).remove_scene(*static_cast<toy::GameScene*>(args[0])); }
 void toy_GameShell_clear_scenes(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::GameShell*>(object)).clear_scenes(); }
-void toy_GameModuleBind__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::GameModuleBind( *static_cast<mud::Module*>(args[0]), *static_cast<mud::VirtualMethod*>(args[1]) ); }
 void toy_paint_physics_0(span<void*> args, void*& result) { UNUSED(result);  toy::paint_physics(*static_cast<mud::Gnode*>(args[0]), *static_cast<toy::World*>(args[1])); }
 void toy_physic_painter_1(span<void*> args, void*& result) { UNUSED(result);  toy::physic_painter(*static_cast<toy::GameScene*>(args[0])); }
 
@@ -222,14 +221,11 @@ namespace mud
 		static size_t bases_offsets[] = { base_offset<toy::GameModuleBind, toy::GameModule>() };
 		// defaults
 		// constructors
-		static Constructor constructors[] = {
-			{ t, toy_GameModuleBind__construct_0, { { "module", type<mud::Module>(),  }, { "call", type<mud::VirtualMethod>(),  } } }
-		};
 		// copy constructor
 		// members
 		// methods
 		// static members
-		static Class cls = { t, bases, bases_offsets, constructors, {}, {}, {}, {}, };
+		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
 	}
 	
 	{
@@ -270,6 +266,6 @@ namespace toy
 extern "C"
 Module& getModule()
 {
-		return toy_shell::m();
+	return toy_shell::m();
 }
 #endif

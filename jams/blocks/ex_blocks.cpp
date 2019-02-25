@@ -14,9 +14,8 @@ using namespace toy;
 Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
 	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
-	material.m_pbr_block.m_enabled = true;
-	material.m_pbr_block.m_emissive.m_value = colour;
-	material.m_pbr_block.m_emissive.m_value.m_a = float(factor);
+	material.m_pbr.m_emissive.m_value = colour;
+	material.m_pbr.m_emissive.m_value.a = float(factor);
 	return material;
 }
 
@@ -141,7 +140,7 @@ void Slug::update(Spatial& spatial)
 			tank->m_shock += 1.f;
 			tank->m_hitpoints -= 25.f;
 
-			vec3 location = Zero3;//rotate(inverse(m_spatial.m_rotation), m_impact - m_spatial.m_position);
+			vec3 location = vec3(0.f);//rotate(inverse(m_spatial.m_rotation), m_impact - m_spatial.m_position);
 
 			Solid& solid = (*tank->m_solid);
 			if(tank->m_hitpoints < 0.f)
@@ -161,7 +160,7 @@ void Slug::update(Spatial& spatial)
 		}
 	}
 
-	if(distance(spatial.m_position, Zero3) > 1000.f)
+	if(distance(spatial.m_position, vec3(0.f)) > 1000.f)
 		m_destroy = true;
 
 	spatial.set_position(spatial.m_position + m_velocity);
@@ -206,7 +205,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 	{
 		slug->update(slug->m_spatial);
 		//if(slug->m_destroy)
-		//	vector_remove(m_slugs, *slug);
+		//	remove(m_slugs, *slug);
 	}
 
 	if(!m_ia)
@@ -237,7 +236,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 			else if(m_cooldown == 0.f)
 			{
 				this->shoot();
-				m_dest = Zero3;
+				m_dest = vec3(0.f);
 				m_cooldown = 1.f;
 			}
 		}
@@ -246,18 +245,18 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 		if(leader && !m_target && distance(leader->m_spatial->m_position, spatial.m_position) > 50.f)
 			m_dest = leader->m_spatial->m_position;
 		
-		if(m_dest != Zero3)
+		if(m_dest != vec3(0.f))
 		{
 			if(!steer_2d(spatial, movable, m_dest, 15.f, float(delta) * float(c_tick_interval), m_range))
 				movable.set_linear_velocity(movable.m_linear_velocity - Y3 * 1.f);
 			else
-				m_dest = Zero3;
+				m_dest = vec3(0.f);
 		}
 	}
 	else
 	{
 		//m_movable.set_linear_velocity(-Y3 * 1.f);
-		m_dest = Zero3;
+		m_dest = vec3(0.f);
 	}
 }
 
@@ -274,7 +273,7 @@ void Tank::shoot(bool critical)
 	quat rotation = this->turret_rotation();
 
 	Spatial& spatial = m_spatial;
-	m_slugs.emplace_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
+	m_slugs.push_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
 }
 
 Prototype block_world = { type<BlockWorld>(), { &type<World>(), &type<BulletWorld>(), &type<Navmesh>() } };
@@ -336,9 +335,8 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 	auto fresnel_material = [&](Material& material, const Colour& colour)
 	{
-		material.m_fresnel_block.m_enabled = true;
-		material.m_fresnel_block.m_value.m_value = colour;
-		material.m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
+		material.m_fresnel.m_value = colour;
+		material.m_fresnel.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
 	};
 
 	if(power[faction.m_id] == nullptr)
@@ -355,7 +353,7 @@ void paint_shield(Gnode& parent, Shield& shield)
 	auto paint = [&](Material& material, float bias, const Colour& colour)
 	{
 		fresnel_material(material, colour);
-		material.m_fresnel_block.m_fresnel_bias = bias;
+		material.m_fresnel.m_fresnel_bias = bias;
 		gfx::shape(parent, Sphere(shield.m_radius), Symbol(colour), 0U, &material);
 	};
 
@@ -374,12 +372,12 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 void paint_shell(Gnode& parent, Slug& shell)
 {
-	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleFlow* trail = parent.m_scene->m_gfx_system.particles().file("trail");
-	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static Flow* flash = parent.m_scene->m_gfx_system.flows().file("flash");
+	static Flow* trail = parent.m_scene->m_gfx_system.flows().file("trail");
+	static Flow* impact = parent.m_scene->m_gfx_system.flows().file("impact");
 
 	Gnode& source = gfx::node(parent, Ref(&shell), shell.m_source, shell.m_spatial->m_rotation);
-	gfx::particles(source, *flash);
+	gfx::flows(source, *flash);
 
 	bool active = toy::sound(source, "bang", false, 0.5f);
 
@@ -388,13 +386,13 @@ void paint_shell(Gnode& parent, Slug& shell)
 	{
 		Gnode& projectile = gfx::node(parent.subx(Fly), Ref(&shell), shell.m_spatial->m_position, shell.m_spatial->m_rotation);
 		gfx::shape(projectile, Cube(vec3(0.4f, 0.4f, 1.f)), Symbol(Colour(1.f, 2.f, 1.5f)));
-		gfx::particles(projectile, *trail);
+		gfx::flows(projectile, *trail);
 	}
 
 	if(shell.m_impacted)
 	{
 		Gnode& hit = gfx::node(parent.subx(Impact), Ref(&shell), shell.m_impact, shell.m_spatial->m_rotation);
-		active |= !gfx::particles(hit, *impact).m_ended;
+		active |= !gfx::flows(hit, *impact).m_ended;
 		active |= toy::sound(hit, "impact", false, 0.2f);
 		//active |= toy::sound(hit, "explode", false, 0.2f);
 	}
@@ -407,15 +405,13 @@ Model& faction_model_dead_variant(GfxSystem& gfx_system, Model& model)
 	static Material& material = highlight_material("no_highlight", Colour::Black, 0);
 
 	string name = model.m_name + "_dead";
-	return model_variant(gfx_system, model, name.c_str(), carray<string, 2>{ "Highlight11", "Highlight2" }, 
-														  carray<Material*, 2>{ &material, &material });
+	return model_variant(gfx_system, model, name.c_str(), { "Highlight11", "Highlight2" }, { &material, &material });
 }
 
 Model& faction_model_variant(GfxSystem& gfx_system, Faction& faction, Model& model)
 {
 	string name = model.m_name + "_faction" + to_string(faction.m_id);
-	return model_variant(gfx_system, model, name.c_str(), carray<string, 2>{ "Highlight11", "Highlight2" }, 
-														  carray<Material*, 2>{ faction.m_highlight11, faction.m_highlight2 });
+	return model_variant(gfx_system, model, name.c_str(), { "Highlight11", "Highlight2" }, { faction.m_highlight11, faction.m_highlight2 });
 }
 
 void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float percentage, Colour colour)
@@ -430,11 +426,9 @@ void paint_tank(Gnode& parent, Tank& tank)
 {
 	static Material* debug = &parent.m_scene->m_gfx_system.debug_material();
 	static Material* stealth = &parent.m_scene->m_gfx_system.fetch_material("tank_stealth", "fresnel");
-	{
-		stealth->m_fresnel_block.m_enabled = true;
-		stealth->m_fresnel_block.m_value.m_value = { 0.8f, 0.9f, 5.f };
-		//stealth->m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
-	}
+
+	stealth->m_fresnel.m_value.m_value = { 0.8f, 0.9f, 5.f };
+	//stealth->m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
 
 	GfxSystem& gfx_system = parent.m_scene->m_gfx_system;
 
@@ -488,17 +482,17 @@ void paint_tank(Gnode& parent, Tank& tank)
 				static const Colour energy = { 0.f, 0.6f, 1.f };
 				static const Colour life = { 0.f, 1.f, 0.2f };
 
-				hud_bar(alive, Zero3, vec2(0.f), max(0.f, tank.m_hitpoints * 0.01f), life);
-				hud_bar(alive, Zero3, vec2(0.f, -0.4f), max(0.f, tank.m_energy * 0.01f), energy);
+				hud_bar(alive, vec3(0.f), vec2(0.f), max(0.f, tank.m_hitpoints * 0.01f), life);
+				hud_bar(alive, vec3(0.f), vec2(0.f, -0.4f), max(0.f, tank.m_energy * 0.01f), energy);
 			}
 		}
 	}
 	else
 	{
 		Gnode& dead = parent.subx(Dead);
-		static ParticleFlow* explode = parent.m_scene->m_gfx_system.particles().file("explode");
+		static Flow* explode = parent.m_scene->m_gfx_system.flows().file("explode");
 
-		gfx::particles(dead, *explode);
+		gfx::flows(dead, *explode);
 		//toy::sound(dead, "explosion", false, 0.2f);
 		toy::sound(dead, "explode", false, 0.2f);
 	}
@@ -566,10 +560,10 @@ static void tank_velocity_controller(Widget& widget, Tank& tank)
 
 	const KeyMove moves[8] =
 	{
-		{ Key::Up,    -Z3, Zero3 }, { Key::W,  -Z3, Zero3 },
-		{ Key::Down,   Z3, Zero3 }, { Key::S,   Z3, Zero3 },
-		{ Key::Left,  Zero3,  Y3 }, { Key::A,  Zero3,  Y3 },
-		{ Key::Right, Zero3, -Y3 }, { Key::D,  Zero3, -Y3 },
+		{ Key::Up,    -Z3, vec3(0.f) }, { Key::W,  -Z3, vec3(0.f) },
+		{ Key::Down,   Z3, vec3(0.f) }, { Key::S,   Z3, vec3(0.f) },
+		{ Key::Left,  vec3(0.f),  Y3 }, { Key::A,  vec3(0.f),  Y3 },
+		{ Key::Right, vec3(0.f), -Y3 }, { Key::D,  vec3(0.f), -Y3 },
 	};
 
 	for(const KeyMove& key_move : moves)
@@ -578,7 +572,7 @@ static void tank_velocity_controller(Widget& widget, Tank& tank)
 
 Style& screen_style()
 {
-	static Style style = { "GameScreen", styles().wedge, [](Layout& l) { l.m_space = LAYOUT; l.m_padding = vec4(30.f); } };
+	static Style style = { "GameScreen", styles().wedge, [](Layout& l) { l.m_space = Preset::Layout; l.m_padding = vec4(30.f); } };
 	return style;
 }
 
@@ -587,7 +581,7 @@ Style& right_panel_style(UiWindow& ui_window)
 	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Right, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Right, Align::Center }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
 													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
@@ -597,7 +591,7 @@ Style& center_panel_style(UiWindow& ui_window)
 	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { CENTER, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Center, Align::Center }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
 													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
@@ -607,14 +601,14 @@ Style& left_panel_style(UiWindow& ui_window)
 	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Left, Align::Center }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
 													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
 
 Style& menu_style()
 {
-	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
+	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Left, Align::Center }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
 	return style;
 }
 
@@ -650,7 +644,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	orbit.set_target(spatial.m_position);
 
 #ifdef TOY_SOUND
-	scene.m_snd_manager.m_listener.setTransform(viewer.m_camera.m_eye, look_at(viewer.m_camera.m_eye, viewer.m_camera.m_target));
+	scene.m_snd_manager.m_listener.set_transform(viewer.m_camera.m_eye, look_at(viewer.m_camera.m_eye, viewer.m_camera.m_target));
 #endif
 
 	Ray ray = viewer.mouse_ray();
@@ -669,7 +663,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 		tank.shoot(viewer.ui().m_keyboard.m_shift);
 	}
 
-	static vec3 destination = Zero3;
+	static vec3 destination = vec3(0.f);
 
 	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseRight, EventType::Stroked))
 	{
@@ -679,11 +673,11 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 		destination = player.m_world->m_bullet_world.ground_point(pick_ray);
 	}
 
-	if(destination != Zero3)
+	if(destination != vec3(0.f))
 	{
 		static Clock clock;
 		if(steer_2d(spatial, tank.m_movable, destination, 15.f, float(clock.step()), 0.1f))
-			destination = Zero3;
+			destination = vec3(0.f);
 	}
 
 	paint_viewer(viewer);
@@ -725,7 +719,7 @@ Viewer& ex_blocks_menu_viewport(Widget& parent, GameShell& app)
 	static DefaultWorld world = { "", *app.m_job_system };
 	static EntityHandle<Origin> root = { Origin::create(world.m_world.m_ecs, world.m_world), 0 };
 
-	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root->m_spatial, Zero3, g_factions[0]);
+	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root->m_spatial, vec3(0.f), g_factions[0]);
 	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root->m_spatial, X3 * 10.f, g_factions[1]);
 	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root->m_spatial, Z3 * 10.f, g_factions[2]);
 
@@ -786,9 +780,9 @@ public:
 		UNUSED(game);
 		app.m_gfx_system->add_resource_path("examples/ex_blocks");
 
-		g_factions.emplace_back(0, Colour::Red);
-		g_factions.emplace_back(0, Colour::Pink);
-		g_factions.emplace_back(0, Colour::Cyan);
+		g_factions.push_back({ 0, Colour::Red });
+		g_factions.push_back({ 0, Colour::Pink });
+		g_factions.push_back({ 0, Colour::Cyan });
 	}
 
 	virtual void start(GameShell& app, Game& game) final

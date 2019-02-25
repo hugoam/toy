@@ -39,7 +39,7 @@ namespace toy
 			uvec3 coord = sectors[i]->m_coordinate;
 			size_t index = grid.index_at(coord.x, coord.y, coord.z);
 			for(Side side : c_sides)
-				blocks[i]->m_neighbours[size_t(side)] = grid.border(index, side) ? nullptr : grid.neighbour_item(index, side);
+				blocks[i]->m_neighbours[side] = grid.border(index, side) ? nullptr : grid.neighbour_item(index, side);
 		}
 	}
 	
@@ -225,11 +225,11 @@ namespace toy
 	{
 		if(m_chunks.border(index, side))
 		{
-			if(!m_neighbours[size_t(side)])
+			if(!m_neighbours[side])
 				return Hunk();
 
-			size_t neighbour = m_neighbours[size_t(side)]->m_chunks.neighbour_mod(index, side);
-			return m_neighbours[size_t(side)]->hunk_at(neighbour);
+			size_t neighbour = m_neighbours[side]->m_chunks.neighbour_mod(index, side);
+			return m_neighbours[side]->hunk_at(neighbour);
 		}
 		else
 		{

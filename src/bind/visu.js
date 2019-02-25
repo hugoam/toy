@@ -16,7 +16,7 @@ VisuScene.prototype.constructor = VisuScene;
 VisuScene.prototype.__class__ = VisuScene;
 VisuScene.__cache__ = {};
 Module['VisuScene'] = VisuScene;
-VisuScene.prototype["next_frame"] = VisuScene.prototype.next_frame = function(self) {
+VisuScene.prototype["next_frame"] = VisuScene.prototype.next_frame = function() {
     var self = this.ptr;
     _toy_VisuScene_next_frame_0(self);
 };

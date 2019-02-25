@@ -277,6 +277,6 @@ namespace toy
 extern "C"
 Module& getModule()
 {
-		return toy_edit::m();
+	return toy_edit::m();
 }
 #endif

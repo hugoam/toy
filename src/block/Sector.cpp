@@ -79,7 +79,7 @@ namespace toy
 			vec3 position = grid_center(coord, grid.m_sector_size) - grid.m_center_offset;
 
 			Sector& sector = construct<Sector>(world.origin(), position, coord, grid.m_sector_size);
-			Block& block = construct<Block>(sector.m_spatial, sector.m_world_page, Zero3, nullptr, 0, grid.m_sector_size);
+			Block& block = construct<Block>(sector.m_spatial, sector.m_world_page, vec3(0.f), nullptr, 0, grid.m_sector_size);
 
 			grid.m_sectors.push_back(&sector);
 			blocks.push_back(&block);

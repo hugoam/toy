@@ -46,9 +46,9 @@ namespace toy
 	};
 
 	template <class T_Func>
-	auto time(float* times, GameShell::Step step, cstring name, T_Func f)
+	void time(table<GameShell::Step, float>& times, GameShell::Step step, cstring name, T_Func f)
 	{
-		UNUSED(name); static SmoothTimer timer = { 10 }; timer.begin(); f(); times[size_t(step)] = timer.read();
+		UNUSED(name); static SmoothTimer timer = { 10 }; timer.begin(); f(); times[step] = timer.read();
 	}
 
 	Game::Game(User& user, GfxSystem& gfx_system)
@@ -159,8 +159,8 @@ namespace toy
 			printf("ERROR: Sound - failed to init\n");
 		}
 #endif
-		//m_context = m_gfx_system->create_context("mud EditorCore", 1920, 1080, false);
-		m_context = m_gfx_system->create_context("mud EditorCore", 1600, 900, false);
+		//m_context = m_gfx_system->create_context("mud EditorCore", { 1920, 1080 }, false);
+		m_context = m_gfx_system->create_context("mud EditorCore", { 1600, 900 }, false);
 		//m_context = m_gfx_system.create_context("mud EditorCore", 1280, 720, false);
 		GfxContext& context = as<GfxContext>(*m_context);
 
@@ -190,7 +190,7 @@ namespace toy
 
 		m_ui = m_ui_window->m_root_sheet.get();
 
-		add_asset_loader(m_gfx_system->particles(), ".ptc");
+		add_asset_loader(m_gfx_system->flows(), ".ptc");
 	}
 
 	void GameShell::reset_interpreters(bool reflect)
@@ -341,7 +341,7 @@ namespace toy
 		timer.begin();
 
 		bool pursue = true;
-		for(float& time : m_times)
+		for(float& time : m_times.m_values)
 			time = 0.f;
 		time(m_times, Step::Input,		"ui input",		[&] { ZoneScopedNC("ui input",  tracy::Color::Salmon);    pursue &= m_ui_window->input_frame(); });
 		time(m_times, Step::Core,		"core",			[&] { ZoneScopedNC("core",      tracy::Color::Red);       m_core->next_frame(); });
@@ -476,13 +476,13 @@ namespace toy
 			ui::label(row, truncate_number(to_string(value)).c_str());
 		};
 
-		entry(parent, "ui input",	int(1000.f * m_times[size_t(Step::Input)]));
-		entry(parent, "core",		int(1000.f * m_times[size_t(Step::Core)]));
-		entry(parent, "world",		int(1000.f * m_times[size_t(Step::World)]));
-		entry(parent, "game",		int(1000.f * m_times[size_t(Step::Game)]));
-		entry(parent, "scenes",		int(1000.f * m_times[size_t(Step::Scene)]));
-		entry(parent, "ui render",	int(1000.f * m_times[size_t(Step::UiRender)]));
-		entry(parent, "gfx",		int(1000.f * m_times[size_t(Step::GfxRender)]));
+		entry(parent, "ui input",	int(1000.f * m_times[Step::Input]));
+		entry(parent, "core",		int(1000.f * m_times[Step::Core]));
+		entry(parent, "world",		int(1000.f * m_times[Step::World]));
+		entry(parent, "game",		int(1000.f * m_times[Step::Game]));
+		entry(parent, "scenes",		int(1000.f * m_times[Step::Scene]));
+		entry(parent, "ui render",	int(1000.f * m_times[Step::UiRender]));
+		entry(parent, "gfx",		int(1000.f * m_times[Step::GfxRender]));
 	}
 
 	void GameShell::copy(const string& text)

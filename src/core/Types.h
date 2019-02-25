@@ -26,7 +26,7 @@ namespace mud
     // Exported types
     export_ template <> TOY_CORE_EXPORT Type& type<toy::CollisionGroup>();
     
-    export_ template <> TOY_CORE_EXPORT Type& type<stl::vector<mud::ComponentHandle<toy::Spatial>>>();
+    export_ template <> TOY_CORE_EXPORT Type& type<stl::vector<toy::HSpatial>>();
     
     export_ template <> TOY_CORE_EXPORT Type& type<toy::BulletMedium>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::BulletShape>();

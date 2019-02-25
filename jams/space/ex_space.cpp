@@ -2,8 +2,8 @@
 #include <space/ex_space.h>
 #include <toy/toy.h>
 
-#include <meta/space/Convert.h>
-#include <meta/space/Module.h>
+#include <meta/_space.conv.h>
+#include <meta/_space.meta.h>
 #include <space/Api.h>
 #include <shell/Shell.h>
 
@@ -16,11 +16,11 @@ using namespace toy;
 
 float g_hull_weight[8] = { 2.f, 6.f, 20.f, 50.f, 100.f, 150.f, 200.f, 250.f };
 
-TurnStep g_turn_steps[size_t(TurnStage::Count)] = { turn_begin, turn_divisions, turn_jumps, turn_spatial_combats, turn_planetary_combats, turn_stars, turn_constructions, turn_fleets, turn_technology, turn_scans };
+table<TurnStage, TurnStep> g_turn_steps = { turn_begin, turn_divisions, turn_jumps, turn_spatial_combats, turn_planetary_combats, turn_stars, turn_constructions, turn_fleets, turn_technology, turn_scans };
 
 void star_power(Star& star, Combat::Force& force)
 {
-	float race_modifier = star.m_commander ? 100.f - c_race_factors[size_t(star.m_commander->m_race)].m_planetary_combat * 100.f
+	float race_modifier = star.m_commander ? 100.f - c_race_factors[star.m_commander->m_race].m_planetary_combat * 100.f
 										   : 0.f;
 	float defense_modifier = star.m_politic == Politic::Defense ? 20.f : 0.f;
 
@@ -51,7 +51,7 @@ void fleet_power_planetary(const vector<CombatFleet>& flotilla, Combat::Force& f
 	{
 		Fleet& fleet = *combat_fleet.m_fleet;
 
-		float race_modifier = 100.f - c_race_factors[size_t(fleet.m_commander->m_race)].m_spatial_combat * 100.f;
+		float race_modifier = 100.f - c_race_factors[fleet.m_commander->m_race].m_spatial_combat * 100.f;
 		float stance_modifier = fleet_stance_modifier(fleet.m_stance, CombatType::Planetary, fleet.m_fought);
 
 		float modifier = 100.f + fleet.m_commander->m_command
@@ -82,7 +82,7 @@ void fleet_power_spatial(const vector<CombatFleet>& flotilla, Combat::Force& for
 	{
 		Fleet& fleet = *combat_fleet.m_fleet;
 
-		float race_modifier = 100.f - c_race_factors[size_t(fleet.m_commander->m_race)].m_spatial_combat * 100.f;
+		float race_modifier = 100.f - c_race_factors[fleet.m_commander->m_race].m_spatial_combat * 100.f;
 		float stance_modifier = fleet_stance_modifier(fleet.m_stance, CombatType::Spatial, fleet.m_fought);
 
 		float modifier = 100.f + fleet.m_commander->m_command
@@ -266,17 +266,17 @@ void extract_resources(Turn& turn, Commander& commander, Star& star)
 {
 	auto mining_factor = [&](Commander& commander)
 	{
-		return 1.f + commander.level(Technology::Mining) * 0.10f + (1.f - c_race_factors[size_t(commander.m_race)].m_mining);
+		return 1.f + commander.level(Technology::Mining) * 0.10f + (1.f - c_race_factors[commander.m_race].m_mining);
 	};
 
 	for(Resource resource = Resource(0); resource != Resource::Count; resource = Resource(size_t(resource) + 1))
 	{
 		bool is_mining = (resource == Resource::Minerals || resource == Resource::Andrium);
-		int extracted = star.m_resources[size_t(resource)] * star.m_extractors[size_t(resource)];
+		int extracted = star.m_resources[resource] * star.m_extractors[resource];
 		extracted = int(extracted * (is_mining ? mining_factor(commander) : 1.f));
 		if(extracted > 0)
 		{
-			star.m_stocks[size_t(resource)] += extracted;
+			star.m_stocks[resource] += extracted;
 			turn.add_item(TurnStage::Systems, commander, "System " + star.m_name + " extracted " + to_string(extracted) + " " + to_string(resource));
 		}
 	}
@@ -286,8 +286,8 @@ void commit_construction(Turn& turn, Commander& commander, Star& star, Construct
 {
 	int number = construction.m_number; // @todo clamp number depending on actual resources
 
-	star.m_stocks[size_t(Resource::Minerals)] -= int(construction.m_schema->m_minerals * number);
-	star.m_stocks[size_t(Resource::Andrium)] -= int(construction.m_schema->m_andrium * number);
+	star.m_stocks[Resource::Minerals] -= int(construction.m_schema->m_minerals * number);
+	star.m_stocks[Resource::Andrium] -= int(construction.m_schema->m_andrium * number);
 	commander.m_centaures -= construction.m_schema->m_cost * number;
 
 	if(construction.m_destination)
@@ -310,12 +310,12 @@ void advance_constructions(Turn& turn, Commander& commander, Star& star)
 		if(construction.m_turns == 0)
 			commit_construction(turn, commander, star, construction);
 	}
-	vector_remove_if(star.m_constructions, [](Construction& construction) { return construction.m_turns == 0; });
+	remove_if(star.m_constructions, [](Construction& construction) { return construction.m_turns == 0; });
 }
 
 void grow_population(Turn& turn, Commander& commander, Star& star)
 {
-	int growth = int(star.m_population * star.m_environment / 100.f * c_race_factors[size_t(commander.m_race)].m_growth);
+	int growth = int(star.m_population * star.m_env / 100.f * c_race_factors[commander.m_race].m_growth);
 	growth = min(growth, star.m_max_population - star.m_population);
 	if(growth > 0)
 	{
@@ -359,7 +359,7 @@ void sustain_fleet(Turn& turn, Commander& commander, Fleet& fleet)
 void advance_technology(Turn& turn, Commander& commander, Technology tech, TechDomain& domain)
 {
 	commander.m_centaures -= domain.m_budget;
-	domain.m_points += int(domain.m_budget * c_race_factors[size_t(commander.m_race)].m_research);
+	domain.m_points += int(domain.m_budget * c_race_factors[commander.m_race].m_research);
 	int level = techno_level(domain.m_points);
 	if(level != domain.m_level)
 	{
@@ -470,7 +470,7 @@ void turn_technology(Turn& turn)
 	for(Commander* commander : turn.m_commanders)
 	{
 		for(Technology tech = Technology(0); tech != Technology::Count; tech = Technology(size_t(tech) + 1))
-			advance_technology(turn, *commander, tech, commander->m_technology[size_t(tech)]);
+			advance_technology(turn, *commander, tech, commander->m_technology[tech]);
 	}
 }
 
@@ -542,10 +542,10 @@ void GalaxyGrid::update_slots(uvec2 coord)
 		vec3 slot = fleets.size() == 1 ? center : center + rotate(-Z3 * 0.2f, angle, X3);
 		for(Fleet* fleet : commander_fleets.second)
 		{
-			float size = c_fleet_visu_sizes[size_t(fleet->estimated_size())];
+			float size = c_fleet_visu_sizes[fleet->estimated_size()];
 			fleet->m_slot = slot;
 			//fleet->m_spatial.set_position(slot);
-			animate(Ref(&as<Transform>(fleet->m_spatial)), member(&Spatial::m_position), var(slot), 0.25f);
+			//animate(Ref(&as<Transform>(fleet->m_spatial)), member(&Spatial::m_position), var(slot), 0.25f);
 			slot += Y3 * -size;
 		}
 		angle += theta;
@@ -560,7 +560,7 @@ void GalaxyGrid::add_fleet(Fleet& fleet, uvec2 coord)
 
 void GalaxyGrid::move_fleet(Fleet& fleet, uvec2 start, uvec2 dest)
 {
-	vector_remove(m_fleets[start], &fleet);
+	remove(m_fleets[start], &fleet);
 	m_fleets[dest].push_back(&fleet);
 	fleet.m_coord = dest;
 	update_slots(dest);
@@ -654,7 +654,7 @@ void Star::set_buildings(BuildingSchema& schema, uint32_t number)
 		m_buildings[&schema] = number;
 
 	if(schema.m_extractor != Resource::None)
-		m_extractors[size_t(schema.m_extractor)] = m_buildings[&schema];
+		m_extractors[schema.m_extractor] = m_buildings[&schema];
 }
 
 void Star::set_buildings(const string& code, uint32_t number)
@@ -838,16 +838,16 @@ void Fleet::split()
 void Fleet::destroy()
 {
 	if(m_commander)
-		vector_remove(m_commander->m_fleets, HFleet(m_spatial));
+		remove(m_commander->m_fleets, HFleet(m_spatial));
 }
 
 Commander::Commander(uint32_t id, const string& name, Race race, int command, int commerce, int diplomacy)
 	: m_id(index(type<Commander>(), id, Ref(this)))
 	, m_name(name)
 	, m_race(race)
-	, m_command(command + c_race_factors[size_t(race)].m_command)
-	, m_commerce(commerce + c_race_factors[size_t(race)].m_commerce)
-	, m_diplomacy(diplomacy + c_race_factors[size_t(race)].m_diplomacy)
+	, m_command(command + c_race_factors[race].m_command)
+	, m_commerce(commerce + c_race_factors[race].m_commerce)
+	, m_diplomacy(diplomacy + c_race_factors[race].m_diplomacy)
 {}
 
 Commander::~Commander()
@@ -889,7 +889,7 @@ void Commander::take_star(Star& star)
 {
 	HStar hstar = star.m_spatial;
 	if(star.m_commander)
-		vector_remove(star.m_commander->m_stars, hstar);
+		remove(star.m_commander->m_stars, hstar);
 	m_stars.push_back(hstar);
 	star.m_commander = this;
 }
@@ -898,7 +898,7 @@ void Commander::take_fleet(Fleet& fleet)
 {
 	HFleet hfleet = fleet.m_spatial;
 	if(fleet.m_commander)
-		vector_remove(fleet.m_commander->m_fleets, hfleet);
+		remove(fleet.m_commander->m_fleets, hfleet);
 	m_fleets.push_back(hfleet);
 	fleet.m_commander = this;
 }
@@ -911,7 +911,7 @@ CommanderBrush::CommanderBrush(ToolContext& context)
 
 Colour rgb_to_rgba(const Colour& colour, float a)
 {
-	return{ colour.m_r, colour.m_g, colour.m_b, a };
+	return{ colour.r, colour.g, colour.b, a };
 }
 
 void CommanderBrush::paint(Gnode& parent)
@@ -967,7 +967,7 @@ void ex_space_lua_check(GameShell& shell, Galaxy& galaxy)
 	lua.set("coord", var(vec2{ 45.f, 12.f }));
 	lua.call("coord = vec2(45, 12)");
 	lua.set("stance", var(FleetStance::PlanetaryAttack));
-	//float x = lua.getx<float>(carray<cstring, 2>{ "coord", "x" });
+	//float x = lua.getx<float>({ "coord", "x" });
 	//printf("cpp -> coord.x = %f\n", x);
 	lua.call("print('coord = ' .. coord.x .. ', ' .. coord.y)");
 	lua.call("print('stance = ' .. tostring(stance))");
@@ -978,7 +978,7 @@ void ex_space_lua_check(GameShell& shell, Galaxy& galaxy)
 
 Style& menu_style()
 {
-	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
+	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Left, Align::Center }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
 	return style;
 }
 
@@ -1025,7 +1025,7 @@ Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 	update_visu_fleet(fleet, tick, delta);
 
 	float angle = fmod(float(clock.read()) / 50.f, 2.f * c_pi);
-	Gnode& node = gfx::node(scene, {}, Zero3, angle_axis(angle, Y3), Unit3);
+	Gnode& node = gfx::node(scene, {}, vec3(0.f), angle_axis(angle, Y3), vec3(1.f));
 	paint_fleet_ships(node, fleet, 1.f, 0.1f);
 	
 	//toy::sound(node, "complexambient", true);
@@ -1090,7 +1090,7 @@ public:
 	{
 		app.m_gfx_system->add_resource_path("examples/ex_space");
 
-		game.m_editor.m_custom_brushes.emplace_back(make_unique<CommanderBrush>(game.m_editor.m_tool_context));
+		game.m_editor.m_custom_brushes.push_back(construct<CommanderBrush>(game.m_editor.m_tool_context));
 	}
 
 	virtual void start(GameShell& app, Game& game) final
@@ -1103,7 +1103,7 @@ public:
 		world.add_loop<Fleet, Spatial>(Task::GameObject);
 
 		//VisualScript& generator = space_generator(app);
-		//generator(carray<Var, 2>{ Ref(game.m_world), Ref(&game.m_world->origin()) });
+		//generator({ Ref(game.m_world), Ref(&game.m_world->origin()) });
 
 		space_generate(game.m_world->origin());
 

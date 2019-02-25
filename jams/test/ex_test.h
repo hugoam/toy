@@ -12,7 +12,7 @@ using namespace toy;
 
 namespace test
 {
-class Shell : public NonCopy
+class Shell
 {
 public:
 	Shell(const string& resource_path, int argc, char *argv[]);

@@ -91,6 +91,6 @@ namespace toy
 extern "C"
 Module& getModule()
 {
-		return toy_visu::m();
+	return toy_visu::m();
 }
 #endif

@@ -30,16 +30,16 @@ namespace toy
 
 		MotionState* m_motion_state = nullptr;
 
-		attr_ vec3 m_linear_velocity = Zero3;
-		attr_ vec3 m_angular_velocity = Zero3;
+		attr_ vec3 m_linear_velocity = vec3(0.f);
+		attr_ vec3 m_angular_velocity = vec3(0.f);
 
 		vec3 m_direction = -Z3;
-		vec3 m_acceleration = Zero3;
+		vec3 m_acceleration = vec3(0.f);
 
 		attr_ bool m_moving = false;
 		attr_ vec3 m_previous_position;
 
-		vec3 m_max_linear_velocity = Zero3;
+		vec3 m_max_linear_velocity = vec3(0.f);
 
 		size_t m_updated = 0;
 		size_t m_acceleration_updated = 0;

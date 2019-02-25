@@ -63,13 +63,13 @@ Human::Human(HSpatial spatial, HMovable movable)
 void Human::next_frame(Spatial& spatial, size_t tick, size_t delta)
 {
 	UNUSED(spatial); UNUSED(tick); UNUSED(delta);
-	(*m_solid)->set_angular_factor(Zero3);
+	(*m_solid)->set_angular_factor(vec3(0.f));
 
-	for(auto& bullet : reverse_adapt(m_bullets))
+	for(llong i = m_bullets.size() - 1; i >= 0; --i)
 	{
-		bullet->update();
-		if(bullet->m_destroy)
-			vector_remove_pt(m_bullets, *bullet);
+		m_bullets[i]->update();
+		if(m_bullets[i]->m_destroy)
+			m_bullets.erase(m_bullets.begin() + i);
 	}
 }
 
@@ -92,7 +92,7 @@ void Human::shoot()
 	Aim aim = this->aim();
 	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, random_scalar(-0.05f, 0.05f)); };
 	quat rotation = fuzz(fuzz(aim.rotation, X3), Y3);
-	m_bullets.emplace_back(make_object<Bullet>(m_spatial, aim.source, rotation, 2.f));
+	m_bullets.push_back(construct_owned<Bullet>(m_spatial, aim.source, rotation, 2.f));
 }
 
 Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
@@ -122,11 +122,11 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 {
 	Spatial& spatial = bullet.m_spatial;
 
-	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static Flow* flash = parent.m_scene->m_gfx_system.flows().file("flash");
+	static Flow* impact = parent.m_scene->m_gfx_system.flows().file("impact");
 
 	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
-	gfx::particles(source, *flash);
+	gfx::flows(source, *flash);
 
 	toy::sound(source, "rifle2", false, 0.4f);
 
@@ -140,7 +140,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 	{
 		Gnode& hit = gfx::node(parent, {}, bullet.m_impact, spatial.m_rotation);
 		toy::sound(source, "impact2", false, 0.4f);
-		if(gfx::particles(hit, *impact).m_ended)
+		if(gfx::flows(hit, *impact).m_ended)
 			bullet.m_destroy = true;
 	}
 }
@@ -154,7 +154,7 @@ void paint_human(Gnode& parent, Human& human)
 	Gnode& self = gfx::node(parent, Ref(&human), spatial.m_position, spatial.m_rotation);
 	
 	Item& item = gfx::item(self, model);
-	Animated& animated = gfx::animated(self, item);
+	Mime& animated = gfx::animated(self, item);
 
 	if(animated.m_playing.empty() || animated.playing() != human.m_state.name)
 		animated.start(human.m_state.name.c_str(), human.m_state.loop, 0.f, human.m_walk ? 0.7f : 1.f);
@@ -162,7 +162,7 @@ void paint_human(Gnode& parent, Human& human)
 	Bone* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
 
 	mat4 pose = bxrotation(spatial.m_rotation) * fix_bone_pose(*bone);
-	Gnode& arm = gfx::node(self, {}, spatial.m_position + vec3(pose * vec4(Zero3, 1.f)), spatial.m_rotation);
+	Gnode& arm = gfx::node(self, {}, spatial.m_position + vec3(pose * vec4(vec3(0.f), 1.f)), spatial.m_rotation);
 	gfx::model(arm, "rifle");
 }
 
@@ -229,9 +229,9 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 		movement_key(viewer, controller.m_force, controller.m_torque, key_move, speed);
 
 	if(viewer.key_event(Key::Space, EventType::Stroked))
-		(*human.m_solid)->impulse(Y3 * 16.f, Zero3);
+		(*human.m_solid)->impulse(Y3 * 16.f, vec3(0.f));
 
-	if(controller.m_force != Zero3 || controller.m_torque != Zero3)
+	if(controller.m_force != vec3(0.f) || controller.m_torque != vec3(0.f))
 	{
 		human.m_state = { human.m_walk ? "Walk" : "RunAim", true };
 	}
@@ -254,8 +254,8 @@ void ex_minimal_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 	human_velocity_controller(viewer, controller, human, orbit, mode != ui::OrbitMode::Isometric);
 
-	if(mode == ui::OrbitMode::Isometric && controller.m_force != Zero3)
-		human.m_spatial->set_rotation(look_at(Zero3, rotate(quat(vec3(0.f, orbit.m_yaw, 0.f)), controller.m_force)));
+	if(mode == ui::OrbitMode::Isometric && controller.m_force != vec3(0.f))
+		human.m_spatial->set_rotation(look_at(vec3(0.f), rotate(quat(vec3(0.f, orbit.m_yaw, 0.f)), controller.m_force)));
 
 	if(viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
 	{

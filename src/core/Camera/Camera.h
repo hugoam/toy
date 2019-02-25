@@ -35,7 +35,7 @@ namespace toy
 
 		bool m_lens_updated = true;
 
-		vec3 m_lens_position = Zero3;
+		vec3 m_lens_position = vec3(0.f);
 		quat m_lens_rotation = ZeroQuat;
 
 		size_t m_last_updated = 0;

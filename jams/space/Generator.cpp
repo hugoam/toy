@@ -62,11 +62,11 @@ HStar generate_system(Galaxy& galaxy, const uvec3& coord, const vec3& position)
 	star.m_base_population = random_integer(1, 1000);
 	star.m_population = random_integer(1, star.m_base_population);
 	star.m_max_population = star.m_base_population;
-	star.m_environment = random_integer(1, 20);
-	star.m_resources[size_t(Resource::Minerals)] = random_integer(1, 20);
+	star.m_env = random_integer(1, 20);
+	star.m_resources[Resource::Minerals] = random_integer(1, 20);
 	for(Resource resource = Resource(0); resource != Resource::Count; resource = Resource(size_t(resource) + 1))
 		if(random_integer(1, 100) > 98)
-			star.m_resources[size_t(resource)] = random_integer(1, 20);
+			star.m_resources[resource] = random_integer(1, 20);
 	return hstar;
 }
 
@@ -107,7 +107,7 @@ Commander* generate_commander(Galaxy& galaxy, Star& star)
 	commander.m_capital = &star;
 	commander.m_centaures = 10'000.f;
 
-	star.m_stocks[size_t(Resource::Minerals)] = 200;
+	star.m_stocks[Resource::Minerals] = 200;
 
 	star.set_buildings("MINE", 3);
 	star.set_buildings("CHANTIER", 1);
@@ -140,7 +140,7 @@ void space_generate(HSpatial origin)
 {
 	uint galaxy_size = 40;
 
-	HGalaxy galaxy = construct<Galaxy>(origin, Zero3, uvec2(galaxy_size));
+	HGalaxy galaxy = construct<Galaxy>(origin, vec3(0.f), uvec2(galaxy_size));
 
 	as<Universe>(origin->m_world->m_complex).m_galaxies.push_back(galaxy);
 
@@ -183,7 +183,7 @@ void space_generator(GameShell& shell, VisualScript& script)
 
 	Valve& origin = script.input("origin");
 
-	Valve& galaxy = script.create<Galaxy>({ &script.value(0U), &origin, &script.value(Zero3), &galaxy_size2 });
+	Valve& galaxy = script.create<Galaxy>({ &script.value(0U), &origin, &script.value(vec3(0.f)), &galaxy_size2 });
 
 	//Valve& sectors = script.create<Quadrant>().pipe({ &script.value(0U), &galaxy, &sectorPositions, &sectorCoords, &sectorParsecs });
 
@@ -206,7 +206,7 @@ void space_generator(GameShell& shell, VisualScript& script)
 
 VisualScript& space_generator(GameShell& shell)
 {
-	static Signature signature = { { { "world", Ref(type<World>()) }, { "origin", Ref(type<Origin>()) } } };
+	static Signature signature = { { { "world", type<World>() }, { "origin", type<Origin>() } } };
 	static VisualScript generator = { "Generator", signature };
 	space_generator(shell, generator);
 	return generator;

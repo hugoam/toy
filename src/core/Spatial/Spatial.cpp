@@ -23,7 +23,7 @@ module toy.core;
 namespace toy
 {
 	Spatial::Spatial(World& world, HSpatial parent, const vec3& position, const quat& rotation)
-		: Transform{ position, rotation, Unit3 }
+		: Transform{ position, rotation, vec3(1.f) }
 		, m_world(&world)
 		, m_parent(parent)
 		, m_hooked(true)

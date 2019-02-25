@@ -13,7 +13,7 @@ namespace mud
     // Exported types
     template <> TOY_CORE_EXPORT Type& type<toy::CollisionGroup>() { static Type ty("CollisionGroup", sizeof(toy::CollisionGroup)); return ty; }
     
-    template <> TOY_CORE_EXPORT Type& type<stl::vector<mud::ComponentHandle<toy::Spatial>>>() { static Type ty("vector<mud::ComponentHandle<toy::Spatial>>", sizeof(stl::vector<mud::ComponentHandle<toy::Spatial>>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<stl::vector<toy::HSpatial>>() { static Type ty("vector<toy::HSpatial>", sizeof(stl::vector<toy::HSpatial>)); return ty; }
     
     template <> TOY_CORE_EXPORT Type& type<toy::BulletMedium>() { static Type ty("BulletMedium", sizeof(toy::BulletMedium)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::BulletShape>() { static Type ty("BulletShape", sizeof(toy::BulletShape)); return ty; }

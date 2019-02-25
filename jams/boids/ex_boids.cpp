@@ -16,8 +16,11 @@
 #include <boids/Api.h>
 #include <meta/boids/Module.h>
 
-#include <jobs/JobLoop.h>
-#include <ecs/Loop.h>
+#include <pool/Pool.hpp>
+#include <jobs/JobLoop.hpp>
+#include <ecs/Loop.hpp>
+
+#include <stl/vector.hpp>
 
 #include <Tracy.hpp>
 
@@ -299,6 +302,17 @@ namespace boids
 		}
 	};
 
+	template <class T>
+	struct ComponentArray
+	{
+		size_t size() const { return m_components.size(); }
+
+		T& operator[](size_t index) { return *m_components[index]; }
+		const T& operator[](size_t index) const { return *m_components[index]; }
+
+		vector<T*> m_components;
+	};
+
 	class BoidSystem
 	{
 	public:
@@ -312,8 +326,8 @@ namespace boids
 			BoidsData& data = m_data;
 			BoidParams4 params4 = params;
 
-			vector<Position*> obstacles = ecs.gather<Position, BoidObstacle>();
-			vector<Position*> targets = ecs.gather<Position, BoidTarget>();
+			ComponentArray<Position> obstacles = { ecs.gather<Position, BoidObstacle>() };
+			ComponentArray<Position> targets = { ecs.gather<Position, BoidTarget>() };
 
 			vector<EntityStream*> matches = ecs.match(prototype);
 			for(EntityStream* stream : matches)
@@ -429,7 +443,7 @@ namespace boids
 				lookat(transform, position.m_value, heading.m_value, up);
 #else
 				//bxlookat(transform, position.m_value, position.m_value + heading.m_value, Y3);
-				//transform = bxTRS(Unit3, look_dir(position.m_value, heading.m_value), position.m_value);
+				//transform = bxTRS(vec3(1.f), look_dir(position.m_value, heading.m_value), position.m_value);
 				transform = bxtranslation(mud::vec3(position.m_value));
 #endif
 			};
@@ -524,8 +538,8 @@ namespace boids
 			scene.painter("World", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
 				UNUSED(visu_scene);
 				Gnode& self = parent.subi((void*)index);
-				parent.m_scene->m_environment.m_radiance.m_energy = 0.2f;
-				parent.m_scene->m_environment.m_radiance.m_ambient = 0.04f;
+				parent.m_scene->m_env.m_radiance.m_energy = 0.2f;
+				parent.m_scene->m_env.m_radiance.m_ambient = 0.04f;
 				gfx::radiance(self, "radiance/tiber_1_1k.hdr", BackgroundMode::Radiance);
 			});
 
@@ -573,8 +587,8 @@ namespace boids
 				});
 			};
 		
-			scene.m_painters.emplace_back(make_unique<VisuPainter>("boids", scene.m_painters.size(), paint_boids));
-			scene.m_painters.emplace_back(make_unique<VisuPainter>("targets", scene.m_painters.size(), paint_targets));
+			scene.m_painters.push_back(construct<VisuPainter>("boids", scene.m_painters.size(), paint_boids));
+			scene.m_painters.push_back(construct<VisuPainter>("targets", scene.m_painters.size(), paint_targets));
 		}
 
 		virtual void pump(GameShell& app, Game& game, Widget& ui) final
@@ -595,11 +609,11 @@ namespace boids
 
 				Widget& header = ui::row(viewer);
 
-				static Style panel_style("SpacePanel", styles().wedge, [](Layout& l) { l.m_space = STACK; l.m_align = { CENTER, CENTER }; 
+				static Style panel_style("SpacePanel", styles().wedge, [](Layout& l) { l.m_space = Preset::Stack; l.m_align = { Align::Center, Align::Center }; 
 																					   l.m_padding = vec4(15.f); l.m_spacing = vec2(10.f); });
 
 				Widget& left = ui::widget(header, panel_style);
-				Widget& numbers = ui::columns(left, carray<float, 2>{ 0.15f, 0.85f });
+				Widget& numbers = ui::columns(left, { 0.15f, 0.85f });
 
 				ui::slider_field<size_t>(numbers, "num targets", { m_num_targets, { 0, 10, 1 } });
 				ui::slider_field<size_t>(numbers, "num obstacles", { m_num_obstacles, { 0, 10, 1 } });
@@ -615,7 +629,7 @@ namespace boids
 				UNUSED(middle);
 
 				Widget& right = ui::widget(header, panel_style);
-				Widget& edit = ui::columns(middle, carray<float, 2>{ 0.2f, 0.8f });
+				Widget& edit = ui::columns(middle, { 0.2f, 0.8f });
 
 				ui::number_field<float>(edit, "cell radius",		{ params.cell_radius,		{ 1.f, 10.f, 0.1f } });
 				ui::number_field<float>(edit, "separation weight",	{ params.separation_weight, { 0.f, 10.f, 0.1f } });

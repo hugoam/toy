@@ -5,6 +5,8 @@
 
 #include <toy/toy.h>
 
+#include <ecs/ECS.hpp>
+
 void generate_crates(World& world, const vec3& extents)
 {
 	HSpatial origin = world.origin();

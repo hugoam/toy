@@ -25,7 +25,7 @@ namespace toy
     class TOY_CORE_EXPORT MotionState
     {
     public:
-		MotionState(const vec3& offset = Zero3)
+		MotionState(const vec3& offset = vec3(0.f))
 			: m_offset(offset)
 		{
 			//if(m_movable)
@@ -34,7 +34,7 @@ namespace toy
 
 		TransformSource* m_transform_source = nullptr;
 		MotionSource* m_motion_source = nullptr;
-		vec3 m_offset = Zero3;
+		vec3 m_offset = vec3(0.f);
 		size_t m_last_updated = 0;
 
 		struct Transform { vec3 m_position; quat m_rotation; };

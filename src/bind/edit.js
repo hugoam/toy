@@ -1,7 +1,6 @@
 // ActionGroup
 function ActionGroup() {
-    this.ptr = _toy_ActionGroup__construct_0(); getCache(ActionGroup)[this.ptr] = this;
-    this.type = ActionGroup;
+    this.ptr = _toy_ActionGroup__construct_0(); this.type = ActionGroup; getCache(ActionGroup)[this.ptr] = this;
 };
 ActionGroup.prototype = Object.create(WrapperObject.prototype);
 ActionGroup.prototype.constructor = ActionGroup;
@@ -74,9 +73,7 @@ Object.defineProperty(Editor.prototype, "edited_world", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <toy::World> [] */
-        value = value.ptr;
-        _toy_Editor__set_edited_world(self, value);
+        _toy_Editor__set_edited_world(self, value.ptr);
     }
 });
 Object.defineProperty(Editor.prototype, "run_game", {
@@ -86,7 +83,6 @@ Object.defineProperty(Editor.prototype, "run_game", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <bool> [] */
         _toy_Editor__set_run_game(self, value);
     }
 });
@@ -97,7 +93,6 @@ Object.defineProperty(Editor.prototype, "play_game", {
     },
     set: function(value) {
         var self = this.ptr;
-        /* value <bool> [] */
         _toy_Editor__set_play_game(self, value);
     }
 });
@@ -107,8 +102,7 @@ Editor.prototype["__destroy__"] = Editor.prototype.__destroy__ = function() {
 };
 // GraphicsDebug
 function GraphicsDebug() {
-    this.ptr = _toy_GraphicsDebug__construct_0(); getCache(GraphicsDebug)[this.ptr] = this;
-    this.type = GraphicsDebug;
+    this.ptr = _toy_GraphicsDebug__construct_0(); this.type = GraphicsDebug; getCache(GraphicsDebug)[this.ptr] = this;
 };
 GraphicsDebug.prototype = Object.create(WrapperObject.prototype);
 GraphicsDebug.prototype.constructor = GraphicsDebug;
@@ -176,7 +170,7 @@ Toolbox.prototype["__destroy__"] = Toolbox.prototype.__destroy__ = function() {
 };
 // DynamicToolbox
 function DynamicToolbox() { throw "cannot construct a DynamicToolbox, no constructor in IDL" }
-DynamicToolbox.prototype = Object.create(WrapperObject.prototype);
+DynamicToolbox.prototype = Object.create(Toolbox.prototype);
 DynamicToolbox.prototype.constructor = DynamicToolbox;
 DynamicToolbox.prototype.__class__ = DynamicToolbox;
 DynamicToolbox.__cache__ = {};
@@ -185,6 +179,10 @@ DynamicToolbox.prototype["__destroy__"] = DynamicToolbox.prototype.__destroy__ =
     var self = this.ptr;
     _toy_DynamicToolbox__destroy(self);
 };
+Module['Selection'] = vector_mud_Ref;
+Module['Selection'] = vector_mud_Ref;
+Module['Selection'] = vector_mud_Ref;
+Module['Selection'] = vector_mud_Ref;
 
 (function() {
     function setup() {

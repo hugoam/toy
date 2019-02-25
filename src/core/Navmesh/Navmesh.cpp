@@ -123,7 +123,7 @@ namespace toy
 
 				Colour colour = { r, g, b, 0.6f };
 
-				vec3 center = Zero3;
+				vec3 center = vec3(0.f);
 
 				for(int v = 0; v < tile->polys[p].vertCount; ++v)
 				{

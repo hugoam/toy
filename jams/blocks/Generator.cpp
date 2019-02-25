@@ -15,16 +15,14 @@ struct Edge
 Material& cliff_material(GfxSystem& gfx_system)
 {
 	Material& material = gfx_system.fetch_material("cliff", "pbr/pbr");
-	material.m_pbr_block.m_enabled = true;
-	material.m_pbr_block.m_albedo = Colour::DarkGrey;
+	material.m_pbr.m_albedo = Colour::DarkGrey;
 	return material;
 }
 
 Material& ground_material(GfxSystem& gfx_system)
 {
 	Material& material = gfx_system.fetch_material("ground", "pbr/pbr");
-	material.m_pbr_block.m_enabled = true;
-	material.m_pbr_block.m_albedo = Colour(0.1f);//Colour::LightGrey;
+	material.m_pbr.m_albedo = Colour(0.1f);//Colour::LightGrey;
 	return material;
 }
 
@@ -33,7 +31,7 @@ void flat_low(GfxSystem& gfx_system)
 	static Material& material = ground_material(gfx_system);
 	Model& model = gfx_system.models().create("flat_low");
 	Quad quad = { 1.f, X3, Z3 };
-	quad.m_center = Zero3;
+	quad.m_center = vec3(0.f);
 	draw_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
 }
 
@@ -69,10 +67,10 @@ vector<size_t> range(size_t begin, size_t end)
 	return result;
 }
 
-Grid3 extrude(const vec3& offset, array<Edge> edges, array<size_t> points, const vec3& dir, const vec3& normal)
+Grid3 extrude(const vec3& offset, span<Edge> edges, span<size_t> points, const vec3& dir, const vec3& normal)
 {
 	Grid3 grid = { uvec2(edges.size(), points.size()) };
-	array2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
+	span2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
 
 	vec3 du = dir * 1.f / float(edges.size()-1);
 	for(size_t i = 0; i < edges.size(); ++i)
@@ -86,10 +84,10 @@ Grid3 extrude(const vec3& offset, array<Edge> edges, array<size_t> points, const
 	return grid;
 }
 
-Grid3 revolve(const vec3& center, float radius, float start_angle, float end_angle, array<Edge> edges, array<size_t> points, bool reverse_edge)
+Grid3 revolve(const vec3& center, float radius, float start_angle, float end_angle, span<Edge> edges, span<size_t> points, bool reverse_edge)
 {
 	Grid3 grid = { uvec2(edges.size(), points.size()) };
-	array2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
+	span2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
 
 	float total_angle = end_angle - start_angle;
 	float increment = total_angle / float(edges.size()-1);
@@ -212,8 +210,8 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 		m_cliff_edges.push_back(random_edge(0.f, 1.f, 0.1f, Cliff::subdiv));
 
 	tileset.m_name = "cliffs";
-	tileset.m_tile_size = Unit3 * 5.f;
-	tileset.m_tile_scale = Unit3;
+	tileset.m_tile_size = vec3(1.f) * 5.f;
+	tileset.m_tile_scale = vec3(1.f);
 
 	flat_low(gfx_system);
 	flat_high(gfx_system);

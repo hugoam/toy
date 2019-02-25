@@ -75,7 +75,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 	//Valve& wave = empty_wave;
 
 	Valve& scale = script.value(vec3(4.f));
-	Valve& empty_world = script.create<Tileblock>({ &script.value(0U), &script.input("origin"), &script.value(Zero3), &gridSize, &scale, tileset });
+	Valve& empty_world = script.create<Tileblock>({ &script.value(0U), &script.input("origin"), &script.value(vec3(0.f)), &gridSize, &scale, tileset });
 	//Valve& world = script.method(&Tileblock::update, { &empty_world, &wave });
 	UNUSED(empty_world);
 
@@ -107,7 +107,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 
 VisualScript& platform_generator(GameShell& shell)
 {
-	static Signature signature = { { { "world", Ref(type<World>()) }, { "origin", Ref(type<Origin>()) } } };
+	static Signature signature = { vector<Param>{ { "world", type<World>() }, { "origin", type<Origin>() } } };
 	static VisualScript generator = { "Generator", signature };
 	platform_generator(shell, generator);
 	return generator;

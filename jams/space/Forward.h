@@ -40,7 +40,7 @@
 #define _SPACE_EXPORT MUD_IMPORT
 #endif
 
-#include <cstdint>
+#include <stdint.h>
 
 enum class GameStage : uint32_t;
 enum class Race : unsigned int;

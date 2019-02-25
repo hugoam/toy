@@ -195,15 +195,15 @@ namespace toy
 
     void Movable::next_frame(Spatial& spatial, size_t tick, size_t delta)
 	{
-		if(m_acceleration != Zero3)
+		if(m_acceleration != vec3(0.f))
 		{
 			//m_linear_velocity += m_acceleration * (delta * float(TICK_INTERVAL));
 			//if(m_linear_velocity > m_maxLinearVelocity)
 			//	m_linear_velocity = m_maxLinearVelocity;
 		}
 
-		//if(m_linear_velocity != Zero3 || m_angular_velocity != Zero3)
-		if((m_linear_velocity != Zero3 || m_angular_velocity != Zero3) && m_motion_state == nullptr)
+		//if(m_linear_velocity != vec3(0.f) || m_angular_velocity != vec3(0.f))
+		if((m_linear_velocity != vec3(0.f) || m_angular_velocity != vec3(0.f)) && m_motion_state == nullptr)
         {
 			m_previous_position = spatial.m_position;
 

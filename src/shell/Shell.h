@@ -88,7 +88,7 @@ namespace toy
 	class refl_ TOY_SHELL_EXPORT GameModuleBind : public GameModule
 	{
 	public:
-		constr_ GameModuleBind(Module& module, const VirtualMethod& call)
+		/*constr_*/ GameModuleBind(Module& module, const VirtualMethod& call)
 			: GameModule(module)
 			, m_call(call)
 		{}
@@ -194,7 +194,7 @@ namespace toy
 		function<void()> m_pump;
 
 		enum class Step : unsigned int { Input = 0, Core, World, Game, Scene, UiRender, GfxRender, Count };
-		float m_times[size_t(Step::Count)] = {};
+		table<Step, float> m_times = {};
 	};
 
 #ifdef MUD_PLATFORM_EMSCRIPTEN
