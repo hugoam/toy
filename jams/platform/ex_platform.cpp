@@ -185,7 +185,7 @@ Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position, Faction fa
 {
 	Entity entity = ecs.create<Spatial, Movable, Emitter, Receptor, EntityScript, Human>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	ecs.set(entity, Receptor(HSpatial(entity)));
 	ecs.set(entity, EntityScript(entity));
@@ -360,7 +360,7 @@ Entity Lamp::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
 	Entity entity = ecs.create<Spatial, Movable, Lamp>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Lamp(HSpatial(entity), HMovable(entity)));
 	return entity;
 }
@@ -374,7 +374,7 @@ Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3
 {
 	Entity entity = ecs.create<Spatial, Movable, Crate>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }

@@ -171,7 +171,7 @@ Entity Tank::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& fa
 {
 	Entity entity = ecs.create<Spatial, Movable, Emitter, Receptor, Tank>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	ecs.set(entity, Receptor(HSpatial(entity)));
 	ecs.set(entity, Tank(HSpatial(entity), HMovable(entity), HEmitter(entity), HReceptor(entity), faction));
@@ -327,6 +327,7 @@ void paint_well(Gnode& parent, Well& well)
 
 void paint_shield(Gnode& parent, Shield& shield)
 {
+	return;
 	static Material* discharge = &parent.m_scene->m_gfx.fetch_material("shield_discharge", "fresnel");
 
 	static vector<Material*> power = vector<Material*>(4);
@@ -717,11 +718,11 @@ Viewer& ex_blocks_menu_viewport(Widget& parent, GameShell& app)
 	viewer.m_camera.m_eye = viewer.m_camera.m_target + vec3(-1.5f, 1.0f, -0.5f) * (10.f + sinf(float(clock.read()) * 0.1f));
 
 	static DefaultWorld world = { "", *app.m_job_system };
-	static EntityHandle<Origin> root = { Origin::create(world.m_world.m_ecs, world.m_world), 0 };
+	static EntityHandle<Origin> root = Origin::create(world.m_world.m_ecs, world.m_world);
 
-	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root->m_spatial, vec3(0.f), g_factions[0]);
-	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root->m_spatial, X3 * 10.f, g_factions[1]);
-	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root->m_spatial, Z3 * 10.f, g_factions[2]);
+	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root, vec3(0.f), g_factions[0]);
+	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root, X3 * 10.f, g_factions[1]);
+	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root, Z3 * 10.f, g_factions[2]);
 
 	static bool once = false;
 	if(!once)

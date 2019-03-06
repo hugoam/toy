@@ -216,7 +216,7 @@ public:
     {
         // ... (initialize the viewer)
         
-        Model& model = app.m_gfx_system.models().file("my_model.obj");
+        Model& model = app.m_gfx.models().file("my_model.obj");
         
         Gnode& node = gfx::node(scene, {}, vec3(0.f, 0.f, 0.f));
         gfx::item(node, model);
@@ -416,14 +416,14 @@ To load a resource, you need to use the AssetStore using the `load()` function, 
 Each Asset Store holds the specific operations to do in order to load a given type of resource. 
 
 ```cpp
-Texture* texture = gfx_system.textures().file("my_texture.png");
-Model* model = gfx_system.models().file("my_model.gltf");
+Texture* texture = gfx.textures().file("my_texture.png");
+Model* model = gfx.models().file("my_model.gltf");
 ```
 
 Resources lifetimes are managed by the user explicitly: to free a resource, simply call
 
 ```cpp
-gfx_system.textures().release(texture);
+gfx.textures().release(texture);
 ```
 
 ### asynchronous loading
@@ -435,7 +435,7 @@ resources can be loaded in a background thread. the returned pointer is null unt
 Scenes represent a graph of objects to be rendered.
 
 ```cpp
-Scene scene = { gfx_system };
+Scene scene = { gfx };
 
 while(true)
 {
@@ -450,7 +450,7 @@ This means you don't need to manage the lifetimes of the rendered objects yourse
 ```cpp
 // inside the drawing loop
 Gnode& root = scene.begin();
-Model& model = gfx_system.models().file("my_model.obj");
+Model& model = gfx.models().file("my_model.obj");
 gfx::item(root, model);
 ```
 
@@ -464,7 +464,7 @@ In this case you can interact with the underlying Camera and Viewport directly t
 If you want to interact with the rendering layer directly though, the only things needed to start rendering is a Camera, a Viewport, and a Scene.
 
 ```cpp
-Scene scene = { gfx_system };
+Scene scene = { gfx };
 Camera camera = { &scene };
 Viewport viewport = { camera, scene };
 
@@ -539,7 +539,7 @@ toy uses the bimg library to load textures, which supports the following formats
 A Texture is loaded explicitly with the following code:
 ```cpp
 // loads and return a texture, or nullptr if the file isn't found in any resource paths
-Texture* texture = gfx_system.textures().file("my_texture.png");
+Texture* texture = gfx.textures().file("my_texture.png");
 ```
 
 Some properties are stored in the Texture object for convenience:
@@ -573,12 +573,12 @@ The BasicBlock holds the following Material attributes, which are used by every 
 
 ```cpp
 // fetch the program
-Program& program = gfx_system.programs().file("unshaded");
+Program& program = gfx.programs().file("solid");
 
 // initialize a material with the required blocks
 BasicBlock base_block = {};
-UnshadedBlock unshaded_block = {};
-Material material = { program, base_block, { unshaded_block } };
+UnshadedBlock solid_block = {};
+Material material = { program, base_block, { solid_block } };
 ```
 
 ### material parameters
@@ -591,7 +591,7 @@ Their only particularity is that most parameters are of the type MaterialParam<T
 
 ```cpp
 material.block<UnshadedBlock>().m_color.m_value = Colour::White;
-material.block<UnshadedBlock>().m_color.m_texture = gfx_system.textures().file("my_texture.png");
+material.block<UnshadedBlock>().m_color.m_texture = gfx.textures().file("my_texture.png");
 ```
 
 ## models

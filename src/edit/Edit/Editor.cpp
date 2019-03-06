@@ -187,7 +187,7 @@ namespace toy
 
 	string entity_name(Entity entity)
 	{
-		return string(entity_prototype(entity)) + ":" + to_string(entity);
+		return string(entity_prototype(entity)) + ":" + to_string(entity.m_handle);
 	}
 
 	string entity_icon(Entity entity)

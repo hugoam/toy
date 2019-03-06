@@ -6,6 +6,7 @@
 #pragma once
 
 #include <stl/string.h>
+#include <stl/span.h>
 #include <type/Ref.h>
 #include <type/Indexer.h>
 #include <util/Forward.h>
