@@ -14,13 +14,15 @@
 #include <toy/toy.h>
 
 #include <boids/Api.h>
-#include <meta/boids/Module.h>
+#include <meta/_boids.meta.h>
 
 #include <pool/Pool.hpp>
+#include <pool/ObjectPool.hpp>
 #include <jobs/JobLoop.hpp>
 #include <ecs/Loop.hpp>
 
 #include <stl/vector.hpp>
+#include <stl/string.hpp>
 
 #include <Tracy.hpp>
 
@@ -487,13 +489,13 @@ namespace boids
 		{
 			for(size_t i = 0; i < m_num_obstacles; ++i)
 			{
-				uint32_t obstacle = ecs.create<Position, Rotation, Transform4, BoidObstacle>();
+				Entity obstacle = ecs.create<Position, Rotation, Transform4, BoidObstacle>();
 				ecs.set<Position>(obstacle, random_vec3(m_extents));
 			}
 
 			for(size_t i = 0; i < m_num_targets; ++i)
 			{
-				uint32_t target = ecs.create<Position, Rotation, Transform4, BoidTarget>();
+				Entity target = ecs.create<Position, Rotation, Transform4, BoidTarget>();
 				ecs.set<Position>(target, random_vec3(m_extents));
 			}
 
@@ -571,7 +573,7 @@ namespace boids
 			auto paint_targets = [&](size_t index, VisuScene& scene, Gnode& parent)
 			{ 
 				UNUSED(index); UNUSED(scene);
-				Model& model = app.m_gfx->shape({ Colour::White, Colour::White }, Sphere(0.1f), PLAIN);
+				Model& model = app.m_gfx->shape(Sphere(0.1f), { Colour::White, Colour::White }, PLAIN);
 				Material& target_material = app.m_gfx->symbol_material(Symbol::plain(Colour::Red), PLAIN);
 				Material& obstacle_material = app.m_gfx->symbol_material(Symbol::plain(Colour::Black), PLAIN);
 
@@ -663,7 +665,7 @@ int main(int argc, char *argv[])
 {
 	GameShell app(TOY_RESOURCE_PATH, exec_path(argc, argv).c_str());
 
-
+#if 0
 	//Any any; TAnyHandlerImpl<Heading>::create(any, TAnyHandler<Heading>::me, static_cast<Heading&&>(Heading()));
 	Any any; new ((void*)&any.m_storage) Heading(static_cast<Heading&&>(Heading())); any.m_handler = &TAnyHandler<Heading>::me;
 	auto moveany = [](Any& any2, Any& any)
@@ -686,6 +688,7 @@ int main(int argc, char *argv[])
 	Any test0 = TAnyHandler<Heading>::create(static_cast<Heading&&>(Heading()));
 
 	Var test = var(Heading());
+#endif
 
 	boids::ExBoids module = { _boids::m() };
 	app.run_game(module);
