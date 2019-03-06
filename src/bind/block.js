@@ -81,9 +81,9 @@ Block.prototype["__destroy__"] = Block.prototype.__destroy__ = function() {
     _toy_Block__destroy(self);
 };
 // Chunk
-function Chunk(a0, a1, a2, a3, a4) {
+function Chunk(a0, a1, a2, a3) {
     if (a0 === undefined) { this.ptr = _toy_Chunk__construct_0(); this.type = Chunk; getCache(Chunk)[this.ptr] = this; return; }
-    this.ptr = _toy_Chunk__construct_5(/*spatial*/a0.ptr, /*block*/a1.ptr, /*index*/a2, /*element*/a3.ptr, /*size*/a4); this.type = Chunk; getCache(Chunk)[this.ptr] = this;
+    this.ptr = _toy_Chunk__construct_4(/*block*/a0.ptr, /*index*/a1, /*element*/a2.ptr, /*size*/a3); this.type = Chunk; getCache(Chunk)[this.ptr] = this;
 };
 Chunk.prototype = Object.create(WrapperObject.prototype);
 Chunk.prototype.constructor = Chunk;
@@ -254,9 +254,9 @@ Element.prototype["__destroy__"] = Element.prototype.__destroy__ = function() {
     _toy_Element__destroy(self);
 };
 // Heap
-function Heap(a0, a1, a2) {
+function Heap(a0, a1) {
     if (a0 === undefined) { this.ptr = _toy_Heap__construct_0(); this.type = Heap; getCache(Heap)[this.ptr] = this; return; }
-    this.ptr = _toy_Heap__construct_3(/*spatial*/a0.ptr, /*element*/a1.ptr, /*radius*/a2); this.type = Heap; getCache(Heap)[this.ptr] = this;
+    this.ptr = _toy_Heap__construct_2(/*element*/a0.ptr, /*radius*/a1); this.type = Heap; getCache(Heap)[this.ptr] = this;
 };
 Heap.prototype = Object.create(WrapperObject.prototype);
 Heap.prototype.constructor = Heap;
@@ -370,6 +370,19 @@ Tileblock.prototype["__destroy__"] = Tileblock.prototype.__destroy__ = function(
     var self = this.ptr;
     _toy_Tileblock__destroy(self);
 };
+// vector2d<toy::Block*>
+function vector2d_toy_Block_() {
+    this.ptr = _mud_vector2d_toy_Block___construct_0(); this.type = vector2d_toy_Block_; getCache(vector2d_toy_Block_)[this.ptr] = this;
+};
+vector2d_toy_Block_.prototype = Object.create(WrapperObject.prototype);
+vector2d_toy_Block_.prototype.constructor = vector2d_toy_Block_;
+vector2d_toy_Block_.prototype.__class__ = vector2d_toy_Block_;
+vector2d_toy_Block_.__cache__ = {};
+Module['mud']['vector2d_toy_Block_'] = vector2d_toy_Block_;
+vector2d_toy_Block_.prototype["__destroy__"] = vector2d_toy_Block_.prototype.__destroy__ = function() {
+    var self = this.ptr;
+    _mud_vector2d_toy_Block___destroy(self);
+};
 // Earth
 function Earth() {
     this.ptr = _toy_Earth__construct_0(); this.type = Earth; getCache(Earth)[this.ptr] = this;
@@ -387,11 +400,14 @@ Module['paint_block_height'] = function(a0, a1, a2) {
     _toy_paint_block_height_3(/*block*/a0.ptr, /*image*/a1.ptr, /*element*/a2.ptr);
 };
 Module['generate_block'] = function(a0, a1, a2, a3, a4, a5, a6) {
-    if (a6 === undefined) { return wrapPointer(_toy_generate_block_6(/*gfx_system*/a0.ptr, /*tileset*/a1.ptr, /*origin*/a2.ptr, /*coord*/a3.ptr, /*block_subdiv*/a4.ptr, /*tile_scale*/a5.ptr), ComponentHandle_toy_Tileblock); }
-    return wrapPointer(_toy_generate_block_7(/*gfx_system*/a0.ptr, /*tileset*/a1.ptr, /*origin*/a2.ptr, /*coord*/a3.ptr, /*block_subdiv*/a4.ptr, /*tile_scale*/a5.ptr, /*from_file*/a6), ComponentHandle_toy_Tileblock);
+    if (a6 === undefined) { return wrapPointer(_toy_generate_block_6(/*gfx*/a0.ptr, /*tileset*/a1.ptr, /*origin*/a2.ptr, /*coord*/a3.ptr, /*block_subdiv*/a4.ptr, /*tile_scale*/a5.ptr), ComponentHandle_toy_Tileblock); }
+    return wrapPointer(_toy_generate_block_7(/*gfx*/a0.ptr, /*tileset*/a1.ptr, /*origin*/a2.ptr, /*coord*/a3.ptr, /*block_subdiv*/a4.ptr, /*tile_scale*/a5.ptr, /*from_file*/a6), ComponentHandle_toy_Tileblock);
 };
 Module['build_block_geometry'] = function(a0, a1, a2) {
     _toy_build_block_geometry_3(/*scene*/a0.ptr, /*page*/a1.ptr, /*block*/a2.ptr);
+};
+Module['index_blocks'] = function(a0, a1, a2, a3) {
+    _toy_index_blocks_4(/*grid_size*/a0.ptr, /*grid*/a1.ptr, /*blocks*/a2.ptr, /*sectors*/a3.ptr);
 };
 Module['HBlock'] = ComponentHandle_toy_Block;
 Module['HChunk'] = ComponentHandle_toy_Chunk;

@@ -78,8 +78,8 @@ extern "C" {
 	toy::Chunk* DECL toy_Chunk__construct_0() {
 		return new toy::Chunk();
 	}
-	toy::Chunk* DECL toy_Chunk__construct_5(toy::HSpatial* spatial, toy::Block* block, size_t index, toy::Element* element, float size) {
-		return new toy::Chunk(*spatial, *block, index, *element, size);
+	toy::Chunk* DECL toy_Chunk__construct_4(toy::Block* block, size_t index, toy::Element* element, float size) {
+		return new toy::Chunk(*block, index, *element, size);
 	}
 	size_t DECL toy_Chunk__get_index(toy::Chunk* self) {
 		return self->m_index;
@@ -199,8 +199,8 @@ extern "C" {
 	toy::Heap* DECL toy_Heap__construct_0() {
 		return new toy::Heap();
 	}
-	toy::Heap* DECL toy_Heap__construct_3(toy::HSpatial* spatial, toy::Element* element, float radius) {
-		return new toy::Heap(*spatial, *element, radius);
+	toy::Heap* DECL toy_Heap__construct_2(toy::Element* element, float radius) {
+		return new toy::Heap(*element, radius);
 	}
 	toy::Element* DECL toy_Heap__get_element(toy::Heap* self) {
 		return self->m_element;
@@ -276,6 +276,16 @@ extern "C" {
 	void DECL toy_Tileblock__destroy(toy::Tileblock* self) {
 		delete self;
 	}
+	// vector2d<toy::Block*>
+	mud::Type* DECL mud_vector2d_toy_Block___type() {
+		return &mud::type<mud::vector2d<toy::Block*>>();
+	}
+	mud::vector2d<toy::Block*>* DECL mud_vector2d_toy_Block___construct_0() {
+		return new mud::vector2d<toy::Block*>();
+	}
+	void DECL mud_vector2d_toy_Block___destroy(mud::vector2d<toy::Block*>* self) {
+		delete self;
+	}
 	// Earth
 	mud::Type* DECL toy_Earth__type() {
 		return &mud::type<toy::Earth>();
@@ -289,16 +299,19 @@ extern "C" {
 	void DECL toy_paint_block_height_3(toy::Block* block, mud::Image256* image, toy::Element* element) {
 		toy::paint_block_height(*block, *image, *element);
 	}
-	toy::HTileblock* DECL toy_generate_block_6(mud::GfxSystem* gfx_system, mud::WaveTileset* tileset, toy::HSpatial* origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale) {
+	toy::HTileblock* DECL toy_generate_block_6(mud::GfxSystem* gfx, mud::WaveTileset* tileset, toy::HSpatial* origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale) {
 		static toy::HTileblock temp;
-		return (temp = toy::generate_block(*gfx_system, *tileset, *origin, *coord, *block_subdiv, *tile_scale), &temp);
+		return (temp = toy::generate_block(*gfx, *tileset, *origin, *coord, *block_subdiv, *tile_scale), &temp);
 	}
-	toy::HTileblock* DECL toy_generate_block_7(mud::GfxSystem* gfx_system, mud::WaveTileset* tileset, toy::HSpatial* origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale, bool from_file) {
+	toy::HTileblock* DECL toy_generate_block_7(mud::GfxSystem* gfx, mud::WaveTileset* tileset, toy::HSpatial* origin, const mud::ivec2* coord, const mud::uvec3* block_subdiv, const mud::vec3* tile_scale, bool from_file) {
 		static toy::HTileblock temp;
-		return (temp = toy::generate_block(*gfx_system, *tileset, *origin, *coord, *block_subdiv, *tile_scale, from_file), &temp);
+		return (temp = toy::generate_block(*gfx, *tileset, *origin, *coord, *block_subdiv, *tile_scale, from_file), &temp);
 	}
 	void DECL toy_build_block_geometry_3(mud::Scene* scene, toy::WorldPage* page, toy::Tileblock* block) {
 		toy::build_block_geometry(*scene, *page, *block);
+	}
+	void DECL toy_index_blocks_4(const mud::uvec3* grid_size, mud::vector2d<toy::Block*>* grid, stl::span<toy::Block*>* blocks, stl::span<toy::Sector*>* sectors) {
+		toy::index_blocks(*grid_size, *grid, *blocks, *sectors);
 	}
 	// MatterState
 	toy::MatterState DECL toy_MatterState_Solid() {

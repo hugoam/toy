@@ -51,9 +51,9 @@ namespace toy
 		UNUSED(name); static SmoothTimer timer = { 10 }; timer.begin(); f(); times[step] = timer.read();
 	}
 
-	Game::Game(User& user, GfxSystem& gfx_system)
+	Game::Game(User& user, GfxSystem& gfx)
 		: m_user(&user)
-		, m_editor(gfx_system)
+		, m_editor(gfx)
 	{}
 
 	Game::~Game()
@@ -62,15 +62,15 @@ namespace toy
 	GameScene& Game::add_scene()
 	{
 #ifdef TOY_SOUND
-		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx_system, m_shell->m_sound_system.get(), *this, m_player));
+		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx, m_shell->m_sound_system.get(), *this, m_player));
 #else
-		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx_system, nullptr, *this, m_player));
+		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx, nullptr, *this, m_player));
 #endif
 		return *m_scenes.back();
 	}
 
-	GameScene::GameScene(User& user, GfxSystem& gfx_system, SoundManager* sound_system, Game& game, Ref player)
-		: VisuScene(gfx_system, sound_system)
+	GameScene::GameScene(User& user, GfxSystem& gfx, SoundManager* sound_system, Game& game, Ref player)
+		: VisuScene(gfx, sound_system)
 		, m_selection(user.m_selection)
 		, m_game(game)
 	{
@@ -105,12 +105,12 @@ namespace toy
 		, m_resource_path(resource_path)
 		, m_job_system(oconstruct<JobSystem>())
 		, m_core(oconstruct<toy::Core>(*m_job_system))
-		, m_gfx_system(oconstruct<GfxSystem>(resource_path))
+		, m_gfx(oconstruct<GfxSystem>(resource_path))
 #ifdef TOY_SOUND
 		, m_sound_system(oconstruct<SoundManager>(resource_path))
 #endif
-		, m_editor(*m_gfx_system)
-		, m_game(m_user, *m_gfx_system)
+		, m_editor(*m_gfx)
+		, m_game(m_user, *m_gfx)
 	{
 		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
 		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m() });
@@ -129,7 +129,7 @@ namespace toy
 
 		m_game.m_shell = this;
 
-		m_gfx_system->m_job_system = m_job_system.get();
+		m_gfx->m_job_system = m_job_system.get();
 		m_job_system->adopt();
 
 		this->init();
@@ -159,25 +159,25 @@ namespace toy
 			printf("ERROR: Sound - failed to init\n");
 		}
 #endif
-		//m_context = m_gfx_system->create_context("mud EditorCore", { 1920, 1080 }, false);
-		m_context = m_gfx_system->create_context("mud EditorCore", { 1600, 900 }, false);
-		//m_context = m_gfx_system.create_context("mud EditorCore", 1280, 720, false);
+		//m_context = m_gfx->create_context("mud EditorCore", { 1920, 1080 }, false);
+		m_context = m_gfx->create_context("mud EditorCore", { 1600, 900 }, false);
+		//m_context = m_gfx.create_context("mud EditorCore", 1280, 720, false);
 		GfxContext& context = as<GfxContext>(*m_context);
 
 #if defined MUD_VG_VG
-		m_vg = oconstruct<VgVg>(m_resource_path.c_str(), &m_gfx_system->allocator());
+		m_vg = oconstruct<VgVg>(m_resource_path.c_str(), &m_gfx->allocator());
 #elif defined MUD_VG_NANOVG
 		m_vg = oconstruct<VgNanoBgfx>(m_resource_path.c_str());
 #endif
-		m_gfx_system->m_vg = &*m_vg;
+		m_gfx->m_vg = &*m_vg;
 		context.m_reset_vg = [](GfxContext& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.idx); };
 
 		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
 
-		m_gfx_system->init_pipeline(pipeline_pbr);
+		m_gfx->init_pipeline(pipeline_pbr);
 
-		static ImporterOBJ obj_importer(*m_gfx_system);
-		static ImporterGltf gltf_importer(*m_gfx_system);
+		static ImporterOBJ obj_importer(*m_gfx);
+		static ImporterGltf gltf_importer(*m_gfx);
 
 		string stylesheet = "minimal.yml";
 		//string stylesheet = "vector.yml";
@@ -190,7 +190,7 @@ namespace toy
 
 		m_ui = m_ui_window->m_root_sheet.get();
 
-		add_asset_loader(m_gfx_system->flows(), ".ptc");
+		add_asset_loader(m_gfx->flows(), ".ptc");
 	}
 
 	void GameShell::reset_interpreters(bool reflect)
@@ -250,7 +250,7 @@ namespace toy
 
 	void GameShell::run_script(Module& module, const string& file, bool run)
 	{
-		LocatedFile location = m_gfx_system->locate_file("scripts/" + file);
+		LocatedFile location = m_gfx->locate_file("scripts/" + file);
 		if(!location) return;
 
 		Signature signature = { vector<Param>{ { "app", type<GameShell>() }, { "module", type<Module>() } } };
@@ -346,9 +346,9 @@ namespace toy
 		time(m_times, Step::Input,		"ui input",		[&] { ZoneScopedNC("ui input",  tracy::Color::Salmon);    pursue &= m_ui_window->input_frame(); });
 		time(m_times, Step::Core,		"core",			[&] { ZoneScopedNC("core",      tracy::Color::Red);       m_core->next_frame(); });
 		m_pump();
-		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",		tracy::Color::Green);	  m_gfx_system->begin_frame(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",		tracy::Color::Green);	  m_gfx->begin_frame(); });
 		time(m_times, Step::UiRender,	"ui render",	[&] { ZoneScopedNC("ui render", tracy::Color::LightBlue); m_ui_window->render_frame(); });
-		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     pursue &= m_gfx_system->next_frame(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     pursue &= m_gfx->next_frame(); });
 
 		FrameMark;
 		timer.end();

@@ -213,7 +213,7 @@ public:
 	std::map<ivec2, Tileblock*> m_blocks;
 	Tileblock* m_center_block = nullptr;
 
-	void generate_block(GfxSystem& gfx_system, const ivec2& coord);
+	void generate_block(GfxSystem& gfx, const ivec2& coord);
 };
 
 class refl_ _BLOCKS_EXPORT Player

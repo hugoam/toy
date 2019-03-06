@@ -53,7 +53,7 @@ namespace toy
 	class refl_ TOY_EDIT_EXPORT Editor : public EditContext
     {
     public:
-		Editor(GfxSystem& gfx_system);
+		Editor(GfxSystem& gfx);
         
 		Toolbelt m_toolbelt;
 

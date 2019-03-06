@@ -31,7 +31,7 @@ namespace toy
 	class refl_ TOY_SHELL_EXPORT GameScene : public VisuScene
 	{
 	public:
-		GameScene(User& user, GfxSystem& gfx_system, SoundManager* sound_system, Game& game, Ref player = {});
+		GameScene(User& user, GfxSystem& gfx, SoundManager* sound_system, Game& game, Ref player = {});
 		~GameScene();
 
 		Selection& m_selection;
@@ -48,7 +48,7 @@ namespace toy
 	class refl_ TOY_SHELL_EXPORT Game
 	{
 	public:
-		Game(User& user, GfxSystem& gfx_system);
+		Game(User& user, GfxSystem& gfx);
 		~Game();
 
 		GameScene& add_scene();
@@ -153,7 +153,7 @@ namespace toy
 		attr_ Core& core() { return *m_core; }
 		attr_ LuaInterpreter& lua() { return *m_lua; }
 		attr_ WrenInterpreter& wren() { return *m_wren; }
-		attr_ GfxSystem& gfx() { return *m_gfx_system; }
+		attr_ GfxSystem& gfx() { return *m_gfx; }
 #ifdef TOY_SOUND
 		attr_ SoundManager& sound() { return *m_sound_system; }
 #endif
@@ -172,7 +172,7 @@ namespace toy
 		object<Core> m_core;
 		object<LuaInterpreter> m_lua;
 		object<WrenInterpreter> m_wren;
-		object<GfxSystem> m_gfx_system;
+		object<GfxSystem> m_gfx;
 #ifdef TOY_SOUND
 		object<SoundManager> m_sound_system;
 #endif

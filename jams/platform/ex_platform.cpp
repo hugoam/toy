@@ -3,9 +3,10 @@
 #include <toy/toy.h>
 
 #include <platform/Api.h>
-#include <meta/platform/Module.h>
+#include <meta/_platform.meta.h>
 
 //#define _PLATFORM_TOOLS
+#define CLUSTERED 1
 //#define SCRIPTED_IA
 
 float omni_attenuation(vec3 ray, float range, float attenuation_factor, float lower_bound)
@@ -56,11 +57,11 @@ void TileWorld::next_frame()
 		}
 }
 
-void TileWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
+void TileWorld::generate_block(GfxSystem& gfx, const ivec2& coord)
 {
-	static WaveTileset& tileset = generator_tileset(gfx_system);
+	static WaveTileset& tileset = generator_tileset(gfx);
 
-	HTileblock block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale);
+	HTileblock block = ::generate_block(gfx, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale);
 	WfcBlock& wfc = block->m_wfc_block;
 	WorldPage& world_page = block->m_world_page;
 
@@ -103,7 +104,7 @@ void TileWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 	wfc.m_auto_solve = true;
 }
 
-void TileWorld::open_blocks(GfxSystem& gfx_system, const vec3& position, const ivec2& radius)
+void TileWorld::open_blocks(GfxSystem& gfx, const vec3& position, const ivec2& radius)
 {
 	ivec2 coord = ivec2(to_xz(position / m_block_size));
 
@@ -112,13 +113,13 @@ void TileWorld::open_blocks(GfxSystem& gfx_system, const vec3& position, const i
 	{
 		ivec2 neighbour = { x, y };
 		if(!m_blocks[neighbour])
-			this->generate_block(gfx_system, neighbour);
+			this->generate_block(gfx, neighbour);
 	}
 }
 
 Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	Entity entity = { ecs.create<Spatial, Bullet>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Bullet>();
 	ecs.set(entity, Spatial(parent, source, rotation));
 	ecs.set(entity, Bullet(HSpatial(entity), source, rotation, velocity));
 	return entity;
@@ -182,7 +183,7 @@ float Human::headlight_angle = 40.f;
 
 Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position, Faction faction)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Emitter, Receptor, EntityScript, Human>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Emitter, Receptor, EntityScript, Human>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Movable(HSpatial(entity)));
 	ecs.set(entity, Emitter(HSpatial(entity)));
@@ -288,7 +289,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 			if(m_dest == vec3(0.f))
 			{
 				float amplitude = 10.f;
-				m_dest = spatial.m_position + vec3(random_scalar(-amplitude, amplitude), 0.f, random_scalar(-amplitude, amplitude));
+				m_dest = spatial.m_position + vec3(randf(-amplitude, amplitude), 0.f, randf(-amplitude, amplitude));
 				if(!is_walkable(m_dest))
 					m_dest = vec3(0.f);
 			}
@@ -338,7 +339,7 @@ Aim Human::aim()
 void Human::shoot()
 {
 	Aim aim = this->aim();
-	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, random_scalar(-0.05f, 0.05f)); };
+	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, randf(-0.05f, 0.05f)); };
 	quat rotation = fuzz(fuzz(aim.rotation, X3), Y3);
 	m_bullets.push_back(construct_owned<Bullet>(m_spatial, aim.start, rotation, 2.f));
 	//m_solid->impulse(rotate(m_spatial.m_rotation, Z3 * 4.f), vec3(0.f));
@@ -357,7 +358,7 @@ void Human::damage(float amount)
 
 Entity Lamp::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Lamp>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Lamp>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Movable(HSpatial(entity)));
 	ecs.set(entity, Lamp(HSpatial(entity), HMovable(entity)));
@@ -371,7 +372,7 @@ Lamp::Lamp(HSpatial spatial, HMovable movable)
 
 Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Crate>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Crate>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Movable(HSpatial(entity)));
 	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
@@ -404,8 +405,8 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 {
 	Spatial& spatial = bullet.m_spatial;
 
-	static Flow* flash = parent.m_scene->m_gfx_system.flows().file("flash");
-	static Flow* impact = parent.m_scene->m_gfx_system.flows().file("impact");
+	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
+	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
 	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
 	gfx::flows(source, *flash);
@@ -444,20 +445,20 @@ Material& highlight_material(const string& name, const Colour& colour, int facto
 	return material;
 }
 
-Model& human_model_glow(GfxSystem& gfx_system)
+Model& human_model_glow(GfxSystem& gfx)
 {
 	//Material& glow_material = highlight_material("JointsGlow", Colour(0.2f, 0.8f, 2.4f), 2);
 	static Material& glow_material = highlight_material("JointsGlow", Colour::Red, 4);
-	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_glow", { "Joints" }, { &glow_material });
+	static Model& human = *gfx.models().file("human00");
+	static Model& model = model_variant(gfx, human, "human_glow", { "Joints" }, { &glow_material });
 	return model;
 }
 
-Model& human_model_stealth(GfxSystem& gfx_system)
+Model& human_model_stealth(GfxSystem& gfx)
 {
 	static Material& stealth_material = highlight_material("JointsStealth", Colour(0.2f, 0.2f, 0.2f), 2);
-	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_stealth", { "Joints" }, { &stealth_material });
+	static Model& human = *gfx.models().file("human00");
+	static Model& model = model_variant(gfx, human, "human_stealth", { "Joints" }, { &stealth_material });
 	return model;
 }
 
@@ -465,9 +466,9 @@ void paint_human(Gnode& parent, Human& human)
 {
 	Spatial& spatial = human.m_spatial;
 
-	static Model& model_normal = *parent.m_scene->m_gfx_system.models().file("human00");
-	static Model& model_stealth = human_model_stealth(parent.m_scene->m_gfx_system);
-	static Model& model_glow = human_model_glow(parent.m_scene->m_gfx_system);
+	static Model& model_normal = *parent.m_scene->m_gfx.models().file("human00");
+	static Model& model_stealth = human_model_stealth(parent.m_scene->m_gfx);
+	static Model& model_glow = human_model_glow(parent.m_scene->m_gfx);
 
 	Model& model = human.m_stealth ? model_stealth : model_glow;
 	
@@ -504,10 +505,10 @@ void paint_human(Gnode& parent, Human& human)
 	{
 		auto shield_material = [&](Colour colour, float bias) -> Material&
 		{
-			Material& material = parent.m_scene->m_gfx_system.fetch_material("shield", "fresnel");
+			Material& material = parent.m_scene->m_gfx.fetch_material("shield", "fresnel");
 			material.m_fresnel.m_value.m_value = colour;
 			material.m_fresnel.m_fresnel_bias = bias;
-			//material.m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
+			//material.m_fresnel_block.m_value = parent.m_scene->m_gfx.textures().file("beehive.png");
 			return material;
 		};
 
@@ -564,7 +565,7 @@ void paint_world_block(Gnode& parent, Tileblock& block, const uvec3* exclude = n
 
 void paint_crate(Gnode& parent, Crate& crate)
 {
-	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
+	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx, "crate", Colour::White);
 	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ItemFlag::Default | ItemFlag::Selectable, &material);
 }
 
@@ -580,12 +581,14 @@ void paint_scene(Gnode& parent)
 
 void paint_viewer(Viewer& viewer)
 {
+#if CLUSTERED
 	if(rect_size(vec4(viewer.m_viewport.m_rect)) != vec2(0.f) && !viewer.m_camera.m_clusters)
 	{
 		viewer.m_camera.m_clustered = true;
-		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
+		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx);
 		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
 	}
+#endif
 
 	viewer.m_viewport.comp<Tonemap>().m_enabled = true;
 
@@ -796,7 +799,7 @@ Viewer& ex_platform_menu_viewport(Widget& parent, GameShell& app)
 	paint_viewer(viewer);
 	paint_scene(scene);
 	
-	static Model& human = human_model_glow(viewer.m_scene->m_gfx_system);
+	static Model& human = human_model_glow(viewer.m_scene->m_gfx);
 	static Clock clock;
 
 	viewer.m_camera.m_eye = Z3 * 2.f;
@@ -875,7 +878,7 @@ void ex_platform_pump_game(GameShell& app, Game& game, Widget& parent)
 
 		Spatial& spatial = player.m_human->m_spatial;
 		vec3 position = spatial.m_position;
-		world.open_blocks(*app.m_gfx_system, position, { 0, 1 });
+		world.open_blocks(*app.m_gfx, position, { 0, 1 });
 	}
 }
 
@@ -887,12 +890,12 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		app.m_gfx_system->add_resource_path("examples/ex_platform");
-		app.m_gfx_system->add_resource_path("examples/05_character");
-		app.m_gfx_system->add_resource_path("examples/17_wfc");
+		app.m_gfx->add_resource_path("examples/ex_platform");
+		app.m_gfx->add_resource_path("examples/05_character");
+		app.m_gfx->add_resource_path("examples/17_wfc");
 
 #ifdef SCRIPTED_IA
-		LocatedFile location = app.m_gfx_system->locate_file("scripts/enemy_ai.lua");
+		LocatedFile location = app.m_gfx->locate_file("scripts/enemy_ai.lua");
 
 		if(location)
 		{
@@ -914,7 +917,7 @@ public:
 		static Player player = { tileworld };
 		game.m_player = Ref(&player);
 
-		tileworld.generate_block(*app.m_gfx_system, ivec2(0));
+		tileworld.generate_block(*app.m_gfx, ivec2(0));
 	}
 
 	virtual void scene(GameShell& app, GameScene& scene) final

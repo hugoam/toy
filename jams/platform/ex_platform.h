@@ -67,8 +67,8 @@ public:
 
 	void next_frame();
 
-	void generate_block(GfxSystem& gfx_system, const ivec2& coord);
-	void open_blocks(GfxSystem& gfx_system, const vec3& position, const ivec2& radius);
+	void generate_block(GfxSystem& gfx, const ivec2& coord);
+	void open_blocks(GfxSystem& gfx, const vec3& position, const ivec2& radius);
 };
 
 class refl_ _PLATFORM_EXPORT Bullet

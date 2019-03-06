@@ -14,10 +14,7 @@ namespace toy
 	{
 	public:
 		constr_ Origin() {}
-		constr_ Origin(HSpatial spatial);
 
 		static Entity create(ECS& ecs, World& world);
-
-		comp_ HSpatial m_spatial;
 	};
 }

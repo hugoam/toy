@@ -45,7 +45,7 @@ void star_power(Star& star, Combat::Force& force)
 	}
 }
 
-void fleet_power_planetary(const vector<CombatFleet>& flotilla, Combat::Force& force)
+void fleet_power_planetary(span<CombatFleet> flotilla, Combat::Force& force)
 {
 	for(const CombatFleet& combat_fleet : flotilla)
 	{
@@ -76,7 +76,7 @@ void fleet_power_planetary(const vector<CombatFleet>& flotilla, Combat::Force& f
 	}
 }
 
-void fleet_power_spatial(const vector<CombatFleet>& flotilla, Combat::Force& force)
+void fleet_power_spatial(span<CombatFleet> flotilla, Combat::Force& force)
 {
 	for(const CombatFleet& combat_fleet : flotilla)
 	{
@@ -119,7 +119,7 @@ void star_losses(CombatStar& star, float ratio)
 	}
 }
 
-void fleet_losses(vector<CombatFleet>& flotilla, float ratio)
+void fleet_losses(span<CombatFleet> flotilla, float ratio)
 {
 	for(CombatFleet& combat_fleet : flotilla)
 	{
@@ -568,7 +568,7 @@ void GalaxyGrid::move_fleet(Fleet& fleet, uvec2 start, uvec2 dest)
 
 Entity Galaxy::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec2& size)
 {
-	Entity entity = { ecs.create<Spatial, Galaxy>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Galaxy>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Galaxy(HSpatial(entity), size));
 	return entity;
@@ -607,7 +607,7 @@ static size_t star_count = 0;
 
 Entity Star::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, const uvec2& coord, const string& name)
 {
-	Entity entity = { ecs.create<Spatial, Star>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Star>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Star(HSpatial(entity), galaxy, coord, name));
 	return entity;
@@ -676,7 +676,7 @@ static size_t fleet_count = 0;
 
 Entity Fleet::create(ECS& ecs, HSpatial parent, Galaxy& galaxy, const vec3& position, Commander& commander, const uvec2& coord, const string& name)
 {
-	Entity entity = { ecs.create<Spatial, Fleet>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Fleet>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Fleet(HSpatial(entity), galaxy, commander, coord, name));
 	return entity;
@@ -964,7 +964,7 @@ void ex_space_lua_check(GameShell& shell, Galaxy& galaxy)
 	lua.call("star = galaxy.stars[1]");
 	lua.call("fleet = galaxy.fleets[1]");
 	lua.call("fleet:order_attack(star)");
-	lua.set("coord", var(vec2{ 45.f, 12.f }));
+	lua.set("coord", var(vec2(45.f, 12.f)));
 	lua.call("coord = vec2(45, 12)");
 	lua.set("stance", var(FleetStance::PlanetaryAttack));
 	//float x = lua.getx<float>({ "coord", "x" });
@@ -1088,7 +1088,7 @@ public:
 
 	virtual void init(GameShell& app, Game& game) final
 	{
-		app.m_gfx_system->add_resource_path("examples/ex_space");
+		app.m_gfx->add_resource_path("examples/ex_space");
 
 		game.m_editor.m_custom_brushes.push_back(construct<CommanderBrush>(game.m_editor.m_tool_context));
 	}

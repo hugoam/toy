@@ -220,9 +220,6 @@ extern "C" {
 	mud::Type* DECL toy_GameModuleBind__type() {
 		return &mud::type<toy::GameModuleBind>();
 	}
-	toy::GameModuleBind* DECL toy_GameModuleBind__construct_2(mud::Module* module, const const mud::VirtualMethod& call) {
-		return new toy::GameModuleBind(*module, call);
-	}
 	void DECL toy_GameModuleBind__destroy(toy::GameModuleBind* self) {
 		delete self;
 	}

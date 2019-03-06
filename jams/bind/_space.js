@@ -21,6 +21,26 @@ CombatFleet.prototype.constructor = CombatFleet;
 CombatFleet.prototype.__class__ = CombatFleet;
 CombatFleet.__cache__ = {};
 Module['CombatFleet'] = CombatFleet;
+Object.defineProperty(CombatFleet.prototype, "fleet", {
+    get: function() {
+        var self = this.ptr;
+        return wrapPointer(_CombatFleet__get_fleet(self), Fleet);
+    },
+    set: function(value) {
+        var self = this.ptr;
+        _CombatFleet__set_fleet(self, value.ptr);
+    }
+});
+Object.defineProperty(CombatFleet.prototype, "damage", {
+    get: function() {
+        var self = this.ptr;
+        return _CombatFleet__get_damage(self);
+    },
+    set: function(value) {
+        var self = this.ptr;
+        _CombatFleet__set_damage(self, value);
+    }
+});
 CombatFleet.prototype["__destroy__"] = CombatFleet.prototype.__destroy__ = function() {
     var self = this.ptr;
     _CombatFleet__destroy(self);

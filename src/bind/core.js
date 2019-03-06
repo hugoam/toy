@@ -23,12 +23,11 @@ BulletShape.prototype["__destroy__"] = BulletShape.prototype.__destroy__ = funct
     _toy_BulletShape__destroy(self);
 };
 // Camera
-function Camera(a0, a1, a2, a3) {
+function Camera(a0, a1, a2) {
     if (a0 === undefined) { this.ptr = _toy_Camera__construct_0(); this.type = Camera; getCache(Camera)[this.ptr] = this; return; }
-    if (a1 === undefined) { this.ptr = _toy_Camera__construct_1(/*spatial*/a0.ptr); this.type = Camera; getCache(Camera)[this.ptr] = this; return; }
-    if (a2 === undefined) { this.ptr = _toy_Camera__construct_2(/*spatial*/a0.ptr, /*lens_distance*/a1); this.type = Camera; getCache(Camera)[this.ptr] = this; return; }
-    if (a3 === undefined) { this.ptr = _toy_Camera__construct_3(/*spatial*/a0.ptr, /*lens_distance*/a1, /*near*/a2); this.type = Camera; getCache(Camera)[this.ptr] = this; return; }
-    this.ptr = _toy_Camera__construct_4(/*spatial*/a0.ptr, /*lens_distance*/a1, /*near*/a2, /*far*/a3); this.type = Camera; getCache(Camera)[this.ptr] = this;
+    if (a1 === undefined) { this.ptr = _toy_Camera__construct_1(/*distance*/a0); this.type = Camera; getCache(Camera)[this.ptr] = this; return; }
+    if (a2 === undefined) { this.ptr = _toy_Camera__construct_2(/*distance*/a0, /*near*/a1); this.type = Camera; getCache(Camera)[this.ptr] = this; return; }
+    this.ptr = _toy_Camera__construct_3(/*distance*/a0, /*near*/a1, /*far*/a2); this.type = Camera; getCache(Camera)[this.ptr] = this;
 };
 Camera.prototype = Object.create(WrapperObject.prototype);
 Camera.prototype.constructor = Camera;
@@ -528,7 +527,7 @@ Medium.prototype["__destroy__"] = Medium.prototype.__destroy__ = function() {
 // Movable
 function Movable(a0) {
     if (a0 === undefined) { this.ptr = _toy_Movable__construct_0(); this.type = Movable; getCache(Movable)[this.ptr] = this; return; }
-    this.ptr = _toy_Movable__construct_1(/*spatial*/a0.ptr); this.type = Movable; getCache(Movable)[this.ptr] = this;
+    this.ptr = _toy_Movable__construct_1(/*position*/a0.ptr); this.type = Movable; getCache(Movable)[this.ptr] = this;
 };
 Movable.prototype = Object.create(WrapperObject.prototype);
 Movable.prototype.constructor = Movable;
@@ -691,9 +690,8 @@ NavmeshShape.prototype["__destroy__"] = NavmeshShape.prototype.__destroy__ = fun
     _toy_NavmeshShape__destroy(self);
 };
 // Origin
-function Origin(a0) {
-    if (a0 === undefined) { this.ptr = _toy_Origin__construct_0(); this.type = Origin; getCache(Origin)[this.ptr] = this; return; }
-    this.ptr = _toy_Origin__construct_1(/*spatial*/a0.ptr); this.type = Origin; getCache(Origin)[this.ptr] = this;
+function Origin() {
+    this.ptr = _toy_Origin__construct_0(); this.type = Origin; getCache(Origin)[this.ptr] = this;
 };
 Origin.prototype = Object.create(WrapperObject.prototype);
 Origin.prototype.constructor = Origin;
@@ -942,9 +940,8 @@ User.prototype["__destroy__"] = User.prototype.__destroy__ = function() {
     _toy_User__destroy(self);
 };
 // Waypoint
-function Waypoint(a0) {
-    if (a0 === undefined) { this.ptr = _toy_Waypoint__construct_0(); this.type = Waypoint; getCache(Waypoint)[this.ptr] = this; return; }
-    this.ptr = _toy_Waypoint__construct_1(/*parent*/a0.ptr); this.type = Waypoint; getCache(Waypoint)[this.ptr] = this;
+function Waypoint() {
+    this.ptr = _toy_Waypoint__construct_0(); this.type = Waypoint; getCache(Waypoint)[this.ptr] = this;
 };
 Waypoint.prototype = Object.create(WrapperObject.prototype);
 Waypoint.prototype.constructor = Waypoint;
@@ -956,10 +953,6 @@ Waypoint.prototype["__destroy__"] = Waypoint.prototype.__destroy__ = function() 
     _toy_Waypoint__destroy(self);
 };
 // World
-function World(a0, a1, a2, a3) {
-    ensureCache.prepare();
-    this.ptr = _toy_World__construct_4(/*id*/a0, /*complex*/a1.ptr, ensureString(/*name*/a2), /*job_system*/a3.ptr); this.type = World; getCache(World)[this.ptr] = this;
-};
 World.prototype = Object.create(WrapperObject.prototype);
 World.prototype.constructor = World;
 World.prototype.__class__ = World;

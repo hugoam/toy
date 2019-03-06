@@ -61,8 +61,8 @@ namespace toy
 		for(Item* item : items)
 			for(const ModelItem& model_item : item->m_model->m_items)
 			{
-				uint16_t num = item->m_instances.empty() ? 1U : uint16_t(item->m_instances.size());
-				if(model_item.m_mesh->m_draw_mode != PLAIN)
+				uint16_t num = item->m_batch ? 0U : 1U;
+				if(model_item.m_mesh->m_primitive < PrimitiveType::Triangles)
 					continue;
 				vertex_count += num * model_item.m_mesh->m_vertex_count;
 				index_count += num * model_item.m_mesh->m_index_count;
@@ -75,19 +75,19 @@ namespace toy
 
 		span<Vertex> vertices = geometry.vertices();
 		span<uint32_t> indices = geometry.indices();
-		MeshAdapter data(Vertex::vertex_format, vertices.data(), uint32_t(vertices.size()), indices.data(), uint32_t(indices.size()), true);
+		MeshAdapter data(Vertex::vertex_format, { vertices.data(), uint32_t(vertices.size()) }, { indices.data(), uint32_t(indices.size()) }, true);
 
 		for(Item* item : items)
 			for(const ModelItem& model_item : item->m_model->m_items)
 			{
-				if(model_item.m_mesh->m_draw_mode != PLAIN)
+				if(model_item.m_mesh->m_primitive < PrimitiveType::Triangles)
 					continue;
 
-				if(item->m_instances.empty())
+				if(!item->m_batch)
 					model_item.m_mesh->read(data, item->m_node->m_transform);
-				else
-					for(const mat4& transform : item->m_instances)
-						model_item.m_mesh->read(data, transform);
+				//else
+				//	for(const mat4& transform : item->m_instances)
+				//		model_item.m_mesh->read(data, transform);
 			}
 	}
 

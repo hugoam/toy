@@ -70,11 +70,9 @@ if _OPTIONS["sound"] then
 else
     toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    toy_visu,       uses_toy_visu,  true,       { mud.type, mud.gfx, toy.util, toy.core })
 end
-toy.edit        = mud_module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,            nil,            true,       { mud.type, mud.ui, mud.tool, toy.util, toy.core, toy.visu }) -- table.merge(mud.all, 
+toy.edit        = mud_module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,            nil,            true,       { mud.type, mud.ui, mud.tool, toy.util, toy.core, toy.visu }) -- table.union(mud.all, 
 toy.block       = mud_module("toy", "block",    TOY_SRC_DIR, "block",   nil,            nil,            true,       { mud.type, mud.math, mud.wfc.gfx, toy.core, toy.visu, toy.edit })
-toy.shell       = mud_module("toy", "shell",    TOY_SRC_DIR, "shell",   toy_shell,      nil,            true,       table.merge(mud.mud, { toy.core, toy.visu, toy.edit, toy.block }))
-
-toy.core.aliases = { ['toy::string'] = 'std::string' }
+toy.shell       = mud_module("toy", "shell",    TOY_SRC_DIR, "shell",   toy_shell,      nil,            true,       table.union(mud.mud, { toy.core, toy.visu, toy.edit, toy.block }))
 
 toy.toy = { toy.util, toy.core, toy.visu, toy.edit, toy.block, toy.shell }
 
@@ -99,9 +97,9 @@ else
         toy.lib = mud_lib("toy", toy.toy, "SharedLib")
     end
     
-        files {
-            path.join(TOY_SRC_DIR, "toy",    "**.h"),
-        }
+        --files {
+        --    path.join(TOY_SRC_DIR, "toy",    "**.h"),
+        --}
 end
 
 toy.all = table.union(mud.mud, toy.toy)

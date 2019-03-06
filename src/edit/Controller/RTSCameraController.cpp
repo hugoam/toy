@@ -37,7 +37,7 @@ namespace toy
 	void RTSCameraController::process(Viewer& viewer)
 	{
 		EventDispatch::process(viewer);
-		this->process(viewer, m_camera->m_spatial, m_camera);
+		//this->process(viewer, m_camera, m_camera);
 	}
 
 	void RTSCameraController::process(Viewer& viewer, Spatial& spatial, Camera& camera)

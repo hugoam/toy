@@ -24,6 +24,10 @@ namespace mud
     template <> _SPACE_EXPORT Type& type<Technology>() { static Type ty("Technology", sizeof(Technology)); return ty; }
     template <> _SPACE_EXPORT Type& type<WeaponType>() { static Type ty("WeaponType", sizeof(WeaponType)); return ty; }
     
+    template <> _SPACE_EXPORT Type& type<stl::vector<CombatFleet>>() { static Type ty("stl::vector<CombatFleet>", sizeof(stl::vector<CombatFleet>)); return ty; }
+    template <> _SPACE_EXPORT Type& type<stl::vector<Commander*>>() { static Type ty("stl::vector<Commander*>", sizeof(stl::vector<Commander*>)); return ty; }
+    template <> _SPACE_EXPORT Type& type<stl::vector<HFleet>>() { static Type ty("stl::vector<HFleet>", sizeof(stl::vector<HFleet>)); return ty; }
+    template <> _SPACE_EXPORT Type& type<stl::vector<HStar>>() { static Type ty("stl::vector<HStar>", sizeof(stl::vector<HStar>)); return ty; }
     
     template <> _SPACE_EXPORT Type& type<Combat>() { static Type ty("Combat", sizeof(Combat)); return ty; }
     template <> _SPACE_EXPORT Type& type<CombatFleet>() { static Type ty("CombatFleet", sizeof(CombatFleet)); return ty; }

@@ -259,9 +259,7 @@ GameShell.prototype["__destroy__"] = GameShell.prototype.__destroy__ = function(
     _toy_GameShell__destroy(self);
 };
 // GameModuleBind
-function GameModuleBind(a0, a1) {
-    this.ptr = _toy_GameModuleBind__construct_2(/*module*/a0.ptr, /*call*/a1); this.type = GameModuleBind; getCache(GameModuleBind)[this.ptr] = this;
-};
+function GameModuleBind() { throw "cannot construct a GameModuleBind, no constructor in IDL" }
 GameModuleBind.prototype = Object.create(GameModule.prototype);
 GameModuleBind.prototype.constructor = GameModuleBind;
 GameModuleBind.prototype.__class__ = GameModuleBind;

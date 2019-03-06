@@ -40,11 +40,9 @@ namespace toy
 	{
 	public:
 		constr_ Heap() {}
-		constr_ Heap(HSpatial spatial, Element& element, float radius);
+		constr_ Heap(Element& element, float radius);
 
 		static Entity create(ECS& ecs, HSpatial parent, const vec3& position, Element& element, float radius);
-
-		comp_ HSpatial m_spatial;
 
 		attr_ link_ Element* m_element;
 		attr_ float m_radius;

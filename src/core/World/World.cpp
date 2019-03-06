@@ -31,8 +31,8 @@ namespace toy
 		UNUSED(id);
 		s_ecs[0] = &m_ecs;
 
-		m_origin = { Origin::create(m_ecs, *this), 0 };
-		m_unworld = { Origin::create(m_ecs, *this), 0 };
+		m_origin = Origin::create(m_ecs, *this);
+		m_unworld = Origin::create(m_ecs, *this);
 
 		auto update_colliders = [&](size_t tick, size_t delta)
 		{

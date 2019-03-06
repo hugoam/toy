@@ -28,7 +28,7 @@ namespace toy
 	void FPSCameraController::process(Viewer& viewer)
 	{
 		EventDispatch::process(viewer);
-		this->process(viewer, m_camera->m_spatial, m_camera);
+		//this->process(viewer, m_camera->m_spatial, m_camera);
 	}
 
 	void FPSCameraController::process(Viewer& viewer, Spatial& spatial, Camera& camera)

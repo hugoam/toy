@@ -22,7 +22,7 @@ module toy.visu;
 
 using namespace mud;
 
-void* toy_VisuScene__get_gfx_system(void* object) { return &(*static_cast<toy::VisuScene*>(object)).m_gfx_system; }
+void* toy_VisuScene__get_gfx(void* object) { return &(*static_cast<toy::VisuScene*>(object)).m_gfx; }
 void toy_VisuScene_next_frame(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::VisuScene*>(object)).next_frame(); }
 
 namespace mud
@@ -60,7 +60,7 @@ namespace mud
 		// copy constructor
 		// members
 		static Member members[] = {
-			{ t, SIZE_MAX, type<mud::GfxSystem>(), "gfx_system", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_VisuScene__get_gfx_system },
+			{ t, SIZE_MAX, type<mud::GfxSystem>(), "gfx", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_VisuScene__get_gfx },
 			{ t, offsetof(toy::VisuScene, m_scene), type<mud::Scene>(), "scene", nullptr, Member::NonMutable, nullptr }
 		};
 		// methods

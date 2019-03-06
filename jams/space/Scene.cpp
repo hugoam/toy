@@ -8,23 +8,23 @@
 void fill_star(VisuStar& visu, Star& star)
 {
 	UNUSED(star);
-	size_t num_planets = random_integer(3, 12);
+	size_t num_planets = randi(3, 12);
 	for(size_t i = 0; i < num_planets; ++i)
 	{
-		float distance = random_scalar(0.f, 1.f);
+		float distance = randf(0.f, 1.f);
 		float speed = 1.f / (2.f * c_pi * distance) * 10.f;
-		float offset = random_scalar(0.f, 2.f * float(c_pi));
-		float aniso = random_scalar(0.8f, 1.2f);
-		float pitch = random_scalar(0.8f * float(c_pi), 1.2f * float(c_pi));
-		float roll = random_scalar(0.8f * float(c_pi), 1.2f * float(c_pi));
-		visu.m_planets.push_back({ vec2{ distance, distance * aniso } *0.4f, quat({ pitch, 0.f, roll }), offset, speed });
+		float offset = randf(0.f, 2.f * float(c_pi));
+		float aniso = randf(0.8f, 1.2f);
+		float pitch = randf(0.8f * float(c_pi), 1.2f * float(c_pi));
+		float roll = randf(0.8f * float(c_pi), 1.2f * float(c_pi));
+		visu.m_planets.push_back({ vec2(distance, distance * aniso) *0.4f, quat({ pitch, 0.f, roll }), offset, speed });
 	}
 }
 
 mat4 planet_transform(VisuPlanet& planet, const mat4& transform)
 {
-	vec2 coord = vec2{ cos(planet.m_period), sin(planet.m_period) } * planet.m_ellipsis;
-	mat4 planet_mat = bxSRT(vec3(1.f), vec3(0.f), rotate(planet.m_rotation, vec3{ coord.x, 0.f, coord.y }));
+	vec2 coord = vec2(cos(planet.m_period), sin(planet.m_period)) * planet.m_ellipsis;
+	mat4 planet_mat = bxSRT(vec3(1.f), vec3(0.f), rotate(planet.m_rotation, vec3(coord.x, 0.f, coord.y)));
 	return bxmul(planet_mat, transform);
 }
 
@@ -116,7 +116,7 @@ void paint_scan_star(Gnode& parent, Star& star, Player& player)
 	//gfx::shape(parent, Circle(0.4f, Axis::Z), Symbol(colour), ItemFlag::Render | ItemFlag::Billboard);
 
 	//if(star.m_commander)
-	//	gfx::sprite(parent, star.m_commander->m_avatar, vec2{ 0.4f }, ItemFlag::Render | ItemFlag::Billboard | ItemFlag::Selectable);
+	//	gfx::sprite(parent, star.m_commander->m_avatar, vec2(0.4f), ItemFlag::Render | ItemFlag::Billboard | ItemFlag::Selectable);
 
 	if(star.m_commander == player.m_commander)
 	{
@@ -165,7 +165,7 @@ void fill_fleet(VisuFleet& visu, const Ships& ships)
 
 	for(size_t size = 0; size < 8; ++size)
 	{
-		Poisson distribution = { vec2{ 1.f }, spaceship_sizes[size] };
+		Poisson distribution = { vec2(1.f), spaceship_sizes[size] };
 		distribution.m_start_from_center = true;
 
 		visu.m_points.m_points.resize(visu.m_points.m_points.size() + visu.m_ships[size].size());
@@ -173,10 +173,10 @@ void fill_fleet(VisuFleet& visu, const Ships& ships)
 		for(VisuShip& ship : visu.m_ships[size])
 		{
 			distribution.addPoint(ship.m_radius, ship.m_spot);
-			ship.m_depth = random_scalar(0.f, 1.f);
+			ship.m_depth = randf(0.f, 1.f);
 			ship.m_spot.z = ship.m_depth;
 			ship.m_spot = ship.m_spot * 2.f - 1.f;
-			ship.m_cooldown = random_scalar(0.f, 1.f);
+			ship.m_cooldown = randf(0.f, 1.f);
 		}
 	}
 }
@@ -200,7 +200,7 @@ void update_fleet_positions(VisuFleet& visu, float radius)
 
 mat4 ship_transform(VisuShip& ship, const mat4& transform, const vec3& position, float ship_scale)
 {
-	vec3 scale = ship.m_destroyed ? vec3(0.f) : vec3{ ship.m_radius  * ship_scale };
+	vec3 scale = ship.m_destroyed ? vec3(0.f) : vec3(ship.m_radius  * ship_scale);
 	mat4 ship_mat = bxSRT(scale, vec3(0.f), position);
 	return bxmul(ship_mat, transform);
 }
@@ -341,7 +341,7 @@ void scale_down(Flow& particles, float factor)
 
 unique<Flow> weapon_particles(Gnode& parent, cstring name, WeaponType weapon)
 {
-	Flow& original = *parent.m_scene->m_gfx_system.flows().file(name);
+	Flow& original = *parent.m_scene->m_gfx.flows().file(name);
 	unique<Flow> particles = make_unique<Flow>(original);
 	particles->m_colour.m_value = s_weapon_colour[weapon];
 	//particles->m_scale.m_value = s_weapon_scale[weapon];
@@ -391,12 +391,12 @@ namespace mud
 }
 
 template <class T>
-T random_element(const vector<T>& vec)
+T random_element(span<T> vec)
 {
-	return vec[random_integer<size_t>(0, vec.size() - 1)];
+	return vec[randi<size_t>(0, vec.size() - 1)];
 }
 
-void paint_combat_fleet(Gnode& parent, const vector<CombatFleet>& flotilla, const vector<CombatFleet>& enemies, float delta, float intensity)
+void paint_combat_fleet(Gnode& parent, span<CombatFleet> flotilla, span<CombatFleet> enemies, float delta, float intensity)
 {
 	for(const CombatFleet& combat_fleet : flotilla)
 	{
@@ -410,7 +410,7 @@ void paint_combat_fleet(Gnode& parent, const vector<CombatFleet>& flotilla, cons
 
 				if(ship.m_destroyed)
 				{
-					static Flow& explode = *parent.m_scene->m_gfx_system.flows().file("explode");
+					static Flow& explode = *parent.m_scene->m_gfx.flows().file("explode");
 					static bool once = false;
 					if(!once)
 					{
@@ -512,7 +512,7 @@ void galaxy_grid(Gnode& parent, Galaxy& galaxy)
 
 void highlighted_sector(Gnode& parent, const vec2& coord)
 {
-	Gnode& self = gfx::node(parent, {}, vec3{ coord.x, 0.f, coord.y } + 0.5f);
+	Gnode& self = gfx::node(parent, {}, vec3(coord.x, 0.f, coord.y) + 0.5f);
 	gfx::shape(self, Quad(1.f, X3, Z3), Symbol::wire(Colour::White));
 }
 

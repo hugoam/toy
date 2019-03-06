@@ -28,8 +28,8 @@ extern "C" {
 	void DECL toy_VisuScene_next_frame_0(toy::VisuScene* self) {
 		self->next_frame();
 	}
-	mud::GfxSystem* DECL toy_VisuScene__get_gfx_system(toy::VisuScene* self) {
-		return &self->m_gfx_system;
+	mud::GfxSystem* DECL toy_VisuScene__get_gfx(toy::VisuScene* self) {
+		return &self->m_gfx;
 	}
 	mud::Scene* DECL toy_VisuScene__get_scene(toy::VisuScene* self) {
 		return &self->m_scene;

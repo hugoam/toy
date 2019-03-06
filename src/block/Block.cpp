@@ -24,7 +24,7 @@ module toy.block
 
 namespace toy
 {
-	void index_blocks(const uvec3& grid_size, vector2d<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors)
+	void index_blocks(const uvec3& grid_size, vector2d<Block*>& grid, span<Block*> blocks, span<Sector*> sectors)
 	{
 		grid.reset(grid_size.x, grid_size.y, grid_size.z);
 
@@ -74,7 +74,7 @@ namespace toy
 
 	Entity Block::create(ECS& ecs, HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size)
 	{
-		Entity entity = { ecs.create<Spatial, Block>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Block>();
 		asa<Spatial>(entity) = Spatial(parent, position, ZeroQuat);
 		asa<Block>(entity) = Block(HSpatial(entity), world_page, parentblock, index, size);
 		//, m_emitter(*this, m_spatial, m_movable)

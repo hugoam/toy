@@ -51,7 +51,7 @@ static void iterate()
 Shell::Shell(const string& resource_path, int argc, char *argv[])
 	: m_exec_path(exec_path(argc, argv))
 	, m_resource_path(resource_path)
-	, m_gfx_system(resource_path)
+	, m_gfx(resource_path)
 {
 	System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
 	System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m() });
@@ -85,16 +85,16 @@ void Shell::run(const function<void(Shell&)>& func, size_t iterations)
 bool Shell::pump()
 {
 	m_pump(*this);
-	m_gfx_system.begin_frame();
-	return m_gfx_system.next_frame();
+	m_gfx.begin_frame();
+	return m_gfx.next_frame();
 }
 
 void Shell::init()
 {
-	m_context = m_gfx_system.create_context("mud EditorCore", { 1600, 900 }, false);
+	m_context = m_gfx.create_context("mud EditorCore", { 1600, 900 }, false);
 	GfxContext& context = as<GfxContext>(*m_context);
 
-	m_gfx_system.init_pipeline(pipeline_pbr);
+	m_gfx.init_pipeline(pipeline_pbr);
 }
 
 
@@ -132,19 +132,19 @@ void Viewer::resize()
 }
 
 SceneViewer::SceneViewer(GfxContext& context, const vec4& rect)
-	: Scene(context.m_gfx_system)
+	: Scene(context.m_gfx)
 	, Viewer(context, *this, rect)
 {}
 
 SceneViewer::SceneViewer(GfxContext& context)
-	: Scene(context.m_gfx_system)
+	: Scene(context.m_gfx)
 	, Viewer(context, *this)
 {}
 
 void ex_test(Shell& app)
 {
 	UNUSED(app);
-	SceneViewer viewer = { app.m_gfx_system.context() };
+	SceneViewer viewer = { app.m_gfx.context() };
 	Gnode& scene = viewer.m_scene->begin();
 
 	static vec3 position = vec3(0.f);

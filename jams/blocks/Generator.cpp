@@ -12,33 +12,33 @@ struct Edge
 	vector<vec2> m_points;
 };
 
-Material& cliff_material(GfxSystem& gfx_system)
+Material& cliff_material(GfxSystem& gfx)
 {
-	Material& material = gfx_system.fetch_material("cliff", "pbr/pbr");
+	Material& material = gfx.fetch_material("cliff", "pbr/pbr");
 	material.m_pbr.m_albedo = Colour::DarkGrey;
 	return material;
 }
 
-Material& ground_material(GfxSystem& gfx_system)
+Material& ground_material(GfxSystem& gfx)
 {
-	Material& material = gfx_system.fetch_material("ground", "pbr/pbr");
+	Material& material = gfx.fetch_material("ground", "pbr/pbr");
 	material.m_pbr.m_albedo = Colour(0.1f);//Colour::LightGrey;
 	return material;
 }
 
-void flat_low(GfxSystem& gfx_system)
+void flat_low(GfxSystem& gfx)
 {
-	static Material& material = ground_material(gfx_system);
-	Model& model = gfx_system.models().create("flat_low");
+	static Material& material = ground_material(gfx);
+	Model& model = gfx.models().create("flat_low");
 	Quad quad = { 1.f, X3, Z3 };
 	quad.m_center = vec3(0.f);
 	draw_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
 }
 
-void flat_high(GfxSystem& gfx_system)
+void flat_high(GfxSystem& gfx)
 {
-	static Material& material = ground_material(gfx_system);
-	Model& model = gfx_system.models().create("flat_high");
+	static Material& material = ground_material(gfx);
+	Model& model = gfx.models().create("flat_high");
 	Quad quad = { 1.f, X3, Z3 };
 	quad.m_center = Y3;
 	draw_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
@@ -53,7 +53,7 @@ Edge random_edge(float start, float end, float dv, size_t subdiv)
 	for(size_t i = 1; i < subdiv-1; ++i)
 	{
 		float t = float(i-1) * 1.f / float(subdiv-3);
-		edge.m_points.push_back({ random_scalar(vmin, vmax), t });
+		edge.m_points.push_back({ randf(vmin, vmax), t });
 	}
 	edge.m_points.push_back({ end, 1.f });
 	return edge;
@@ -69,7 +69,7 @@ vector<size_t> range(size_t begin, size_t end)
 
 Grid3 extrude(const vec3& offset, span<Edge> edges, span<size_t> points, const vec3& dir, const vec3& normal)
 {
-	Grid3 grid = { uvec2(edges.size(), points.size()) };
+	Grid3 grid = { uvec2(uint(edges.size()), uint(points.size())) };
 	span2d<vec3> vertices = { grid.m_points.data(), grid.m_size.x, grid.m_size.y };
 
 	vec3 du = dir * 1.f / float(edges.size()-1);
@@ -145,15 +145,15 @@ Cliff random_corner_cliff(Edge &edge0, Edge& edge1, size_t subdiv, bool inner)
 	return cliff;
 }
 
-void cliff_side(GfxSystem& gfx_system, const string& name, Edge& edge0, Edge& edge1)
+void cliff_side(GfxSystem& gfx, const string& name, Edge& edge0, Edge& edge1)
 {
-	static Material& material_cliff = cliff_material(gfx_system);
-	static Material& material_ground = ground_material(gfx_system);
-	Model& model = gfx_system.models().create(name.c_str());
+	static Material& material_cliff = cliff_material(gfx);
+	static Material& material_ground = ground_material(gfx);
+	Model& model = gfx.models().create(name.c_str());
 
 	Cliff cliff = random_cliff(edge0, edge1, Cliff::subdiv);
 
-	auto extrusion = [&](vector<size_t> points, Material& material)
+	auto extrusion = [&](span<size_t> points, Material& material)
 	{
 		vec3 offset = Z3 * 0.5f - X3 * 0.5f;
 		Grid3 grid = extrude(offset, { cliff.edges, Cliff::subdiv }, points, X3, -Z3);
@@ -168,15 +168,15 @@ void cliff_side(GfxSystem& gfx_system, const string& name, Edge& edge0, Edge& ed
 	model.prepare();
 }
 
-void cliff_corner(GfxSystem& gfx_system, const string& name, Edge& edge0, Edge& edge1, bool inner)
+void cliff_corner(GfxSystem& gfx, const string& name, Edge& edge0, Edge& edge1, bool inner)
 {
-	static Material& material_cliff = cliff_material(gfx_system);
-	static Material& material_ground = ground_material(gfx_system);
-	Model& model = gfx_system.models().create(name.c_str());
+	static Material& material_cliff = cliff_material(gfx);
+	static Material& material_ground = ground_material(gfx);
+	Model& model = gfx.models().create(name.c_str());
 
 	Cliff cliff = random_corner_cliff(edge0, edge1, Cliff::subdiv, inner);
 
-	auto revolution = [&](vector<size_t> points, Material& material)
+	auto revolution = [&](span<size_t> points, Material& material)
 	{
 		Grid3 grid;
 		if(inner)
@@ -200,7 +200,7 @@ void cliff_corner(GfxSystem& gfx_system, const string& name, Edge& edge0, Edge& 
 	model.prepare();
 }
 
-WaveTileset& generator_tileset(GfxSystem& gfx_system)
+WaveTileset& generator_tileset(GfxSystem& gfx)
 {
 	static WaveTileset tileset;
 
@@ -213,8 +213,8 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 	tileset.m_tile_size = vec3(1.f) * 5.f;
 	tileset.m_tile_scale = vec3(1.f);
 
-	flat_low(gfx_system);
-	flat_high(gfx_system);
+	flat_low(gfx);
+	flat_high(gfx);
 
 	add_tile(tileset, "flat_low", 'X', 10.f);
 	add_tile(tileset, "flat_high", 'X', 1.f);
@@ -233,9 +233,9 @@ WaveTileset& generator_tileset(GfxSystem& gfx_system)
 
 	for(uvec2 cliff : cliffs)
 	{
-		cliff_side(gfx_system, "cliff_side" + suffix(cliff), m_cliff_edges[cliff.x], m_cliff_edges[cliff.y]);
-		cliff_corner(gfx_system, "cliff_corner_out" + suffix(cliff), m_cliff_edges[cliff.x], m_cliff_edges[cliff.y], false);
-		cliff_corner(gfx_system, "cliff_corner_in" + suffix(cliff), m_cliff_edges[cliff.x], m_cliff_edges[cliff.y], true);
+		cliff_side(gfx, "cliff_side" + suffix(cliff), m_cliff_edges[cliff.x], m_cliff_edges[cliff.y]);
+		cliff_corner(gfx, "cliff_corner_out" + suffix(cliff), m_cliff_edges[cliff.x], m_cliff_edges[cliff.y], false);
+		cliff_corner(gfx, "cliff_corner_in" + suffix(cliff), m_cliff_edges[cliff.x], m_cliff_edges[cliff.y], true);
 
 		add_tile(tileset, "cliff_side" + suffix(cliff), 'T', 1.f);
 		add_tile(tileset, "cliff_corner_out" + suffix(cliff), 'L', 1.f);
@@ -358,7 +358,7 @@ void generate_camps(BlockWorld& world)
 		Faction& faction = g_factions[i];
 
 		vec3 camp_position = offset + to_xz(vec2(corners[i])) * world.m_world_size + to_xz(margins[i]) * camp_radius;
-		Colour colour = Colour::hsl(random_scalar(0.f, 1.f), 1.f, random_scalar(0.5f, 0.7f));
+		Colour colour = Colour::hsl(randf(0.f, 1.f), 1.f, randf(0.5f, 0.7f));
 
 		construct<Camp>(world.m_world.origin(), camp_position, faction);
 		construct<Shield>(world.m_world.origin(), camp_position, faction, camp_radius);

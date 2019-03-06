@@ -26,7 +26,7 @@ public:
 	string m_exec_path;
 	string m_resource_path;
 
-	GfxSystem m_gfx_system;
+	GfxSystem m_gfx;
 	object<Context> m_context;
 
 	function<void(Shell&)> m_pump;

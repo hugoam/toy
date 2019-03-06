@@ -20,10 +20,10 @@ VisuScene.prototype["next_frame"] = VisuScene.prototype.next_frame = function() 
     var self = this.ptr;
     _toy_VisuScene_next_frame_0(self);
 };
-Object.defineProperty(VisuScene.prototype, "gfx_system", {
+Object.defineProperty(VisuScene.prototype, "gfx", {
     get: function() {
         var self = this.ptr;
-        return wrapPointer(_toy_VisuScene__get_gfx_system(self), GfxSystem);
+        return wrapPointer(_toy_VisuScene__get_gfx(self), GfxSystem);
     }});
 Object.defineProperty(VisuScene.prototype, "scene", {
     get: function() {

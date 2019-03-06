@@ -31,15 +31,14 @@ namespace toy
 
 	Entity Heap::create(ECS& ecs, HSpatial parent, const vec3& position, Element& element, float radius)
 	{
-		Entity entity = { ecs.create<Spatial, Heap>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Heap>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
-		ecs.set(entity, Heap(entity, element, radius));
+		ecs.set(entity, Heap(element, radius));
 		return entity;
 	}
 
-	Heap::Heap(HSpatial spatial, Element& element, float radius)
-		: m_spatial(spatial)
-		, m_element(&element)
+	Heap::Heap(Element& element, float radius)
+		: m_element(&element)
 		, m_radius(radius)
 	{}
 }

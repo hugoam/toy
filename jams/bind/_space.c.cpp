@@ -51,6 +51,18 @@ extern "C" {
 	CombatFleet* DECL CombatFleet__construct_0() {
 		return new CombatFleet();
 	}
+	Fleet* DECL CombatFleet__get_fleet(CombatFleet* self) {
+		return self->m_fleet;
+	}
+	void DECL CombatFleet__set_fleet(CombatFleet* self, Fleet* value) {
+		self->m_fleet = value;
+	}
+	float DECL CombatFleet__get_damage(CombatFleet* self) {
+		return self->m_damage;
+	}
+	void DECL CombatFleet__set_damage(CombatFleet* self, float value) {
+		self->m_damage = value;
+	}
 	void DECL CombatFleet__destroy(CombatFleet* self) {
 		delete self;
 	}

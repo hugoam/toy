@@ -151,9 +151,9 @@ namespace toy
 		bullet_world.m_collision_world->debugDrawWorld();
 	}
 
-	VisuScene::VisuScene(GfxSystem& gfx_system, SoundManager* sound_system)
-		: m_gfx_system(gfx_system)
-		, m_scene(gfx_system)
+	VisuScene::VisuScene(GfxSystem& gfx, SoundManager* sound_system)
+		: m_gfx(gfx)
+		, m_scene(gfx)
 #ifdef TOY_SOUND
 		, m_snd_manager(*sound_system)
 #endif
@@ -212,10 +212,10 @@ namespace toy
 		{
 			for(Ref object : selection)
 				if(item.m_node->m_object == object)
-					select_bounds.mergeSafe(item.m_aabb);
+					select_bounds.merge(item.m_aabb);
 
 			if(hovered != Ref() && item.m_node->m_object == hovered)
-				hover_bounds.mergeSafe(item.m_aabb);
+				hover_bounds.merge(item.m_aabb);
 		});
 
 		gfx::draw(parent, Cube(select_bounds), Symbol(Colour::White));
@@ -224,7 +224,7 @@ namespace toy
 
 	void update_camera(Camera& camera, mud::Camera& gfx_camera)
 	{
-		gfx_camera.set_look_at(camera.m_lens_position, camera.m_spatial->absolute_position());
+		//gfx_camera.set_look_at(camera.m_lens_position, camera.m_spatial->absolute_position());
 
 		gfx_camera.m_near = camera.m_near;
 		gfx_camera.m_far = camera.m_far;
@@ -320,7 +320,7 @@ namespace toy
 			return self.m_sound->m_state != Sound::STOPPED;
 		}
 
-		LocatedFile location = parent.m_scene->m_gfx_system.locate_file("sounds/" + sound + ".ogg");
+		LocatedFile location = parent.m_scene->m_gfx.locate_file("sounds/" + sound + ".ogg");
 		self.m_sound = parent.m_sound_manager->create_sound(location.path(true), loop, false, [](Sound&) {});
 
 		if(self.m_sound)

@@ -37,8 +37,8 @@ namespace toy
 		m_state = m_editor.m_play_game ? ToolState::Active : ToolState::Inactive;
 	}
 
-	Editor::Editor(GfxSystem& gfx_system)
-		: EditContext(gfx_system)
+	Editor::Editor(GfxSystem& gfx)
+		: EditContext(gfx)
 		, m_run_tool(m_tool_context, *this)
 		, m_play_tool(m_tool_context, *this)
 		, m_frame_view_tool(m_tool_context)

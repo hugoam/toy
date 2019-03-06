@@ -25,8 +25,8 @@ namespace toy
 
 	TOY_EDIT_EXPORT void registry(Widget& parent, Indexer& indexer, Selection& selection);
 	TOY_EDIT_EXPORT void registry_section(Widget& parent, Indexer& indexer, Selection& selection);
-	TOY_EDIT_EXPORT void library(Widget& parent, const vector<Type*>& types, Selection& selection);
-	TOY_EDIT_EXPORT void library_section(Widget& parent, const vector<Type*>& types, Selection& selection);
+	TOY_EDIT_EXPORT void library(Widget& parent, span<Type*> types, Selection& selection);
+	TOY_EDIT_EXPORT void library_section(Widget& parent, span<Type*> types, Selection& selection);
 
 	TOY_EDIT_EXPORT void editor_menu(Widget& parent, ActionGroup& action_group);
 	TOY_EDIT_EXPORT void editor_menu_bar(Widget& parent, Editor& editor);

@@ -22,8 +22,8 @@ namespace toy
 
 	float angle_flat(const vec3& v1, const vec3& v2)
 	{
-		vec3 vec1 = normalize(vec3{ v1.x, 0.f, v1.z });
-		vec3 vec2 = normalize(vec3{ v2.x, 0.f, v2.z });
+		vec3 vec1 = normalize(vec3(v1.x, 0.f, v1.z));
+		vec3 vec2 = normalize(vec3(v2.x, 0.f, v2.z));
 
 		return oriented_angle(vec1, vec2, Y3);
 	}
@@ -149,8 +149,8 @@ namespace toy
 		return steer_2d(spatial, target, velocity, time_step, margin);
 	}
 
-	Movable::Movable(HSpatial spatial)
-		: m_previous_position(spatial->m_position)
+	Movable::Movable(const vec3& position)
+		: m_previous_position(position)
 	{}
 
 	Movable::~Movable()

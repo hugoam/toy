@@ -45,7 +45,7 @@ namespace toy
 	{
 		UNUSED(shape);
 		uint16_t num_verts = uint16_t(navmesh_num_vertices(navmesh.m_navmesh));
-		return { num_verts, num_verts * 2 };
+		return { num_verts, uint16_t(num_verts * 2U) };
 	}
 
 	void draw_shape_lines(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshAdapter& writer)
@@ -65,9 +65,9 @@ namespace toy
 
 			for(int p = 0; p < tile->header->polyCount; ++p)
 			{
-				float r = random_scalar(0.f, 1.f);
-				float g = random_scalar(0.f, 1.f);
-				float b = random_scalar(0.f, 1.f);
+				float r = randf(0.f, 1.f);
+				float g = randf(0.f, 1.f);
+				float b = randf(0.f, 1.f);
 
 				Colour colour = { r, g, b, 1.f };
 
@@ -97,7 +97,7 @@ namespace toy
 	{
 		UNUSED(shape);
 		uint16_t num_verts = uint16_t(navmesh_num_vertices(navmesh.m_navmesh));
-		return { num_verts, num_verts * 3 };
+		return { num_verts, uint16_t(num_verts * 3U) };
 	}
 
 	void draw_shape_triangles(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshAdapter& writer)
@@ -117,9 +117,9 @@ namespace toy
 
 			for(int p = 0; p < tile->header->polyCount; ++p)
 			{
-				float r = random_scalar(0.f, 1.f);
-				float g = random_scalar(0.f, 1.f);
-				float b = random_scalar(0.f, 1.f);
+				float r = randf(0.f, 1.f);
+				float g = randf(0.f, 1.f);
+				float b = randf(0.f, 1.f);
 
 				Colour colour = { r, g, b, 0.6f };
 

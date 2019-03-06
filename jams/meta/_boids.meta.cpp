@@ -258,6 +258,12 @@ namespace mud
 		static Class cls = { t, {}, {}, constructors, copy_constructor, {}, {}, {}, };
 	}
 	
+	{
+		Type& t = type<mud::v4<float>>();
+		static Alias alias = { &t, &namspc({ "boids" }), "vec3" };
+		m.m_aliases.push_back(&alias);
+	}
+	
 		m.m_types.push_back(&type<boids::Boid>());
 		m.m_types.push_back(&type<boids::BoidObstacle>());
 		m.m_types.push_back(&type<boids::BoidTarget>());
@@ -268,6 +274,7 @@ namespace mud
 		m.m_types.push_back(&type<boids::Position>());
 		m.m_types.push_back(&type<boids::Rotation>());
 		m.m_types.push_back(&type<boids::Transform4>());
+		m.m_types.push_back(&type<boids::vec3>());
 	}
 }
 

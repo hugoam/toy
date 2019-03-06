@@ -33,7 +33,7 @@ void stl_vector_toy_HSpatial__push(void* vec) { (*static_cast<stl::vector<toy::H
 void stl_vector_toy_HSpatial__add(void* vec, void* value) { (*static_cast<stl::vector<toy::HSpatial>*>(vec)).push_back(*static_cast<toy::HSpatial*>(value)); }
 void stl_vector_toy_HSpatial__remove(void* vec, void* value) { vector_remove_any((*static_cast<stl::vector<toy::HSpatial>*>(vec)), *static_cast<toy::HSpatial*>(value)); }
 void toy_Camera__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Camera(  ); }
-void toy_Camera__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Camera( *static_cast<toy::HSpatial*>(args[0]), *static_cast<float*>(args[1]), *static_cast<float*>(args[2]), *static_cast<float*>(args[3]) ); }
+void toy_Camera__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Camera( *static_cast<float*>(args[0]), *static_cast<float*>(args[1]), *static_cast<float*>(args[2]) ); }
 void toy_Collider__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Collider(  ); }
 void toy_Collider__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Collider( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HMovable*>(args[1]), *static_cast<toy::CollisionShape*>(args[2]), *static_cast<toy::Medium*>(args[3]), *static_cast<toy::CollisionGroup*>(args[4]) ); }
 void* toy_Collider__get_impl(void* object) { return &(*static_cast<toy::Collider*>(object)).impl(); }
@@ -67,7 +67,7 @@ void toy_Emitter__construct_1(void* ref, span<void*> args) { new(stl::placeholde
 void toy_EntityScript__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::EntityScript(  ); }
 void toy_EntityScript__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::EntityScript( *static_cast<toy::HSpatial*>(args[0]) ); }
 void toy_Movable__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Movable(  ); }
-void toy_Movable__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Movable( *static_cast<toy::HSpatial*>(args[0]) ); }
+void toy_Movable__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Movable( *static_cast<mud::vec3*>(args[0]) ); }
 void toy_Movable_set_linear_velocity(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Movable*>(object)).set_linear_velocity(*static_cast<mud::vec3*>(args[0])); }
 void toy_Movable_modify_linear_velocity(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Movable*>(object)).modify_linear_velocity(*static_cast<mud::vec3*>(args[0])); }
 void toy_Movable_set_angular_velocity(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Movable*>(object)).set_angular_velocity(*static_cast<mud::vec3*>(args[0])); }
@@ -78,7 +78,6 @@ void toy_Navmesh__construct_0(void* ref, span<void*> args) { new(stl::placeholde
 void* toy_Navmesh__get_world(void* object) { return &(*static_cast<toy::Navmesh*>(object)).m_world; }
 void toy_NavmeshShape__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::NavmeshShape( *static_cast<toy::Navmesh*>(args[0]) ); }
 void toy_Origin__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Origin(  ); }
-void toy_Origin__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Origin( *static_cast<toy::HSpatial*>(args[0]) ); }
 void mud_OwnedHandle_toy_Collider__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::OwnedHandle<toy::Collider>(  ); }
 void mud_OwnedHandle_toy_Solid__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::OwnedHandle<toy::Solid>(  ); }
 void toy_Pathfinder__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Pathfinder( *static_cast<toy::Navmesh*>(args[0]) ); }
@@ -104,7 +103,6 @@ void toy_Spatial__construct_2(void* ref, span<void*> args) { new(stl::placeholde
 void toy_Spatial_set_position(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Spatial*>(object)).set_position(*static_cast<mud::vec3*>(args[0])); }
 void toy_Spatial_set_rotation(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Spatial*>(object)).set_rotation(*static_cast<mud::quat*>(args[0])); }
 void toy_Waypoint__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Waypoint(  ); }
-void toy_Waypoint__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Waypoint( *static_cast<toy::HSpatial*>(args[0]) ); }
 void toy_World__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::World( *static_cast<uint32_t*>(args[0]), *static_cast<mud::Complex*>(args[1]), *static_cast<stl::string*>(args[2]), *static_cast<mud::JobSystem*>(args[3]) ); }
 void* toy_World__get_complex(void* object) { return &(*static_cast<toy::World*>(object)).m_complex; }
 void* toy_World__get_origin(void* object) { return &(*static_cast<toy::World*>(object)).origin(); }
@@ -196,13 +194,12 @@ namespace mud
 		static float lens_angle_default = 0.f;
 		static float near_default = 0.001f;
 		static float far_default = 1000.f;
-		static float construct_1_lens_distance_default = 1.f;
 		static float construct_1_near_default = 0.001f;
 		static float construct_1_far_default = 1000.f;
 		// constructors
 		static Constructor constructors[] = {
 			{ t, toy_Camera__construct_0, {} },
-			{ t, toy_Camera__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "lens_distance", type<float>(), Param::Default, &construct_1_lens_distance_default }, { "near", type<float>(), Param::Default, &construct_1_near_default }, { "far", type<float>(), Param::Default, &construct_1_far_default } } }
+			{ t, toy_Camera__construct_1, { { "distance", type<float>(),  }, { "near", type<float>(), Param::Default, &construct_1_near_default }, { "far", type<float>(), Param::Default, &construct_1_far_default } } }
 		};
 		// copy constructor
 		// members
@@ -634,7 +631,7 @@ namespace mud
 		// constructors
 		static Constructor constructors[] = {
 			{ t, toy_Movable__construct_0, {} },
-			{ t, toy_Movable__construct_1, { { "spatial", type<toy::HSpatial>(),  } } }
+			{ t, toy_Movable__construct_1, { { "position", type<mud::vec3>(),  } } }
 		};
 		// copy constructor
 		// members
@@ -726,8 +723,7 @@ namespace mud
 		// defaults
 		// constructors
 		static Constructor constructors[] = {
-			{ t, toy_Origin__construct_0, {} },
-			{ t, toy_Origin__construct_1, { { "spatial", type<toy::HSpatial>(),  } } }
+			{ t, toy_Origin__construct_0, {} }
 		};
 		// copy constructor
 		// members
@@ -951,8 +947,7 @@ namespace mud
 		// defaults
 		// constructors
 		static Constructor constructors[] = {
-			{ t, toy_Waypoint__construct_0, {} },
-			{ t, toy_Waypoint__construct_1, { { "parent", type<toy::HSpatial>(),  } } }
+			{ t, toy_Waypoint__construct_0, {} }
 		};
 		// copy constructor
 		// members

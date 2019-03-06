@@ -7,7 +7,7 @@
 
 Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	Entity entity = { ecs.create<Spatial, Bullet>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Bullet>();
 	asa<Spatial>(entity) = Spatial(parent, source, rotation);
 	asa<Bullet>(entity) = Bullet(HSpatial(entity), source, rotation, velocity);
 	return entity;
@@ -46,7 +46,7 @@ float Human::headlight_angle = 40.f;
 
 Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Human>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Human>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Movable(HSpatial(entity)));
 	ecs.set(entity, Human(entity, entity));
@@ -90,14 +90,14 @@ Aim Human::aim()
 void Human::shoot()
 {
 	Aim aim = this->aim();
-	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, random_scalar(-0.05f, 0.05f)); };
+	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, randf(-0.05f, 0.05f)); };
 	quat rotation = fuzz(fuzz(aim.rotation, X3), Y3);
 	m_bullets.push_back(construct_owned<Bullet>(m_spatial, aim.source, rotation, 2.f));
 }
 
 Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Crate>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Crate>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Movable(HSpatial(entity)));
 	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
@@ -122,8 +122,8 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 {
 	Spatial& spatial = bullet.m_spatial;
 
-	static Flow* flash = parent.m_scene->m_gfx_system.flows().file("flash");
-	static Flow* impact = parent.m_scene->m_gfx_system.flows().file("impact");
+	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
+	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
 	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
 	gfx::flows(source, *flash);
@@ -147,7 +147,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 
 void paint_human(Gnode& parent, Human& human)
 {
-	static Model& model = *parent.m_scene->m_gfx_system.models().file("human00");
+	static Model& model = *parent.m_scene->m_gfx.models().file("human00");
 
 	Spatial& spatial = human.m_spatial;
 
@@ -168,7 +168,7 @@ void paint_human(Gnode& parent, Human& human)
 
 void paint_crate(Gnode& parent, Crate& crate)
 {
-	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
+	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx, "crate", Colour::White);
 	gfx::shape(parent, Cube(crate.m_extents), Symbol(), 0U, &material);
 }
 
@@ -272,8 +272,8 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		app.m_gfx_system->add_resource_path("examples/ex_minimal");
-		app.m_gfx_system->add_resource_path("examples/05_character");
+		app.m_gfx->add_resource_path("examples/ex_minimal");
+		app.m_gfx->add_resource_path("examples/05_character");
 	}
 
 	virtual void start(GameShell& app, Game& game) final

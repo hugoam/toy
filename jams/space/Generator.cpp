@@ -18,13 +18,13 @@ string generate_name()
 {
 	string name = "";
 
-	size_t length = random_integer(3U, 8U);
+	size_t length = randi(3U, 8U);
 	bool vowel = false;
 	for(size_t i = 0; i < length; ++i)
 	{
-		vowel = random_scalar(0.f, 1.f) > (vowel ? 0.8f : 0.2f);
+		vowel = randf(0.f, 1.f) > (vowel ? 0.8f : 0.2f);
 		const string& chars = vowel ? consonnants : vowels;
-		size_t c = random_integer(size_t(0U), chars.size() - size_t(1U));
+		size_t c = randi(size_t(0U), chars.size() - size_t(1U));
 		name += string(1, char(toupper(chars[c])));
 	}
 
@@ -36,7 +36,7 @@ void generate_avatar(Colour& colour, Image256& avatar)
 	const uint16_t side = 6;
 	avatar.resize(side, side);
 
-	colour = Colour::hsl(random_scalar(0.f, 1.f), 1.f, random_scalar(0.5f, 0.6f));
+	colour = Colour::hsl(randf(0.f, 1.f), 1.f, randf(0.5f, 0.6f));
 
 	Palette palette = { { Colour::None, colour } };
 	avatar.m_palette = palette;
@@ -45,7 +45,7 @@ void generate_avatar(Colour& colour, Image256& avatar)
 	for(uint16_t x = 0; x < halfside; ++x)
 		for(uint16_t y = 0; y < side; ++y)
 		{
-			bool full = random_scalar(0.f, 1.f) >= 0.5f;
+			bool full = randf(0.f, 1.f) >= 0.5f;
 			avatar.at(x, y) = (full ? 1 : 0);
 			avatar.at(side - 1 - x, y) = (full ? 1 : 0);
 		}
@@ -53,20 +53,20 @@ void generate_avatar(Colour& colour, Image256& avatar)
 
 HStar generate_system(Galaxy& galaxy, const uvec3& coord, const vec3& position)
 {
-	int roll = random_integer(0, 100);
+	int roll = randi(0, 100);
 	if(roll < 85)
 		return {};
 
 	HStar hstar = construct<Star>(galaxy.m_spatial, galaxy, position, to_coord(coord), generate_name());
 	Star& star = hstar;
-	star.m_base_population = random_integer(1, 1000);
-	star.m_population = random_integer(1, star.m_base_population);
+	star.m_base_population = randi(1, 1000);
+	star.m_population = randi(1, star.m_base_population);
 	star.m_max_population = star.m_base_population;
-	star.m_env = random_integer(1, 20);
-	star.m_resources[Resource::Minerals] = random_integer(1, 20);
+	star.m_env = randi(1, 20);
+	star.m_resources[Resource::Minerals] = randi(1, 20);
 	for(Resource resource = Resource(0); resource != Resource::Count; resource = Resource(size_t(resource) + 1))
-		if(random_integer(1, 100) > 98)
-			star.m_resources[resource] = random_integer(1, 20);
+		if(randi(1, 100) > 98)
+			star.m_resources[resource] = randi(1, 20);
 	return hstar;
 }
 
@@ -78,7 +78,7 @@ HFleet generate_fleet(Galaxy& galaxy, const uvec3& coord, const vec3& position)
 
 Commander* generate_commander(Galaxy& galaxy, Star& star)
 {
-	int roll = random_integer(0, 100);
+	int roll = randi(0, 100);
 	if(roll < 85)
 		return nullptr;
 
@@ -90,10 +90,10 @@ Commander* generate_commander(Galaxy& galaxy, Star& star)
 		return nullptr;
 	*/
 
-	Race race = Race(random_integer<uint>(uint(Race::Human), uint(Race::Zwiie)));
-	int command = random_integer(0, 100);
-	int commerce = random_integer(0, 100);
-	int diplomacy = random_integer(0, 100);
+	Race race = Race(randi<uint>(uint(Race::Human), uint(Race::Zwiie)));
+	int command = randi(0, 100);
+	int commerce = randi(0, 100);
+	int diplomacy = randi(0, 100);
 
 	vec3 traits = { float(command), float(commerce), float(diplomacy) };
 	traits = normalize(traits);
@@ -121,7 +121,7 @@ Commander* generate_commander(Galaxy& galaxy, Star& star)
 
 	Fleet& fleet = construct<Fleet>(galaxy.m_spatial, galaxy, star.m_spatial->m_position + 1.0f * Y3, commander, star.m_coord, generate_name());
 
-	float size = random_scalar(1.f, 3.f);
+	float size = randf(1.f, 3.f);
 	fleet.set_ships("SONDE", size_t(1 * size));
 	fleet.set_ships("CHA", size_t(20 * size));
 	fleet.set_ships("CHABOM", size_t(10 * size));

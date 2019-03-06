@@ -6,7 +6,7 @@
 using namespace mud;
 using namespace toy;
 
-WaveTileset& generator_tileset(GfxSystem& gfx_system);
+WaveTileset& generator_tileset(GfxSystem& gfx);
 void generate_crates(Tileblock& block);
 void generate_npcs(Tileblock& block);
 void generate_lamps(Tileblock& block);

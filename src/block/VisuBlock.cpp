@@ -52,38 +52,38 @@ namespace toy
 		if(state.m_updated < block.m_updated)
 		{
 			state.m_updated = block.m_updated;
-			update_block_geometry(parent.m_scene->m_gfx_system, block, state);
+			update_block_geometry(parent.m_scene->m_gfx, block, state);
 		}
 
 		for(auto& element_model : state.m_models)
 			gfx::item(parent, *element_model.second, ItemFlag::Default | ItemFlag::Static | ItemFlag::Selectable, material);
 	}
 
-	Material& plain_material(GfxSystem& gfx_system, cstring name)
+	Material& plain_material(GfxSystem& gfx, cstring name)
 	{
-		Material& material = gfx_system.fetch_material(name, "pbr/pbr");
-		material.m_base.m_geometry_filter = 1 << PLAIN;
+		Material& material = gfx.fetch_material(name, "pbr/pbr");
+		material.m_base.m_geometry_filter = 1 << uint(PrimitiveType::Triangles);
 		return material;
 	}
 
-	Material& wireframe_material(GfxSystem& gfx_system, cstring name, const Colour& colour)
+	Material& wireframe_material(GfxSystem& gfx, cstring name, const Colour& colour)
 	{
 		string variant_name = string(name) + "_" + to_string(to_rgba(colour));
-		Material& material = gfx_system.fetch_material(variant_name.c_str(), "unshaded");
-		material.m_base.m_geometry_filter = 1 << OUTLINE;
-		material.m_unshaded.m_colour.m_value = colour;
+		Material& material = gfx.fetch_material(variant_name.c_str(), "solid");
+		material.m_base.m_geometry_filter = 1 << uint(PrimitiveType::Lines);
+		material.m_solid.m_colour.m_value = colour;
 		return material;
 	}
 
 	void paint_block(Gnode& parent, Block& block)
 	{
-		static Material& material = plain_material(parent.m_scene->m_gfx_system, "block");
+		static Material& material = plain_material(parent.m_scene->m_gfx, "block");
 		paint_block(parent, block, &material);
 	}
 
 	void paint_block_wireframe(Gnode& parent, Block& block, const Colour& colour)
 	{
-		static Material& material = wireframe_material(parent.m_scene->m_gfx_system, "block_wireframe", colour);
+		static Material& material = wireframe_material(parent.m_scene->m_gfx, "block_wireframe", colour);
 		paint_block(parent, block, &material);
 	}
 
@@ -98,9 +98,9 @@ namespace toy
 		shapes.push_back({ Symbol(element->m_colour), &quads.back(), PLAIN });
 	}
 
-	void update_block_geometry(GfxSystem& gfx_system, Block& block, BlockState& state)
+	void update_block_geometry(GfxSystem& gfx, Block& block, BlockState& state)
 	{
-		UNUSED(gfx_system);
+		UNUSED(gfx);
 
 		//Spatial& spatial = block.m_spatial;
 		WorldPage& world_page = block.m_world_page;
@@ -150,8 +150,8 @@ namespace toy
 				state.m_models[element] = draw_model(identifier.c_str(), bodies[element], true);
 
 				/*
-				Material& plain = gfx_system.fetch_material(element->m_name.c_str(), "pbr/pbr");
-				plain.m_base.m_geometry_filter = 1 << PLAIN;
+				Material& plain = gfx.fetch_material(element->m_name.c_str(), "pbr/pbr");
+				plain.m_base.m_geometry_filter = 1 << uint(PrimitiveType::Triangles);
 				plain.m_pbr.m_enabled = true;
 
 				state.m_models[element]->m_meshes[0]->m_material = &wireframe;

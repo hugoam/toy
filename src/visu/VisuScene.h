@@ -54,10 +54,10 @@ namespace toy
 	class refl_ TOY_VISU_EXPORT VisuScene
     {
     public:
-        VisuScene(GfxSystem& gfx_system, SoundManager* sound_system = nullptr);
+        VisuScene(GfxSystem& gfx, SoundManager* sound_system = nullptr);
         ~VisuScene();
 
-		attr_ GfxSystem& m_gfx_system;
+		attr_ GfxSystem& m_gfx;
 		attr_ Scene m_scene;
 
 		Ref m_player;

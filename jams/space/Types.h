@@ -53,6 +53,10 @@ namespace mud
     export_ template <> _SPACE_EXPORT Type& type<Technology>();
     export_ template <> _SPACE_EXPORT Type& type<WeaponType>();
     
+    export_ template <> _SPACE_EXPORT Type& type<stl::vector<CombatFleet>>();
+    export_ template <> _SPACE_EXPORT Type& type<stl::vector<Commander*>>();
+    export_ template <> _SPACE_EXPORT Type& type<stl::vector<HFleet>>();
+    export_ template <> _SPACE_EXPORT Type& type<stl::vector<HStar>>();
     
     export_ template <> _SPACE_EXPORT Type& type<Combat>();
     export_ template <> _SPACE_EXPORT Type& type<CombatFleet>();

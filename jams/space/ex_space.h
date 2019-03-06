@@ -47,9 +47,15 @@ namespace mud
 	template struct refl_ ComponentHandle<Fleet>;
 }
 
+
 using HGalaxy = ComponentHandle<Galaxy>;
 using HStar = ComponentHandle<Star>;
 using HFleet = ComponentHandle<Fleet>;
+
+extern template class refl_ seque_ vector<HStar>;
+extern template class refl_ seque_ vector<HFleet>;
+extern template class refl_ seque_ vector<Commander*>;
+extern template class refl_ seque_ vector<CombatFleet>;
 
 using Buildings = std::map<BuildingSchema*, uint32_t>;
 using Ships = std::map<ShipSchema*, uint32_t>;
@@ -962,8 +968,8 @@ struct refl_ _SPACE_EXPORT CombatFleet
 {
 	CombatFleet() {}
 	CombatFleet(Fleet& fleet) : m_fleet(&fleet) {}
-	Fleet* m_fleet;
-	float m_damage = 0.f;
+	attr_ Fleet* m_fleet;
+	attr_ float m_damage = 0.f;
 	Ships m_losses = {};
 	uint32_t m_hull_losses[8] = {};
 };

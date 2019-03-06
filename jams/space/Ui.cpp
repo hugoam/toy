@@ -829,7 +829,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 			if(selected)
 			{
 				Spatial& spatial = asa<Spatial>(selected);
-				jump_camera_to(player.m_camera->m_spatial, player.m_camera, spatial.m_position, random_scalar(1.f, 2.f), random_scalar(float(-c_pi / 8.f), float(c_pi / 8.f)));
+				jump_camera_to(player.m_camera->m_spatial, player.m_camera, spatial.m_position, randf(1.f, 2.f), randf(float(-c_pi / 8.f), float(c_pi / 8.f)));
 			}
 			player.m_selected_item = selected;
 		}

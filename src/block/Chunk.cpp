@@ -19,15 +19,14 @@ namespace toy
 {
 	Entity Chunk::create(ECS& ecs, HSpatial parent, Block& block, const vec3& position, size_t index, Element& element, float size)
 	{
-		Entity entity = { ecs.create<Spatial, Chunk>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Chunk>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
-		ecs.set(entity, Chunk(entity, block, index, element, size));
+		ecs.set(entity, Chunk(block, index, element, size));
 		return entity;
 	}
 
-	Chunk::Chunk(HSpatial spatial, Block& block, size_t index, Element& element, float size)
-		: m_spatial(spatial)
-		, m_index(index)
+	Chunk::Chunk(Block& block, size_t index, Element& element, float size)
+		: m_index(index)
 		, m_block(&block)
 		, m_element(&element)
 		, m_size(size)

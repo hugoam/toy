@@ -25,7 +25,7 @@ namespace toy
 	{
 	public:
 		constr_ Movable() {}
-		constr_ Movable(HSpatial spatial);
+		constr_ Movable(const vec3& position);
 		~Movable();
 
 		MotionState* m_motion_state = nullptr;

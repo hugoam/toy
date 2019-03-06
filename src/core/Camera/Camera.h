@@ -18,12 +18,10 @@ namespace toy
 	{
 	public:
 		constr_ Camera() {}
-		constr_ Camera(HSpatial spatial, float lens_distance = 1.f, float near = 0.001f, float far = 1000.f);
+		constr_ Camera(float distance, float near = 0.001f, float far = 1000.f);
 		~Camera();
 
 		static Entity create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near = 0.001f, float far = 1000.f);
-
-		comp_ HSpatial m_spatial;
 
 		attr_ float m_lens_distance = 1.f;
 		attr_ float m_lens_angle = 0.f;

@@ -19,15 +19,11 @@ namespace toy
 {
 	Entity Waypoint::create(ECS& ecs, HSpatial parent, const vec3& position)
 	{
-		Entity entity = { ecs.create<Spatial, Waypoint>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Waypoint>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
-		ecs.set(entity, Waypoint(HSpatial(entity)));
+		ecs.set(entity, Waypoint());
 		return entity;
 	}
-
-	Waypoint::Waypoint(HSpatial spatial)
-		: m_spatial(spatial)
-	{}
 
 	DetourPath::DetourPath(Pathfinder& pathfinder, const vec3& origin, const vec3& destination)
 		: m_pathfinder(pathfinder)

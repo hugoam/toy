@@ -26,5 +26,5 @@ namespace toy
 		map<Element*, object<Model>> m_models;
 	};
 
-	export_ TOY_BLOCK_EXPORT void update_block_geometry(GfxSystem& gfx_system, Block& block, BlockState& state);
+	export_ TOY_BLOCK_EXPORT void update_block_geometry(GfxSystem& gfx, Block& block, BlockState& state);
 }

@@ -131,11 +131,11 @@ namespace boids
 
 	struct HashPositions
 	{
-		const vector<Position>&	positions;
-		vector<int>&			hashes;
-		vector<int>&			threads;
-		float                   cell_radius;
-		size_t					num_threads;
+		span<Position>	positions;
+		vector<int>&	hashes;
+		vector<int>&	threads;
+		float           cell_radius;
+		size_t			num_threads;
 
 		inline void operator()(JobSystem& js, Job* job, uint32_t index) const
 		{
@@ -147,10 +147,10 @@ namespace boids
 	};
 
 
-	void init_cell(Cells& cells, const vector<Position>& targets, const vector<Position>& obstacles, int index)
+	void init_cell(Cells& cells, span<Position> targets, span<Position> obstacles, int index)
 	{
 		struct Result { size_t index; float distance; };
-		auto nearest = [](const vector<Position>& targets, const vec3& position) -> Result
+		auto nearest = [](span<Position> targets, const vec3& position) -> Result
 		{
 			size_t index = 0;
 			float distance = length2(position - targets[0].m_value);
@@ -188,11 +188,11 @@ namespace boids
 	struct MergeCells
 	{
 		Cells& cells;
-		const vector<int>& hashes;
-		const vector<int>& threads;
+		span<int> hashes;
+		span<int> threads;
 		CellMap* cell_hashes_mt;
-		const vector<Position>& targets;
-		const vector<Position>& obstacles;
+		span<Position> targets;
+		span<Position> obstacles;
 
 		inline void operator()(JobSystem& js, Job* job, uint32_t start, uint32_t count) const
 		{
@@ -267,13 +267,13 @@ namespace boids
 
 	struct Steer
 	{
-		const BoidParams4&		m_params;
-		const Cells&			m_cells;
-		const vector<Position>&	m_targets;
-		const vector<Position>&	m_obstacles;
-		const vector<Position>&	m_positions;
-		vector<Heading>&		m_headings;
-		float                   m_dt;
+		const BoidParams4&	m_params;
+		const Cells&		m_cells;
+		span<Position>		m_targets;
+		span<Position>		m_obstacles;
+		span<Position>		m_positions;
+		vector<Heading>&	m_headings;
+		float               m_dt;
 
 		uint32_t m_start;
 		uint32_t m_count;
@@ -499,7 +499,7 @@ namespace boids
 
 			for(size_t i = 0; i < m_num_boids; ++i)
 			{
-				Entity entity = { ecs.create<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>(), ecs.m_index };
+				Entity entity = ecs.create<Position, Heading, MoveForward, MoveSpeed, Transform4, Boid>();
 				ecs.set<Position>(entity, random_vec3(m_extents));
 				ecs.set<Heading>(entity, normalize(random_vec3(1.f)));
 			}
@@ -508,12 +508,12 @@ namespace boids
 		virtual void init(GameShell& app, Game& game) final
 		{
 			UNUSED(game);
-			app.m_gfx_system->add_resource_path("examples/ex_boids");
+			app.m_gfx->add_resource_path("examples/ex_boids");
 		}
 
 		vec3 random_vec3(float ext)
 		{
-			return vec3(random_scalar(-ext, ext), random_scalar(-ext, ext), random_scalar(-ext, ext), 0.f);
+			return vec3(randf(-ext, ext), randf(-ext, ext), randf(-ext, ext), 0.f);
 		}
 
 		virtual void start(GameShell& app, Game& game) final
@@ -548,21 +548,22 @@ namespace boids
 				UNUSED(index); UNUSED(scene);
 				uint64_t prototype = ecs.prototype<Transform4, Boid>();
 
-				Model& model = parent.m_scene->m_gfx_system.fetch_symbol({ Colour::White, Colour::White }, Sphere(0.01f), PLAIN);
-				Material& material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::White), PLAIN);
-				//Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "boid", Colour::White);
+				Model& model = parent.m_scene->m_gfx.shape(Sphere(0.01f));
+				Material& material = parent.m_scene->m_gfx.symbol_material(Symbol::plain(Colour::White), PLAIN);
+				//Material& material = gfx::pbr_material(parent.m_scene->m_gfx, "boid", Colour::White);
 
 				vector<EntityStream*> matches = ecs.match(prototype);
 				for(EntityStream* stream : matches)
 				{
 					const TBuffer<Transform4>& components = stream->buffer<Transform4>();
-					vector<mat4>& transforms = (vector<mat4>&) components.m_data;
+					span<mat4> transforms = { (mat4*)components.m_data.data(), components.m_data.size() };
 
 					const size_t size = min(m_num_visible, transforms.size());
 					for(size_t i = 0; i < size; i += 4096)
 					{
 						const size_t count = min(size - i, size_t(4096U));
-						gfx::item(parent, model, ItemFlag::Default | ItemFlag::NoUpdate, &material, count, { transforms.data() + i, count });
+						Item& item = gfx::item(parent, model, ItemFlag::Default | ItemFlag::NoUpdate, &material);
+						gfx::instances(parent, item, { transforms.data() + i, count });
 					}
 				}
 			};
@@ -570,9 +571,9 @@ namespace boids
 			auto paint_targets = [&](size_t index, VisuScene& scene, Gnode& parent)
 			{ 
 				UNUSED(index); UNUSED(scene);
-				Model& model = parent.m_scene->m_gfx_system.fetch_symbol({ Colour::White, Colour::White }, Sphere(0.1f), PLAIN);
-				Material& target_material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::Red), PLAIN);
-				Material& obstacle_material = parent.m_scene->m_gfx_system.fetch_symbol_material(Symbol::plain(Colour::Black), PLAIN);
+				Model& model = app.m_gfx->shape({ Colour::White, Colour::White }, Sphere(0.1f), PLAIN);
+				Material& target_material = app.m_gfx->symbol_material(Symbol::plain(Colour::Red), PLAIN);
+				Material& obstacle_material = app.m_gfx->symbol_material(Symbol::plain(Colour::Black), PLAIN);
 
 				ecs.loop<Position, BoidObstacle>([&](Position& position, BoidObstacle&)
 				{

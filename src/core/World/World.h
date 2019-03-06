@@ -30,8 +30,8 @@ namespace toy
 		JobPump m_pump;
 		WorldClock m_clock;
 
-		attr_ graph_ HSpatial origin() { return m_origin->m_spatial; }
-		attr_ graph_ HSpatial unworld() { return m_unworld->m_spatial; }
+		attr_ graph_ HSpatial origin() { return m_origin; }
+		attr_ graph_ HSpatial unworld() { return m_unworld; }
 
 		void next_frame();
 

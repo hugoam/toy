@@ -22,20 +22,19 @@ namespace toy
 {
 	Entity Camera::create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near, float far)
 	{
-		Entity entity = { ecs.create<Spatial, Movable, toy::Camera>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Movable, toy::Camera>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
-		ecs.set(entity, Movable(HSpatial(entity)));
-		ecs.set(entity, toy::Camera(HSpatial(entity), lens_distance, near, far));
+		ecs.set(entity, Movable(position));
+		ecs.set(entity, Camera(lens_distance, near, far));
 		return entity;
 	}
 
-    Camera::Camera(HSpatial spatial, float lens_distance, float near, float far)
-        : m_spatial(spatial)
-		, m_lens_distance(lens_distance)
+    Camera::Camera(float distance, float near, float far)
+        : m_lens_distance(distance)
 		, m_near(near)
         , m_far(far)
     {
-		calc_lens_position(spatial);
+		//calc_lens_position(spatial);
 	}
 
 	Camera::~Camera()

@@ -148,7 +148,7 @@ namespace toy
 		}
 	}
 
-	void library(Widget& parent, const vector<Type*>& types, Selection& selection)
+	void library(Widget& parent, span<Type*> types, Selection& selection)
 	{
 		Tabber& self = ui::tabber(parent);
 
@@ -159,7 +159,7 @@ namespace toy
 			}
 	}
 
-	void library_section(Widget& parent, const vector<Type*>& types, Selection& selection)
+	void library_section(Widget& parent, span<Type*> types, Selection& selection)
 	{
 		Section& self = section(parent, "Library");
 		library(*self.m_body, types, selection);
@@ -185,17 +185,17 @@ namespace toy
 			editor_menu(self, name_group.second);
 	}
 
-	string entity_name(uint32_t entity)
+	string entity_name(Entity entity)
 	{
-		return string(entity_prototype({ entity, 0 })) + ":" + to_string(entity);
+		return string(entity_prototype(entity)) + ":" + to_string(entity);
 	}
 
-	string entity_icon(uint32_t entity)
+	string entity_icon(Entity entity)
 	{
-		return "(" + string(entity_prototype({ entity, 0 })) + ")";
+		return "(" + string(entity_prototype(entity)) + ")";
 	}
 
-	void outliner_node(Widget& parent, uint32_t entity, HSpatial spatial, vector<Ref>& selection)
+	void outliner_node(Widget& parent, Entity entity, HSpatial spatial, vector<Ref>& selection)
 	{
 		TreeNode& self = ui::tree_node(parent, { entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
 
@@ -209,7 +209,7 @@ namespace toy
 		if(self.m_body)
 			for(HSpatial child : spatial->m_contents)
 			{
-				outliner_node(*self.m_body, child.m_handle, child, selection);
+				outliner_node(*self.m_body, child, child, selection);
 			}
 	}
 
@@ -217,7 +217,7 @@ namespace toy
 	{
 		ScrollSheet& sheet = ui::scroll_sheet(parent);
 		Widget& tree = ui::tree(*sheet.m_body);
-		outliner_node(tree, spatial.m_handle, spatial, selection);
+		outliner_node(tree, spatial, spatial, selection);
 	}
 
 	void editor_graph(Widget& parent, Editor& editor, Selection& selection)
@@ -280,7 +280,7 @@ namespace toy
 		//current_brush_edit(self, editor); // dockid { 0, 0 }
 		//ui_edit(self, editor.m_selection); // dockid { 0, 2 }
 		if(Widget* dock = ui::dockitem(dockspace, "Graphics", { 0U, 2U }))
-			edit_gfx_system(*dock, editor.m_gfx_system);
+			edit_gfx_system(*dock, editor.m_gfx);
 
 		editor.m_screen = ui::dockitem(dockspace, "Screen", { 0U, 1U }, 4.f);
 		
@@ -321,8 +321,8 @@ namespace toy
 		};
 
 		float eps = 0.0000001f;
-		entry(layout, "frame time", int(editor.m_gfx_system.m_frame_time * 1000.f));
-		entry(layout, "frame per second", int(1.f / max(editor.m_gfx_system.m_frame_time, eps)));
+		entry(layout, "frame time", int(editor.m_gfx.m_frame_time * 1000.f));
+		entry(layout, "frame per second", int(1.f / max(editor.m_gfx.m_frame_time, eps)));
 
 		return layout;
 	}

@@ -5,9 +5,9 @@
 
 #include <toy/toy.h>
 
-WaveTileset& generator_tileset(GfxSystem& gfx_system)
+WaveTileset& generator_tileset(GfxSystem& gfx)
 {
-	LocatedFile location = gfx_system.locate_file("models/platform/platform.tls");
+	LocatedFile location = gfx.locate_file("models/platform/platform.tls");
 	static WaveTileset tileset;
 	parse_json_wave_tileset(location.path(true), "", tileset);
 	return tileset;
@@ -47,7 +47,7 @@ void generate_lamps(Tileblock& block)
 			{
 				Tile& tile = block.m_wfc_block.m_tileset->m_tiles_flip[block.m_wfc_block.m_tiles.at(x, y, z)];
 				if(tile.m_name == "cube_covered_side")
-					if(random_integer(0, 9) > 8)
+					if(randi(0, 9) > 8)
 					{
 						construct<Lamp>(origin, block.m_wfc_block.to_position(uvec3(x, y, z)) + Y3 * 1.5f * block.m_wfc_block.m_scale);
 					}
@@ -64,7 +64,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 
 	Valve* coords = script.function(grid, { &gridSize });
 
-	LocatedFile location = shell.m_gfx_system->locate_file("models/platform/platform.tls");
+	LocatedFile location = shell.m_gfx->locate_file("models/platform/platform.tls");
 	Valve* tileset = script.function(parse_json_wave_tileset, { &script.value(location.path(true)), &script.value(string("")) });
 
 	//Valve& empty_wave = script.create<TileWave>({ &tileset, &tiles, &height, &tiles, &script.value(false) });
@@ -84,7 +84,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 	if(0)
 	{
 		Var& radius = script.value(15.f);
-		Var* positions = script.function(distribute_poisson, { &script.value(vec2{ 50.f }), &radius }); // .flow(sectors
+		Var* positions = script.function(distribute_poisson, { &script.value(vec2(50.f)), &radius }); // .flow(sectors
 
 		Var& extents = script.value(vec3(0.75f, 0.5f, 0.4f));
 		Var& crates = script.create<Crate>({ &script.value(0), &sectors, positions, &extents });
@@ -95,7 +95,7 @@ void platform_generator(GameShell& shell, VisualScript& script)
 	{
 		Var& radius = script.value(20.f);
 		//Var& positions = script.function(distribute_poisson{ &sectorSize2, &radius });
-		Var* positions = script.function(distribute_poisson, { &script.value(vec2{ 50.f }), &radius }); // .flow(sectors
+		Var* positions = script.function(distribute_poisson, { &script.value(vec2(50.f)), &radius }); // .flow(sectors
 
 		Var& crates = script.create<Human>({ &script.value(0), &sectors, positions, &script.value(0.35f), &script.value(2.f),
 											 &script.value(string("Human")), &script.value(string("X")) });

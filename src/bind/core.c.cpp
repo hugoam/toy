@@ -38,17 +38,14 @@ extern "C" {
 	toy::Camera* DECL toy_Camera__construct_0() {
 		return new toy::Camera();
 	}
-	toy::Camera* DECL toy_Camera__construct_1(toy::HSpatial* spatial) {
-		return new toy::Camera(*spatial);
+	toy::Camera* DECL toy_Camera__construct_1(float distance) {
+		return new toy::Camera(distance);
 	}
-	toy::Camera* DECL toy_Camera__construct_2(toy::HSpatial* spatial, float lens_distance) {
-		return new toy::Camera(*spatial, lens_distance);
+	toy::Camera* DECL toy_Camera__construct_2(float distance, float near) {
+		return new toy::Camera(distance, near);
 	}
-	toy::Camera* DECL toy_Camera__construct_3(toy::HSpatial* spatial, float lens_distance, float near) {
-		return new toy::Camera(*spatial, lens_distance, near);
-	}
-	toy::Camera* DECL toy_Camera__construct_4(toy::HSpatial* spatial, float lens_distance, float near, float far) {
-		return new toy::Camera(*spatial, lens_distance, near, far);
+	toy::Camera* DECL toy_Camera__construct_3(float distance, float near, float far) {
+		return new toy::Camera(distance, near, far);
 	}
 	float DECL toy_Camera__get_lens_distance(toy::Camera* self) {
 		return self->m_lens_distance;
@@ -403,8 +400,8 @@ extern "C" {
 	toy::Movable* DECL toy_Movable__construct_0() {
 		return new toy::Movable();
 	}
-	toy::Movable* DECL toy_Movable__construct_1(toy::HSpatial* spatial) {
-		return new toy::Movable(*spatial);
+	toy::Movable* DECL toy_Movable__construct_1(const mud::vec3* position) {
+		return new toy::Movable(*position);
 	}
 	void DECL toy_Movable_set_linear_velocity_1(toy::Movable* self, const mud::vec3* velocity) {
 		self->set_linear_velocity(*velocity);
@@ -517,9 +514,6 @@ extern "C" {
 	}
 	toy::Origin* DECL toy_Origin__construct_0() {
 		return new toy::Origin();
-	}
-	toy::Origin* DECL toy_Origin__construct_1(toy::HSpatial* spatial) {
-		return new toy::Origin(*spatial);
 	}
 	void DECL toy_Origin__destroy(toy::Origin* self) {
 		delete self;
@@ -708,18 +702,12 @@ extern "C" {
 	toy::Waypoint* DECL toy_Waypoint__construct_0() {
 		return new toy::Waypoint();
 	}
-	toy::Waypoint* DECL toy_Waypoint__construct_1(toy::HSpatial* parent) {
-		return new toy::Waypoint(*parent);
-	}
 	void DECL toy_Waypoint__destroy(toy::Waypoint* self) {
 		delete self;
 	}
 	// World
 	mud::Type* DECL toy_World__type() {
 		return &mud::type<toy::World>();
-	}
-	toy::World* DECL toy_World__construct_4(uint32_t id, mud::Complex* complex, const char* name, mud::JobSystem* job_system) {
-		return new toy::World(id, *complex, name, *job_system);
 	}
 	uint32_t DECL toy_World__get_id(toy::World* self) {
 		return self->m_id;

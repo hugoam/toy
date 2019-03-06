@@ -19,11 +19,8 @@ namespace toy
 	{
 	public:
 		constr_ Waypoint() {}
-		constr_ Waypoint(HSpatial parent);
 
 		static Entity create(ECS& ecs, HSpatial parent, const vec3& position);
-
-		comp_ HSpatial m_spatial;
 	};
 
     class refl_ TOY_CORE_EXPORT DetourPath

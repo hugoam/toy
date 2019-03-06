@@ -2,7 +2,7 @@
 #include <toy/toy.h>
 
 #include <blocks/Api.h>
-#include <meta/blocks/Module.h>
+#include <meta/_blocks.meta.h>
 
 #include <shell/Shell.h>
 
@@ -41,7 +41,7 @@ vector<Faction> g_factions;
 
 /*Entity Well::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.create<Spatial, Emitter, Well>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Emitter, Well>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	return entity;
@@ -59,7 +59,7 @@ void Well::next_frame(size_t tick, size_t delta)
 
 Entity Camp::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	Entity entity = { ecs.create<Spatial, Camp>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Camp>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Camp(HSpatial(entity), position, faction));
 	return entity;
@@ -73,7 +73,7 @@ Camp::Camp(HSpatial spatial, const vec3& position, Faction& faction)
 
 Entity Shield::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction, float radius)
 {
-	Entity entity = { ecs.create<Spatial, Emitter, Shield>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Emitter, Shield>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	ecs.set(entity, Shield(HSpatial(entity), HEmitter(entity), faction, radius));
@@ -104,7 +104,7 @@ void Shield::next_frame(size_t tick, size_t delta)
 
 Entity Slug::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
 {
-	Entity entity = { ecs.create<Spatial, Slug>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Slug>();
 	ecs.set(entity, Spatial(parent, source, rotation));
 	ecs.set(entity, Slug(HSpatial(entity), source, velocity, power));
 	return entity;
@@ -169,7 +169,7 @@ void Slug::update(Spatial& spatial)
 
 Entity Tank::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Emitter, Receptor, Tank>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Emitter, Receptor, Tank>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Movable(HSpatial(entity)));
 	ecs.set(entity, Emitter(HSpatial(entity)));
@@ -297,11 +297,11 @@ BlockWorld::BlockWorld(const string& name, JobSystem& job_system)
 BlockWorld::~BlockWorld()
 {}
 
-void BlockWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
+void BlockWorld::generate_block(GfxSystem& gfx, const ivec2& coord)
 {
-	static WaveTileset& tileset = generator_tileset(gfx_system);
+	static WaveTileset& tileset = generator_tileset(gfx);
 
-	Tileblock& block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale, false);
+	Tileblock& block = ::generate_block(gfx, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale, false);
 
 	block.m_world_page->m_geometry_filter = { "flat_low", "flat_high", "cliff_side_0_0", "cliff_corner_in_0_0", "cliff_corner_out_0_0" };
 
@@ -327,7 +327,7 @@ void paint_well(Gnode& parent, Well& well)
 
 void paint_shield(Gnode& parent, Shield& shield)
 {
-	static Material* discharge = &parent.m_scene->m_gfx_system.fetch_material("shield_discharge", "fresnel");
+	static Material* discharge = &parent.m_scene->m_gfx.fetch_material("shield_discharge", "fresnel");
 
 	static vector<Material*> power = vector<Material*>(4);
 
@@ -336,12 +336,12 @@ void paint_shield(Gnode& parent, Shield& shield)
 	auto fresnel_material = [&](Material& material, const Colour& colour)
 	{
 		material.m_fresnel.m_value = colour;
-		material.m_fresnel.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
+		material.m_fresnel.m_value = parent.m_scene->m_gfx.textures().file("beehive.png");
 	};
 
 	if(power[faction.m_id] == nullptr)
 	{
-		Material* material = &parent.m_scene->m_gfx_system.fetch_material(("shield_faction_" + to_string(faction.m_id)).c_str(), "fresnel");
+		Material* material = &parent.m_scene->m_gfx.fetch_material(("shield_faction_" + to_string(faction.m_id)).c_str(), "fresnel");
 		fresnel_material(*material, faction.m_colour * 4.f);
 		power[faction.m_id] = material;
 	}
@@ -359,7 +359,7 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 	if(shield.m_discharge > 0.f)
 	{
-		paint(*discharge, shield.m_discharge, Colour::hsl(random_scalar(0.f, 1.f), 1.f, 0.5f) * shield.m_discharge * 10.f);
+		paint(*discharge, shield.m_discharge, Colour::hsl(randf(0.f, 1.f), 1.f, 0.5f) * shield.m_discharge * 10.f);
 	}
 	else
 	{
@@ -372,9 +372,9 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 void paint_shell(Gnode& parent, Slug& shell)
 {
-	static Flow* flash = parent.m_scene->m_gfx_system.flows().file("flash");
-	static Flow* trail = parent.m_scene->m_gfx_system.flows().file("trail");
-	static Flow* impact = parent.m_scene->m_gfx_system.flows().file("impact");
+	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
+	static Flow* trail = parent.m_scene->m_gfx.flows().file("trail");
+	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
 	Gnode& source = gfx::node(parent, Ref(&shell), shell.m_source, shell.m_spatial->m_rotation);
 	gfx::flows(source, *flash);
@@ -400,18 +400,18 @@ void paint_shell(Gnode& parent, Slug& shell)
 	shell.m_destroy |= !active;
 }
 
-Model& faction_model_dead_variant(GfxSystem& gfx_system, Model& model)
+Model& faction_model_dead_variant(GfxSystem& gfx, Model& model)
 {
 	static Material& material = highlight_material("no_highlight", Colour::Black, 0);
 
 	string name = model.m_name + "_dead";
-	return model_variant(gfx_system, model, name.c_str(), { "Highlight11", "Highlight2" }, { &material, &material });
+	return model_variant(gfx, model, name.c_str(), { "Highlight11", "Highlight2" }, { &material, &material });
 }
 
-Model& faction_model_variant(GfxSystem& gfx_system, Faction& faction, Model& model)
+Model& faction_model_variant(GfxSystem& gfx, Faction& faction, Model& model)
 {
 	string name = model.m_name + "_faction" + to_string(faction.m_id);
-	return model_variant(gfx_system, model, name.c_str(), { "Highlight11", "Highlight2" }, { faction.m_highlight11, faction.m_highlight2 });
+	return model_variant(gfx, model, name.c_str(), { "Highlight11", "Highlight2" }, { faction.m_highlight11, faction.m_highlight2 });
 }
 
 void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float percentage, Colour colour)
@@ -424,26 +424,26 @@ void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float perc
 
 void paint_tank(Gnode& parent, Tank& tank)
 {
-	static Material* debug = &parent.m_scene->m_gfx_system.debug_material();
-	static Material* stealth = &parent.m_scene->m_gfx_system.fetch_material("tank_stealth", "fresnel");
+	static Material* debug = &parent.m_scene->m_gfx.debug_material();
+	static Material* stealth = &parent.m_scene->m_gfx.fetch_material("tank_stealth", "fresnel");
 
 	stealth->m_fresnel.m_value.m_value = { 0.8f, 0.9f, 5.f };
-	//stealth->m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
+	//stealth->m_fresnel_block.m_value = parent.m_scene->m_gfx.textures().file("beehive.png");
 
-	GfxSystem& gfx_system = parent.m_scene->m_gfx_system;
+	GfxSystem& gfx = parent.m_scene->m_gfx;
 
 	static vector<Model*> tank_base_models = vector<Model*>(size_t(Faction::s_max_factions));
 	static vector<Model*> tank_turret_models = vector<Model*>(size_t(Faction::s_max_factions));
 
-	static Model& tank_base_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_base"));
-	static Model& tank_turret_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_turret"));
+	static Model& tank_base_dead = faction_model_dead_variant(gfx, *gfx.models().file("scifi_tank_base"));
+	static Model& tank_turret_dead = faction_model_dead_variant(gfx, *gfx.models().file("scifi_tank_turret"));
 
 	Faction& faction = *tank.m_faction;
 
 	if(tank_base_models[faction.m_id] == nullptr)
 	{
-		tank_base_models[faction.m_id] = &faction_model_variant(gfx_system, faction, *gfx_system.models().file("scifi_tank_base"));
-		tank_turret_models[faction.m_id] = &faction_model_variant(gfx_system, faction, *gfx_system.models().file("scifi_tank_turret"));
+		tank_base_models[faction.m_id] = &faction_model_variant(gfx, faction, *gfx.models().file("scifi_tank_base"));
+		tank_turret_models[faction.m_id] = &faction_model_variant(gfx, faction, *gfx.models().file("scifi_tank_turret"));
 	}
 
 	Gnode& turret = gfx::node(parent, {}, parent.m_attach->position(), tank.turret_rotation());
@@ -490,7 +490,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 	else
 	{
 		Gnode& dead = parent.subx(Dead);
-		static Flow* explode = parent.m_scene->m_gfx_system.flows().file("explode");
+		static Flow* explode = parent.m_scene->m_gfx.flows().file("explode");
 
 		gfx::flows(dead, *explode);
 		//toy::sound(dead, "explosion", false, 0.2f);
@@ -778,7 +778,7 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		app.m_gfx_system->add_resource_path("examples/ex_blocks");
+		app.m_gfx->add_resource_path("examples/ex_blocks");
 
 		g_factions.push_back({ 0, Colour::Red });
 		g_factions.push_back({ 0, Colour::Pink });
@@ -800,7 +800,7 @@ public:
 		static Player player = { block_world };
 		game.m_player = Ref(&player);
 
-		block_world.generate_block(*app.m_gfx_system, ivec2(0));
+		block_world.generate_block(*app.m_gfx, ivec2(0));
 		generate_camps(block_world);
 	}
 

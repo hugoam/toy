@@ -66,6 +66,26 @@ void Technology__to_string(void* val, string& str) { str = g_enu[type<Technology
 void Technology__to_value(const string& str, void* val) { (*static_cast<Technology*>(val)) = Technology(g_enu[type<Technology>().m_id]->value(str.c_str())); }
 void WeaponType__to_string(void* val, string& str) { str = g_enu[type<WeaponType>().m_id]->name(uint32_t((*static_cast<WeaponType*>(val)))); }
 void WeaponType__to_value(const string& str, void* val) { (*static_cast<WeaponType*>(val)) = WeaponType(g_enu[type<WeaponType>().m_id]->value(str.c_str())); }
+size_t stl_vector_CombatFleet__size(void* vec) { return (*static_cast<stl::vector<CombatFleet>*>(vec)).size(); }
+void* stl_vector_CombatFleet__at(void* vec, size_t i) { return &(*static_cast<stl::vector<CombatFleet>*>(vec))[i]; }
+void stl_vector_CombatFleet__push(void* vec) { (*static_cast<stl::vector<CombatFleet>*>(vec)).emplace_back(); }
+void stl_vector_CombatFleet__add(void* vec, void* value) { (*static_cast<stl::vector<CombatFleet>*>(vec)).push_back(*static_cast<CombatFleet*>(value)); }
+void stl_vector_CombatFleet__remove(void* vec, void* value) { vector_remove_any((*static_cast<stl::vector<CombatFleet>*>(vec)), *static_cast<CombatFleet*>(value)); }
+size_t stl_vector_Commander___size(void* vec) { return (*static_cast<stl::vector<Commander*>*>(vec)).size(); }
+void* stl_vector_Commander___at(void* vec, size_t i) { return &(*static_cast<stl::vector<Commander*>*>(vec))[i]; }
+void stl_vector_Commander___push(void* vec) { (*static_cast<stl::vector<Commander*>*>(vec)).emplace_back(); }
+void stl_vector_Commander___add(void* vec, void* value) { (*static_cast<stl::vector<Commander*>*>(vec)).push_back(static_cast<Commander*>(value)); }
+void stl_vector_Commander___remove(void* vec, void* value) { vector_remove_any((*static_cast<stl::vector<Commander*>*>(vec)), static_cast<Commander*>(value)); }
+size_t stl_vector_HFleet__size(void* vec) { return (*static_cast<stl::vector<HFleet>*>(vec)).size(); }
+void* stl_vector_HFleet__at(void* vec, size_t i) { return &(*static_cast<stl::vector<HFleet>*>(vec))[i]; }
+void stl_vector_HFleet__push(void* vec) { (*static_cast<stl::vector<HFleet>*>(vec)).emplace_back(); }
+void stl_vector_HFleet__add(void* vec, void* value) { (*static_cast<stl::vector<HFleet>*>(vec)).push_back(*static_cast<HFleet*>(value)); }
+void stl_vector_HFleet__remove(void* vec, void* value) { vector_remove_any((*static_cast<stl::vector<HFleet>*>(vec)), *static_cast<HFleet*>(value)); }
+size_t stl_vector_HStar__size(void* vec) { return (*static_cast<stl::vector<HStar>*>(vec)).size(); }
+void* stl_vector_HStar__at(void* vec, size_t i) { return &(*static_cast<stl::vector<HStar>*>(vec))[i]; }
+void stl_vector_HStar__push(void* vec) { (*static_cast<stl::vector<HStar>*>(vec)).emplace_back(); }
+void stl_vector_HStar__add(void* vec, void* value) { (*static_cast<stl::vector<HStar>*>(vec)).push_back(*static_cast<HStar*>(value)); }
+void stl_vector_HStar__remove(void* vec, void* value) { vector_remove_any((*static_cast<stl::vector<HStar>*>(vec)), *static_cast<HStar*>(value)); }
 void Combat__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) Combat(  ); }
 void Combat__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) Combat((*static_cast<Combat*>(other))); }
 void CombatFleet__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) CombatFleet(  ); }
@@ -121,7 +141,7 @@ void SpatialCombat__copy_construct(void* ref, void* other) { new(stl::placeholde
 void generate_system_0(span<void*> args, void*& result) { (*static_cast<mud::ComponentHandle<Star>*>(result)) = generate_system(*static_cast<Galaxy*>(args[0]), *static_cast<mud::uvec3*>(args[1]), *static_cast<mud::vec3*>(args[2])); }
 void generate_fleet_1(span<void*> args, void*& result) { (*static_cast<mud::ComponentHandle<Fleet>*>(result)) = generate_fleet(*static_cast<Galaxy*>(args[0]), *static_cast<mud::uvec3*>(args[1]), *static_cast<mud::vec3*>(args[2])); }
 void generate_commander_2(span<void*> args, void*& result) { result = generate_commander(*static_cast<Galaxy*>(args[0]), *static_cast<Star*>(args[1])); }
-void assign_system_3(span<void*> args, void*& result) { UNUSED(result);  assign_system(*static_cast<Galaxy*>(args[0]), *static_cast<Star*>(args[1]), *static_cast<stl::vector<Commander*, stl::allocator>*>(args[2])); }
+void assign_system_3(span<void*> args, void*& result) { UNUSED(result);  assign_system(*static_cast<Galaxy*>(args[0]), *static_cast<Star*>(args[1]), *static_cast<stl::vector<Commander*>*>(args[2])); }
 
 namespace mud
 {
@@ -278,6 +298,58 @@ namespace mud
 	}
 	
 	// Sequences
+	{
+		Type& t = type<stl::vector<CombatFleet>>();
+		static Meta meta = { t, &namspc({}), "stl::vector<CombatFleet>", sizeof(stl::vector<CombatFleet>), TypeClass::Sequence };
+		static Class cls = { t };
+		static Iterable iterable = { &type<CombatFleet>(),
+		                             stl_vector_CombatFleet__size,
+		                             stl_vector_CombatFleet__at};
+		g_iterable[t.m_id] = &iterable;
+		static Sequence sequence = { stl_vector_CombatFleet__push,
+		                             stl_vector_CombatFleet__add,
+		                             stl_vector_CombatFleet__remove };
+		g_sequence[t.m_id] = &sequence;
+	}
+	{
+		Type& t = type<stl::vector<Commander*>>();
+		static Meta meta = { t, &namspc({}), "stl::vector<Commander*>", sizeof(stl::vector<Commander*>), TypeClass::Sequence };
+		static Class cls = { t };
+		static Iterable iterable = { &type<Commander>(),
+		                             stl_vector_Commander___size,
+		                             stl_vector_Commander___at};
+		g_iterable[t.m_id] = &iterable;
+		static Sequence sequence = { stl_vector_Commander___push,
+		                             stl_vector_Commander___add,
+		                             stl_vector_Commander___remove };
+		g_sequence[t.m_id] = &sequence;
+	}
+	{
+		Type& t = type<stl::vector<HFleet>>();
+		static Meta meta = { t, &namspc({}), "stl::vector<HFleet>", sizeof(stl::vector<HFleet>), TypeClass::Sequence };
+		static Class cls = { t };
+		static Iterable iterable = { &type<HFleet>(),
+		                             stl_vector_HFleet__size,
+		                             stl_vector_HFleet__at};
+		g_iterable[t.m_id] = &iterable;
+		static Sequence sequence = { stl_vector_HFleet__push,
+		                             stl_vector_HFleet__add,
+		                             stl_vector_HFleet__remove };
+		g_sequence[t.m_id] = &sequence;
+	}
+	{
+		Type& t = type<stl::vector<HStar>>();
+		static Meta meta = { t, &namspc({}), "stl::vector<HStar>", sizeof(stl::vector<HStar>), TypeClass::Sequence };
+		static Class cls = { t };
+		static Iterable iterable = { &type<HStar>(),
+		                             stl_vector_HStar__size,
+		                             stl_vector_HStar__at};
+		g_iterable[t.m_id] = &iterable;
+		static Sequence sequence = { stl_vector_HStar__push,
+		                             stl_vector_HStar__add,
+		                             stl_vector_HStar__remove };
+		g_sequence[t.m_id] = &sequence;
+	}
 	
 	// Combat
 	{
@@ -304,6 +376,7 @@ namespace mud
 		static Meta meta = { t, &namspc({}), "CombatFleet", sizeof(CombatFleet), TypeClass::Struct };
 		// bases
 		// defaults
+		static float damage_default = 0.f;
 		// constructors
 		static Constructor constructors[] = {
 			{ t, CombatFleet__construct_0, {} }
@@ -313,9 +386,13 @@ namespace mud
 			{ t, CombatFleet__copy_construct }
 		};
 		// members
+		static Member members[] = {
+			{ t, offsetof(CombatFleet, m_fleet), type<Fleet>(), "fleet", nullptr, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(CombatFleet, m_damage), type<float>(), "damage", &damage_default, Member::Value, nullptr }
+		};
 		// methods
 		// static members
-		static Class cls = { t, {}, {}, constructors, copy_constructor, {}, {}, {}, };
+		static Class cls = { t, {}, {}, constructors, copy_constructor, members, {}, {}, };
 	}
 	// CombatStar
 	{
@@ -361,8 +438,8 @@ namespace mud
 			{ t, offsetof(Commander, m_diplomacy), type<int>(), "diplomacy", nullptr, Member::Value, nullptr },
 			{ t, offsetof(Commander, m_reputation), type<int>(), "reputation", nullptr, Member::Value, nullptr },
 			{ t, offsetof(Commander, m_victory), type<int>(), "victory", nullptr, Member::Value, nullptr },
-			{ t, offsetof(Commander, m_stars), type<stl::vector<mud::ComponentHandle<Star>, stl::allocator>>(), "stars", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(Commander, m_fleets), type<stl::vector<mud::ComponentHandle<Fleet>, stl::allocator>>(), "fleets", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(Commander, m_stars), type<stl::vector<HStar>>(), "stars", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(Commander, m_fleets), type<stl::vector<HFleet>>(), "fleets", nullptr, Member::NonMutable, nullptr },
 			{ t, offsetof(Commander, m_capital), type<Star>(), "capital", capital_default, Member::Flags(Member::Pointer|Member::Link), nullptr },
 			{ t, offsetof(Commander, m_regime), type<Regime>(), "regime", &regime_default, Member::Value, nullptr },
 			{ t, offsetof(Commander, m_power), type<float>(), "power", &power_default, Member::Value, nullptr },
@@ -530,9 +607,9 @@ namespace mud
 		// copy constructor
 		// members
 		static Member members[] = {
-			{ t, offsetof(Galaxy, m_stars), type<stl::vector<mud::ComponentHandle<Star>, stl::allocator>>(), "stars", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(Galaxy, m_fleets), type<stl::vector<mud::ComponentHandle<Fleet>, stl::allocator>>(), "fleets", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(Galaxy, m_commanders), type<stl::vector<Commander*, stl::allocator>>(), "commanders", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(Galaxy, m_stars), type<stl::vector<HStar>>(), "stars", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(Galaxy, m_fleets), type<stl::vector<HFleet>>(), "fleets", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(Galaxy, m_commanders), type<stl::vector<Commander*>>(), "commanders", nullptr, Member::NonMutable, nullptr },
 			{ t, offsetof(Galaxy, m_size), type<mud::uvec2>(), "size", nullptr, Member::Value, nullptr }
 		};
 		// methods
@@ -833,7 +910,7 @@ namespace mud
 		// members
 		static Member members[] = {
 			{ t, offsetof(PlanetaryCombat, m_coord), type<mud::uvec2>(), "coord", nullptr, Member::Value, nullptr },
-			{ t, offsetof(PlanetaryCombat, m_attack), type<stl::vector<CombatFleet, stl::allocator>>(), "attack", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(PlanetaryCombat, m_attack), type<stl::vector<CombatFleet>>(), "attack", nullptr, Member::NonMutable, nullptr },
 			{ t, offsetof(PlanetaryCombat, m_defense), type<CombatStar>(), "defense", nullptr, Member::Value, nullptr }
 		};
 		// methods
@@ -949,8 +1026,8 @@ namespace mud
 		// members
 		static Member members[] = {
 			{ t, offsetof(SpatialCombat, m_coord), type<mud::uvec2>(), "coord", nullptr, Member::Value, nullptr },
-			{ t, offsetof(SpatialCombat, m_attack), type<stl::vector<CombatFleet, stl::allocator>>(), "attack", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(SpatialCombat, m_defense), type<stl::vector<CombatFleet, stl::allocator>>(), "defense", nullptr, Member::NonMutable, nullptr }
+			{ t, offsetof(SpatialCombat, m_attack), type<stl::vector<CombatFleet>>(), "attack", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(SpatialCombat, m_defense), type<stl::vector<CombatFleet>>(), "defense", nullptr, Member::NonMutable, nullptr }
 		};
 		// methods
 		// static members
@@ -1009,6 +1086,10 @@ namespace mud
 		m.m_types.push_back(&type<Turn>());
 		m.m_types.push_back(&type<Universe>());
 		m.m_types.push_back(&type<WeaponType>());
+		m.m_types.push_back(&type<stl::vector<CombatFleet>>());
+		m.m_types.push_back(&type<stl::vector<Commander*>>());
+		m.m_types.push_back(&type<stl::vector<HFleet>>());
+		m.m_types.push_back(&type<stl::vector<HStar>>());
 		m.m_types.push_back(&type<BuildingSchema>());
 		m.m_types.push_back(&type<PlanetaryCombat>());
 		m.m_types.push_back(&type<ShipComponent>());
@@ -1029,7 +1110,7 @@ namespace mud
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({}), "assign_system", nullptr, assign_system_3, { { "galaxy", type<Galaxy>(),  }, { "star", type<Star>(),  }, { "commanders", type<stl::vector<Commander*, stl::allocator>>(),  } }, g_qvoid };
+			static Function f = { &namspc({}), "assign_system", nullptr, assign_system_3, { { "galaxy", type<Galaxy>(),  }, { "star", type<Star>(),  }, { "commanders", type<stl::vector<Commander*>>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 	}

@@ -45,7 +45,7 @@ void toy_Block_reset(void* object, span<void*> args, void*& result) { UNUSED(res
 void toy_Block_chunk(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Block*>(object)).chunk(*static_cast<size_t*>(args[0]), *static_cast<size_t*>(args[1]), *static_cast<size_t*>(args[2]), *static_cast<toy::Element*>(args[3])); }
 void toy_Block_commit(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::Block*>(object)).commit(); }
 void toy_Chunk__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Chunk(  ); }
-void toy_Chunk__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Chunk( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::Block*>(args[1]), *static_cast<size_t*>(args[2]), *static_cast<toy::Element*>(args[3]), *static_cast<float*>(args[4]) ); }
+void toy_Chunk__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Chunk( *static_cast<toy::Block*>(args[0]), *static_cast<size_t*>(args[1]), *static_cast<toy::Element*>(args[2]), *static_cast<float*>(args[3]) ); }
 void mud_ComponentHandle_toy_Block__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::ComponentHandle<toy::Block>(  ); }
 void mud_ComponentHandle_toy_Block__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) mud::ComponentHandle<toy::Block>((*static_cast<mud::ComponentHandle<toy::Block>*>(other))); }
 void mud_ComponentHandle_toy_Chunk__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::ComponentHandle<toy::Chunk>(  ); }
@@ -58,7 +58,7 @@ void mud_ComponentHandle_toy_Tileblock__construct_0(void* ref, span<void*> args)
 void mud_ComponentHandle_toy_Tileblock__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) mud::ComponentHandle<toy::Tileblock>((*static_cast<mud::ComponentHandle<toy::Tileblock>*>(other))); }
 void toy_Element__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Element( static_cast<const char*>(args[0]), *static_cast<toy::MatterState*>(args[1]), *static_cast<mud::Colour*>(args[2]) ); }
 void toy_Heap__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Heap(  ); }
-void toy_Heap__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Heap( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::Element*>(args[1]), *static_cast<float*>(args[2]) ); }
+void toy_Heap__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Heap( *static_cast<toy::Element*>(args[0]), *static_cast<float*>(args[1]) ); }
 void toy_Sector__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Sector(  ); }
 void toy_Sector__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Sector( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HWorldPage*>(args[1]), *static_cast<toy::HNavblock*>(args[2]), *static_cast<mud::uvec3*>(args[3]), *static_cast<mud::vec3*>(args[4]) ); }
 void toy_Tileblock__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Tileblock(  ); }
@@ -70,7 +70,7 @@ void toy_paint_block_height_0(span<void*> args, void*& result) { UNUSED(result);
 void toy_paint_block_elements_1(span<void*> args, void*& result) { UNUSED(result);  toy::paint_block_elements(*static_cast<toy::Block*>(args[0]), *static_cast<mud::Image256*>(args[1]), *static_cast<stl::span<toy::Element*>*>(args[2])); }
 void toy_generate_block_2(span<void*> args, void*& result) { (*static_cast<mud::ComponentHandle<toy::Tileblock>*>(result)) = toy::generate_block(*static_cast<mud::GfxSystem*>(args[0]), *static_cast<mud::WaveTileset*>(args[1]), *static_cast<toy::HSpatial*>(args[2]), *static_cast<mud::ivec2*>(args[3]), *static_cast<mud::uvec3*>(args[4]), *static_cast<mud::vec3*>(args[5]), *static_cast<bool*>(args[6])); }
 void toy_build_block_geometry_3(span<void*> args, void*& result) { UNUSED(result);  toy::build_block_geometry(*static_cast<mud::Scene*>(args[0]), *static_cast<toy::WorldPage*>(args[1]), *static_cast<toy::Tileblock*>(args[2])); }
-void toy_index_blocks_4(span<void*> args, void*& result) { UNUSED(result);  toy::index_blocks(*static_cast<mud::uvec3*>(args[0]), *static_cast<mud::vector2d<toy::Block*>*>(args[1]), *static_cast<stl::vector<toy::Block*>*>(args[2]), *static_cast<stl::vector<toy::Sector*>*>(args[3])); }
+void toy_index_blocks_4(span<void*> args, void*& result) { UNUSED(result);  toy::index_blocks(*static_cast<mud::uvec3*>(args[0]), *static_cast<mud::vector2d<toy::Block*>*>(args[1]), *static_cast<stl::span<toy::Block*>*>(args[2]), *static_cast<stl::span<toy::Sector*>*>(args[3])); }
 
 namespace mud
 {
@@ -172,7 +172,7 @@ namespace mud
 		// constructors
 		static Constructor constructors[] = {
 			{ t, toy_Chunk__construct_0, {} },
-			{ t, toy_Chunk__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "block", type<toy::Block>(),  }, { "index", type<size_t>(),  }, { "element", type<toy::Element>(),  }, { "size", type<float>(),  } } }
+			{ t, toy_Chunk__construct_1, { { "block", type<toy::Block>(),  }, { "index", type<size_t>(),  }, { "element", type<toy::Element>(),  }, { "size", type<float>(),  } } }
 		};
 		// copy constructor
 		// members
@@ -312,7 +312,7 @@ namespace mud
 		// constructors
 		static Constructor constructors[] = {
 			{ t, toy_Heap__construct_0, {} },
-			{ t, toy_Heap__construct_1, { { "spatial", type<toy::HSpatial>(),  }, { "element", type<toy::Element>(),  }, { "radius", type<float>(),  } } }
+			{ t, toy_Heap__construct_1, { { "element", type<toy::Element>(),  }, { "radius", type<float>(),  } } }
 		};
 		// copy constructor
 		// members
@@ -469,7 +469,7 @@ namespace mud
 		}
 		{
 			static bool from_file_default = true;
-			static Function f = { &namspc({ "toy" }), "generate_block", nullptr, toy_generate_block_2, { { "gfx_system", type<mud::GfxSystem>(),  }, { "tileset", type<mud::WaveTileset>(),  }, { "origin", type<toy::HSpatial>(),  }, { "coord", type<mud::ivec2>(),  }, { "block_subdiv", type<mud::uvec3>(),  }, { "tile_scale", type<mud::vec3>(),  }, { "from_file", type<bool>(), Param::Default, &from_file_default } }, { &type<toy::HTileblock>(), QualType::None } };
+			static Function f = { &namspc({ "toy" }), "generate_block", nullptr, toy_generate_block_2, { { "gfx", type<mud::GfxSystem>(),  }, { "tileset", type<mud::WaveTileset>(),  }, { "origin", type<toy::HSpatial>(),  }, { "coord", type<mud::ivec2>(),  }, { "block_subdiv", type<mud::uvec3>(),  }, { "tile_scale", type<mud::vec3>(),  }, { "from_file", type<bool>(), Param::Default, &from_file_default } }, { &type<toy::HTileblock>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 		{
@@ -477,7 +477,7 @@ namespace mud
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({ "toy" }), "index_blocks", nullptr, toy_index_blocks_4, { { "grid_size", type<mud::uvec3>(),  }, { "grid", type<mud::vector2d<toy::Block*>>(),  }, { "blocks", type<stl::vector<toy::Block*>>(),  }, { "sectors", type<stl::vector<toy::Sector*>>(),  } }, g_qvoid };
+			static Function f = { &namspc({ "toy" }), "index_blocks", nullptr, toy_index_blocks_4, { { "grid_size", type<mud::uvec3>(),  }, { "grid", type<mud::vector2d<toy::Block*>>(),  }, { "blocks", type<stl::span<toy::Block*>>(),  }, { "sectors", type<stl::span<toy::Sector*>>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 	}

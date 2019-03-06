@@ -23,7 +23,7 @@ namespace toy
 {
 	Entity Sector::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
 	{
-		Entity entity = { ecs.create<Spatial, WorldPage, Navblock, Sector>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, WorldPage, Navblock, Sector>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
 		ecs.set(entity, WorldPage(HSpatial(entity), true, size));
 		ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
@@ -91,7 +91,7 @@ namespace toy
 
 	Entity Tileblock::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset)
 	{
-		Entity entity = { ecs.create<Spatial, WorldPage, Navblock, Tileblock>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, WorldPage, Navblock, Tileblock>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
 		ecs.set(entity, WorldPage(HSpatial(entity), true, vec3(size)));
 		ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
@@ -129,13 +129,13 @@ namespace toy
 		return !outside;
 	}
 
-	HTileblock generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
+	HTileblock generate_block(GfxSystem& gfx, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
 	{
 		vec3 position = vec3(to_xz(coord)) * vec3(block_subdiv) * tile_scale;
 		HTileblock block = construct<Tileblock>(origin, position, block_subdiv, tile_scale, tileset);
 
 		if(block->m_wfc_block.m_tile_models.empty())
-			block->m_wfc_block.load_models(gfx_system, from_file);
+			block->m_wfc_block.load_models(gfx, from_file);
 
 		return block;
 	}
@@ -177,7 +177,7 @@ namespace toy
 
 		span<Vertex> vertices = geometry.vertices();
 		span<uint32_t> indices = geometry.indices();
-		MeshAdapter data(Vertex::vertex_format, vertices.data(), vertices.size(), indices.data(), indices.size(), true);
+		MeshAdapter data(Vertex::vertex_format, { vertices.data(), vertices.size() }, { indices.data(), indices.size() }, true);
 
 		for(const ProcShape& shape : shapes)
 		{
