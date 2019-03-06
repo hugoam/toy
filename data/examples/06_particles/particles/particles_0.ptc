@@ -101,6 +101,7 @@
 		"mode": "Constant"
 	},
 	"scale": {
+        "value": 1.0,
 		"curve": {
 			"keys": [0.200000002980232, 1.0, 0.100000001490116]
 		},
@@ -116,7 +117,7 @@
 		"shape": {
 			"type": "Circle",
 			"value": {
-				"axis": "AXIS_Y",
+				"axis": "Y",
 				"radius": 1.0
 			}
 		}
