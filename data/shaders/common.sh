@@ -31,6 +31,12 @@ uniform vec4 u_state;
 
 SAMPLER2D(s_color, 0);
 SAMPLER2D(s_alpha, 1);
+SAMPLER2D(s_user0, 2);
+SAMPLER2D(s_user1, 3);
+SAMPLER2D(s_user2, 4);
+SAMPLER2D(s_user3, 5);
+SAMPLER2D(s_user4, 6);
+SAMPLER2D(s_user5, 7);
 
 #if BGFX_SHADER_LANGUAGE_GLSL == 110
 mat4 transpose(in mat4 mat)

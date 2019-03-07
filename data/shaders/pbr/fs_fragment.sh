@@ -13,6 +13,7 @@
     
 #if BGFX_SHADER_LANGUAGE_HLSL
     fragment.coord.z = (fragment.coord.z + 1.0) / 2.0;
+    //fragment.coord.z = (fragment.coord.z + 0.5) / 2.0;
     fragment.depth = gl_FragCoord.w;
 #else
     fragment.depth = -fragment.position.z;

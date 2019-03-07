@@ -1,7 +1,8 @@
 #ifndef MUD_SHADER_FOG
 #define MUD_SHADER_FOG
 
- #include "common.sh"
+ #include <common.sh>
+ #include <pbr/pbr.sh>
 
 uniform vec4 u_fog_params_0;
 #define u_fog_density u_fog_params_0.x
