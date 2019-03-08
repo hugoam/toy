@@ -1,5 +1,5 @@
-//$input v_color, v_texcoord0
-$input v_view, v_position, v_normal, v_tangent, v_color, v_texcoord0, v_texcoord1, v_binormal
+//$input v_color, v_uv0
+$input v_view, v_position, v_normal, v_tangent, v_color, v_uv0, v_uv1, v_binormal
 
 #include <common.sh>
 
@@ -11,7 +11,7 @@ void main()
 #include "fs_alpha.sh"
 #include "fs_alphatest.sh"
     
-    vec4 color_tex = toLinear(texture2D(s_color, v_texcoord0.xy));
+    vec4 color_tex = toLinear(texture2D(s_color, v_uv0));
     color_tex.a *= alpha;
     gl_FragColor = v_color * color_tex * solid.color;
 }

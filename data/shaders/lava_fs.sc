@@ -1,11 +1,11 @@
-$input v_position, v_texcoord0
+$input v_position, v_uv0
 
 #include <common.sh>
 #include <pbr/fog.sh>
 
 void main()
 {
-   vec2 uv = v_texcoord0.xy;	vec2 position = - 1.0 + 2.0 * uv;
+   vec2 uv = v_uv0;	vec2 position = - 1.0 + 2.0 * uv;
 
 	vec4 noise = texture2D(s_user0, uv);
 	vec2 T1 = uv + vec2(1.5, - 1.5) * u_time * 0.02;

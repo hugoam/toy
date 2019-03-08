@@ -1,4 +1,4 @@
-$input v_world, v_texcoord0
+$input v_world, v_uv0
 
 #include <common.sh>
 #include <encode.sh>
@@ -6,7 +6,7 @@ $input v_world, v_texcoord0
 
 void main()
 {
-    vec2 uv = v_texcoord0.xy;
+    vec2 uv = v_uv0;
 #include "fs_alpha.sh"
 #include "fs_alphatest.sh"
 

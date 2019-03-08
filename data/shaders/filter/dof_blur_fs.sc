@@ -1,4 +1,4 @@
-$input v_texcoord0
+$input v_uv0
 
 #include <filter/filter.sh>
 
@@ -72,13 +72,13 @@ void main() {
 	vec4 near_color_sum = vec4_splat(0.0);
 	float near_weight_sum = 0.0;
     
-    float norm_radius = coc_radius(v_texcoord0.xy);
+    float norm_radius = coc_radius(v_uv0);
     float radius = norm_radius * u_max_coc_pixels;
     float is_near = float(radius > 0.0);
     
     for (int delta = int(-u_max_coc_pixels); delta <= int(u_max_coc_pixels); ++delta)
     {
-        vec2 tap_coord = v_texcoord0.xy + direction * float(delta) * u_pixel_size;
+        vec2 tap_coord = v_uv0 + direction * float(delta) * u_pixel_size;
 
         vec4 tap_color = texture2DLod(s_source_taps, tap_coord, 0.0);
         float tap_radius = coc_radius(tap_coord) * u_max_coc_pixels;
@@ -108,7 +108,7 @@ void main() {
 #ifdef DOF_FIRST_PASS
 	gl_FragColor = mix(far_color, near_color, near_color.a);
 #else
-	vec4 color = texture2DLod(s_source_color, v_texcoord0.xy, 0.0);
+	vec4 color = texture2DLod(s_source_color, v_uv0, 0.0);
     gl_FragColor = mix(color, far_color, abs(norm_radius)) * (1.0 - near_color.a) + near_color * near_color.a;
     
     //gl_FragColor += vec4(saturate(norm_radius), saturate(-norm_radius), 0.0, 0.0);

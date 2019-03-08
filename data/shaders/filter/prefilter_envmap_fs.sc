@@ -1,4 +1,4 @@
-$input v_texcoord0,
+$input v_uv0,
 
 #include <common.sh>
 #include <spherical.sh>
@@ -80,7 +80,7 @@ vec2 Hammersley(uint i, uint N)
 
 void main()
 {
-	vec3 N = invertedSphericalUV(v_texcoord0.xy);
+	vec3 N = invertedSphericalUV(v_uv0);
     vec3 V = N;
 
 	vec4 color = vec4_splat(0.0);

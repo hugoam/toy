@@ -1,5 +1,5 @@
 $input a_position, a_color0, a_texcoord0, i_data0, i_data1, i_data2
-$output v_color, v_texcoord0
+$output v_color, v_uv0
 
 #include <common.sh>
 #include <convert.sh>
@@ -24,7 +24,7 @@ void main()
 
     //v_color = a_color0 * colour;
     v_color = colour;
-    v_texcoord0 = vec4((a_texcoord0.xy * basic.uv0_scale) + basic.uv0_offset, 0.0, 0.0);
+    v_uv0 = (a_texcoord0 * basic.uv0_scale) + basic.uv0_offset;
 
     gl_Position = mul(u_proj, vec4(view, 1.0));
 }

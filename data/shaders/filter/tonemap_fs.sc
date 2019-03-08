@@ -1,4 +1,4 @@
-$input v_texcoord0
+$input v_uv0
 
 #include <filter/filter.sh>
 #include <tonemap.sh>
@@ -21,7 +21,7 @@ void main()
 {
 	ivec2 ifrag_coord = ivec2(gl_FragCoord.xy);
 	//vec3 color = texelFetch(s_source, ifrag_coord, 0).rgb;
-    vec3 color = texture2DLod(s_source, v_texcoord0.xy, 0.0).rgb;
+    vec3 color = texture2DLod(s_source, v_uv0, 0.0).rgb;
     
 #ifdef AUTO_EXPOSURE
 	color /= texelFetch(s_exposure, ivec2(0,0), 0).r / auto_exposure_grey;

@@ -1,10 +1,10 @@
-$input v_texcoord0
+$input v_uv0
 
 #include <filter/filter.sh>
 
 void main() {
 
-	vec2 p = - 1.0 + 2.0 * v_texcoord0.xy;
+	vec2 p = - 1.0 + 2.0 * v_uv0;
 	float a = u_time * 40.0;
 	float d, e, f, g = 1.0 / 40.0 ,h ,i ,r ,q;
 

@@ -1,5 +1,5 @@
 $input a_position, a_texcoord0, i_data0
-$output v_texcoord0, v_scale
+$output v_uv0, v_scale
 
 #include <common.sh>
 
@@ -11,7 +11,7 @@ void main()
 	float size = scale * 10.0 + 10.0;
 	vec3 view = mul(u_modelView, vec4(i_position, 1.0)).xyz;
 	view += a_position.xyz * size;
-	v_texcoord0 = vec4(a_texcoord0.xy, 0.0, 0.0);
+	v_uv0 = vec4(a_texcoord0, 0.0, 0.0);
 	gl_Position = mul(u_proj, vec4(view, 1.0));
 
 }

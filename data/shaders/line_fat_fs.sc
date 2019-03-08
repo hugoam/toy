@@ -4,7 +4,7 @@
 #define DASH_PARAMS
 #endif
 
-$input v_color, v_texcoord0 DASH_PARAMS
+$input v_color, v_uv0 DASH_PARAMS
 
 #include <common.sh>
 
@@ -17,7 +17,7 @@ void main()
 #include "fs_alpha.sh"
 #include "fs_alphatest.sh"
 
-    vec2 uv = v_texcoord0.xy;
+    vec2 uv = v_uv0;
     
     #ifdef DASH
         if (uv.y < - 1.0 || uv.y > 1.0) discard; // discard endcaps
