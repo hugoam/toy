@@ -30,7 +30,7 @@ void main()
 	v_texcoord0 = vec4((a_texcoord0.xy * basic.uv0_scale) + basic.uv0_offset, 0.0, 0.0);
 	v_texcoord1 = vec4((a_texcoord1.xy * basic.uv1_scale) + basic.uv1_offset, 0.0, 0.0);
 
-	v_view = mul(modelView, vec4(a_position, 1.0)).xyz;
+	v_view = mul(modelView, vec4(a_position.xyz, 1.0)).xyz;
 #ifdef QNORMALS
     v_normal = normalize(mul(normalModelView, vec4(vec3(a_normal) / 255.0 - 0.5, 0.0)).xyz);
 	v_tangent = normalize(mul(normalModelView, vec4(vec3(a_tangent.xyz) / 255.0 - 0.5, 0.0)).xyz);

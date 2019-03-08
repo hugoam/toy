@@ -21,7 +21,7 @@ void main()
 {
 #include "modelview.sh"
 
-	vec3 vertex = mul(modelView, vec4(a_position, 1.0)).xyz;
+	vec3 vertex = mul(modelView, vec4(a_position.xyz, 1.0)).xyz;
 	vec3 normal = mul(modelView, vec4(a_normal, 0.0)).xyz;
     
     int material_index = int(u_state_material);

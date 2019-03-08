@@ -4,7 +4,7 @@
 #define DASH_PARAMS
 #endif
 
-$input v_color DASH_PARAMS
+$input v_color, v_texcoord0 DASH_PARAMS
 
 #include <common.sh>
 
@@ -17,9 +17,20 @@ void main()
 #include "fs_alpha.sh"
 #include "fs_alphatest.sh"
 
+    vec2 uv = v_texcoord0.xy;
+    
     #ifdef DASH
+        if (uv.y < - 1.0 || uv.y > 1.0) discard; // discard endcaps
         if (mod(v_line_distance, mat.dash_size + mat.dash_gap) > mat.dash_size) discard; // todo - FIX
     #endif
+
+    if (abs(uv.y) > 1.0) {
+        float a = uv.x;
+        float b = (uv.y > 0.0) ? uv.y - 1.0 : uv.y + 1.0;
+        float len2 = a * a + b * b;
+
+        if (len2 > 1.0) discard;
+    }
 
     vec4 diffuse = v_color * vec4(solid.color.rgb, solid.color.a * alpha);
 

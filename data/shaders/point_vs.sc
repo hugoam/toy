@@ -19,7 +19,7 @@ void main()
     view.xy += a_position.xy * size;
 #else
     vec4 colour = vec4_splat(1.0);
-    vec3 view = mul(u_modelView, vec4(a_position, 1.0)).xyz;
+    vec3 view = mul(u_modelView, vec4(a_position.xyz, 1.0)).xyz;
 #endif
 
     //v_color = a_color0 * colour;

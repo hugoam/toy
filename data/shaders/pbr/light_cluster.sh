@@ -3,6 +3,7 @@
 
 #include <common.sh>
 #include <pbr/pbr.sh>
+#include <gpu/light.sh>
 
 uniform vec4 u_froxel_params;
 uniform vec4 u_froxel_z;
@@ -70,6 +71,14 @@ LightCluster get_light_cluster(uint cluster_index)
 ivec2 record_uv(uint index)
 {
     return ivec2(index & RECORD_BUFFER_WIDTH_MASK, index >> RECORD_BUFFER_WIDTH_SHIFT);
+}
+
+Light read_cluster_light(uint index)
+{
+    ivec2 uv = record_uv(index);
+    //uint light_index = texelFetch(s_light_records, uv, 0).r;
+    uint light_index = uint(texelFetch(s_light_records, uv, 0).r * 255.0);
+    return read_light(int(light_index));
 }
 
 #endif

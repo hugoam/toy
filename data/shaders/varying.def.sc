@@ -20,7 +20,7 @@ vec4 g_texcoord0    : TEXCOORD0 = vec4(0.0, 0.0, 0.0, 0.0);
 vec3 g_normal       : NORMAL    = vec3(0.0, 0.0, 1.0);
 vec4 g_color        : COLOR0    = vec4(1.0, 1.0, 1.0, 1.0);
 
-vec3 a_position     : POSITION;
+vec4 a_position     : POSITION;
 vec4 a_color0       : COLOR0;
 vec3 a_normal       : NORMAL;
 vec4 a_tangent      : TANGENT;

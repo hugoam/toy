@@ -22,5 +22,5 @@ void main()
 
     v_dir = mul(u_skybox_matrix, vec4(corner, -1.0, 0.0)).xyz;
     
-    gl_Position = mul(u_modelViewProj, vec4(a_position, 1.0));
+    gl_Position = mul(u_modelViewProj, vec4(a_position.xyz, 1.0));
 }
