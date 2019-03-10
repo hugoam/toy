@@ -304,25 +304,6 @@ extern "C" {
 	void DECL toy_Core__destroy(toy::Core* self) {
 		delete self;
 	}
-	// DefaultWorld
-	mud::Type* DECL toy_DefaultWorld__type() {
-		return &mud::type<toy::DefaultWorld>();
-	}
-	toy::DefaultWorld* DECL toy_DefaultWorld__construct_2(const char* name, mud::JobSystem* job_system) {
-		return new toy::DefaultWorld(name, *job_system);
-	}
-	toy::World* DECL toy_DefaultWorld__get_world(toy::DefaultWorld* self) {
-		return &self->m_world;
-	}
-	toy::BulletWorld* DECL toy_DefaultWorld__get_bullet_world(toy::DefaultWorld* self) {
-		return &self->m_bullet_world;
-	}
-	toy::Navmesh* DECL toy_DefaultWorld__get_navmesh(toy::DefaultWorld* self) {
-		return &self->m_navmesh;
-	}
-	void DECL toy_DefaultWorld__destroy(toy::DefaultWorld* self) {
-		delete self;
-	}
 	// DetourPath
 	mud::Type* DECL toy_DetourPath__type() {
 		return &mud::type<toy::DetourPath>();
@@ -498,16 +479,6 @@ extern "C" {
 	void DECL toy_Navmesh__destroy(toy::Navmesh* self) {
 		delete self;
 	}
-	// NavmeshShape
-	mud::Type* DECL toy_NavmeshShape__type() {
-		return &mud::type<toy::NavmeshShape>();
-	}
-	toy::NavmeshShape* DECL toy_NavmeshShape__construct_1(toy::Navmesh* navmesh) {
-		return new toy::NavmeshShape(*navmesh);
-	}
-	void DECL toy_NavmeshShape__destroy(toy::NavmeshShape* self) {
-		delete self;
-	}
 	// Origin
 	mud::Type* DECL toy_Origin__type() {
 		return &mud::type<toy::Origin>();
@@ -654,40 +625,6 @@ extern "C" {
 	void DECL mud_SparseHandle_toy_Solid__destroy(mud::SparseHandle<toy::Solid>* self) {
 		delete self;
 	}
-	// Spatial
-	mud::Type* DECL toy_Spatial__type() {
-		return &mud::type<toy::Spatial>();
-	}
-	toy::Spatial* DECL toy_Spatial__construct_0() {
-		return new toy::Spatial();
-	}
-	toy::Spatial* DECL toy_Spatial__construct_3(toy::HSpatial* parent, const mud::vec3* position, const mud::quat* rotation) {
-		return new toy::Spatial(*parent, *position, *rotation);
-	}
-	toy::Spatial* DECL toy_Spatial__construct_4(toy::World* world, toy::HSpatial* parent, const mud::vec3* position, const mud::quat* rotation) {
-		return new toy::Spatial(*world, *parent, *position, *rotation);
-	}
-	void DECL toy_Spatial_set_position_1(toy::Spatial* self, const mud::vec3* position) {
-		self->set_position(*position);
-	}
-	void DECL toy_Spatial_set_rotation_1(toy::Spatial* self, const mud::quat* rotation) {
-		self->set_rotation(*rotation);
-	}
-	toy::World* DECL toy_Spatial__get_world(toy::Spatial* self) {
-		return self->m_world;
-	}
-	void DECL toy_Spatial__set_world(toy::Spatial* self, toy::World* value) {
-		self->m_world = value;
-	}
-	toy::HSpatial* DECL toy_Spatial__get_parent(toy::Spatial* self) {
-		return &self->m_parent;
-	}
-	void DECL toy_Spatial__set_parent(toy::Spatial* self, toy::HSpatial* value) {
-		self->m_parent = *value;
-	}
-	void DECL toy_Spatial__destroy(toy::Spatial* self) {
-		delete self;
-	}
 	// User
 	mud::Type* DECL toy_User__type() {
 		return &mud::type<toy::User>();
@@ -809,6 +746,35 @@ extern "C" {
 	void DECL toy_BulletWorld__destroy(toy::BulletWorld* self) {
 		delete self;
 	}
+	// DefaultWorld
+	mud::Type* DECL toy_DefaultWorld__type() {
+		return &mud::type<toy::DefaultWorld>();
+	}
+	toy::DefaultWorld* DECL toy_DefaultWorld__construct_2(const char* name, mud::JobSystem* job_system) {
+		return new toy::DefaultWorld(name, *job_system);
+	}
+	toy::World* DECL toy_DefaultWorld__get_world(toy::DefaultWorld* self) {
+		return &self->m_world;
+	}
+	toy::BulletWorld* DECL toy_DefaultWorld__get_bullet_world(toy::DefaultWorld* self) {
+		return &self->m_bullet_world;
+	}
+	toy::Navmesh* DECL toy_DefaultWorld__get_navmesh(toy::DefaultWorld* self) {
+		return &self->m_navmesh;
+	}
+	void DECL toy_DefaultWorld__destroy(toy::DefaultWorld* self) {
+		delete self;
+	}
+	// NavmeshShape
+	mud::Type* DECL toy_NavmeshShape__type() {
+		return &mud::type<toy::NavmeshShape>();
+	}
+	toy::NavmeshShape* DECL toy_NavmeshShape__construct_1(toy::Navmesh* navmesh) {
+		return new toy::NavmeshShape(*navmesh);
+	}
+	void DECL toy_NavmeshShape__destroy(toy::NavmeshShape* self) {
+		delete self;
+	}
 	// PhysicScope
 	mud::Type* DECL toy_PhysicScope__type() {
 		return &mud::type<toy::PhysicScope>();
@@ -867,6 +833,40 @@ extern "C" {
 		return new toy::SoundMedium();
 	}
 	void DECL toy_SoundMedium__destroy(toy::SoundMedium* self) {
+		delete self;
+	}
+	// Spatial
+	mud::Type* DECL toy_Spatial__type() {
+		return &mud::type<toy::Spatial>();
+	}
+	toy::Spatial* DECL toy_Spatial__construct_0() {
+		return new toy::Spatial();
+	}
+	toy::Spatial* DECL toy_Spatial__construct_3(toy::HSpatial* parent, const mud::vec3* position, const mud::quat* rotation) {
+		return new toy::Spatial(*parent, *position, *rotation);
+	}
+	toy::Spatial* DECL toy_Spatial__construct_4(toy::World* world, toy::HSpatial* parent, const mud::vec3* position, const mud::quat* rotation) {
+		return new toy::Spatial(*world, *parent, *position, *rotation);
+	}
+	void DECL toy_Spatial_set_position_1(toy::Spatial* self, const mud::vec3* position) {
+		self->set_position(*position);
+	}
+	void DECL toy_Spatial_set_rotation_1(toy::Spatial* self, const mud::quat* rotation) {
+		self->set_rotation(*rotation);
+	}
+	toy::World* DECL toy_Spatial__get_world(toy::Spatial* self) {
+		return self->m_world;
+	}
+	void DECL toy_Spatial__set_world(toy::Spatial* self, toy::World* value) {
+		self->m_world = value;
+	}
+	toy::HSpatial* DECL toy_Spatial__get_parent(toy::Spatial* self) {
+		return &self->m_parent;
+	}
+	void DECL toy_Spatial__set_parent(toy::Spatial* self, toy::HSpatial* value) {
+		self->m_parent = *value;
+	}
+	void DECL toy_Spatial__destroy(toy::Spatial* self) {
 		delete self;
 	}
 	// VisualMedium

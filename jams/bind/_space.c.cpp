@@ -164,25 +164,6 @@ extern "C" {
 	void DECL Commander__destroy(Commander* self) {
 		delete self;
 	}
-	// CommanderBrush
-	mud::Type* DECL CommanderBrush__type() {
-		return &mud::type<CommanderBrush>();
-	}
-	Commander* DECL CommanderBrush__get_commander(CommanderBrush* self) {
-		return self->m_commander;
-	}
-	void DECL CommanderBrush__set_commander(CommanderBrush* self, Commander* value) {
-		self->m_commander = value;
-	}
-	float DECL CommanderBrush__get_radius(CommanderBrush* self) {
-		return self->m_radius;
-	}
-	void DECL CommanderBrush__set_radius(CommanderBrush* self, float value) {
-		self->m_radius = value;
-	}
-	void DECL CommanderBrush__destroy(CommanderBrush* self) {
-		delete self;
-	}
 	// ComponentHandle<Fleet>
 	mud::Type* DECL mud_ComponentHandle_Fleet__type() {
 		return &mud::type<mud::ComponentHandle<Fleet>>();
@@ -681,22 +662,6 @@ extern "C" {
 	void DECL Turn__destroy(Turn* self) {
 		delete self;
 	}
-	// Universe
-	mud::Type* DECL Universe__type() {
-		return &mud::type<Universe>();
-	}
-	Universe* DECL Universe__construct_2(const char* name, mud::JobSystem* job_system) {
-		return new Universe(name, *job_system);
-	}
-	toy::World* DECL Universe__get_world(Universe* self) {
-		return &self->m_world;
-	}
-	toy::BulletWorld* DECL Universe__get_bullet_world(Universe* self) {
-		return &self->m_bullet_world;
-	}
-	void DECL Universe__destroy(Universe* self) {
-		delete self;
-	}
 	// BuildingSchema
 	mud::Type* DECL BuildingSchema__type() {
 		return &mud::type<BuildingSchema>();
@@ -705,6 +670,25 @@ extern "C" {
 		return new BuildingSchema();
 	}
 	void DECL BuildingSchema__destroy(BuildingSchema* self) {
+		delete self;
+	}
+	// CommanderBrush
+	mud::Type* DECL CommanderBrush__type() {
+		return &mud::type<CommanderBrush>();
+	}
+	Commander* DECL CommanderBrush__get_commander(CommanderBrush* self) {
+		return self->m_commander;
+	}
+	void DECL CommanderBrush__set_commander(CommanderBrush* self, Commander* value) {
+		self->m_commander = value;
+	}
+	float DECL CommanderBrush__get_radius(CommanderBrush* self) {
+		return self->m_radius;
+	}
+	void DECL CommanderBrush__set_radius(CommanderBrush* self, float value) {
+		self->m_radius = value;
+	}
+	void DECL CommanderBrush__destroy(CommanderBrush* self) {
 		delete self;
 	}
 	// PlanetaryCombat
@@ -801,6 +785,22 @@ extern "C" {
 		self->m_coord = *value;
 	}
 	void DECL SpatialCombat__destroy(SpatialCombat* self) {
+		delete self;
+	}
+	// Universe
+	mud::Type* DECL Universe__type() {
+		return &mud::type<Universe>();
+	}
+	Universe* DECL Universe__construct_2(const char* name, mud::JobSystem* job_system) {
+		return new Universe(name, *job_system);
+	}
+	toy::World* DECL Universe__get_world(Universe* self) {
+		return &self->m_world;
+	}
+	toy::BulletWorld* DECL Universe__get_bullet_world(Universe* self) {
+		return &self->m_bullet_world;
+	}
+	void DECL Universe__destroy(Universe* self) {
 		delete self;
 	}
 	HStar* DECL generate_system_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {

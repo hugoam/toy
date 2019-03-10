@@ -336,6 +336,8 @@ namespace mud
 		Type& t = type<TileWorld>();
 		static Meta meta = { t, &namspc({}), "TileWorld", sizeof(TileWorld), TypeClass::Object };
 		// bases
+		static Type* bases[] = { &type<mud::Complex>() };
+		static size_t bases_offsets[] = { base_offset<TileWorld, mud::Complex>() };
 		// defaults
 		// constructors
 		static Constructor constructors[] = {
@@ -350,7 +352,7 @@ namespace mud
 		};
 		// methods
 		// static members
-		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
+		static Class cls = { t, bases, bases_offsets, constructors, {}, members, {}, {}, };
 	}
 	
 	{

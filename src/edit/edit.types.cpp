@@ -17,12 +17,12 @@ namespace mud
     template <> TOY_EDIT_EXPORT Type& type<toy::Clone>() { static Type ty("Clone", sizeof(toy::Clone)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Cut>() { static Type ty("Cut", sizeof(toy::Cut)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Edit>() { static Type ty("Edit", sizeof(toy::Edit)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::Editor>() { static Type ty("Editor", sizeof(toy::Editor)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::GraphicsDebug>() { static Type ty("GraphicsDebug", sizeof(toy::GraphicsDebug)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Paste>() { static Type ty("Paste", sizeof(toy::Paste)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::PlayTool>() { static Type ty("PlayTool", sizeof(toy::PlayTool)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::RunTool>() { static Type ty("RunTool", sizeof(toy::RunTool)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Toolbelt>() { static Type ty("Toolbelt", sizeof(toy::Toolbelt)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Toolbox>() { static Type ty("Toolbox", sizeof(toy::Toolbox)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::DynamicToolbox>() { static Type ty("DynamicToolbox", type<toy::Toolbox>(), sizeof(toy::DynamicToolbox)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::Editor>() { static Type ty("Editor", type<mud::EditContext>(), sizeof(toy::Editor)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::PlayTool>() { static Type ty("PlayTool", type<mud::Tool>(), sizeof(toy::PlayTool)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::RunTool>() { static Type ty("RunTool", type<mud::Tool>(), sizeof(toy::RunTool)); return ty; }
 }

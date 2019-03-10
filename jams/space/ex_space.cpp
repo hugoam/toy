@@ -535,7 +535,7 @@ void GalaxyGrid::update_slots(uvec2 coord)
 		fleets[fleet->m_commander].push_back(fleet);
 	}
 
-	float theta = 2.f * c_pi / float(fleets.size());
+	float theta = c_2pi / float(fleets.size());
 	float angle = 0.f;
 	for(auto& commander_fleets : fleets)
 	{
@@ -633,11 +633,11 @@ void Star::next_frame(Spatial& spatial, size_t tick, size_t delta)
 {
 	UNUSED(spatial); UNUSED(tick); UNUSED(delta);
 	float speed = 0.001f;
-	m_visu.m_period = fmod(m_visu.m_period + delta * speed, 2 * c_pi);
+	m_visu.m_period = fmod(m_visu.m_period + delta * speed, c_2pi);
 
 	for(VisuPlanet& planet : m_visu.m_planets)
 	{
-		planet.m_period = fmod(planet.m_period + delta * speed * planet.m_speed, 2 * c_pi);
+		planet.m_period = fmod(planet.m_period + delta * speed * planet.m_speed, c_2pi);
 	}
 }
 
@@ -703,7 +703,7 @@ Galaxy& Fleet::galaxy() { return *m_galaxy; }
 void update_visu_fleet(VisuFleet& visu, size_t tick, size_t delta)
 {
 	float speed = 0.001f;
-	visu.m_angle = fmod(visu.m_angle + delta * speed, 2 * c_pi);
+	visu.m_angle = fmod(visu.m_angle + delta * speed, c_2pi);
 	visu.m_offset = sin(tick * speed);
 	visu.m_dilate.z = remap_trig(visu.m_offset, 0.7f, 1.f);
 }
@@ -1024,7 +1024,7 @@ Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 
 	update_visu_fleet(fleet, tick, delta);
 
-	float angle = fmod(float(clock.read()) / 50.f, 2.f * c_pi);
+	float angle = fmod(float(clock.read()) / 50.f, c_2pi);
 	Gnode& node = gfx::node(scene, {}, vec3(0.f), angle_axis(angle, Y3), vec3(1.f));
 	paint_fleet_ships(node, fleet, 1.f, 0.1f);
 	

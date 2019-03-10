@@ -33,7 +33,6 @@ namespace mud
     template <> _SPACE_EXPORT Type& type<CombatFleet>() { static Type ty("CombatFleet", sizeof(CombatFleet)); return ty; }
     template <> _SPACE_EXPORT Type& type<CombatStar>() { static Type ty("CombatStar", sizeof(CombatStar)); return ty; }
     template <> _SPACE_EXPORT Type& type<Commander>() { static Type ty("Commander", sizeof(Commander)); return ty; }
-    template <> _SPACE_EXPORT Type& type<CommanderBrush>() { static Type ty("CommanderBrush", sizeof(CommanderBrush)); return ty; }
     template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Fleet>>() { static Type ty("ComponentHandle<Fleet>", sizeof(mud::ComponentHandle<Fleet>)); return ty; }
     template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Galaxy>>() { static Type ty("ComponentHandle<Galaxy>", sizeof(mud::ComponentHandle<Galaxy>)); return ty; }
     template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Star>>() { static Type ty("ComponentHandle<Star>", sizeof(mud::ComponentHandle<Star>)); return ty; }
@@ -49,12 +48,13 @@ namespace mud
     template <> _SPACE_EXPORT Type& type<Star>() { static Type ty("Star", sizeof(Star)); return ty; }
     template <> _SPACE_EXPORT Type& type<TechDomain>() { static Type ty("TechDomain", sizeof(TechDomain)); return ty; }
     template <> _SPACE_EXPORT Type& type<Turn>() { static Type ty("Turn", sizeof(Turn)); return ty; }
-    template <> _SPACE_EXPORT Type& type<Universe>() { static Type ty("Universe", sizeof(Universe)); return ty; }
     template <> _SPACE_EXPORT Type& type<BuildingSchema>() { static Type ty("BuildingSchema", type<Schema>(), sizeof(BuildingSchema)); return ty; }
+    template <> _SPACE_EXPORT Type& type<CommanderBrush>() { static Type ty("CommanderBrush", type<mud::Brush>(), sizeof(CommanderBrush)); return ty; }
     template <> _SPACE_EXPORT Type& type<PlanetaryCombat>() { static Type ty("PlanetaryCombat", type<Combat>(), sizeof(PlanetaryCombat)); return ty; }
     template <> _SPACE_EXPORT Type& type<ShipComponent>() { static Type ty("ShipComponent", type<Schema>(), sizeof(ShipComponent)); return ty; }
     template <> _SPACE_EXPORT Type& type<ShipEngine>() { static Type ty("ShipEngine", type<Schema>(), sizeof(ShipEngine)); return ty; }
     template <> _SPACE_EXPORT Type& type<ShipHull>() { static Type ty("ShipHull", type<Schema>(), sizeof(ShipHull)); return ty; }
     template <> _SPACE_EXPORT Type& type<ShipSchema>() { static Type ty("ShipSchema", type<Schema>(), sizeof(ShipSchema)); return ty; }
     template <> _SPACE_EXPORT Type& type<SpatialCombat>() { static Type ty("SpatialCombat", type<Combat>(), sizeof(SpatialCombat)); return ty; }
+    template <> _SPACE_EXPORT Type& type<Universe>() { static Type ty("Universe", type<mud::Complex>(), sizeof(Universe)); return ty; }
 }

@@ -12,7 +12,7 @@ void fill_star(VisuStar& visu, Star& star)
 	for(size_t i = 0; i < num_planets; ++i)
 	{
 		float distance = randf(0.f, 1.f);
-		float speed = 1.f / (2.f * c_pi * distance) * 10.f;
+		float speed = 1.f / (c_2pi * distance) * 10.f;
 		float offset = randf(0.f, 2.f * float(c_pi));
 		float aniso = randf(0.8f, 1.2f);
 		float pitch = randf(0.8f * float(c_pi), 1.2f * float(c_pi));
@@ -90,7 +90,7 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 {
 	static Clock clock;
 
-	float angle = fmod(float(clock.read()), 2.f * c_pi);
+	float angle = fmod(float(clock.read()), c_2pi);
 	float length = min(abs(sec(angle)), abs(csc(angle))) * range;
 	vec3 end = rotate(X3 * length, angle, Y3);
 

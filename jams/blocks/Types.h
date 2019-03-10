@@ -42,7 +42,6 @@ namespace mud
     // Exported types
     
     
-    export_ template <> _BLOCKS_EXPORT Type& type<BlockWorld>();
     export_ template <> _BLOCKS_EXPORT Type& type<Camp>();
     export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Camp>>();
     export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Shield>>();
@@ -53,4 +52,5 @@ namespace mud
     export_ template <> _BLOCKS_EXPORT Type& type<Shield>();
     export_ template <> _BLOCKS_EXPORT Type& type<Slug>();
     export_ template <> _BLOCKS_EXPORT Type& type<Tank>();
+    export_ template <> _BLOCKS_EXPORT Type& type<BlockWorld>();
 }

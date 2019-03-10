@@ -62,7 +62,6 @@ namespace mud
     export_ template <> _SPACE_EXPORT Type& type<CombatFleet>();
     export_ template <> _SPACE_EXPORT Type& type<CombatStar>();
     export_ template <> _SPACE_EXPORT Type& type<Commander>();
-    export_ template <> _SPACE_EXPORT Type& type<CommanderBrush>();
     export_ template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Fleet>>();
     export_ template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Galaxy>>();
     export_ template <> _SPACE_EXPORT Type& type<mud::ComponentHandle<Star>>();
@@ -78,12 +77,13 @@ namespace mud
     export_ template <> _SPACE_EXPORT Type& type<Star>();
     export_ template <> _SPACE_EXPORT Type& type<TechDomain>();
     export_ template <> _SPACE_EXPORT Type& type<Turn>();
-    export_ template <> _SPACE_EXPORT Type& type<Universe>();
     export_ template <> _SPACE_EXPORT Type& type<BuildingSchema>();
+    export_ template <> _SPACE_EXPORT Type& type<CommanderBrush>();
     export_ template <> _SPACE_EXPORT Type& type<PlanetaryCombat>();
     export_ template <> _SPACE_EXPORT Type& type<ShipComponent>();
     export_ template <> _SPACE_EXPORT Type& type<ShipEngine>();
     export_ template <> _SPACE_EXPORT Type& type<ShipHull>();
     export_ template <> _SPACE_EXPORT Type& type<ShipSchema>();
     export_ template <> _SPACE_EXPORT Type& type<SpatialCombat>();
+    export_ template <> _SPACE_EXPORT Type& type<Universe>();
 }

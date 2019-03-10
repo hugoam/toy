@@ -42,7 +42,6 @@ module ._blocks;
 
 using namespace mud;
 
-void BlockWorld__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) BlockWorld( *static_cast<stl::string*>(args[0]), *static_cast<mud::JobSystem*>(args[1]) ); }
 void Camp__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) Camp(  ); }
 void Camp__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) Camp( *static_cast<toy::HSpatial*>(args[0]), *static_cast<mud::vec3*>(args[1]), *static_cast<Faction*>(args[2]) ); }
 void mud_ComponentHandle_Camp__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::ComponentHandle<Camp>(  ); }
@@ -58,6 +57,7 @@ void Shield__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::p
 void Shield__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) Shield( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HEmitter*>(args[1]), *static_cast<Faction*>(args[2]), *static_cast<float*>(args[3]) ); }
 void Tank__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) Tank(  ); }
 void Tank__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) Tank( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HMovable*>(args[1]), *static_cast<toy::HEmitter*>(args[2]), *static_cast<toy::HReceptor*>(args[3]), *static_cast<Faction*>(args[4]) ); }
+void BlockWorld__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) BlockWorld( *static_cast<stl::string*>(args[0]), *static_cast<mud::JobSystem*>(args[1]) ); }
 
 namespace mud
 {
@@ -71,32 +71,6 @@ namespace mud
 	
 	// Sequences
 	
-	// BlockWorld
-	{
-		Type& t = type<BlockWorld>();
-		static Meta meta = { t, &namspc({}), "BlockWorld", sizeof(BlockWorld), TypeClass::Object };
-		// bases
-		// defaults
-		static mud::uvec3 block_subdiv_default = uvec3(20,4,20);
-		// constructors
-		static Constructor constructors[] = {
-			{ t, BlockWorld__construct_0, { { "name", type<stl::string>(),  }, { "job_system", type<mud::JobSystem>(),  } } }
-		};
-		// copy constructor
-		// members
-		static Member members[] = {
-			{ t, offsetof(BlockWorld, m_world), type<toy::World>(), "world", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(BlockWorld, m_bullet_world), type<toy::BulletWorld>(), "bullet_world", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr },
-			{ t, offsetof(BlockWorld, m_navmesh), type<toy::Navmesh>(), "navmesh", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr },
-			{ t, offsetof(BlockWorld, m_block_subdiv), type<mud::uvec3>(), "block_subdiv", &block_subdiv_default, Member::Value, nullptr },
-			{ t, offsetof(BlockWorld, m_tile_scale), type<mud::vec3>(), "tile_scale", nullptr, Member::Value, nullptr },
-			{ t, offsetof(BlockWorld, m_block_size), type<mud::vec3>(), "block_size", nullptr, Member::Value, nullptr },
-			{ t, offsetof(BlockWorld, m_world_size), type<mud::vec3>(), "world_size", nullptr, Member::Value, nullptr }
-		};
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
-	}
 	// Camp
 	{
 		Type& t = type<Camp>();
@@ -286,6 +260,34 @@ namespace mud
 		// static members
 		static Class cls = { t, {}, {}, constructors, {}, {}, {}, {}, };
 	}
+	// BlockWorld
+	{
+		Type& t = type<BlockWorld>();
+		static Meta meta = { t, &namspc({}), "BlockWorld", sizeof(BlockWorld), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Complex>() };
+		static size_t bases_offsets[] = { base_offset<BlockWorld, mud::Complex>() };
+		// defaults
+		static mud::uvec3 block_subdiv_default = uvec3(20,4,20);
+		// constructors
+		static Constructor constructors[] = {
+			{ t, BlockWorld__construct_0, { { "name", type<stl::string>(),  }, { "job_system", type<mud::JobSystem>(),  } } }
+		};
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(BlockWorld, m_world), type<toy::World>(), "world", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(BlockWorld, m_bullet_world), type<toy::BulletWorld>(), "bullet_world", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr },
+			{ t, offsetof(BlockWorld, m_navmesh), type<toy::Navmesh>(), "navmesh", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr },
+			{ t, offsetof(BlockWorld, m_block_subdiv), type<mud::uvec3>(), "block_subdiv", &block_subdiv_default, Member::Value, nullptr },
+			{ t, offsetof(BlockWorld, m_tile_scale), type<mud::vec3>(), "tile_scale", nullptr, Member::Value, nullptr },
+			{ t, offsetof(BlockWorld, m_block_size), type<mud::vec3>(), "block_size", nullptr, Member::Value, nullptr },
+			{ t, offsetof(BlockWorld, m_world_size), type<mud::vec3>(), "world_size", nullptr, Member::Value, nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, {}, members, {}, {}, };
+	}
 	
 	{
 		Type& t = type<mud::ComponentHandle<Camp>>();
@@ -308,7 +310,6 @@ namespace mud
 		m.m_aliases.push_back(&alias);
 	}
 	
-		m.m_types.push_back(&type<BlockWorld>());
 		m.m_types.push_back(&type<Camp>());
 		m.m_types.push_back(&type<mud::ComponentHandle<Camp>>());
 		m.m_types.push_back(&type<mud::ComponentHandle<Shield>>());
@@ -323,6 +324,7 @@ namespace mud
 		m.m_types.push_back(&type<Shield>());
 		m.m_types.push_back(&type<Slug>());
 		m.m_types.push_back(&type<Tank>());
+		m.m_types.push_back(&type<BlockWorld>());
 	}
 }
 

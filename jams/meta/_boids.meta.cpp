@@ -274,7 +274,7 @@ namespace mud
 		m.m_types.push_back(&type<boids::Position>());
 		m.m_types.push_back(&type<boids::Rotation>());
 		m.m_types.push_back(&type<boids::Transform4>());
-		//m.m_types.push_back(&type<boids::vec3>());
+		m.m_types.push_back(&type<boids::vec3>());
 	}
 }
 

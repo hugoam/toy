@@ -13,7 +13,6 @@ namespace mud
     // Exported types
     
     
-    template <> _BLOCKS_EXPORT Type& type<BlockWorld>() { static Type ty("BlockWorld", sizeof(BlockWorld)); return ty; }
     template <> _BLOCKS_EXPORT Type& type<Camp>() { static Type ty("Camp", sizeof(Camp)); return ty; }
     template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Camp>>() { static Type ty("ComponentHandle<Camp>", sizeof(mud::ComponentHandle<Camp>)); return ty; }
     template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Shield>>() { static Type ty("ComponentHandle<Shield>", sizeof(mud::ComponentHandle<Shield>)); return ty; }
@@ -24,4 +23,5 @@ namespace mud
     template <> _BLOCKS_EXPORT Type& type<Shield>() { static Type ty("Shield", sizeof(Shield)); return ty; }
     template <> _BLOCKS_EXPORT Type& type<Slug>() { static Type ty("Slug", sizeof(Slug)); return ty; }
     template <> _BLOCKS_EXPORT Type& type<Tank>() { static Type ty("Tank", sizeof(Tank)); return ty; }
+    template <> _BLOCKS_EXPORT Type& type<BlockWorld>() { static Type ty("BlockWorld", type<mud::Complex>(), sizeof(BlockWorld)); return ty; }
 }

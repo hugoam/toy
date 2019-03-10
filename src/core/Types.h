@@ -48,7 +48,6 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::WorldPage>>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::ComponentPool>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Core>();
-    export_ template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::DetourPath>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Emitter>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::EntityScript>();
@@ -56,7 +55,6 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Movable>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Navblock>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Navmesh>();
-    export_ template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Origin>();
     export_ template <> TOY_CORE_EXPORT Type& type<mud::OwnedHandle<toy::Collider>>();
     export_ template <> TOY_CORE_EXPORT Type& type<mud::OwnedHandle<toy::Solid>>();
@@ -67,7 +65,6 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::SolidImpl>();
     export_ template <> TOY_CORE_EXPORT Type& type<mud::SparseHandle<toy::Collider>>();
     export_ template <> TOY_CORE_EXPORT Type& type<mud::SparseHandle<toy::Solid>>();
-    export_ template <> TOY_CORE_EXPORT Type& type<toy::Spatial>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::User>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Waypoint>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::World>();
@@ -76,12 +73,15 @@ namespace mud
     export_ template <> TOY_CORE_EXPORT Type& type<toy::BulletCollider>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::BulletSolid>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::BulletWorld>();
+    export_ template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>();
+    export_ template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::EmitterScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::ReceptorScope>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::SolidMedium>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::SoundMedium>();
+    export_ template <> TOY_CORE_EXPORT Type& type<toy::Spatial>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::VisualMedium>();
     export_ template <> TOY_CORE_EXPORT Type& type<toy::WorldMedium>();
 }

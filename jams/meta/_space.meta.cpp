@@ -123,7 +123,6 @@ void TechDomain__construct_0(void* ref, span<void*> args) { UNUSED(args); new(st
 void TechDomain__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) TechDomain((*static_cast<TechDomain*>(other))); }
 void Turn__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) Turn(  ); }
 void Turn__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) Turn((*static_cast<Turn*>(other))); }
-void Universe__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) Universe( *static_cast<stl::string*>(args[0]), *static_cast<mud::JobSystem*>(args[1]) ); }
 void BuildingSchema__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) BuildingSchema(  ); }
 void BuildingSchema__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) BuildingSchema((*static_cast<BuildingSchema*>(other))); }
 void PlanetaryCombat__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) PlanetaryCombat(  ); }
@@ -138,6 +137,7 @@ void ShipSchema__construct_0(void* ref, span<void*> args) { UNUSED(args); new(st
 void ShipSchema__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) ShipSchema((*static_cast<ShipSchema*>(other))); }
 void SpatialCombat__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) SpatialCombat(  ); }
 void SpatialCombat__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) SpatialCombat((*static_cast<SpatialCombat*>(other))); }
+void Universe__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) Universe( *static_cast<stl::string*>(args[0]), *static_cast<mud::JobSystem*>(args[1]) ); }
 void generate_system_0(span<void*> args, void*& result) { (*static_cast<mud::ComponentHandle<Star>*>(result)) = generate_system(*static_cast<Galaxy*>(args[0]), *static_cast<mud::uvec3*>(args[1]), *static_cast<mud::vec3*>(args[2])); }
 void generate_fleet_1(span<void*> args, void*& result) { (*static_cast<mud::ComponentHandle<Fleet>*>(result)) = generate_fleet(*static_cast<Galaxy*>(args[0]), *static_cast<mud::uvec3*>(args[1]), *static_cast<mud::vec3*>(args[2])); }
 void generate_commander_2(span<void*> args, void*& result) { result = generate_commander(*static_cast<Galaxy*>(args[0]), *static_cast<Star*>(args[1])); }
@@ -449,23 +449,6 @@ namespace mud
 		// methods
 		// static members
 		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
-	}
-	// CommanderBrush
-	{
-		Type& t = type<CommanderBrush>();
-		static Meta meta = { t, &namspc({}), "CommanderBrush", sizeof(CommanderBrush), TypeClass::Object };
-		// bases
-		// defaults
-		// constructors
-		// copy constructor
-		// members
-		static Member members[] = {
-			{ t, offsetof(CommanderBrush, m_commander), type<Commander>(), "commander", nullptr, Member::Flags(Member::Pointer|Member::Link), nullptr },
-			{ t, offsetof(CommanderBrush, m_radius), type<float>(), "radius", nullptr, Member::Value, nullptr }
-		};
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, {}, {}, members, {}, {}, };
 	}
 	// mud::ComponentHandle<Fleet>
 	{
@@ -850,26 +833,6 @@ namespace mud
 		// static members
 		static Class cls = { t, {}, {}, constructors, copy_constructor, {}, {}, {}, };
 	}
-	// Universe
-	{
-		Type& t = type<Universe>();
-		static Meta meta = { t, &namspc({}), "Universe", sizeof(Universe), TypeClass::Object };
-		// bases
-		// defaults
-		// constructors
-		static Constructor constructors[] = {
-			{ t, Universe__construct_0, { { "name", type<stl::string>(),  }, { "job_system", type<mud::JobSystem>(),  } } }
-		};
-		// copy constructor
-		// members
-		static Member members[] = {
-			{ t, offsetof(Universe, m_world), type<toy::World>(), "world", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(Universe, m_bullet_world), type<toy::BulletWorld>(), "bullet_world", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr }
-		};
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
-	}
 	// BuildingSchema
 	{
 		Type& t = type<BuildingSchema>();
@@ -890,6 +853,25 @@ namespace mud
 		// methods
 		// static members
 		static Class cls = { t, bases, bases_offsets, constructors, copy_constructor, {}, {}, {}, };
+	}
+	// CommanderBrush
+	{
+		Type& t = type<CommanderBrush>();
+		static Meta meta = { t, &namspc({}), "CommanderBrush", sizeof(CommanderBrush), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Brush>() };
+		static size_t bases_offsets[] = { base_offset<CommanderBrush, mud::Brush>() };
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(CommanderBrush, m_commander), type<Commander>(), "commander", nullptr, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(CommanderBrush, m_radius), type<float>(), "radius", nullptr, Member::Value, nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, {}, {}, members, {}, {}, };
 	}
 	// PlanetaryCombat
 	{
@@ -1033,6 +1015,28 @@ namespace mud
 		// static members
 		static Class cls = { t, bases, bases_offsets, constructors, copy_constructor, members, {}, {}, };
 	}
+	// Universe
+	{
+		Type& t = type<Universe>();
+		static Meta meta = { t, &namspc({}), "Universe", sizeof(Universe), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Complex>() };
+		static size_t bases_offsets[] = { base_offset<Universe, mud::Complex>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, Universe__construct_0, { { "name", type<stl::string>(),  }, { "job_system", type<mud::JobSystem>(),  } } }
+		};
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(Universe, m_world), type<toy::World>(), "world", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(Universe, m_bullet_world), type<toy::BulletWorld>(), "bullet_world", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, {}, members, {}, {}, };
+	}
 	
 	{
 		Type& t = type<mud::ComponentHandle<Galaxy>>();
@@ -1055,7 +1059,6 @@ namespace mud
 		m.m_types.push_back(&type<CombatStar>());
 		m.m_types.push_back(&type<CombatType>());
 		m.m_types.push_back(&type<Commander>());
-		m.m_types.push_back(&type<CommanderBrush>());
 		m.m_types.push_back(&type<mud::ComponentHandle<Fleet>>());
 		m.m_types.push_back(&type<mud::ComponentHandle<Galaxy>>());
 		m.m_types.push_back(&type<mud::ComponentHandle<Star>>());
@@ -1084,19 +1087,20 @@ namespace mud
 		m.m_types.push_back(&type<TechDomain>());
 		m.m_types.push_back(&type<Technology>());
 		m.m_types.push_back(&type<Turn>());
-		m.m_types.push_back(&type<Universe>());
 		m.m_types.push_back(&type<WeaponType>());
 		m.m_types.push_back(&type<stl::vector<CombatFleet>>());
 		m.m_types.push_back(&type<stl::vector<Commander*>>());
 		m.m_types.push_back(&type<stl::vector<HFleet>>());
 		m.m_types.push_back(&type<stl::vector<HStar>>());
 		m.m_types.push_back(&type<BuildingSchema>());
+		m.m_types.push_back(&type<CommanderBrush>());
 		m.m_types.push_back(&type<PlanetaryCombat>());
 		m.m_types.push_back(&type<ShipComponent>());
 		m.m_types.push_back(&type<ShipEngine>());
 		m.m_types.push_back(&type<ShipHull>());
 		m.m_types.push_back(&type<ShipSchema>());
 		m.m_types.push_back(&type<SpatialCombat>());
+		m.m_types.push_back(&type<Universe>());
 		{
 			static Function f = { &namspc({}), "generate_system", nullptr, generate_system_0, { { "galaxy", type<Galaxy>(),  }, { "coord", type<mud::uvec3>(),  }, { "position", type<mud::vec3>(),  } }, { &type<HStar>(), QualType::None } };
 			m.m_functions.push_back(&f);

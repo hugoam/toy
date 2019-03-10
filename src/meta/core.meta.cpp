@@ -61,7 +61,6 @@ void mud_ComponentHandle_toy_Waypoint__construct_0(void* ref, span<void*> args) 
 void mud_ComponentHandle_toy_Waypoint__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) mud::ComponentHandle<toy::Waypoint>((*static_cast<mud::ComponentHandle<toy::Waypoint>*>(other))); }
 void mud_ComponentHandle_toy_WorldPage__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::ComponentHandle<toy::WorldPage>(  ); }
 void mud_ComponentHandle_toy_WorldPage__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) mud::ComponentHandle<toy::WorldPage>((*static_cast<mud::ComponentHandle<toy::WorldPage>*>(other))); }
-void toy_DefaultWorld__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::DefaultWorld( *static_cast<stl::string*>(args[0]), *static_cast<mud::JobSystem*>(args[1]) ); }
 void toy_Emitter__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Emitter(  ); }
 void toy_Emitter__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Emitter( *static_cast<toy::HSpatial*>(args[0]) ); }
 void toy_EntityScript__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::EntityScript(  ); }
@@ -76,7 +75,6 @@ void toy_Navblock__construct_0(void* ref, span<void*> args) { UNUSED(args); new(
 void toy_Navblock__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Navblock( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HWorldPage*>(args[1]), *static_cast<toy::Navmesh*>(args[2]) ); }
 void toy_Navmesh__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Navmesh( *static_cast<toy::World*>(args[0]) ); }
 void* toy_Navmesh__get_world(void* object) { return &(*static_cast<toy::Navmesh*>(object)).m_world; }
-void toy_NavmeshShape__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::NavmeshShape( *static_cast<toy::Navmesh*>(args[0]) ); }
 void toy_Origin__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Origin(  ); }
 void mud_OwnedHandle_toy_Collider__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::OwnedHandle<toy::Collider>(  ); }
 void mud_OwnedHandle_toy_Solid__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::OwnedHandle<toy::Solid>(  ); }
@@ -97,11 +95,6 @@ void mud_SparseHandle_toy_Collider__construct_0(void* ref, span<void*> args) { U
 void mud_SparseHandle_toy_Collider__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) mud::SparseHandle<toy::Collider>((*static_cast<mud::SparseHandle<toy::Collider>*>(other))); }
 void mud_SparseHandle_toy_Solid__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) mud::SparseHandle<toy::Solid>(  ); }
 void mud_SparseHandle_toy_Solid__copy_construct(void* ref, void* other) { new(stl::placeholder(), ref) mud::SparseHandle<toy::Solid>((*static_cast<mud::SparseHandle<toy::Solid>*>(other))); }
-void toy_Spatial__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Spatial(  ); }
-void toy_Spatial__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Spatial( *static_cast<toy::HSpatial*>(args[0]), *static_cast<mud::vec3*>(args[1]), *static_cast<mud::quat*>(args[2]) ); }
-void toy_Spatial__construct_2(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Spatial( *static_cast<toy::World*>(args[0]), *static_cast<toy::HSpatial*>(args[1]), *static_cast<mud::vec3*>(args[2]), *static_cast<mud::quat*>(args[3]) ); }
-void toy_Spatial_set_position(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Spatial*>(object)).set_position(*static_cast<mud::vec3*>(args[0])); }
-void toy_Spatial_set_rotation(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Spatial*>(object)).set_rotation(*static_cast<mud::quat*>(args[0])); }
 void toy_Waypoint__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Waypoint(  ); }
 void toy_World__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::World( *static_cast<uint32_t*>(args[0]), *static_cast<mud::Complex*>(args[1]), *static_cast<stl::string*>(args[2]), *static_cast<mud::JobSystem*>(args[3]) ); }
 void* toy_World__get_complex(void* object) { return &(*static_cast<toy::World*>(object)).m_complex; }
@@ -113,9 +106,16 @@ void toy_WorldPage_update_geometry(void* object, span<void*> args, void*& result
 void toy_WorldPage_ground_point(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::WorldPage*>(object)).ground_point(*static_cast<mud::vec3*>(args[0]), *static_cast<bool*>(args[1]), *static_cast<mud::vec3*>(args[2])); }
 void toy_WorldPage_raycast_ground(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::WorldPage*>(object)).raycast_ground(*static_cast<mud::vec3*>(args[0]), *static_cast<mud::vec3*>(args[1]), *static_cast<mud::vec3*>(args[2])); }
 void toy_BulletWorld__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::BulletWorld( *static_cast<toy::World*>(args[0]) ); }
+void toy_DefaultWorld__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::DefaultWorld( *static_cast<stl::string*>(args[0]), *static_cast<mud::JobSystem*>(args[1]) ); }
+void toy_NavmeshShape__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::NavmeshShape( *static_cast<toy::Navmesh*>(args[0]) ); }
 void toy_Obstacle__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Obstacle( *static_cast<toy::HSpatial*>(args[0]), *static_cast<toy::HMovable*>(args[1]), *static_cast<toy::Medium*>(args[2]), *static_cast<toy::CollisionShape*>(args[3]), *static_cast<float*>(args[4]) ); }
 void toy_SolidMedium__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::SolidMedium(  ); }
 void toy_SoundMedium__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::SoundMedium(  ); }
+void toy_Spatial__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Spatial(  ); }
+void toy_Spatial__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Spatial( *static_cast<toy::HSpatial*>(args[0]), *static_cast<mud::vec3*>(args[1]), *static_cast<mud::quat*>(args[2]) ); }
+void toy_Spatial__construct_2(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::Spatial( *static_cast<toy::World*>(args[0]), *static_cast<toy::HSpatial*>(args[1]), *static_cast<mud::vec3*>(args[2]), *static_cast<mud::quat*>(args[3]) ); }
+void toy_Spatial_set_position(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Spatial*>(object)).set_position(*static_cast<mud::vec3*>(args[0])); }
+void toy_Spatial_set_rotation(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::Spatial*>(object)).set_rotation(*static_cast<mud::quat*>(args[0])); }
 void toy_VisualMedium__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::VisualMedium(  ); }
 void toy_WorldMedium__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::WorldMedium(  ); }
 void toy_move_2d_0(span<void*> args, void*& result) { (*static_cast<bool*>(result)) = toy::move_2d(*static_cast<toy::Spatial*>(args[0]), *static_cast<toy::Movable*>(args[1]), *static_cast<mud::vec3*>(args[2]), *static_cast<float*>(args[3]), *static_cast<float*>(args[4]), *static_cast<float*>(args[5])); }
@@ -529,27 +529,6 @@ namespace mud
 		// static members
 		static Class cls = { t, {}, {}, {}, {}, {}, {}, {}, };
 	}
-	// toy::DefaultWorld
-	{
-		Type& t = type<toy::DefaultWorld>();
-		static Meta meta = { t, &namspc({ "toy" }), "DefaultWorld", sizeof(toy::DefaultWorld), TypeClass::Object };
-		// bases
-		// defaults
-		// constructors
-		static Constructor constructors[] = {
-			{ t, toy_DefaultWorld__construct_0, { { "name", type<stl::string>(),  }, { "job_system", type<mud::JobSystem>(),  } } }
-		};
-		// copy constructor
-		// members
-		static Member members[] = {
-			{ t, offsetof(toy::DefaultWorld, m_world), type<toy::World>(), "world", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(toy::DefaultWorld, m_bullet_world), type<toy::BulletWorld>(), "bullet_world", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr },
-			{ t, offsetof(toy::DefaultWorld, m_navmesh), type<toy::Navmesh>(), "navmesh", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr }
-		};
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
-	}
 	// toy::DetourPath
 	{
 		Type& t = type<toy::DetourPath>();
@@ -698,22 +677,6 @@ namespace mud
 		// methods
 		// static members
 		static Class cls = { t, {}, {}, constructors, {}, members, {}, {}, };
-	}
-	// toy::NavmeshShape
-	{
-		Type& t = type<toy::NavmeshShape>();
-		static Meta meta = { t, &namspc({ "toy" }), "NavmeshShape", sizeof(toy::NavmeshShape), TypeClass::Object };
-		// bases
-		// defaults
-		// constructors
-		static Constructor constructors[] = {
-			{ t, toy_NavmeshShape__construct_0, { { "navmesh", type<toy::Navmesh>(),  } } }
-		};
-		// copy constructor
-		// members
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, constructors, {}, {}, {}, {}, };
 	}
 	// toy::Origin
 	{
@@ -898,34 +861,6 @@ namespace mud
 		// static members
 		static Class cls = { t, {}, {}, constructors, copy_constructor, {}, {}, {}, };
 	}
-	// toy::Spatial
-	{
-		Type& t = type<toy::Spatial>();
-		static Meta meta = { t, &namspc({ "toy" }), "Spatial", sizeof(toy::Spatial), TypeClass::Object };
-		// bases
-		// defaults
-		static toy::World* world_default = nullptr;
-		// constructors
-		static Constructor constructors[] = {
-			{ t, toy_Spatial__construct_0, {} },
-			{ t, toy_Spatial__construct_1, { { "parent", type<toy::HSpatial>(),  }, { "position", type<mud::vec3>(),  }, { "rotation", type<mud::quat>(),  } } },
-			{ t, toy_Spatial__construct_2, { { "world", type<toy::World>(),  }, { "parent", type<toy::HSpatial>(),  }, { "position", type<mud::vec3>(),  }, { "rotation", type<mud::quat>(),  } } }
-		};
-		// copy constructor
-		// members
-		static Member members[] = {
-			{ t, offsetof(toy::Spatial, m_world), type<toy::World>(), "world", world_default, Member::Flags(Member::Pointer|Member::Link), nullptr },
-			{ t, offsetof(toy::Spatial, m_parent), type<toy::HSpatial>(), "parent", nullptr, Member::Flags(Member::Value|Member::Link), nullptr },
-			{ t, offsetof(toy::Spatial, m_contents), type<stl::vector<toy::HSpatial>>(), "contents", nullptr, Member::Flags(Member::NonMutable|Member::Structure), nullptr }
-		};
-		// methods
-		static Method methods[] = {
-			{ t, "set_position", Address(), toy_Spatial_set_position, { { "position", type<mud::vec3>(),  } }, g_qvoid },
-			{ t, "set_rotation", Address(), toy_Spatial_set_rotation, { { "rotation", type<mud::quat>(),  } }, g_qvoid }
-		};
-		// static members
-		static Class cls = { t, {}, {}, constructors, {}, members, methods, {}, };
-	}
 	// toy::User
 	{
 		Type& t = type<toy::User>();
@@ -1070,6 +1005,47 @@ namespace mud
 		// static members
 		static Class cls = { t, bases, bases_offsets, constructors, {}, {}, {}, {}, };
 	}
+	// toy::DefaultWorld
+	{
+		Type& t = type<toy::DefaultWorld>();
+		static Meta meta = { t, &namspc({ "toy" }), "DefaultWorld", sizeof(toy::DefaultWorld), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Complex>() };
+		static size_t bases_offsets[] = { base_offset<toy::DefaultWorld, mud::Complex>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_DefaultWorld__construct_0, { { "name", type<stl::string>(),  }, { "job_system", type<mud::JobSystem>(),  } } }
+		};
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::DefaultWorld, m_world), type<toy::World>(), "world", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(toy::DefaultWorld, m_bullet_world), type<toy::BulletWorld>(), "bullet_world", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr },
+			{ t, offsetof(toy::DefaultWorld, m_navmesh), type<toy::Navmesh>(), "navmesh", nullptr, Member::Flags(Member::NonMutable|Member::Component), nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, {}, members, {}, {}, };
+	}
+	// toy::NavmeshShape
+	{
+		Type& t = type<toy::NavmeshShape>();
+		static Meta meta = { t, &namspc({ "toy" }), "NavmeshShape", sizeof(toy::NavmeshShape), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Shape>() };
+		static size_t bases_offsets[] = { base_offset<toy::NavmeshShape, mud::Shape>() };
+		// defaults
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_NavmeshShape__construct_0, { { "navmesh", type<toy::Navmesh>(),  } } }
+		};
+		// copy constructor
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, {}, {}, {}, {}, };
+	}
 	// toy::PhysicScope
 	{
 		Type& t = type<toy::PhysicScope>();
@@ -1178,6 +1154,36 @@ namespace mud
 			{ t, "me", Ref(&toy::SoundMedium::me) }
 		};
 		static Class cls = { t, bases, bases_offsets, constructors, {}, {}, {}, statics, };
+	}
+	// toy::Spatial
+	{
+		Type& t = type<toy::Spatial>();
+		static Meta meta = { t, &namspc({ "toy" }), "Spatial", sizeof(toy::Spatial), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Transform>() };
+		static size_t bases_offsets[] = { base_offset<toy::Spatial, mud::Transform>() };
+		// defaults
+		static toy::World* world_default = nullptr;
+		// constructors
+		static Constructor constructors[] = {
+			{ t, toy_Spatial__construct_0, {} },
+			{ t, toy_Spatial__construct_1, { { "parent", type<toy::HSpatial>(),  }, { "position", type<mud::vec3>(),  }, { "rotation", type<mud::quat>(),  } } },
+			{ t, toy_Spatial__construct_2, { { "world", type<toy::World>(),  }, { "parent", type<toy::HSpatial>(),  }, { "position", type<mud::vec3>(),  }, { "rotation", type<mud::quat>(),  } } }
+		};
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Spatial, m_world), type<toy::World>(), "world", world_default, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(toy::Spatial, m_parent), type<toy::HSpatial>(), "parent", nullptr, Member::Flags(Member::Value|Member::Link), nullptr },
+			{ t, offsetof(toy::Spatial, m_contents), type<stl::vector<toy::HSpatial>>(), "contents", nullptr, Member::Flags(Member::NonMutable|Member::Structure), nullptr }
+		};
+		// methods
+		static Method methods[] = {
+			{ t, "set_position", Address(), toy_Spatial_set_position, { { "position", type<mud::vec3>(),  } }, g_qvoid },
+			{ t, "set_rotation", Address(), toy_Spatial_set_rotation, { { "rotation", type<mud::quat>(),  } }, g_qvoid }
+		};
+		// static members
+		static Class cls = { t, bases, bases_offsets, constructors, {}, members, methods, {}, };
 	}
 	// toy::VisualMedium
 	{
@@ -1349,7 +1355,6 @@ namespace mud
 		m.m_types.push_back(&type<mud::ComponentHandle<toy::WorldPage>>());
 		m.m_types.push_back(&type<toy::ComponentPool>());
 		m.m_types.push_back(&type<toy::Core>());
-		m.m_types.push_back(&type<toy::DefaultWorld>());
 		m.m_types.push_back(&type<toy::DetourPath>());
 		m.m_types.push_back(&type<toy::Emitter>());
 		m.m_types.push_back(&type<toy::EntityScript>());
@@ -1369,7 +1374,6 @@ namespace mud
 		m.m_types.push_back(&type<toy::Movable>());
 		m.m_types.push_back(&type<toy::Navblock>());
 		m.m_types.push_back(&type<toy::Navmesh>());
-		m.m_types.push_back(&type<toy::NavmeshShape>());
 		m.m_types.push_back(&type<toy::OCollider>());
 		m.m_types.push_back(&type<toy::OSolid>());
 		m.m_types.push_back(&type<toy::Origin>());
@@ -1382,7 +1386,6 @@ namespace mud
 		m.m_types.push_back(&type<toy::SolidImpl>());
 		m.m_types.push_back(&type<mud::SparseHandle<toy::Collider>>());
 		m.m_types.push_back(&type<mud::SparseHandle<toy::Solid>>());
-		m.m_types.push_back(&type<toy::Spatial>());
 		m.m_types.push_back(&type<toy::User>());
 		m.m_types.push_back(&type<toy::Waypoint>());
 		m.m_types.push_back(&type<toy::World>());
@@ -1399,12 +1402,15 @@ namespace mud
 		m.m_types.push_back(&type<toy::BulletCollider>());
 		m.m_types.push_back(&type<toy::BulletSolid>());
 		m.m_types.push_back(&type<toy::BulletWorld>());
+		m.m_types.push_back(&type<toy::DefaultWorld>());
+		m.m_types.push_back(&type<toy::NavmeshShape>());
 		m.m_types.push_back(&type<toy::PhysicScope>());
 		m.m_types.push_back(&type<toy::EmitterScope>());
 		m.m_types.push_back(&type<toy::Obstacle>());
 		m.m_types.push_back(&type<toy::ReceptorScope>());
 		m.m_types.push_back(&type<toy::SolidMedium>());
 		m.m_types.push_back(&type<toy::SoundMedium>());
+		m.m_types.push_back(&type<toy::Spatial>());
 		m.m_types.push_back(&type<toy::VisualMedium>());
 		m.m_types.push_back(&type<toy::WorldMedium>());
 		{

@@ -25,5 +25,5 @@ namespace mud
     template <> _PLATFORM_EXPORT Type& type<Lamp>() { static Type ty("Lamp", sizeof(Lamp)); return ty; }
     template <> _PLATFORM_EXPORT Type& type<Player>() { static Type ty("Player", sizeof(Player)); return ty; }
     template <> _PLATFORM_EXPORT Type& type<Stance>() { static Type ty("Stance", sizeof(Stance)); return ty; }
-    template <> _PLATFORM_EXPORT Type& type<TileWorld>() { static Type ty("TileWorld", sizeof(TileWorld)); return ty; }
+    template <> _PLATFORM_EXPORT Type& type<TileWorld>() { static Type ty("TileWorld", type<mud::Complex>(), sizeof(TileWorld)); return ty; }
 }

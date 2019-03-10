@@ -1,146 +1,136 @@
 Module['boids'] = Module['boids'] || {};
 // Boid
 function Boid() {
-    this.ptr = _boids_Boid__construct_0(); this.type = Boid; getCache(Boid)[this.ptr] = this;
+    this.__ptr = _boids_Boid__construct_0(); this.__type = Boid.__type; getCache(Boid)[this.__ptr] = this;
 };
 Boid.prototype = Object.create(WrapperObject.prototype);
 Boid.prototype.constructor = Boid;
-Boid.prototype.__class__ = Boid;
-Boid.__cache__ = {};
+Boid.prototype.__class = Boid;
+Boid.__cache = {};
 Module['boids']['Boid'] = Boid;
-Boid.prototype["__destroy__"] = Boid.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_Boid__destroy(self);
+Boid.prototype["__destroy"] = Boid.prototype.__destroy = function() {
+    _boids_Boid__destroy(this.__ptr);
 };
 // BoidObstacle
 function BoidObstacle() {
-    this.ptr = _boids_BoidObstacle__construct_0(); this.type = BoidObstacle; getCache(BoidObstacle)[this.ptr] = this;
+    this.__ptr = _boids_BoidObstacle__construct_0(); this.__type = BoidObstacle.__type; getCache(BoidObstacle)[this.__ptr] = this;
 };
 BoidObstacle.prototype = Object.create(WrapperObject.prototype);
 BoidObstacle.prototype.constructor = BoidObstacle;
-BoidObstacle.prototype.__class__ = BoidObstacle;
-BoidObstacle.__cache__ = {};
+BoidObstacle.prototype.__class = BoidObstacle;
+BoidObstacle.__cache = {};
 Module['boids']['BoidObstacle'] = BoidObstacle;
-BoidObstacle.prototype["__destroy__"] = BoidObstacle.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_BoidObstacle__destroy(self);
+BoidObstacle.prototype["__destroy"] = BoidObstacle.prototype.__destroy = function() {
+    _boids_BoidObstacle__destroy(this.__ptr);
 };
 // BoidTarget
 function BoidTarget() {
-    this.ptr = _boids_BoidTarget__construct_0(); this.type = BoidTarget; getCache(BoidTarget)[this.ptr] = this;
+    this.__ptr = _boids_BoidTarget__construct_0(); this.__type = BoidTarget.__type; getCache(BoidTarget)[this.__ptr] = this;
 };
 BoidTarget.prototype = Object.create(WrapperObject.prototype);
 BoidTarget.prototype.constructor = BoidTarget;
-BoidTarget.prototype.__class__ = BoidTarget;
-BoidTarget.__cache__ = {};
+BoidTarget.prototype.__class = BoidTarget;
+BoidTarget.__cache = {};
 Module['boids']['BoidTarget'] = BoidTarget;
-BoidTarget.prototype["__destroy__"] = BoidTarget.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_BoidTarget__destroy(self);
+BoidTarget.prototype["__destroy"] = BoidTarget.prototype.__destroy = function() {
+    _boids_BoidTarget__destroy(this.__ptr);
 };
 // Heading
 function Heading() {
-    this.ptr = _boids_Heading__construct_0(); this.type = Heading; getCache(Heading)[this.ptr] = this;
+    this.__ptr = _boids_Heading__construct_0(); this.__type = Heading.__type; getCache(Heading)[this.__ptr] = this;
 };
 Heading.prototype = Object.create(WrapperObject.prototype);
 Heading.prototype.constructor = Heading;
-Heading.prototype.__class__ = Heading;
-Heading.__cache__ = {};
+Heading.prototype.__class = Heading;
+Heading.__cache = {};
 Module['boids']['Heading'] = Heading;
-Heading.prototype["__destroy__"] = Heading.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_Heading__destroy(self);
+Heading.prototype["__destroy"] = Heading.prototype.__destroy = function() {
+    _boids_Heading__destroy(this.__ptr);
 };
 // MoveForward
 function MoveForward() {
-    this.ptr = _boids_MoveForward__construct_0(); this.type = MoveForward; getCache(MoveForward)[this.ptr] = this;
+    this.__ptr = _boids_MoveForward__construct_0(); this.__type = MoveForward.__type; getCache(MoveForward)[this.__ptr] = this;
 };
 MoveForward.prototype = Object.create(WrapperObject.prototype);
 MoveForward.prototype.constructor = MoveForward;
-MoveForward.prototype.__class__ = MoveForward;
-MoveForward.__cache__ = {};
+MoveForward.prototype.__class = MoveForward;
+MoveForward.__cache = {};
 Module['boids']['MoveForward'] = MoveForward;
-MoveForward.prototype["__destroy__"] = MoveForward.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_MoveForward__destroy(self);
+MoveForward.prototype["__destroy"] = MoveForward.prototype.__destroy = function() {
+    _boids_MoveForward__destroy(this.__ptr);
 };
 // MoveSpeed
 function MoveSpeed() {
-    this.ptr = _boids_MoveSpeed__construct_0(); this.type = MoveSpeed; getCache(MoveSpeed)[this.ptr] = this;
+    this.__ptr = _boids_MoveSpeed__construct_0(); this.__type = MoveSpeed.__type; getCache(MoveSpeed)[this.__ptr] = this;
 };
 MoveSpeed.prototype = Object.create(WrapperObject.prototype);
 MoveSpeed.prototype.constructor = MoveSpeed;
-MoveSpeed.prototype.__class__ = MoveSpeed;
-MoveSpeed.__cache__ = {};
+MoveSpeed.prototype.__class = MoveSpeed;
+MoveSpeed.__cache = {};
 Module['boids']['MoveSpeed'] = MoveSpeed;
-MoveSpeed.prototype["__destroy__"] = MoveSpeed.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_MoveSpeed__destroy(self);
+MoveSpeed.prototype["__destroy"] = MoveSpeed.prototype.__destroy = function() {
+    _boids_MoveSpeed__destroy(this.__ptr);
 };
 // Player
 function Player() { throw "cannot construct a Player, no constructor in IDL" }
 Player.prototype = Object.create(WrapperObject.prototype);
 Player.prototype.constructor = Player;
-Player.prototype.__class__ = Player;
-Player.__cache__ = {};
+Player.prototype.__class = Player;
+Player.__cache = {};
 Module['boids']['Player'] = Player;
-Player.prototype["__destroy__"] = Player.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_Player__destroy(self);
+Player.prototype["__destroy"] = Player.prototype.__destroy = function() {
+    _boids_Player__destroy(this.__ptr);
 };
 // Position
 function Position() {
-    this.ptr = _boids_Position__construct_0(); this.type = Position; getCache(Position)[this.ptr] = this;
+    this.__ptr = _boids_Position__construct_0(); this.__type = Position.__type; getCache(Position)[this.__ptr] = this;
 };
 Position.prototype = Object.create(WrapperObject.prototype);
 Position.prototype.constructor = Position;
-Position.prototype.__class__ = Position;
-Position.__cache__ = {};
+Position.prototype.__class = Position;
+Position.__cache = {};
 Module['boids']['Position'] = Position;
-Position.prototype["__destroy__"] = Position.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_Position__destroy(self);
+Position.prototype["__destroy"] = Position.prototype.__destroy = function() {
+    _boids_Position__destroy(this.__ptr);
 };
 // Rotation
 function Rotation() {
-    this.ptr = _boids_Rotation__construct_0(); this.type = Rotation; getCache(Rotation)[this.ptr] = this;
+    this.__ptr = _boids_Rotation__construct_0(); this.__type = Rotation.__type; getCache(Rotation)[this.__ptr] = this;
 };
 Rotation.prototype = Object.create(WrapperObject.prototype);
 Rotation.prototype.constructor = Rotation;
-Rotation.prototype.__class__ = Rotation;
-Rotation.__cache__ = {};
+Rotation.prototype.__class = Rotation;
+Rotation.__cache = {};
 Module['boids']['Rotation'] = Rotation;
-Rotation.prototype["__destroy__"] = Rotation.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_Rotation__destroy(self);
+Rotation.prototype["__destroy"] = Rotation.prototype.__destroy = function() {
+    _boids_Rotation__destroy(this.__ptr);
 };
 // Transform4
 function Transform4() {
-    this.ptr = _boids_Transform4__construct_0(); this.type = Transform4; getCache(Transform4)[this.ptr] = this;
+    this.__ptr = _boids_Transform4__construct_0(); this.__type = Transform4.__type; getCache(Transform4)[this.__ptr] = this;
 };
 Transform4.prototype = Object.create(WrapperObject.prototype);
 Transform4.prototype.constructor = Transform4;
-Transform4.prototype.__class__ = Transform4;
-Transform4.__cache__ = {};
+Transform4.prototype.__class = Transform4;
+Transform4.__cache = {};
 Module['boids']['Transform4'] = Transform4;
-Transform4.prototype["__destroy__"] = Transform4.prototype.__destroy__ = function() {
-    var self = this.ptr;
-    _boids_Transform4__destroy(self);
+Transform4.prototype["__destroy"] = Transform4.prototype.__destroy = function() {
+    _boids_Transform4__destroy(this.__ptr);
 };
 Module['boids']['vec3'] = v4_float;
 
 (function() {
     function setup() {
-        Boid.__type__ = _boids_Boid__type();
-        BoidObstacle.__type__ = _boids_BoidObstacle__type();
-        BoidTarget.__type__ = _boids_BoidTarget__type();
-        Heading.__type__ = _boids_Heading__type();
-        MoveForward.__type__ = _boids_MoveForward__type();
-        MoveSpeed.__type__ = _boids_MoveSpeed__type();
-        Player.__type__ = _boids_Player__type();
-        Position.__type__ = _boids_Position__type();
-        Rotation.__type__ = _boids_Rotation__type();
-        Transform4.__type__ = _boids_Transform4__type();
+        Boid.__type = _boids_Boid__type();
+        BoidObstacle.__type = _boids_BoidObstacle__type();
+        BoidTarget.__type = _boids_BoidTarget__type();
+        Heading.__type = _boids_Heading__type();
+        MoveForward.__type = _boids_MoveForward__type();
+        MoveSpeed.__type = _boids_MoveSpeed__type();
+        Player.__type = _boids_Player__type();
+        Position.__type = _boids_Position__type();
+        Rotation.__type = _boids_Rotation__type();
+        Transform4.__type = _boids_Transform4__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);

@@ -804,7 +804,7 @@ Viewer& ex_platform_menu_viewport(Widget& parent, GameShell& app)
 
 	viewer.m_camera.m_eye = Z3 * 2.f;
 
-	Gnode& node = gfx::node(scene, {}, -Y3 * 0.5f + X3 * 0.6f, angle_axis(fmod(float(clock.read()), 2.f * c_pi), Y3), vec3(1.f) * 0.5f);
+	Gnode& node = gfx::node(scene, {}, -Y3 * 0.5f + X3 * 0.6f, angle_axis(fmod(float(clock.read()), c_2pi), Y3), vec3(1.f) * 0.5f);
 	Item& item = gfx::item(node, human);
 	Mime& animated = gfx::animated(node, item);
 	 

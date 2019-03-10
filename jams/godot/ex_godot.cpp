@@ -544,13 +544,7 @@ void paint_level(Gnode& parent)
 void paint_viewer(Viewer& viewer)
 {
 #ifdef CLUSTERED
-	if(rect_size(vec4(viewer.m_viewport.m_rect)) != vec2(0.f) && !viewer.m_camera.m_clusters)
-	{
-		mud::Camera& camera = viewer.m_camera;
-		camera.m_clustered = true;
-		camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx);
-		camera.m_clusters->prepare(viewer.m_viewport, camera.m_projection, camera.m_near, camera.m_far);
-	}
+	viewer.m_camera.set_clustered(viewer.m_scene->m_gfx, viewer.m_viewport);
 #endif
 
 	viewer.m_viewport.comp<Tonemap>().m_enabled = true;

@@ -34,49 +34,6 @@
 
 extern "C" {
 	
-	// BlockWorld
-	mud::Type* DECL BlockWorld__type() {
-		return &mud::type<BlockWorld>();
-	}
-	BlockWorld* DECL BlockWorld__construct_2(const char* name, mud::JobSystem* job_system) {
-		return new BlockWorld(name, *job_system);
-	}
-	toy::World* DECL BlockWorld__get_world(BlockWorld* self) {
-		return &self->m_world;
-	}
-	toy::BulletWorld* DECL BlockWorld__get_bullet_world(BlockWorld* self) {
-		return &self->m_bullet_world;
-	}
-	toy::Navmesh* DECL BlockWorld__get_navmesh(BlockWorld* self) {
-		return &self->m_navmesh;
-	}
-	mud::uvec3* DECL BlockWorld__get_block_subdiv(BlockWorld* self) {
-		return &self->m_block_subdiv;
-	}
-	void DECL BlockWorld__set_block_subdiv(BlockWorld* self, mud::uvec3* value) {
-		self->m_block_subdiv = *value;
-	}
-	mud::vec3* DECL BlockWorld__get_tile_scale(BlockWorld* self) {
-		return &self->m_tile_scale;
-	}
-	void DECL BlockWorld__set_tile_scale(BlockWorld* self, mud::vec3* value) {
-		self->m_tile_scale = *value;
-	}
-	mud::vec3* DECL BlockWorld__get_block_size(BlockWorld* self) {
-		return &self->m_block_size;
-	}
-	void DECL BlockWorld__set_block_size(BlockWorld* self, mud::vec3* value) {
-		self->m_block_size = *value;
-	}
-	mud::vec3* DECL BlockWorld__get_world_size(BlockWorld* self) {
-		return &self->m_world_size;
-	}
-	void DECL BlockWorld__set_world_size(BlockWorld* self, mud::vec3* value) {
-		self->m_world_size = *value;
-	}
-	void DECL BlockWorld__destroy(BlockWorld* self) {
-		delete self;
-	}
 	// Camp
 	mud::Type* DECL Camp__type() {
 		return &mud::type<Camp>();
@@ -244,6 +201,49 @@ extern "C" {
 		return new Tank(*spatial, *movable, *emitter, *receptor, *faction);
 	}
 	void DECL Tank__destroy(Tank* self) {
+		delete self;
+	}
+	// BlockWorld
+	mud::Type* DECL BlockWorld__type() {
+		return &mud::type<BlockWorld>();
+	}
+	BlockWorld* DECL BlockWorld__construct_2(const char* name, mud::JobSystem* job_system) {
+		return new BlockWorld(name, *job_system);
+	}
+	toy::World* DECL BlockWorld__get_world(BlockWorld* self) {
+		return &self->m_world;
+	}
+	toy::BulletWorld* DECL BlockWorld__get_bullet_world(BlockWorld* self) {
+		return &self->m_bullet_world;
+	}
+	toy::Navmesh* DECL BlockWorld__get_navmesh(BlockWorld* self) {
+		return &self->m_navmesh;
+	}
+	mud::uvec3* DECL BlockWorld__get_block_subdiv(BlockWorld* self) {
+		return &self->m_block_subdiv;
+	}
+	void DECL BlockWorld__set_block_subdiv(BlockWorld* self, mud::uvec3* value) {
+		self->m_block_subdiv = *value;
+	}
+	mud::vec3* DECL BlockWorld__get_tile_scale(BlockWorld* self) {
+		return &self->m_tile_scale;
+	}
+	void DECL BlockWorld__set_tile_scale(BlockWorld* self, mud::vec3* value) {
+		self->m_tile_scale = *value;
+	}
+	mud::vec3* DECL BlockWorld__get_block_size(BlockWorld* self) {
+		return &self->m_block_size;
+	}
+	void DECL BlockWorld__set_block_size(BlockWorld* self, mud::vec3* value) {
+		self->m_block_size = *value;
+	}
+	mud::vec3* DECL BlockWorld__get_world_size(BlockWorld* self) {
+		return &self->m_world_size;
+	}
+	void DECL BlockWorld__set_world_size(BlockWorld* self, mud::vec3* value) {
+		self->m_world_size = *value;
+	}
+	void DECL BlockWorld__destroy(BlockWorld* self) {
 		delete self;
 	}
 	

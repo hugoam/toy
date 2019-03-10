@@ -99,30 +99,6 @@ namespace mud
 		// static members
 		static Class cls = { t, {}, {}, {}, {}, {}, {}, {}, };
 	}
-	// toy::Editor
-	{
-		Type& t = type<toy::Editor>();
-		static Meta meta = { t, &namspc({ "toy" }), "Editor", sizeof(toy::Editor), TypeClass::Object };
-		// bases
-		// defaults
-		static toy::World* edited_world_default = nullptr;
-		static bool run_game_default = false;
-		static bool play_game_default = false;
-		// constructors
-		// copy constructor
-		// members
-		static Member members[] = {
-			{ t, offsetof(toy::Editor, m_run_tool), type<toy::RunTool>(), "run_tool", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(toy::Editor, m_play_tool), type<toy::PlayTool>(), "play_tool", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(toy::Editor, m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(toy::Editor, m_edited_world), type<toy::World>(), "edited_world", edited_world_default, Member::Flags(Member::Pointer|Member::Link), nullptr },
-			{ t, offsetof(toy::Editor, m_run_game), type<bool>(), "run_game", &run_game_default, Member::Value, nullptr },
-			{ t, offsetof(toy::Editor, m_play_game), type<bool>(), "play_game", &play_game_default, Member::Value, nullptr }
-		};
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, {}, {}, members, {}, {}, };
-	}
 	// toy::GraphicsDebug
 	{
 		Type& t = type<toy::GraphicsDebug>();
@@ -146,32 +122,6 @@ namespace mud
 	{
 		Type& t = type<toy::Paste>();
 		static Meta meta = { t, &namspc({ "toy" }), "Paste", sizeof(toy::Paste), TypeClass::Object };
-		// bases
-		// defaults
-		// constructors
-		// copy constructor
-		// members
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, {}, {}, {}, {}, {}, };
-	}
-	// toy::PlayTool
-	{
-		Type& t = type<toy::PlayTool>();
-		static Meta meta = { t, &namspc({ "toy" }), "PlayTool", sizeof(toy::PlayTool), TypeClass::Object };
-		// bases
-		// defaults
-		// constructors
-		// copy constructor
-		// members
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, {}, {}, {}, {}, {}, };
-	}
-	// toy::RunTool
-	{
-		Type& t = type<toy::RunTool>();
-		static Meta meta = { t, &namspc({ "toy" }), "RunTool", sizeof(toy::RunTool), TypeClass::Object };
 		// bases
 		// defaults
 		// constructors
@@ -222,6 +172,62 @@ namespace mud
 		// static members
 		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
 	}
+	// toy::Editor
+	{
+		Type& t = type<toy::Editor>();
+		static Meta meta = { t, &namspc({ "toy" }), "Editor", sizeof(toy::Editor), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::EditContext>() };
+		static size_t bases_offsets[] = { base_offset<toy::Editor, mud::EditContext>() };
+		// defaults
+		static toy::World* edited_world_default = nullptr;
+		static bool run_game_default = false;
+		static bool play_game_default = false;
+		// constructors
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::Editor, m_run_tool), type<toy::RunTool>(), "run_tool", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(toy::Editor, m_play_tool), type<toy::PlayTool>(), "play_tool", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(toy::Editor, m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(toy::Editor, m_edited_world), type<toy::World>(), "edited_world", edited_world_default, Member::Flags(Member::Pointer|Member::Link), nullptr },
+			{ t, offsetof(toy::Editor, m_run_game), type<bool>(), "run_game", &run_game_default, Member::Value, nullptr },
+			{ t, offsetof(toy::Editor, m_play_game), type<bool>(), "play_game", &play_game_default, Member::Value, nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, {}, {}, members, {}, {}, };
+	}
+	// toy::PlayTool
+	{
+		Type& t = type<toy::PlayTool>();
+		static Meta meta = { t, &namspc({ "toy" }), "PlayTool", sizeof(toy::PlayTool), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Tool>() };
+		static size_t bases_offsets[] = { base_offset<toy::PlayTool, mud::Tool>() };
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
+	}
+	// toy::RunTool
+	{
+		Type& t = type<toy::RunTool>();
+		static Meta meta = { t, &namspc({ "toy" }), "RunTool", sizeof(toy::RunTool), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::Tool>() };
+		static size_t bases_offsets[] = { base_offset<toy::RunTool, mud::Tool>() };
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
+	}
 	
 	{
 		Type& t = type<stl::vector<mud::Ref>>();
@@ -248,11 +254,8 @@ namespace mud
 		m.m_types.push_back(&type<toy::Clone>());
 		m.m_types.push_back(&type<toy::Cut>());
 		m.m_types.push_back(&type<toy::Edit>());
-		m.m_types.push_back(&type<toy::Editor>());
 		m.m_types.push_back(&type<toy::GraphicsDebug>());
 		m.m_types.push_back(&type<toy::Paste>());
-		m.m_types.push_back(&type<toy::PlayTool>());
-		m.m_types.push_back(&type<toy::RunTool>());
 		m.m_types.push_back(&type<toy::Selection>());
 		m.m_types.push_back(&type<toy::Selection>());
 		m.m_types.push_back(&type<toy::Selection>());
@@ -260,6 +263,9 @@ namespace mud
 		m.m_types.push_back(&type<toy::Toolbelt>());
 		m.m_types.push_back(&type<toy::Toolbox>());
 		m.m_types.push_back(&type<toy::DynamicToolbox>());
+		m.m_types.push_back(&type<toy::Editor>());
+		m.m_types.push_back(&type<toy::PlayTool>());
+		m.m_types.push_back(&type<toy::RunTool>());
 	}
 }
 

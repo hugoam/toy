@@ -103,13 +103,6 @@ extern "C" {
 	void DECL toy_GameModule__destroy(toy::GameModule* self) {
 		delete self;
 	}
-	// GameScene
-	mud::Type* DECL toy_GameScene__type() {
-		return &mud::type<toy::GameScene>();
-	}
-	void DECL toy_GameScene__destroy(toy::GameScene* self) {
-		delete self;
-	}
 	// GameShell
 	mud::Type* DECL toy_GameShell__type() {
 		return &mud::type<toy::GameShell>();
@@ -221,6 +214,13 @@ extern "C" {
 		return &mud::type<toy::GameModuleBind>();
 	}
 	void DECL toy_GameModuleBind__destroy(toy::GameModuleBind* self) {
+		delete self;
+	}
+	// GameScene
+	mud::Type* DECL toy_GameScene__type() {
+		return &mud::type<toy::GameScene>();
+	}
+	void DECL toy_GameScene__destroy(toy::GameScene* self) {
 		delete self;
 	}
 	void DECL toy_paint_physics_2(mud::Gnode* parent, toy::World* world) {

@@ -47,6 +47,44 @@ extern "C" {
 	void DECL toy_Edit__destroy(toy::Edit* self) {
 		delete self;
 	}
+	// GraphicsDebug
+	mud::Type* DECL toy_GraphicsDebug__type() {
+		return &mud::type<toy::GraphicsDebug>();
+	}
+	toy::GraphicsDebug* DECL toy_GraphicsDebug__construct_0() {
+		return new toy::GraphicsDebug();
+	}
+	void DECL toy_GraphicsDebug__destroy(toy::GraphicsDebug* self) {
+		delete self;
+	}
+	// Paste
+	mud::Type* DECL toy_Paste__type() {
+		return &mud::type<toy::Paste>();
+	}
+	void DECL toy_Paste__destroy(toy::Paste* self) {
+		delete self;
+	}
+	// Toolbelt
+	mud::Type* DECL toy_Toolbelt__type() {
+		return &mud::type<toy::Toolbelt>();
+	}
+	void DECL toy_Toolbelt__destroy(toy::Toolbelt* self) {
+		delete self;
+	}
+	// Toolbox
+	mud::Type* DECL toy_Toolbox__type() {
+		return &mud::type<toy::Toolbox>();
+	}
+	void DECL toy_Toolbox__destroy(toy::Toolbox* self) {
+		delete self;
+	}
+	// DynamicToolbox
+	mud::Type* DECL toy_DynamicToolbox__type() {
+		return &mud::type<toy::DynamicToolbox>();
+	}
+	void DECL toy_DynamicToolbox__destroy(toy::DynamicToolbox* self) {
+		delete self;
+	}
 	// Editor
 	mud::Type* DECL toy_Editor__type() {
 		return &mud::type<toy::Editor>();
@@ -81,23 +119,6 @@ extern "C" {
 	void DECL toy_Editor__destroy(toy::Editor* self) {
 		delete self;
 	}
-	// GraphicsDebug
-	mud::Type* DECL toy_GraphicsDebug__type() {
-		return &mud::type<toy::GraphicsDebug>();
-	}
-	toy::GraphicsDebug* DECL toy_GraphicsDebug__construct_0() {
-		return new toy::GraphicsDebug();
-	}
-	void DECL toy_GraphicsDebug__destroy(toy::GraphicsDebug* self) {
-		delete self;
-	}
-	// Paste
-	mud::Type* DECL toy_Paste__type() {
-		return &mud::type<toy::Paste>();
-	}
-	void DECL toy_Paste__destroy(toy::Paste* self) {
-		delete self;
-	}
 	// PlayTool
 	mud::Type* DECL toy_PlayTool__type() {
 		return &mud::type<toy::PlayTool>();
@@ -110,27 +131,6 @@ extern "C" {
 		return &mud::type<toy::RunTool>();
 	}
 	void DECL toy_RunTool__destroy(toy::RunTool* self) {
-		delete self;
-	}
-	// Toolbelt
-	mud::Type* DECL toy_Toolbelt__type() {
-		return &mud::type<toy::Toolbelt>();
-	}
-	void DECL toy_Toolbelt__destroy(toy::Toolbelt* self) {
-		delete self;
-	}
-	// Toolbox
-	mud::Type* DECL toy_Toolbox__type() {
-		return &mud::type<toy::Toolbox>();
-	}
-	void DECL toy_Toolbox__destroy(toy::Toolbox* self) {
-		delete self;
-	}
-	// DynamicToolbox
-	mud::Type* DECL toy_DynamicToolbox__type() {
-		return &mud::type<toy::DynamicToolbox>();
-	}
-	void DECL toy_DynamicToolbox__destroy(toy::DynamicToolbox* self) {
 		delete self;
 	}
 	

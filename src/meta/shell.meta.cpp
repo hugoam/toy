@@ -147,19 +147,6 @@ namespace mud
 		// static members
 		static Class cls = { t, {}, {}, {}, {}, {}, methods, {}, };
 	}
-	// toy::GameScene
-	{
-		Type& t = type<toy::GameScene>();
-		static Meta meta = { t, &namspc({ "toy" }), "GameScene", sizeof(toy::GameScene), TypeClass::Object };
-		// bases
-		// defaults
-		// constructors
-		// copy constructor
-		// members
-		// methods
-		// static members
-		static Class cls = { t, {}, {}, {}, {}, {}, {}, {}, };
-	}
 	// toy::GameShell
 	{
 		Type& t = type<toy::GameShell>();
@@ -227,6 +214,21 @@ namespace mud
 		// static members
 		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
 	}
+	// toy::GameScene
+	{
+		Type& t = type<toy::GameScene>();
+		static Meta meta = { t, &namspc({ "toy" }), "GameScene", sizeof(toy::GameScene), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<toy::VisuScene>() };
+		static size_t bases_offsets[] = { base_offset<toy::GameScene, toy::VisuScene>() };
+		// defaults
+		// constructors
+		// copy constructor
+		// members
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
+	}
 	
 	{
 		Type& t = type<stl::vector<mud::Ref>>();
@@ -237,10 +239,10 @@ namespace mud
 		m.m_types.push_back(&type<toy::Game>());
 		m.m_types.push_back(&type<toy::GameMode>());
 		m.m_types.push_back(&type<toy::GameModule>());
-		m.m_types.push_back(&type<toy::GameScene>());
 		m.m_types.push_back(&type<toy::GameShell>());
 		m.m_types.push_back(&type<toy::Selection>());
 		m.m_types.push_back(&type<toy::GameModuleBind>());
+		m.m_types.push_back(&type<toy::GameScene>());
 		{
 			static Function f = { &namspc({ "toy" }), "paint_physics", nullptr, toy_paint_physics_0, { { "parent", type<mud::Gnode>(),  }, { "world", type<toy::World>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
