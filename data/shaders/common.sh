@@ -111,13 +111,40 @@ float linear_depth(float depth)
     return 2.0 * u_z_near * u_z_far / (u_z_far + u_z_near - depth * (u_z_far - u_z_near));
 }
 
+float linearize_depth(float depth)
+{
+    float w = depth * ((u_z_far - u_z_near) / (-u_z_far * u_z_near)) + u_z_far / (u_z_far * u_z_near);
+    return -1.0 / w;
+    //return rcp(w);
+}
+
+float viewZToOrthographicDepth(float viewZ)
+{
+    return (viewZ + u_z_near) / (u_z_near - u_z_far);
+}
+
+float orthographicDepthToViewZ(float linearClipZ)
+{
+    return linearClipZ * (u_z_near - u_z_far) - u_z_near;
+}
+
+float viewZToPerspectiveDepth(float viewZ)
+{
+    return ((u_z_near + viewZ) * u_z_far) / ((u_z_far - u_z_near) * viewZ);
+}
+
+float perspectiveDepthToViewZ(float invClipZ)
+{
+    return (u_z_near * u_z_far) / ((u_z_far - u_z_near) * invClipZ - u_z_far);
+}
+
 mat4 mat4_from_vec4(vec4 v0, vec4 v1, vec4 v2, vec4 v3)
 {
     mat4 mat;
-	mat[0] = v0;
-	mat[1] = v1;
-	mat[2] = v2;
-	mat[3] = v3;
+    mat[0] = v0;
+    mat[1] = v1;
+    mat[2] = v2;
+    mat[3] = v3;
 #if BGFX_SHADER_LANGUAGE_HLSL
     return transpose(mat);
 #else
@@ -127,7 +154,7 @@ mat4 mat4_from_vec4(vec4 v0, vec4 v1, vec4 v2, vec4 v3)
 
 float random(vec2 _uv)
 {
-	return fract(sin(dot(_uv.xy, vec2(12.9898, 78.233) ) ) * 43758.5453);
+    return fract(sin(dot(_uv.xy, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
 #endif
