@@ -1,10 +1,10 @@
 $input v_uv0
 
-#include <filter/filter.sh>
+#include <filter.sh>
 #include <filter/blur.sh>
 
-uniform vec4 u_blur_params;
-#define u_blur_lod u_blur_params.x
+uniform vec4 u_blur_p0;
+#define u_blur_lod u_blur_p0.x
 
 uniform vec4 u_blur_kernel_0_3;
 uniform vec4 u_blur_kernel_4_7;

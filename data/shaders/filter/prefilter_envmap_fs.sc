@@ -4,13 +4,13 @@ $input v_uv0,
 #include <spherical.sh>
 
 //#define SOURCE_0_ARRAY
-#include <filter/filter.sh>
+#include <filter.sh>
 
 #define s_radiance_source s_source_0
 
-uniform vec4 u_prefilter_envmap_params;
-#define u_roughness u_prefilter_envmap_params.x
-#define u_num_samples u_prefilter_envmap_params.y
+uniform vec4 u_prefilter_envmap_p0;
+#define u_roughness u_prefilter_envmap_p0.x
+#define u_num_samples u_prefilter_envmap_p0.y
 
 // reference : Real Shading in Unreal Engine 4
 // also : https://learnopengl.com/PBR/IBL/Specular-IBL

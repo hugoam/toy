@@ -5,11 +5,11 @@
 #include <pbr/pbr.sh>
 #include <gpu/light.sh>
 
-uniform vec4 u_cluster_params;
+uniform vec4 u_cluster_p0;
 uniform vec4 u_cluster_z;
 uniform vec4 u_cluster_f;
-#define u_cluster_inv_dimension u_cluster_params.xy
-#define u_cluster_origin u_cluster_params.zw
+#define u_cluster_inv_dimension u_cluster_p0.xy
+#define u_cluster_origin u_cluster_p0.zw
 
 SAMPLER2D(s_light_clusters, 13);
 SAMPLER2D(s_light_records, 14);

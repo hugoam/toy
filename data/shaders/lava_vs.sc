@@ -5,9 +5,9 @@ $output v_position, v_uv0
 
 void main()
 {
-   int material_index = int(u_state_material);
-   BaseMaterial basic = read_base_material(material_index);
-   
+	int material_index = int(u_state_material);
+	BaseMaterial basic = read_base_material(material_index);
+	
    v_uv0 = (a_texcoord0 * basic.uv0_scale) + basic.uv0_offset;
 	vec4 view = mul(u_modelView, vec4(a_position.xyz, 1.0));
 	v_position = mul(u_proj, view);

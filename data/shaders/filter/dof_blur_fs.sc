@@ -1,6 +1,6 @@
 $input v_uv0
 
-#include <filter/filter.sh>
+#include <filter.sh>
 
 #define s_source_taps s_source_0
 #define s_source_color s_source_1
@@ -15,21 +15,21 @@ CONST(ARRAY_BEGIN(float, kernel, 7)) 1.00 , 1.00 , 0.90 , 0.75 , 0.60 , 0.50 , 0
 CONST(ARRAY_BEGIN(float, kernel, 7)) 0.13425804976814 , 0.12815541114232 , 0.11143948794984 , 0.08822292796029 , 0.06352050813141 , 0.04153263993208 , 0.00000000000000 ARRAY_END();
 #endif
 
-uniform vec4 u_dof_near_params;
-#define u_dof_near_begin u_dof_near_params.x
-#define u_dof_near_end u_dof_near_params.y
-#define u_dof_near_radius u_dof_near_params.z
-#define u_dof_near_inv_radius u_dof_near_params.w
+uniform vec4 u_dof_near_p0;
+#define u_dof_near_begin u_dof_near_p0.x
+#define u_dof_near_end u_dof_near_p0.y
+#define u_dof_near_radius u_dof_near_p0.z
+#define u_dof_near_inv_radius u_dof_near_p0.w
 
-uniform vec4 u_dof_far_params;
-#define u_dof_far_begin u_dof_far_params.x
-#define u_dof_far_end u_dof_far_params.y
-#define u_dof_far_radius u_dof_far_params.z
+uniform vec4 u_dof_far_p0;
+#define u_dof_far_begin u_dof_far_p0.x
+#define u_dof_far_end u_dof_far_p0.y
+#define u_dof_far_radius u_dof_far_p0.z
 
-uniform vec4 u_dof_params;
-#define u_max_coc_pixels u_dof_params.x
-//#define u_dof_focus_plane_z u_dof_params.x
-//#define u_dof_focus_scale u_dof_params.y
+uniform vec4 u_dof_p0;
+#define u_max_coc_pixels u_dof_p0.x
+//#define u_dof_focus_plane_z u_dof_p0.x
+//#define u_dof_focus_scale u_dof_p0.y
 
 bool in_near_field(float radius)
 {

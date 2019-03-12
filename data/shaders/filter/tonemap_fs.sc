@@ -1,16 +1,16 @@
 $input v_uv0
 
-#include <filter/filter.sh>
+#include <filter.sh>
 #include <tonemap.sh>
 
 #define s_source s_source_0
 #define s_color_correction s_source_1
 #define s_exposure s_source_2
 
-uniform vec4 u_exposure_params;
-#define u_exposure u_exposure_params.x
-#define u_exposure_white u_exposure_params.y
-#define u_exposure_grey u_exposure_params.z
+uniform vec4 u_exposure_p0;
+#define u_exposure u_exposure_p0.x
+#define u_exposure_white u_exposure_p0.y
+#define u_exposure_grey u_exposure_p0.z
 
 uniform vec4 u_tonemap_bcs;
 #define u_brightness u_tonemap_bcs.x

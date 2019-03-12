@@ -1,6 +1,6 @@
 $input v_uv0
 
-#include "filter/filter.sh"
+#include "filter.sh"
 
 #define PI 3.1415926553589793
 #define TAU 6.283185307179586
@@ -38,5 +38,5 @@ void main() {
         0.0);
 
     c = 1.0 - exp(-1.5 * pow(c, vec3_splat(1.25)));
-    gl_FragData[0] = vec4(c., 1.0);
+    gl_FragData[0] = vec4(c, 1.0);
 }

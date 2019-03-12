@@ -2,14 +2,14 @@ $input a_position, a_texcoord0
 $output v_dir, v_uv0
 
 #include <common.sh>
-#include <filter/filter.sh>
+#include <filter.sh>
 
 uniform mat4 u_skybox_matrix;
 
 void main()
 {
 	v_uv0 = a_texcoord0;
-	v_uv0 = u_source_0_crop.xy + v_uv0 * u_source_0_crop.zw;
+	v_uv0 = u_source_crop.xy + v_uv0 * u_source_crop.zw;
     if(!bool(u_origin_bottom_left))
     {
         // spherical uvs are sampled from bottom left: we flip uvs when input texture is NOT inverted

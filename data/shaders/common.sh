@@ -5,20 +5,20 @@
 #include <srgb.sh>
 #include <gpu/material.sh>
 
-uniform vec4 u_render_params;
-#define u_time u_render_params.x
-#define u_origin_bottom_left u_render_params.y
-#define u_point_size u_render_params.zw
+uniform vec4 u_render_p0;
+#define u_time u_render_p0.x
+#define u_origin_bottom_left u_render_p0.y
+#define u_point_size u_render_p0.zw
 
-uniform vec4 u_viewport_params;
-#define u_screen_size u_viewport_params.xy
-#define u_pixel_size u_viewport_params.zw
+uniform vec4 u_viewport_p0;
+#define u_screen_size u_viewport_p0.xy
+#define u_pixel_size u_viewport_p0.zw
 
-uniform vec4 u_camera_params;
-#define u_z_near u_camera_params.x
-#define u_z_far u_camera_params.y
-#define u_fov u_camera_params.z
-#define u_aspect u_camera_params.w
+uniform vec4 u_camera_p0;
+#define u_z_near u_camera_p0.x
+#define u_z_far u_camera_p0.y
+#define u_fov u_camera_p0.z
+#define u_aspect u_camera_p0.w
 
 #ifdef MATERIALS_BUFFER
 uniform vec4 u_state;

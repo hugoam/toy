@@ -5,7 +5,8 @@ $input v_position, v_uv0
 
 void main()
 {
-   vec2 uv = v_uv0;	vec2 position = - 1.0 + 2.0 * uv;
+	vec2 uv = v_uv0;
+	vec2 position = - 1.0 + 2.0 * uv;
 
 	vec4 noise = texture2D(s_user0, uv);
 	vec2 T1 = uv + vec2(1.5, - 1.5) * u_time * 0.02;
@@ -37,5 +38,4 @@ void main()
 	fogFactor = 1.0 - clamp(fogFactor, 0.0, 1.0);
 
 	gl_FragColor = mix(color, vec4(vec3(0.0, 0.0, 0.0), color.w), fogFactor);
-
 }

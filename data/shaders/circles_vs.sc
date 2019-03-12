@@ -11,7 +11,7 @@ void main()
 	float size = scale * 10.0 + 10.0;
 	vec3 view = mul(u_modelView, vec4(i_position, 1.0)).xyz;
 	view += a_position.xyz * size;
-	v_uv0 = vec4(a_texcoord0, 0.0, 0.0);
+	v_uv0 = a_texcoord0;
 	gl_Position = mul(u_proj, vec4(view, 1.0));
 
 }

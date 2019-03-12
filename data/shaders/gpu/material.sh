@@ -11,8 +11,8 @@
 #ifdef MATERIALS_BUFFER
 SAMPLER2D(s_materials, 8);
 #else
-uniform vec4 u_material_params_0;
-uniform vec4 u_material_params_1;
+uniform vec4 u_material_p0;
+uniform vec4 u_material_p1;
 #endif
 
 struct BaseMaterial
@@ -28,10 +28,10 @@ BaseMaterial read_base_material(int index)
     BaseMaterial m;
     
 #ifndef MATERIALS_BUFFER
-    m.uv0_scale = u_material_params_0.xy;
-    m.uv0_offset = u_material_params_0.zw;
-    m.uv1_scale = u_material_params_1.xy;
-    m.uv1_offset = u_material_params_1.zw;
+    m.uv0_scale = u_material_p0.xy;
+    m.uv0_offset = u_material_p0.zw;
+    m.uv1_scale = u_material_p1.xy;
+    m.uv1_offset = u_material_p1.zw;
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
@@ -91,7 +91,7 @@ SolidMaterial read_solid_material(int index)
 }
 
 #ifndef MATERIALS_BUFFER
-uniform vec4 u_line_params;
+uniform vec4 u_line_p0;
 #endif
 
 struct LineMaterial
@@ -107,10 +107,10 @@ LineMaterial read_line_material(int index)
     LineMaterial m;
     
 #ifndef MATERIALS_BUFFER
-    m.line_width = u_line_params.x;
-    m.dash_scale = u_line_params.y;
-    m.dash_size = u_line_params.z;
-    m.dash_gap = u_line_params.w;
+    m.line_width = u_line_p0.x;
+    m.dash_scale = u_line_p0.y;
+    m.dash_size = u_line_p0.z;
+    m.dash_gap = u_line_p0.w;
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
@@ -126,11 +126,11 @@ LineMaterial read_line_material(int index)
 
 #ifndef MATERIALS_BUFFER
 uniform vec4 u_albedo;
-uniform vec4 u_pbr_params_0;
+uniform vec4 u_pbr_p0;
 uniform vec4 u_emissive;
 uniform vec4 u_pbr_channels_0;
-uniform vec4 u_pbr_params_1;
-uniform vec4 u_pbr_params_2;
+uniform vec4 u_pbr_p1;
+uniform vec4 u_pbr_p2;
 #endif
 
 struct PbrMaterial
@@ -163,23 +163,23 @@ PbrMaterial read_pbr_material(int index)
 #ifndef MATERIALS_BUFFER
     m.albedo = u_albedo.xyz;
     m.alpha = u_albedo.w;
-    m.specular = u_pbr_params_0.x;
-    m.metallic = u_pbr_params_0.y;
-    m.roughness = u_pbr_params_0.z;
-    m.normal_scale = u_pbr_params_0.w;
+    m.specular = u_pbr_p0.x;
+    m.metallic = u_pbr_p0.y;
+    m.roughness = u_pbr_p0.z;
+    m.normal_scale = u_pbr_p0.w;
     m.emissive = u_emissive.xyz;
     m.emissive_energy = u_emissive.w;
     m.roughness_channel = u_pbr_channels_0.x;
     m.metallic_channel = u_pbr_channels_0.y;
     m.ao_channel = u_pbr_channels_0.z;
-    m.anisotropy = u_pbr_params_1.x;
-    m.refaction = u_pbr_params_1.y;
-    m.subsurface = u_pbr_params_1.z;
-    m.depth_scale = u_pbr_params_1.w;
-    m.rim = u_pbr_params_2.x;
-    m.rim_tint = u_pbr_params_2.y;
-    m.clearcoat = u_pbr_params_2.z;
-    m.clearcoat_gloss = u_pbr_params_2.w;
+    m.anisotropy = u_pbr_p1.x;
+    m.refaction = u_pbr_p1.y;
+    m.subsurface = u_pbr_p1.z;
+    m.depth_scale = u_pbr_p1.w;
+    m.rim = u_pbr_p2.x;
+    m.rim_tint = u_pbr_p2.y;
+    m.clearcoat = u_pbr_p2.z;
+    m.clearcoat_gloss = u_pbr_p2.w;
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     

@@ -6,11 +6,11 @@ $input v_view, v_position, v_normal, v_tangent, v_color, v_uv0, v_uv1, v_binorma
 SAMPLER2D(s_fresnel, 0);
 
 uniform vec4 u_fresnel_value;
-uniform vec4 u_fresnel_params;
-#define u_fresnel_bias u_fresnel_params.x
-#define u_fresnel_scale u_fresnel_params.y
-#define u_fresnel_power u_fresnel_params.z
-#define u_fresnel_texture u_fresnel_params.w
+uniform vec4 u_fresnel_p0;
+#define u_fresnel_bias u_fresnel_p0.x
+#define u_fresnel_scale u_fresnel_p0.y
+#define u_fresnel_power u_fresnel_p0.z
+#define u_fresnel_texture u_fresnel_p0.w
 
 void main()
 {
