@@ -27,6 +27,5 @@ if (4.0 <= iters && uv.y < 1.0) col += texture2D(s_source_0, uv).r;
 uv += stepv;
 if (5.0 <= iters && uv.y < 1.0) col += texture2D(s_source_0, uv).r;
 uv += stepv;
-gl_FragColor = vec4(col/TAPS_PER_PASS);
-gl_FragColor.a = 1.0;
+gl_FragColor = vec4(col/TAPS_PER_PASS, 0.0, 0.0, 1.0);
 }

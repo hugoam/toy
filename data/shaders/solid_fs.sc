@@ -13,6 +13,9 @@ void main()
     
     vec4 color_tex = toLinear(texture2D(s_color, v_uv0));
     color_tex.a *= alpha;
-    //gl_FragColor = v_color * color_tex * solid.color;
+#ifdef VERTEX_COLOR
+    gl_FragColor = v_color * color_tex * solid.color;
+#else
     gl_FragColor = color_tex * solid.color;
+#endif
 }

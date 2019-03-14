@@ -43,7 +43,7 @@ void main()
         v_line_distance = (a_position.y < 0.5) ? mat.dash_scale * i_distance_start : mat.dash_scale * i_distance_end;
     #endif
 
-    v_uv0 = vec4(a_texcoord0, 0.0, 0.0);
+    v_uv0 = a_texcoord0;
 
     // camera space
     vec4 start = mul(u_modelView, vec4(i_start, 1.0));

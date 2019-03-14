@@ -12,5 +12,5 @@ float readDepth(sampler2D depthSampler, vec2 coord)
 void main() {
 	float depth = readDepth(s_source_depth, v_uv0);
 
-	gl_FragColor = vec4(1.0 - vec3(depth), 1.0);
+	gl_FragColor = vec4(1.0 - vec3_splat(depth), 1.0);
 }
