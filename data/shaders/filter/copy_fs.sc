@@ -2,6 +2,7 @@ $input v_uv0
 
 #include <common.sh>
 #include <filter.sh>
+#include <spherical.sh>
 
 #if defined SOURCE_DEPTH || defined UNPACK_DEPTH
 CONST(float) depth_value_pow = 500.0;
@@ -10,7 +11,8 @@ CONST(float) depth_value_pow = 500.0;
 void main()
 {
 #if defined SOURCE_0_CUBE
-	vec4 color = textureCube(s_source_0, normalize(v_uv0));
+    vec3 dir = invertedSphericalUV(v_uv0);
+	vec4 color = textureCubeLod(s_source_0, dir, float(u_source_0_level));
 #elif defined SOURCE_0_ARRAY
 	vec4 color = texture2DArray(s_source_0, vec3(v_uv0, u_source_0_level));
 #elif defined TEXEL_COPY

@@ -70,6 +70,7 @@ struct Material
     float specular;
     vec3 f0;
     vec4 emission;
+    float refraction;
     float ao;
     float anisotropy;
     float rim;

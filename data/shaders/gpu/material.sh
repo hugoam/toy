@@ -147,7 +147,7 @@ struct PbrMaterial
     float metallic_channel;
     float ao_channel;
     float anisotropy;
-    float refaction;
+    float refraction;
     float subsurface;
     float depth_scale;
     float rim;
@@ -173,7 +173,7 @@ PbrMaterial read_pbr_material(int index)
     m.metallic_channel = u_pbr_channels_0.y;
     m.ao_channel = u_pbr_channels_0.z;
     m.anisotropy = u_pbr_p1.x;
-    m.refaction = u_pbr_p1.y;
+    m.refraction = u_pbr_p1.y;
     m.subsurface = u_pbr_p1.z;
     m.depth_scale = u_pbr_p1.w;
     m.rim = u_pbr_p2.x;
@@ -204,7 +204,7 @@ PbrMaterial read_pbr_material(int index)
     
     vec4 params_1 = texelFetch(s_materials, ivec2(x, 9), 0);
     m.anisotropy = params_1.x;
-    m.refaction = params_1.y;
+    m.refraction = params_1.y;
     m.subsurface = params_1.z;
     m.depth_scale = params_1.w;
     

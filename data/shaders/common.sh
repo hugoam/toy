@@ -31,6 +31,14 @@ uniform vec4 u_state;
 
 SAMPLER2D(s_color, 0);
 SAMPLER2D(s_alpha, 1);
+
+uniform vec4 u_user_p0;
+uniform vec4 u_user_p1;
+uniform vec4 u_user_p2;
+uniform vec4 u_user_p3;
+uniform vec4 u_user_p4;
+uniform vec4 u_user_p5;
+
 SAMPLER2D(s_user0, 2);
 SAMPLER2D(s_user1, 3);
 SAMPLER2D(s_user2, 4);

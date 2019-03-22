@@ -16,6 +16,13 @@ vec2 v_particle     : TEXCOORD1 = vec2(0.0, 0.0);
 float v_scale       : TEXCOORD6 = 0.0;
 float v_line_distance : TEXCOORD6 = 0.0;
 
+vec4 v_mirrored     : TEXCOORD4 = vec4(0.0, 0.0, 0.0, 0.0);
+
+vec3 v_sundir       : TEXCOORD4 = vec3(0.0, 0.0, -1.0);
+vec2 v_sunp0        : TEXCOORD5 = vec2(0.0, 0.0);
+vec3 v_betaR        : TEXCOORD6 = vec3(0.0, 0.0, 0.0);
+vec3 v_betaM        : TEXCOORD7 = vec3(0.0, 0.0, 0.0);
+
 vec3 g_position     : TEXCOORD3 = vec3(0.0, 0.0, 0.0);
 vec4 g_texcoord0    : TEXCOORD0 = vec4(0.0, 0.0, 0.0, 0.0);
 vec3 g_normal       : NORMAL    = vec3(0.0, 0.0, 1.0);

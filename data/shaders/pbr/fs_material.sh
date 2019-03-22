@@ -14,6 +14,12 @@
     material.metallic = pbr.metallic * sample_material_texture(s_metallic, fragment.uv)[ int(pbr.metallic_channel) ];
     material.specular = pbr.specular;
     material.emission = vec4_splat(0.0);
+    material.refraction = pbr.refraction;
+
+#ifdef VERTEX_COLOR
+    material.albedo *= v_color.rgb;
+    material.alpha *= v_color.a;
+#endif
 
 #include "fs_normal.sh"
 #include "fs_emission.sh"

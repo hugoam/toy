@@ -21,7 +21,8 @@ void main()
 {
 #include "modelview.sh"
 
-    mat4 normalModelView = transpose(inverse(modelView));
+    //mat4 normalModelView = transpose(inverse(modelView));
+    mat4 normalModelView = modelView;
     
     int material_index = int(u_state_material);
     BaseMaterial basic = read_base_material(material_index);
@@ -49,6 +50,11 @@ void main()
 #endif
 
 	v_position = mul(u_proj, vec4(v_view, 1.0));
+
+#ifdef VFLIP
+    v_position.y = -v_position.y;
+#endif
+
 #ifdef RENDER_UV2
     vec2 uv2ndc = vec2(v_uv1.x, 1.0 - v_uv1.y) * 2.0 - 1.0; // uvs are relative to top-left, so we need to reverse y and to NDC for rendering
 	gl_Position = vec4(uv2ndc, 0.0, 1.0);

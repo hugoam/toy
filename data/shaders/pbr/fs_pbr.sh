@@ -16,7 +16,11 @@
     
 #ifdef RADIANCE_ENVMAP
     ambient += radiance_ambient(zone, fragment.normal);
+#ifdef REFRACTION
+    specular += radiance_refraction(zone, fragment.view, fragment.normal, material.roughness, material.refraction);
+#else
     specular += radiance_reflection(zone, fragment.view, fragment.normal, material.roughness);
+#endif
 #else
     ambient += zone.radiance_color * zone.ambient;
 #endif
