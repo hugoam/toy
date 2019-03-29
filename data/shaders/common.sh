@@ -39,10 +39,10 @@ uniform vec4 u_user_p3;
 uniform vec4 u_user_p4;
 uniform vec4 u_user_p5;
 
-SAMPLER2D(s_user0, 2);
-SAMPLER2D(s_user1, 3);
-SAMPLER2D(s_user2, 4);
-SAMPLER2D(s_user3, 5);
+SAMPLER2D(s_user0, 12);
+SAMPLER2D(s_user1, 13);
+SAMPLER2D(s_user2, 14);
+SAMPLER2D(s_user3, 15);
 SAMPLER2D(s_user4, 6);
 SAMPLER2D(s_user5, 7);
 
@@ -144,6 +144,10 @@ float viewZToPerspectiveDepth(float viewZ)
 float perspectiveDepthToViewZ(float invClipZ)
 {
     return (u_z_near * u_z_far) / ((u_z_far - u_z_near) * invClipZ - u_z_far);
+}
+
+vec4 LinearToGamma(vec4 value, float gammaFactor) {
+    return vec4(pow(value.rgb, vec3_splat(1.0 / gammaFactor)), value.a);
 }
 
 mat4 mat4_from_vec4(vec4 v0, vec4 v1, vec4 v2, vec4 v3)

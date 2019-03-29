@@ -1,9 +1,10 @@
 #include <pbr/light.sh>
+#include <pbr/radiance.sh>
 
 struct LightRay
 {
-    vec3 l;
-    
+    //vec3 l;
+
     float NoL;
     float NoH;
     float LoH;
@@ -26,7 +27,7 @@ LightRay calc_light_ray(Fragment fragment, vec3 l)
 {
     vec3 V = fragment.view;
     vec3 N = fragment.normal;
-    vec3 L = normalize(l);
+    vec3 L = l; //normalize(l);
     vec3 H = normalize(V + L);
 	vec3 R = normalize(-reflect(L, N));
     
@@ -36,7 +37,7 @@ LightRay calc_light_ray(Fragment fragment, vec3 l)
 #endif
 
     LightRay r;
-    r.l = l;
+    //r.l = l;
     r.NoL = dot(N, L);
     r.NoH = dot(N, H);
     r.LoH = dot(L, H);
@@ -295,10 +296,10 @@ vec2 specular_brdf(float roughness, float cNoV)
     return vec2( -1.04, 1.04 ) * a004 + r.zw;
 }
 
-vec3 brdf_specular_term(Fragment fragment, Material material)
+vec3 brdf_specular_term(Fragment fragment, vec3 f0, float roughness)
 {
-    vec2 brdf = specular_brdf(material.roughness, fragment.cNoV);
-	return material.f0 * brdf.x + brdf.y;
+    vec2 brdf = specular_brdf(roughness, fragment.cNoV);
+	return f0 * brdf.x + brdf.y;
 }
 
 #define LAMBERT 0
@@ -312,39 +313,49 @@ vec3 brdf_specular_term(Fragment fragment, Material material)
 #define PHONG 2
 #define SPECULAR_TOON 3
 #define NO_SPECULAR 4
-        
-void light_brdf(Light light, vec3 l, Fragment fragment, Material material, float factor, inout vec3 diffuse, inout vec3 specular)
+
+float brdf_env_level(Material material)
+{
+    return material.roughness * RADIANCE_MAX_LOD;
+}
+
+vec3 brdf_env_specular(Fragment fragment, Material material)
+{
+    return brdf_specular_term(fragment, material.f0, material.roughness);
+}
+
+void direct_brdf(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
 {
     LightRay ray = calc_light_ray(fragment, l);
  
     if(material.metallic < 1.0) {
 #if DIFFUSE_MODE == LAMBERT
-        diffuse += light.energy * factor * material.albedo * diffuse_lambert(      ray, fragment.cNoV, material.roughness);
+        diffuse += energy * material.albedo * diffuse_lambert(      ray, fragment.cNoV, material.roughness);
 #elif DIFFUSE_MODE == HALF_LAMBERT
-        diffuse += light.energy * factor * material.albedo * diffuse_half_lambert( ray, fragment.cNoV, material.roughness);
+        diffuse += energy * material.albedo * diffuse_half_lambert( ray, fragment.cNoV, material.roughness);
 #elif DIFFUSE_MODE == OREN_NAYAR
-        diffuse += light.energy * factor * material.albedo * diffuse_oren_nayar(   ray, fragment.NoV, material.roughness, material.albedo);
+        diffuse += energy * material.albedo * diffuse_oren_nayar(   ray, fragment.NoV, material.roughness, material.albedo);
 #elif DIFFUSE_MODE == BURLEY
-        diffuse += light.energy * factor * material.albedo * diffuse_burley(       ray, fragment.cNoV, material.roughness);
+        diffuse += energy * material.albedo * diffuse_burley(       ray, fragment.cNoV, material.roughness);
 #elif DIFFUSE_MODE == DIFFUSE_TOON
-        diffuse += light.energy * factor * material.albedo * diffuse_toon(         ray, fragment.cNoV, material.roughness);
+        diffuse += energy * material.albedo * diffuse_toon(         ray, fragment.cNoV, material.roughness);
 #endif
     }
     
 #ifdef RIM
 	float rim_light = pow(1.0 - fragment.cNoV,(1.0 - material.roughness) * 16.0);
-	diffuse += rim_light * material.rim * mix(vec3(1.0), material.albedo, material.rim_tint) * light.energy;
+	diffuse += energy * rim_light * material.rim * mix(vec3(1.0), material.albedo, material.rim_tint);
 #endif
 
 	if (material.roughness > 0.0) {
 #if SPECULAR_MODE == SHLICK_GGX
-        specular += light.energy * factor * light.specular * specular_schlick_GGX_old(ray, fragment.cNoV, material.roughness, material.f0, material.anisotropy);
+        specular += energy * specular_schlick_GGX(ray, fragment.cNoV, material.roughness, material.f0, material.anisotropy);
 #elif SPECULAR_MODE == BLINN
-        specular += light.energy * factor * light.specular * specular_blinn(      ray, fragment.cNoV, material.roughness);
+        specular += energy * specular_blinn(      ray, fragment.cNoV, material.roughness);
 #elif SPECULAR_MODE == PHONG
-        specular += light.energy * factor * light.specular * specular_phong(      ray, fragment.cNoV, material.roughness);
+        specular += energy * specular_phong(      ray, fragment.cNoV, material.roughness);
 #elif SPECULAR_MODE == SPECULAR_TOON
-        diffuse  += light.energy * factor * light.specular * specular_toon(       ray, fragment.cNoV, material.roughness) * material.specular * 2.0;
+        diffuse  += energy * specular_toon(       ray, fragment.cNoV, material.roughness) * material.specular * 2.0;
 #elif SPECULAR_MODE == NO_SPECULAR
 #endif
 	}

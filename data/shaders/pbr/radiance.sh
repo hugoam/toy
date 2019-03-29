@@ -7,8 +7,9 @@
 //uniform vec4 u_pbr_globals;
 //#define u_roughness_levels u_pbr_globals.x
 
-#ifdef RADIANCE_ENVMAP
 #define RADIANCE_MAX_LOD 7.0
+
+#ifdef RADIANCE_ENVMAP
 
 #ifdef RADIANCE_CUBE
 SAMPLERCUBE(s_radiance, 10);
@@ -16,28 +17,26 @@ SAMPLERCUBE(s_radiance, 10);
 SAMPLER2D(s_radiance, 10);
 #endif
 
-vec3 radiance_refraction(Zone zone, vec3 view, vec3 normal, float roughness, float refraction)
+vec3 radiance_refraction(Zone zone, vec3 view, vec3 normal, float refraction, float level)
 {
-    float roughness_level = roughness * RADIANCE_MAX_LOD;
 	vec3 dir = refract(-view, normal, refraction);
 	dir = normalize(mul(u_invView, vec4(dir, 0.0)).xyz);
 #ifdef RADIANCE_CUBE
-	vec3 rad = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), roughness_level).rgb;
+	vec3 rad = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), level).rgb;
 #else
-	vec3 rad = textureSpherical2D(s_radiance, dir, roughness_level).rgb;
+	vec3 rad = textureSpherical2D(s_radiance, dir, level).rgb;
 #endif
     return rad;
 }
 
-vec3 radiance_reflection(Zone zone, vec3 view, vec3 normal, float roughness)
+vec3 radiance_reflection(Zone zone, vec3 view, vec3 normal, float level)
 {
-    float roughness_level = roughness * RADIANCE_MAX_LOD;
 	vec3 dir = reflect(-view, normal);
 	dir = normalize(mul(u_invView, vec4(dir, 0.0)).xyz);
 #ifdef RADIANCE_CUBE
-	vec3 rad = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), roughness_level).rgb;
+	vec3 rad = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), level).rgb;
 #else
-	vec3 rad = textureSpherical2D(s_radiance, dir, roughness_level).rgb;
+	vec3 rad = textureSpherical2D(s_radiance, dir, level).rgb;
 #endif
     return rad * zone.radiance_color * zone.radiance_energy;
 }

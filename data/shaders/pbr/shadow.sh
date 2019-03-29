@@ -10,12 +10,10 @@
 
 #if 0 // PCF_LEVEL != HARD_PCF
     SAMPLER2DSHADOW(s_shadow_atlas, 11);
-    SAMPLER2DSHADOW(s_csm_atlas, 12);
 #define samplerShadow sampler2DShadow
 #define SHADOW_SAMPLER 1
 #else
     SAMPLER2D(s_shadow_atlas, 11);
-    SAMPLER2D(s_csm_atlas, 12);
 #define samplerShadow sampler2D
 #define SHADOW_SAMPLER 0
 #endif
@@ -158,7 +156,7 @@ float sample_shadow_pcf(samplerShadow shadowmap, vec4 coord, float bias, vec2 te
 float sample_cascade(int cascade_index, vec3 frag, float bias, vec2 texel_size)
 {
     vec4 shadow_coord = mul(u_csm_matrix[cascade_index], vec4(frag, 1.0));
-    return sample_shadow_pcf(s_csm_atlas, shadow_coord, bias, texel_size);
+    return sample_shadow_pcf(s_shadow_atlas, shadow_coord, bias, texel_size);
 }
 
 vec3 debug_sample_cascade(int cascade_index, vec3 frag, float bias, vec2 texel_size)
@@ -167,9 +165,9 @@ vec3 debug_sample_cascade(int cascade_index, vec3 frag, float bias, vec2 texel_s
 	vec2 pos = shadow_coord.xy / shadow_coord.w;
     float depth = (shadow_coord.z - bias) / shadow_coord.w;
 #if !SHADOW_SAMPLER
-    return vec3(pos, depth) * vec3_splat(sample_shadow(s_csm_atlas, vec4(pos, depth, 0.0), 0.0));
+    return vec3(pos, depth) * vec3_splat(sample_shadow(s_shadow_atlas, vec4(pos, depth, 0.0), 0.0));
 #else
-    return vec3(pos, depth) * vec3_splat(shadow2D(s_csm_atlas, vec3(pos, depth)));
+    return vec3(pos, depth) * vec3_splat(shadow2D(s_shadow_atlas, vec3(pos, depth)));
 #endif
 }
 

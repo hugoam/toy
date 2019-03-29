@@ -21,5 +21,4 @@ void main() {
 
 	gl_FragColor.xyz = mix(u_sun_color, u_bg_color, 1.0 - prop);
 	gl_FragColor.w = 1.0;
-	gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
 }

@@ -47,6 +47,6 @@ void main() {
 	vec4 cb = texture2D(s_source_0, p - offset);
 	gl_FragColor = vec4(cr.r, cga.g, cb.b, cga.a);
 	//add noise
-	vec4 snow = 200.0 * u_amount * vec4(rand(vec2(xs * u_seed, ys * u_seed * 50.0)) * 0.2);
+	vec4 snow = 200.0 * u_amount * vec4_splat(rand(vec2(xs * u_seed, ys * u_seed * 50.0)) * 0.2);
 	gl_FragColor = gl_FragColor + snow;
 }
