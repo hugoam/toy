@@ -52,10 +52,8 @@ void* toy_GameShell__get_core(void* object) { return &(*static_cast<toy::GameShe
 void* toy_GameShell__get_lua(void* object) { return &(*static_cast<toy::GameShell*>(object)).lua(); }
 void* toy_GameShell__get_wren(void* object) { return &(*static_cast<toy::GameShell*>(object)).wren(); }
 void* toy_GameShell__get_gfx(void* object) { return &(*static_cast<toy::GameShell*>(object)).gfx(); }
-void* toy_GameShell__get_context(void* object) { return &(*static_cast<toy::GameShell*>(object)).context(); }
-void* toy_GameShell__get_vg(void* object) { return &(*static_cast<toy::GameShell*>(object)).vg(); }
-void* toy_GameShell__get_ui_window(void* object) { return &(*static_cast<toy::GameShell*>(object)).ui_window(); }
-void toy_GameShell_init(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::GameShell*>(object)).init(); }
+void toy_GameShell_init(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::GameShell*>(object)).init(*static_cast<bool*>(args[0])); }
+void toy_GameShell_window(void* object, span<void*> args, void*& result) { result = &(*static_cast<toy::GameShell*>(object)).window(*static_cast<stl::string*>(args[0]), *static_cast<mud::uvec2*>(args[1]), *static_cast<bool*>(args[2])); }
 void toy_GameShell_load(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::GameShell*>(object)).load(*static_cast<toy::GameModule*>(args[0])); }
 void toy_GameShell_load_path(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::GameShell*>(object)).load_path(*static_cast<stl::string*>(args[0])); }
 void toy_GameShell_run(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::GameShell*>(object)).run(*static_cast<size_t*>(args[0])); }
@@ -68,6 +66,7 @@ void toy_GameShell_save(void* object, span<void*> args, void*& result) { UNUSED(
 void toy_GameShell_reload(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::GameShell*>(object)).reload(); }
 void toy_GameShell_pump(void* object, span<void*> args, void*& result) { UNUSED(args); (*static_cast<bool*>(result)) = (*static_cast<toy::GameShell*>(object)).pump(); }
 void toy_GameShell_cleanup(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::GameShell*>(object)).cleanup(); }
+void toy_GameShell_main_window(void* object, span<void*> args, void*& result) { UNUSED(args); result = &(*static_cast<toy::GameShell*>(object)).main_window(); }
 void toy_GameShell_add_scene(void* object, span<void*> args, void*& result) { UNUSED(args); result = &(*static_cast<toy::GameShell*>(object)).add_scene(); }
 void toy_GameShell_remove_scene(void* object, span<void*> args, void*& result) { UNUSED(result); (*static_cast<toy::GameShell*>(object)).remove_scene(*static_cast<toy::GameScene*>(args[0])); }
 void toy_GameShell_clear_scenes(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::GameShell*>(object)).clear_scenes(); }
@@ -153,8 +152,8 @@ namespace mud
 		static Meta meta = { t, &namspc({ "toy" }), "GameShell", sizeof(toy::GameShell), TypeClass::Object };
 		// bases
 		// defaults
-		static mud::Ui* ui_default = nullptr;
 		static const char* construct_0_exec_path_default = nullptr;
+		static bool window_0_fullscreen_default = false;
 		static size_t run_0_iterations_default = 0U;
 		static size_t run_game_0_iterations_default = 0U;
 		static size_t run_editor_0_iterations_default = 0U;
@@ -171,15 +170,12 @@ namespace mud
 			{ t, SIZE_MAX, type<mud::LuaInterpreter>(), "lua", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_GameShell__get_lua },
 			{ t, SIZE_MAX, type<mud::WrenInterpreter>(), "wren", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_GameShell__get_wren },
 			{ t, SIZE_MAX, type<mud::GfxSystem>(), "gfx", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_GameShell__get_gfx },
-			{ t, SIZE_MAX, type<mud::Context>(), "context", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_GameShell__get_context },
-			{ t, SIZE_MAX, type<mud::Vg>(), "vg", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_GameShell__get_vg },
-			{ t, SIZE_MAX, type<mud::UiWindow>(), "ui_window", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_GameShell__get_ui_window },
-			{ t, offsetof(toy::GameShell, m_editor), type<toy::Editor>(), "editor", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(toy::GameShell, m_ui), type<mud::Ui>(), "ui", ui_default, Member::Flags(Member::Pointer|Member::Link), nullptr }
+			{ t, offsetof(toy::GameShell, m_editor), type<toy::Editor>(), "editor", nullptr, Member::NonMutable, nullptr }
 		};
 		// methods
 		static Method methods[] = {
-			{ t, "init", Address(), toy_GameShell_init, {}, g_qvoid },
+			{ t, "init", Address(), toy_GameShell_init, { { "window", type<bool>(),  } }, g_qvoid },
+			{ t, "window", Address(), toy_GameShell_window, { { "name", type<stl::string>(),  }, { "size", type<mud::uvec2>(),  }, { "fullscreen", type<bool>(), Param::Default, &window_0_fullscreen_default } }, { &type<toy::GameWindow>(), QualType::None } },
 			{ t, "load", Address(), toy_GameShell_load, { { "module", type<toy::GameModule>(),  } }, g_qvoid },
 			{ t, "load_path", Address(), toy_GameShell_load_path, { { "module_path", type<stl::string>(),  } }, g_qvoid },
 			{ t, "run", Address(), toy_GameShell_run, { { "iterations", type<size_t>(), Param::Default, &run_0_iterations_default } }, g_qvoid },
@@ -192,6 +188,7 @@ namespace mud
 			{ t, "reload", Address(), toy_GameShell_reload, {}, g_qvoid },
 			{ t, "pump", Address(), toy_GameShell_pump, {}, { &type<bool>(), QualType::None } },
 			{ t, "cleanup", Address(), toy_GameShell_cleanup, {}, g_qvoid },
+			{ t, "main_window", Address(), toy_GameShell_main_window, {}, { &type<toy::GameWindow>(), QualType::None } },
 			{ t, "add_scene", Address(), toy_GameShell_add_scene, {}, { &type<toy::GameScene>(), QualType::None } },
 			{ t, "remove_scene", Address(), toy_GameShell_remove_scene, { { "scene", type<toy::GameScene>(),  } }, g_qvoid },
 			{ t, "clear_scenes", Address(), toy_GameShell_clear_scenes, {}, g_qvoid }
@@ -229,6 +226,28 @@ namespace mud
 		// static members
 		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
 	}
+	// toy::GameWindow
+	{
+		Type& t = type<toy::GameWindow>();
+		static Meta meta = { t, &namspc({ "toy" }), "GameWindow", sizeof(toy::GameWindow), TypeClass::Object };
+		// bases
+		static Type* bases[] = { &type<mud::GfxWindow>() };
+		static size_t bases_offsets[] = { base_offset<toy::GameWindow, mud::GfxWindow>() };
+		// defaults
+		static uint32_t index_default = 0;
+		static mud::Ui* ui_default = nullptr;
+		// constructors
+		// copy constructor
+		// members
+		static Member members[] = {
+			{ t, offsetof(toy::GameWindow, m_index), type<uint32_t>(), "index", &index_default, Member::Value, nullptr },
+			{ t, offsetof(toy::GameWindow, m_ui_window), type<mud::UiWindow>(), "ui_window", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(toy::GameWindow, m_ui), type<mud::Ui>(), "ui", ui_default, Member::Flags(Member::Pointer|Member::Link), nullptr }
+		};
+		// methods
+		// static members
+		static Class cls = { t, bases, bases_offsets, {}, {}, members, {}, {}, };
+	}
 	
 	{
 		Type& t = type<stl::vector<mud::Ref>>();
@@ -243,6 +262,7 @@ namespace mud
 		m.m_types.push_back(&type<toy::Selection>());
 		m.m_types.push_back(&type<toy::GameModuleBind>());
 		m.m_types.push_back(&type<toy::GameScene>());
+		m.m_types.push_back(&type<toy::GameWindow>());
 		{
 			static Function f = { &namspc({ "toy" }), "paint_physics", nullptr, toy_paint_physics_0, { { "parent", type<mud::Gnode>(),  }, { "world", type<toy::World>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);

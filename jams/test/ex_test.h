@@ -35,12 +35,12 @@ public:
 class Viewer
 {
 public:
-	Viewer(GfxContext& context, Scene& scene, const vec4& rect);
-	Viewer(GfxContext& context, Scene& scene);
+	Viewer(GfxWindow& context, Scene& scene, const vec4& rect);
+	Viewer(GfxWindow& context, Scene& scene);
 	~Viewer();
 
 	attr_ Scene* m_scene;
-	GfxContext& m_context;
+	GfxWindow& m_context;
 
 	mud::Camera m_camera;
 	attr_ Viewport m_viewport;
@@ -55,8 +55,8 @@ public:
 class SceneViewer : public Scene, public Viewer
 {
 public:
-	SceneViewer(GfxContext& context, const vec4& rect);
-	SceneViewer(GfxContext& context);
+	SceneViewer(GfxWindow& context, const vec4& rect);
+	SceneViewer(GfxWindow& context);
 };
 
 }

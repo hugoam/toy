@@ -10,5 +10,6 @@ namespace stl
 {
 	using namespace toy;
 	template class TOY_SHELL_EXPORT vector<unique<GameScene>>;
+	template class TOY_SHELL_EXPORT vector<unique<GameWindow>>;
 }
 #endif

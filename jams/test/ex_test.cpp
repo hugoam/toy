@@ -84,21 +84,22 @@ void Shell::run(const function<void(Shell&)>& func, size_t iterations)
 
 bool Shell::pump()
 {
+	bool pursue = m_gfx.begin_frame();
 	m_pump(*this);
-	m_gfx.begin_frame();
-	return m_gfx.next_frame();
+	m_gfx.end_frame();
+	return pursue;
 }
 
 void Shell::init()
 {
-	m_context = m_gfx.create_context("mud EditorCore", { 1600, 900 }, false);
-	GfxContext& context = as<GfxContext>(*m_context);
+	m_context = construct<GfxWindow>(m_gfx, "mud EditorCore", uvec2(1600, 900), false);
+	GfxWindow& context = as<GfxWindow>(*m_context);
 
 	m_gfx.init_pipeline(pipeline_pbr);
 }
 
 
-Viewer::Viewer(GfxContext& context, Scene& scene, const vec4& rect)
+Viewer::Viewer(GfxWindow& context, Scene& scene, const vec4& rect)
 	: m_scene(&scene)
 	, m_context(context)
 	, m_camera()
@@ -117,7 +118,7 @@ Viewer::Viewer(GfxContext& context, Scene& scene, const vec4& rect)
 	//this->take_focus();
 }
 
-Viewer::Viewer(GfxContext& context, Scene& scene)
+Viewer::Viewer(GfxWindow& context, Scene& scene)
 	: Viewer(context, scene, { 0.f, 0.f, float(context.m_size.x), float(context.m_size.y) })
 {}
 
@@ -131,12 +132,12 @@ void Viewer::resize()
 	m_viewport.m_rect = uvec4(vec4(m_position, m_size));
 }
 
-SceneViewer::SceneViewer(GfxContext& context, const vec4& rect)
+SceneViewer::SceneViewer(GfxWindow& context, const vec4& rect)
 	: Scene(context.m_gfx)
 	, Viewer(context, *this, rect)
 {}
 
-SceneViewer::SceneViewer(GfxContext& context)
+SceneViewer::SceneViewer(GfxWindow& context)
 	: Scene(context.m_gfx)
 	, Viewer(context, *this)
 {}

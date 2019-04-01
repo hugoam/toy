@@ -51,7 +51,7 @@ namespace toy
 		for(uint16_t y = 0; y < subdiv; ++y)
 			for(uint16_t x = 0; x < subdiv; ++x)
 			{
-				uint32_t height = image.at(x, y);
+				uint32_t height = image.at(uvec2(x, y));
 				for(uint32_t z = 0; z <= height; ++z)
 					block.chunk(x, z, y, element);
 			}
@@ -64,7 +64,7 @@ namespace toy
 			for(uint16_t x = 0; x < subdiv; ++x)
 				for(uint16_t z = 0; z < subdiv; ++z)
 				{
-					size_t colour = image.at(x, y);
+					size_t colour = image.at(uvec2(x, y));
 					Element* element = block.m_chunks.at(x, z, y);
 
 					if(element->m_state == MatterState::Solid)

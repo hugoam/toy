@@ -338,6 +338,7 @@ void Player::spawn(const vec3& start_position)
 
 void paint_bullet(Gnode& parent, Bullet& bullet)
 {
+	return;
 	Spatial& spatial = bullet.m_spatial;
 
 	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
@@ -375,8 +376,8 @@ Material& highlight_material(const string& name, const Colour& colour, int facto
 {
 	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
 	material.m_pbr.m_albedo.m_value = Colour::Black;
-	material.m_pbr.m_emissive.m_value = colour;
-	material.m_pbr.m_emissive.m_value.a = float(factor);
+	material.m_lit.m_emissive.m_value = colour;
+	material.m_lit.m_emissive.m_value.a = float(factor);
 	return material;
 }
 
@@ -544,7 +545,7 @@ void paint_level(Gnode& parent)
 void paint_viewer(Viewer& viewer)
 {
 #ifdef CLUSTERED
-	viewer.m_camera.set_clustered(viewer.m_scene->m_gfx, viewer.m_viewport);
+	//viewer.m_viewport.set_clustered(viewer.m_scene->m_gfx);
 #endif
 
 	viewer.m_viewport.comp<Tonemap>().m_enabled = true;

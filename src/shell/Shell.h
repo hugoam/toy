@@ -106,13 +106,36 @@ namespace toy
 	TOY_SHELL_EXPORT func_ void paint_physics(Gnode& parent, World& world);
 	TOY_SHELL_EXPORT func_ void physic_painter(GameScene& scene);
 
+	class refl_ TOY_SHELL_EXPORT GameWindow : public GfxWindow
+	{
+	public:
+		GameWindow(GfxSystem& gfx, uint32_t index, const string& name, const uvec2& size, bool fullscreen = false);
+
+#if !GLOBAL_VG
+		unique<Vg> m_vg = nullptr;
+#endif
+
+		attr_ uint32_t m_index = 0;
+		attr_ UiWindow m_ui_window;
+		attr_ Ui* m_ui = nullptr;
+
+		//attr_ Context& context() { return *m_context; }
+		//attr_ Vg& vg() { return *m_vg; }
+
+		virtual bool begin_frame() override;
+		virtual void render_frame() override;
+		//virtual void end_frame() override;
+	};
+
 	class refl_ TOY_SHELL_EXPORT GameShell
 	{
 	public:
 		constr_ GameShell(const string& resource_path, cstring exec_path = nullptr);
 		~GameShell();
 
-		meth_ void init();
+		meth_ void init(bool window);
+		meth_ GameWindow& window(const string& name, const uvec2& size, bool fullscreen = false);
+
 		meth_ void load(GameModule& module);
 		meth_ void load_path(const string& module_path);
 		meth_ void run(size_t iterations = 0U);
@@ -125,6 +148,8 @@ namespace toy
 		meth_ void reload();
 		meth_ bool pump();
 		meth_ void cleanup();
+
+		meth_ GameWindow& main_window();
 
 		void run_script(Module& module, const string& file, bool run = false);
 
@@ -158,10 +183,6 @@ namespace toy
 		attr_ SoundManager& sound() { return *m_sound_system; }
 #endif
 
-		attr_ Context& context() { return *m_context; }
-		attr_ Vg& vg() { return *m_vg; }
-		attr_ UiWindow& ui_window() { return *m_ui_window; }
-
 	public:
 		string m_exec_path;
 		string m_resource_path;
@@ -177,14 +198,10 @@ namespace toy
 		object<SoundManager> m_sound_system;
 #endif
 
+		vector<unique<GameWindow>> m_windows;
+
 		attr_ Editor m_editor;
 		bool m_mini_editor = false;
-
-		unique<Context> m_context;
-		unique<Vg> m_vg;
-		unique<UiWindow> m_ui_window;
-
-		attr_ Ui* m_ui = nullptr;
 
 		unique<GameModule> m_game_module_alloc;
 

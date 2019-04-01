@@ -14,8 +14,8 @@ using namespace toy;
 Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
 	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
-	material.m_pbr.m_emissive.m_value = colour;
-	material.m_pbr.m_emissive.m_value.a = float(factor);
+	material.m_lit.m_emissive.m_value = colour;
+	material.m_lit.m_emissive.m_value.a = float(factor);
 	return material;
 }
 

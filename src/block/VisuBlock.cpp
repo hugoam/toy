@@ -147,7 +147,7 @@ namespace toy
 
 				printf("INFO: Creating geometry for Block %s, %zu quads\n", identifier.c_str(), bodies[element].size());
 
-				state.m_models[element] = draw_model(identifier.c_str(), bodies[element], true);
+				state.m_models[element] = gen_model(identifier.c_str(), bodies[element], true);
 
 				/*
 				Material& plain = gfx.fetch_material(element->m_name.c_str(), "pbr/pbr");

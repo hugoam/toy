@@ -100,8 +100,13 @@ GameShell.prototype.constructor = GameShell;
 GameShell.prototype.__class = GameShell;
 GameShell.__cache = {};
 Module['GameShell'] = GameShell;
-GameShell.prototype["init"] = GameShell.prototype.init = function() {
-    _toy_GameShell_init_0(this.__ptr);
+GameShell.prototype["init"] = GameShell.prototype.init = function(a0) {
+    _toy_GameShell_init_1(this.__ptr, /*window*/a0);
+};
+GameShell.prototype["window"] = GameShell.prototype.window = function(a0, a1, a2) {
+    ensureCache.prepare();
+    if (a2 === undefined) { return wrapPointer(_toy_GameShell_window_2(this.__ptr, ensureString(/*name*/a0), /*size*/a1.__ptr), GameWindow); }
+    return wrapPointer(_toy_GameShell_window_3(this.__ptr, ensureString(/*name*/a0), /*size*/a1.__ptr, /*fullscreen*/a2), GameWindow);
 };
 GameShell.prototype["load"] = GameShell.prototype.load = function(a0) {
     _toy_GameShell_load_1(this.__ptr, /*module*/a0.__ptr);
@@ -147,6 +152,9 @@ GameShell.prototype["pump"] = GameShell.prototype.pump = function() {
 GameShell.prototype["cleanup"] = GameShell.prototype.cleanup = function() {
     _toy_GameShell_cleanup_0(this.__ptr);
 };
+GameShell.prototype["main_window"] = GameShell.prototype.main_window = function() {
+    return wrapPointer(_toy_GameShell_main_window_0(this.__ptr), GameWindow);
+};
 GameShell.prototype["add_scene"] = GameShell.prototype.add_scene = function() {
     return wrapPointer(_toy_GameShell_add_scene_0(this.__ptr), GameScene);
 };
@@ -172,30 +180,10 @@ Object.defineProperty(GameShell.prototype, "gfx", {
     get: function() {
         return wrapPointer(_toy_GameShell__get_gfx(this.__ptr), GfxSystem);
     }});
-Object.defineProperty(GameShell.prototype, "context", {
-    get: function() {
-        return wrapPointer(_toy_GameShell__get_context(this.__ptr), Context);
-    }});
-Object.defineProperty(GameShell.prototype, "vg", {
-    get: function() {
-        return wrapPointer(_toy_GameShell__get_vg(this.__ptr), Vg);
-    }});
-Object.defineProperty(GameShell.prototype, "ui_window", {
-    get: function() {
-        return wrapPointer(_toy_GameShell__get_ui_window(this.__ptr), UiWindow);
-    }});
 Object.defineProperty(GameShell.prototype, "editor", {
     get: function() {
         return wrapPointer(_toy_GameShell__get_editor(this.__ptr), Editor);
     }});
-Object.defineProperty(GameShell.prototype, "ui", {
-    get: function() {
-        return wrapPointer(_toy_GameShell__get_ui(this.__ptr), Ui);
-    },
-    set: function(value) {
-        _toy_GameShell__set_ui(this.__ptr, value.__ptr);
-    }
-});
 GameShell.prototype["__destroy"] = GameShell.prototype.__destroy = function() {
     _toy_GameShell__destroy(this.__ptr);
 };
@@ -219,6 +207,36 @@ Module['GameScene'] = GameScene;
 GameScene.prototype["__destroy"] = GameScene.prototype.__destroy = function() {
     _toy_GameScene__destroy(this.__ptr);
 };
+// GameWindow
+function GameWindow() { throw "cannot construct a GameWindow, no constructor in IDL" }
+GameWindow.prototype = Object.create(GfxWindow.prototype);
+GameWindow.prototype.constructor = GameWindow;
+GameWindow.prototype.__class = GameWindow;
+GameWindow.__cache = {};
+Module['GameWindow'] = GameWindow;
+Object.defineProperty(GameWindow.prototype, "index", {
+    get: function() {
+        return _toy_GameWindow__get_index(this.__ptr);
+    },
+    set: function(value) {
+        _toy_GameWindow__set_index(this.__ptr, value);
+    }
+});
+Object.defineProperty(GameWindow.prototype, "ui_window", {
+    get: function() {
+        return wrapPointer(_toy_GameWindow__get_ui_window(this.__ptr), UiWindow);
+    }});
+Object.defineProperty(GameWindow.prototype, "ui", {
+    get: function() {
+        return wrapPointer(_toy_GameWindow__get_ui(this.__ptr), Ui);
+    },
+    set: function(value) {
+        _toy_GameWindow__set_ui(this.__ptr, value.__ptr);
+    }
+});
+GameWindow.prototype["__destroy"] = GameWindow.prototype.__destroy = function() {
+    _toy_GameWindow__destroy(this.__ptr);
+};
 Module['paint_physics'] = function(a0, a1) {
     _toy_paint_physics_2(/*parent*/a0.__ptr, /*world*/a1.__ptr);
 };
@@ -233,6 +251,7 @@ Module['physic_painter'] = function(a0) {
         GameShell.__type = _toy_GameShell__type();
         GameModuleBind.__type = _toy_GameModuleBind__type();
         GameScene.__type = _toy_GameScene__type();
+        GameWindow.__type = _toy_GameWindow__type();
         // GameMode
         Module['GameMode'] = Module['GameMode'] || {};
         Module['GameMode']['Play'] = _toy_GameMode_Play();

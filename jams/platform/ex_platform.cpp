@@ -440,8 +440,8 @@ Material& highlight_material(const string& name, const Colour& colour, int facto
 {
 	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
 	material.m_pbr.m_albedo.m_value = Colour::Black;
-	material.m_pbr.m_emissive.m_value = colour;
-	material.m_pbr.m_emissive.m_value.a = float(factor);
+	material.m_lit.m_emissive.m_value = colour;
+	material.m_lit.m_emissive.m_value.a = float(factor);
 	return material;
 }
 
@@ -582,12 +582,7 @@ void paint_scene(Gnode& parent)
 void paint_viewer(Viewer& viewer)
 {
 #if CLUSTERED
-	if(rect_size(vec4(viewer.m_viewport.m_rect)) != vec2(0.f) && !viewer.m_camera.m_clusters)
-	{
-		viewer.m_camera.m_clustered = true;
-		viewer.m_camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx);
-		viewer.m_camera.m_clusters->prepare(viewer.m_viewport, viewer.m_camera.m_projection, viewer.m_camera.m_near, viewer.m_camera.m_far);
-	}
+	//viewer.m_viewport.set_clustered(viewer.m_scene->m_gfx);
 #endif
 
 	viewer.m_viewport.comp<Tonemap>().m_enabled = true;

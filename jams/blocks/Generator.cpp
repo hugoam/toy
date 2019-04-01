@@ -32,7 +32,7 @@ void flat_low(GfxSystem& gfx)
 	Model& model = gfx.models().create("flat_low");
 	Quad quad = { 1.f, X3, Z3 };
 	quad.m_center = vec3(0.f);
-	draw_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
+	gen_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
 }
 
 void flat_high(GfxSystem& gfx)
@@ -41,7 +41,7 @@ void flat_high(GfxSystem& gfx)
 	Model& model = gfx.models().create("flat_high");
 	Quad quad = { 1.f, X3, Z3 };
 	quad.m_center = Y3;
-	draw_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
+	gen_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
 }
 
 Edge random_edge(float start, float end, float dv, size_t subdiv)
@@ -157,7 +157,7 @@ void cliff_side(GfxSystem& gfx, const string& name, Edge& edge0, Edge& edge1)
 	{
 		vec3 offset = Z3 * 0.5f - X3 * 0.5f;
 		Grid3 grid = extrude(offset, { cliff.edges, Cliff::subdiv }, points, X3, -Z3);
-		draw_mesh(ProcShape{ Symbol(), &grid, PLAIN }, model, PLAIN, true, &material);
+		gen_mesh(ProcShape{ Symbol(), &grid, PLAIN }, model, PLAIN, true, &material);
 	};
 
 	extrusion(range(0, 2), material_ground);
@@ -189,7 +189,7 @@ void cliff_corner(GfxSystem& gfx, const string& name, Edge& edge0, Edge& edge1, 
 			vec3 offset = X3 - Z3 * 0.5f - X3 * 0.5f;
 			grid = revolve(offset, 0.5f, c_pi, c_pi * 3.f / 2.f, { cliff.edges, Cliff::subdiv }, points, true);
 		}
-		draw_mesh(ProcShape{ Symbol(), &grid, PLAIN }, model, PLAIN, true, &material);
+		gen_mesh(ProcShape{ Symbol(), &grid, PLAIN }, model, PLAIN, true, &material);
 	};
 	
 	revolution(range(0, 2), material_ground);

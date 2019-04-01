@@ -19,4 +19,5 @@ namespace mud
     template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>() { static Type ty("GameShell", sizeof(toy::GameShell)); return ty; }
     template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>() { static Type ty("GameModuleBind", type<toy::GameModule>(), sizeof(toy::GameModuleBind)); return ty; }
     template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>() { static Type ty("GameScene", type<toy::VisuScene>(), sizeof(toy::GameScene)); return ty; }
+    template <> TOY_SHELL_EXPORT Type& type<toy::GameWindow>() { static Type ty("GameWindow", type<mud::GfxWindow>(), sizeof(toy::GameWindow)); return ty; }
 }

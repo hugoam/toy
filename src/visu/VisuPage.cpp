@@ -84,7 +84,7 @@ namespace toy
 					continue;
 
 				if(!item->m_batch)
-					model_item.m_mesh->read(data, item->m_node->m_transform);
+					model_item.m_mesh->m_cache.xcopy(data, item->m_node->m_transform);
 				//else
 				//	for(const mat4& transform : item->m_instances)
 				//		model_item.m_mesh->read(data, transform);

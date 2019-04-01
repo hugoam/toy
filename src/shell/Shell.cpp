@@ -100,6 +100,56 @@ namespace toy
 		});
 	}
 
+	unique<Vg> create_vg(GfxSystem& gfx, const string& resource_path)
+	{
+#if defined MUD_VG_VG
+		return make_unique<VgVg>(resource_path, &gfx.allocator());
+#elif defined MUD_VG_NANOVG
+		return make_unique<VgNanoBgfx>(m_resource_path);
+#endif
+	}
+
+	GameWindow::GameWindow(GfxSystem& gfx, uint32_t index, const string& name, const uvec2& size, bool fullscreen)
+		: GfxWindow(gfx, name, size, fullscreen, index == 0)
+#if !GLOBAL_VG
+		, m_vg(create_vg(gfx, gfx.m_resource_path))
+#endif
+		, m_index(index)
+		, m_ui_window(*this, *m_vg)
+	{
+#if GLOBAL_VG
+		if(index == 0) m_vg->setup_context();
+#else
+		GfxWindow::m_vg = m_vg.get();
+		m_vg->setup_context();
+#endif
+
+		m_reset_vg = [](GfxWindow& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.m_tex.idx); };
+
+		m_ui_window.init();
+		m_ui = m_ui_window.m_ui.get();
+
+		style_minimal(m_ui_window);
+
+		//string stylesheet = "minimal.yml";
+		//string stylesheet = "vector.yml";
+		//string stylesheet = "blendish_dark.yml";
+		//set_style_sheet(*m_ui_window->m_styler, (string(m_ui_window->m_resource_path) + "interface/styles/" + stylesheet).c_str());
+	}
+
+	bool GameWindow::begin_frame()
+	{
+		GfxWindow::begin_frame();
+		return m_ui_window.input_frame();
+	}
+
+	void GameWindow::render_frame()
+	{
+		GfxWindow::render_frame();
+		bgfx::setViewFrameBuffer(240 + m_index, m_target->m_backbuffer.m_fbo);
+		m_ui_window.render_frame(240 + m_index);
+	}
+
 	GameShell::GameShell(const string& resource_path, cstring exec_path)
 		: m_exec_path(exec_path ? string(exec_path) : "")
 		, m_resource_path(resource_path)
@@ -132,7 +182,7 @@ namespace toy
 		m_gfx->m_job_system = m_job_system.get();
 		m_job_system->adopt();
 
-		this->init();
+		this->init(true);
 	}
 
 	GameShell::~GameShell()
@@ -151,7 +201,7 @@ namespace toy
 		store.add_format(format, loader);
 	}
 
-	void GameShell::init()
+	void GameShell::init(bool window)
 	{
 #ifdef TOY_SOUND
 		if(!m_sound_system->init())
@@ -159,38 +209,29 @@ namespace toy
 			printf("ERROR: Sound - failed to init\n");
 		}
 #endif
-		//m_context = m_gfx->create_context("mud EditorCore", { 1920, 1080 }, false);
-		m_context = m_gfx->create_context("mud EditorCore", { 1600, 900 }, false);
-		//m_context = m_gfx.create_context("mud EditorCore", 1280, 720, false);
-		GfxContext& context = as<GfxContext>(*m_context);
-
-#if defined MUD_VG_VG
-		m_vg = oconstruct<VgVg>(m_resource_path.c_str(), &m_gfx->allocator());
-#elif defined MUD_VG_NANOVG
-		m_vg = oconstruct<VgNanoBgfx>(m_resource_path.c_str());
-#endif
-		m_gfx->m_vg = &*m_vg;
-		context.m_reset_vg = [](GfxContext& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.idx); };
-
-		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
+		if(window)
+			this->window("toy", uvec2(1600U, 900U), false);
 
 		m_gfx->init_pipeline(pipeline_pbr);
 
 		static ImporterOBJ obj_importer(*m_gfx);
 		static ImporterGltf gltf_importer(*m_gfx);
 
-		string stylesheet = "minimal.yml";
-		//string stylesheet = "vector.yml";
-		//string stylesheet = "blendish_dark.yml";
-		//set_style_sheet(*m_ui_window->m_styler, (string(m_ui_window->m_resource_path) + "interface/styles/" + stylesheet).c_str());
-
-		style_minimal(*m_ui_window);
-
 		//declare_gfx_edit();
 
-		m_ui = m_ui_window->m_root_sheet.get();
-
 		add_asset_loader(m_gfx->flows(), ".ptc");
+	}
+
+	GameWindow& GameShell::window(const string& name, const uvec2& size, bool fullscreen)
+	{
+		const uint32_t index = m_windows.size();
+		m_windows.push_back(make_unique<GameWindow>(*m_gfx, index, name, size, fullscreen));
+		return *m_windows.back();
+	}
+
+	GameWindow& GameShell::main_window()
+	{
+		return *m_windows[0];
 	}
 
 	void GameShell::reset_interpreters(bool reflect)
@@ -343,12 +384,11 @@ namespace toy
 		bool pursue = true;
 		for(float& time : m_times.m_values)
 			time = 0.f;
-		time(m_times, Step::Input,		"ui input",		[&] { ZoneScopedNC("ui input",  tracy::Color::Salmon);    pursue &= m_ui_window->input_frame(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",		tracy::Color::Green);	  pursue &= m_gfx->begin_frame(); });
 		time(m_times, Step::Core,		"core",			[&] { ZoneScopedNC("core",      tracy::Color::Red);       m_core->next_frame(); });
 		m_pump();
-		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",		tracy::Color::Green);	  m_gfx->begin_frame(); });
-		time(m_times, Step::UiRender,	"ui render",	[&] { ZoneScopedNC("ui render", tracy::Color::LightBlue); m_ui_window->render_frame(); });
-		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     pursue &= m_gfx->next_frame(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("contexts",  tracy::Color::Pink);      m_gfx->render_contexts(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     m_gfx->end_frame(); });
 
 		FrameMark;
 		timer.end();
@@ -371,7 +411,10 @@ namespace toy
 	void GameShell::frame_game()
 	{
 		if(m_game_module)
-			m_game_module->pump(*this, m_game, m_game.m_screen ? *m_game.m_screen : m_ui->begin());
+		{
+			Widget& ui = m_game.m_screen ? *m_game.m_screen : this->main_window().m_ui->begin();
+			m_game_module->pump(*this, m_game, ui);
+		}
 	}
 
 	void GameShell::frame_scenes()
@@ -392,7 +435,7 @@ namespace toy
 		m_editor.m_edited_world = m_game.m_world;
 
 		//Widget& ui = m_ui->begin();
-		Widget& ui = *m_ui;
+		Widget& ui = *this->main_window().m_ui;
 
 		if(m_mini_editor)
 			toy::mini_editor(ui, m_editor, m_game.m_screen);
@@ -406,7 +449,7 @@ namespace toy
 
 		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange); this->frame_scenes(); });
 
-		m_ui->begin(); // well maybe we should call it end() then
+		this->main_window().m_ui->begin(); // well maybe we should call it end() then
 	}
 
 	GameScene& GameShell::add_scene()
@@ -487,12 +530,12 @@ namespace toy
 
 	void GameShell::copy(const string& text)
 	{
-		m_ui_window->m_clipboard = { text, false };
+		this->main_window().m_ui_window.m_clipboard = { text, false };
 	}
 
 	void GameShell::paste(const string& text)
 	{
-		m_ui_window->m_clipboard.m_pasted.push_back(text);
+		this->main_window().m_ui_window.m_clipboard.m_pasted.push_back(text);
 	}
 }
 

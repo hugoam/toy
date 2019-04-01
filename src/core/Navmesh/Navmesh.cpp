@@ -160,7 +160,7 @@ namespace toy
 	{
 		NavmeshShapeDeclaration()
 		{
-			declare_shape<NavmeshShape>(DispatchDrawProcShape::me);
+			decl_shape<NavmeshShape>(DispatchDrawProcShape::me);
 		}
 	};
 
