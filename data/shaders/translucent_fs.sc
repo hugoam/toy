@@ -4,9 +4,9 @@ $input v_view, v_position, v_normal, v_tangent, v_color, v_uv0, v_uv1, v_binorma
 #include <pbr/light.sh>
 #include <pbr/light_brdf_three.sh>
 #include <pbr/radiance.sh>
-#define s_thickness s_user5
-uniform vec4 u_scatter_p0;
-uniform vec4 u_scatter_p1;
+#define s_thickness s_user0
+#define u_scatter_p0 u_user_p0
+#define u_scatter_p1 u_user_p1
 #define u_thicknessPower u_scatter_p0.x
 #define u_thicknessScale u_scatter_p0.y
 #define u_thicknessDistortion u_scatter_p0.z
