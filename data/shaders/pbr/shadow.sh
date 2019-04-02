@@ -171,7 +171,7 @@ vec3 debug_sample_cascade(int cascade_index, vec3 frag, float bias, vec2 texel_s
 #endif
 }
 
-float shadow_csm(Light light, Shadow shadow, vec3 frag, float w)
+float shadow_csm(Shadow shadow, vec3 frag, float w)
 {
     // alternative / todo : transform to all shadowmap spaces in the vertex shader and select here
 #if CSM_NUM_CASCADES > 1
@@ -264,23 +264,24 @@ float shadow_point(samplerShadow shadowmap, vec2 slot, vec2 subdiv, float bias, 
 #endif
 }
 
-float shadow_point(Light light, Shadow shadow, vec3 frag)
+float shadow_point(Shadow shadow, vec3 frag)
 {
     vec4 coord = mul(u_shadow_matrix[shadow.index], vec4(frag, 1.0));
-    return shadow_point(s_shadow_atlas, shadow.atlas_slot, shadow.atlas_subdiv, shadow.bias, coord.xyz, 0.01, light.range);
+    return shadow_point(s_shadow_atlas, shadow.atlas_slot, shadow.atlas_subdiv, shadow.bias, coord.xyz, 0.01, shadow.range);
     
 #ifdef USE_CONTACT_SHADOWS
-    if (shadowmap > 0.01 && light.contact_shadows > 0.0)
+    if (shadowmap > 0.01 && shadow.contact > 0.0)
     {
-        float contact_shadow = contact_shadow_compute(vertex, normalize(l), min(light_length, light.contact_shadows));
+        float contact_shadow = contact_shadow_compute(vertex, normalize(l), min(light_length, shadow.contact));
         shadowmap = min(shadowmap, contact_shadow);
 
     }
 #endif
 }
 
-void shadow_spot(Light light, Shadow shadow, vec3 frag)
+float shadow_spot(Shadow shadow, vec3 frag)
 {
+    return 1.0;
 }
 
 #endif

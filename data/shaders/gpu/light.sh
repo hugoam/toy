@@ -24,6 +24,7 @@ struct Shadow
     int index;
     float bias;
     float radius;
+    float range;
     vec2 atlas_slot;
     vec2 atlas_subdiv;
 };
@@ -39,11 +40,7 @@ struct Light
     float spot_attenuation;
     float spot_cutoff;
     float spot_inner;
-    bool shadows;
-    Shadow shadow;
 };
-
-Shadow read_shadow(int index);
 
 Light read_light(int index)
 {
@@ -80,9 +77,6 @@ Light read_light(int index)
     light.spot_inner = light.spot_cutoff; //@todo
 #endif
 
-    light.shadow = read_shadow(index);
-    light.shadows = light.shadow.index != MAX_SHADOWS;
-    
     return light;
 }
 
@@ -94,6 +88,7 @@ Shadow read_shadow(int index)
     shadow.index = int(u_light_shadow_p0[index].x);
     shadow.bias = u_light_shadow_p0[index].y;
     shadow.radius = u_light_shadow_p0[index].z;
+    shadow.range = u_light_shadow_p0[index].w;
     shadow.atlas_slot = u_light_shadowmap_p0[index].xy;
     shadow.atlas_subdiv = u_light_shadowmap_p0[index].zw;
 #else
@@ -103,6 +98,7 @@ Shadow read_shadow(int index)
     shadow.index = int(shadow_p0.x);
     shadow.bias = shadow_p0.y;
     shadow.radius = shadow_p0.z;
+    shadow.range = shadow_p0.w;
     
     vec4 shadowmap_p0 = texelFetch(s_lights, ivec2(x, 5), 0);
     shadow.atlas_slot = shadowmap_p0.xy;

@@ -8,6 +8,7 @@
 
 #ifndef ZONES_TEXTURE
 uniform vec4 u_light_counts;
+uniform vec4 u_shadow_counts;
 uniform vec4 u_light_indices[MAX_LIGHTS];
 #endif
 
