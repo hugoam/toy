@@ -11,8 +11,8 @@
 #ifdef MATERIALS_BUFFER
 SAMPLER2D(s_materials, 8);
 #else
-uniform highp vec4 u_material_p0;
-uniform highp vec4 u_material_p1;
+uniform vec4 u_material_p0;
+uniform vec4 u_material_p1;
 #endif
 
 struct BaseMaterial
@@ -67,7 +67,7 @@ AlphaMaterial read_alpha_material(int index)
 }
 
 #ifndef MATERIALS_BUFFER
-uniform highp vec4 u_color;
+uniform vec4 u_color;
 #endif
 
 struct SolidMaterial
@@ -91,7 +91,7 @@ SolidMaterial read_solid_material(int index)
 }
 
 #ifndef MATERIALS_BUFFER
-uniform highp vec4 u_point_p0;
+uniform vec4 u_point_p0;
 #endif
 
 struct PointMaterial
@@ -119,7 +119,8 @@ PointMaterial read_point_material(int index)
 }
 
 #ifndef MATERIALS_BUFFER
-uniform highp vec4 u_line_p0;
+uniform vec4 u_line_p0;
+uniform vec4 u_line_p1;
 #endif
 
 struct LineMaterial
@@ -136,9 +137,9 @@ LineMaterial read_line_material(int index)
     
 #ifndef MATERIALS_BUFFER
     m.line_width = u_line_p0.x;
-    m.dash_scale = u_line_p0.y;
-    m.dash_size = u_line_p0.z;
-    m.dash_gap = u_line_p0.w;
+    m.dash_size = u_line_p0.y;
+    m.dash_gap = u_line_p0.z;
+    m.dash_scale = u_line_p1.x;
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
@@ -153,8 +154,8 @@ LineMaterial read_line_material(int index)
 }
 
 #ifndef MATERIALS_BUFFER
-uniform highp vec4 u_lit_p0;
-uniform highp vec4 u_emissive;
+uniform vec4 u_lit_p0;
+uniform vec4 u_emissive;
 #endif
 
 struct LitMaterial
@@ -190,11 +191,11 @@ LitMaterial read_lit_material(int index)
 }
 
 #ifndef MATERIALS_BUFFER
-uniform highp vec4 u_albedo;
-uniform highp vec4 u_pbr_p0;
-uniform highp vec4 u_pbr_channels_0;
-uniform highp vec4 u_pbr_p1;
-uniform highp vec4 u_pbr_p2;
+uniform vec4 u_albedo;
+uniform vec4 u_pbr_p0;
+uniform vec4 u_pbr_channels_0;
+uniform vec4 u_pbr_p1;
+uniform vec4 u_pbr_p2;
 #endif
 
 struct PbrMaterial
@@ -272,9 +273,9 @@ PbrMaterial read_pbr_material(int index)
 }
 
 #ifndef MATERIALS_BUFFER
-uniform highp vec4 u_diffuse;
-uniform highp vec4 u_specular;
-uniform highp vec4 u_phong_p0;
+uniform vec4 u_diffuse;
+uniform vec4 u_specular;
+uniform vec4 u_phong_p0;
 #endif
 
 struct PhongMaterial
