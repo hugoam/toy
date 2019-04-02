@@ -137,9 +137,9 @@ LineMaterial read_line_material(int index)
     
 #ifndef MATERIALS_BUFFER
     m.line_width = u_line_p0.x;
-    m.dash_size = u_line_p0.y;
-    m.dash_gap = u_line_p0.z;
-    m.dash_scale = u_line_p1.x;
+    m.dash_scale = u_line_p0.y;
+    m.dash_size = u_line_p1.x;
+    m.dash_gap = u_line_p1.y;
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
