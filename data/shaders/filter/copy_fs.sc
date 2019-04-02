@@ -5,7 +5,7 @@ $input v_uv0
 #include <spherical.sh>
 
 #if defined SOURCE_DEPTH || defined UNPACK_DEPTH
-CONST(float) depth_value_pow = 500.0;
+CONST(float) depth_value_pow = 1.0;
 #endif
 
 void main()
