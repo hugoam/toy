@@ -84,30 +84,19 @@ float spot_attenuation(vec3 l, Light light)
     return spot_attenuation(l, light.direction, light.range, light.attenuation, light.spot_attenuation, light.spot_cutoff);
 }
 
-#if NUM_HEMI_LIGHTS > 0
-struct HemisphereLight {
-    vec3 direction;
-    vec3 skyColor;
-    vec3 groundColor;
-};
+vec3 light_hemisphere(vec3 l, vec3 ground, vec3 sky, Fragment fragment) {
 
-//uniform HemisphereLight hemisphereLights[ NUM_HEMI_LIGHTS ];
+    float dotNL = dot(fragment.normal, l);
+    float weight = 0.5 * dotNL + 0.5;
 
-vec3 light_hemisphere(HemisphereLight light, Fragment fragment) {
-
-    float dotNL = dot(fragment.normal, light.direction);
-    float hemiDiffuseWeight = 0.5 * dotNL + 0.5;
-
-    vec3 irradiance = mix(light.groundColor, light.skyColor, hemiDiffuseWeight);
+    vec3 irradiance = mix(ground, sky, weight);
 
 #ifndef PHYSICALLY_CORRECT_LIGHTS
-    irradiance *= PI;
+    irradiance *= M_PI;
 #endif
 
     return irradiance;
-
 }
-#endif
 
 #include <pbr/shadow.sh>
 

@@ -6,8 +6,8 @@
     vec3 specular = vec3_splat(0.0);
 
 #include "fs_indirect.sh"
-    diffuse *= material.diffuse;
-
+    diffuse *= BRDF_Diffuse_Lambert(material.diffuse);
+    
 #ifdef CLUSTERED
 #include "fs_direct_cluster.sh"
 #else

@@ -62,19 +62,6 @@ float brdf_env_specular(Fragment fragment, PhongMaterial material)
 #define MAX_REFLECTANCE 0.16
 #define DEFAULT_REFLECTANCE 0.04
 
-
-PhysicalMaterial material;
-material.albedo = albedo.rgb * (1.0 - metalness);
-material.roughness = clamp(roughness, 0.04, 1.0);
-#ifdef STANDARD
-	material.f0 = mix(vec3(DEFAULT_REFLECTANCE), albedo.rgb, metalness);
-#else
-	material.f0 = mix(vec3(MAX_REFLECTANCE * pow2(reflectivity)), albedo.rgb, metalness);
-	material.clearCoat = saturate(clearCoat); // Burley clearcoat model
-	material.clearCoatRoughness = clamp(clearCoatRoughness, 0.04, 1.0);
-#endif
-
-
 // Clear coat directional hemishperical reflectance (this approximation should be improved)
 float clearCoatDHRApprox(float roughness, float dotNL) {
 
@@ -96,7 +83,6 @@ uniform sampler2D ltc_1; // RGBA Float
 uniform sampler2D ltc_2; // RGBA Float
 
 uniform RectAreaLight rectAreaLights[ NUM_RECT_AREA_LIGHTS ];
-#endif
 
 void direct_rect_physical(RectAreaLight light, Fragment fragment, PhysicalMaterial material, inout vec3 diffuse, inout vec3 specular) {
 
@@ -124,36 +110,37 @@ void direct_rect_physical(RectAreaLight light, Fragment fragment, PhysicalMateri
     specular += light.energy * fresnel * LTC_Evaluate(fragment.normal, fragment.view, fragment.position, mInv, rectCoords);
 
     diffuse += light.energy * material.albedo * LTC_Evaluate(fragment.normal, fragment.view, fragment.position, mat3(1.0), rectCoords);
-
 }
+#endif
 
 void direct_standard(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
 
     vec3 irradiance = direct_energy(energy, l, fragment);
 
-    specular += irradiance * BRDF_Specular_GGX(l, fragment, material.f0, material.specularRoughness);
+    specular += irradiance * BRDF_Specular_GGX(l, fragment, material.f0, material.roughness);
 
     diffuse += irradiance * BRDF_Diffuse_Lambert(material.albedo);
-}
-
-void direct_physical(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
-
-    vec3 irradiance = direct_energy(energy, l, fragment);
-    
-    float clearCoatDHR = material.clearcoat * clearCoatDHRApprox(material.clearCoatRoughness, dotNL);
-
-    specular += (1.0 - clearCoatDHR) * irradiance * BRDF_Specular_GGX(l, fragment, material.f0, material.specularRoughness);
-
-    diffuse += (1.0 - clearCoatDHR) * irradiance * BRDF_Diffuse_Lambert(material.albedo);
-
-    specular += irradiance * material.clearcoat * BRDF_Specular_GGX(l, fragment, vec3(DEFAULT_SPECULAR_COEFFICIENT), material.clearCoatRoughness);
 }
 
 void indirect_standard(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
 
     diffuse *= BRDF_Diffuse_Lambert(material.albedo);
-    specular *= BRDF_Specular_GGX_Environment(fragment, material.specularColor, material.specularRoughness);
+    specular *= BRDF_Specular_GGX_Environment(fragment, material.f0, material.roughness);
 
+}
+
+#ifdef BRDF_PHYSICAL
+void direct_physical(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
+
+    vec3 irradiance = direct_energy(energy, l, fragment);
+
+    float clearCoatDHR = material.clearcoat * clearCoatDHRApprox(material.clearCoatRoughness, dotNL);
+
+    specular += (1.0 - clearCoatDHR) * irradiance * BRDF_Specular_GGX(l, fragment, material.f0, material.roughness);
+
+    diffuse += (1.0 - clearCoatDHR) * irradiance * BRDF_Diffuse_Lambert(material.albedo);
+
+    specular += irradiance * material.clearcoat * BRDF_Specular_GGX(l, fragment, vec3(DEFAULT_SPECULAR_COEFFICIENT), material.clearCoatRoughness);
 }
 
 void indirect_physical(vec3 irradiance, vec3 radiance, vec3 radiance_clearcoat, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
@@ -163,9 +150,10 @@ void indirect_physical(vec3 irradiance, vec3 radiance, vec3 radiance_clearcoat, 
     float clearCoatDHR = material.clearCoat * clearCoatDHRApprox(material.clearCoatRoughness, dotNL);
 
     diffuse += irradiance * BRDF_Diffuse_Lambert(material.albedo);
-    specular += (1.0 - clearCoatDHR) * radiance * BRDF_Specular_GGX_Environment(fragment, material.specularColor, material.specularRoughness);
+    specular += (1.0 - clearCoatDHR) * radiance * BRDF_Specular_GGX_Environment(fragment, material.f0, material.roughness);
     specular += radiance_clearcoat * material.clearCoat * BRDF_Specular_GGX_Environment(fragment, vec3(DEFAULT_SPECULAR_COEFFICIENT), material.clearCoatRoughness);
 }
+#endif
 
 #define BlinnShininessExponent(roughness)   GGXRoughnessToBlinnExponent(roughness)
 

@@ -11,10 +11,9 @@
     diffuse += zone.radiance_color * zone.ambient;
 #endif
 
-#if (NUM_HEMI_LIGHTS > 0)
-    for (int i = 0; i < NUM_HEMI_LIGHTS; i ++) {
-        diffuse += getHemisphereLightIrradiance(hemisphereLights[ i ], geometry);
-    }
+#ifdef SKY_LIGHT
+    Skylight skylight = read_skylight();
+    diffuse += light_hemisphere(skylight.direction, skylight.ground, skylight.color, fragment);
 #endif
 
 #if defined LIGHTMAP

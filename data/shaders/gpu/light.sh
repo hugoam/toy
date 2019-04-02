@@ -17,7 +17,13 @@ uniform vec4 u_light_direction_attenuation[MAX_LIGHTS];
 uniform vec4 u_light_spot_p0[MAX_LIGHTS];
 uniform vec4 u_light_shadow_p0[MAX_LIGHTS];
 uniform vec4 u_light_shadowmap_p0[MAX_LIGHTS];
+uniform vec4 u_light_csm_p0[MAX_LIGHTS];
+uniform vec4 u_light_csm_p1[MAX_LIGHTS];
 #endif
+
+uniform vec4 u_skylight_p0;
+uniform vec4 u_skylight_p1;
+uniform vec4 u_skylight_p2;
 
 struct Shadow
 {
@@ -27,6 +33,13 @@ struct Shadow
     float range;
     vec2 atlas_slot;
     vec2 atlas_subdiv;
+};
+
+struct CSMShadow
+{
+    int count;
+    ivec4 matrices;
+    vec4 splits;
 };
 
 struct Light
@@ -41,6 +54,24 @@ struct Light
     float spot_cutoff;
     float spot_inner;
 };
+
+struct Skylight
+{
+    vec3 direction;
+    vec3 color;
+    vec3 ground;
+};
+
+Skylight read_skylight()
+{
+    Skylight skylight;
+    
+    skylight.direction = u_skylight_p0.xyz;
+    skylight.color = u_skylight_p1.xyz;
+    skylight.ground = u_skylight_p2.xyz;
+    
+    return skylight;
+}
 
 Light read_light(int index)
 {
@@ -106,6 +137,27 @@ Shadow read_shadow(int index)
 #endif
     
     return shadow;
+}
+
+CSMShadow read_csm_shadow(int index)
+{
+    CSMShadow csm;
+    csm.count = 4;
+    
+#ifndef LIGHTS_BUFFER
+    csm.matrices = ivec4(u_light_csm_p0[index]);
+    csm.splits = u_light_csm_p1[index];
+#else
+    int x = int(mod(index, LIGHTS_TEXTURE_WIDTH));
+    
+    vec4 csm_p0 = texelFetch(s_lights, ivec2(x, 6), 0);
+    csm.matrices = ivec4(csm_p0);
+    
+    vec4 csm_p1 = texelFetch(s_lights, ivec2(x, 7), 0);
+    csm.splits = csm_p1;
+#endif
+    
+    return csm;
 }
 
 #ifdef NO_TEXEL_FETCH

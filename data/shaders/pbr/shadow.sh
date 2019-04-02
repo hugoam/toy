@@ -123,9 +123,9 @@ float sample_shadow_pcf(samplerShadow shadowmap, vec4 coord, float bias, vec2 te
 #else
     return step(depth, texture2D(shadowmap, pos).r);
 #endif
-    //return sample_shadow(shadowmap, shadow_coord, bias);
+    //return sample_shadow(shadowmap, coord, bias);
 #elif PCF_LEVEL == HARD_PCF
-    return sample_shadow_hard_pcf(shadowmap, shadow_coord, bias, texel_size);
+    return sample_shadow_hard_pcf(shadowmap, coord, bias, texel_size);
 #elif PCF_LEVEL == PCF5
 	float avg = shadow2D(shadowmap, vec3(pos, depth));
 	avg += shadow2D(shadowmap, vec3(pos + vec2(texel_size.x, 0.0), depth));
@@ -153,17 +153,19 @@ float sample_shadow_pcf(samplerShadow shadowmap, vec4 coord, float bias, vec2 te
 
 #ifdef CSM_SHADOW
 
-float sample_cascade(int cascade_index, vec3 frag, float bias, vec2 texel_size)
+float sample_cascade(CSMShadow csm, int index, vec3 frag, float bias, vec2 texel_size)
 {
-    vec4 shadow_coord = mul(u_csm_matrix[cascade_index], vec4(frag, 1.0));
-    return sample_shadow_pcf(s_shadow_atlas, shadow_coord, bias, texel_size);
+    int matindex = csm.matrices[index];
+    vec4 coord = mul(u_shadow_matrix[matindex], vec4(frag, 1.0));
+    return sample_shadow_pcf(s_shadow_atlas, coord, bias, texel_size);
 }
 
-vec3 debug_sample_cascade(int cascade_index, vec3 frag, float bias, vec2 texel_size)
+vec3 debug_sample_cascade(CSMShadow csm, int index, vec3 frag, float bias, vec2 texel_size)
 {
-    vec4 shadow_coord = mul(u_csm_matrix[cascade_index], vec4(frag, 1.0));
-	vec2 pos = shadow_coord.xy / shadow_coord.w;
-    float depth = (shadow_coord.z - bias) / shadow_coord.w;
+    int matindex = csm.matrices[index];
+    vec4 coord = mul(u_shadow_matrix[matindex], vec4(frag, 1.0));
+	vec2 pos = coord.xy / coord.w;
+    float depth = (coord.z - bias) / coord.w;
 #if !SHADOW_SAMPLER
     return vec3(pos, depth) * vec3_splat(sample_shadow(s_shadow_atlas, vec4(pos, depth, 0.0), 0.0));
 #else
@@ -171,25 +173,22 @@ vec3 debug_sample_cascade(int cascade_index, vec3 frag, float bias, vec2 texel_s
 #endif
 }
 
-float shadow_csm(Shadow shadow, vec3 frag, float w)
+float shadow_csm(CSMShadow csm, vec3 frag, float w)
 {
     // alternative / todo : transform to all shadowmap spaces in the vertex shader and select here
-#if CSM_NUM_CASCADES > 1
-    vec4 comparison = vec4(greaterThan(vec4_splat(w), u_csm_splits));
-    float findex = dot(vec4(float(CSM_NUM_CASCADES > 0), float(CSM_NUM_CASCADES > 1), float(CSM_NUM_CASCADES > 2), float(CSM_NUM_CASCADES > 3)), comparison);
-    int cascade_index = int(min(findex, float(CSM_NUM_CASCADES) - 1.0));
-#else
-    int cascade_index = 0;
-#endif
+
+    vec4 comparison = vec4(greaterThan(vec4_splat(w), csm.splits));
+    float findex = dot(vec4(float(csm.count > 0), float(csm.count > 1), float(csm.count > 2), float(csm.count > 3)), comparison);
+    int cascade = int(min(findex, float(csm.count) - 1.0));
 
     float shadow_bias = 0.0;
-    float shadowmap = sample_cascade(cascade_index, frag, shadow_bias, u_csm_atlas_pixel_size);
+    float shadowmap = sample_cascade(csm, cascade, frag, shadow_bias, u_csm_atlas_pixel_size);
 
 #ifdef CSM_BLEND
-    if(cascade_index > 0) {
+    if(cascade > 0) {
     
-        float amount = smoothstep(1.0 / u_csm_splits[cascade_index - 1], 1.0 / u_csm_splits[cascade_index], 1.0 / w);
-        float blend = sample_cascade(cascade_index - 1, frag, shadow_bias, u_csm_atlas_pixel_size);
+        float amount = smoothstep(1.0 / csm.splits[cascade - 1], 1.0 / csm.splits[cascade], 1.0 / w);
+        float blend = sample_cascade(cascade - 1, frag, shadow_bias, u_csm_atlas_pixel_size);
 
         shadowmap = mix(blend, shadowmap, amount);
     }
@@ -223,17 +222,21 @@ vec2 cubeUV(vec3 v, float texelSizeY)
         planar.y = v.z * signY - 2.0;
     }
     vec2 uv = vec2(0.125, 0.25) * planar + vec2(0.375, 0.75);
-#if BGFX_SHADER_LANGUAGE_HLSL
-    // this function calculates coordinates from bottom-left (as it's simpler from NDC cube dir in [-1,+1]), so flip y in D3D
+    
+    // this function calculates coordinates from bottom-left (as it's simpler from NDC cube dir in [-1,+1]), so flip y at the end
     uv.y = 1.0 - uv.y;
-#endif
+
     return uv;
 }
 
 vec2 atlasCubeUV(vec2 slot, vec2 subdiv, vec3 v, float texelSizeY)
 {
-    vec2 uv = cubeUV(v, texelSizeY);
-    return slot + uv * subdiv * vec2(4.0, 2.0); // scale = vec2(1.0 / 4.0) = vec2(1.0, 0.5)
+    vec2 side = cubeUV(v, texelSizeY);
+    vec2 uv = slot + side * subdiv * vec2(4.0, 2.0);
+#if !BGFX_SHADER_LANGUAGE_HLSL
+    uv.y = 1.0 - uv.y;
+#endif
+    return uv;
 }
 
 float shadow_point(samplerShadow shadowmap, vec2 slot, vec2 subdiv, float bias, vec3 coord, float near, float far)

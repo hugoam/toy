@@ -11,12 +11,13 @@
     phong.diffuse = phong.diffuse * sample_material_texture(s_diffuse, fragment.uv).rgb;
     phong.specular = phong.specular * sample_material_texture(s_specular, fragment.uv).rgb;
     phong.shininess = phong.shininess * sample_material_texture(s_shininess, fragment.uv).r;
-    PhongMaterial material = phong;
 
 #ifdef VERTEX_COLOR
     phong.diffuse *= v_color.rgb;
     alpha *= v_color.a;
 #endif
+
+    PhongMaterial material = phong;
 
 #include "fs_normal.sh"
 #include "fs_emission.sh"
