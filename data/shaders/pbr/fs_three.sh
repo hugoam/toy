@@ -2,7 +2,7 @@
     int zone_index = int(u_state_zone);
     Zone zone = read_zone(zone_index);
 
-    material.f0 = mix(vec3(DEFAULT_REFLECTANCE), material.albedo, material.metallic);
+    material.f0 = mix(vec3_splat(DEFAULT_REFLECTANCE), material.albedo, material.metallic);
     material.albedo = material.albedo * (1.0 - material.metallic);
     material.roughness = clamp(material.roughness, 0.04, 1.0);
 
@@ -10,7 +10,7 @@
     //fragment.cNoV = max(dot(fragment.normal, fragment.view), 0.0);
 
 #ifdef BRDF_PHYSICAL
-	material.f0 = mix(vec3(MAX_REFLECTANCE * pow2(reflectivity)), material.albedo, material.metallic);
+	material.f0 = mix(vec3_splat(MAX_REFLECTANCE * pow2(reflectivity)), material.albedo, material.metallic);
 	material.clearCoat = saturate(clearCoat); // Burley clearcoat model
 	material.clearCoatRoughness = clamp(clearCoatRoughness, 0.04, 1.0);
 #endif

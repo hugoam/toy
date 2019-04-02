@@ -19,6 +19,7 @@ uniform vec4 u_light_shadow_p0[MAX_LIGHTS];
 uniform vec4 u_light_shadowmap_p0[MAX_LIGHTS];
 uniform vec4 u_light_csm_p0[MAX_LIGHTS];
 uniform vec4 u_light_csm_p1[MAX_LIGHTS];
+uniform vec4 u_light_csm_p2[MAX_LIGHTS];
 #endif
 
 uniform vec4 u_skylight_p0;
@@ -142,19 +143,22 @@ Shadow read_shadow(int index)
 CSMShadow read_csm_shadow(int index)
 {
     CSMShadow csm;
-    csm.count = 4;
     
 #ifndef LIGHTS_BUFFER
-    csm.matrices = ivec4(u_light_csm_p0[index]);
-    csm.splits = u_light_csm_p1[index];
+    csm.count = int(u_light_csm_p0[index].x);
+    csm.matrices = ivec4(u_light_csm_p1[index]);
+    csm.splits = u_light_csm_p2[index];
 #else
     int x = int(mod(index, LIGHTS_TEXTURE_WIDTH));
     
     vec4 csm_p0 = texelFetch(s_lights, ivec2(x, 6), 0);
-    csm.matrices = ivec4(csm_p0);
+    csm.count = int(csm_p0.x);
     
     vec4 csm_p1 = texelFetch(s_lights, ivec2(x, 7), 0);
-    csm.splits = csm_p1;
+    csm.matrices = ivec4(csm_p1);
+    
+    vec4 csm_p2 = texelFetch(s_lights, ivec2(x, 8), 0);
+    csm.splits = csm_p2;
 #endif
     
     return csm;
