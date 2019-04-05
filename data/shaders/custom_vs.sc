@@ -1,8 +1,6 @@
 $input a_position, a_texcoord0
 $output v_uv0
-
 #include <filter.sh>
-
 void main()
 {
 	int material_index = int(u_state_material);

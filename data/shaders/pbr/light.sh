@@ -92,7 +92,7 @@ vec3 light_hemisphere(vec3 l, vec3 ground, vec3 sky, Fragment fragment) {
     vec3 irradiance = mix(ground, sky, weight);
 
 #ifndef PHYSICALLY_CORRECT_LIGHTS
-    irradiance *= M_PI;
+    irradiance *= PI;
 #endif
 
     return irradiance;

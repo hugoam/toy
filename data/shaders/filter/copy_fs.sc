@@ -39,7 +39,7 @@ void main()
 	color.rgb = toLinear(color.rgb);
 #endif
 
-	gl_FragColor = color;
+	gl_FragColor = u_multiply * color;
 #ifdef FILTER_DEBUG_UV
 	gl_FragColor = vec4(v_uv0, 1.0, 1.0);
 #endif

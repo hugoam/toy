@@ -74,10 +74,10 @@ float SchlickFresnel(float u)
 
 float GTR1(float NoH, float a)
 {
-    if (a >= 1.0) return 1.0 / M_PI;
+    if (a >= 1.0) return 1.0 / PI;
     float a2 = a * a;
     float t = 1.0 + (a2 - 1.0) * NoH * NoH;
-    return (a2 - 1.0) / (M_PI * log(a2) * t);
+    return (a2 - 1.0) / (PI * log(a2) * t);
 }
 
 // This returns the G_GGX function divided by 2 cos_theta_m, where in practice cos_theta_m is either N.L or N.V.
@@ -114,7 +114,7 @@ float D_GGX(float cos_theta_m, float alpha)
 {
     float alpha2 = alpha * alpha;
     float d = 1.0 + (alpha2 - 1.0) * cos_theta_m * cos_theta_m;
-    return alpha2 / (M_PI * d * d);
+    return alpha2 / (PI * d * d);
 }
 
 float G_GGX_anisotropic_2cos(float cos_theta_m, float alpha_x, float alpha_y, float cos_phi, float sin_phi)
@@ -133,13 +133,13 @@ float D_GGX_anisotropic(float cos_theta_m, float alpha_x, float alpha_y, float c
     float r_x = cos_phi / alpha_x;
     float r_y = sin_phi / alpha_y;
     float d = cos2 + sin2 * (r_x * r_x + r_y * r_y);
-    return 1.0 / max(M_PI * alpha_x * alpha_y * d * d, 0.001);
+    return 1.0 / max(PI * alpha_x * alpha_y * d * d, 0.001);
 }
 
 float diffuse_lambert(LightRay l, float cNoV, float roughness)
 {
     return max(l.NoL, 0.0);
-    //return l.cNoL * (1.0 / M_PI);
+    //return l.cNoL * (1.0 / PI);
 }
 
 float diffuse_half_lambert(LightRay l, float cNoV, float roughness)
@@ -157,7 +157,7 @@ vec3 diffuse_oren_nayar(LightRay l, float NoV, float roughness, vec3 albedo)
     vec3 alpha = 1.0 + sigma2 * (albedo / (sigma2 + 0.13) + 0.5 / (sigma2 + 0.33));
     float beta = 0.45 * sigma2 / (sigma2 + 0.09);
 
-    return max(0.0, l.cNoL) * (alpha + vec3_splat(beta) * s / t) / M_PI;
+    return max(0.0, l.cNoL) * (alpha + vec3_splat(beta) * s / t) / PI;
 }
 
 float diffuse_toon(LightRay l, float cNoV, float roughness)
@@ -170,7 +170,7 @@ float diffuse_burley(LightRay l, float cNoV, float roughness)
     float FD90_minus_1 = 2.0 * l.LoH * l.LoH * roughness - 0.5;
     float FdV = 1.0 + FD90_minus_1 * SchlickFresnel(cNoV);
     float FdL = 1.0 + FD90_minus_1 * SchlickFresnel(l.cNoL);
-    return (1.0 / M_PI) * FdV * FdL * l.cNoL;
+    return (1.0 / PI) * FdV * FdL * l.cNoL;
 
     //float energyBias = mix(roughness, 0.0, 0.5);
     //float energyFactor = mix(roughness, 1.0, 1.0 / 1.51);
@@ -188,7 +188,7 @@ float specular_blinn(LightRay l, float cNoV, float roughness)
     
     float shininess = exp2(15.0 * (1.0 - roughness) + 1.0) * 0.25;
     float blinn = pow(l.cNoH, shininess);
-    blinn *= (shininess + 8.0) * (1.0 / (8.0 * M_PI));
+    blinn *= (shininess + 8.0) * (1.0 / (8.0 * PI));
     return blinn / max(4.0 * cNoV * l.cNoL, 0.75);
 }
 
@@ -198,7 +198,7 @@ float specular_phong(LightRay l, float cNoV, float roughness)
     
     float shininess = exp2(15.0 * (1.0 - roughness) + 1.0) * 0.25;
     float phong = pow(l.cRoV, shininess);
-    phong *= (shininess + 8.0) * (1.0 / (8.0 * M_PI));
+    phong *= (shininess + 8.0) * (1.0 / (8.0 * PI));
     return phong / max(4.0 * cNoV * l.cNoL, 0.75);
 }
 
@@ -256,12 +256,12 @@ float specular_schlick_GGX_old(LightRay l, float cNoV, float roughness, vec3 f0,
     float ry = roughness * aspect;
     float ax = rx * rx;
     float ay = ry * ry;
-    float pi = M_PI;
+    float pi = PI;
     float denom = sqr(l.XoH) / sqr(ax) + sqr(l.YoH) / sqr(ay) + sqr(l.NoH);
     float D = 1.0 / ( pi * ax * ay * denom * denom );
 #else
     float alpha2 = alpha * alpha;
-    float pi = M_PI;
+    float pi = PI;
     float denom = l.cNoH * l.NoH * (alpha2 - 1.0) + 1.0;
     float D = alpha2 / (pi * denom * denom);
 #endif
@@ -314,14 +314,19 @@ vec3 brdf_specular_term(Fragment fragment, vec3 f0, float roughness)
 #define SPECULAR_TOON 3
 #define NO_SPECULAR 4
 
-float brdf_env_level(Material material)
+float env_brdf_miplevel(Material material)
 {
     return material.roughness * RADIANCE_MAX_LOD;
 }
 
-vec3 brdf_env_specular(Fragment fragment, Material material)
+vec3 env_brdf_diffuse(Fragment fragment, Material material, vec3 color)
 {
-    return brdf_specular_term(fragment, material.f0, material.roughness);
+    return color;
+}
+
+vec3 env_brdf_specular(Fragment fragment, Material material, vec3 color)
+{
+    return color * brdf_specular_term(fragment, material.f0, material.roughness);
 }
 
 void direct_brdf(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)

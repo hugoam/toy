@@ -155,6 +155,7 @@ LineMaterial read_line_material(int index)
 
 #ifndef MATERIALS_BUFFER
 uniform vec4 u_lit_p0;
+uniform vec4 u_lit_p1;
 uniform vec4 u_emissive;
 #endif
 
@@ -165,6 +166,8 @@ struct LitMaterial
     float energy;
     float ao;
     float ao_channel;
+    float displace;
+    float displace_bias;
 };
 
 LitMaterial read_lit_material(int index)
@@ -175,7 +178,10 @@ LitMaterial read_lit_material(int index)
     m.normal_scale = u_lit_p0.x;
     m.emissive = u_emissive.xyz;
     m.energy = u_emissive.w;
-    m.ao_channel = 0.0; //u_pbr_channels_0.z;
+    m.ao = u_lit_p0.y;
+    m.ao_channel = 0.0; // u_lit_p0.y; //u_pbr_channels_0.z;
+    m.displace = u_lit_p1.x;
+    m.displace_bias = u_lit_p1.y;
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
@@ -185,6 +191,10 @@ LitMaterial read_lit_material(int index)
     vec4 emissive = texelFetch(s_materials, ivec2(x, 7), 0);
     m.emissive = emissive.xyz;
     m.energy = emissive.w;
+    
+    vec4 params_1 = texelFetch(s_materials, ivec2(x, 8), 0);
+    m.displace = params_1.x;
+    m.displace_bias = params_1.y;
 #endif
 
     return m;
@@ -242,27 +252,27 @@ PbrMaterial read_pbr_material(int index)
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
-    vec4 albedo = texelFetch(s_materials, ivec2(x, 8), 0);
+    vec4 albedo = texelFetch(s_materials, ivec2(x, 9), 0);
     m.albedo = albedo.xyz;
     m.alpha = albedo.w;
     
-    vec4 params_0 = texelFetch(s_materials, ivec2(x, 9), 0);
+    vec4 params_0 = texelFetch(s_materials, ivec2(x, 10), 0);
     m.specular = params_0.x;
     m.metallic = params_0.y;
     m.roughness = params_0.z;
 
-    vec4 channels = texelFetch(s_materials, ivec2(x, 10), 0);
+    vec4 channels = texelFetch(s_materials, ivec2(x, 11), 0);
     m.roughness_channel = channels.x;
     m.metallic_channel = channels.y;
     //m.ao_channel = channels.z;
     
-    vec4 params_1 = texelFetch(s_materials, ivec2(x, 11), 0);
+    vec4 params_1 = texelFetch(s_materials, ivec2(x, 12), 0);
     m.anisotropy = params_1.x;
     m.refraction = params_1.y;
     m.subsurface = params_1.z;
     m.depth_scale = params_1.w;
     
-    vec4 params_2 = texelFetch(s_materials, ivec2(x, 12), 0);
+    vec4 params_2 = texelFetch(s_materials, ivec2(x, 13), 0);
     m.rim = params_2.x;
     m.rim_tint = params_2.y;
     m.clearcoat = params_2.z;
@@ -300,13 +310,13 @@ PhongMaterial read_phong_material(int index)
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
-    vec4 diffuse = texelFetch(s_materials, ivec2(x, 13), 0);
+    vec4 diffuse = texelFetch(s_materials, ivec2(x, 14), 0);
     m.diffuse = diffuse.xyz;
     
-    vec4 specular = texelFetch(s_materials, ivec2(x, 14), 0);
+    vec4 specular = texelFetch(s_materials, ivec2(x, 15), 0);
     m.specular = specular.xyz;
     
-    vec4 params_0 = texelFetch(s_materials, ivec2(x, 15), 0);
+    vec4 params_0 = texelFetch(s_materials, ivec2(x, 16), 0);
     m.shininess = params_0.x;
     m.reflectivity = params_0.y;
     m.refraction = params_0.z;

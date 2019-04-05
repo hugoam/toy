@@ -1,16 +1,3 @@
-#ifdef RADIANCE_ENVMAP
-    diffuse += radiance_ambient(zone, fragment.normal);
-#ifdef REFRACTION
-    specular += radiance_refraction(zone, fragment.view, fragment.normal, material.refraction, brdf_env_level(material))
-              * brdf_env_specular(fragment, material);
-#else
-    specular += radiance_reflection(zone, fragment.view, fragment.normal, brdf_env_level(material))
-              * brdf_env_specular(fragment, material);
-#endif
-#else
-    diffuse += zone.radiance_color * zone.ambient;
-#endif
-
 #ifdef SKY_LIGHT
     Skylight skylight = read_skylight();
     diffuse += light_hemisphere(skylight.direction, skylight.ground, skylight.color, fragment);

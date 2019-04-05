@@ -1,6 +1,7 @@
 #ifndef MUD_SHADER_SHADOW
 #define MUD_SHADER_SHADOW
 
+#include <encode.sh>
 #include <pbr/light.sh>
 
 #define NO_PCF 0

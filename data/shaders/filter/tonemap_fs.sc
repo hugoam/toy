@@ -19,8 +19,8 @@ uniform vec4 u_tonemap_bcs;
 
 void main()
 {
-	ivec2 ifrag_coord = ivec2(gl_FragCoord.xy);
-	//vec3 color = texelFetch(s_source, ifrag_coord, 0).rgb;
+    ivec2 ifrag_coord = ivec2(gl_FragCoord.xy);
+    //vec3 color = texelFetch(s_source, ifrag_coord, 0).rgb;
     vec3 color = texture2DLod(s_source, v_uv0, 0.0).rgb;
     
 #ifdef AUTO_EXPOSURE
@@ -29,19 +29,21 @@ void main()
 	color *= u_exposure;
 
 #if TONEMAP_MODE == 1
-    color.rgb = to_reindhart(color.rgb, u_exposure_white);
+    color = to_reindhart(color, u_exposure_white);
 #elif TONEMAP_MODE == 2
-    color.rgb = to_filmic(color.rgb, u_exposure_white);
+    color = to_filmic(color, u_exposure_white);
 #elif TONEMAP_MODE == 3
-    color.rgb = toAcesFilmic(color.rgb);
+    color = toAcesFilmic(color);
 #endif
 
-    color.rgb = toGammaAccurate(color.rgb);
+    //color = toGammaAccurate(color);
+    //color = LinearToGamma(color, 2.0);
+    color = pow(color, vec3_splat(1.0 / 2.0));
     
 #ifdef ADJUST_BCS
-	color.rgb = mix(vec3_splat(0.0), color.rgb, u_brightness);
-	color.rgb = mix(vec3_splat(0.5), color.rgb, u_contrast);
-	color.rgb = mix(vec3_splat(dot(vec3_splat(1.0), color.rgb) * 0.33333), color.rgb, u_saturation);
+	color = mix(vec3_splat(0.0), color, u_brightness);
+	color = mix(vec3_splat(0.5), color, u_contrast);
+	color = mix(vec3_splat(dot(vec3_splat(1.0), color) * 0.33333), color, u_saturation);
 #endif
 
 #ifdef COLOR_CORRECTION

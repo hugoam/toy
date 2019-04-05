@@ -1,13 +1,9 @@
 $input v_uv0
-
 #include <filter.sh>
 #include <convert.sh>
-
 #define SIGMA KERNEL_RADIUS
-
 uniform vec4 u_glow_blur_p0;
 #define u_direction u_glow_blur_p0.xy
-
 float gaussianPdf(in float x, in float sigma) {
 	return 0.39894 * exp(-0.5 * x * x/(sigma * sigma)) / sigma;
 }

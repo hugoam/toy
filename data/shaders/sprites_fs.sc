@@ -1,8 +1,6 @@
 $input v_uv0, v_scale
-
 #include <common.sh>
 #include <convert.sh>
-
 void main()
 {
 	vec4 color = texture2D(s_color, v_uv0);

@@ -14,8 +14,9 @@
     vec3 diffuse = vec3_splat(0.0);
     vec3 specular = vec3_splat(0.0);
 
+#include "fs_indirect_ibl.sh"
 #include "fs_indirect.sh"
-    diffuse *= material.albedo / M_PI;
+    diffuse *= material.albedo / PI;
     //diffuse *= BRDF_Diffuse_Lambert(material.diffuse);
 
 #ifdef CLUSTERED

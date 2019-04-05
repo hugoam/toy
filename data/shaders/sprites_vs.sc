@@ -1,8 +1,6 @@
 $input a_position, a_texcoord0, i_data0
 $output v_uv0, v_scale
-
 #include <common.sh>
-
 void main()
 {
    vec3 i_position = i_data0.xyz;	vec3 timexyz = i_position + vec3_splat(u_time / 2.0);
@@ -13,5 +11,4 @@ void main()
 	view += a_position.xyz * size;
 	v_uv0 = a_texcoord0;
 	gl_Position = mul(u_proj, vec4(view, 1.0));
-
 }

@@ -1,8 +1,6 @@
 $input a_position
 $output v_world, v_sundir, v_sunp0, v_betaR, v_betaM
-
 #include <common.sh>
-
 #define u_sun_position u_user_p0.xyz
 #define u_turbidity u_user_p1.x
 #define u_rayleigh u_user_p1.y

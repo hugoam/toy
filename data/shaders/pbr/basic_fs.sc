@@ -17,7 +17,8 @@ void main()
     Zone zone = read_zone(zone_index);
     
 #ifdef RADIANCE_ENVMAP
-    vec3 env = radiance_reflection(zone, fragment.view, fragment.normal, 0.0);
+    vec3 env = ibl_reflect(fragment.view, fragment.normal, 0.0);
+    env *= zone.radiance_color * zone.radiance_energy;
 #else
     vec3 env = vec3_splat(1.0);
 #endif

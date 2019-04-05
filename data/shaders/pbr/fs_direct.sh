@@ -25,14 +25,12 @@ for(i = 0; i < int(u_shadow_counts[LIGHT_SPOT]); i++)
     spot_shadows[i] = shadow_spot(shadow, fragment.position);
 }
 
-#ifdef DIRECT_LIGHT
 for(i = 0; i < int(u_light_counts[LIGHT_DIRECT]); i++)
 {
     Light direct = read_light(int(u_light_indices[i][LIGHT_DIRECT]));
     float factor = (i < int(u_shadow_counts[LIGHT_DIRECT]) ? direct_shadows[i] : 1.0);
     direct_brdf(direct.energy * factor, -direct.direction, fragment, material, diffuse, specular);
 }
-#endif
 
 for(i = 0; i < int(u_light_counts[LIGHT_POINT]); i++)
 {

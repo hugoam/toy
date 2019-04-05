@@ -11,7 +11,3 @@
     //gl_FragColor = vec4(normalize(fragment.normal) * 0.5 + 0.5, 1.0);
     //gl_FragColor = vec4(v_color.rgb, 1.0);
 #endif
-
-#if 1 //def TO_GAMMA
-    gl_FragColor = LinearToGamma(gl_FragColor, 2.0);
-#endif

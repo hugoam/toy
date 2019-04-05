@@ -6,6 +6,7 @@ $input v_view, v_position, v_normal, v_tangent, v_color, v_uv0, v_uv1, v_binorma
 #define BRDF_BLINN_PHONG
 #include <pbr/light_brdf_three.sh>
 #include <pbr/radiance.sh>
+#include <fog.sh>
 
 void main()
 {
@@ -18,5 +19,6 @@ void main()
 #else
     #include "fs_phong.sh"
     #include "fs_out_pbr.sh"
+    #include "fs_fog_simple.sh"
 #endif
 }

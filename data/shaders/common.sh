@@ -5,6 +5,23 @@
 #include <srgb.sh>
 #include <gpu/material.sh>
 
+//#define PI M_PI
+
+#define PI 3.14159265359
+#define PI2 6.28318530718
+#define PIh 1.5707963267949
+#define rPI 0.31830988618
+#define rPI2 0.15915494
+#define LOG2 1.442695
+#define EPSILON 1e-6
+
+#define saturate(a) clamp(a, 0.0, 1.0)
+
+float pow2(float x) { return x*x; }
+float pow3(float x) { return x*x*x; }
+float pow4(float x) { float x2 = x*x; return x2*x2; }
+float average(vec3 color) { return dot(color, vec3_splat(0.3333)); }
+
 uniform vec4 u_render_p0;
 #define u_time u_render_p0.x
 #define u_origin_bottom_left u_render_p0.y
@@ -29,6 +46,8 @@ uniform vec4 u_state;
 #define u_state_material 0
 #endif
 
+uniform vec4 u_morph_weights;
+
 SAMPLER2D(s_color, 0);
 SAMPLER2D(s_alpha, 1);
 
@@ -45,6 +64,17 @@ SAMPLER2D(s_user2, 14);
 SAMPLER2D(s_user3, 15);
 SAMPLER2D(s_user4, 6);
 SAMPLER2D(s_user5, 7);
+
+#ifdef DISPLACEMENT
+SAMPLER2D(s_displace, 7);
+#endif
+
+float rand(vec2 uv)
+{
+    const float a = 12.9898; const float b = 78.233; const float c = 43758.5453;
+    float dt = dot(uv.xy, vec2(a, b)), sn = mod(dt, PI);
+    return fract(sin(sn) * c);
+}
 
 #if BGFX_SHADER_LANGUAGE_GLSL == 110
 mat4 transpose(in mat4 mat)

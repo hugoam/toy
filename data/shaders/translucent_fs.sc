@@ -26,10 +26,7 @@ void direct_scatter(vec3 energy, vec3 l, Fragment fragment, PhongMaterial materi
 void main()
 {
 #include <pbr/fs_fragment.sh>
-
 #include <pbr/fs_phong_material.sh>
-
 #include <pbr/fs_phong.sh>
 #include <pbr/fs_out_pbr.sh>
-gl_FragColor = LinearToGamma(gl_FragColor, 2.0);
 }

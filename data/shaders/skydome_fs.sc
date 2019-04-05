@@ -8,4 +8,5 @@ void main()
 {
 	float h = normalize(v_world + u_offset).y;
 	gl_FragColor = vec4(mix(u_bottom_color, u_top_color, max(pow(max(h, 0.0), u_exponent), 0.0)), 1.0);
+	gl_FragColor = vec4(pow(gl_FragColor.rgb, vec3_splat(2.0)), 1.0);
 }

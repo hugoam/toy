@@ -2,7 +2,6 @@ $input v_uv0
 #include <filter.sh>
 #define SQRT2_MINUS_ONE 0.41421356
 #define SQRT2_HALF_MINUS_ONE 0.20710678
-#define PI2 6.28318531
 #define SHAPE_DOT 1
 #define SHAPE_ELLIPSE 2
 #define SHAPE_LINE 3
@@ -32,7 +31,7 @@ return a * (1.0 - t) + b * t;
 float hypot(float x, float y) {
 return sqrt(x * x + y * y);
 }
-float rand(vec2 seed){
+float randf(vec2 seed){
 return fract(sin(dot(seed.xy, vec2(12.9898, 78.233))) * 43758.5453);
 }
 float distanceToDotRadius(float channel, vec2 coord, vec2 normal, vec2 p, float angle, float rad_max) {
@@ -72,7 +71,7 @@ float samp4;
 };
 vec4 getSample(vec2 uv) {
 vec4 tex = texture2D(s_source_0, uv * u_pixel_size);
-float base = rand(vec2(floor(uv.x), floor(uv.y))) * PI2;
+float base = randf(vec2(floor(uv.x), floor(uv.y))) * PI2;
 float step = PI2 / float(samples);
 float dist = u_radius * 0.66;
 for (int i = 0; i < samples; ++i) {
@@ -130,7 +129,7 @@ c.p1.x = p.x - n.x * normal_scale + n.y * line_scale;
 c.p1.y = p.y - n.y * normal_scale - n.x * line_scale;
 if (u_scatter != 0.0) {
 float off_mag = u_scatter * threshold * 0.5;
-float off_angle = rand(vec2(floor(c.p1.x), floor(c.p1.y))) * PI2;
+float off_angle = randf(vec2(floor(c.p1.x), floor(c.p1.y))) * PI2;
 c.p1.x += cos(off_angle) * off_mag;
 c.p1.y += sin(off_angle) * off_mag;
 }

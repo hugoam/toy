@@ -1,7 +1,5 @@
 $input v_world, v_sundir, v_sunp0, v_betaR, v_betaM
-
 #include <common.sh>
-
 #define u_luminance u_user_p1.z
 #define u_mieDirectionalG u_user_p2.y
 CONST(vec3) cameraPos = vec3(0.0, 0.0, 0.0);

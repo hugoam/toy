@@ -1,15 +1,10 @@
 $input v_uv0
-
 #include <filter.sh>
 #include <tonemap.sh>
-
 #define s_diffuse s_source_0
-
 // FXAA 3.11 implementation by NVIDIA, ported to WebGL by Agost Biro (biro@archilogic.com)
 //----------------------------------------------------------------------------------
-
 #define FXAA_QUALITY_PRESET 12
-
 #ifndef FXAA_DISCARD
     //
     // Only valid for PC OpenGL currently.
@@ -20,7 +15,6 @@ $input v_uv0
     //
     #define FXAA_DISCARD 0
 #endif
-
 #ifndef FXAA_FAST_PIXEL_OFFSET
     //
     // Used for GLSL 120 only.
@@ -41,7 +35,6 @@ $input v_uv0
         #define FXAA_FAST_PIXEL_OFFSET 0
     #endif
 #endif
-
 #ifndef FXAA_GATHER4_ALPHA
     //
     // 1 = API supports gather4 on alpha channel.
@@ -60,8 +53,6 @@ $input v_uv0
         #define FXAA_GATHER4_ALPHA 0
     #endif
 #endif
-
-
 // FXAA QUALITY - TUNING KNOBS
 //
 // OPTIONS
@@ -81,12 +72,8 @@ $input v_uv0
 #ifndef FXAA_QUALITY_PRESET
     #define FXAA_QUALITY_PRESET 12
 #endif
-
-
 // FXAA QUALITY - PRESETS
-
 // FXAA QUALITY - MEDIUM DITHER PRESETS
-
 #if (FXAA_QUALITY_PRESET == 10)
     #define FXAA_QUALITY_PS 3
     CONST(ARRAY_BEGIN(float, c_kernel, 3)) 1.5, 3.0, 12.0 ARRAY_END();
@@ -105,7 +92,6 @@ $input v_uv0
 #elif (FXAA_QUALITY_PRESET == 15)
     #define FXAA_QUALITY_PS 8
     CONST(ARRAY_BEGIN(float, c_kernel, 8)) 1.0, 1.5, 2.0, 2.0, 2.0, 2.0, 4.0, 12.0 ARRAY_END();
-
 // FXAA QUALITY - LOW DITHER PRESETS
 #elif (FXAA_QUALITY_PRESET == 20)
     #define FXAA_QUALITY_PS 3
@@ -137,26 +123,18 @@ $input v_uv0
 #elif (FXAA_QUALITY_PRESET == 29)
     #define FXAA_QUALITY_PS 12
     CONST(ARRAY_BEGIN(float, c_kernel, 12)) 1.0, 1.5, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 4.0, 8.0 ARRAY_END();
-
 // FXAA QUALITY - EXTREME QUALITY
-
 #elif (FXAA_QUALITY_PRESET == 39)
     #define FXAA_QUALITY_PS 12
     CONST(ARRAY_BEGIN(float, c_kernel, 12)) 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 2.0, 2.0, 2.0, 2.0, 4.0, 8.0 ARRAY_END();
 #endif
-
-
-
 #if (FXAA_FAST_PIXEL_OFFSET == 1)
     #define FxaaTexOff(t, p, o, r) texture2DLodOffset(t, p, 0.0, o)
 #else
     #define FxaaTexOff(t, p, o, r) texture2DLod(t, p + (o * r), 0.0)
 #endif
-
 float FxaaLuma(vec4 rgba) { return luma(rgba.rgb); }
-
 // FXAA3 QUALITY - PC
-
 vec4 FxaaPixelShader(
     //
     // Use noperspective interpolation here (turn off perspective interpolation).
@@ -201,7 +179,6 @@ vec4 FxaaPixelShader(
     float fxaaQualityEdgeThresholdMin
     //
 ) {
-
     vec2 posM = pos;
     #if (FXAA_GATHER4_ALPHA == 1)
         #if (FXAA_DISCARD == 0)
@@ -227,7 +204,6 @@ vec4 FxaaPixelShader(
         float lumaN = FxaaLuma(FxaaTexOff(tex, posM, ivec2(0,-1), fxaaQualityRcpFrame.xy));
         float lumaW = FxaaLuma(FxaaTexOff(tex, posM, ivec2(-1, 0), fxaaQualityRcpFrame.xy));
     #endif
-
     float maxSM = max(lumaS, lumaM);
     float minSM = min(lumaS, lumaM);
     float maxESM = max(lumaE, maxSM);
@@ -240,14 +216,12 @@ vec4 FxaaPixelShader(
     float range = rangeMax - rangeMin;
     float rangeMaxClamped = max(fxaaQualityEdgeThresholdMin, rangeMaxScaled);
     bool earlyExit = range < rangeMaxClamped;
-
     if(earlyExit)
         #if (FXAA_DISCARD == 1)
             FxaaDiscard;
         #else
             return rgbyM;
         #endif
-
     #if (FXAA_GATHER4_ALPHA == 0)
         float lumaNW = FxaaLuma(FxaaTexOff(tex, posM, ivec2(-1,-1), fxaaQualityRcpFrame.xy));
         float lumaSE = FxaaLuma(FxaaTexOff(tex, posM, ivec2(1, 1), fxaaQualityRcpFrame.xy));
@@ -257,19 +231,16 @@ vec4 FxaaPixelShader(
         float lumaNE = FxaaLuma(FxaaTexOff(tex, posM, ivec2(1, -1), fxaaQualityRcpFrame.xy));
         float lumaSW = FxaaLuma(FxaaTexOff(tex, posM, ivec2(-1,  1), fxaaQualityRcpFrame.xy));
     #endif
-
     float lumaNS = lumaN + lumaS;
     float lumaWE = lumaW + lumaE;
     float subpixRcpRange = 1.0/range;
     float subpixNSWE = lumaNS + lumaWE;
     float edgeHorz1 = (-2.0 * lumaM) + lumaNS;
     float edgeVert1 = (-2.0 * lumaM) + lumaWE;
-
     float lumaNESE = lumaNE + lumaSE;
     float lumaNWNE = lumaNW + lumaNE;
     float edgeHorz2 = (-2.0 * lumaE) + lumaNESE;
     float edgeVert2 = (-2.0 * lumaN) + lumaNWNE;
-
     float lumaNWSW = lumaNW + lumaSW;
     float lumaSWSE = lumaSW + lumaSE;
     float edgeHorz4 = (abs(edgeHorz1) * 2.0) + abs(edgeHorz2);
@@ -278,17 +249,14 @@ vec4 FxaaPixelShader(
     float edgeVert3 = (-2.0 * lumaS) + lumaSWSE;
     float edgeHorz = abs(edgeHorz3) + edgeHorz4;
     float edgeVert = abs(edgeVert3) + edgeVert4;
-
     float subpixNWSWNESE = lumaNWSW + lumaNESE;
     float lengthSign = fxaaQualityRcpFrame.x;
     bool horzSpan = edgeHorz >= edgeVert;
     float subpixA = subpixNSWE * 2.0 + subpixNWSWNESE;
-
     if(!horzSpan) lumaN = lumaW;
     if(!horzSpan) lumaS = lumaE;
     if(horzSpan) lengthSign = fxaaQualityRcpFrame.y;
     float subpixB = (subpixA * (1.0/12.0)) - lumaM;
-
     float gradientN = lumaN - lumaM;
     float gradientS = lumaS - lumaM;
     float lumaNN = lumaN + lumaM;
@@ -297,14 +265,12 @@ vec4 FxaaPixelShader(
     float gradient = max(abs(gradientN), abs(gradientS));
     if(pairN) lengthSign = -lengthSign;
     float subpixC = saturate(abs(subpixB) * subpixRcpRange);
-
     vec2 posB = posM;
     vec2 offNP;
     offNP.x = (!horzSpan) ? 0.0 : fxaaQualityRcpFrame.x;
     offNP.y = (horzSpan) ? 0.0 : fxaaQualityRcpFrame.y;
     if(!horzSpan) posB.x += lengthSign * 0.5;
     if(horzSpan) posB.y += lengthSign * 0.5;
-
     vec2 posN;
     posN.x = posB.x - offNP.x * c_kernel[0];
     posN.y = posB.y - offNP.y * c_kernel[0];
@@ -315,13 +281,11 @@ vec4 FxaaPixelShader(
     float lumaEndN = FxaaLuma(texture2DLod(tex, posN, 0.0));
     float subpixE = subpixC * subpixC;
     float lumaEndP = FxaaLuma(texture2DLod(tex, posP, 0.0));
-
     if(!pairN) lumaNN = lumaSS;
     float gradientScaled = gradient * 1.0/4.0;
     float lumaMM = lumaM - lumaNN * 0.5;
     float subpixF = subpixD * subpixE;
     bool lumaMLTZero = lumaMM < 0.0;
-
     lumaEndN -= lumaNN * 0.5;
     lumaEndP -= lumaNN * 0.5;
     bool doneN = abs(lumaEndN) >= gradientScaled;
@@ -331,7 +295,6 @@ vec4 FxaaPixelShader(
     bool doneNP = (!doneN) || (!doneP);
     if(!doneP) posP.x += offNP.x * c_kernel[1];
     if(!doneP) posP.y += offNP.y * c_kernel[1];
-
 	 for(int i = 1; i < int(FXAA_QUALITY_PS); i++)
     {
         if(!doneNP) break;
@@ -347,24 +310,20 @@ vec4 FxaaPixelShader(
         if(!doneP) posP.x += offNP.x * c_kernel[i];
         if(!doneP) posP.y += offNP.y * c_kernel[i];
     }
-
     float dstN = posM.x - posN.x;
     float dstP = posP.x - posM.x;
     if(!horzSpan) dstN = posM.y - posN.y;
     if(!horzSpan) dstP = posP.y - posM.y;
-
     bool goodSpanN = (lumaEndN < 0.0) != lumaMLTZero;
     float spanLength = (dstP + dstN);
     bool goodSpanP = (lumaEndP < 0.0) != lumaMLTZero;
     float spanLengthRcp = 1.0/spanLength;
-
     bool directionN = dstN < dstP;
     float dst = min(dstN, dstP);
     bool goodSpan = directionN ? goodSpanN : goodSpanP;
     float subpixG = subpixF * subpixF;
     float pixelOffset = (dst * (-spanLengthRcp)) + 0.5;
     float subpixH = subpixG * fxaaQualitySubpix;
-
     float pixelOffsetGood = goodSpan ? pixelOffset : 0.0;
     float pixelOffsetSubpix = max(pixelOffsetGood, subpixH);
     if(!horzSpan) posM.x += pixelOffsetSubpix * lengthSign;
@@ -375,7 +334,6 @@ vec4 FxaaPixelShader(
         return vec4(texture2DLod(tex, posM, 0.0).xyz, lumaM);
     #endif
 }
-
 void main() {
     gl_FragColor = FxaaPixelShader(
         v_uv0,
@@ -385,7 +343,6 @@ void main() {
         0.166,
         0.0833
   );
-
     // TODO avoid querying texture twice for same texel
     gl_FragColor.a = texture2D(s_diffuse, v_uv0).a;
 }

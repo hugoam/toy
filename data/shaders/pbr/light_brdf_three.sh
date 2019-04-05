@@ -2,36 +2,51 @@
 #include <pbr/bsdf.sh>
 #include <pbr/radiance.sh>
 
-vec3 direct_energy(vec3 energy, vec3 l, Fragment fragment)
+#ifdef TOON
+uniform sampler2D s_gradient;
+
+vec3 gradient_energy(vec3 energy, vec3 l, vec3 normal)
 {
-    float dotNL = saturate(dot(fragment.normal, l));
-    vec3 irradiance = dotNL * energy;
-#ifndef PHYSICALLY_CORRECT_LIGHTS
-    irradiance *= M_PI; // punctual light
+    float dotNL = dot(normal, l);
+    vec2 coord = vec2(dotNL * 0.5 + 0.5, 0.0);
+#ifdef USE_GRADIENTMAP
+    energy *= texture2D(s_gradient, coord).rgb;
+#else
+    energy *= (coord.x < 0.7) ? vec3_splat(0.7) : vec3_splat(1.0);
 #endif
-    return irradiance;
+#ifndef PHYSICALLY_CORRECT_LIGHTS
+    energy *= PI; // punctual light
+#endif
+    return energy;
 }
+#endif
 
-// taken from here: http://casual-effects.blogspot.ca/2011/08/plausible-environment-lighting-in-two.html
-float getSpecularMIPLevel(float blinnShininessExponent, float highest) {
-
-    float level = highest + 0.79248 - 0.5 * log2(pow2(blinnShininessExponent) + 1.0);
-
-    // clamp to allowable LOD ranges.
-    return clamp(level, 0.0, highest);
+vec3 direct_energy(vec3 energy, vec3 l, vec3 normal)
+{
+    float dotNL = saturate(dot(normal, l));
+    energy *= dotNL;
+#ifndef PHYSICALLY_CORRECT_LIGHTS
+    energy *= PI; // punctual light
+#endif
+    return energy;
 }
 
 #ifdef BRDF_BLINN_PHONG
 #define direct_brdf direct_blinn_phong
 #define indirect_brdf indirect_blinn_phong
+#define env_brdf_miplevel env_specular_miplevel_phong
+#endif
+
+#ifdef BRDF_LAMBERT
+#define env_brdf_miplevel env_specular_miplevel_lambert
 #endif
 
 void direct_blinn_phong(vec3 energy, vec3 l, Fragment fragment, PhongMaterial material, inout vec3 diffuse, inout vec3 specular) {
 
 #ifdef TOON
-    vec3 irradiance = getGradientIrradiance(fragment.normal, l) * energy;
+    vec3 irradiance = gradient_energy(energy, l, fragment.normal);
 #else
-    vec3 irradiance = direct_energy(energy, l, fragment);
+    vec3 irradiance = direct_energy(energy, l, fragment.normal);
 #endif
 
     diffuse += irradiance * BRDF_Diffuse_Lambert(material.diffuse);
@@ -41,32 +56,70 @@ void direct_blinn_phong(vec3 energy, vec3 l, Fragment fragment, PhongMaterial ma
 void indirect_blinn_phong(Fragment fragment, PhongMaterial material, inout vec3 diffuse, inout vec3 specular) {
 
     diffuse *= BRDF_Diffuse_Lambert(material.diffuse);
-
 }
 
-float brdf_env_level(PhongMaterial material)
+// ref: http://casual-effects.blogspot.ca/2011/08/plausible-environment-lighting-in-two.html
+float env_specular_miplevel_phong(PhongMaterial material)
 {
-    return getSpecularMIPLevel(material.shininess, RADIANCE_MAX_LOD);
+    float level = RADIANCE_MAX_LOD + 0.79248 - 0.5 * log2(pow2(material.shininess) + 1.0);
+
+    // clamp to allowable LOD ranges.
+    return clamp(level, 0.0, RADIANCE_MAX_LOD);
 }
 
-float brdf_env_specular(Fragment fragment, PhongMaterial material)
+float env_specular_miplevel_lambert(PhongMaterial material)
 {
-    return 1.0;
+    return 0.0;
+}
+
+void env_blend_op(PhongMaterial material, vec3 color, inout vec3 light, float factor)
+{
+    float specularStrength = 1.0; // can be sampled from a specular map
+    float amount = specularStrength * material.reflectivity;
+#if ENV_BLEND == 0 // MULTIPLY
+    light = mix(light, light * color, amount);
+#elif ENV_BLEND == 1 // MIX
+    light = mix(light, color * factor, amount);
+#elif ENV_BLEND == 2 // ADD
+    light += color * factor * amount;
+#endif
+}
+
+void env_brdf_blend(PhongMaterial material, vec3 color, inout vec3 diffuse, inout vec3 specular)
+{
+    // lambert stores all light in diffuse
+    env_blend_op(material, color, diffuse, 0.5);
+    env_blend_op(material, color, specular, 0.5);
+}
+
+vec3 env_brdf_specular(Fragment fragment, Material material, vec3 color)
+{
+    return color;
+}
+
+vec3 env_brdf_diffuse(Fragment fragment, Material material, vec3 color)
+{
+    return color;
 }
 
 #ifdef BRDF_STANDARD
-
 #define direct_brdf direct_standard
 #define indirect_brdf indirect_standard
+#define env_brdf_miplevel env_specular_miplevel_pbr
+#endif
 
 #define MAX_REFLECTANCE 0.16
 #define DEFAULT_REFLECTANCE 0.04
+
+float env_specular_miplevel_pbr(Material material)
+{
+    return material.roughness * RADIANCE_MAX_LOD;
+}
 
 // Clear coat directional hemishperical reflectance (this approximation should be improved)
 float clearCoatDHRApprox(float roughness, float dotNL) {
 
     return MAX_REFLECTANCE + (1.0 - DEFAULT_REFLECTANCE) * (pow(1.0 - dotNL, 5.0) * pow(1.0 - roughness, 2.0));
-
 }
 
 #if NUM_RECT_AREA_LIGHTS > 0
@@ -99,9 +152,9 @@ void direct_rect_physical(RectAreaLight light, Fragment fragment, PhysicalMateri
 
     mat3 mInv = mat3(
         vec3(t1.x, 0, t1.y),
-        vec3(  0, 1,    0),
+        vec3( 0, 1,    0),
         vec3(t1.z, 0, t1.w)
-   );
+ );
 
     // LTC Fresnel Approximation by Stephen Hill
     // http://blog.selfshadow.com/publications/s2016-advances/s2016_ltc_fresnel.pdf
@@ -115,7 +168,7 @@ void direct_rect_physical(RectAreaLight light, Fragment fragment, PhysicalMateri
 
 void direct_standard(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
 
-    vec3 irradiance = direct_energy(energy, l, fragment);
+    vec3 irradiance = direct_energy(energy, l, fragment.normal);
 
     specular += irradiance * BRDF_Specular_GGX(l, fragment, material.f0, material.roughness);
 
@@ -132,7 +185,7 @@ void indirect_standard(Fragment fragment, Material material, inout vec3 diffuse,
 #ifdef BRDF_PHYSICAL
 void direct_physical(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
 
-    vec3 irradiance = direct_energy(energy, l, fragment);
+    vec3 irradiance = direct_energy(energy, l, fragment.normal);
 
     float clearCoatDHR = material.clearcoat * clearCoatDHRApprox(material.clearCoatRoughness, dotNL);
 
@@ -162,6 +215,4 @@ void indirect_physical(vec3 irradiance, vec3 radiance, vec3 radiance_clearcoat, 
 float computeSpecularOcclusion(float dotNV, float ambientOcclusion, float roughness) {
 
     return saturate(pow(dotNV + ambientOcclusion, exp2(- 16.0 * roughness - 1.0)) - 1.0 + ambientOcclusion);
-
 }
-#endif

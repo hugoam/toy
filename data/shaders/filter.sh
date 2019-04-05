@@ -24,6 +24,9 @@ uniform vec4 u_source_levels;
 #define u_source_2_level int(u_source_levels.z)
 #define u_source_3_level int(u_source_levels.w)
 
+uniform vec4 u_filter_p0;
+#define u_multiply u_filter_p0.x
+
 uniform mat4 u_camera_proj;
 
 #ifdef NO_TEXEL_FETCH

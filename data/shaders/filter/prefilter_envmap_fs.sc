@@ -18,7 +18,7 @@ vec3 ImportanceSampleGGX(vec2 Xi, float Roughness, vec3 N)
     float a = Roughness * Roughness;
 
     // Compute distribution direction
-    float Phi = 2.0 * M_PI * Xi.x;
+    float Phi = 2.0 * PI * Xi.x;
     float CosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
     float SinTheta = sqrt(1.0 - CosTheta * CosTheta);
 

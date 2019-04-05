@@ -1,25 +1,9 @@
 #ifndef MUD_SHADER_BSDF_THREE
 #define MUD_SHADER_BSDF_THREE
 
-#define PI 3.14159265359
-#define PI2 6.28318530718
-#define PI_HALF 1.5707963267949
-#define RECIPROCAL_PI 0.31830988618
-#define RECIPROCAL_PI2 0.15915494
-#define LOG2 1.442695
-#define EPSILON 1e-6
-
-#define saturate(a) clamp(a, 0.0, 1.0)
-#define whiteCompliment(a) (1.0 - saturate(a))
-
-float pow2(const in float x) { return x*x; }
-float pow3(const in float x) { return x*x*x; }
-float pow4(const in float x) { float x2 = x*x; return x2*x2; }
-float average(const in vec3 color) { return dot(color, vec3_splat(0.3333)); }
-
 vec3 BRDF_Diffuse_Lambert(vec3 diffuseColor) {
 
-    return RECIPROCAL_PI * diffuseColor;
+    return rPI * diffuseColor;
 
 } // validated
 
@@ -76,7 +60,7 @@ float D_GGX(float alpha, float dotNH) {
 
     float denom = pow2(dotNH) * (a2 - 1.0) + 1.0; // avoid alpha = 0 with dotNH = 1
 
-    return RECIPROCAL_PI * a2 / pow2(denom);
+    return rPI * a2 / pow2(denom);
 
 }
 
@@ -246,7 +230,7 @@ float G_BlinnPhong_Implicit(/* float dotNL, float dotNV */) {
 
 float D_BlinnPhong(float shininess, float dotNH) {
 
-    return RECIPROCAL_PI * (shininess * 0.5 + 1.0) * pow(dotNH, shininess);
+    return rPI * (shininess * 0.5 + 1.0) * pow(dotNH, shininess);
 
 }
 
