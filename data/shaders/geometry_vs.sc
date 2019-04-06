@@ -78,18 +78,19 @@ void main()
 
     v_position = mul(u_proj, vec4(v_view, 1.0));
 
-#ifdef VFLIP
-    v_position.y = -v_position.y;
-#endif
-
 #if defined RENDER_UV
-    vec2 uv2ndc = vec2(v_uv0.x, 1.0 - v_uv0.y) * 2.0 - 1.0; // uvs are relative to top-left, so we need to reverse y and to NDC for rendering
+    vec2 uv2ndc = mod(vec2(v_uv0.x, 1.0 - v_uv0.y), vec2(1.0, 1.0)) * 2.0 - 1.0; // uvs are relative to top-left, so we need to reverse y and to NDC for rendering
     gl_Position = vec4(uv2ndc, 0.0, 1.0);
 #elif defined RENDER_UV2
-    vec2 uv2ndc = vec2(v_uv1.x, 1.0 - v_uv1.y) * 2.0 - 1.0; // uvs are relative to top-left, so we need to reverse y and to NDC for rendering
+    vec2 uv2ndc = mod(vec2(v_uv1.x, 1.0 - v_uv1.y), vec2(1.0, 1.0)) * 2.0 - 1.0; // uvs are relative to top-left, so we need to reverse y and to NDC for rendering
     gl_Position = vec4(uv2ndc, 0.0, 1.0);
 #else
     gl_Position = v_position;
+#endif
+
+#ifdef VFLIP
+    gl_Position.y = -gl_Position.y;
+    v_position.y = -v_position.y;
 #endif
 }
 
