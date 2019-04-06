@@ -16,7 +16,7 @@ uniform vec4 u_light_indices[MAX_LIGHTS];
 #define LIGHT_POINT 1
 #define LIGHT_SPOT 2
 
-float punctualLightIntensityToIrradianceFactor(float lightDistance, float cutoffDistance, float decayExponent) {
+float point_light_decay(float lightDistance, float cutoffDistance, float decayExponent) {
 
 #ifdef PHYSICALLY_CORRECT_LIGHTS
     // based upon Frostbite 3 Moving to Physically-based Rendering
@@ -42,14 +42,14 @@ float punctualLightIntensityToIrradianceFactor(float lightDistance, float cutoff
 
 }
 
-float omni_attenuation_three(vec3 l, float range, float factor, float cap)
+float omni_attenuation_three(vec3 l, float range, float factor)
 {
-    return punctualLightIntensityToIrradianceFactor(length(l), range, factor);
+    return point_light_decay(length(l), range, factor);
 }
 
 float omni_attenuation(vec3 l, float range, float factor, float cap)
 {
-    return omni_attenuation_three(l, range, factor, cap);
+    return omni_attenuation_three(l, range, factor);
     //float normalized_distance = length(l) / range;
     //float attenuation = pow(max(1.0 - normalized_distance, cap), factor);
     //return attenuation;

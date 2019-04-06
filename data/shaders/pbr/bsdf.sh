@@ -86,6 +86,7 @@ vec3 BRDF_Specular_GGX(vec3 l, Fragment fragment, vec3 specularColor, float roug
 
 } // validated
 
+#if NUM_RECT_AREA_LIGHTS > 0
 // Rect Area Light
 
 // Real-Time Polygonal-Light Shading with Linearly Transformed Cosines
@@ -198,6 +199,7 @@ vec3 LTC_Evaluate(vec3 N, vec3 V, vec3 P, mat3 mInv, vec3 rectCoords[4]) {
     return vec3_splat(result);
 
 }
+#endif
 
 // End Rect Area Light
 
