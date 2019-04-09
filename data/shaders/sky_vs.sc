@@ -21,9 +21,9 @@ vec3 totalMie(float T) {
 	return 0.434 * c * MieConst;
 }
 void main() {
-int material_index = int(u_state_material);
+int material_index = int(u_state_material_vertex);
 UserMaterial mat = read_user_material(material_index);
-vec3 sunposition    = mat.p0.xyz;
+vec3 sunposition     = mat.p0.xyz;
 float turbidity      = mat.p1.x;
 float rayleigh       = mat.p1.y;
 float mieCoefficient = mat.p2.x;

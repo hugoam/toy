@@ -15,7 +15,7 @@ void main()
 {
 #include <pbr/fs_fragment.sh>
 #include <pbr/fs_phong_material.sh>
-#include <pbr/fs_phong.sh>
+PhongMaterial material = matphong;#include <pbr/fs_phong.sh>
 
 //#define ALL_LIGHTS
 #ifndef ALL_LIGHTS

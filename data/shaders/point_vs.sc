@@ -6,7 +6,7 @@ $output v_color, v_uv0
 
 void main()
 {
-    int material_index = int(u_state_material);
+    int material_index = int(u_state_material_vertex);
     BaseMaterial basic = read_base_material(material_index);
     
 #ifdef INSTANCING

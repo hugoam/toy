@@ -44,7 +44,7 @@ void main()
 	vec3 vertex = mul(modelView, vec4(position, 1.0)).xyz;
 	vec3 normal = mul(modelView, vec4(a_normal, 0.0)).xyz;
     
-    int material_index = int(u_state_material);
+    int material_index = int(u_state_material_vertex);
     BaseMaterial basic = read_base_material(material_index);
     
 	v_uv0 = (a_texcoord0 * basic.uv0_scale) + basic.uv0_offset;

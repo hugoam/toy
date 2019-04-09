@@ -25,7 +25,7 @@ void main()
     //mat4 normalModelView = transpose(inverse(modelView));
     mat4 normalModelView = modelView;
 
-    int material_index = int(u_state_material);
+    int material_index = int(u_state_material_vertex);
     BaseMaterial basic = read_base_material(material_index);
 
     v_color = a_color0;

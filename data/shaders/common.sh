@@ -39,8 +39,10 @@ uniform vec4 u_camera_p0;
 
 #ifdef MATERIALS_BUFFER
 uniform vec4 u_state;
+uniform vec4 u_state_vertex;
 #define u_state_zone u_state.x
 #define u_state_material u_state.y
+#define u_state_material_vertex u_state_vertex.y
 #else
 #define u_state_zone 0
 #define u_state_material 0

@@ -32,7 +32,7 @@ void trimSegment(vec4 start, inout vec4 end)
 
 void main()
 {
-    int material_index = int(u_state_material);
+    int material_index = int(u_state_material_vertex);
     LineMaterial mat = read_line_material(material_index);
     
     #if 1 //def USE_COLOR
