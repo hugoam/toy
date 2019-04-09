@@ -1,11 +1,11 @@
 $input v_position, v_uv0
 #include <common.sh>
-#define fog_density p0.x
-#define fog_color   p0.yzw
 void main()
 {
 int material_index = int(u_state_material);
 UserMaterial mat = read_user_material(material_index);
+float fog_density = mat.p0.x;
+vec3 fog_color    = mat.p0.yzw;
 vec2 uv = v_uv0;
 vec2 position = - 1.0 + 2.0 * uv;
 vec4 noise = texture2D(s_user0, uv);
@@ -27,7 +27,7 @@ float depth = gl_FragCoord.z * gl_FragCoord.w;
 #else
 float depth = gl_FragCoord.z / gl_FragCoord.w;
 #endif
-float fogFactor = exp2(-mat.fog_density * mat.fog_density * depth * depth * LOG2);
+float fogFactor = exp2(-fog_density * fog_density * depth * depth * LOG2);
 fogFactor = 1.0 - clamp(fogFactor, 0.0, 1.0);
-gl_FragColor = mix(source, vec4(mat.fog_color, source.w), fogFactor);
+gl_FragColor = mix(source, vec4(fog_color, source.w), fogFactor);
 }

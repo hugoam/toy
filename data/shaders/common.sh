@@ -46,6 +46,7 @@ uniform vec4 u_state_vertex;
 #else
 #define u_state_zone 0
 #define u_state_material 0
+#define u_state_material_vertex 0
 #endif
 
 uniform vec4 u_morph_weights;
