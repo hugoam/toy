@@ -2,7 +2,7 @@
 #define MUD_GPU_LIGHT
 
 #define LIGHTS_TEXTURE_WIDTH 1024
-#define LIGHTS_TEXTURE_HEIGHT 5
+#define LIGHTS_TEXTURE_HEIGHT 9
 
 #ifdef NO_TEXEL_FETCH
 #define texelFetch(_sampler, _coord, _level) texture2DLod(_sampler, vec2(_coord) / vec2(float(LIGHTS_TEXTURE_WIDTH), float(LIGHTS_TEXTURE_HEIGHT)), _level)

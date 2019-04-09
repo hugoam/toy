@@ -4,8 +4,6 @@ $input v_view, v_position, v_normal, v_tangent, v_color, v_uv0, v_uv1, v_binorma
 #include <pbr/light.sh>
 #include <pbr/light_brdf_three.sh>
 #include <pbr/radiance.sh>
-#define u_roughness u_user_p0.x
-#define u_spec_brightness u_user_p0.y
 #define s_blur1 s_user0
 #define s_blur2 s_user1
 #define s_blur3 s_user2
@@ -33,22 +31,32 @@ result = ndotl * rho_s * frSpec;
 }
 return result;
 }
-void direct_skin(vec3 energy, vec3 l, Fragment fragment, PhongMaterial material, inout vec3 diffuse, inout vec3 specular)
+struct SkinMaterial
+{
+	PhongMaterial phong;
+	UserMaterial skin;
+};
+void direct_skin(vec3 energy, vec3 l, Fragment fragment, SkinMaterial mat, inout vec3 diffuse, inout vec3 specular)
 {
 float diffuseWeight = max(dot(fragment.normal, l), 0.0);
 diffuse += energy * diffuseWeight;
 #ifndef PASS_DIFFUSE
-float specularWeight = KS_Skin_Specular(fragment.normal, l, fragment.view, u_roughness, u_spec_brightness);
-specular += energy * material.specular * specularWeight;
+float roughness  = mat.skin.p0.x;
+float brightness = mat.skin.p0.y;
+float specularWeight = KS_Skin_Specular(fragment.normal, l, fragment.view, roughness, brightness);
+specular += energy * mat.phong.specular * specularWeight;
 #endif
 }
 #define direct_brdf direct_skin
 void main() {
 #include <pbr/fs_fragment.sh>
 #include <pbr/fs_phong_material.sh>
+SkinMaterial material;
+material.phong = matphong;
+material.skin = matuser;
 vec4 texDiffuse = sample_material_texture(s_diffuse, fragment.uv);
 texDiffuse *= texDiffuse;
-vec4 diffuseColor = vec4(material.diffuse, 1.0) * texDiffuse;
+vec4 diffuseColor = vec4(matphong.diffuse, 1.0) * texDiffuse;
 #include <pbr/fs_phong.sh>
 vec3 light = diffuseColor.rgb * (diffuse + specular);
 #ifdef PASS_DIFFUSE
@@ -59,17 +67,14 @@ vec3 color = sqrt(light);
 #else
 vec3 color = light;
 #endif
-vec3 blur1 = texture2D(s_blur1, v_uv0).xyz;
-vec3 blur2 = texture2D(s_blur2, v_uv0).xyz;
-vec3 blur3 = texture2D(s_blur3, v_uv0).xyz;
-vec3 blur4 = texture2D(s_blur4, v_uv0).xyz;
 light = vec3(vec3(0.22,  0.437, 0.635) * color + 
-vec3(0.101, 0.355, 0.365) * blur1 + 
-vec3(0.119, 0.208, 0.0)   * blur2 + 
-vec3(0.114, 0.0,   0.0)   * blur3 + 
-vec3(0.444, 0.0,   0.0)   * blur4);
+vec3(0.101, 0.355, 0.365) * texture2D(s_blur1, v_uv0).rgb + 
+vec3(0.119, 0.208, 0.0)   * texture2D(s_blur2, v_uv0).rgb + 
+vec3(0.114, 0.0,   0.0)   * texture2D(s_blur3, v_uv0).rgb + 
+vec3(0.444, 0.0,   0.0)   * texture2D(s_blur4, v_uv0).rgb);
 light *= sqrt(texDiffuse.xyz);
-vec3 ambient = vec3_splat(0.0); //zone.radiance_color * zone.ambient;light += ambient * material.diffuse * texDiffuse.xyz + specular;
+vec3 ambient = zone.ambient;
+light += ambient * matphong.diffuse * texDiffuse.xyz + specular;
 #ifndef VERSION1
 light = sqrt(light);
 #endif

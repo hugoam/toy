@@ -1,12 +1,14 @@
 $input v_world
 #include <common.sh>
-#define u_top_color u_user_p0.xyz
-#define u_bottom_color u_user_p1.xyz
-#define u_offset u_user_p2.x
-#define u_exponent u_user_p2.y
+#define top_color    p0.xyz
+#define bottom_color p1.xyz
+#define offset       p2.x
+#define exponent     p2.y
 void main()
 {
-	float h = normalize(v_world + u_offset).y;
-	gl_FragColor = vec4(mix(u_bottom_color, u_top_color, max(pow(max(h, 0.0), u_exponent), 0.0)), 1.0);
-	gl_FragColor = vec4(pow(gl_FragColor.rgb, vec3_splat(2.0)), 1.0);
+int material_index = int(u_state_material);
+UserMaterial u = read_user_material(material_index);
+float h = normalize(v_world + u.offset).y;
+gl_FragColor = vec4(mix(u.bottom_color, u.top_color, max(pow(max(h, 0.0), u.exponent), 0.0)), 1.0);
+gl_FragColor = vec4(pow(gl_FragColor.rgb, vec3_splat(2.0)), 1.0);
 }

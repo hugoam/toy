@@ -7,7 +7,7 @@
 
 #include "fs_indirect.sh"
     diffuse += zone.ambient * PI;
-    diffuse *= BRDF_Diffuse_Lambert(material.diffuse);
+    diffuse *= BRDF_Diffuse_Lambert(matphong.diffuse);
     
 #ifdef CLUSTERED
 #include "fs_direct_cluster.sh"

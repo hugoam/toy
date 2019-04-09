@@ -2,6 +2,7 @@
     AlphaMaterial matalpha = read_alpha_material(material_index);
     LitMaterial   matlit   = read_lit_material(material_index);
     PhongMaterial matphong = read_phong_material(material_index);
+    UserMaterial  matuser  = read_user_material(material_index);
 
 #include "fs_depth.sh"
 
@@ -9,13 +10,12 @@
 #include "fs_alpha.sh"
 #include "fs_alphatest.sh"
 
-    PhongMaterial material = matphong;
-    material.diffuse *= sample_material_texture(s_diffuse, fragment.uv).rgb;
-    material.specular *= sample_material_texture(s_specular, fragment.uv).rgb;
-    material.shininess *= sample_material_texture(s_shininess, fragment.uv).r;
+    matphong.diffuse *= sample_material_texture(s_diffuse, fragment.uv).rgb;
+    matphong.specular *= sample_material_texture(s_specular, fragment.uv).rgb;
+    matphong.shininess *= sample_material_texture(s_shininess, fragment.uv).r;
 
 #ifdef VERTEX_COLOR
-    material.diffuse *= v_color.rgb;
+    matphong.diffuse *= v_color.rgb;
     alpha *= v_color.a;
 #endif
 

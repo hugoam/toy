@@ -13,7 +13,8 @@ void main()
 #include "fs_fragment.sh"
 
 #include "fs_phong_material.sh"
-
+    PhongMaterial material = matphong;
+    
 #ifdef DEFERRED
     #include "fs_out_gbuffer.sh"
 #else
