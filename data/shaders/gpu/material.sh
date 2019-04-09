@@ -262,8 +262,8 @@ PbrMaterial read_pbr_material(int index)
     m.clearcoat = u_pbr_p2.z;
     m.clearcoat_gloss = u_pbr_p2.w;
 #else
-    uint x = index % MATERIALS_TEXTURE_WIDTH;
-    uint y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
+    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 albedo = texelFetch(s_materials, ivec2(x, y + 9), 0);
     m.albedo = albedo.xyz;
