@@ -33,7 +33,8 @@ BaseMaterial read_base_material(int index)
     m.uv1_scale = u_material_p1.xy;
     m.uv1_offset = u_material_p1.zw;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    //int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 uv0_scale_offset = texelFetch(s_materials, ivec2(x, y + 0), 0);
@@ -64,7 +65,7 @@ AlphaMaterial read_alpha_material(int index)
 #ifndef MATERIALS_BUFFER
     m.alpha = u_alpha.x;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 params = texelFetch(s_materials, ivec2(x, y + 2), 0);
@@ -90,7 +91,7 @@ SolidMaterial read_solid_material(int index)
 #ifndef MATERIALS_BUFFER
     m.color = u_color;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     m.color = texelFetch(s_materials, ivec2(x, y + 3), 0);
@@ -117,7 +118,7 @@ PointMaterial read_point_material(int index)
     m.point_size = u_point_p0.x;
     m.project = bool(u_point_p0.y);
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 params = texelFetch(s_materials, ivec2(x, y + 4), 0);
@@ -151,7 +152,7 @@ LineMaterial read_line_material(int index)
     m.dash_size = u_line_p1.x;
     m.dash_gap = u_line_p1.y;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 params = texelFetch(s_materials, ivec2(x, y + 5), 0);
@@ -194,7 +195,7 @@ LitMaterial read_lit_material(int index)
     m.displace = u_lit_p1.x;
     m.displace_bias = u_lit_p1.y;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 params_0 = texelFetch(s_materials, ivec2(x, y + 6), 0);
@@ -262,7 +263,7 @@ PbrMaterial read_pbr_material(int index)
     m.clearcoat = u_pbr_p2.z;
     m.clearcoat_gloss = u_pbr_p2.w;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 albedo = texelFetch(s_materials, ivec2(x, y + 9), 0);
@@ -321,7 +322,7 @@ PhongMaterial read_phong_material(int index)
     m.reflectivity = u_phong_p0.y;
     m.refraction = u_phong_p0.z;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     vec4 diffuse = texelFetch(s_materials, ivec2(x, y + 14), 0);
@@ -370,7 +371,7 @@ UserMaterial read_user_material(int index)
     m.p4 = u_user_p4;
     m.p5 = u_user_p5;
 #else
-    int x = index % MATERIALS_TEXTURE_WIDTH;
+    int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     int y = (index / MATERIALS_TEXTURE_WIDTH) * MATERIALS_TEXTURE_HEIGHT;
     
     m.p0 = texelFetch(s_materials, ivec2(x, y + 17), 0);
