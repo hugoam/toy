@@ -9,6 +9,10 @@ void main()
 {
 #include "fs_fragment.sh"
 
+    int material_index = int(u_state_material);
+    AlphaMaterial matalpha = read_alpha_material(material_index);
+    PbrMaterial   matpbr   = read_pbr_material(material_index);
+
     vec2 uv = fragment.uv;
 #include "fs_alpha.sh"
 #include "fs_alphatest.sh"
@@ -23,8 +27,6 @@ void main()
     vec3 env = vec3_splat(1.0);
 #endif
     
-    int material_index = int(u_state_material);
-    PbrMaterial pbr = read_pbr_material(material_index);
 
-    gl_FragColor = vec4(pbr.albedo * env, pbr.alpha);
+    gl_FragColor = vec4(matpbr.albedo * env, alpha);
 }

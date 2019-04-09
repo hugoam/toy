@@ -47,6 +47,10 @@ BaseMaterial read_base_material(int index)
     return m;
 }
 
+#ifndef MATERIALS_BUFFER
+uniform vec4 u_alpha;
+#endif
+
 struct AlphaMaterial
 {
     float alpha;
@@ -57,10 +61,12 @@ AlphaMaterial read_alpha_material(int index)
     AlphaMaterial m;
     
 #ifndef MATERIALS_BUFFER
+    m.alpha = u_alpha.x;
 #else
     int x = int(mod(index, MATERIALS_TEXTURE_WIDTH));
     
     vec4 params = texelFetch(s_materials, ivec2(x, 2), 0);
+    m.alpha = params.x;
 #endif
 
     return m;

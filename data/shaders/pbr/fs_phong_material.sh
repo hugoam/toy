@@ -1,6 +1,7 @@
     int material_index = int(u_state_material);
-    LitMaterial lit = read_lit_material(material_index);
-    PhongMaterial phong = read_phong_material(material_index);
+    AlphaMaterial matalpha = read_alpha_material(material_index);
+    LitMaterial   matlit   = read_lit_material(material_index);
+    PhongMaterial matphong = read_phong_material(material_index);
 
 #include "fs_depth.sh"
 
@@ -8,16 +9,15 @@
 #include "fs_alpha.sh"
 #include "fs_alphatest.sh"
 
-    phong.diffuse = phong.diffuse * sample_material_texture(s_diffuse, fragment.uv).rgb;
-    phong.specular = phong.specular * sample_material_texture(s_specular, fragment.uv).rgb;
-    phong.shininess = phong.shininess * sample_material_texture(s_shininess, fragment.uv).r;
+    PhongMaterial material = matphong;
+    material.diffuse = matphong.diffuse * sample_material_texture(s_diffuse, fragment.uv).rgb;
+    material.specular = matphong.specular * sample_material_texture(s_specular, fragment.uv).rgb;
+    material.shininess = matphong.shininess * sample_material_texture(s_shininess, fragment.uv).r;
 
 #ifdef VERTEX_COLOR
-    phong.diffuse *= v_color.rgb;
+    material.diffuse *= v_color.rgb;
     alpha *= v_color.a;
 #endif
-
-    PhongMaterial material = phong;
 
 #include "fs_normal.sh"
 #include "fs_emission.sh"

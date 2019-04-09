@@ -17,7 +17,7 @@
 #endif
 
 #ifdef AMBIENT_OCCLUSION
-    diffuse *= lit.ao;
+    diffuse *= matlit.ao;
 #endif
 
     //apply_reflections(specular, ambient);

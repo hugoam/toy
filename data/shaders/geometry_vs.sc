@@ -52,9 +52,9 @@ void main()
 #endif
 
 #ifdef DISPLACEMENT
-    LitMaterial lit = read_lit_material(material_index);
+    LitMaterial matlit = read_lit_material(material_index);
     float displace = texture2D(s_displace, v_uv0).x;
-    position += normalize(a_normal) * (displace * lit.displace + lit.displace_bias);
+    position += normalize(a_normal) * (displace * matlit.displace + matlit.displace_bias);
 #endif
 
     v_view = mul(modelView, vec4(position, 1.0)).xyz;

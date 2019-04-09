@@ -69,7 +69,7 @@ vec3(0.119, 0.208, 0.0)   * blur2 +
 vec3(0.114, 0.0,   0.0)   * blur3 + 
 vec3(0.444, 0.0,   0.0)   * blur4);
 light *= sqrt(texDiffuse.xyz);
-vec3 ambient = vec3_splat(0.0); //zone.ambient; light += ambient * material.diffuse * texDiffuse.xyz + specular;
+vec3 ambient = vec3_splat(0.0); //zone.radiance_color * zone.ambient;light += ambient * material.diffuse * texDiffuse.xyz + specular;
 #ifndef VERSION1
 light = sqrt(light);
 #endif
