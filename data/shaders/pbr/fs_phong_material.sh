@@ -10,9 +10,9 @@
 #include "fs_alphatest.sh"
 
     PhongMaterial material = matphong;
-    material.diffuse = matphong.diffuse * sample_material_texture(s_diffuse, fragment.uv).rgb;
-    material.specular = matphong.specular * sample_material_texture(s_specular, fragment.uv).rgb;
-    material.shininess = matphong.shininess * sample_material_texture(s_shininess, fragment.uv).r;
+    material.diffuse *= sample_material_texture(s_diffuse, fragment.uv).rgb;
+    material.specular *= sample_material_texture(s_specular, fragment.uv).rgb;
+    material.shininess *= sample_material_texture(s_shininess, fragment.uv).r;
 
 #ifdef VERTEX_COLOR
     material.diffuse *= v_color.rgb;
