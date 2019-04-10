@@ -1,6 +1,23 @@
 #ifndef MUD_SHADER_BSDF_THREE
 #define MUD_SHADER_BSDF_THREE
 
+// Analytical approximation of the DFG LUT, one half of the
+// split-sum approximation used in indirect specular lighting.
+// via 'environmentBRDF' from "Physically Based Shading on Mobile"
+// https://www.unrealengine.com/blog/physically-based-shading-on-mobile - environmentBRDF for GGX on mobile
+
+vec2 integrateSpecularBRDF(float dotNV, float roughness) {
+    const vec4 c0 = vec4(-1, -0.0275, -0.572, 0.022);
+
+    const vec4 c1 = vec4(1, 0.0425, 1.04, -0.04);
+
+    vec4 r = roughness * c0 + c1;
+
+    float a004 = min(r.x * r.x, exp2(-9.28 * dotNV)) * r.x + r.y;
+
+    return vec2(-1.04, 1.04) * a004 + r.zw;
+}
+
 vec3 BRDF_Diffuse_Lambert(vec3 diffuseColor) {
 
     return rPI * diffuseColor;
@@ -25,7 +42,7 @@ vec3 F_Schlick(vec3 specularColor, float dotLH) {
 // alpha is "roughness squared" in Disney’s reparameterization
 float G_GGX_Smith(float alpha, float dotNL, float dotNV) {
 
-    // geometry term (normalized) = G(l)⋅G(v) / 4(n⋅l)(n⋅v)
+    // fragment term (normalized) = G(l)⋅G(v) / 4(n⋅l)(n⋅v)
     // also see #12151
 
     float a2 = pow2(alpha);
@@ -208,24 +225,39 @@ vec3 BRDF_Specular_GGX_Environment(Fragment fragment, vec3 specularColor, float 
 
     float dotNV = saturate(dot(fragment.normal, fragment.view));
 
-    const vec4 c0 = vec4(- 1, - 0.0275, - 0.572, 0.022);
+    vec2 brdf = integrateSpecularBRDF(dotNV, roughness);
 
-    const vec4 c1 = vec4(1, 0.0425, 1.04, - 0.04);
-
-    vec4 r = roughness * c0 + c1;
-
-    float a004 = min(r.x * r.x, exp2(- 9.28 * dotNV)) * r.x + r.y;
-
-    vec2 AB = vec2(-1.04, 1.04) * a004 + r.zw;
-
-    return specularColor * AB.x + AB.y;
+    return specularColor * brdf.x + brdf.y;
 
 } // validated
 
+// Fdez-Agüera's "Multiple-Scattering Microfacet Model for Real-Time Image Based Lighting"
+// Approximates multiscattering in order to preserve energy.
+// http://www.jcgt.org/published/0008/01/03/
+void BRDF_Specular_Multiscattering_Environment(Fragment fragment, vec3 specularColor, float roughness, inout vec3 singleScatter, inout vec3 multiScatter) {
+
+    float dotNV = saturate(dot(fragment.normal, fragment.view));
+
+    vec3 F = F_Schlick(specularColor, dotNV);
+    vec2 brdf = integrateSpecularBRDF(dotNV, roughness);
+    vec3 FssEss = F * brdf.x + brdf.y;
+
+    float Ess = brdf.x + brdf.y;
+    float Ems = 1.0 - Ess;
+
+    // Paper incorrect indicates coefficient is PI/21, and will
+    // be corrected to 1/21 in future updates.
+    vec3 Favg = specularColor + (1.0 - specularColor) * 0.047619; // 1/21
+    vec3 Fms = FssEss * Favg / (1.0 - Ems * Favg);
+
+    singleScatter += FssEss;
+    multiScatter += Fms * Ems;
+
+}
 
 float G_BlinnPhong_Implicit(/* float dotNL, float dotNV */) {
 
-    // geometry term is (n dot l)(n dot v) / 4(n dot l)(n dot v)
+    // fragment term is (n dot l)(n dot v) / 4(n dot l)(n dot v)
     return 0.25;
 
 }

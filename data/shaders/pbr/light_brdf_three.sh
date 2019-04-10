@@ -59,12 +59,17 @@ void indirect_blinn_phong(Fragment fragment, PhongMaterial material, inout vec3 
 }
 
 // ref: http://casual-effects.blogspot.ca/2011/08/plausible-environment-lighting-in-two.html
-float env_specular_miplevel_phong(PhongMaterial material)
+float env_shininess_miplevel(float shininess)
 {
-    float level = RADIANCE_MAX_LOD + 0.79248 - 0.5 * log2(pow2(material.shininess) + 1.0);
+    float level = RADIANCE_MAX_LOD + 0.79248 - 0.5 * log2(pow2(shininess) + 1.0);
 
     // clamp to allowable LOD ranges.
     return clamp(level, 0.0, RADIANCE_MAX_LOD);
+}
+
+float env_specular_miplevel_phong(PhongMaterial material)
+{
+    return env_shininess_miplevel(material.shininess);
 }
 
 float env_specular_miplevel_lambert(PhongMaterial material)
@@ -92,15 +97,42 @@ void env_brdf_blend(PhongMaterial material, vec3 color, inout vec3 diffuse, inou
     env_blend_op(material, color, specular, 0.5);
 }
 
-vec3 env_brdf_specular(Fragment fragment, Material material, vec3 color)
+void env_brdf_simple(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
 {
-    return color;
+    diffuse *= BRDF_Diffuse_Lambert(material.albedo);
+    specular *= BRDF_Specular_GGX_Environment(fragment, material.f0, material.roughness);
 }
 
-vec3 env_brdf_diffuse(Fragment fragment, Material material, vec3 color)
+void env_brdf_multiscatter(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
 {
-    return color;
+    vec3 singleScattering = vec3_splat(0.0);
+    vec3 multiScattering = vec3_splat(0.0);
+    vec3 cosineWeightedIrradiance = diffuse * rPI;
+    diffuse = vec3_splat(0.0);
+    BRDF_Specular_Multiscattering_Environment(fragment, material.f0, material.roughness, singleScattering, multiScattering);
+    specular *= singleScattering;
+    diffuse += multiScattering * cosineWeightedIrradiance;
+    diffuse += material.albedo * cosineWeightedIrradiance;
 }
+
+void env_brdf(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
+{
+    //env_brdf_multiscatter(fragment, material, diffuse, specular);
+    env_brdf_simple(fragment, material, diffuse, specular);
+}
+
+#ifdef BRDF_PHYSICAL
+void env_brdf_physical(Fragment fragment, Material material, vec3 clearcoatSpecular, inout vec3 diffuse, inout vec3 specular)
+{
+    float dotNV = saturate(dot(fragment.normal, fragment.viewDir));
+    float dotNL = dotNV;
+    float clearCoatDHR = material.clearCoat * clearCoatDHRApprox(material.clearCoatRoughness, dotNL);
+    float clearCoatInv = 1.0 - clearCoatDHR;
+    //env_brdf_multiscatter();
+    specular *= clearCoatInv * BRDF_Specular_GGX_Environment(fragment, material.f0, material.roughness);
+    specular += clearcoatSpecular * material.clearCoat * BRDF_Specular_GGX_Environment(fragment, vec3(DEFAULT_SPECULAR_COEFFICIENT), material.clearCoatRoughness);
+}
+#endif
 
 #ifdef BRDF_STANDARD
 #define direct_brdf direct_standard
@@ -113,7 +145,9 @@ vec3 env_brdf_diffuse(Fragment fragment, Material material, vec3 color)
 
 float env_specular_miplevel_pbr(Material material)
 {
-    return material.roughness * RADIANCE_MAX_LOD;
+    float shininess = GGXRoughnessToBlinnExponent(material.roughness);
+    return env_shininess_miplevel(shininess);
+    //return material.roughness * RADIANCE_MAX_LOD;
 }
 
 // Clear coat directional hemishperical reflectance (this approximation should be improved)
@@ -137,7 +171,7 @@ uniform sampler2D ltc_2; // RGBA Float
 
 uniform RectAreaLight rectAreaLights[ NUM_RECT_AREA_LIGHTS ];
 
-void direct_rect_physical(RectAreaLight light, Fragment fragment, PhysicalMaterial material, inout vec3 diffuse, inout vec3 specular) {
+void direct_rect_physical(RectAreaLight light, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular) {
 
     vec3 rectCoords[4];
     rectCoords[0] = light.position + light.halfWidth - light.halfHeight; // counterclockwise; light shines in local neg z direction
@@ -152,9 +186,9 @@ void direct_rect_physical(RectAreaLight light, Fragment fragment, PhysicalMateri
 
     mat3 mInv = mat3(
         vec3(t1.x, 0, t1.y),
-        vec3( 0, 1,    0),
+        vec3(0, 1,    0),
         vec3(t1.z, 0, t1.w)
- );
+);
 
     // LTC Fresnel Approximation by Stephen Hill
     // http://blog.selfshadow.com/publications/s2016-advances/s2016_ltc_fresnel.pdf
@@ -179,7 +213,6 @@ void indirect_standard(Fragment fragment, Material material, inout vec3 diffuse,
 
     diffuse *= BRDF_Diffuse_Lambert(material.albedo);
     specular *= BRDF_Specular_GGX_Environment(fragment, material.f0, material.roughness);
-
 }
 
 #ifdef BRDF_PHYSICAL

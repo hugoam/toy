@@ -16,8 +16,7 @@
 
 #include "fs_indirect_ibl.sh"
 #include "fs_indirect.sh"
-    diffuse *= material.albedo / PI;
-    //diffuse *= BRDF_Diffuse_Lambert(material.diffuse);
+    env_brdf(fragment, material, diffuse, specular);
 
 #ifdef CLUSTERED
 #include "fs_direct_cluster.sh"

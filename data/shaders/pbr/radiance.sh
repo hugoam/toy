@@ -40,11 +40,13 @@ vec3 ibl_reflect(vec3 view, vec3 normal, float level)
 
 vec3 ibl_diffuse(vec3 normal)
 {
+    // @todo it seems wrong that last level is too uniform, look into how those are generated
+    float level = RADIANCE_MAX_LOD - 3.0;
 	vec3 dir = normalize(mul(u_invView, vec4(normal, 0.0)).xyz);
 #ifdef RADIANCE_CUBE
-	vec3 amb = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), RADIANCE_MAX_LOD).rgb;
+	vec3 amb = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), level).rgb;
 #else
-	vec3 amb = textureSpherical2D(s_radiance, dir, RADIANCE_MAX_LOD).rgb;
+	vec3 amb = textureSpherical2D(s_radiance, dir, level).rgb;
 #endif
 	return amb;
 }

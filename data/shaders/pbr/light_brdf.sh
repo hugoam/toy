@@ -319,14 +319,10 @@ float env_brdf_miplevel(Material material)
     return material.roughness * RADIANCE_MAX_LOD;
 }
 
-vec3 env_brdf_diffuse(Fragment fragment, Material material, vec3 color)
+void env_brdf(Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
 {
-    return color;
-}
-
-vec3 env_brdf_specular(Fragment fragment, Material material, vec3 color)
-{
-    return color * brdf_specular_term(fragment, material.f0, material.roughness);
+    diffuse *= material.albedo * rPI; // lambert brdf
+    specular *= brdf_specular_term(fragment, material.f0, material.roughness);
 }
 
 void direct_brdf(vec3 energy, vec3 l, Fragment fragment, Material material, inout vec3 diffuse, inout vec3 specular)
