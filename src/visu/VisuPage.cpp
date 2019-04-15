@@ -59,13 +59,13 @@ namespace toy
 		size_t index_count = 0;
 
 		for(Item* item : items)
-			for(const ModelItem& model_item : item->m_model->m_items)
+			for(const ModelElem& elem : item->m_model->m_items)
 			{
-				uint16_t num = item->m_batch ? 0U : 1U;
-				if(model_item.m_mesh->m_primitive < PrimitiveType::Triangles)
+				uint16_t num = item->m_batch ? item->m_batch->m_cache.size() / 16 : 1U;
+				if(elem.m_mesh->m_primitive < PrimitiveType::Triangles)
 					continue;
-				vertex_count += num * model_item.m_mesh->m_vertex_count;
-				index_count += num * model_item.m_mesh->m_index_count;
+				vertex_count += num * elem.m_mesh->m_vertex_count;
+				index_count += num * elem.m_mesh->m_index_count;
 			}
 
 		if(vertex_count == 0 || index_count == 0)
@@ -78,23 +78,32 @@ namespace toy
 		MeshAdapter data(Vertex::vertex_format, { vertices.data(), uint32_t(vertices.size()) }, { indices.data(), uint32_t(indices.size()) }, true);
 
 		for(Item* item : items)
-			for(const ModelItem& model_item : item->m_model->m_items)
+			for(const ModelElem& elem : item->m_model->m_items)
 			{
-				if(model_item.m_mesh->m_primitive < PrimitiveType::Triangles)
+				if(elem.m_mesh->m_primitive < PrimitiveType::Triangles)
 					continue;
 
 				if(!item->m_batch)
-					model_item.m_mesh->m_cache.xcopy(data, item->m_node->m_transform);
-				//else
-				//	for(const mat4& transform : item->m_instances)
-				//		model_item.m_mesh->read(data, transform);
+				{
+					elem.m_mesh->m_cache.xcopy(data, item->m_node->m_transform * elem.m_transform);
+					data.next();
+				}
+				else
+				{
+					span<mat4> transforms = { (mat4*)item->m_batch->m_cache.data(), item->m_batch->m_cache.size() / 16 };
+					for(const mat4& transform : transforms)
+					{
+						elem.m_mesh->m_cache.xcopy(data, transform);
+						data.next();
+					}
+				}
+
 			}
 	}
 
 	void build_world_page_geometry(WorldPage& page, span<Item*> items)
 	{
-		page.m_chunks.emplace_back();
-		Geometry& geom = page.m_chunks.back();
+		Geometry& geom = push(page.m_chunks);
 		build_geometry(geom, items);
 	}
 
@@ -112,11 +121,11 @@ namespace toy
 			//}
 			//else
 			{
-				bool add = has(page.m_geometry_filter, string(item.m_model->m_name))
-						&& item.m_node->m_object && item.m_node->m_object.m_type->is<EntityRef>();
+				bool add = has(page.m_geometry_filter, item.m_model->m_name);
+				add &= bool(item.m_node->m_object);
 				if(add)
 				{
-					Entity entity = { as_ent(item.m_node->m_object), 0 };
+					Entity entity = item.m_node->m_object;
 					Spatial& object = asa<Spatial>(entity);
 					if((object.is_child_of(page.m_spatial) || &object == &spatial) && !isa<Movable>(entity))
 						items.push_back(&item);

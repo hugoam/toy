@@ -64,6 +64,11 @@ namespace toy
 #endif
 	};
 
+	export_ TOY_CORE_EXPORT void jump_camera_to(Spatial& spatial, Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration = 1.f);
 	export_ TOY_CORE_EXPORT void jump_camera_to(Spatial& spatial, Camera& camera, const vec3& position, float distance = 1.f, float rotation = 0.f);
 	export_ TOY_CORE_EXPORT void move_camera_to(Spatial& spatial, Camera& camera, const vec3& position);
+
+	export_ TOY_CORE_EXPORT void jump_camera_to(Entity camera, const vec3& target, const quat& rotation, float distance, float angle, float duration = 1.f);
+	export_ TOY_CORE_EXPORT void jump_camera_to(Entity camera, const vec3& position, float distance = 1.f, float rotation = 0.f);
+	export_ TOY_CORE_EXPORT void move_camera_to(Entity camera, const vec3& position);
 }

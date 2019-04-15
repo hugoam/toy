@@ -4,6 +4,7 @@
 
 #include <type/Forward.h>
 #include <gfx/Forward.h>
+#include <tool/Forward.h>
 #include <util/Forward.h>
 #include <core/Forward.h>
 

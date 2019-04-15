@@ -229,43 +229,18 @@ namespace mud
 		static Class cls = { t, bases, bases_offsets, {}, {}, {}, {}, {}, };
 	}
 	
-	{
-		Type& t = type<stl::vector<mud::Ref>>();
-		static Alias alias = { &t, &namspc({ "toy" }), "Selection" };
-		m.m_aliases.push_back(&alias);
-	}
-	{
-		Type& t = type<stl::vector<mud::Ref>>();
-		static Alias alias = { &t, &namspc({ "toy" }), "Selection" };
-		m.m_aliases.push_back(&alias);
-	}
-	{
-		Type& t = type<stl::vector<mud::Ref>>();
-		static Alias alias = { &t, &namspc({ "toy" }), "Selection" };
-		m.m_aliases.push_back(&alias);
-	}
-	{
-		Type& t = type<stl::vector<mud::Ref>>();
-		static Alias alias = { &t, &namspc({ "toy" }), "Selection" };
-		m.m_aliases.push_back(&alias);
-	}
-	
 		m.m_types.push_back(&type<toy::ActionGroup>());
 		m.m_types.push_back(&type<toy::Clone>());
 		m.m_types.push_back(&type<toy::Cut>());
 		m.m_types.push_back(&type<toy::Edit>());
 		m.m_types.push_back(&type<toy::GraphicsDebug>());
 		m.m_types.push_back(&type<toy::Paste>());
-		m.m_types.push_back(&type<toy::Selection>());
-		m.m_types.push_back(&type<toy::Selection>());
-		m.m_types.push_back(&type<toy::Selection>());
-		m.m_types.push_back(&type<toy::Selection>());
 		m.m_types.push_back(&type<toy::Toolbelt>());
 		m.m_types.push_back(&type<toy::Toolbox>());
-		m.m_types.push_back(&type<toy::DynamicToolbox>());
 		m.m_types.push_back(&type<toy::Editor>());
-		m.m_types.push_back(&type<toy::PlayTool>());
 		m.m_types.push_back(&type<toy::RunTool>());
+		m.m_types.push_back(&type<toy::DynamicToolbox>());
+		m.m_types.push_back(&type<toy::PlayTool>());
 	}
 }
 

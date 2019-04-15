@@ -190,7 +190,7 @@ Object.defineProperty(Element.prototype, "id", {
 });
 Object.defineProperty(Element.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_toy_Element__get_name(this.__ptr));
+        return UTF8ToString(_toy_Element__get_name(this.__ptr));
     },
     set: function(value) {
         _toy_Element__set_name(this.__ptr, ensureString(value));

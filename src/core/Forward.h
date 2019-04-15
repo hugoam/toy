@@ -96,24 +96,24 @@ namespace toy
 #include <ecs/ECS.h>
 namespace mud
 {
-	export_ extern template struct refl_ nocopy_ OwnedHandle<toy::Collider>;
-	export_ extern template struct refl_ nocopy_ OwnedHandle<toy::Solid>;
-	export_ extern template struct refl_ SparseHandle<toy::Collider>;
-	export_ extern template struct refl_ SparseHandle<toy::Solid>;
+	extern template struct refl_ nocopy_ OwnedHandle<toy::Collider>;
+	extern template struct refl_ nocopy_ OwnedHandle<toy::Solid>;
+	extern template struct refl_ SparseHandle<toy::Collider>;
+	extern template struct refl_ SparseHandle<toy::Solid>;
 
-	export_ extern template struct refl_ ComponentHandle<toy::Spatial>;
-	export_ extern template struct refl_ ComponentHandle<toy::Movable>;
-	export_ extern template struct refl_ ComponentHandle<toy::Camera>;
-	export_ extern template struct refl_ ComponentHandle<toy::Emitter>;
-	export_ extern template struct refl_ ComponentHandle<toy::Receptor>;
-	export_ extern template struct refl_ ComponentHandle<toy::EntityScript>;
-	export_ extern template struct refl_ ComponentHandle<toy::WorldPage>;
-	export_ extern template struct refl_ ComponentHandle<toy::Navblock>;
-	//export_ extern template struct refl_ ComponentHandle<toy::Collider>;
-	//export_ extern template struct refl_ ComponentHandle<toy::Solid>;
+	extern template struct refl_ ComponentHandle<toy::Spatial>;
+	extern template struct refl_ ComponentHandle<toy::Movable>;
+	extern template struct refl_ ComponentHandle<toy::Camera>;
+	extern template struct refl_ ComponentHandle<toy::Emitter>;
+	extern template struct refl_ ComponentHandle<toy::Receptor>;
+	extern template struct refl_ ComponentHandle<toy::EntityScript>;
+	extern template struct refl_ ComponentHandle<toy::WorldPage>;
+	extern template struct refl_ ComponentHandle<toy::Navblock>;
+	//extern template struct refl_ ComponentHandle<toy::Collider>;
+	//extern template struct refl_ ComponentHandle<toy::Solid>;
 
-	export_ extern template struct refl_ ComponentHandle<toy::Origin>;
-	export_ extern template struct refl_ ComponentHandle<toy::Waypoint>;
+	extern template struct refl_ ComponentHandle<toy::Origin>;
+	extern template struct refl_ ComponentHandle<toy::Waypoint>;
 }
 #endif
 

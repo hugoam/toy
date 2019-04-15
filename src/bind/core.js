@@ -408,7 +408,7 @@ Medium.__cache = {};
 Module['Medium'] = Medium;
 Object.defineProperty(Medium.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_toy_Medium__get_name(this.__ptr));
+        return UTF8ToString(_toy_Medium__get_name(this.__ptr));
     },
     set: function(value) {
         _toy_Medium__set_name(this.__ptr, ensureString(value));
@@ -767,7 +767,7 @@ Object.defineProperty(World.prototype, "id", {
 });
 Object.defineProperty(World.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_toy_World__get_name(this.__ptr));
+        return UTF8ToString(_toy_World__get_name(this.__ptr));
     },
     set: function(value) {
         _toy_World__set_name(this.__ptr, ensureString(value));

@@ -66,13 +66,13 @@ namespace toy
 		SoundManager& m_snd_manager;
 #endif
 
-		vector<Gnode*> m_entities;
+		vector<vector<Gnode*>> m_entities;
 
 		vector<unique<VisuPainter>> m_painters;
 
 		meth_ void next_frame();
 
-		Gnode& entity_node(Gnode& parent, uint32_t entity, Spatial& spatial, size_t painter);
+		Gnode& entity_node(Gnode& parent, Entity entity, Spatial& spatial, size_t painter);
 
 		inline void painter(cstring name, function<void(size_t, VisuScene&, Gnode&)> paint)
 		{

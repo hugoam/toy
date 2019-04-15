@@ -31,6 +31,7 @@ module toy.edit
 #include <tool//EditContext.h>
 #include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
+#include <core/Selector/Selection.h>
 #include <visu/VisuScene.h>
 #include <edit/Edit/Editor.h>
 #include <edit/Editor/Editor.h>
@@ -92,8 +93,11 @@ namespace toy
 	{
 		Widget& self = ui::select_list(parent);
 
-		for(Ref object : selection)
+		for(Ref object : selection.objects)
 			object_item(self, object);
+
+		//for(Entity entity : selection.entities)
+		//	object_item(self, object);
 	}
 
 #if 0
@@ -137,7 +141,7 @@ namespace toy
 		enum Modes { CREATE = 1 << 0 };
 
 		Section& self = section(parent, string(indexer.m_type->m_name) + " Registry");
-		complex_indexer(*self.m_body, indexer, &selection);
+		complex_indexer(*self.m_body, indexer, &selection.objects);
 
 		if(ui::modal_button(self, *self.m_toolbar, "Create", CREATE))
 		{
@@ -187,22 +191,22 @@ namespace toy
 
 	string entity_name(Entity entity)
 	{
-		return string(entity_prototype(entity)) + ":" + to_string(entity.m_handle);
+		return entity_prototype(entity) + ":" + to_string(entity.m_handle);
 	}
 
 	string entity_icon(Entity entity)
 	{
-		return "(" + string(entity_prototype(entity)) + ")";
+		return "(" + entity_prototype(entity) + ")";
 	}
 
-	void outliner_node(Widget& parent, Entity entity, HSpatial spatial, vector<Ref>& selection)
+	void outliner_node(Widget& parent, Entity entity, HSpatial spatial, Selection& selection)
 	{
 		TreeNode& self = ui::tree_node(parent, { entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
 
-		self.m_header->set_state(SELECTED, has(selection, ent_ref(entity)));
+		self.m_header->set_state(SELECTED, has(selection.entities, entity));
 
 		if(self.m_header->activated())
-			select(selection, ent_ref(entity));
+			select(selection.entities, entity);
 
 		//object_item(self, object);
 
@@ -213,7 +217,7 @@ namespace toy
 			}
 	}
 
-	void outliner_graph(Widget& parent, HSpatial spatial, vector<Ref>& selection)
+	void outliner_graph(Widget& parent, HSpatial spatial, Selection& selection)
 	{
 		ScrollSheet& sheet = ui::scroll_sheet(parent);
 		Widget& tree = ui::tree(*sheet.m_body);
@@ -280,7 +284,7 @@ namespace toy
 		//current_brush_edit(self, editor); // dockid { 0, 0 }
 		//ui_edit(self, editor.m_selection); // dockid { 0, 2 }
 		if(Widget* dock = ui::dockitem(dockspace, "Graphics", { 0U, 2U }))
-			edit_gfx_system(*dock, editor.m_gfx);
+			edit_gfx(*dock, editor.m_gfx);
 
 		editor.m_screen = ui::dockitem(dockspace, "Screen", { 0U, 1U }, 4.f);
 		
@@ -295,7 +299,7 @@ namespace toy
 			if(MouseEvent mouse_event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
 				editor.m_viewer->take_focus();
 
-			ui::viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection);
+			ui::viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection.objects);
 
 			KeyEvent key_event = editor.m_viewer->key_event(Key::F, EventType::Pressed);
 			if(key_event)
@@ -303,7 +307,7 @@ namespace toy
 		}
 
 		if(editor.m_spatial_tool && editor.m_viewer)
-			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection);
+			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection.objects);
 	}
 
 	Widget& editor_viewer_overlay(Viewer& viewer, Editor& editor)
@@ -361,7 +365,7 @@ namespace toy
 
 		if(editor.m_viewer)
 		{
-			Ref hovered = editor.m_viewer->m_hovered ? editor.m_viewer->m_hovered->m_node->m_object : Ref();
+			Ref hovered = Ref(); // editor.m_viewer->m_hovered ? editor.m_viewer->m_hovered->m_node->m_object : Ref();
 			paint_selection(editor.m_viewer->m_scene->m_graph, editor.m_selection, hovered);
 			//Widget& layout = toy::editor_viewer_overlay(*editor.m_viewer, editor);
 			//time_entries(layout);

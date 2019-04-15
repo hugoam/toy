@@ -30,7 +30,7 @@ mat4 planet_transform(VisuPlanet& planet, const mat4& transform)
 
 void paint_planet_ellipsis(Gnode& parent, VisuPlanet& planet)
 {
-	gfx::node(parent, {}, rotate(planet.m_rotation, parent.m_attach->position()), planet.m_rotation);
+	gfx::node(parent, rotate(planet.m_rotation, parent.m_attach->position()), planet.m_rotation);
 	gfx::shape(parent, Ellipsis(planet.m_ellipsis), Symbol::wire(Colour::AlphaGrey), ItemFlag::Default | ItemFlag::Selectable);
 }
 
@@ -50,12 +50,15 @@ void paint_star_planets(Gnode& parent, Star& star)
 		visu.m_updated = 1;
 	}
 
-	Item& item = gfx::shape(parent, Sphere(0.005f), Symbol(), 0, nullptr, visu.m_planets.size());
+	Item& item = gfx::shape(parent, Sphere(0.005f), Symbol(), 0, nullptr);
+	Batch& batch = gfx::batch(parent, item, sizeof(mat4));
 	mat4 transform = parent.m_attach->m_transform;
+
+	batch.m_cache.clear();
 
 	for(size_t i = 0; i < visu.m_planets.size(); ++i)
 	{
-		item.m_instances[i] = planet_transform(visu.m_planets[i], transform);
+		batch.transform(planet_transform(visu.m_planets[i], transform));
 	}
 
 	//paint_star_ellipses(parent, star);
@@ -71,7 +74,7 @@ inline vec3 to_xz3(const vec3& vec) { return { vec.x, 0.f, vec.z }; }
 void paint_range_grid(Gnode& parent, const Colour& colour, int range)
 {
 	float side = float(range * 2 + 1);
-	Gnode& projected = gfx::node(parent, {}, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
+	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
 	gfx::shape(projected, Grid2(vec2(side), vec2(2.5f)), Symbol::wire(colour));
 }
 
@@ -79,7 +82,7 @@ void paint_range(Gnode& parent, const Colour& colour, int range)
 {
 	if(range == 0) return;
 	float side = float(range * 2 + 1);
-	Gnode& projected = gfx::node(parent, {}, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
+	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
 	gfx::shape(projected, Quad(side, X3, Z3), Symbol::wire(colour));
 }
 
@@ -94,7 +97,7 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 	float length = min(abs(sec(angle)), abs(csc(angle))) * range;
 	vec3 end = rotate(X3 * length, angle, Y3);
 
-	Gnode& projected = gfx::node(parent, {}, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
+	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
 	gfx::draw(projected, Line(vec3(0.f), end), Symbol::wire(colour));
 }
 
@@ -209,14 +212,20 @@ void paint_fleet_ships(Gnode& parent, VisuFleet& visu, float radius, float ship_
 {
 	update_fleet_positions(visu, radius);
 
+	Model& model = *parent.m_scene->m_gfx.models().file("spaceship");
+
 	size_t index = 0;
 	for(size_t size = 0; size < 8; ++size)
 		if(!visu.m_ships[size].empty())
 		{
-			Item* item = gfx::model(parent, "spaceship", ItemFlag::Render | ItemFlag::Lod0, nullptr, visu.m_ships[size].size());
-			mat4 transform = parent.m_attach->m_transform;
+			Item& item = gfx::item(parent, model, ItemFlag::Render | ItemFlag::Lod0);
+			Batch& batch = gfx::batch(parent, item, sizeof(mat4));
+
+			const mat4 transform = parent.m_attach->m_transform;
+
+			batch.m_cache.clear();
 			for(size_t i = 0; i < visu.m_ships[size].size(); ++i)
-				item->m_instances[i] = ship_transform(visu.m_ships[size][i], transform, visu.m_points.m_points[index++], ship_scale);
+				batch.transform(ship_transform(visu.m_ships[size][i], transform, visu.m_points.m_points[index++], ship_scale));
 		}
 }
 
@@ -366,9 +375,9 @@ bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
 
 	vec3 current = ray.m_start + ray.m_dir * ray.m_d;
 
-	//Gnode& source = gfx::node(parent, {}, ray.m_start, ray.m_angle);
-	Gnode& projectile = gfx::node(parent, {}, current, ray.m_angle);
-	//Gnode& hit = gfx::node(parent, {}, ray.m_end, ray.m_angle);
+	//Gnode& source = gfx::node(parent, ray.m_start, ray.m_angle);
+	Gnode& projectile = gfx::node(parent, current, ray.m_angle);
+	//Gnode& hit = gfx::node(parent, ray.m_end, ray.m_angle);
 
 	//gfx::flows(out, flash);
 
@@ -406,7 +415,8 @@ void paint_combat_fleet(Gnode& parent, span<CombatFleet> flotilla, span<CombatFl
 		for(uint8_t i = 0; i < 8; ++i)
 			for(VisuShip& ship : fleet->m_visu.m_ships[i])
 			{
-				Gnode& node = gfx::node(parent, Ref(&ship), fleet->m_spatial->m_position + ship.m_position);
+				Gnode& node = gfx::node(parent, fleet->m_spatial->m_position + ship.m_position);
+				//node.m_node->m_object = Ref(&ship);
 
 				if(ship.m_destroyed)
 				{
@@ -428,9 +438,9 @@ void paint_combat_fleet(Gnode& parent, span<CombatFleet> flotilla, span<CombatFl
 				{
 					if(ship.m_ray.m_end == vec3(0.f))
 					{
-						vec3 source = fleet->m_spatial->m_position + ship.m_position;
-						vec3 target = target_fleet->m_spatial->m_position + random_element(target_fleet->m_visu.m_points.m_points);
-						quat angle = look_at(source, target);
+						const vec3 source = fleet->m_spatial->m_position + ship.m_position;
+						const vec3 target = target_fleet->m_spatial->m_position + random_element(span<vec3>(target_fleet->m_visu.m_points.m_points));
+						const quat angle = look_at(source, target);
 						ship.m_ray = { source, target, normalize(target - source), length(target - source), angle, 0.f };
 					}
 
@@ -506,13 +516,13 @@ void paint_combat(Gnode& parent, SpatialCombat& combat)
 void galaxy_grid(Gnode& parent, Galaxy& galaxy)
 {
 	Colour colour = Colour::White * 3.f;
-	Gnode& self = gfx::node(parent, {}, Y3 * 0.5f);
+	Gnode& self = gfx::node(parent, Y3 * 0.5f);
 	gfx::shape(self, Grid2(vec2(galaxy.m_size)), Symbol::wire(colour));
 }
 
 void highlighted_sector(Gnode& parent, const vec2& coord)
 {
-	Gnode& self = gfx::node(parent, {}, vec3(coord.x, 0.f, coord.y) + 0.5f);
+	Gnode& self = gfx::node(parent, vec3(coord.x, 0.f, coord.y) + 0.5f);
 	gfx::shape(self, Quad(1.f, X3, Z3), Symbol::wire(Colour::White));
 }
 

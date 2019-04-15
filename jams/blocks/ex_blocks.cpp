@@ -13,7 +13,7 @@ using namespace toy;
 
 Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
-	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
+	Material& material = Material::ms_gfx->fetch_material(name.c_str(), "pbr/pbr");
 	material.m_lit.m_emissive.m_value = colour;
 	material.m_lit.m_emissive.m_value.a = float(factor);
 	return material;
@@ -377,7 +377,9 @@ void paint_shell(Gnode& parent, Slug& shell)
 	static Flow* trail = parent.m_scene->m_gfx.flows().file("trail");
 	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
-	Gnode& source = gfx::node(parent, Ref(&shell), shell.m_source, shell.m_spatial->m_rotation);
+	Gnode& source = gfx::node(parent, shell.m_source, shell.m_spatial->m_rotation);
+	source.m_node->m_object = shell.m_spatial;
+
 	gfx::flows(source, *flash);
 
 	bool active = toy::sound(source, "bang", false, 0.5f);
@@ -385,14 +387,14 @@ void paint_shell(Gnode& parent, Slug& shell)
 	enum States { Fly = 1, Impact = 2 };
 	if(!shell.m_impacted)
 	{
-		Gnode& projectile = gfx::node(parent.subx(Fly), Ref(&shell), shell.m_spatial->m_position, shell.m_spatial->m_rotation);
+		Gnode& projectile = gfx::node(parent.subx(Fly), shell.m_spatial->m_position, shell.m_spatial->m_rotation);
 		gfx::shape(projectile, Cube(vec3(0.4f, 0.4f, 1.f)), Symbol(Colour(1.f, 2.f, 1.5f)));
 		gfx::flows(projectile, *trail);
 	}
 
 	if(shell.m_impacted)
 	{
-		Gnode& hit = gfx::node(parent.subx(Impact), Ref(&shell), shell.m_impact, shell.m_spatial->m_rotation);
+		Gnode& hit = gfx::node(parent.subx(Impact), shell.m_impact, shell.m_spatial->m_rotation);
 		active |= !gfx::flows(hit, *impact).m_ended;
 		active |= toy::sound(hit, "impact", false, 0.2f);
 		//active |= toy::sound(hit, "explode", false, 0.2f);
@@ -420,7 +422,7 @@ void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float perc
 	static const vec2 size = { 4.f, 0.2f };
 	vec2 fill_offset = { size.x * -(1.f - percentage) / 2.f, 0.f };
 	gfx::shape(parent, Quad(position, offset, vec2(4.f, 0.2f)), Symbol(Colour::White, Colour::None, true), ItemFlag::Render | ItemFlag::Billboard);
-	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(colour, true, true), ItemFlag::Render | ItemFlag::Billboard);
+	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(colour, Colour::None, true), ItemFlag::Render | ItemFlag::Billboard);
 }
 
 void paint_tank(Gnode& parent, Tank& tank)
@@ -447,7 +449,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 		tank_turret_models[faction.m_id] = &faction_model_variant(gfx, faction, *gfx.models().file("scifi_tank_turret"));
 	}
 
-	Gnode& turret = gfx::node(parent, {}, parent.m_attach->position(), tank.turret_rotation());
+	Gnode& turret = gfx::node(parent, parent.m_attach->position(), tank.turret_rotation());
 
 	if(tank.m_hitpoints > 0.f)
 	{
@@ -475,7 +477,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 		if(false)
 		{
 			Gnode& alive = parent.subx(Alive);
-			Gnode& symbol = gfx::node(alive, {}, parent.m_attach->m_transform);
+			Gnode& symbol = gfx::node(alive, parent.m_attach->m_transform);
 			gfx::shape(symbol, Torus(4.f, 0.1f), Symbol(faction.m_colour * 2.f));
 
 			if(false)
@@ -507,7 +509,16 @@ void paint_block_wire(Gnode& parent, Block& block)
 void paint_block(Gnode& parent, Tileblock& block)
 {
 	if(block.m_wfc_block.m_wave.m_solved)
-		paint_tiles(parent, ent_ref(block.m_spatial.m_handle), block.m_wfc_block);
+	{
+		paint_tiles(parent, block.m_spatial, block.m_wfc_block);
+
+		WorldPage& world_page = block.m_world_page;
+		if(world_page.m_updated > world_page.m_last_rebuilt)
+		{
+			build_world_page_geometry(*parent.m_scene, world_page);
+			world_page.update_geometry(world_page.m_spatial->m_last_tick);
+		}
+	}
 }
 
 void paint_scene(Gnode& parent, bool radiance)
@@ -524,13 +535,17 @@ void paint_viewer(Viewer& viewer)
 {
 	viewer.m_camera.m_far = 500.f;
 
-	viewer.m_viewport.comp<Tonemap>().m_enabled = true;
+	viewer.m_viewport.m_to_gamma = true;
 
-	viewer.m_viewport.comp<Glow>().m_enabled = true;
-	viewer.m_viewport.comp<Glow>().m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
-	viewer.m_viewport.comp<Glow>().m_intensity = 0.8f;
+	Tonemap& tonemap = viewer.m_viewport.comp<Tonemap>();
+	tonemap.m_enabled = true;
+
+	Glow& glow = viewer.m_viewport.comp<Glow>();
+	glow.m_enabled = true;
+	glow.m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
+	glow.m_intensity = 0.8f;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	viewer.m_viewport.comp<Glow>().m_bicubic_filter = true;
+	glow.m_bicubic_filter = true;
 #endif
 }
 
@@ -641,7 +656,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	Tank& tank = player.m_tank;
 	Spatial& spatial = tank.m_spatial;
 
-	OrbitController& orbit = ui::orbit_controller(viewer, 0.f, -c_pi / 4.f, 200.f);
+	OrbitController& orbit = ui::orbit_controller(viewer, 0.f, -c_pi4, 200.f);
 	orbit.set_target(spatial.m_position);
 
 #ifdef TOY_SOUND
@@ -670,7 +685,8 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	{
 		viewer.take_focus();
 
-		Ray pick_ray = viewer.m_viewport.ray(mouse_event.m_relative);
+		Ray pick_ray = viewer.mouse_ray();
+		//Ray pick_ray = viewer.ray(mouse_event.m_relative);
 		destination = player.m_world->m_bullet_world.ground_point(pick_ray);
 	}
 
@@ -733,7 +749,7 @@ Viewer& ex_blocks_menu_viewport(Widget& parent, GameShell& app)
 		once = true;
 	}
 
-	auto paint = [&](Tank& tank) { Gnode& node = gfx::node(scene, {}, tank.m_spatial->m_position, tank.m_spatial->m_rotation); paint_tank(node, tank); };
+	auto paint = [&](Tank& tank) { Gnode& node = gfx::node(scene, tank.m_spatial->m_position, tank.m_spatial->m_rotation); paint_tank(node, tank); };
 	paint(tank0);
 	paint(tank1);
 	paint(tank2);
@@ -820,12 +836,7 @@ public:
 		scene.entity_painter<Tileblock>("Tileblocks", world, paint_block);
 		scene_painters(scene, world);
 
-		static PhysicDebugDraw physic_draw = { *scene.m_scene.m_immediate };
-
-		scene.painter("PhysicsDebug", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
-			UNUSED(index); UNUSED(visu_scene); UNUSED(parent);
-			//physic_draw.draw_physics(parent, *scene.m_game.m_world, SolidMedium::me);
-		});
+		//physic_painter(scene);
 	}
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final

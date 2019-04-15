@@ -193,7 +193,7 @@ namespace toy
 	template <class T_Asset>
 	void add_asset_loader(AssetStore<T_Asset>& store, cstring format)
 	{
-		auto loader = [&](T_Asset& asset, const string& path)
+		auto loader = [&](T_Asset& asset, const string& path, const NoConfig& config)
 		{
 			unpack_json_file(Ref(&asset), path + store.m_formats[0]);
 		};
@@ -309,7 +309,7 @@ namespace toy
 				m_game.m_world = nullptr;
 
 				if(m_editor.m_viewer)
-					m_editor.m_viewer->m_viewport.m_active = false;
+					m_editor.m_viewer->m_viewport.m_autorender = false;
 
 				//Var args[2] = { Ref(this), Ref(&module) };
 				//script({ args, 2 });
@@ -328,7 +328,7 @@ namespace toy
 			//this->pump_game();
 
 			if(m_editor.m_viewer)
-				m_editor.m_viewer->m_viewport.m_active = true;
+				m_editor.m_viewer->m_viewport.m_autorender = true;
 		};
 
 		//m_editor.m_run_game = run;

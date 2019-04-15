@@ -47,15 +47,14 @@ namespace mud
 	template struct refl_ ComponentHandle<Fleet>;
 }
 
-
 using HGalaxy = ComponentHandle<Galaxy>;
 using HStar = ComponentHandle<Star>;
 using HFleet = ComponentHandle<Fleet>;
 
-extern template class refl_ seque_ vector<HStar>;
-extern template class refl_ seque_ vector<HFleet>;
-extern template class refl_ seque_ vector<Commander*>;
-extern template class refl_ seque_ vector<CombatFleet>;
+template class refl_ seque_ vector<HStar>;
+template class refl_ seque_ vector<HFleet>;
+template class refl_ seque_ vector<Commander*>;
+template class refl_ seque_ vector<CombatFleet>;
 
 using Buildings = std::map<BuildingSchema*, uint32_t>;
 using Ships = std::map<ShipSchema*, uint32_t>;

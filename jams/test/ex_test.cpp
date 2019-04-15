@@ -104,8 +104,8 @@ Viewer::Viewer(GfxWindow& context, Scene& scene, const vec4& rect)
 	, m_context(context)
 	, m_camera()
 	, m_viewport(m_camera, scene)
-	, m_position(rect_offset(rect))
-	, m_size(rect_size(rect))
+	, m_position(rect.pos)
+	, m_size(rect.size)
 {
 	m_viewport.m_rect = uvec4(vec4(m_position, m_size));
 
@@ -151,7 +151,7 @@ void ex_test(Shell& app)
 	static vec3 position = vec3(0.f);
 	static vec3 speed = vec3(0.f);
 
-	Gnode& node = gfx::node(scene, {}, position);
+	Gnode& node = gfx::node(scene, position);
 	gfx::shape(node, Cube(), Symbol::wire(Colour::Red));
 }
 }

@@ -17,8 +17,6 @@
 
 namespace toy
 {
-	using Selection = vector<Ref>;
-
 	export_ class refl_ TOY_EDIT_EXPORT PlayTool : public Tool
 	{
 	public:

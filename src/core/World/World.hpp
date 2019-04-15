@@ -56,7 +56,7 @@ using namespace mud; namespace toy
 	{
 		ECS& ecs = parent->m_world->m_ecs;
 		ComponentHandle<T> object = T::create(ecs, parent, static_cast<Types&&>(args)...);
-		parent->m_contents.push_back(object->m_spatial);
+		parent->m_contents.push_back(HSpatial(object));
 		return object;
 	}
 

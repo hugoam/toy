@@ -11,6 +11,7 @@ namespace stl
 {
 	using namespace toy;
 	template class TOY_VISU_EXPORT vector<Gnode*>;
+	template class TOY_VISU_EXPORT vector<vector<Gnode*>>;
 	template class TOY_VISU_EXPORT vector<unique<VisuPainter>>;
 }
 #endif

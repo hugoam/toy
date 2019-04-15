@@ -93,3 +93,14 @@ struct SpatialCombat;
 class Galaxy;
 class Universe;
 class CommanderBrush;
+
+//namespace mud
+//{
+//	template struct refl_ ComponentHandle<Galaxy>;
+//	template struct refl_ ComponentHandle<Star>;
+//	template struct refl_ ComponentHandle<Fleet>;
+//}
+
+using HGalaxy = mud::ComponentHandle<Galaxy>;
+using HStar = mud::ComponentHandle<Star>;
+using HFleet = mud::ComponentHandle<Fleet>;

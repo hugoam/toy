@@ -505,14 +505,6 @@ void turn_report_divisions(Widget& parent, Turn& turn)
 		turn.next_stage();
 }
 
-void jump_camera_to(Spatial& spatial, toy::Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration = 1.f)
-{
-	animate(Ref(&camera), member(&toy::Camera::m_lens_distance), var(distance), duration);
-	animate(Ref(&camera), member(&toy::Camera::m_lens_angle), var(angle), duration);
-	animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), duration);
-	animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotation), duration);
-}
-
 void turn_report_movements(Widget& parent, GameScene& scene, Turn& turn)
 {
 	Player& player = val<Player>(scene.m_player);
@@ -528,9 +520,9 @@ void turn_report_movements(Widget& parent, GameScene& scene, Turn& turn)
 			float size = c_fleet_visu_sizes[fleet.estimated_size()];
 
 			if(jump.m_state == Jump::Start)
-				jump_camera_to(player.m_camera->m_spatial, player.m_camera, jump.m_start_pos, rotation, 2.f * size, c_pi / 8.f, 3.f);
+				jump_camera_to(player.m_camera, jump.m_start_pos, rotation, 2.f * size, c_pi / 8.f, 3.f);
 			else if(jump.m_state == Jump::Warp)
-				jump_camera_to(player.m_camera->m_spatial, player.m_camera, jump.m_dest_pos, 2.f * size);
+				jump_camera_to(player.m_camera, jump.m_dest_pos, 2.f * size);
 		}
 		if(jump.m_state == Jump::None)
 			turn.m_jump++;
@@ -829,13 +821,14 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 			if(selected)
 			{
 				Spatial& spatial = asa<Spatial>(selected);
-				jump_camera_to(player.m_camera->m_spatial, player.m_camera, spatial.m_position, randf(1.f, 2.f), randf(float(-c_pi / 8.f), float(c_pi / 8.f)));
+				jump_camera_to(player.m_camera, spatial.m_position, randf(1.f, 2.f), randf(float(-c_pi / 8.f), float(c_pi / 8.f)));
 			}
 			player.m_selected_item = selected;
 		}
 
 		static Clock clock;
-		player.m_camera->m_spatial->rotate(Y3, CAMERA_ROTATION_SPEED * float(clock.step()));
+		Spatial& spatial = asa<Spatial>(player.m_camera);
+		spatial.rotate(Y3, CAMERA_ROTATION_SPEED * float(clock.step()));
 	}
 	else if(player.m_mode == GameStage::TurnReport)
 	{
@@ -857,8 +850,8 @@ void ex_space_ui(Widget& parent, GameScene& scene)
 
 	if(viewer.m_hovered)
 	{
-		uint32_t* hovered = try_val<uint32_t>(viewer.m_hovered->m_node->m_object);
-		player.m_hovered_item = hovered ? Entity(*hovered, 0) : Entity();
+		Entity hovered = viewer.m_hovered->m_node->m_object;
+		player.m_hovered_item = hovered;
 	}
 	else
 	{

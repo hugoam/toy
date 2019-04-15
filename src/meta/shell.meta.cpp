@@ -249,17 +249,10 @@ namespace mud
 		static Class cls = { t, bases, bases_offsets, {}, {}, members, {}, {}, };
 	}
 	
-	{
-		Type& t = type<stl::vector<mud::Ref>>();
-		static Alias alias = { &t, &namspc({ "toy" }), "Selection" };
-		m.m_aliases.push_back(&alias);
-	}
-	
 		m.m_types.push_back(&type<toy::Game>());
 		m.m_types.push_back(&type<toy::GameMode>());
 		m.m_types.push_back(&type<toy::GameModule>());
 		m.m_types.push_back(&type<toy::GameShell>());
-		m.m_types.push_back(&type<toy::Selection>());
 		m.m_types.push_back(&type<toy::GameModuleBind>());
 		m.m_types.push_back(&type<toy::GameScene>());
 		m.m_types.push_back(&type<toy::GameWindow>());

@@ -100,9 +100,32 @@ namespace toy
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotate(spatial.m_rotation, rotation, Y3)), 1.f);
 	}
 
+	void jump_camera_to(Spatial& spatial, toy::Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration)
+	{
+		animate(Ref(&camera), member(&toy::Camera::m_lens_distance), var(distance), duration);
+		animate(Ref(&camera), member(&toy::Camera::m_lens_angle), var(angle), duration);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), duration);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotation), duration);
+	}
+
 	void move_camera_to(Spatial& spatial, Camera& camera, const vec3& target)
 	{
 		UNUSED(camera);
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
+	}
+
+	void jump_camera_to(Entity camera, const vec3& target, float distance, float rotation)
+	{
+		jump_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target, distance, rotation);
+	}
+
+	void jump_camera_to(Entity camera, const vec3& target, const quat& rotation, float distance, float angle, float duration)
+	{
+		jump_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target, rotation, distance, angle, duration);
+	}
+
+	void move_camera_to(Entity camera, const vec3& target)
+	{
+		move_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target);
 	}
 }

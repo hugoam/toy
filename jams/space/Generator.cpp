@@ -33,8 +33,8 @@ string generate_name()
 
 void generate_avatar(Colour& colour, Image256& avatar)
 {
-	const uint16_t side = 6;
-	avatar.resize(side, side);
+	constexpr uint32_t side = 6;
+	avatar.resize(uvec2(side));
 
 	colour = Colour::hsl(randf(0.f, 1.f), 1.f, randf(0.5f, 0.6f));
 
@@ -46,8 +46,8 @@ void generate_avatar(Colour& colour, Image256& avatar)
 		for(uint16_t y = 0; y < side; ++y)
 		{
 			bool full = randf(0.f, 1.f) >= 0.5f;
-			avatar.at(x, y) = (full ? 1 : 0);
-			avatar.at(side - 1 - x, y) = (full ? 1 : 0);
+			avatar.at(uvec2(x, y)) = (full ? 1 : 0);
+			avatar.at(uvec2(side - 1 - x, y)) = (full ? 1 : 0);
 		}
 }
 

@@ -125,20 +125,20 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
 	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
-	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
+	Gnode& source = gfx::node(parent, bullet.m_source, spatial.m_rotation);
 	gfx::flows(source, *flash);
 
 	toy::sound(source, "rifle2", false, 0.4f);
 
 	if(!bullet.m_impacted)
 	{
-		Gnode& projectile = gfx::node(parent, {}, spatial.m_position, spatial.m_rotation);
+		Gnode& projectile = gfx::node(parent, spatial.m_position, spatial.m_rotation);
 		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour(2.f, 0.3f, 0.3f) * 4.f));
 	}
 
 	if(bullet.m_impacted)
 	{
-		Gnode& hit = gfx::node(parent, {}, bullet.m_impact, spatial.m_rotation);
+		Gnode& hit = gfx::node(parent, bullet.m_impact, spatial.m_rotation);
 		toy::sound(source, "impact2", false, 0.4f);
 		if(gfx::flows(hit, *impact).m_ended)
 			bullet.m_destroy = true;
@@ -151,18 +151,19 @@ void paint_human(Gnode& parent, Human& human)
 
 	Spatial& spatial = human.m_spatial;
 
-	Gnode& self = gfx::node(parent, Ref(&human), spatial.m_position, spatial.m_rotation);
-	
+	Gnode& self = gfx::node(parent, spatial.m_position, spatial.m_rotation);
+	self.m_node->m_object = human.m_spatial;
+
 	Item& item = gfx::item(self, model);
 	Mime& animated = gfx::animated(self, item);
 
 	if(animated.m_playing.empty() || animated.playing() != human.m_state.name)
 		animated.start(human.m_state.name.c_str(), human.m_state.loop, 0.f, human.m_walk ? 0.7f : 1.f);
 
-	Bone* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
+	Node3* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
 
 	mat4 pose = bxrotation(spatial.m_rotation) * fix_bone_pose(*bone);
-	Gnode& arm = gfx::node(self, {}, spatial.m_position + vec3(pose * vec4(vec3(0.f), 1.f)), spatial.m_rotation);
+	Gnode& arm = gfx::node(self, spatial.m_position + vec3(pose * vec4(vec3(0.f), 1.f)), spatial.m_rotation);
 	gfx::model(arm, "rifle");
 }
 

@@ -7,6 +7,7 @@
 #include <edit/Types.h>
 #include <edit/Editor/Toolbox.h>
 
+#include <tool/EditContext.h>
 #include <tool/Tool.h>
 #include <tool/Brush.h>
 
@@ -36,7 +37,7 @@ namespace toy
 		m_current_tools.clear();
 
 		for(auto& tool : m_tools)
-			if(tool->enabled(targets))
+			if(tool->enabled(targets.objects))
 				add(m_current_tools, tool);
 	}
 

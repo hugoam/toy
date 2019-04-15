@@ -11,8 +11,6 @@
 
 namespace toy
 {
-	using Selection = vector<Ref>;
-
 	//TOY_EDIT_EXPORT void context_menu(Widget& parent, Selector& selector, Ref object);
 
 	TOY_EDIT_EXPORT void edit_toolbox(Widget& parent, Toolbox& toolbox);

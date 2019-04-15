@@ -166,13 +166,25 @@ namespace toy
 	VisuScene::~VisuScene()
     {}
 
-	Gnode& VisuScene::entity_node(Gnode& parent, uint32_t entity, Spatial& spatial, size_t painter)
+	Gnode& VisuScene::entity_node(Gnode& parent, Entity entity, Spatial& spatial, size_t painter)
 	{
-		if(m_entities.size() <= entity)
-			m_entities.resize((entity + 1) * 2);
-		if(m_entities[entity] == nullptr)
-			m_entities[entity] = &gfx::node(parent.subx(uint16_t(entity)), ent_ref(entity), spatial.absolute_position(), spatial.absolute_rotation());
-		return m_entities[entity]->subx(uint16_t(painter));
+		const size_t index = entity.m_handle;
+
+		if(m_entities.size() <= entity.m_stream)
+			m_entities.resize(entity.m_stream + 1);
+
+		vector<Gnode*>& nodes = m_entities[entity.m_stream];
+
+		if(nodes.size() <= index)
+			nodes.resize((index + 1) * 2);
+
+		if(nodes[index] == nullptr)
+		{
+			nodes[index] = &gfx::node(parent.subx(uint16_t(index)), spatial.absolute_position(), spatial.absolute_rotation());
+			nodes[index]->m_node->m_object = entity;
+		}
+
+		return nodes[index]->subx(uint16_t(painter));
 	}
 
 	void VisuScene::next_frame()
@@ -188,8 +200,11 @@ namespace toy
 		m_snd_manager.update();
 #endif
 
-		for(size_t i = 0; i < m_entities.size(); ++i)
-			m_entities[i] = nullptr;
+		for(vector<Gnode*>& entities : m_entities)
+		{
+			for(size_t i = 0; i < entities.size(); ++i)
+				entities[i] = nullptr;
+		}
 
 		Gnode& root = m_scene.begin();
 
@@ -210,12 +225,12 @@ namespace toy
 
 		parent.m_scene->m_pool->pool<Item>().iterate([&](Item& item)
 		{
-			for(Ref object : selection)
-				if(item.m_node->m_object == object)
-					select_bounds.merge(item.m_aabb);
-
-			if(hovered != Ref() && item.m_node->m_object == hovered)
-				hover_bounds.merge(item.m_aabb);
+			//for(Ref object : selection)
+			//	if(item.m_node->m_object == object)
+			//		select_bounds.merge(item.m_aabb);
+			//
+			//if(hovered != Ref() && item.m_node->m_object == hovered)
+			//	hover_bounds.merge(item.m_aabb);
 		});
 
 		gfx::draw(parent, Cube(select_bounds), Symbol(Colour::White));

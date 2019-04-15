@@ -131,7 +131,7 @@ Cliff random_corner_cliff(Edge &edge0, Edge& edge1, size_t subdiv, bool inner)
 
 	for(uint16_t r = 0; r < Cliff::subdiv; r++)
 	{
-		float angle = c_pi / 2.f * float(r) / float(Cliff::subdiv - 1);
+		float angle = c_pi2 * float(r) / float(Cliff::subdiv - 1);
 		float length = min(abs(sec(angle)), abs(csc(angle)));
 		if(inner)
 		{
@@ -182,7 +182,7 @@ void cliff_corner(GfxSystem& gfx, const string& name, Edge& edge0, Edge& edge1, 
 		if(inner)
 		{
 			vec3 offset = Z3 - Z3 * 0.5f - X3 * 0.5f;
-			grid = revolve(offset, 0.5f, c_pi / 2.f, 0.f, { cliff.edges, Cliff::subdiv }, points, false);
+			grid = revolve(offset, 0.5f, c_pi2, 0.f, { cliff.edges, Cliff::subdiv }, points, false);
 		}
 		else
 		{

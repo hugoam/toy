@@ -40,4 +40,5 @@ namespace toy
     class GameModule;
     class GameModuleBind;
     class GameShell;
+	class GameWindow;
 }

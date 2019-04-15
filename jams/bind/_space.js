@@ -71,7 +71,7 @@ Object.defineProperty(Commander.prototype, "id", {
 });
 Object.defineProperty(Commander.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_Commander__get_name(this.__ptr));
+        return UTF8ToString(_Commander__get_name(this.__ptr));
     },
     set: function(value) {
         _Commander__set_name(this.__ptr, ensureString(value));
@@ -267,7 +267,7 @@ Object.defineProperty(Fleet.prototype, "slot", {
 });
 Object.defineProperty(Fleet.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_Fleet__get_name(this.__ptr));
+        return UTF8ToString(_Fleet__get_name(this.__ptr));
     },
     set: function(value) {
         _Fleet__set_name(this.__ptr, ensureString(value));
@@ -470,7 +470,7 @@ Schema.__cache = {};
 Module['Schema'] = Schema;
 Object.defineProperty(Schema.prototype, "code", {
     get: function() {
-        return Pointer_stringify(_Schema__get_code(this.__ptr));
+        return UTF8ToString(_Schema__get_code(this.__ptr));
     },
     set: function(value) {
         _Schema__set_code(this.__ptr, ensureString(value));
@@ -478,7 +478,7 @@ Object.defineProperty(Schema.prototype, "code", {
 });
 Object.defineProperty(Schema.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_Schema__get_name(this.__ptr));
+        return UTF8ToString(_Schema__get_name(this.__ptr));
     },
     set: function(value) {
         _Schema__set_name(this.__ptr, ensureString(value));
@@ -486,7 +486,7 @@ Object.defineProperty(Schema.prototype, "name", {
 });
 Object.defineProperty(Schema.prototype, "conceptor", {
     get: function() {
-        return Pointer_stringify(_Schema__get_conceptor(this.__ptr));
+        return UTF8ToString(_Schema__get_conceptor(this.__ptr));
     },
     set: function(value) {
         _Schema__set_conceptor(this.__ptr, ensureString(value));
@@ -614,7 +614,7 @@ Object.defineProperty(Split.prototype, "dest", {
 });
 Object.defineProperty(Split.prototype, "code", {
     get: function() {
-        return Pointer_stringify(_Split__get_code(this.__ptr));
+        return UTF8ToString(_Split__get_code(this.__ptr));
     },
     set: function(value) {
         _Split__set_code(this.__ptr, ensureString(value));
@@ -660,7 +660,7 @@ Object.defineProperty(Star.prototype, "coord", {
 });
 Object.defineProperty(Star.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_Star__get_name(this.__ptr));
+        return UTF8ToString(_Star__get_name(this.__ptr));
     },
     set: function(value) {
         _Star__set_name(this.__ptr, ensureString(value));

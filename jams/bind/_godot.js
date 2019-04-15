@@ -288,7 +288,7 @@ Stance.__cache = {};
 Module['Stance'] = Stance;
 Object.defineProperty(Stance.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_Stance__get_name(this.__ptr));
+        return UTF8ToString(_Stance__get_name(this.__ptr));
     },
     set: function(value) {
         _Stance__set_name(this.__ptr, ensureString(value));

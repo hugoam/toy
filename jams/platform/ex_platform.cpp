@@ -65,7 +65,9 @@ void TileWorld::generate_block(GfxSystem& gfx, const ivec2& coord)
 	WfcBlock& wfc = block->m_wfc_block;
 	WorldPage& world_page = block->m_world_page;
 
-	world_page.m_geometry_filter = { "platform/cube_covered", "platform/cube_covered_side", "platform/cube_covered_angle", "platform/corner_covered", "platform/empty_covered" };
+	world_page.m_geometry_filter = {
+		"platform/cube_covered", "platform/cube_covered_side", "platform/cube_covered_angle", "platform/corner_covered", "platform/empty_covered"
+	};
 
 	m_blocks[coord] = block;
 
@@ -408,7 +410,7 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
 	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
-	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
+	Gnode& source = gfx::node(parent, bullet.m_source, spatial.m_rotation);
 	gfx::flows(source, *flash);
 
 	//toy::sound(source, "rifle", false, 0.4f);
@@ -416,13 +418,13 @@ void paint_bullet(Gnode& parent, Bullet& bullet)
 
 	if(!bullet.m_impacted)
 	{
-		Gnode& projectile = gfx::node(parent, {}, spatial.m_position, spatial.m_rotation);
+		Gnode& projectile = gfx::node(parent, spatial.m_position, spatial.m_rotation);
 		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour(2.f, 0.3f, 0.3f) * 4.f));
 	}
 
 	if(bullet.m_impacted)
 	{
-		Gnode& hit = gfx::node(parent, {}, bullet.m_impact, spatial.m_rotation);
+		Gnode& hit = gfx::node(parent, bullet.m_impact, spatial.m_rotation);
 		toy::sound(source, "impact2", false, 0.4f);
 		if(gfx::flows(hit, *impact).m_ended)
 			bullet.m_destroy = true;
@@ -438,7 +440,7 @@ void paint_lamp(Gnode& parent, Lamp& lamp)
 
 Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
-	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
+	Material& material = Material::ms_gfx->fetch_material(name.c_str(), "pbr/pbr");
 	material.m_pbr.m_albedo.m_value = Colour::Black;
 	material.m_lit.m_emissive.m_value = colour;
 	material.m_lit.m_emissive.m_value.a = float(factor);
@@ -464,7 +466,7 @@ Model& human_model_stealth(GfxSystem& gfx)
 
 void paint_human(Gnode& parent, Human& human)
 {
-	Spatial& spatial = human.m_spatial;
+	const Spatial& spatial = human.m_spatial;
 
 	static Model& model_normal = *parent.m_scene->m_gfx.models().file("human00");
 	static Model& model_stealth = human_model_stealth(parent.m_scene->m_gfx);
@@ -472,31 +474,32 @@ void paint_human(Gnode& parent, Human& human)
 
 	Model& model = human.m_stealth ? model_stealth : model_glow;
 	
-	Gnode& self = gfx::node(parent, Ref(&human), spatial.m_position, spatial.m_rotation);
-	
+	Gnode& self = gfx::node(parent, spatial.m_position, spatial.m_rotation);
+	self.m_node->m_object = human.m_spatial;
+
 	Item& item = gfx::item(self, model, ItemFlag::Default | ItemFlag::Selectable);
 	Mime& animated = gfx::animated(self, item);
 
 	if(animated.m_playing.empty() || animated.playing() != human.m_state.name)
 		animated.start(human.m_state.name.c_str(), human.m_state.loop, 0.f, human.m_walk ? 0.7f : 1.f);
 
-	Bone* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
+	Node3* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
 
-	mat4 pose = bxrotation(spatial.m_rotation) * fix_bone_pose(*bone);
-	Gnode& arm = gfx::node(self, {}, spatial.m_position + vec3(pose * vec4(vec3(0.f), 1.f)), spatial.m_rotation);
+	const mat4 pose = bxrotation(spatial.m_rotation) * fix_bone_pose(*bone);
+	Gnode& arm = gfx::node(self, spatial.m_position + vec3(pose * vec4(vec3(0.f), 1.f)), spatial.m_rotation);
 	gfx::model(arm, "rifle");
 
 	enum States { Seek = 3, Dead = 4, Shield = 5, Headlight = 6, Visor = 7 };
 
 	if(human.m_target)
 	{
-		Gnode& seek = gfx::node(parent.subx(Seek), Ref(&human), spatial.m_position, spatial.m_rotation);
+		Gnode& seek = gfx::node(parent.subx(Seek), spatial.m_position, spatial.m_rotation);
 		toy::sound(seek, "destroy", false, 0.5f);
 	}
 
 	if(human.m_life <= 0.f)
 	{
-		Gnode& dead = gfx::node(parent.subx(Dead), Ref(&human), spatial.m_position, spatial.m_rotation);
+		Gnode& dead = gfx::node(parent.subx(Dead), spatial.m_position, spatial.m_rotation);
 		//toy::sound(dead, "robotdeath", false, 0.1f);
 		toy::sound(dead, "sparks", false, 0.1f);
 	}
@@ -512,16 +515,18 @@ void paint_human(Gnode& parent, Human& human)
 			return material;
 		};
 
-		Colour shield_colour = Colour(0.2f, 0.8f, 2.4f) * 4.f;
+		const Colour shield_colour = Colour(0.2f, 0.8f, 2.4f) * 4.f;
 		static Material& shield = shield_material(shield_colour, 0.04f);
 
 		static Clock clock;
-		float shield_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.3f, 1.4f) * (human.m_energy + human.m_discharge * 10.f);
-		float light_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.8f, 1.4f) * (human.m_energy + human.m_discharge * 5.f);
+		const float shield_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.3f, 1.4f) * (human.m_energy + human.m_discharge * 10.f);
+		const float light_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.8f, 1.4f) * (human.m_energy + human.m_discharge * 5.f);
 		
 		shield.m_fresnel.m_value.m_value = shield_colour * shield_intensity;
 
-		Gnode& center = gfx::node(parent.subx(Shield), Ref(&human), spatial.m_position + rotate(spatial.m_rotation, Y3), spatial.m_rotation);
+		Gnode& center = gfx::node(parent.subx(Shield), spatial.m_position + rotate(spatial.m_rotation, Y3), spatial.m_rotation);
+		center.m_node->m_object = human.m_spatial;
+
 		gfx::shape(center, Sphere(1.f), Symbol(shield_colour), 0U, &shield);
 		gfx::light(center, LightType::Point, false, Colour(0.3f, 0.4f, 1.f) * light_intensity, 10.f);
 	
@@ -536,7 +541,7 @@ void paint_human(Gnode& parent, Human& human)
 
 	if(human.m_headlight)
 	{
-		Gnode& headlight = gfx::node(parent.subx(Headlight), Ref(&human), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight());
+		Gnode& headlight = gfx::node(parent.subx(Headlight), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight());
 		Light& light = gfx::light(headlight, LightType::Spot, false, Colour::White, 30.f);
 		light.m_spot_angle = Human::headlight_angle;
 		light.m_spot_attenuation = 0.9f;
@@ -544,7 +549,7 @@ void paint_human(Gnode& parent, Human& human)
 
 	if(human.m_faction == Faction::Ally)
 	{
-		Gnode& visor = gfx::node(parent.subx(Visor), Ref(&human), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight(human.m_aiming));
+		Gnode& visor = gfx::node(parent.subx(Visor), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight(human.m_aiming));
 		//gfx::shape(visor, Line(-Z3 * 4.f, -Z3 * 8.f), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
 		gfx::shape(visor, Circle(-Z3 * 8.f, 0.2f, Axis::Z), Symbol(Colour::None, Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
 	}
@@ -552,9 +557,8 @@ void paint_human(Gnode& parent, Human& human)
 
 void paint_world_block(Gnode& parent, Tileblock& block, const uvec3* exclude = nullptr)
 {
-	Spatial& spatial = block.m_spatial;
 	if(!block.m_wfc_block.m_wave.m_solved) return;
-	paint_tiles(parent, Ref(&spatial), block.m_wfc_block, uvec3(UINT_MAX), exclude);
+	paint_tiles(parent, block.m_spatial, block.m_wfc_block, uvec3(UINT_MAX), exclude);
 	WorldPage& world_page = block.m_world_page;
 	if(world_page.m_updated > world_page.m_last_rebuilt)
 	{
@@ -572,9 +576,9 @@ void paint_crate(Gnode& parent, Crate& crate)
 void paint_scene(Gnode& parent)
 {
 	parent.m_scene->m_env.m_radiance.m_energy = 0.2f;
-	parent.m_scene->m_env.m_radiance.m_ambient = 0.04f;
+	parent.m_scene->m_env.m_radiance.m_ambient = Colour(0.04f);
 
-	gfx::radiance(parent, "radiance/tiber_1_1k.hdr", BackgroundMode::None);
+	//gfx::radiance(parent, "radiance/tiber_1_1k.hdr", BackgroundMode::None);
 
 	toy::sound(parent, "complexambient", true, 0.1f);
 }
@@ -582,14 +586,18 @@ void paint_scene(Gnode& parent)
 void paint_viewer(Viewer& viewer)
 {
 #if CLUSTERED
-	//viewer.m_viewport.set_clustered(viewer.m_scene->m_gfx);
+	viewer.m_viewport.set_clustered(viewer.m_scene->m_gfx);
 #endif
 
-	viewer.m_viewport.comp<Tonemap>().m_enabled = true;
+	viewer.m_viewport.m_to_gamma = true;
 
-	viewer.m_viewport.comp<Glow>().m_enabled = true;
+	Tonemap& tonemap = viewer.m_viewport.comp<Tonemap>();
+	tonemap.m_enabled = true;
+
+	Glow& glow = viewer.m_viewport.comp<Glow>();
+	glow.m_enabled = true;
 #ifndef MUD_PLATFORM_EMSCRIPTEN
-	viewer.m_viewport.comp<Glow>().m_bicubic_filter = true;
+	glow.m_bicubic_filter = true;
 #endif
 }
 
@@ -799,7 +807,7 @@ Viewer& ex_platform_menu_viewport(Widget& parent, GameShell& app)
 
 	viewer.m_camera.m_eye = Z3 * 2.f;
 
-	Gnode& node = gfx::node(scene, {}, -Y3 * 0.5f + X3 * 0.6f, angle_axis(fmod(float(clock.read()), c_2pi), Y3), vec3(1.f) * 0.5f);
+	Gnode& node = gfx::node(scene, -Y3 * 0.5f + X3 * 0.6f, angle_axis(fmod(float(clock.read()), c_2pi), Y3), vec3(1.f) * 0.5f);
 	Item& item = gfx::item(node, human);
 	Mime& animated = gfx::animated(node, item);
 	 
@@ -984,7 +992,7 @@ int main(int argc, char *argv[])
 	GameShell app(TOY_RESOURCE_PATH, exec_path(argc, argv).c_str());
 	
 	PlatformModule module = { _platform::m() };
-	app.run_game(module);
-	//app.run_editor(module);
+	//app.run_game(module);
+	app.run_editor(module);
 }
 #endif

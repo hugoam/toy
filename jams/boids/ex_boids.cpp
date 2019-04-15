@@ -541,7 +541,7 @@ namespace boids
 				UNUSED(visu_scene);
 				Gnode& self = parent.subi((void*)index);
 				parent.m_scene->m_env.m_radiance.m_energy = 0.2f;
-				parent.m_scene->m_env.m_radiance.m_ambient = 0.04f;
+				//parent.m_scene->m_env.m_radiance.m_ambient = 0.04f;
 				gfx::radiance(self, "radiance/tiber_1_1k.hdr", BackgroundMode::Radiance);
 			});
 
@@ -579,13 +579,13 @@ namespace boids
 
 				ecs.loop<Position, BoidObstacle>([&](Position& position, BoidObstacle&)
 				{
-					Gnode& node = gfx::node(parent, {}, to_mud(position.m_value));
+					Gnode& node = gfx::node(parent, to_mud(position.m_value));
 					gfx::item(node, model, 0U, &obstacle_material);
 				});
 
 				ecs.loop<Position, BoidTarget>([&](Position& position, BoidTarget&)
 				{
-					Gnode& node = gfx::node(parent, {}, to_mud(position.m_value));
+					Gnode& node = gfx::node(parent, to_mud(position.m_value));
 					gfx::item(node, model, 0U, &target_material);
 				});
 			};

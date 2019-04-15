@@ -18,7 +18,7 @@ using namespace mud; namespace toy
 	{
 		auto paint = [this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
 		{
-			world.m_ecs.loop_ent<Spatial, T>([this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+			world.m_ecs.loop_ent<Spatial, T>([this, paint_func, index, &parent](Entity entity, Spatial& spatial, T& component)
 			{
 				paint_func(this->entity_node(parent, entity, spatial, index), component);
 			});
@@ -33,7 +33,7 @@ using namespace mud; namespace toy
 		auto paint = [reference, range2, this, &world, paint_func](size_t index, VisuScene&, Gnode& parent)
 		{
 			vec3 position = reference->m_position;
-			world.m_ecs.loop_ent<Spatial, T>([&position, range2, this, paint_func, index, &parent](uint32_t entity, Spatial& spatial, T& component)
+			world.m_ecs.loop_ent<Spatial, T>([&position, range2, this, paint_func, index, &parent](Entity entity, Spatial& spatial, T& component)
 			{
 				float dist2 = distance2(spatial.m_position, position);
 				if(dist2 < range2)
@@ -49,7 +49,7 @@ using namespace mud; namespace toy
 		auto paint = [this, &objects, paint_func](size_t index, VisuScene&, Gnode& parent)
 		{
 			for(auto object : objects)
-				paint_func(this->entity_node(parent, object->m_spatial.m_handle, object->m_spatial, index), *object);
+				paint_func(this->entity_node(parent, object->m_spatial, object->m_spatial, index), *object);
 		};
 		m_painters.push_back(make_unique<VisuPainter>(name, m_painters.size(), paint));
 	}

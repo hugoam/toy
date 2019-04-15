@@ -29,7 +29,7 @@ Object.defineProperty(ProcedureType.prototype, "index", {
 });
 Object.defineProperty(ProcedureType.prototype, "name", {
     get: function() {
-        return Pointer_stringify(_toy_ProcedureType__get_name(this.__ptr));
+        return UTF8ToString(_toy_ProcedureType__get_name(this.__ptr));
     },
     set: function(value) {
         _toy_ProcedureType__set_name(this.__ptr, ensureString(value));

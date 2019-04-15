@@ -13,8 +13,6 @@
 
 namespace toy
 {
-	using Selection = vector<Ref>;
-
 	class refl_ Toolbox
 	{
 	public:

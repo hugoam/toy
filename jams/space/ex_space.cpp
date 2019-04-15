@@ -918,7 +918,7 @@ void CommanderBrush::paint(Gnode& parent)
 {
 	if(!m_commander) return;
 
-	gfx::node(parent, {}, m_position);
+	gfx::node(parent, m_position);
 	gfx::shape(parent, Circle(m_radius, Axis::Y), Symbol(Colour::White, rgb_to_rgba(m_commander->m_colour, 0.3f)));
 }
 
@@ -946,7 +946,7 @@ Player::Player(Galaxy* galaxy, Commander* commander)
 	: m_galaxy(galaxy), m_commander(commander), m_last_turn(*galaxy), m_turn_replay(*galaxy)
 {
 	m_camera = construct<toy::Camera>(galaxy->m_spatial->m_world->origin(), vec3(10.f, 0.f, 10.f), 25.f, 0.1f, 300.f);
-	m_camera->set_lens_angle(c_pi / 4.f);
+	m_camera->set_lens_angle(c_pi4);
 }
 
 void ex_space_lua_check(GameShell& shell, Galaxy& galaxy)
@@ -1025,7 +1025,7 @@ Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 	update_visu_fleet(fleet, tick, delta);
 
 	float angle = fmod(float(clock.read()) / 50.f, c_2pi);
-	Gnode& node = gfx::node(scene, {}, vec3(0.f), angle_axis(angle, Y3), vec3(1.f));
+	Gnode& node = gfx::node(scene, vec3(0.f), angle_axis(angle, Y3), vec3(1.f));
 	paint_fleet_ships(node, fleet, 1.f, 0.1f);
 	
 	//toy::sound(node, "complexambient", true);
@@ -1083,7 +1083,8 @@ public:
 			//	paint_combat(parent, *player.m_turn_replay.planetary_combat());
 		});
 
-		player.m_camera->m_spatial->m_position = player.m_commander->m_capital->m_spatial->m_position;
+		Spatial& spatial = asa<Spatial>(player.m_camera);
+		spatial.m_position = player.m_commander->m_capital->m_spatial->m_position;
 	}
 
 	virtual void init(GameShell& app, Game& game) final

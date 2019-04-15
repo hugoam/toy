@@ -26,8 +26,6 @@ namespace toy
 {
 	class SqliteDatabase;
 	
-	using Selection = vector<Ref>;
-
 	class refl_ TOY_SHELL_EXPORT GameScene : public VisuScene
 	{
 	public:
