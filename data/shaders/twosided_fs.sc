@@ -43,6 +43,7 @@ void main()
         direct_brdf(light.energy * a, normalize(l), fragment, material, diffuse, specular);
     }
 
+    #include <pbr/fs_phong_ibl.sh>
     #include <pbr/fs_out_pbr.sh>
     #include <fs_fog_simple.sh>
 }

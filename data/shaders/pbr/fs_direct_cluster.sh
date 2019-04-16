@@ -1,8 +1,8 @@
 
-uint cluster_index = fragment_cluster_index(fragment.coord.xyz);
-LightCluster cluster = get_light_cluster(cluster_index);
+uint cluster_index = cluster_index(fragment.coord.xyz);
+LightCluster cluster = read_cluster(cluster_index);
 
-uint index = cluster.record_offset;
+uint offset = cluster.record_offset;
 
 int i  = 0;
 
@@ -30,7 +30,7 @@ for(i = 0; i < int(u_shadow_counts[LIGHT_SPOT]); i++)
 }
 #endif
 
-index = cluster.record_offset;
+offset = cluster.record_offset;
 
 for(i = 0; i < int(u_light_counts[LIGHT_DIRECT]); i++)
 {
@@ -42,24 +42,26 @@ for(i = 0; i < int(u_light_counts[LIGHT_DIRECT]); i++)
     direct_brdf(direct.energy * factor, -direct.direction, fragment, material, diffuse, specular);
 }
 
-for(uint last_point = index + cluster.point_count; index < last_point; index++)
+for(uint last_point = offset + cluster.point_count; offset < last_point; offset++)
 {
-    Light light = read_cluster_light(index);
+    int index = clustered_light_index(offset);
+    Light light = read_light(index);
     vec3 l = light.position - fragment.position;
     float a = omni_attenuation(l, light);
 #ifdef SHADOWS
-    a *= (j < int(u_shadow_counts[LIGHT_POINT]) ? point_shadows[j] : 1.0);
+    a *= (index < int(u_shadow_counts[LIGHT_POINT]) ? point_shadows[index] : 1.0);
 #endif
     direct_brdf(light.energy * a, normalize(l), fragment, material, diffuse, specular);
 }
 
-for(uint last_spot = index + cluster.spot_count; index < last_spot; index++)
+for(uint last_spot = offset + cluster.spot_count; offset < last_spot; offset++)
 {
-    Light light = read_cluster_light(index);
+    int index = clustered_light_index(offset);
+    Light light = read_light(index);
     vec3 l = light.position - fragment.position;
     float a = spot_attenuation(l, light);
 #ifdef SHADOWS
-    a *= (k < int(u_shadow_counts[LIGHT_SPOT]) ? spot_shadows[k] : 1.0);
+    a *= (index < int(u_shadow_counts[LIGHT_SPOT]) ? spot_shadows[index] : 1.0);
 #endif
     direct_brdf(light.energy * a, normalize(l), fragment, material, diffuse, specular);
 }
