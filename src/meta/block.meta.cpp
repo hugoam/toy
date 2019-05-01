@@ -460,24 +460,24 @@ namespace mud
 		m.m_types.push_back(&type<stl::vector<toy::Sector*>>());
 		m.m_types.push_back(&type<toy::Earth>());
 		{
-			static Function f = { &namspc({ "toy" }), "paint_block_height", nullptr, toy_paint_block_height_0, { { "block", type<toy::Block>(),  }, { "image", type<mud::Image256>(),  }, { "element", type<toy::Element>(),  } }, g_qvoid };
+			static Function f = { &namspc({ "toy" }), "paint_block_height", funcptr<void(*)(toy::Block&, mud::Image256&, toy::Element&)>(toy::paint_block_height), toy_paint_block_height_0, { { "block", type<toy::Block>(),  }, { "image", type<mud::Image256>(),  }, { "element", type<toy::Element>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({ "toy" }), "paint_block_elements", nullptr, toy_paint_block_elements_1, { { "block", type<toy::Block>(),  }, { "image", type<mud::Image256>(),  }, { "elements", type<stl::span<toy::Element*>>(),  } }, g_qvoid };
+			static Function f = { &namspc({ "toy" }), "paint_block_elements", funcptr<void(*)(toy::Block&, mud::Image256&, stl::span<toy::Element*>)>(toy::paint_block_elements), toy_paint_block_elements_1, { { "block", type<toy::Block>(),  }, { "image", type<mud::Image256>(),  }, { "elements", type<stl::span<toy::Element*>>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 		{
 			static bool from_file_default = true;
-			static Function f = { &namspc({ "toy" }), "generate_block", nullptr, toy_generate_block_2, { { "gfx", type<mud::GfxSystem>(),  }, { "tileset", type<mud::WaveTileset>(),  }, { "origin", type<toy::HSpatial>(),  }, { "coord", type<mud::ivec2>(),  }, { "block_subdiv", type<mud::uvec3>(),  }, { "tile_scale", type<mud::vec3>(),  }, { "from_file", type<bool>(), Param::Default, &from_file_default } }, { &type<toy::HTileblock>(), QualType::None } };
+			static Function f = { &namspc({ "toy" }), "generate_block", funcptr<toy::HTileblock(*)(mud::GfxSystem&, mud::WaveTileset&, toy::HSpatial, const mud::ivec2&, const mud::uvec3&, const mud::vec3&, bool)>(toy::generate_block), toy_generate_block_2, { { "gfx", type<mud::GfxSystem>(),  }, { "tileset", type<mud::WaveTileset>(),  }, { "origin", type<toy::HSpatial>(),  }, { "coord", type<mud::ivec2>(),  }, { "block_subdiv", type<mud::uvec3>(),  }, { "tile_scale", type<mud::vec3>(),  }, { "from_file", type<bool>(), Param::Default, &from_file_default } }, { &type<toy::HTileblock>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({ "toy" }), "build_block_geometry", nullptr, toy_build_block_geometry_3, { { "scene", type<mud::Scene>(),  }, { "page", type<toy::WorldPage>(),  }, { "block", type<toy::Tileblock>(),  } }, g_qvoid };
+			static Function f = { &namspc({ "toy" }), "build_block_geometry", funcptr<void(*)(mud::Scene&, toy::WorldPage&, toy::Tileblock&)>(toy::build_block_geometry), toy_build_block_geometry_3, { { "scene", type<mud::Scene>(),  }, { "page", type<toy::WorldPage>(),  }, { "block", type<toy::Tileblock>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({ "toy" }), "index_blocks", nullptr, toy_index_blocks_4, { { "grid_size", type<mud::uvec3>(),  }, { "grid", type<mud::vector2d<toy::Block*>>(),  }, { "blocks", type<stl::span<toy::Block*>>(),  }, { "sectors", type<stl::span<toy::Sector*>>(),  } }, g_qvoid };
+			static Function f = { &namspc({ "toy" }), "index_blocks", funcptr<void(*)(const mud::uvec3&, mud::vector2d<toy::Block*>&, stl::span<toy::Block*>, stl::span<toy::Sector*>)>(toy::index_blocks), toy_index_blocks_4, { { "grid_size", type<mud::uvec3>(),  }, { "grid", type<mud::vector2d<toy::Block*>>(),  }, { "blocks", type<stl::span<toy::Block*>>(),  }, { "sectors", type<stl::span<toy::Sector*>>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 	}

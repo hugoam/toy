@@ -3,7 +3,7 @@
 #include <toy/toy.h>
 
 #include <minimal/Api.h>
-#include <meta/minimal/Module.h>
+#include <meta/_minimal.meta.h>
 
 Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
@@ -48,7 +48,7 @@ Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
 	Entity entity = ecs.create<Spatial, Movable, Human>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Human(entity, entity));
 	return entity;
 }
@@ -99,7 +99,7 @@ Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3
 {
 	Entity entity = ecs.create<Spatial, Movable, Crate>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }

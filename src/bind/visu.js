@@ -16,6 +16,7 @@ VisuScene.prototype.__class = VisuScene;
 VisuScene.__cache = {};
 Module['VisuScene'] = VisuScene;
 VisuScene.prototype["next_frame"] = VisuScene.prototype.next_frame = function() {
+    
     _toy_VisuScene_next_frame_0(this.__ptr);
 };
 Object.defineProperty(VisuScene.prototype, "gfx", {
@@ -32,8 +33,8 @@ VisuScene.prototype["__destroy"] = VisuScene.prototype.__destroy = function() {
 
 (function() {
     function setup() {
-        PhysicDebugDraw.__type = _toy_PhysicDebugDraw__type();
-        VisuScene.__type = _toy_VisuScene__type();
+        PhysicDebugDraw.prototype.__type = _toy_PhysicDebugDraw__type();
+        VisuScene.prototype.__type = _toy_VisuScene__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);

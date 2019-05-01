@@ -673,7 +673,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	if(KeyEvent key_event = viewer.key_stroke(Key::LeftControl))
 		tank.m_stealth = !tank.m_stealth;
 
-	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::Any))
+	if(MouseEvent event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::Any))
 	{
 		viewer.take_focus();
 		tank.shoot(viewer.ui().m_keyboard.m_shift);
@@ -681,12 +681,12 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 
 	static vec3 destination = vec3(0.f);
 
-	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseRight, EventType::Stroked))
+	if(MouseEvent event = viewer.mouse_event(DeviceType::MouseRight, EventType::Stroked))
 	{
 		viewer.take_focus();
 
 		Ray pick_ray = viewer.mouse_ray();
-		//Ray pick_ray = viewer.ray(mouse_event.m_relative);
+		//Ray pick_ray = viewer.ray(event.m_relative);
 		destination = player.m_world->m_bullet_world.ground_point(pick_ray);
 	}
 

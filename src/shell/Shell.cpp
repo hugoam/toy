@@ -206,7 +206,7 @@ namespace toy
 #ifdef TOY_SOUND
 		if(!m_sound_system->init())
 		{
-			printf("ERROR: Sound - failed to init\n");
+			printf("[ERROR] Sound - failed to init\n");
 		}
 #endif
 		if(window)
@@ -263,7 +263,7 @@ namespace toy
 		Module* module = system().open_module((m_exec_path + "/" + module_name).c_str());
 		if(module == nullptr)
 		{
-			printf("ERROR: could not locate/load module %s\n", module_name.c_str());
+			printf("[ERROR] could not locate/load module %s\n", module_name.c_str());
 			return;
 		}
 

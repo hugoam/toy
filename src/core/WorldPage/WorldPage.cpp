@@ -54,13 +54,13 @@ namespace toy
 
 	void WorldPage::update_geometry(size_t tick)
 	{
-		printf("INFO: Updating WorldPage world geometry\n");
+		printf("[info] Updating WorldPage world geometry\n");
 		m_solids.clear();
 		for(Geometry& geom : m_chunks)
 		{
 			if(geom.m_vertices.empty() || geom.m_triangles.empty())
 				continue;
-			printf("INFO: WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
+			printf("[info] WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
 			m_solids.push_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}
 
@@ -101,7 +101,7 @@ namespace toy
 		ground_point = as<PhysicWorld>(m_world->m_complex).ground_point(ray) - spatial.m_position;
 
 		if(any(isnan(ground_point)) || any(isinf(ground_point)))
-			printf("ERROR: raycast ground point failed, position result invalid\n");
+			printf("[ERROR] raycast ground point failed, position result invalid\n");
 	}
 
 	void WorldPage::raycast_ground(const vec3& start, const vec3& end, vec3& ground_point)

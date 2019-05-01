@@ -728,7 +728,7 @@ void Fleet::add_ships(ShipSchema& schema, int number)
 {
 	if(number < 0 && size_t(abs(number)) > m_ships[&schema])
 	{
-		printf("WARNING: removing more ships than the fleet contains");
+		printf("[warning] removing more ships than the fleet contains");
 		number = -int(m_ships[&schema]);
 	}
 	this->set_ships(schema, m_ships[&schema] + number);

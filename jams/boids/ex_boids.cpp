@@ -618,10 +618,10 @@ namespace boids
 				Widget& left = ui::widget(header, panel_style);
 				Widget& numbers = ui::columns(left, { 0.15f, 0.85f });
 
-				ui::slider_field<size_t>(numbers, "num targets", { m_num_targets, { 0, 10, 1 } });
-				ui::slider_field<size_t>(numbers, "num obstacles", { m_num_obstacles, { 0, 10, 1 } });
-				ui::slider_field<size_t>(numbers, "num boids", { m_num_boids, { 0, 250'000, 1000 } });
-				ui::slider_field<size_t>(numbers, "num visible", { m_num_visible, { 0, 250'000, 100 } });
+				ui::slider_field<size_t>(numbers, "num targets",   m_num_targets, { 0, 10, 1 });
+				ui::slider_field<size_t>(numbers, "num obstacles", m_num_obstacles, { 0, 10, 1 });
+				ui::slider_field<size_t>(numbers, "num boids",     m_num_boids, { 0, 250'000, 1000 });
+				ui::slider_field<size_t>(numbers, "num visible",   m_num_visible, { 0, 250'000, 100 });
 				if(ui::button(numbers, "reset").activated())
 				{
 					this->destroy_entities(ecs);
@@ -634,11 +634,11 @@ namespace boids
 				Widget& right = ui::widget(header, panel_style);
 				Widget& edit = ui::columns(middle, { 0.2f, 0.8f });
 
-				ui::number_field<float>(edit, "cell radius",		{ params.cell_radius,		{ 1.f, 10.f, 0.1f } });
-				ui::number_field<float>(edit, "separation weight",	{ params.separation_weight, { 0.f, 10.f, 0.1f } });
-				ui::number_field<float>(edit, "alignment weight",	{ params.alignment_weight,	{ 0.f, 10.f, 0.1f } });
-				ui::number_field<float>(edit, "target weight",		{ params.target_weight,		{ 0.f, 10.f, 0.1f } });
-				ui::number_field<float>(edit, "obstacle aversion",  { params.obstacle_aversion_distance, { 0.f, 10.f, 0.1f } });
+				ui::field<float>(edit, "cell radius",		params.cell_radius,		    { 1.f, 10.f, 0.1f });
+				ui::field<float>(edit, "separation weight",	params.separation_weight,   { 0.f, 10.f, 0.1f });
+				ui::field<float>(edit, "alignment weight",	params.alignment_weight,	{ 0.f, 10.f, 0.1f });
+				ui::field<float>(edit, "target weight",		params.target_weight,		{ 0.f, 10.f, 0.1f });
+				ui::field<float>(edit, "obstacle aversion", params.obstacle_aversion_distance, { 0.f, 10.f, 0.1f });
 
 				static BoidSystem boid_system;
 				static MoveForwardSystem move_forward_system;

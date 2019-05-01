@@ -47,42 +47,42 @@ namespace toy
 		// deactivate
 		//mWidget->ui().cursor()->free();
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Moved))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Moved))
 		{
-			if(mouse_event.m_deltaZ > 0)
+			if(event.m_deltaZ > 0)
 				camera.zoom(1.3f);
 			else
 				camera.zoom(0.75f);
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
 		{
 			viewer.take_focus();
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputMod::Ctrl))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputMod::Ctrl))
 		{
 #if DRAG_BY_GRAB
 			Plane horizontal_plane = { Y3, spatial.m_position.y };
-			vec3 from = m_viewer.m_viewport.raycast(horizontal_plane, mouse_event.m_relative);
-			vec3 to = m_viewer.m_viewport.raycast(horizontal_plane, mouse_event.m_relative - mouse_event.m_delta);
+			vec3 from = m_viewer.m_viewport.raycast(horizontal_plane, event.m_relative);
+			vec3 to = m_viewer.m_viewport.raycast(horizontal_plane, event.m_relative - event.m_delta);
 
 			//spatial.translate(to - from);
 			spatial.set_position(spatial.m_position + (to - from));
 #else
-			spatial.translate(to_vec3(Side::Right) * 0.02f * m_camera.m_lensDistance * -mouse_event.m_delta.x);
-			spatial.translate(to_vec3(Side::Front) * 0.02f * m_camera.m_lensDistance * mouse_event.m_delta.y);
+			spatial.translate(to_vec3(Side::Right) * 0.02f * m_camera.m_lensDistance * -event.m_delta.x);
+			spatial.translate(to_vec3(Side::Front) * 0.02f * m_camera.m_lensDistance * event.m_delta.y);
 #endif
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged))
 		{
-			spatial.rotate(to_vec3(Side::Down), 0.02f * mouse_event.m_delta.x);
-			//spatial.rotateRelative(to_vec3(Side::Left), 0.02f * mouse_event.m_delta.y);
-			camera.set_lens_angle(m_camera->m_lens_angle + 0.02f * mouse_event.m_delta.y);
+			spatial.rotate(to_vec3(Side::Down), 0.02f * event.m_delta.x);
+			//spatial.rotateRelative(to_vec3(Side::Left), 0.02f * event.m_delta.y);
+			camera.set_lens_angle(m_camera->m_lens_angle + 0.02f * event.m_delta.y);
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Heartbeat))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::Mouse, EventType::Heartbeat))
 		{
 #if 0
 			static const float threshold = 4.f;

@@ -145,7 +145,7 @@ namespace toy
 			{
 				string identifier = "sector_" + to_string(block.m_index) + "_" + element->m_name;
 
-				printf("INFO: Creating geometry for Block %s, %zu quads\n", identifier.c_str(), bodies[element].size());
+				printf("[info] Creating geometry for Block %s, %zu quads\n", identifier.c_str(), bodies[element].size());
 
 				state.m_models[element] = gen_model(identifier.c_str(), bodies[element], true);
 

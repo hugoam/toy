@@ -33,7 +33,7 @@ namespace toy
 	{
 		if(page.m_updated > page.m_last_rebuilt)
 		{
-			printf("INFO: Rebuilding WorldPage geometry\n");
+			printf("[info] Rebuilding WorldPage geometry\n");
 			build_world_page_geometry(*parent.m_scene, page);
 			page.update_geometry(page.m_spatial->m_last_tick);
 		}

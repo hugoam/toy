@@ -1,7 +1,8 @@
 Module['mud'] = Module['mud'] || {};
 // Aim
 function Aim() {
-    this.__ptr = _Aim__construct_0(); this.__type = Aim.__type; getCache(Aim)[this.__ptr] = this;
+    
+    this.__ptr = _Aim__construct_0(); getCache(Aim)[this.__ptr] = this;
 };
 Aim.prototype = Object.create(WrapperObject.prototype);
 Aim.prototype.constructor = Aim;
@@ -13,6 +14,7 @@ Object.defineProperty(Aim.prototype, "rotation", {
         return wrapPointer(_Aim__get_rotation(this.__ptr), quat);
     },
     set: function(value) {
+        if (!checkClass(value, quat)) throw Error('Aim.rotation: expected quat');
         _Aim__set_rotation(this.__ptr, value.__ptr);
     }
 });
@@ -21,6 +23,7 @@ Object.defineProperty(Aim.prototype, "start", {
         return wrapPointer(_Aim__get_start(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Aim.start: expected v3<float>');
         _Aim__set_start(this.__ptr, value.__ptr);
     }
 });
@@ -29,6 +32,7 @@ Object.defineProperty(Aim.prototype, "end", {
         return wrapPointer(_Aim__get_end(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Aim.end: expected v3<float>');
         _Aim__set_end(this.__ptr, value.__ptr);
     }
 });
@@ -37,6 +41,7 @@ Object.defineProperty(Aim.prototype, "hit", {
         return wrapPointer(_Aim__get_hit(this.__ptr), Spatial);
     },
     set: function(value) {
+        if (!checkClass(value, Spatial)) throw Error('Aim.hit: expected Spatial');
         _Aim__set_hit(this.__ptr, value.__ptr);
     }
 });
@@ -55,6 +60,7 @@ Object.defineProperty(Bullet.prototype, "source", {
         return wrapPointer(_Bullet__get_source(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Bullet.source: expected v3<float>');
         _Bullet__set_source(this.__ptr, value.__ptr);
     }
 });
@@ -63,6 +69,7 @@ Object.defineProperty(Bullet.prototype, "velocity", {
         return wrapPointer(_Bullet__get_velocity(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Bullet.velocity: expected v3<float>');
         _Bullet__set_velocity(this.__ptr, value.__ptr);
     }
 });
@@ -71,7 +78,8 @@ Bullet.prototype["__destroy"] = Bullet.prototype.__destroy = function() {
 };
 // ComponentHandle<Bullet>
 function ComponentHandle_Bullet() {
-    this.__ptr = _mud_ComponentHandle_Bullet__construct_0(); this.__type = ComponentHandle_Bullet.__type; getCache(ComponentHandle_Bullet)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Bullet__construct_0(); getCache(ComponentHandle_Bullet)[this.__ptr] = this;
 };
 ComponentHandle_Bullet.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Bullet.prototype.constructor = ComponentHandle_Bullet;
@@ -83,7 +91,8 @@ ComponentHandle_Bullet.prototype["__destroy"] = ComponentHandle_Bullet.prototype
 };
 // ComponentHandle<Crate>
 function ComponentHandle_Crate() {
-    this.__ptr = _mud_ComponentHandle_Crate__construct_0(); this.__type = ComponentHandle_Crate.__type; getCache(ComponentHandle_Crate)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Crate__construct_0(); getCache(ComponentHandle_Crate)[this.__ptr] = this;
 };
 ComponentHandle_Crate.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Crate.prototype.constructor = ComponentHandle_Crate;
@@ -95,7 +104,8 @@ ComponentHandle_Crate.prototype["__destroy"] = ComponentHandle_Crate.prototype._
 };
 // ComponentHandle<Human>
 function ComponentHandle_Human() {
-    this.__ptr = _mud_ComponentHandle_Human__construct_0(); this.__type = ComponentHandle_Human.__type; getCache(ComponentHandle_Human)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Human__construct_0(); getCache(ComponentHandle_Human)[this.__ptr] = this;
 };
 ComponentHandle_Human.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Human.prototype.constructor = ComponentHandle_Human;
@@ -107,7 +117,8 @@ ComponentHandle_Human.prototype["__destroy"] = ComponentHandle_Human.prototype._
 };
 // ComponentHandle<Lamp>
 function ComponentHandle_Lamp() {
-    this.__ptr = _mud_ComponentHandle_Lamp__construct_0(); this.__type = ComponentHandle_Lamp.__type; getCache(ComponentHandle_Lamp)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Lamp__construct_0(); getCache(ComponentHandle_Lamp)[this.__ptr] = this;
 };
 ComponentHandle_Lamp.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Lamp.prototype.constructor = ComponentHandle_Lamp;
@@ -119,8 +130,10 @@ ComponentHandle_Lamp.prototype["__destroy"] = ComponentHandle_Lamp.prototype.__d
 };
 // Crate
 function Crate(a0, a1, a2) {
-    if (a0 === undefined) { this.__ptr = _Crate__construct_0(); this.__type = Crate.__type; getCache(Crate)[this.__ptr] = this; return; }
-    this.__ptr = _Crate__construct_3(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*extents*/a2.__ptr); this.__type = Crate.__type; getCache(Crate)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Crate(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Crate(1:movable): expected ComponentHandle<toy::Movable>'); if (!checkClass(a2, v3_float)) throw Error('Crate(2:extents): expected v3<float>'); }
+    if (a0 === undefined) { this.__ptr = _Crate__construct_0(); getCache(Crate)[this.__ptr] = this; }
+    else { this.__ptr = _Crate__construct_3(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*extents*/a2.__ptr); getCache(Crate)[this.__ptr] = this; }
 };
 Crate.prototype = Object.create(WrapperObject.prototype);
 Crate.prototype.constructor = Crate;
@@ -132,6 +145,7 @@ Object.defineProperty(Crate.prototype, "extents", {
         return wrapPointer(_Crate__get_extents(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Crate.extents: expected v3<float>');
         _Crate__set_extents(this.__ptr, value.__ptr);
     }
 });
@@ -140,8 +154,10 @@ Crate.prototype["__destroy"] = Crate.prototype.__destroy = function() {
 };
 // Human
 function Human(a0, a1, a2, a3, a4, a5) {
-    if (a0 === undefined) { this.__ptr = _Human__construct_0(); this.__type = Human.__type; getCache(Human)[this.__ptr] = this; return; }
-    this.__ptr = _Human__construct_6(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*emitter*/a2.__ptr, /*receptor*/a3.__ptr, /*script*/a4.__ptr, /*faction*/a5); this.__type = Human.__type; getCache(Human)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Human(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Human(1:movable): expected ComponentHandle<toy::Movable>'); if (!checkClass(a2, ComponentHandle_toy_Emitter)) throw Error('Human(2:emitter): expected ComponentHandle<toy::Emitter>'); if (!checkClass(a3, ComponentHandle_toy_Receptor)) throw Error('Human(3:receptor): expected ComponentHandle<toy::Receptor>'); if (!checkClass(a4, ComponentHandle_toy_EntityScript)) throw Error('Human(4:script): expected ComponentHandle<toy::EntityScript>'); if (typeof a5 !== 'number') throw Error('Human(5:faction): expected integer'); }
+    if (a0 === undefined) { this.__ptr = _Human__construct_0(); getCache(Human)[this.__ptr] = this; }
+    else { this.__ptr = _Human__construct_6(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*emitter*/a2.__ptr, /*receptor*/a3.__ptr, /*script*/a4.__ptr, /*faction*/a5); getCache(Human)[this.__ptr] = this; }
 };
 Human.prototype = Object.create(WrapperObject.prototype);
 Human.prototype.constructor = Human;
@@ -149,16 +165,21 @@ Human.prototype.__class = Human;
 Human.__cache = {};
 Module['Human'] = Human;
 Human.prototype["sight"] = Human.prototype.sight = function(a0) {
+    if (a0 === undefined) {  }
+    else { if (typeof a0 !== 'boolean') throw Error('sight(0:aiming): expected boolean'); }
     if (a0 === undefined) { return wrapPointer(_Human_sight_0(this.__ptr), quat); }
-    return wrapPointer(_Human_sight_1(this.__ptr, /*aiming*/a0), quat);
+    else { return wrapPointer(_Human_sight_1(this.__ptr, /*aiming*/a0), quat); }
 };
 Human.prototype["aim"] = Human.prototype.aim = function() {
+    
     return wrapPointer(_Human_aim_0(this.__ptr), Aim);
 };
 Human.prototype["shoot"] = Human.prototype.shoot = function() {
+    
     _Human_shoot_0(this.__ptr);
 };
 Human.prototype["stop"] = Human.prototype.stop = function() {
+    
     _Human_stop_0(this.__ptr);
 };
 Object.defineProperty(Human.prototype, "faction", {
@@ -166,6 +187,7 @@ Object.defineProperty(Human.prototype, "faction", {
         return _Human__get_faction(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Human.faction: expected integer');
         _Human__set_faction(this.__ptr, value);
     }
 });
@@ -174,6 +196,7 @@ Object.defineProperty(Human.prototype, "life", {
         return _Human__get_life(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Human.life: expected number');
         _Human__set_life(this.__ptr, value);
     }
 });
@@ -182,6 +205,7 @@ Object.defineProperty(Human.prototype, "energy", {
         return _Human__get_energy(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Human.energy: expected number');
         _Human__set_energy(this.__ptr, value);
     }
 });
@@ -190,6 +214,7 @@ Object.defineProperty(Human.prototype, "discharge", {
         return _Human__get_discharge(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Human.discharge: expected number');
         _Human__set_discharge(this.__ptr, value);
     }
 });
@@ -198,6 +223,7 @@ Object.defineProperty(Human.prototype, "headlight", {
         return !!(_Human__get_headlight(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Human.headlight: expected boolean');
         _Human__set_headlight(this.__ptr, value);
     }
 });
@@ -206,6 +232,7 @@ Object.defineProperty(Human.prototype, "shield", {
         return !!(_Human__get_shield(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Human.shield: expected boolean');
         _Human__set_shield(this.__ptr, value);
     }
 });
@@ -214,6 +241,7 @@ Object.defineProperty(Human.prototype, "walk", {
         return !!(_Human__get_walk(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Human.walk: expected boolean');
         _Human__set_walk(this.__ptr, value);
     }
 });
@@ -222,6 +250,7 @@ Object.defineProperty(Human.prototype, "target", {
         return wrapPointer(_Human__get_target(this.__ptr), ComponentHandle_Human);
     },
     set: function(value) {
+        if (!checkClass(value, ComponentHandle_Human)) throw Error('Human.target: expected ComponentHandle<Human>');
         _Human__set_target(this.__ptr, value.__ptr);
     }
 });
@@ -230,6 +259,7 @@ Object.defineProperty(Human.prototype, "dest", {
         return wrapPointer(_Human__get_dest(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Human.dest: expected v3<float>');
         _Human__set_dest(this.__ptr, value.__ptr);
     }
 });
@@ -238,6 +268,7 @@ Object.defineProperty(Human.prototype, "cooldown", {
         return _Human__get_cooldown(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Human.cooldown: expected number');
         _Human__set_cooldown(this.__ptr, value);
     }
 });
@@ -246,6 +277,7 @@ Object.defineProperty(Human.prototype, "state", {
         return wrapPointer(_Human__get_state(this.__ptr), Stance);
     },
     set: function(value) {
+        if (!checkClass(value, Stance)) throw Error('Human.state: expected Stance');
         _Human__set_state(this.__ptr, value.__ptr);
     }
 });
@@ -254,8 +286,10 @@ Human.prototype["__destroy"] = Human.prototype.__destroy = function() {
 };
 // Lamp
 function Lamp(a0, a1) {
-    if (a0 === undefined) { this.__ptr = _Lamp__construct_0(); this.__type = Lamp.__type; getCache(Lamp)[this.__ptr] = this; return; }
-    this.__ptr = _Lamp__construct_2(/*spatial*/a0.__ptr, /*movable*/a1.__ptr); this.__type = Lamp.__type; getCache(Lamp)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Lamp(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Lamp(1:movable): expected ComponentHandle<toy::Movable>'); }
+    if (a0 === undefined) { this.__ptr = _Lamp__construct_0(); getCache(Lamp)[this.__ptr] = this; }
+    else { this.__ptr = _Lamp__construct_2(/*spatial*/a0.__ptr, /*movable*/a1.__ptr); getCache(Lamp)[this.__ptr] = this; }
 };
 Lamp.prototype = Object.create(WrapperObject.prototype);
 Lamp.prototype.constructor = Lamp;
@@ -278,8 +312,10 @@ Player.prototype["__destroy"] = Player.prototype.__destroy = function() {
 // Stance
 function Stance(a0, a1) {
     ensureCache.prepare();
-    if (a0 === undefined) { this.__ptr = _Stance__construct_0(); this.__type = Stance.__type; getCache(Stance)[this.__ptr] = this; return; }
-    this.__ptr = _Stance__construct_2(ensureString(/*name*/a0), /*loop*/a1); this.__type = Stance.__type; getCache(Stance)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (typeof a0 !== 'string') throw Error('Stance(0:name): expected string'); if (typeof a1 !== 'boolean') throw Error('Stance(1:loop): expected boolean'); }
+    if (a0 === undefined) { this.__ptr = _Stance__construct_0(); getCache(Stance)[this.__ptr] = this; }
+    else { this.__ptr = _Stance__construct_2(ensureString(/*name*/a0), /*loop*/a1); getCache(Stance)[this.__ptr] = this; }
 };
 Stance.prototype = Object.create(WrapperObject.prototype);
 Stance.prototype.constructor = Stance;
@@ -291,6 +327,7 @@ Object.defineProperty(Stance.prototype, "name", {
         return UTF8ToString(_Stance__get_name(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Stance.name: expected string');
         _Stance__set_name(this.__ptr, ensureString(value));
     }
 });
@@ -299,6 +336,7 @@ Object.defineProperty(Stance.prototype, "loop", {
         return !!(_Stance__get_loop(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Stance.loop: expected boolean');
         _Stance__set_loop(this.__ptr, value);
     }
 });
@@ -307,8 +345,10 @@ Stance.prototype["__destroy"] = Stance.prototype.__destroy = function() {
 };
 // WorldBlock
 function WorldBlock(a0, a1, a2, a3) {
-    if (a0 === undefined) { this.__ptr = _WorldBlock__construct_0(); this.__type = WorldBlock.__type; getCache(WorldBlock)[this.__ptr] = this; return; }
-    this.__ptr = _WorldBlock__construct_4(/*spatial*/a0.__ptr, /*world_page*/a1.__ptr, /*navblock*/a2.__ptr, /*extents*/a3.__ptr); this.__type = WorldBlock.__type; getCache(WorldBlock)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('WorldBlock(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_WorldPage)) throw Error('WorldBlock(1:world_page): expected ComponentHandle<toy::WorldPage>'); if (!checkClass(a2, ComponentHandle_toy_Navblock)) throw Error('WorldBlock(2:navblock): expected ComponentHandle<toy::Navblock>'); if (!checkClass(a3, v3_float)) throw Error('WorldBlock(3:extents): expected v3<float>'); }
+    if (a0 === undefined) { this.__ptr = _WorldBlock__construct_0(); getCache(WorldBlock)[this.__ptr] = this; }
+    else { this.__ptr = _WorldBlock__construct_4(/*spatial*/a0.__ptr, /*world_page*/a1.__ptr, /*navblock*/a2.__ptr, /*extents*/a3.__ptr); getCache(WorldBlock)[this.__ptr] = this; }
 };
 WorldBlock.prototype = Object.create(WrapperObject.prototype);
 WorldBlock.prototype.constructor = WorldBlock;
@@ -320,6 +360,7 @@ Object.defineProperty(WorldBlock.prototype, "extents", {
         return wrapPointer(_WorldBlock__get_extents(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('WorldBlock.extents: expected v3<float>');
         _WorldBlock__set_extents(this.__ptr, value.__ptr);
     }
 });
@@ -333,14 +374,14 @@ Module['HCrate'] = ComponentHandle_Crate;
 
 (function() {
     function setup() {
-        Aim.__type = _Aim__type();
-        Bullet.__type = _Bullet__type();
-        Crate.__type = _Crate__type();
-        Human.__type = _Human__type();
-        Lamp.__type = _Lamp__type();
-        Player.__type = _Player__type();
-        Stance.__type = _Stance__type();
-        WorldBlock.__type = _WorldBlock__type();
+        Aim.prototype.__type = _Aim__type();
+        Bullet.prototype.__type = _Bullet__type();
+        Crate.prototype.__type = _Crate__type();
+        Human.prototype.__type = _Human__type();
+        Lamp.prototype.__type = _Lamp__type();
+        Player.prototype.__type = _Player__type();
+        Stance.prototype.__type = _Stance__type();
+        WorldBlock.prototype.__type = _WorldBlock__type();
         // Faction
         Module['Faction'] = Module['Faction'] || {};
         Module['Faction']['Ally'] = _Faction_Ally();

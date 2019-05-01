@@ -1,7 +1,8 @@
 Module['mud'] = Module['mud'] || {};
 // Combat
 function Combat() {
-    this.__ptr = _Combat__construct_0(); this.__type = Combat.__type; getCache(Combat)[this.__ptr] = this;
+    
+    this.__ptr = _Combat__construct_0(); getCache(Combat)[this.__ptr] = this;
 };
 Combat.prototype = Object.create(WrapperObject.prototype);
 Combat.prototype.constructor = Combat;
@@ -13,7 +14,8 @@ Combat.prototype["__destroy"] = Combat.prototype.__destroy = function() {
 };
 // CombatFleet
 function CombatFleet() {
-    this.__ptr = _CombatFleet__construct_0(); this.__type = CombatFleet.__type; getCache(CombatFleet)[this.__ptr] = this;
+    
+    this.__ptr = _CombatFleet__construct_0(); getCache(CombatFleet)[this.__ptr] = this;
 };
 CombatFleet.prototype = Object.create(WrapperObject.prototype);
 CombatFleet.prototype.constructor = CombatFleet;
@@ -25,6 +27,7 @@ Object.defineProperty(CombatFleet.prototype, "fleet", {
         return wrapPointer(_CombatFleet__get_fleet(this.__ptr), Fleet);
     },
     set: function(value) {
+        if (!checkClass(value, Fleet)) throw Error('CombatFleet.fleet: expected Fleet');
         _CombatFleet__set_fleet(this.__ptr, value.__ptr);
     }
 });
@@ -33,6 +36,7 @@ Object.defineProperty(CombatFleet.prototype, "damage", {
         return _CombatFleet__get_damage(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('CombatFleet.damage: expected number');
         _CombatFleet__set_damage(this.__ptr, value);
     }
 });
@@ -41,7 +45,8 @@ CombatFleet.prototype["__destroy"] = CombatFleet.prototype.__destroy = function(
 };
 // CombatStar
 function CombatStar() {
-    this.__ptr = _CombatStar__construct_0(); this.__type = CombatStar.__type; getCache(CombatStar)[this.__ptr] = this;
+    
+    this.__ptr = _CombatStar__construct_0(); getCache(CombatStar)[this.__ptr] = this;
 };
 CombatStar.prototype = Object.create(WrapperObject.prototype);
 CombatStar.prototype.constructor = CombatStar;
@@ -54,7 +59,8 @@ CombatStar.prototype["__destroy"] = CombatStar.prototype.__destroy = function() 
 // Commander
 function Commander(a0, a1, a2, a3, a4, a5) {
     ensureCache.prepare();
-    this.__ptr = _Commander__construct_6(/*id*/a0, ensureString(/*name*/a1), /*race*/a2, /*command*/a3, /*commerce*/a4, /*diplomacy*/a5); this.__type = Commander.__type; getCache(Commander)[this.__ptr] = this;
+    if (typeof a0 !== 'number') throw Error('Commander(0:id): expected integer'); if (typeof a1 !== 'string') throw Error('Commander(1:name): expected string'); if (typeof a2 !== 'number') throw Error('Commander(2:race): expected integer'); if (typeof a3 !== 'number') throw Error('Commander(3:command): expected integer'); if (typeof a4 !== 'number') throw Error('Commander(4:commerce): expected integer'); if (typeof a5 !== 'number') throw Error('Commander(5:diplomacy): expected integer');
+    this.__ptr = _Commander__construct_6(/*id*/a0, ensureString(/*name*/a1), /*race*/a2, /*command*/a3, /*commerce*/a4, /*diplomacy*/a5); getCache(Commander)[this.__ptr] = this;
 };
 Commander.prototype = Object.create(WrapperObject.prototype);
 Commander.prototype.constructor = Commander;
@@ -66,6 +72,7 @@ Object.defineProperty(Commander.prototype, "id", {
         return _Commander__get_id(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.id: expected integer');
         _Commander__set_id(this.__ptr, value);
     }
 });
@@ -74,6 +81,7 @@ Object.defineProperty(Commander.prototype, "name", {
         return UTF8ToString(_Commander__get_name(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Commander.name: expected string');
         _Commander__set_name(this.__ptr, ensureString(value));
     }
 });
@@ -82,6 +90,7 @@ Object.defineProperty(Commander.prototype, "race", {
         return _Commander__get_race(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.race: expected integer');
         _Commander__set_race(this.__ptr, value);
     }
 });
@@ -90,6 +99,7 @@ Object.defineProperty(Commander.prototype, "command", {
         return _Commander__get_command(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.command: expected integer');
         _Commander__set_command(this.__ptr, value);
     }
 });
@@ -98,6 +108,7 @@ Object.defineProperty(Commander.prototype, "commerce", {
         return _Commander__get_commerce(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.commerce: expected integer');
         _Commander__set_commerce(this.__ptr, value);
     }
 });
@@ -106,6 +117,7 @@ Object.defineProperty(Commander.prototype, "diplomacy", {
         return _Commander__get_diplomacy(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.diplomacy: expected integer');
         _Commander__set_diplomacy(this.__ptr, value);
     }
 });
@@ -114,6 +126,7 @@ Object.defineProperty(Commander.prototype, "reputation", {
         return _Commander__get_reputation(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.reputation: expected integer');
         _Commander__set_reputation(this.__ptr, value);
     }
 });
@@ -122,6 +135,7 @@ Object.defineProperty(Commander.prototype, "victory", {
         return _Commander__get_victory(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.victory: expected integer');
         _Commander__set_victory(this.__ptr, value);
     }
 });
@@ -130,6 +144,7 @@ Object.defineProperty(Commander.prototype, "capital", {
         return wrapPointer(_Commander__get_capital(this.__ptr), Star);
     },
     set: function(value) {
+        if (!checkClass(value, Star)) throw Error('Commander.capital: expected Star');
         _Commander__set_capital(this.__ptr, value.__ptr);
     }
 });
@@ -138,6 +153,7 @@ Object.defineProperty(Commander.prototype, "regime", {
         return _Commander__get_regime(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.regime: expected integer');
         _Commander__set_regime(this.__ptr, value);
     }
 });
@@ -146,6 +162,7 @@ Object.defineProperty(Commander.prototype, "power", {
         return _Commander__get_power(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.power: expected number');
         _Commander__set_power(this.__ptr, value);
     }
 });
@@ -154,6 +171,7 @@ Object.defineProperty(Commander.prototype, "centaures", {
         return _Commander__get_centaures(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Commander.centaures: expected number');
         _Commander__set_centaures(this.__ptr, value);
     }
 });
@@ -162,6 +180,7 @@ Object.defineProperty(Commander.prototype, "scans", {
         return wrapPointer(_Commander__get_scans(this.__ptr), Scans);
     },
     set: function(value) {
+        if (!checkClass(value, Scans)) throw Error('Commander.scans: expected Scans');
         _Commander__set_scans(this.__ptr, value.__ptr);
     }
 });
@@ -170,7 +189,8 @@ Commander.prototype["__destroy"] = Commander.prototype.__destroy = function() {
 };
 // ComponentHandle<Fleet>
 function ComponentHandle_Fleet() {
-    this.__ptr = _mud_ComponentHandle_Fleet__construct_0(); this.__type = ComponentHandle_Fleet.__type; getCache(ComponentHandle_Fleet)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Fleet__construct_0(); getCache(ComponentHandle_Fleet)[this.__ptr] = this;
 };
 ComponentHandle_Fleet.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Fleet.prototype.constructor = ComponentHandle_Fleet;
@@ -182,7 +202,8 @@ ComponentHandle_Fleet.prototype["__destroy"] = ComponentHandle_Fleet.prototype._
 };
 // ComponentHandle<Galaxy>
 function ComponentHandle_Galaxy() {
-    this.__ptr = _mud_ComponentHandle_Galaxy__construct_0(); this.__type = ComponentHandle_Galaxy.__type; getCache(ComponentHandle_Galaxy)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Galaxy__construct_0(); getCache(ComponentHandle_Galaxy)[this.__ptr] = this;
 };
 ComponentHandle_Galaxy.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Galaxy.prototype.constructor = ComponentHandle_Galaxy;
@@ -194,7 +215,8 @@ ComponentHandle_Galaxy.prototype["__destroy"] = ComponentHandle_Galaxy.prototype
 };
 // ComponentHandle<Star>
 function ComponentHandle_Star() {
-    this.__ptr = _mud_ComponentHandle_Star__construct_0(); this.__type = ComponentHandle_Star.__type; getCache(ComponentHandle_Star)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Star__construct_0(); getCache(ComponentHandle_Star)[this.__ptr] = this;
 };
 ComponentHandle_Star.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Star.prototype.constructor = ComponentHandle_Star;
@@ -206,7 +228,8 @@ ComponentHandle_Star.prototype["__destroy"] = ComponentHandle_Star.prototype.__d
 };
 // Construction
 function Construction() {
-    this.__ptr = _Construction__construct_0(); this.__type = Construction.__type; getCache(Construction)[this.__ptr] = this;
+    
+    this.__ptr = _Construction__construct_0(); getCache(Construction)[this.__ptr] = this;
 };
 Construction.prototype = Object.create(WrapperObject.prototype);
 Construction.prototype.constructor = Construction;
@@ -219,8 +242,10 @@ Construction.prototype["__destroy"] = Construction.prototype.__destroy = functio
 // Fleet
 function Fleet(a0, a1, a2, a3, a4) {
     ensureCache.prepare();
-    if (a0 === undefined) { this.__ptr = _Fleet__construct_0(); this.__type = Fleet.__type; getCache(Fleet)[this.__ptr] = this; return; }
-    this.__ptr = _Fleet__construct_5(/*spatial*/a0.__ptr, /*galaxy*/a1.__ptr, /*commander*/a2.__ptr, /*coord*/a3.__ptr, ensureString(/*name*/a4)); this.__type = Fleet.__type; getCache(Fleet)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Fleet(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, Galaxy)) throw Error('Fleet(1:galaxy): expected Galaxy'); if (!checkClass(a2, Commander)) throw Error('Fleet(2:commander): expected Commander'); if (!checkClass(a3, v2_uint)) throw Error('Fleet(3:coord): expected v2<uint>'); if (typeof a4 !== 'string') throw Error('Fleet(4:name): expected string'); }
+    if (a0 === undefined) { this.__ptr = _Fleet__construct_0(); getCache(Fleet)[this.__ptr] = this; }
+    else { this.__ptr = _Fleet__construct_5(/*spatial*/a0.__ptr, /*galaxy*/a1.__ptr, /*commander*/a2.__ptr, /*coord*/a3.__ptr, ensureString(/*name*/a4)); getCache(Fleet)[this.__ptr] = this; }
 };
 Fleet.prototype = Object.create(WrapperObject.prototype);
 Fleet.prototype.constructor = Fleet;
@@ -228,9 +253,11 @@ Fleet.prototype.__class = Fleet;
 Fleet.__cache = {};
 Module['Fleet'] = Fleet;
 Fleet.prototype["order_jump"] = Fleet.prototype.order_jump = function(a0, a1) {
+    if (!checkClass(a0, v2_uint)) throw Error('order_jump(0:coord): expected v2<uint>'); if (typeof a1 !== 'number') throw Error('order_jump(1:stance): expected integer');
     _Fleet_order_jump_2(this.__ptr, /*coord*/a0.__ptr, /*stance*/a1);
 };
 Fleet.prototype["order_attack"] = Fleet.prototype.order_attack = function(a0) {
+    if (!checkClass(a0, Star)) throw Error('order_attack(0:star): expected Star');
     _Fleet_order_attack_1(this.__ptr, /*star*/a0.__ptr);
 };
 Object.defineProperty(Fleet.prototype, "galaxy", {
@@ -238,6 +265,7 @@ Object.defineProperty(Fleet.prototype, "galaxy", {
         return wrapPointer(_Fleet__get_galaxy(this.__ptr), Galaxy);
     },
     set: function(value) {
+        if (!checkClass(value, Galaxy)) throw Error('Fleet.galaxy: expected Galaxy');
         _Fleet__set_galaxy(this.__ptr, value.__ptr);
     }
 });
@@ -246,6 +274,7 @@ Object.defineProperty(Fleet.prototype, "commander", {
         return wrapPointer(_Fleet__get_commander(this.__ptr), Commander);
     },
     set: function(value) {
+        if (!checkClass(value, Commander)) throw Error('Fleet.commander: expected Commander');
         _Fleet__set_commander(this.__ptr, value.__ptr);
     }
 });
@@ -254,6 +283,7 @@ Object.defineProperty(Fleet.prototype, "coord", {
         return wrapPointer(_Fleet__get_coord(this.__ptr), v2_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v2_uint)) throw Error('Fleet.coord: expected v2<uint>');
         _Fleet__set_coord(this.__ptr, value.__ptr);
     }
 });
@@ -262,6 +292,7 @@ Object.defineProperty(Fleet.prototype, "slot", {
         return wrapPointer(_Fleet__get_slot(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Fleet.slot: expected v3<float>');
         _Fleet__set_slot(this.__ptr, value.__ptr);
     }
 });
@@ -270,6 +301,7 @@ Object.defineProperty(Fleet.prototype, "name", {
         return UTF8ToString(_Fleet__get_name(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Fleet.name: expected string');
         _Fleet__set_name(this.__ptr, ensureString(value));
     }
 });
@@ -278,6 +310,7 @@ Object.defineProperty(Fleet.prototype, "experience", {
         return _Fleet__get_experience(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Fleet.experience: expected number');
         _Fleet__set_experience(this.__ptr, value);
     }
 });
@@ -286,6 +319,7 @@ Object.defineProperty(Fleet.prototype, "spatial_power", {
         return wrapPointer(_Fleet__get_spatial_power(this.__ptr), SpatialPower);
     },
     set: function(value) {
+        if (!checkClass(value, SpatialPower)) throw Error('Fleet.spatial_power: expected SpatialPower');
         _Fleet__set_spatial_power(this.__ptr, value.__ptr);
     }
 });
@@ -294,6 +328,7 @@ Object.defineProperty(Fleet.prototype, "planetary_power", {
         return _Fleet__get_planetary_power(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Fleet.planetary_power: expected number');
         _Fleet__set_planetary_power(this.__ptr, value);
     }
 });
@@ -302,6 +337,7 @@ Object.defineProperty(Fleet.prototype, "speed", {
         return _Fleet__get_speed(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Fleet.speed: expected integer');
         _Fleet__set_speed(this.__ptr, value);
     }
 });
@@ -310,6 +346,7 @@ Object.defineProperty(Fleet.prototype, "scan", {
         return _Fleet__get_scan(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Fleet.scan: expected integer');
         _Fleet__set_scan(this.__ptr, value);
     }
 });
@@ -318,6 +355,7 @@ Object.defineProperty(Fleet.prototype, "upkeep", {
         return _Fleet__get_upkeep(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Fleet.upkeep: expected number');
         _Fleet__set_upkeep(this.__ptr, value);
     }
 });
@@ -326,6 +364,7 @@ Object.defineProperty(Fleet.prototype, "stance", {
         return _Fleet__get_stance(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Fleet.stance: expected integer');
         _Fleet__set_stance(this.__ptr, value);
     }
 });
@@ -334,6 +373,7 @@ Object.defineProperty(Fleet.prototype, "jump", {
         return wrapPointer(_Fleet__get_jump(this.__ptr), Jump);
     },
     set: function(value) {
+        if (!checkClass(value, Jump)) throw Error('Fleet.jump: expected Jump');
         _Fleet__set_jump(this.__ptr, value.__ptr);
     }
 });
@@ -342,6 +382,7 @@ Object.defineProperty(Fleet.prototype, "split", {
         return wrapPointer(_Fleet__get_split(this.__ptr), Split);
     },
     set: function(value) {
+        if (!checkClass(value, Split)) throw Error('Fleet.split: expected Split');
         _Fleet__set_split(this.__ptr, value.__ptr);
     }
 });
@@ -350,6 +391,7 @@ Object.defineProperty(Fleet.prototype, "fought", {
         return !!(_Fleet__get_fought(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Fleet.fought: expected boolean');
         _Fleet__set_fought(this.__ptr, value);
     }
 });
@@ -358,6 +400,7 @@ Object.defineProperty(Fleet.prototype, "ships_updated", {
         return _Fleet__get_ships_updated(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Fleet.ships_updated: expected integer');
         _Fleet__set_ships_updated(this.__ptr, value);
     }
 });
@@ -366,8 +409,10 @@ Fleet.prototype["__destroy"] = Fleet.prototype.__destroy = function() {
 };
 // Galaxy
 function Galaxy(a0, a1) {
-    if (a0 === undefined) { this.__ptr = _Galaxy__construct_0(); this.__type = Galaxy.__type; getCache(Galaxy)[this.__ptr] = this; return; }
-    this.__ptr = _Galaxy__construct_2(/*spatial*/a0.__ptr, /*size*/a1.__ptr); this.__type = Galaxy.__type; getCache(Galaxy)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Galaxy(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, v2_uint)) throw Error('Galaxy(1:size): expected v2<uint>'); }
+    if (a0 === undefined) { this.__ptr = _Galaxy__construct_0(); getCache(Galaxy)[this.__ptr] = this; }
+    else { this.__ptr = _Galaxy__construct_2(/*spatial*/a0.__ptr, /*size*/a1.__ptr); getCache(Galaxy)[this.__ptr] = this; }
 };
 Galaxy.prototype = Object.create(WrapperObject.prototype);
 Galaxy.prototype.constructor = Galaxy;
@@ -379,6 +424,7 @@ Object.defineProperty(Galaxy.prototype, "size", {
         return wrapPointer(_Galaxy__get_size(this.__ptr), v2_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v2_uint)) throw Error('Galaxy.size: expected v2<uint>');
         _Galaxy__set_size(this.__ptr, value.__ptr);
     }
 });
@@ -387,7 +433,8 @@ Galaxy.prototype["__destroy"] = Galaxy.prototype.__destroy = function() {
 };
 // Jump
 function Jump() {
-    this.__ptr = _Jump__construct_0(); this.__type = Jump.__type; getCache(Jump)[this.__ptr] = this;
+    
+    this.__ptr = _Jump__construct_0(); getCache(Jump)[this.__ptr] = this;
 };
 Jump.prototype = Object.create(WrapperObject.prototype);
 Jump.prototype.constructor = Jump;
@@ -399,6 +446,7 @@ Object.defineProperty(Jump.prototype, "fleet", {
         return wrapPointer(_Jump__get_fleet(this.__ptr), Fleet);
     },
     set: function(value) {
+        if (!checkClass(value, Fleet)) throw Error('Jump.fleet: expected Fleet');
         _Jump__set_fleet(this.__ptr, value.__ptr);
     }
 });
@@ -407,6 +455,7 @@ Object.defineProperty(Jump.prototype, "start", {
         return wrapPointer(_Jump__get_start(this.__ptr), v2_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v2_uint)) throw Error('Jump.start: expected v2<uint>');
         _Jump__set_start(this.__ptr, value.__ptr);
     }
 });
@@ -415,6 +464,7 @@ Object.defineProperty(Jump.prototype, "dest", {
         return wrapPointer(_Jump__get_dest(this.__ptr), v2_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v2_uint)) throw Error('Jump.dest: expected v2<uint>');
         _Jump__set_dest(this.__ptr, value.__ptr);
     }
 });
@@ -423,6 +473,7 @@ Object.defineProperty(Jump.prototype, "stance", {
         return _Jump__get_stance(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Jump.stance: expected integer');
         _Jump__set_stance(this.__ptr, value);
     }
 });
@@ -431,6 +482,7 @@ Object.defineProperty(Jump.prototype, "track", {
         return wrapPointer(_Jump__get_track(this.__ptr), Fleet);
     },
     set: function(value) {
+        if (!checkClass(value, Fleet)) throw Error('Jump.track: expected Fleet');
         _Jump__set_track(this.__ptr, value.__ptr);
     }
 });
@@ -449,7 +501,8 @@ Player.prototype["__destroy"] = Player.prototype.__destroy = function() {
 };
 // Scans
 function Scans() {
-    this.__ptr = _Scans__construct_0(); this.__type = Scans.__type; getCache(Scans)[this.__ptr] = this;
+    
+    this.__ptr = _Scans__construct_0(); getCache(Scans)[this.__ptr] = this;
 };
 Scans.prototype = Object.create(WrapperObject.prototype);
 Scans.prototype.constructor = Scans;
@@ -461,7 +514,8 @@ Scans.prototype["__destroy"] = Scans.prototype.__destroy = function() {
 };
 // Schema
 function Schema() {
-    this.__ptr = _Schema__construct_0(); this.__type = Schema.__type; getCache(Schema)[this.__ptr] = this;
+    
+    this.__ptr = _Schema__construct_0(); getCache(Schema)[this.__ptr] = this;
 };
 Schema.prototype = Object.create(WrapperObject.prototype);
 Schema.prototype.constructor = Schema;
@@ -473,6 +527,7 @@ Object.defineProperty(Schema.prototype, "code", {
         return UTF8ToString(_Schema__get_code(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Schema.code: expected string');
         _Schema__set_code(this.__ptr, ensureString(value));
     }
 });
@@ -481,6 +536,7 @@ Object.defineProperty(Schema.prototype, "name", {
         return UTF8ToString(_Schema__get_name(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Schema.name: expected string');
         _Schema__set_name(this.__ptr, ensureString(value));
     }
 });
@@ -489,6 +545,7 @@ Object.defineProperty(Schema.prototype, "conceptor", {
         return UTF8ToString(_Schema__get_conceptor(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Schema.conceptor: expected string');
         _Schema__set_conceptor(this.__ptr, ensureString(value));
     }
 });
@@ -497,6 +554,7 @@ Object.defineProperty(Schema.prototype, "level", {
         return _Schema__get_level(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.level: expected integer');
         _Schema__set_level(this.__ptr, value);
     }
 });
@@ -505,6 +563,7 @@ Object.defineProperty(Schema.prototype, "cost", {
         return _Schema__get_cost(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.cost: expected number');
         _Schema__set_cost(this.__ptr, value);
     }
 });
@@ -513,6 +572,7 @@ Object.defineProperty(Schema.prototype, "minerals", {
         return _Schema__get_minerals(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.minerals: expected number');
         _Schema__set_minerals(this.__ptr, value);
     }
 });
@@ -521,6 +581,7 @@ Object.defineProperty(Schema.prototype, "andrium", {
         return _Schema__get_andrium(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.andrium: expected number');
         _Schema__set_andrium(this.__ptr, value);
     }
 });
@@ -529,6 +590,7 @@ Object.defineProperty(Schema.prototype, "resistance", {
         return _Schema__get_resistance(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.resistance: expected number');
         _Schema__set_resistance(this.__ptr, value);
     }
 });
@@ -537,6 +599,7 @@ Object.defineProperty(Schema.prototype, "speed", {
         return _Schema__get_speed(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.speed: expected integer');
         _Schema__set_speed(this.__ptr, value);
     }
 });
@@ -545,6 +608,7 @@ Object.defineProperty(Schema.prototype, "scan", {
         return _Schema__get_scan(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.scan: expected integer');
         _Schema__set_scan(this.__ptr, value);
     }
 });
@@ -553,6 +617,7 @@ Object.defineProperty(Schema.prototype, "planetary", {
         return _Schema__get_planetary(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.planetary: expected number');
         _Schema__set_planetary(this.__ptr, value);
     }
 });
@@ -561,6 +626,7 @@ Object.defineProperty(Schema.prototype, "spatial", {
         return wrapPointer(_Schema__get_spatial(this.__ptr), SpatialPower);
     },
     set: function(value) {
+        if (!checkClass(value, SpatialPower)) throw Error('Schema.spatial: expected SpatialPower');
         _Schema__set_spatial(this.__ptr, value.__ptr);
     }
 });
@@ -569,6 +635,7 @@ Object.defineProperty(Schema.prototype, "upkeep_factor", {
         return _Schema__get_upkeep_factor(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Schema.upkeep_factor: expected number');
         _Schema__set_upkeep_factor(this.__ptr, value);
     }
 });
@@ -577,7 +644,8 @@ Schema.prototype["__destroy"] = Schema.prototype.__destroy = function() {
 };
 // SpatialPower
 function SpatialPower() {
-    this.__ptr = _SpatialPower__construct_0(); this.__type = SpatialPower.__type; getCache(SpatialPower)[this.__ptr] = this;
+    
+    this.__ptr = _SpatialPower__construct_0(); getCache(SpatialPower)[this.__ptr] = this;
 };
 SpatialPower.prototype = Object.create(WrapperObject.prototype);
 SpatialPower.prototype.constructor = SpatialPower;
@@ -589,7 +657,8 @@ SpatialPower.prototype["__destroy"] = SpatialPower.prototype.__destroy = functio
 };
 // Split
 function Split() {
-    this.__ptr = _Split__construct_0(); this.__type = Split.__type; getCache(Split)[this.__ptr] = this;
+    
+    this.__ptr = _Split__construct_0(); getCache(Split)[this.__ptr] = this;
 };
 Split.prototype = Object.create(WrapperObject.prototype);
 Split.prototype.constructor = Split;
@@ -601,6 +670,7 @@ Object.defineProperty(Split.prototype, "source", {
         return wrapPointer(_Split__get_source(this.__ptr), Fleet);
     },
     set: function(value) {
+        if (!checkClass(value, Fleet)) throw Error('Split.source: expected Fleet');
         _Split__set_source(this.__ptr, value.__ptr);
     }
 });
@@ -609,6 +679,7 @@ Object.defineProperty(Split.prototype, "dest", {
         return wrapPointer(_Split__get_dest(this.__ptr), Fleet);
     },
     set: function(value) {
+        if (!checkClass(value, Fleet)) throw Error('Split.dest: expected Fleet');
         _Split__set_dest(this.__ptr, value.__ptr);
     }
 });
@@ -617,6 +688,7 @@ Object.defineProperty(Split.prototype, "code", {
         return UTF8ToString(_Split__get_code(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Split.code: expected string');
         _Split__set_code(this.__ptr, ensureString(value));
     }
 });
@@ -625,6 +697,7 @@ Object.defineProperty(Split.prototype, "stance", {
         return _Split__get_stance(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Split.stance: expected integer');
         _Split__set_stance(this.__ptr, value);
     }
 });
@@ -634,8 +707,10 @@ Split.prototype["__destroy"] = Split.prototype.__destroy = function() {
 // Star
 function Star(a0, a1, a2, a3) {
     ensureCache.prepare();
-    if (a0 === undefined) { this.__ptr = _Star__construct_0(); this.__type = Star.__type; getCache(Star)[this.__ptr] = this; return; }
-    this.__ptr = _Star__construct_4(/*spatial*/a0.__ptr, /*galaxy*/a1.__ptr, /*coord*/a2.__ptr, ensureString(/*name*/a3)); this.__type = Star.__type; getCache(Star)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Star(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, Galaxy)) throw Error('Star(1:galaxy): expected Galaxy'); if (!checkClass(a2, v2_uint)) throw Error('Star(2:coord): expected v2<uint>'); if (typeof a3 !== 'string') throw Error('Star(3:name): expected string'); }
+    if (a0 === undefined) { this.__ptr = _Star__construct_0(); getCache(Star)[this.__ptr] = this; }
+    else { this.__ptr = _Star__construct_4(/*spatial*/a0.__ptr, /*galaxy*/a1.__ptr, /*coord*/a2.__ptr, ensureString(/*name*/a3)); getCache(Star)[this.__ptr] = this; }
 };
 Star.prototype = Object.create(WrapperObject.prototype);
 Star.prototype.constructor = Star;
@@ -647,6 +722,7 @@ Object.defineProperty(Star.prototype, "galaxy", {
         return wrapPointer(_Star__get_galaxy(this.__ptr), Galaxy);
     },
     set: function(value) {
+        if (!checkClass(value, Galaxy)) throw Error('Star.galaxy: expected Galaxy');
         _Star__set_galaxy(this.__ptr, value.__ptr);
     }
 });
@@ -655,6 +731,7 @@ Object.defineProperty(Star.prototype, "coord", {
         return wrapPointer(_Star__get_coord(this.__ptr), v2_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v2_uint)) throw Error('Star.coord: expected v2<uint>');
         _Star__set_coord(this.__ptr, value.__ptr);
     }
 });
@@ -663,6 +740,7 @@ Object.defineProperty(Star.prototype, "name", {
         return UTF8ToString(_Star__get_name(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('Star.name: expected string');
         _Star__set_name(this.__ptr, ensureString(value));
     }
 });
@@ -671,6 +749,7 @@ Object.defineProperty(Star.prototype, "stability", {
         return _Star__get_stability(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.stability: expected integer');
         _Star__set_stability(this.__ptr, value);
     }
 });
@@ -679,6 +758,7 @@ Object.defineProperty(Star.prototype, "revolt", {
         return !!(_Star__get_revolt(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Star.revolt: expected boolean');
         _Star__set_revolt(this.__ptr, value);
     }
 });
@@ -687,6 +767,7 @@ Object.defineProperty(Star.prototype, "env", {
         return _Star__get_env(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.env: expected integer');
         _Star__set_env(this.__ptr, value);
     }
 });
@@ -695,6 +776,7 @@ Object.defineProperty(Star.prototype, "terraformation", {
         return _Star__get_terraformation(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.terraformation: expected integer');
         _Star__set_terraformation(this.__ptr, value);
     }
 });
@@ -703,6 +785,7 @@ Object.defineProperty(Star.prototype, "base_population", {
         return _Star__get_base_population(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.base_population: expected integer');
         _Star__set_base_population(this.__ptr, value);
     }
 });
@@ -711,6 +794,7 @@ Object.defineProperty(Star.prototype, "max_population", {
         return _Star__get_max_population(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.max_population: expected integer');
         _Star__set_max_population(this.__ptr, value);
     }
 });
@@ -719,6 +803,7 @@ Object.defineProperty(Star.prototype, "population", {
         return _Star__get_population(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.population: expected integer');
         _Star__set_population(this.__ptr, value);
     }
 });
@@ -727,6 +812,7 @@ Object.defineProperty(Star.prototype, "militia", {
         return _Star__get_militia(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.militia: expected number');
         _Star__set_militia(this.__ptr, value);
     }
 });
@@ -735,6 +821,7 @@ Object.defineProperty(Star.prototype, "defense", {
         return _Star__get_defense(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.defense: expected number');
         _Star__set_defense(this.__ptr, value);
     }
 });
@@ -743,6 +830,7 @@ Object.defineProperty(Star.prototype, "revenue", {
         return _Star__get_revenue(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.revenue: expected number');
         _Star__set_revenue(this.__ptr, value);
     }
 });
@@ -751,6 +839,7 @@ Object.defineProperty(Star.prototype, "politic", {
         return _Star__get_politic(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.politic: expected integer');
         _Star__set_politic(this.__ptr, value);
     }
 });
@@ -759,6 +848,7 @@ Object.defineProperty(Star.prototype, "taxation", {
         return _Star__get_taxation(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.taxation: expected integer');
         _Star__set_taxation(this.__ptr, value);
     }
 });
@@ -767,6 +857,7 @@ Object.defineProperty(Star.prototype, "commander", {
         return wrapPointer(_Star__get_commander(this.__ptr), Commander);
     },
     set: function(value) {
+        if (!checkClass(value, Commander)) throw Error('Star.commander: expected Commander');
         _Star__set_commander(this.__ptr, value.__ptr);
     }
 });
@@ -775,6 +866,7 @@ Object.defineProperty(Star.prototype, "scan", {
         return _Star__get_scan(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Star.scan: expected integer');
         _Star__set_scan(this.__ptr, value);
     }
 });
@@ -783,7 +875,8 @@ Star.prototype["__destroy"] = Star.prototype.__destroy = function() {
 };
 // TechDomain
 function TechDomain() {
-    this.__ptr = _TechDomain__construct_0(); this.__type = TechDomain.__type; getCache(TechDomain)[this.__ptr] = this;
+    
+    this.__ptr = _TechDomain__construct_0(); getCache(TechDomain)[this.__ptr] = this;
 };
 TechDomain.prototype = Object.create(WrapperObject.prototype);
 TechDomain.prototype.constructor = TechDomain;
@@ -795,7 +888,8 @@ TechDomain.prototype["__destroy"] = TechDomain.prototype.__destroy = function() 
 };
 // Turn
 function Turn() {
-    this.__ptr = _Turn__construct_0(); this.__type = Turn.__type; getCache(Turn)[this.__ptr] = this;
+    
+    this.__ptr = _Turn__construct_0(); getCache(Turn)[this.__ptr] = this;
 };
 Turn.prototype = Object.create(WrapperObject.prototype);
 Turn.prototype.constructor = Turn;
@@ -807,11 +901,13 @@ Turn.prototype["__destroy"] = Turn.prototype.__destroy = function() {
 };
 // BuildingSchema
 function BuildingSchema() {
-    this.__ptr = _BuildingSchema__construct_0(); this.__type = BuildingSchema.__type; getCache(BuildingSchema)[this.__ptr] = this;
+    
+    this.__ptr = _BuildingSchema__construct_0(); getCache(BuildingSchema)[this.__ptr] = this;
 };
 BuildingSchema.prototype = Object.create(Schema.prototype);
 BuildingSchema.prototype.constructor = BuildingSchema;
 BuildingSchema.prototype.__class = BuildingSchema;
+BuildingSchema.__base = Schema;
 BuildingSchema.__cache = {};
 Module['BuildingSchema'] = BuildingSchema;
 BuildingSchema.prototype["__destroy"] = BuildingSchema.prototype.__destroy = function() {
@@ -822,6 +918,7 @@ function CommanderBrush() { throw "cannot construct a CommanderBrush, no constru
 CommanderBrush.prototype = Object.create(Brush.prototype);
 CommanderBrush.prototype.constructor = CommanderBrush;
 CommanderBrush.prototype.__class = CommanderBrush;
+CommanderBrush.__base = Brush;
 CommanderBrush.__cache = {};
 Module['CommanderBrush'] = CommanderBrush;
 Object.defineProperty(CommanderBrush.prototype, "commander", {
@@ -829,6 +926,7 @@ Object.defineProperty(CommanderBrush.prototype, "commander", {
         return wrapPointer(_CommanderBrush__get_commander(this.__ptr), Commander);
     },
     set: function(value) {
+        if (!checkClass(value, Commander)) throw Error('CommanderBrush.commander: expected Commander');
         _CommanderBrush__set_commander(this.__ptr, value.__ptr);
     }
 });
@@ -837,6 +935,7 @@ Object.defineProperty(CommanderBrush.prototype, "radius", {
         return _CommanderBrush__get_radius(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('CommanderBrush.radius: expected number');
         _CommanderBrush__set_radius(this.__ptr, value);
     }
 });
@@ -845,11 +944,13 @@ CommanderBrush.prototype["__destroy"] = CommanderBrush.prototype.__destroy = fun
 };
 // PlanetaryCombat
 function PlanetaryCombat() {
-    this.__ptr = _PlanetaryCombat__construct_0(); this.__type = PlanetaryCombat.__type; getCache(PlanetaryCombat)[this.__ptr] = this;
+    
+    this.__ptr = _PlanetaryCombat__construct_0(); getCache(PlanetaryCombat)[this.__ptr] = this;
 };
 PlanetaryCombat.prototype = Object.create(Combat.prototype);
 PlanetaryCombat.prototype.constructor = PlanetaryCombat;
 PlanetaryCombat.prototype.__class = PlanetaryCombat;
+PlanetaryCombat.__base = Combat;
 PlanetaryCombat.__cache = {};
 Module['PlanetaryCombat'] = PlanetaryCombat;
 Object.defineProperty(PlanetaryCombat.prototype, "coord", {
@@ -857,6 +958,7 @@ Object.defineProperty(PlanetaryCombat.prototype, "coord", {
         return wrapPointer(_PlanetaryCombat__get_coord(this.__ptr), v2_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v2_uint)) throw Error('PlanetaryCombat.coord: expected v2<uint>');
         _PlanetaryCombat__set_coord(this.__ptr, value.__ptr);
     }
 });
@@ -865,6 +967,7 @@ Object.defineProperty(PlanetaryCombat.prototype, "defense", {
         return wrapPointer(_PlanetaryCombat__get_defense(this.__ptr), CombatStar);
     },
     set: function(value) {
+        if (!checkClass(value, CombatStar)) throw Error('PlanetaryCombat.defense: expected CombatStar');
         _PlanetaryCombat__set_defense(this.__ptr, value.__ptr);
     }
 });
@@ -873,11 +976,13 @@ PlanetaryCombat.prototype["__destroy"] = PlanetaryCombat.prototype.__destroy = f
 };
 // ShipComponent
 function ShipComponent() {
-    this.__ptr = _ShipComponent__construct_0(); this.__type = ShipComponent.__type; getCache(ShipComponent)[this.__ptr] = this;
+    
+    this.__ptr = _ShipComponent__construct_0(); getCache(ShipComponent)[this.__ptr] = this;
 };
 ShipComponent.prototype = Object.create(Schema.prototype);
 ShipComponent.prototype.constructor = ShipComponent;
 ShipComponent.prototype.__class = ShipComponent;
+ShipComponent.__base = Schema;
 ShipComponent.__cache = {};
 Module['ShipComponent'] = ShipComponent;
 ShipComponent.prototype["__destroy"] = ShipComponent.prototype.__destroy = function() {
@@ -885,11 +990,13 @@ ShipComponent.prototype["__destroy"] = ShipComponent.prototype.__destroy = funct
 };
 // ShipEngine
 function ShipEngine() {
-    this.__ptr = _ShipEngine__construct_0(); this.__type = ShipEngine.__type; getCache(ShipEngine)[this.__ptr] = this;
+    
+    this.__ptr = _ShipEngine__construct_0(); getCache(ShipEngine)[this.__ptr] = this;
 };
 ShipEngine.prototype = Object.create(Schema.prototype);
 ShipEngine.prototype.constructor = ShipEngine;
 ShipEngine.prototype.__class = ShipEngine;
+ShipEngine.__base = Schema;
 ShipEngine.__cache = {};
 Module['ShipEngine'] = ShipEngine;
 ShipEngine.prototype["__destroy"] = ShipEngine.prototype.__destroy = function() {
@@ -897,11 +1004,13 @@ ShipEngine.prototype["__destroy"] = ShipEngine.prototype.__destroy = function() 
 };
 // ShipHull
 function ShipHull() {
-    this.__ptr = _ShipHull__construct_0(); this.__type = ShipHull.__type; getCache(ShipHull)[this.__ptr] = this;
+    
+    this.__ptr = _ShipHull__construct_0(); getCache(ShipHull)[this.__ptr] = this;
 };
 ShipHull.prototype = Object.create(Schema.prototype);
 ShipHull.prototype.constructor = ShipHull;
 ShipHull.prototype.__class = ShipHull;
+ShipHull.__base = Schema;
 ShipHull.__cache = {};
 Module['ShipHull'] = ShipHull;
 ShipHull.prototype["__destroy"] = ShipHull.prototype.__destroy = function() {
@@ -909,11 +1018,13 @@ ShipHull.prototype["__destroy"] = ShipHull.prototype.__destroy = function() {
 };
 // ShipSchema
 function ShipSchema() {
-    this.__ptr = _ShipSchema__construct_0(); this.__type = ShipSchema.__type; getCache(ShipSchema)[this.__ptr] = this;
+    
+    this.__ptr = _ShipSchema__construct_0(); getCache(ShipSchema)[this.__ptr] = this;
 };
 ShipSchema.prototype = Object.create(Schema.prototype);
 ShipSchema.prototype.constructor = ShipSchema;
 ShipSchema.prototype.__class = ShipSchema;
+ShipSchema.__base = Schema;
 ShipSchema.__cache = {};
 Module['ShipSchema'] = ShipSchema;
 Object.defineProperty(ShipSchema.prototype, "size", {
@@ -921,6 +1032,7 @@ Object.defineProperty(ShipSchema.prototype, "size", {
         return _ShipSchema__get_size(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('ShipSchema.size: expected integer');
         _ShipSchema__set_size(this.__ptr, value);
     }
 });
@@ -929,6 +1041,7 @@ Object.defineProperty(ShipSchema.prototype, "class", {
         return _ShipSchema__get_class(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('ShipSchema.class: expected integer');
         _ShipSchema__set_class(this.__ptr, value);
     }
 });
@@ -937,6 +1050,7 @@ Object.defineProperty(ShipSchema.prototype, "main_weapon", {
         return _ShipSchema__get_main_weapon(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('ShipSchema.main_weapon: expected integer');
         _ShipSchema__set_main_weapon(this.__ptr, value);
     }
 });
@@ -945,11 +1059,13 @@ ShipSchema.prototype["__destroy"] = ShipSchema.prototype.__destroy = function() 
 };
 // SpatialCombat
 function SpatialCombat() {
-    this.__ptr = _SpatialCombat__construct_0(); this.__type = SpatialCombat.__type; getCache(SpatialCombat)[this.__ptr] = this;
+    
+    this.__ptr = _SpatialCombat__construct_0(); getCache(SpatialCombat)[this.__ptr] = this;
 };
 SpatialCombat.prototype = Object.create(Combat.prototype);
 SpatialCombat.prototype.constructor = SpatialCombat;
 SpatialCombat.prototype.__class = SpatialCombat;
+SpatialCombat.__base = Combat;
 SpatialCombat.__cache = {};
 Module['SpatialCombat'] = SpatialCombat;
 Object.defineProperty(SpatialCombat.prototype, "coord", {
@@ -957,6 +1073,7 @@ Object.defineProperty(SpatialCombat.prototype, "coord", {
         return wrapPointer(_SpatialCombat__get_coord(this.__ptr), v2_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v2_uint)) throw Error('SpatialCombat.coord: expected v2<uint>');
         _SpatialCombat__set_coord(this.__ptr, value.__ptr);
     }
 });
@@ -966,11 +1083,13 @@ SpatialCombat.prototype["__destroy"] = SpatialCombat.prototype.__destroy = funct
 // Universe
 function Universe(a0, a1) {
     ensureCache.prepare();
-    this.__ptr = _Universe__construct_2(ensureString(/*name*/a0), /*job_system*/a1.__ptr); this.__type = Universe.__type; getCache(Universe)[this.__ptr] = this;
+    if (typeof a0 !== 'string') throw Error('Universe(0:name): expected string'); if (!checkClass(a1, JobSystem)) throw Error('Universe(1:job_system): expected JobSystem');
+    this.__ptr = _Universe__construct_2(ensureString(/*name*/a0), /*job_system*/a1.__ptr); getCache(Universe)[this.__ptr] = this;
 };
 Universe.prototype = Object.create(Complex.prototype);
 Universe.prototype.constructor = Universe;
 Universe.prototype.__class = Universe;
+Universe.__base = Complex;
 Universe.__cache = {};
 Module['Universe'] = Universe;
 Object.defineProperty(Universe.prototype, "world", {
@@ -985,12 +1104,15 @@ Universe.prototype["__destroy"] = Universe.prototype.__destroy = function() {
     _Universe__destroy(this.__ptr);
 };
 Module['generate_system'] = function(a0, a1, a2) {
+    if (!checkClass(a0, Galaxy)) throw Error('generate_system(0:galaxy): expected Galaxy'); if (!checkClass(a1, v3_uint)) throw Error('generate_system(1:coord): expected v3<uint>'); if (!checkClass(a2, v3_float)) throw Error('generate_system(2:position): expected v3<float>');
     return wrapPointer(_generate_system_3(/*galaxy*/a0.__ptr, /*coord*/a1.__ptr, /*position*/a2.__ptr), ComponentHandle_Star);
 };
 Module['generate_fleet'] = function(a0, a1, a2) {
+    if (!checkClass(a0, Galaxy)) throw Error('generate_fleet(0:galaxy): expected Galaxy'); if (!checkClass(a1, v3_uint)) throw Error('generate_fleet(1:coord): expected v3<uint>'); if (!checkClass(a2, v3_float)) throw Error('generate_fleet(2:position): expected v3<float>');
     return wrapPointer(_generate_fleet_3(/*galaxy*/a0.__ptr, /*coord*/a1.__ptr, /*position*/a2.__ptr), ComponentHandle_Fleet);
 };
 Module['generate_commander'] = function(a0, a1) {
+    if (!checkClass(a0, Galaxy)) throw Error('generate_commander(0:galaxy): expected Galaxy'); if (!checkClass(a1, Star)) throw Error('generate_commander(1:star): expected Star');
     return wrapPointer(_generate_commander_2(/*galaxy*/a0.__ptr, /*star*/a1.__ptr), Commander);
 };
 Module['HGalaxy'] = ComponentHandle_Galaxy;
@@ -999,31 +1121,31 @@ Module['HFleet'] = ComponentHandle_Fleet;
 
 (function() {
     function setup() {
-        Combat.__type = _Combat__type();
-        CombatFleet.__type = _CombatFleet__type();
-        CombatStar.__type = _CombatStar__type();
-        Commander.__type = _Commander__type();
-        Construction.__type = _Construction__type();
-        Fleet.__type = _Fleet__type();
-        Galaxy.__type = _Galaxy__type();
-        Jump.__type = _Jump__type();
-        Player.__type = _Player__type();
-        Scans.__type = _Scans__type();
-        Schema.__type = _Schema__type();
-        SpatialPower.__type = _SpatialPower__type();
-        Split.__type = _Split__type();
-        Star.__type = _Star__type();
-        TechDomain.__type = _TechDomain__type();
-        Turn.__type = _Turn__type();
-        BuildingSchema.__type = _BuildingSchema__type();
-        CommanderBrush.__type = _CommanderBrush__type();
-        PlanetaryCombat.__type = _PlanetaryCombat__type();
-        ShipComponent.__type = _ShipComponent__type();
-        ShipEngine.__type = _ShipEngine__type();
-        ShipHull.__type = _ShipHull__type();
-        ShipSchema.__type = _ShipSchema__type();
-        SpatialCombat.__type = _SpatialCombat__type();
-        Universe.__type = _Universe__type();
+        Combat.prototype.__type = _Combat__type();
+        CombatFleet.prototype.__type = _CombatFleet__type();
+        CombatStar.prototype.__type = _CombatStar__type();
+        Commander.prototype.__type = _Commander__type();
+        Construction.prototype.__type = _Construction__type();
+        Fleet.prototype.__type = _Fleet__type();
+        Galaxy.prototype.__type = _Galaxy__type();
+        Jump.prototype.__type = _Jump__type();
+        Player.prototype.__type = _Player__type();
+        Scans.prototype.__type = _Scans__type();
+        Schema.prototype.__type = _Schema__type();
+        SpatialPower.prototype.__type = _SpatialPower__type();
+        Split.prototype.__type = _Split__type();
+        Star.prototype.__type = _Star__type();
+        TechDomain.prototype.__type = _TechDomain__type();
+        Turn.prototype.__type = _Turn__type();
+        BuildingSchema.prototype.__type = _BuildingSchema__type();
+        CommanderBrush.prototype.__type = _CommanderBrush__type();
+        PlanetaryCombat.prototype.__type = _PlanetaryCombat__type();
+        ShipComponent.prototype.__type = _ShipComponent__type();
+        ShipEngine.prototype.__type = _ShipEngine__type();
+        ShipHull.prototype.__type = _ShipHull__type();
+        ShipSchema.prototype.__type = _ShipSchema__type();
+        SpatialCombat.prototype.__type = _SpatialCombat__type();
+        Universe.prototype.__type = _Universe__type();
         // CombatType
         Module['CombatType'] = Module['CombatType'] || {};
         Module['CombatType']['Spatial'] = _CombatType_Spatial();

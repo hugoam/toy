@@ -660,13 +660,13 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 void viewport_item_picker(Viewer& viewer, Widget& widget, vector<Item*>& selection)
 {
-	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::Mouse, EventType::Moved, InputMod::None, false))
+	if(MouseEvent event = widget.mouse_event(DeviceType::Mouse, EventType::Moved, InputMod::None, false))
 	{
 		auto callback = [&](Item* item) { viewer.m_hovered = item; };
-		viewer.picker(0).pick_point(viewer.m_viewport, mouse_event.m_relative, callback, ItemFlag::Static);
+		viewer.picker(0).pick_point(viewer.m_viewport, event.m_relative, callback, ItemFlag::Static);
 	}
 
-	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
+	if(MouseEvent event = widget.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
 	{
 		if(viewer.m_hovered)
 		{

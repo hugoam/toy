@@ -296,7 +296,7 @@ namespace toy
 
 		if(editor.m_viewer)
 		{
-			if(MouseEvent mouse_event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
+			if(MouseEvent event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
 				editor.m_viewer->take_focus();
 
 			ui::viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection.objects);

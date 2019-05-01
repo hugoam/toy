@@ -1,8 +1,10 @@
 Module['mud'] = Module['mud'] || {};
 // Camp
 function Camp(a0, a1, a2) {
-    if (a0 === undefined) { this.__ptr = _Camp__construct_0(); this.__type = Camp.__type; getCache(Camp)[this.__ptr] = this; return; }
-    this.__ptr = _Camp__construct_3(/*spatial*/a0.__ptr, /*position*/a1.__ptr, /*faction*/a2.__ptr); this.__type = Camp.__type; getCache(Camp)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Camp(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, v3_float)) throw Error('Camp(1:position): expected v3<float>'); if (!checkClass(a2, Faction)) throw Error('Camp(2:faction): expected Faction'); }
+    if (a0 === undefined) { this.__ptr = _Camp__construct_0(); getCache(Camp)[this.__ptr] = this; }
+    else { this.__ptr = _Camp__construct_3(/*spatial*/a0.__ptr, /*position*/a1.__ptr, /*faction*/a2.__ptr); getCache(Camp)[this.__ptr] = this; }
 };
 Camp.prototype = Object.create(WrapperObject.prototype);
 Camp.prototype.constructor = Camp;
@@ -14,6 +16,7 @@ Object.defineProperty(Camp.prototype, "position", {
         return wrapPointer(_Camp__get_position(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Camp.position: expected v3<float>');
         _Camp__set_position(this.__ptr, value.__ptr);
     }
 });
@@ -22,6 +25,7 @@ Object.defineProperty(Camp.prototype, "faction", {
         return wrapPointer(_Camp__get_faction(this.__ptr), Faction);
     },
     set: function(value) {
+        if (!checkClass(value, Faction)) throw Error('Camp.faction: expected Faction');
         _Camp__set_faction(this.__ptr, value.__ptr);
     }
 });
@@ -30,7 +34,8 @@ Camp.prototype["__destroy"] = Camp.prototype.__destroy = function() {
 };
 // ComponentHandle<Camp>
 function ComponentHandle_Camp() {
-    this.__ptr = _mud_ComponentHandle_Camp__construct_0(); this.__type = ComponentHandle_Camp.__type; getCache(ComponentHandle_Camp)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Camp__construct_0(); getCache(ComponentHandle_Camp)[this.__ptr] = this;
 };
 ComponentHandle_Camp.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Camp.prototype.constructor = ComponentHandle_Camp;
@@ -42,7 +47,8 @@ ComponentHandle_Camp.prototype["__destroy"] = ComponentHandle_Camp.prototype.__d
 };
 // ComponentHandle<Shield>
 function ComponentHandle_Shield() {
-    this.__ptr = _mud_ComponentHandle_Shield__construct_0(); this.__type = ComponentHandle_Shield.__type; getCache(ComponentHandle_Shield)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Shield__construct_0(); getCache(ComponentHandle_Shield)[this.__ptr] = this;
 };
 ComponentHandle_Shield.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Shield.prototype.constructor = ComponentHandle_Shield;
@@ -54,7 +60,8 @@ ComponentHandle_Shield.prototype["__destroy"] = ComponentHandle_Shield.prototype
 };
 // ComponentHandle<Slug>
 function ComponentHandle_Slug() {
-    this.__ptr = _mud_ComponentHandle_Slug__construct_0(); this.__type = ComponentHandle_Slug.__type; getCache(ComponentHandle_Slug)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Slug__construct_0(); getCache(ComponentHandle_Slug)[this.__ptr] = this;
 };
 ComponentHandle_Slug.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Slug.prototype.constructor = ComponentHandle_Slug;
@@ -66,7 +73,8 @@ ComponentHandle_Slug.prototype["__destroy"] = ComponentHandle_Slug.prototype.__d
 };
 // ComponentHandle<Tank>
 function ComponentHandle_Tank() {
-    this.__ptr = _mud_ComponentHandle_Tank__construct_0(); this.__type = ComponentHandle_Tank.__type; getCache(ComponentHandle_Tank)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Tank__construct_0(); getCache(ComponentHandle_Tank)[this.__ptr] = this;
 };
 ComponentHandle_Tank.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Tank.prototype.constructor = ComponentHandle_Tank;
@@ -78,7 +86,8 @@ ComponentHandle_Tank.prototype["__destroy"] = ComponentHandle_Tank.prototype.__d
 };
 // Faction
 function Faction(a0, a1) {
-    this.__ptr = _Faction__construct_2(/*id*/a0, /*colour*/a1.__ptr); this.__type = Faction.__type; getCache(Faction)[this.__ptr] = this;
+    if (typeof a0 !== 'number') throw Error('Faction(0:id): expected integer'); if (!checkClass(a1, Colour)) throw Error('Faction(1:colour): expected Colour');
+    this.__ptr = _Faction__construct_2(/*id*/a0, /*colour*/a1.__ptr); getCache(Faction)[this.__ptr] = this;
 };
 Faction.prototype = Object.create(WrapperObject.prototype);
 Faction.prototype.constructor = Faction;
@@ -90,6 +99,7 @@ Object.defineProperty(Faction.prototype, "id", {
         return _Faction__get_id(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Faction.id: expected integer');
         _Faction__set_id(this.__ptr, value);
     }
 });
@@ -98,6 +108,7 @@ Object.defineProperty(Faction.prototype, "colour", {
         return wrapPointer(_Faction__get_colour(this.__ptr), Colour);
     },
     set: function(value) {
+        if (!checkClass(value, Colour)) throw Error('Faction.colour: expected Colour');
         _Faction__set_colour(this.__ptr, value.__ptr);
     }
 });
@@ -116,8 +127,10 @@ Player.prototype["__destroy"] = Player.prototype.__destroy = function() {
 };
 // Shield
 function Shield(a0, a1, a2, a3) {
-    if (a0 === undefined) { this.__ptr = _Shield__construct_0(); this.__type = Shield.__type; getCache(Shield)[this.__ptr] = this; return; }
-    this.__ptr = _Shield__construct_4(/*spatial*/a0.__ptr, /*emitter*/a1.__ptr, /*faction*/a2.__ptr, /*radius*/a3); this.__type = Shield.__type; getCache(Shield)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Shield(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Emitter)) throw Error('Shield(1:emitter): expected ComponentHandle<toy::Emitter>'); if (!checkClass(a2, Faction)) throw Error('Shield(2:faction): expected Faction'); if (typeof a3 !== 'number') throw Error('Shield(3:radius): expected number'); }
+    if (a0 === undefined) { this.__ptr = _Shield__construct_0(); getCache(Shield)[this.__ptr] = this; }
+    else { this.__ptr = _Shield__construct_4(/*spatial*/a0.__ptr, /*emitter*/a1.__ptr, /*faction*/a2.__ptr, /*radius*/a3); getCache(Shield)[this.__ptr] = this; }
 };
 Shield.prototype = Object.create(WrapperObject.prototype);
 Shield.prototype.constructor = Shield;
@@ -129,6 +142,7 @@ Object.defineProperty(Shield.prototype, "faction", {
         return wrapPointer(_Shield__get_faction(this.__ptr), Faction);
     },
     set: function(value) {
+        if (!checkClass(value, Faction)) throw Error('Shield.faction: expected Faction');
         _Shield__set_faction(this.__ptr, value.__ptr);
     }
 });
@@ -137,6 +151,7 @@ Object.defineProperty(Shield.prototype, "radius", {
         return _Shield__get_radius(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Shield.radius: expected number');
         _Shield__set_radius(this.__ptr, value);
     }
 });
@@ -145,6 +160,7 @@ Object.defineProperty(Shield.prototype, "charge", {
         return _Shield__get_charge(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Shield.charge: expected number');
         _Shield__set_charge(this.__ptr, value);
     }
 });
@@ -153,6 +169,7 @@ Object.defineProperty(Shield.prototype, "discharge", {
         return _Shield__get_discharge(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Shield.discharge: expected number');
         _Shield__set_discharge(this.__ptr, value);
     }
 });
@@ -171,6 +188,7 @@ Object.defineProperty(Slug.prototype, "source", {
         return wrapPointer(_Slug__get_source(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Slug.source: expected v3<float>');
         _Slug__set_source(this.__ptr, value.__ptr);
     }
 });
@@ -179,6 +197,7 @@ Object.defineProperty(Slug.prototype, "velocity", {
         return wrapPointer(_Slug__get_velocity(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Slug.velocity: expected v3<float>');
         _Slug__set_velocity(this.__ptr, value.__ptr);
     }
 });
@@ -187,6 +206,7 @@ Object.defineProperty(Slug.prototype, "power", {
         return _Slug__get_power(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('Slug.power: expected number');
         _Slug__set_power(this.__ptr, value);
     }
 });
@@ -195,8 +215,10 @@ Slug.prototype["__destroy"] = Slug.prototype.__destroy = function() {
 };
 // Tank
 function Tank(a0, a1, a2, a3, a4) {
-    if (a0 === undefined) { this.__ptr = _Tank__construct_0(); this.__type = Tank.__type; getCache(Tank)[this.__ptr] = this; return; }
-    this.__ptr = _Tank__construct_5(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*emitter*/a2.__ptr, /*receptor*/a3.__ptr, /*faction*/a4.__ptr); this.__type = Tank.__type; getCache(Tank)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Tank(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Tank(1:movable): expected ComponentHandle<toy::Movable>'); if (!checkClass(a2, ComponentHandle_toy_Emitter)) throw Error('Tank(2:emitter): expected ComponentHandle<toy::Emitter>'); if (!checkClass(a3, ComponentHandle_toy_Receptor)) throw Error('Tank(3:receptor): expected ComponentHandle<toy::Receptor>'); if (!checkClass(a4, Faction)) throw Error('Tank(4:faction): expected Faction'); }
+    if (a0 === undefined) { this.__ptr = _Tank__construct_0(); getCache(Tank)[this.__ptr] = this; }
+    else { this.__ptr = _Tank__construct_5(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*emitter*/a2.__ptr, /*receptor*/a3.__ptr, /*faction*/a4.__ptr); getCache(Tank)[this.__ptr] = this; }
 };
 Tank.prototype = Object.create(WrapperObject.prototype);
 Tank.prototype.constructor = Tank;
@@ -209,11 +231,13 @@ Tank.prototype["__destroy"] = Tank.prototype.__destroy = function() {
 // BlockWorld
 function BlockWorld(a0, a1) {
     ensureCache.prepare();
-    this.__ptr = _BlockWorld__construct_2(ensureString(/*name*/a0), /*job_system*/a1.__ptr); this.__type = BlockWorld.__type; getCache(BlockWorld)[this.__ptr] = this;
+    if (typeof a0 !== 'string') throw Error('BlockWorld(0:name): expected string'); if (!checkClass(a1, JobSystem)) throw Error('BlockWorld(1:job_system): expected JobSystem');
+    this.__ptr = _BlockWorld__construct_2(ensureString(/*name*/a0), /*job_system*/a1.__ptr); getCache(BlockWorld)[this.__ptr] = this;
 };
 BlockWorld.prototype = Object.create(Complex.prototype);
 BlockWorld.prototype.constructor = BlockWorld;
 BlockWorld.prototype.__class = BlockWorld;
+BlockWorld.__base = Complex;
 BlockWorld.__cache = {};
 Module['BlockWorld'] = BlockWorld;
 Object.defineProperty(BlockWorld.prototype, "world", {
@@ -233,6 +257,7 @@ Object.defineProperty(BlockWorld.prototype, "block_subdiv", {
         return wrapPointer(_BlockWorld__get_block_subdiv(this.__ptr), v3_uint);
     },
     set: function(value) {
+        if (!checkClass(value, v3_uint)) throw Error('BlockWorld.block_subdiv: expected v3<uint>');
         _BlockWorld__set_block_subdiv(this.__ptr, value.__ptr);
     }
 });
@@ -241,6 +266,7 @@ Object.defineProperty(BlockWorld.prototype, "tile_scale", {
         return wrapPointer(_BlockWorld__get_tile_scale(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('BlockWorld.tile_scale: expected v3<float>');
         _BlockWorld__set_tile_scale(this.__ptr, value.__ptr);
     }
 });
@@ -249,6 +275,7 @@ Object.defineProperty(BlockWorld.prototype, "block_size", {
         return wrapPointer(_BlockWorld__get_block_size(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('BlockWorld.block_size: expected v3<float>');
         _BlockWorld__set_block_size(this.__ptr, value.__ptr);
     }
 });
@@ -257,6 +284,7 @@ Object.defineProperty(BlockWorld.prototype, "world_size", {
         return wrapPointer(_BlockWorld__get_world_size(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('BlockWorld.world_size: expected v3<float>');
         _BlockWorld__set_world_size(this.__ptr, value.__ptr);
     }
 });
@@ -270,13 +298,13 @@ Module['HTank'] = ComponentHandle_Tank;
 
 (function() {
     function setup() {
-        Camp.__type = _Camp__type();
-        Faction.__type = _Faction__type();
-        Player.__type = _Player__type();
-        Shield.__type = _Shield__type();
-        Slug.__type = _Slug__type();
-        Tank.__type = _Tank__type();
-        BlockWorld.__type = _BlockWorld__type();
+        Camp.prototype.__type = _Camp__type();
+        Faction.prototype.__type = _Faction__type();
+        Player.prototype.__type = _Player__type();
+        Shield.prototype.__type = _Shield__type();
+        Slug.prototype.__type = _Slug__type();
+        Tank.prototype.__type = _Tank__type();
+        BlockWorld.prototype.__type = _BlockWorld__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);

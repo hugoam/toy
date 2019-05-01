@@ -11,6 +11,7 @@ Object.defineProperty(Bullet.prototype, "source", {
         return wrapPointer(_Bullet__get_source(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Bullet.source: expected v3<float>');
         _Bullet__set_source(this.__ptr, value.__ptr);
     }
 });
@@ -19,6 +20,7 @@ Object.defineProperty(Bullet.prototype, "velocity", {
         return wrapPointer(_Bullet__get_velocity(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Bullet.velocity: expected v3<float>');
         _Bullet__set_velocity(this.__ptr, value.__ptr);
     }
 });
@@ -27,7 +29,8 @@ Bullet.prototype["__destroy"] = Bullet.prototype.__destroy = function() {
 };
 // ComponentHandle<Bullet>
 function ComponentHandle_Bullet() {
-    this.__ptr = _mud_ComponentHandle_Bullet__construct_0(); this.__type = ComponentHandle_Bullet.__type; getCache(ComponentHandle_Bullet)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Bullet__construct_0(); getCache(ComponentHandle_Bullet)[this.__ptr] = this;
 };
 ComponentHandle_Bullet.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Bullet.prototype.constructor = ComponentHandle_Bullet;
@@ -39,7 +42,8 @@ ComponentHandle_Bullet.prototype["__destroy"] = ComponentHandle_Bullet.prototype
 };
 // ComponentHandle<Crate>
 function ComponentHandle_Crate() {
-    this.__ptr = _mud_ComponentHandle_Crate__construct_0(); this.__type = ComponentHandle_Crate.__type; getCache(ComponentHandle_Crate)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Crate__construct_0(); getCache(ComponentHandle_Crate)[this.__ptr] = this;
 };
 ComponentHandle_Crate.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Crate.prototype.constructor = ComponentHandle_Crate;
@@ -51,7 +55,8 @@ ComponentHandle_Crate.prototype["__destroy"] = ComponentHandle_Crate.prototype._
 };
 // ComponentHandle<Human>
 function ComponentHandle_Human() {
-    this.__ptr = _mud_ComponentHandle_Human__construct_0(); this.__type = ComponentHandle_Human.__type; getCache(ComponentHandle_Human)[this.__ptr] = this;
+    
+    this.__ptr = _mud_ComponentHandle_Human__construct_0(); getCache(ComponentHandle_Human)[this.__ptr] = this;
 };
 ComponentHandle_Human.prototype = Object.create(WrapperObject.prototype);
 ComponentHandle_Human.prototype.constructor = ComponentHandle_Human;
@@ -63,8 +68,10 @@ ComponentHandle_Human.prototype["__destroy"] = ComponentHandle_Human.prototype._
 };
 // Crate
 function Crate(a0, a1, a2) {
-    if (a0 === undefined) { this.__ptr = _Crate__construct_0(); this.__type = Crate.__type; getCache(Crate)[this.__ptr] = this; return; }
-    this.__ptr = _Crate__construct_3(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*extents*/a2.__ptr); this.__type = Crate.__type; getCache(Crate)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Crate(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Crate(1:movable): expected ComponentHandle<toy::Movable>'); if (!checkClass(a2, v3_float)) throw Error('Crate(2:extents): expected v3<float>'); }
+    if (a0 === undefined) { this.__ptr = _Crate__construct_0(); getCache(Crate)[this.__ptr] = this; }
+    else { this.__ptr = _Crate__construct_3(/*spatial*/a0.__ptr, /*movable*/a1.__ptr, /*extents*/a2.__ptr); getCache(Crate)[this.__ptr] = this; }
 };
 Crate.prototype = Object.create(WrapperObject.prototype);
 Crate.prototype.constructor = Crate;
@@ -76,6 +83,7 @@ Object.defineProperty(Crate.prototype, "extents", {
         return wrapPointer(_Crate__get_extents(this.__ptr), v3_float);
     },
     set: function(value) {
+        if (!checkClass(value, v3_float)) throw Error('Crate.extents: expected v3<float>');
         _Crate__set_extents(this.__ptr, value.__ptr);
     }
 });
@@ -84,8 +92,10 @@ Crate.prototype["__destroy"] = Crate.prototype.__destroy = function() {
 };
 // Human
 function Human(a0, a1) {
-    if (a0 === undefined) { this.__ptr = _Human__construct_0(); this.__type = Human.__type; getCache(Human)[this.__ptr] = this; return; }
-    this.__ptr = _Human__construct_2(/*spatial*/a0.__ptr, /*movable*/a1.__ptr); this.__type = Human.__type; getCache(Human)[this.__ptr] = this;
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Human(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Human(1:movable): expected ComponentHandle<toy::Movable>'); }
+    if (a0 === undefined) { this.__ptr = _Human__construct_0(); getCache(Human)[this.__ptr] = this; }
+    else { this.__ptr = _Human__construct_2(/*spatial*/a0.__ptr, /*movable*/a1.__ptr); getCache(Human)[this.__ptr] = this; }
 };
 Human.prototype = Object.create(WrapperObject.prototype);
 Human.prototype.constructor = Human;
@@ -111,10 +121,10 @@ Module['HCrate'] = ComponentHandle_Crate;
 
 (function() {
     function setup() {
-        Bullet.__type = _Bullet__type();
-        Crate.__type = _Crate__type();
-        Human.__type = _Human__type();
-        Player.__type = _Player__type();
+        Bullet.prototype.__type = _Bullet__type();
+        Crate.prototype.__type = _Crate__type();
+        Human.prototype.__type = _Human__type();
+        Player.prototype.__type = _Player__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);

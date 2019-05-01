@@ -208,7 +208,7 @@ namespace toy
 			if(geom.m_vertices.empty())
 				return;
 
-			printf("INFO: Updating Navmesh geometry block with %zu vertices\n", geom.m_vertices.size());
+			printf("[info] Updating Navmesh geometry block with %zu vertices\n", geom.m_vertices.size());
 
 			ShapeIndex offset = ShapeIndex(m_geometry.m_vertices.size());
 

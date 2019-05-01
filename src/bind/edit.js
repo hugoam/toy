@@ -1,6 +1,7 @@
 // ActionGroup
 function ActionGroup() {
-    this.__ptr = _toy_ActionGroup__construct_0(); this.__type = ActionGroup.__type; getCache(ActionGroup)[this.__ptr] = this;
+    
+    this.__ptr = _toy_ActionGroup__construct_0(); getCache(ActionGroup)[this.__ptr] = this;
 };
 ActionGroup.prototype = Object.create(WrapperObject.prototype);
 ActionGroup.prototype.constructor = ActionGroup;
@@ -42,7 +43,8 @@ Edit.prototype["__destroy"] = Edit.prototype.__destroy = function() {
 };
 // GraphicsDebug
 function GraphicsDebug() {
-    this.__ptr = _toy_GraphicsDebug__construct_0(); this.__type = GraphicsDebug.__type; getCache(GraphicsDebug)[this.__ptr] = this;
+    
+    this.__ptr = _toy_GraphicsDebug__construct_0(); getCache(GraphicsDebug)[this.__ptr] = this;
 };
 GraphicsDebug.prototype = Object.create(WrapperObject.prototype);
 GraphicsDebug.prototype.constructor = GraphicsDebug;
@@ -87,6 +89,7 @@ function DynamicToolbox() { throw "cannot construct a DynamicToolbox, no constru
 DynamicToolbox.prototype = Object.create(Toolbox.prototype);
 DynamicToolbox.prototype.constructor = DynamicToolbox;
 DynamicToolbox.prototype.__class = DynamicToolbox;
+DynamicToolbox.__base = Toolbox;
 DynamicToolbox.__cache = {};
 Module['DynamicToolbox'] = DynamicToolbox;
 DynamicToolbox.prototype["__destroy"] = DynamicToolbox.prototype.__destroy = function() {
@@ -97,6 +100,7 @@ function Editor() { throw "cannot construct a Editor, no constructor in IDL" }
 Editor.prototype = Object.create(EditContext.prototype);
 Editor.prototype.constructor = Editor;
 Editor.prototype.__class = Editor;
+Editor.__base = EditContext;
 Editor.__cache = {};
 Module['Editor'] = Editor;
 Object.defineProperty(Editor.prototype, "run_tool", {
@@ -116,6 +120,7 @@ Object.defineProperty(Editor.prototype, "edited_world", {
         return wrapPointer(_toy_Editor__get_edited_world(this.__ptr), World);
     },
     set: function(value) {
+        if (!checkClass(value, World)) throw Error('Editor.edited_world: expected World');
         _toy_Editor__set_edited_world(this.__ptr, value.__ptr);
     }
 });
@@ -124,6 +129,7 @@ Object.defineProperty(Editor.prototype, "run_game", {
         return !!(_toy_Editor__get_run_game(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Editor.run_game: expected boolean');
         _toy_Editor__set_run_game(this.__ptr, value);
     }
 });
@@ -132,6 +138,7 @@ Object.defineProperty(Editor.prototype, "play_game", {
         return !!(_toy_Editor__get_play_game(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'boolean') throw Error('Editor.play_game: expected boolean');
         _toy_Editor__set_play_game(this.__ptr, value);
     }
 });
@@ -143,6 +150,7 @@ function PlayTool() { throw "cannot construct a PlayTool, no constructor in IDL"
 PlayTool.prototype = Object.create(Tool.prototype);
 PlayTool.prototype.constructor = PlayTool;
 PlayTool.prototype.__class = PlayTool;
+PlayTool.__base = Tool;
 PlayTool.__cache = {};
 Module['PlayTool'] = PlayTool;
 PlayTool.prototype["__destroy"] = PlayTool.prototype.__destroy = function() {
@@ -153,6 +161,7 @@ function RunTool() { throw "cannot construct a RunTool, no constructor in IDL" }
 RunTool.prototype = Object.create(Tool.prototype);
 RunTool.prototype.constructor = RunTool;
 RunTool.prototype.__class = RunTool;
+RunTool.__base = Tool;
 RunTool.__cache = {};
 Module['RunTool'] = RunTool;
 RunTool.prototype["__destroy"] = RunTool.prototype.__destroy = function() {
@@ -161,18 +170,18 @@ RunTool.prototype["__destroy"] = RunTool.prototype.__destroy = function() {
 
 (function() {
     function setup() {
-        ActionGroup.__type = _toy_ActionGroup__type();
-        Clone.__type = _toy_Clone__type();
-        Cut.__type = _toy_Cut__type();
-        Edit.__type = _toy_Edit__type();
-        GraphicsDebug.__type = _toy_GraphicsDebug__type();
-        Paste.__type = _toy_Paste__type();
-        Toolbelt.__type = _toy_Toolbelt__type();
-        Toolbox.__type = _toy_Toolbox__type();
-        DynamicToolbox.__type = _toy_DynamicToolbox__type();
-        Editor.__type = _toy_Editor__type();
-        PlayTool.__type = _toy_PlayTool__type();
-        RunTool.__type = _toy_RunTool__type();
+        ActionGroup.prototype.__type = _toy_ActionGroup__type();
+        Clone.prototype.__type = _toy_Clone__type();
+        Cut.prototype.__type = _toy_Cut__type();
+        Edit.prototype.__type = _toy_Edit__type();
+        GraphicsDebug.prototype.__type = _toy_GraphicsDebug__type();
+        Paste.prototype.__type = _toy_Paste__type();
+        Toolbelt.prototype.__type = _toy_Toolbelt__type();
+        Toolbox.prototype.__type = _toy_Toolbox__type();
+        DynamicToolbox.prototype.__type = _toy_DynamicToolbox__type();
+        Editor.prototype.__type = _toy_Editor__type();
+        PlayTool.prototype.__type = _toy_PlayTool__type();
+        RunTool.prototype.__type = _toy_RunTool__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);

@@ -92,14 +92,14 @@ bool select_parsec(Widget& parent, Viewer& viewer, Galaxy& galaxy, uvec2& hover,
 	uvec2 hi = center + range;
 	auto check_parsec = [&](const uvec2& coord) { return intersects(coord, lo, hi); };
 
-	if(MouseEvent mouse_event = screen.mouse_event(DeviceType::Mouse, EventType::Moved))
+	if(MouseEvent event = screen.mouse_event(DeviceType::Mouse, EventType::Moved))
 	{
 		uvec2 coord = galaxy.intersect_coord(viewer.mouse_ray());
 		if(check_parsec(coord))
 			hover = coord;
 	}
 
-	if(MouseEvent mouse_event = screen.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
+	if(MouseEvent event = screen.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
 	{
 		uvec2 coord = galaxy.intersect_coord(viewer.mouse_ray());
 		if(check_parsec(coord))
@@ -186,7 +186,7 @@ void split_query(Widget& parent, Fleet& fleet, uint32_t mode)
 
 	ui::label(self, ("Split Fleet " + fleet.m_name));
 
-	ui::input_field<string>(self, "Name", query.m_name);
+	ui::field<string>(self, "Name", query.m_name);
 	ui::enum_field<FleetStance>(self, "Directive", query.m_stance);
 
 	Table& table = ui::table(self, { "Code", "Name", "Number", "Split" }, { 0.2f, 0.6f, 0.2f, 0.2f });
@@ -197,7 +197,7 @@ void split_query(Widget& parent, Fleet& fleet, uint32_t mode)
 		ui::label(row, kv.first->m_code);
 		ui::label(row, kv.first->m_name);
 		ui::label(row, to_string(kv.second));
-		ui::number_input<uint32_t>(row, { query.m_ships[kv.first], StatDef<uint32_t>{ 0, fleet.m_ships[kv.first] } });
+		ui::number_input<uint32_t>(row, query.m_ships[kv.first], { 0, fleet.m_ships[kv.first] });
 	}
 
 	if(ui::button(self, "Split").activated())
@@ -322,7 +322,7 @@ void launch_build_sheet(Widget& parent, Star& star, uint32_t mode)
 			query.m_schema = &schema;
 	}
 
-	ui::number_field<int>(self, "Number", { query.m_number, { 0, 99'999 } });
+	ui::field<int>(self, "Number", query.m_number, { 0, 99'999 });
 
 	if(ui::button(self, "Submit").activated())
 	{
@@ -471,7 +471,7 @@ void technology_sheet(Widget& parent, Commander& commander)
 		ui::label(row, to_string(t));
 		ui::label(row, to_string(techno.m_level));
 		ui::label(row, to_string(techno.m_points));
-		ui::number_input<float>(row, { techno.m_budget, StatDef<float>{} });
+		ui::number_input<float>(row, techno.m_budget, {});
 	}
 }
 

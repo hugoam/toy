@@ -24,6 +24,7 @@ Object.defineProperty(ProcedureType.prototype, "index", {
         return _toy_ProcedureType__get_index(this.__ptr);
     },
     set: function(value) {
+        if (typeof value !== 'number') throw Error('ProcedureType.index: expected integer');
         _toy_ProcedureType__set_index(this.__ptr, value);
     }
 });
@@ -32,6 +33,7 @@ Object.defineProperty(ProcedureType.prototype, "name", {
         return UTF8ToString(_toy_ProcedureType__get_name(this.__ptr));
     },
     set: function(value) {
+        if (typeof value !== 'string') throw Error('ProcedureType.name: expected string');
         _toy_ProcedureType__set_name(this.__ptr, ensureString(value));
     }
 });
@@ -41,8 +43,8 @@ ProcedureType.prototype["__destroy"] = ProcedureType.prototype.__destroy = funct
 
 (function() {
     function setup() {
-        Procedure.__type = _toy_Procedure__type();
-        ProcedureType.__type = _toy_ProcedureType__type();
+        Procedure.prototype.__type = _toy_Procedure__type();
+        ProcedureType.prototype.__type = _toy_ProcedureType__type();
     }
     if (Module['calledRun']) setup();
     else addOnPreMain(setup);

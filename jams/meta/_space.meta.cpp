@@ -1102,19 +1102,19 @@ namespace mud
 		m.m_types.push_back(&type<SpatialCombat>());
 		m.m_types.push_back(&type<Universe>());
 		{
-			static Function f = { &namspc({}), "generate_system", nullptr, generate_system_0, { { "galaxy", type<Galaxy>(),  }, { "coord", type<mud::uvec3>(),  }, { "position", type<mud::vec3>(),  } }, { &type<HStar>(), QualType::None } };
+			static Function f = { &namspc({}), "generate_system", funcptr<HStar(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(generate_system), generate_system_0, { { "galaxy", type<Galaxy>(),  }, { "coord", type<mud::uvec3>(),  }, { "position", type<mud::vec3>(),  } }, { &type<HStar>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({}), "generate_fleet", nullptr, generate_fleet_1, { { "galaxy", type<Galaxy>(),  }, { "coord", type<mud::uvec3>(),  }, { "position", type<mud::vec3>(),  } }, { &type<HFleet>(), QualType::None } };
+			static Function f = { &namspc({}), "generate_fleet", funcptr<HFleet(*)(Galaxy&, const mud::uvec3&, const mud::vec3&)>(generate_fleet), generate_fleet_1, { { "galaxy", type<Galaxy>(),  }, { "coord", type<mud::uvec3>(),  }, { "position", type<mud::vec3>(),  } }, { &type<HFleet>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({}), "generate_commander", nullptr, generate_commander_2, { { "galaxy", type<Galaxy>(),  }, { "star", type<Star>(),  } }, { &type<Commander>(), QualType::None } };
+			static Function f = { &namspc({}), "generate_commander", funcptr<Commander*(*)(Galaxy&, Star&)>(generate_commander), generate_commander_2, { { "galaxy", type<Galaxy>(),  }, { "star", type<Star>(),  } }, { &type<Commander>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({}), "assign_system", nullptr, assign_system_3, { { "galaxy", type<Galaxy>(),  }, { "star", type<Star>(),  }, { "commanders", type<stl::vector<Commander*>>(),  } }, g_qvoid };
+			static Function f = { &namspc({}), "assign_system", funcptr<void(*)(Galaxy&, Star&, stl::vector<Commander*>)>(assign_system), assign_system_3, { { "galaxy", type<Galaxy>(),  }, { "star", type<Star>(),  }, { "commanders", type<stl::vector<Commander*>>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 	}

@@ -1415,12 +1415,12 @@ namespace mud
 		m.m_types.push_back(&type<toy::WorldMedium>());
 		{
 			static float margin_default = 0.1f;
-			static Function f = { &namspc({ "toy" }), "move_2d", nullptr, toy_move_2d_0, { { "spatial", type<toy::Spatial>(),  }, { "movable", type<toy::Movable>(),  }, { "target", type<mud::vec3>(),  }, { "velocity", type<float>(),  }, { "time_step", type<float>(),  }, { "margin", type<float>(), Param::Default, &margin_default } }, { &type<bool>(), QualType::None } };
+			static Function f = { &namspc({ "toy" }), "move_2d", funcptr<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(toy::move_2d), toy_move_2d_0, { { "spatial", type<toy::Spatial>(),  }, { "movable", type<toy::Movable>(),  }, { "target", type<mud::vec3>(),  }, { "velocity", type<float>(),  }, { "time_step", type<float>(),  }, { "margin", type<float>(), Param::Default, &margin_default } }, { &type<bool>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 		{
 			static float margin_default = 0.1f;
-			static Function f = { &namspc({ "toy" }), "steer_2d", nullptr, toy_steer_2d_1, { { "spatial", type<toy::Spatial>(),  }, { "movable", type<toy::Movable>(),  }, { "target", type<mud::vec3>(),  }, { "velocity", type<float>(),  }, { "time_step", type<float>(),  }, { "margin", type<float>(), Param::Default, &margin_default } }, { &type<bool>(), QualType::None } };
+			static Function f = { &namspc({ "toy" }), "steer_2d", funcptr<bool(*)(toy::Spatial&, toy::Movable&, const mud::vec3&, float, float, float)>(toy::steer_2d), toy_steer_2d_1, { { "spatial", type<toy::Spatial>(),  }, { "movable", type<toy::Movable>(),  }, { "target", type<mud::vec3>(),  }, { "velocity", type<float>(),  }, { "time_step", type<float>(),  }, { "margin", type<float>(), Param::Default, &margin_default } }, { &type<bool>(), QualType::None } };
 			m.m_functions.push_back(&f);
 		}
 	}

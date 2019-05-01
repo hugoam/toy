@@ -39,9 +39,9 @@ namespace toy
 		//else
 		//m_inputWidget->ui().m_cursor.show();
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
 		{
-			vec2 angle = mouse_event.m_delta / viewer.m_frame.m_size;
+			vec2 angle = event.m_delta / viewer.m_frame.m_size;
 			spatial.pitch(-angle.x * 4);
 			spatial.yaw_fixed(-angle.y * 4);
 		}

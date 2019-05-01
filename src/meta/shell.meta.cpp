@@ -249,6 +249,7 @@ namespace mud
 		static Class cls = { t, bases, bases_offsets, {}, {}, members, {}, {}, };
 	}
 	
+	
 		m.m_types.push_back(&type<toy::Game>());
 		m.m_types.push_back(&type<toy::GameMode>());
 		m.m_types.push_back(&type<toy::GameModule>());
@@ -257,11 +258,11 @@ namespace mud
 		m.m_types.push_back(&type<toy::GameScene>());
 		m.m_types.push_back(&type<toy::GameWindow>());
 		{
-			static Function f = { &namspc({ "toy" }), "paint_physics", nullptr, toy_paint_physics_0, { { "parent", type<mud::Gnode>(),  }, { "world", type<toy::World>(),  } }, g_qvoid };
+			static Function f = { &namspc({ "toy" }), "paint_physics", funcptr<void(*)(mud::Gnode&, toy::World&)>(toy::paint_physics), toy_paint_physics_0, { { "parent", type<mud::Gnode>(),  }, { "world", type<toy::World>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 		{
-			static Function f = { &namspc({ "toy" }), "physic_painter", nullptr, toy_physic_painter_1, { { "scene", type<toy::GameScene>(),  } }, g_qvoid };
+			static Function f = { &namspc({ "toy" }), "physic_painter", funcptr<void(*)(toy::GameScene&)>(toy::physic_painter), toy_physic_painter_1, { { "scene", type<toy::GameScene>(),  } }, g_qvoid };
 			m.m_functions.push_back(&f);
 		}
 	}

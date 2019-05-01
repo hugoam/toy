@@ -107,7 +107,7 @@ Viewer::Viewer(GfxWindow& context, Scene& scene, const vec4& rect)
 	, m_position(rect.pos)
 	, m_size(rect.size)
 {
-	m_viewport.m_rect = uvec4(vec4(m_position, m_size));
+	//m_viewport.m_rect = uvec4(vec4(m_position, m_size));
 
 	//m_viewport.m_render = [&](Render& render) {};
 
@@ -129,7 +129,7 @@ Viewer::~Viewer()
 
 void Viewer::resize()
 {
-	m_viewport.m_rect = uvec4(vec4(m_position, m_size));
+	//m_viewport.m_rect = uvec4(vec4(m_position, m_size));
 }
 
 SceneViewer::SceneViewer(GfxWindow& context, const vec4& rect)
