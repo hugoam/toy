@@ -25,7 +25,7 @@
 
 #include <map>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -33,14 +33,14 @@ extern "C"
 	//_SPACE_EXPORT void ex_space_game(GameShell& app, Game& game);
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<Galaxy>	{ static uint32_t index() { return 20; } };
 	template <> struct TypedBuffer<Star>	{ static uint32_t index() { return 21; } };
 	template <> struct TypedBuffer<Fleet>	{ static uint32_t index() { return 22; } };
 }
 
-namespace mud
+namespace two
 {
 	template struct refl_ ComponentHandle<Galaxy>;
 	template struct refl_ ComponentHandle<Star>;

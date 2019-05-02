@@ -17,7 +17,7 @@
 #include <core/Path/DetourPath.h>
 #include <core/World/Origin.h>
 
-namespace mud
+namespace two
 {
 	template struct OwnedHandle<toy::Collider>;
 	template struct OwnedHandle<toy::Solid>;

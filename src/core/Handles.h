@@ -8,7 +8,7 @@
 #include <core/Forward.h>
 #include <ecs/ECS.h>
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<toy::Spatial>		{ static uint32_t index() { return 0; } };
 	template <> struct TypedBuffer<toy::Movable>		{ static uint32_t index() { return 1; } };

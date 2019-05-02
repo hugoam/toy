@@ -3,7 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core;
 #else
 #include <stl/algorithm.h>
@@ -75,19 +75,19 @@ namespace toy
 
 	void Spatial::translate(const vec3& vec)
 	{
-		set_position(mud::rotate(m_rotation, vec) + m_position);
+		set_position(two::rotate(m_rotation, vec) + m_position);
 	}
 
 	void Spatial::rotate(const vec3& axis, float angle)
 	{
-		quat rot = angle_axis(angle, mud::rotate(m_rotation, axis));
+		quat rot = angle_axis(angle, two::rotate(m_rotation, axis));
 		set_rotation(rot * m_rotation);
 		normalize(m_rotation);
 	}
 
 	void Spatial::yaw(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, Y3));			
+		vec3 axis(two::rotate(m_rotation, Y3));			
 		rotate(axis, value);
 	}
 
@@ -98,13 +98,13 @@ namespace toy
 
 	void Spatial::pitch(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, X3));
+		vec3 axis(two::rotate(m_rotation, X3));
 		rotate(axis, value);
 	}
 
 	void Spatial::roll(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, Z3));
+		vec3 axis(two::rotate(m_rotation, Z3));
 		rotate(axis, value);
 	}
 

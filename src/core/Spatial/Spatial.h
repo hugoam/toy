@@ -50,10 +50,10 @@ namespace toy
 		inline void sync_position(const vec3& position) { m_position = position; this->set_sync_dirty(true); }
 		inline void sync_rotation(const quat& rotation) { m_rotation = rotation; this->set_sync_dirty(false); }
 
-		inline vec3 front() const { return mud::rotate(m_rotation, to_vec3(Side::Front)); }
-		inline vec3 right() const { return mud::rotate(m_rotation, to_vec3(Side::Right)); }
-		inline vec3 up()    const { return mud::rotate(m_rotation, to_vec3(Side::Up)); }
-		inline vec3 down()  const { return mud::rotate(m_rotation, to_vec3(Side::Down)); }
+		inline vec3 front() const { return two::rotate(m_rotation, to_vec3(Side::Front)); }
+		inline vec3 right() const { return two::rotate(m_rotation, to_vec3(Side::Right)); }
+		inline vec3 up()    const { return two::rotate(m_rotation, to_vec3(Side::Up)); }
+		inline vec3 down()  const { return two::rotate(m_rotation, to_vec3(Side::Down)); }
 
 		void translate(const vec3& vec);
 		void rotate(const vec3& axis, float angle);

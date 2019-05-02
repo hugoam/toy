@@ -18,7 +18,7 @@
 
 #include <toy/toy.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -26,14 +26,14 @@ extern "C"
 	//_MINIMAL_EXPORT void ex_minimal_game(GameShell& app, Game& game);
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<Bullet> { static uint32_t index() { return 20; } };
 	template <> struct TypedBuffer<Human>  { static uint32_t index() { return 21; } };
 	template <> struct TypedBuffer<Crate>  { static uint32_t index() { return 22; } };
 }
 
-namespace mud
+namespace two
 {
 	template struct refl_ ComponentHandle<Bullet>;
 	template struct refl_ ComponentHandle<Human>;

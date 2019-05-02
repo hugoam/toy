@@ -7,7 +7,7 @@
 #include <test/Forward.h>
 #include <toy/toy.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 namespace test
@@ -42,7 +42,7 @@ public:
 	attr_ Scene* m_scene;
 	GfxWindow& m_context;
 
-	mud::Camera m_camera;
+	two::Camera m_camera;
 	attr_ Viewport m_viewport;
 
 	attr_ vec2 m_position;

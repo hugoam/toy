@@ -12,7 +12,7 @@
 #include <edit/Forward.h>
 
 #ifndef TOY_BLOCK_EXPORT
-#define TOY_BLOCK_EXPORT MUD_IMPORT
+#define TOY_BLOCK_EXPORT TWO_IMPORT
 #endif
 
 namespace toy
@@ -40,7 +40,7 @@ namespace toy
     struct BlockState;
 }
 
-#ifdef MUD_META_GENERATOR
+#ifdef TWO_META_GENERATOR
 #include <stl/span.h>
 #include <stl/vector.h>
 namespace stl
@@ -49,7 +49,7 @@ namespace stl
 	export_ extern template struct refl_ seque_ vector<toy::Block*>;
 	export_ extern template struct refl_ seque_ vector<toy::Sector*>;
 }
-namespace mud
+namespace two
 {
 	export_ extern template struct refl_ ComponentHandle<toy::Block>;
 	export_ extern template struct refl_ ComponentHandle<toy::Chunk>;

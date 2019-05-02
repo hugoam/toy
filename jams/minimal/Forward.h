@@ -37,7 +37,7 @@
 #include <shell/Forward.h>
 
 #ifndef _MINIMAL_EXPORT
-#define _MINIMAL_EXPORT MUD_IMPORT
+#define _MINIMAL_EXPORT TWO_IMPORT
 #endif
     
 class Bullet;

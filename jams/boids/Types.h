@@ -5,11 +5,11 @@
 #include <stl/vector.h>
 #include <boids/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <type/Type.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <infra/Types.h>
 #include <jobs/Types.h>
 #include <type/Types.h>
@@ -37,19 +37,19 @@
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     
     
-    export_ template <> _BOIDS_EXPORT Type& type<boids::Boid>();
-    export_ template <> _BOIDS_EXPORT Type& type<boids::BoidObstacle>();
-    export_ template <> _BOIDS_EXPORT Type& type<boids::BoidTarget>();
-    export_ template <> _BOIDS_EXPORT Type& type<boids::Heading>();
-    export_ template <> _BOIDS_EXPORT Type& type<boids::MoveForward>();
-    export_ template <> _BOIDS_EXPORT Type& type<boids::MoveSpeed>();
-    export_ template <> _BOIDS_EXPORT Type& type<boids::Player>();
     export_ template <> _BOIDS_EXPORT Type& type<boids::Position>();
+    export_ template <> _BOIDS_EXPORT Type& type<boids::Heading>();
     export_ template <> _BOIDS_EXPORT Type& type<boids::Rotation>();
+    export_ template <> _BOIDS_EXPORT Type& type<boids::MoveSpeed>();
     export_ template <> _BOIDS_EXPORT Type& type<boids::Transform4>();
+    export_ template <> _BOIDS_EXPORT Type& type<boids::Boid>();
+    export_ template <> _BOIDS_EXPORT Type& type<boids::BoidTarget>();
+    export_ template <> _BOIDS_EXPORT Type& type<boids::BoidObstacle>();
+    export_ template <> _BOIDS_EXPORT Type& type<boids::MoveForward>();
+    export_ template <> _BOIDS_EXPORT Type& type<boids::Player>();
 }

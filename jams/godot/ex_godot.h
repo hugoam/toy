@@ -18,7 +18,7 @@
 
 #include <toy/toy.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -26,7 +26,7 @@ extern "C"
 	//_GODOT_EXPORT void ex_godot_game(GameShell& app, Game& game);
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<Bullet> { static uint32_t index() { return 20; } };
 	template <> struct TypedBuffer<Human>  { static uint32_t index() { return 21; } };
@@ -35,7 +35,7 @@ namespace mud
 	template <> struct TypedBuffer<WorldBlock>  { static uint32_t index() { return 24; } };
 }
 
-namespace mud
+namespace two
 {
 	template struct refl_ ComponentHandle<Bullet>;
 	template struct refl_ ComponentHandle<Human>;

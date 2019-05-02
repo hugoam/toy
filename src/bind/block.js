@@ -1,5 +1,83 @@
 Module['stl'] = Module['stl'] || {};
 Module['mud'] = Module['mud'] || {};
+// ComponentHandle<toy::Block>
+function ComponentHandle_toy_Block() {
+    
+    this.__ptr = _mud_ComponentHandle_toy_Block__construct_0(); getCache(ComponentHandle_toy_Block)[this.__ptr] = this;
+};
+ComponentHandle_toy_Block.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_toy_Block.prototype.constructor = ComponentHandle_toy_Block;
+ComponentHandle_toy_Block.prototype.__class = ComponentHandle_toy_Block;
+ComponentHandle_toy_Block.__cache = {};
+Module['mud']['ComponentHandle_toy_Block'] = ComponentHandle_toy_Block;
+ComponentHandle_toy_Block.prototype["__destroy"] = ComponentHandle_toy_Block.prototype.__destroy = function() {
+    _mud_ComponentHandle_toy_Block__destroy(this.__ptr);
+};
+// ComponentHandle<toy::Chunk>
+function ComponentHandle_toy_Chunk() {
+    
+    this.__ptr = _mud_ComponentHandle_toy_Chunk__construct_0(); getCache(ComponentHandle_toy_Chunk)[this.__ptr] = this;
+};
+ComponentHandle_toy_Chunk.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_toy_Chunk.prototype.constructor = ComponentHandle_toy_Chunk;
+ComponentHandle_toy_Chunk.prototype.__class = ComponentHandle_toy_Chunk;
+ComponentHandle_toy_Chunk.__cache = {};
+Module['mud']['ComponentHandle_toy_Chunk'] = ComponentHandle_toy_Chunk;
+ComponentHandle_toy_Chunk.prototype["__destroy"] = ComponentHandle_toy_Chunk.prototype.__destroy = function() {
+    _mud_ComponentHandle_toy_Chunk__destroy(this.__ptr);
+};
+// ComponentHandle<toy::Heap>
+function ComponentHandle_toy_Heap() {
+    
+    this.__ptr = _mud_ComponentHandle_toy_Heap__construct_0(); getCache(ComponentHandle_toy_Heap)[this.__ptr] = this;
+};
+ComponentHandle_toy_Heap.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_toy_Heap.prototype.constructor = ComponentHandle_toy_Heap;
+ComponentHandle_toy_Heap.prototype.__class = ComponentHandle_toy_Heap;
+ComponentHandle_toy_Heap.__cache = {};
+Module['mud']['ComponentHandle_toy_Heap'] = ComponentHandle_toy_Heap;
+ComponentHandle_toy_Heap.prototype["__destroy"] = ComponentHandle_toy_Heap.prototype.__destroy = function() {
+    _mud_ComponentHandle_toy_Heap__destroy(this.__ptr);
+};
+// ComponentHandle<toy::Sector>
+function ComponentHandle_toy_Sector() {
+    
+    this.__ptr = _mud_ComponentHandle_toy_Sector__construct_0(); getCache(ComponentHandle_toy_Sector)[this.__ptr] = this;
+};
+ComponentHandle_toy_Sector.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_toy_Sector.prototype.constructor = ComponentHandle_toy_Sector;
+ComponentHandle_toy_Sector.prototype.__class = ComponentHandle_toy_Sector;
+ComponentHandle_toy_Sector.__cache = {};
+Module['mud']['ComponentHandle_toy_Sector'] = ComponentHandle_toy_Sector;
+ComponentHandle_toy_Sector.prototype["__destroy"] = ComponentHandle_toy_Sector.prototype.__destroy = function() {
+    _mud_ComponentHandle_toy_Sector__destroy(this.__ptr);
+};
+// ComponentHandle<toy::Tileblock>
+function ComponentHandle_toy_Tileblock() {
+    
+    this.__ptr = _mud_ComponentHandle_toy_Tileblock__construct_0(); getCache(ComponentHandle_toy_Tileblock)[this.__ptr] = this;
+};
+ComponentHandle_toy_Tileblock.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_toy_Tileblock.prototype.constructor = ComponentHandle_toy_Tileblock;
+ComponentHandle_toy_Tileblock.prototype.__class = ComponentHandle_toy_Tileblock;
+ComponentHandle_toy_Tileblock.__cache = {};
+Module['mud']['ComponentHandle_toy_Tileblock'] = ComponentHandle_toy_Tileblock;
+ComponentHandle_toy_Tileblock.prototype["__destroy"] = ComponentHandle_toy_Tileblock.prototype.__destroy = function() {
+    _mud_ComponentHandle_toy_Tileblock__destroy(this.__ptr);
+};
+// vector2d<toy::Block*>
+function vector2d_toy_Block_() {
+    
+    this.__ptr = _mud_vector2d_toy_Block___construct_0(); getCache(vector2d_toy_Block_)[this.__ptr] = this;
+};
+vector2d_toy_Block_.prototype = Object.create(WrapperObject.prototype);
+vector2d_toy_Block_.prototype.constructor = vector2d_toy_Block_;
+vector2d_toy_Block_.prototype.__class = vector2d_toy_Block_;
+vector2d_toy_Block_.__cache = {};
+Module['mud']['vector2d_toy_Block_'] = vector2d_toy_Block_;
+vector2d_toy_Block_.prototype["__destroy"] = vector2d_toy_Block_.prototype.__destroy = function() {
+    _mud_vector2d_toy_Block___destroy(this.__ptr);
+};
 // Block
 function Block(a0, a1, a2, a3, a4) {
     if (a0 === undefined) {  }
@@ -127,71 +205,6 @@ Object.defineProperty(Chunk.prototype, "size", {
 Chunk.prototype["__destroy"] = Chunk.prototype.__destroy = function() {
     _toy_Chunk__destroy(this.__ptr);
 };
-// ComponentHandle<toy::Block>
-function ComponentHandle_toy_Block() {
-    
-    this.__ptr = _mud_ComponentHandle_toy_Block__construct_0(); getCache(ComponentHandle_toy_Block)[this.__ptr] = this;
-};
-ComponentHandle_toy_Block.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_toy_Block.prototype.constructor = ComponentHandle_toy_Block;
-ComponentHandle_toy_Block.prototype.__class = ComponentHandle_toy_Block;
-ComponentHandle_toy_Block.__cache = {};
-Module['mud']['ComponentHandle_toy_Block'] = ComponentHandle_toy_Block;
-ComponentHandle_toy_Block.prototype["__destroy"] = ComponentHandle_toy_Block.prototype.__destroy = function() {
-    _mud_ComponentHandle_toy_Block__destroy(this.__ptr);
-};
-// ComponentHandle<toy::Chunk>
-function ComponentHandle_toy_Chunk() {
-    
-    this.__ptr = _mud_ComponentHandle_toy_Chunk__construct_0(); getCache(ComponentHandle_toy_Chunk)[this.__ptr] = this;
-};
-ComponentHandle_toy_Chunk.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_toy_Chunk.prototype.constructor = ComponentHandle_toy_Chunk;
-ComponentHandle_toy_Chunk.prototype.__class = ComponentHandle_toy_Chunk;
-ComponentHandle_toy_Chunk.__cache = {};
-Module['mud']['ComponentHandle_toy_Chunk'] = ComponentHandle_toy_Chunk;
-ComponentHandle_toy_Chunk.prototype["__destroy"] = ComponentHandle_toy_Chunk.prototype.__destroy = function() {
-    _mud_ComponentHandle_toy_Chunk__destroy(this.__ptr);
-};
-// ComponentHandle<toy::Heap>
-function ComponentHandle_toy_Heap() {
-    
-    this.__ptr = _mud_ComponentHandle_toy_Heap__construct_0(); getCache(ComponentHandle_toy_Heap)[this.__ptr] = this;
-};
-ComponentHandle_toy_Heap.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_toy_Heap.prototype.constructor = ComponentHandle_toy_Heap;
-ComponentHandle_toy_Heap.prototype.__class = ComponentHandle_toy_Heap;
-ComponentHandle_toy_Heap.__cache = {};
-Module['mud']['ComponentHandle_toy_Heap'] = ComponentHandle_toy_Heap;
-ComponentHandle_toy_Heap.prototype["__destroy"] = ComponentHandle_toy_Heap.prototype.__destroy = function() {
-    _mud_ComponentHandle_toy_Heap__destroy(this.__ptr);
-};
-// ComponentHandle<toy::Sector>
-function ComponentHandle_toy_Sector() {
-    
-    this.__ptr = _mud_ComponentHandle_toy_Sector__construct_0(); getCache(ComponentHandle_toy_Sector)[this.__ptr] = this;
-};
-ComponentHandle_toy_Sector.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_toy_Sector.prototype.constructor = ComponentHandle_toy_Sector;
-ComponentHandle_toy_Sector.prototype.__class = ComponentHandle_toy_Sector;
-ComponentHandle_toy_Sector.__cache = {};
-Module['mud']['ComponentHandle_toy_Sector'] = ComponentHandle_toy_Sector;
-ComponentHandle_toy_Sector.prototype["__destroy"] = ComponentHandle_toy_Sector.prototype.__destroy = function() {
-    _mud_ComponentHandle_toy_Sector__destroy(this.__ptr);
-};
-// ComponentHandle<toy::Tileblock>
-function ComponentHandle_toy_Tileblock() {
-    
-    this.__ptr = _mud_ComponentHandle_toy_Tileblock__construct_0(); getCache(ComponentHandle_toy_Tileblock)[this.__ptr] = this;
-};
-ComponentHandle_toy_Tileblock.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_toy_Tileblock.prototype.constructor = ComponentHandle_toy_Tileblock;
-ComponentHandle_toy_Tileblock.prototype.__class = ComponentHandle_toy_Tileblock;
-ComponentHandle_toy_Tileblock.__cache = {};
-Module['mud']['ComponentHandle_toy_Tileblock'] = ComponentHandle_toy_Tileblock;
-ComponentHandle_toy_Tileblock.prototype["__destroy"] = ComponentHandle_toy_Tileblock.prototype.__destroy = function() {
-    _mud_ComponentHandle_toy_Tileblock__destroy(this.__ptr);
-};
 // Element
 function Element(a0, a1, a2) {
     ensureCache.prepare();
@@ -275,6 +288,20 @@ Object.defineProperty(Heap.prototype, "radius", {
 Heap.prototype["__destroy"] = Heap.prototype.__destroy = function() {
     _toy_Heap__destroy(this.__ptr);
 };
+// Earth
+function Earth() {
+    
+    this.__ptr = _toy_Earth__construct_0(); getCache(Earth)[this.__ptr] = this;
+};
+Earth.prototype = Object.create(Element.prototype);
+Earth.prototype.constructor = Earth;
+Earth.prototype.__class = Earth;
+Earth.__base = Element;
+Earth.__cache = {};
+Module['Earth'] = Earth;
+Earth.prototype["__destroy"] = Earth.prototype.__destroy = function() {
+    _toy_Earth__destroy(this.__ptr);
+};
 // Sector
 function Sector(a0, a1, a2, a3, a4) {
     if (a0 === undefined) {  }
@@ -354,33 +381,6 @@ Object.defineProperty(Tileblock.prototype, "populated", {
 Tileblock.prototype["__destroy"] = Tileblock.prototype.__destroy = function() {
     _toy_Tileblock__destroy(this.__ptr);
 };
-// vector2d<toy::Block*>
-function vector2d_toy_Block_() {
-    
-    this.__ptr = _mud_vector2d_toy_Block___construct_0(); getCache(vector2d_toy_Block_)[this.__ptr] = this;
-};
-vector2d_toy_Block_.prototype = Object.create(WrapperObject.prototype);
-vector2d_toy_Block_.prototype.constructor = vector2d_toy_Block_;
-vector2d_toy_Block_.prototype.__class = vector2d_toy_Block_;
-vector2d_toy_Block_.__cache = {};
-Module['mud']['vector2d_toy_Block_'] = vector2d_toy_Block_;
-vector2d_toy_Block_.prototype["__destroy"] = vector2d_toy_Block_.prototype.__destroy = function() {
-    _mud_vector2d_toy_Block___destroy(this.__ptr);
-};
-// Earth
-function Earth() {
-    
-    this.__ptr = _toy_Earth__construct_0(); getCache(Earth)[this.__ptr] = this;
-};
-Earth.prototype = Object.create(Element.prototype);
-Earth.prototype.constructor = Earth;
-Earth.prototype.__class = Earth;
-Earth.__base = Element;
-Earth.__cache = {};
-Module['Earth'] = Earth;
-Earth.prototype["__destroy"] = Earth.prototype.__destroy = function() {
-    _toy_Earth__destroy(this.__ptr);
-};
 Module['paint_block_height'] = function(a0, a1, a2) {
     if (!checkClass(a0, Block)) throw Error('paint_block_height(0:block): expected Block'); if (!checkClass(a1, Image256)) throw Error('paint_block_height(1:image): expected Image256'); if (!checkClass(a2, Element)) throw Error('paint_block_height(2:element): expected Element');
     _toy_paint_block_height_3(/*block*/a0.__ptr, /*image*/a1.__ptr, /*element*/a2.__ptr);
@@ -411,9 +411,9 @@ Module['HTileblock'] = ComponentHandle_toy_Tileblock;
         Chunk.prototype.__type = _toy_Chunk__type();
         Element.prototype.__type = _toy_Element__type();
         Heap.prototype.__type = _toy_Heap__type();
+        Earth.prototype.__type = _toy_Earth__type();
         Sector.prototype.__type = _toy_Sector__type();
         Tileblock.prototype.__type = _toy_Tileblock__type();
-        Earth.prototype.__type = _toy_Earth__type();
         // MatterState
         Module['MatterState'] = Module['MatterState'] || {};
         Module['MatterState']['Solid'] = _toy_MatterState_Solid();

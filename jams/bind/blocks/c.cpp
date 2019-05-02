@@ -45,20 +45,20 @@
 extern "C" {
 	
 	// Camp
-	mud::Type* DECL Camp__type() {
-		return &mud::type<Camp>();
+	two::Type* DECL Camp__type() {
+		return &two::type<Camp>();
 	}
 	Camp* DECL Camp_Camp_0() {
 		return new Camp();
 	}
-	Camp* DECL Camp_Camp_3(toy::HSpatial spatial, const mud::vec3* position, Faction* faction) {
+	Camp* DECL Camp_Camp_3(toy::HSpatial spatial, const two::vec3* position, Faction* faction) {
 		return new Camp(spatial, *position, *faction);
 	}
-	mud::vec3* DECL Camp__get_position(Camp* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Camp__get_position(Camp* self) {
+		static two::vec3 temp;
 		return (temp = self->m_position, &temp);
 	}
-	void DECL Camp__set_position(Camp* self, mud::vec3* value) {
+	void DECL Camp__set_position(Camp* self, two::vec3* value) {
 		self->m_position = *value;
 	}
 	Faction* DECL Camp__get_faction(Camp* self) {
@@ -71,10 +71,10 @@ extern "C" {
 		delete self;
 	}
 	// Faction
-	mud::Type* DECL Faction__type() {
-		return &mud::type<Faction>();
+	two::Type* DECL Faction__type() {
+		return &two::type<Faction>();
 	}
-	Faction* DECL Faction_Faction_2(uint32_t id, const mud::Colour* colour) {
+	Faction* DECL Faction_Faction_2(uint32_t id, const two::Colour* colour) {
 		return new Faction(id, *colour);
 	}
 	uint32_t DECL Faction__get_id(Faction* self) {
@@ -83,26 +83,26 @@ extern "C" {
 	void DECL Faction__set_id(Faction* self, uint32_t value) {
 		self->m_id = value;
 	}
-	mud::Colour* DECL Faction__get_colour(Faction* self) {
-		static mud::Colour temp;
+	two::Colour* DECL Faction__get_colour(Faction* self) {
+		static two::Colour temp;
 		return (temp = self->m_colour, &temp);
 	}
-	void DECL Faction__set_colour(Faction* self, mud::Colour* value) {
+	void DECL Faction__set_colour(Faction* self, two::Colour* value) {
 		self->m_colour = *value;
 	}
 	void DECL Faction__destroy(Faction* self) {
 		delete self;
 	}
 	// Player
-	mud::Type* DECL Player__type() {
-		return &mud::type<Player>();
+	two::Type* DECL Player__type() {
+		return &two::type<Player>();
 	}
 	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Shield
-	mud::Type* DECL Shield__type() {
-		return &mud::type<Shield>();
+	two::Type* DECL Shield__type() {
+		return &two::type<Shield>();
 	}
 	Shield* DECL Shield_Shield_0() {
 		return new Shield();
@@ -138,21 +138,21 @@ extern "C" {
 		delete self;
 	}
 	// Slug
-	mud::Type* DECL Slug__type() {
-		return &mud::type<Slug>();
+	two::Type* DECL Slug__type() {
+		return &two::type<Slug>();
 	}
-	mud::vec3* DECL Slug__get_source(Slug* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Slug__get_source(Slug* self) {
+		static two::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
-	void DECL Slug__set_source(Slug* self, mud::vec3* value) {
+	void DECL Slug__set_source(Slug* self, two::vec3* value) {
 		self->m_source = *value;
 	}
-	mud::vec3* DECL Slug__get_velocity(Slug* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Slug__get_velocity(Slug* self) {
+		static two::vec3 temp;
 		return (temp = self->m_velocity, &temp);
 	}
-	void DECL Slug__set_velocity(Slug* self, mud::vec3* value) {
+	void DECL Slug__set_velocity(Slug* self, two::vec3* value) {
 		self->m_velocity = *value;
 	}
 	float DECL Slug__get_power(Slug* self) {
@@ -165,8 +165,8 @@ extern "C" {
 		delete self;
 	}
 	// Tank
-	mud::Type* DECL Tank__type() {
-		return &mud::type<Tank>();
+	two::Type* DECL Tank__type() {
+		return &two::type<Tank>();
 	}
 	Tank* DECL Tank_Tank_0() {
 		return new Tank();
@@ -178,10 +178,10 @@ extern "C" {
 		delete self;
 	}
 	// BlockWorld
-	mud::Type* DECL BlockWorld__type() {
-		return &mud::type<BlockWorld>();
+	two::Type* DECL BlockWorld__type() {
+		return &two::type<BlockWorld>();
 	}
-	BlockWorld* DECL BlockWorld_BlockWorld_2(const char* name, mud::JobSystem* job_system) {
+	BlockWorld* DECL BlockWorld_BlockWorld_2(const char* name, two::JobSystem* job_system) {
 		return new BlockWorld(name, *job_system);
 	}
 	toy::World* DECL BlockWorld__get_world(BlockWorld* self) {
@@ -193,32 +193,32 @@ extern "C" {
 	toy::Navmesh* DECL BlockWorld__get_navmesh(BlockWorld* self) {
 		return &self->m_navmesh;
 	}
-	mud::uvec3* DECL BlockWorld__get_block_subdiv(BlockWorld* self) {
-		static mud::uvec3 temp;
+	two::uvec3* DECL BlockWorld__get_block_subdiv(BlockWorld* self) {
+		static two::uvec3 temp;
 		return (temp = self->m_block_subdiv, &temp);
 	}
-	void DECL BlockWorld__set_block_subdiv(BlockWorld* self, mud::uvec3* value) {
+	void DECL BlockWorld__set_block_subdiv(BlockWorld* self, two::uvec3* value) {
 		self->m_block_subdiv = *value;
 	}
-	mud::vec3* DECL BlockWorld__get_tile_scale(BlockWorld* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL BlockWorld__get_tile_scale(BlockWorld* self) {
+		static two::vec3 temp;
 		return (temp = self->m_tile_scale, &temp);
 	}
-	void DECL BlockWorld__set_tile_scale(BlockWorld* self, mud::vec3* value) {
+	void DECL BlockWorld__set_tile_scale(BlockWorld* self, two::vec3* value) {
 		self->m_tile_scale = *value;
 	}
-	mud::vec3* DECL BlockWorld__get_block_size(BlockWorld* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL BlockWorld__get_block_size(BlockWorld* self) {
+		static two::vec3 temp;
 		return (temp = self->m_block_size, &temp);
 	}
-	void DECL BlockWorld__set_block_size(BlockWorld* self, mud::vec3* value) {
+	void DECL BlockWorld__set_block_size(BlockWorld* self, two::vec3* value) {
 		self->m_block_size = *value;
 	}
-	mud::vec3* DECL BlockWorld__get_world_size(BlockWorld* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL BlockWorld__get_world_size(BlockWorld* self) {
+		static two::vec3 temp;
 		return (temp = self->m_world_size, &temp);
 	}
-	void DECL BlockWorld__set_world_size(BlockWorld* self, mud::vec3* value) {
+	void DECL BlockWorld__set_world_size(BlockWorld* self, two::vec3* value) {
 		self->m_world_size = *value;
 	}
 	void DECL BlockWorld__destroy(BlockWorld* self) {

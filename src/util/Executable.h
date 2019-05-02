@@ -9,9 +9,9 @@
 #include <stl/stddef.h>
 #include <util/Forward.h>
 
-namespace mud
+namespace two
 {
-	class MUD_TYPE_EXPORT Executable
+	class TWO_TYPE_EXPORT Executable
 	{
 	public:
 		Executable() : m_done(false), m_done_flag(0) {}

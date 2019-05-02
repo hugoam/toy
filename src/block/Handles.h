@@ -8,7 +8,7 @@
 #include <ecs/ECS.h>
 #include <block/Forward.h>
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<toy::Sector>		{ static uint32_t index() { return 12; } };
 	template <> struct TypedBuffer<toy::Tileblock>	{ static uint32_t index() { return 13; } };

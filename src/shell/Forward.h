@@ -27,7 +27,7 @@
 #include <wfc-gfx/Forward.h>
 
 #ifndef TOY_SHELL_EXPORT
-#define TOY_SHELL_EXPORT MUD_IMPORT
+#define TOY_SHELL_EXPORT TWO_IMPORT
 #endif
 
 namespace toy

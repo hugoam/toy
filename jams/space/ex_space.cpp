@@ -11,7 +11,7 @@
 #include <space/Scene.h>
 #include <space/Ui.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 float g_hull_weight[8] = { 2.f, 6.f, 20.f, 50.f, 100.f, 150.f, 200.f, 250.f };

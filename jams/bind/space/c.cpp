@@ -45,8 +45,8 @@
 extern "C" {
 	
 	// Combat
-	mud::Type* DECL Combat__type() {
-		return &mud::type<Combat>();
+	two::Type* DECL Combat__type() {
+		return &two::type<Combat>();
 	}
 	Combat* DECL Combat_Combat_0() {
 		return new Combat();
@@ -55,8 +55,8 @@ extern "C" {
 		delete self;
 	}
 	// CombatFleet
-	mud::Type* DECL CombatFleet__type() {
-		return &mud::type<CombatFleet>();
+	two::Type* DECL CombatFleet__type() {
+		return &two::type<CombatFleet>();
 	}
 	CombatFleet* DECL CombatFleet_CombatFleet_0() {
 		return new CombatFleet();
@@ -65,8 +65,8 @@ extern "C" {
 		delete self;
 	}
 	// CombatStar
-	mud::Type* DECL CombatStar__type() {
-		return &mud::type<CombatStar>();
+	two::Type* DECL CombatStar__type() {
+		return &two::type<CombatStar>();
 	}
 	CombatStar* DECL CombatStar_CombatStar_0() {
 		return new CombatStar();
@@ -75,8 +75,8 @@ extern "C" {
 		delete self;
 	}
 	// Commander
-	mud::Type* DECL Commander__type() {
-		return &mud::type<Commander>();
+	two::Type* DECL Commander__type() {
+		return &two::type<Commander>();
 	}
 	Commander* DECL Commander_Commander_6(uint32_t id, const char* name, Race race, int command, int commerce, int diplomacy) {
 		return new Commander(id, name, race, command, commerce, diplomacy);
@@ -164,8 +164,8 @@ extern "C" {
 		delete self;
 	}
 	// Construction
-	mud::Type* DECL Construction__type() {
-		return &mud::type<Construction>();
+	two::Type* DECL Construction__type() {
+		return &two::type<Construction>();
 	}
 	Construction* DECL Construction_Construction_0() {
 		return new Construction();
@@ -174,16 +174,16 @@ extern "C" {
 		delete self;
 	}
 	// Fleet
-	mud::Type* DECL Fleet__type() {
-		return &mud::type<Fleet>();
+	two::Type* DECL Fleet__type() {
+		return &two::type<Fleet>();
 	}
 	Fleet* DECL Fleet_Fleet_0() {
 		return new Fleet();
 	}
-	Fleet* DECL Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const mud::uvec2* coord, const char* name) {
+	Fleet* DECL Fleet_Fleet_5(toy::HSpatial spatial, Galaxy* galaxy, Commander* commander, const two::uvec2* coord, const char* name) {
 		return new Fleet(spatial, *galaxy, *commander, *coord, name);
 	}
-	void DECL Fleet_order_jump_2(Fleet* self, mud::uvec2* coord, FleetStance stance) {
+	void DECL Fleet_order_jump_2(Fleet* self, two::uvec2* coord, FleetStance stance) {
 		self->order_jump(*coord, stance);
 	}
 	void DECL Fleet_order_attack_1(Fleet* self, Star* star) {
@@ -201,18 +201,18 @@ extern "C" {
 	void DECL Fleet__set_commander(Fleet* self, Commander* value) {
 		self->m_commander = value;
 	}
-	mud::uvec2* DECL Fleet__get_coord(Fleet* self) {
-		static mud::uvec2 temp;
+	two::uvec2* DECL Fleet__get_coord(Fleet* self) {
+		static two::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void DECL Fleet__set_coord(Fleet* self, mud::uvec2* value) {
+	void DECL Fleet__set_coord(Fleet* self, two::uvec2* value) {
 		self->m_coord = *value;
 	}
-	mud::vec3* DECL Fleet__get_slot(Fleet* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Fleet__get_slot(Fleet* self) {
+		static two::vec3 temp;
 		return (temp = self->m_slot, &temp);
 	}
-	void DECL Fleet__set_slot(Fleet* self, mud::vec3* value) {
+	void DECL Fleet__set_slot(Fleet* self, two::vec3* value) {
 		self->m_slot = *value;
 	}
 	const char* DECL Fleet__get_name(Fleet* self) {
@@ -294,28 +294,28 @@ extern "C" {
 		delete self;
 	}
 	// Galaxy
-	mud::Type* DECL Galaxy__type() {
-		return &mud::type<Galaxy>();
+	two::Type* DECL Galaxy__type() {
+		return &two::type<Galaxy>();
 	}
 	Galaxy* DECL Galaxy_Galaxy_0() {
 		return new Galaxy();
 	}
-	Galaxy* DECL Galaxy_Galaxy_2(toy::HSpatial spatial, const mud::uvec2* size) {
+	Galaxy* DECL Galaxy_Galaxy_2(toy::HSpatial spatial, const two::uvec2* size) {
 		return new Galaxy(spatial, *size);
 	}
-	mud::uvec2* DECL Galaxy__get_size(Galaxy* self) {
-		static mud::uvec2 temp;
+	two::uvec2* DECL Galaxy__get_size(Galaxy* self) {
+		static two::uvec2 temp;
 		return (temp = self->m_size, &temp);
 	}
-	void DECL Galaxy__set_size(Galaxy* self, mud::uvec2* value) {
+	void DECL Galaxy__set_size(Galaxy* self, two::uvec2* value) {
 		self->m_size = *value;
 	}
 	void DECL Galaxy__destroy(Galaxy* self) {
 		delete self;
 	}
 	// Jump
-	mud::Type* DECL Jump__type() {
-		return &mud::type<Jump>();
+	two::Type* DECL Jump__type() {
+		return &two::type<Jump>();
 	}
 	Jump* DECL Jump_Jump_0() {
 		return new Jump();
@@ -326,18 +326,18 @@ extern "C" {
 	void DECL Jump__set_fleet(Jump* self, Fleet* value) {
 		self->m_fleet = value;
 	}
-	mud::uvec2* DECL Jump__get_start(Jump* self) {
-		static mud::uvec2 temp;
+	two::uvec2* DECL Jump__get_start(Jump* self) {
+		static two::uvec2 temp;
 		return (temp = self->m_start, &temp);
 	}
-	void DECL Jump__set_start(Jump* self, mud::uvec2* value) {
+	void DECL Jump__set_start(Jump* self, two::uvec2* value) {
 		self->m_start = *value;
 	}
-	mud::uvec2* DECL Jump__get_dest(Jump* self) {
-		static mud::uvec2 temp;
+	two::uvec2* DECL Jump__get_dest(Jump* self) {
+		static two::uvec2 temp;
 		return (temp = self->m_dest, &temp);
 	}
-	void DECL Jump__set_dest(Jump* self, mud::uvec2* value) {
+	void DECL Jump__set_dest(Jump* self, two::uvec2* value) {
 		self->m_dest = *value;
 	}
 	FleetStance DECL Jump__get_stance(Jump* self) {
@@ -356,15 +356,15 @@ extern "C" {
 		delete self;
 	}
 	// Player
-	mud::Type* DECL Player__type() {
-		return &mud::type<Player>();
+	two::Type* DECL Player__type() {
+		return &two::type<Player>();
 	}
 	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Scans
-	mud::Type* DECL Scans__type() {
-		return &mud::type<Scans>();
+	two::Type* DECL Scans__type() {
+		return &two::type<Scans>();
 	}
 	Scans* DECL Scans_Scans_0() {
 		return new Scans();
@@ -373,8 +373,8 @@ extern "C" {
 		delete self;
 	}
 	// Schema
-	mud::Type* DECL Schema__type() {
-		return &mud::type<Schema>();
+	two::Type* DECL Schema__type() {
+		return &two::type<Schema>();
 	}
 	Schema* DECL Schema_Schema_0() {
 		return new Schema();
@@ -462,8 +462,8 @@ extern "C" {
 		delete self;
 	}
 	// SpatialPower
-	mud::Type* DECL SpatialPower__type() {
-		return &mud::type<SpatialPower>();
+	two::Type* DECL SpatialPower__type() {
+		return &two::type<SpatialPower>();
 	}
 	SpatialPower* DECL SpatialPower_SpatialPower_0() {
 		return new SpatialPower();
@@ -472,8 +472,8 @@ extern "C" {
 		delete self;
 	}
 	// Split
-	mud::Type* DECL Split__type() {
-		return &mud::type<Split>();
+	two::Type* DECL Split__type() {
+		return &two::type<Split>();
 	}
 	Split* DECL Split_Split_0() {
 		return new Split();
@@ -506,13 +506,13 @@ extern "C" {
 		delete self;
 	}
 	// Star
-	mud::Type* DECL Star__type() {
-		return &mud::type<Star>();
+	two::Type* DECL Star__type() {
+		return &two::type<Star>();
 	}
 	Star* DECL Star_Star_0() {
 		return new Star();
 	}
-	Star* DECL Star_Star_4(toy::HSpatial spatial, Galaxy* galaxy, const mud::uvec2* coord, const char* name) {
+	Star* DECL Star_Star_4(toy::HSpatial spatial, Galaxy* galaxy, const two::uvec2* coord, const char* name) {
 		return new Star(spatial, *galaxy, *coord, name);
 	}
 	Galaxy* DECL Star__get_galaxy(Star* self) {
@@ -521,11 +521,11 @@ extern "C" {
 	void DECL Star__set_galaxy(Star* self, Galaxy* value) {
 		self->m_galaxy = value;
 	}
-	mud::uvec2* DECL Star__get_coord(Star* self) {
-		static mud::uvec2 temp;
+	two::uvec2* DECL Star__get_coord(Star* self) {
+		static two::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void DECL Star__set_coord(Star* self, mud::uvec2* value) {
+	void DECL Star__set_coord(Star* self, two::uvec2* value) {
 		self->m_coord = *value;
 	}
 	const char* DECL Star__get_name(Star* self) {
@@ -622,8 +622,8 @@ extern "C" {
 		delete self;
 	}
 	// TechDomain
-	mud::Type* DECL TechDomain__type() {
-		return &mud::type<TechDomain>();
+	two::Type* DECL TechDomain__type() {
+		return &two::type<TechDomain>();
 	}
 	TechDomain* DECL TechDomain_TechDomain_0() {
 		return new TechDomain();
@@ -632,8 +632,8 @@ extern "C" {
 		delete self;
 	}
 	// Turn
-	mud::Type* DECL Turn__type() {
-		return &mud::type<Turn>();
+	two::Type* DECL Turn__type() {
+		return &two::type<Turn>();
 	}
 	Turn* DECL Turn_Turn_0() {
 		return new Turn();
@@ -642,8 +642,8 @@ extern "C" {
 		delete self;
 	}
 	// BuildingSchema
-	mud::Type* DECL BuildingSchema__type() {
-		return &mud::type<BuildingSchema>();
+	two::Type* DECL BuildingSchema__type() {
+		return &two::type<BuildingSchema>();
 	}
 	BuildingSchema* DECL BuildingSchema_BuildingSchema_0() {
 		return new BuildingSchema();
@@ -652,8 +652,8 @@ extern "C" {
 		delete self;
 	}
 	// CommanderBrush
-	mud::Type* DECL CommanderBrush__type() {
-		return &mud::type<CommanderBrush>();
+	two::Type* DECL CommanderBrush__type() {
+		return &two::type<CommanderBrush>();
 	}
 	Commander* DECL CommanderBrush__get_commander(CommanderBrush* self) {
 		return self->m_commander;
@@ -671,17 +671,17 @@ extern "C" {
 		delete self;
 	}
 	// PlanetaryCombat
-	mud::Type* DECL PlanetaryCombat__type() {
-		return &mud::type<PlanetaryCombat>();
+	two::Type* DECL PlanetaryCombat__type() {
+		return &two::type<PlanetaryCombat>();
 	}
 	PlanetaryCombat* DECL PlanetaryCombat_PlanetaryCombat_0() {
 		return new PlanetaryCombat();
 	}
-	mud::uvec2* DECL PlanetaryCombat__get_coord(PlanetaryCombat* self) {
-		static mud::uvec2 temp;
+	two::uvec2* DECL PlanetaryCombat__get_coord(PlanetaryCombat* self) {
+		static two::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void DECL PlanetaryCombat__set_coord(PlanetaryCombat* self, mud::uvec2* value) {
+	void DECL PlanetaryCombat__set_coord(PlanetaryCombat* self, two::uvec2* value) {
 		self->m_coord = *value;
 	}
 	CombatStar* DECL PlanetaryCombat__get_defense(PlanetaryCombat* self) {
@@ -695,8 +695,8 @@ extern "C" {
 		delete self;
 	}
 	// ShipComponent
-	mud::Type* DECL ShipComponent__type() {
-		return &mud::type<ShipComponent>();
+	two::Type* DECL ShipComponent__type() {
+		return &two::type<ShipComponent>();
 	}
 	ShipComponent* DECL ShipComponent_ShipComponent_0() {
 		return new ShipComponent();
@@ -705,8 +705,8 @@ extern "C" {
 		delete self;
 	}
 	// ShipEngine
-	mud::Type* DECL ShipEngine__type() {
-		return &mud::type<ShipEngine>();
+	two::Type* DECL ShipEngine__type() {
+		return &two::type<ShipEngine>();
 	}
 	ShipEngine* DECL ShipEngine_ShipEngine_0() {
 		return new ShipEngine();
@@ -715,8 +715,8 @@ extern "C" {
 		delete self;
 	}
 	// ShipHull
-	mud::Type* DECL ShipHull__type() {
-		return &mud::type<ShipHull>();
+	two::Type* DECL ShipHull__type() {
+		return &two::type<ShipHull>();
 	}
 	ShipHull* DECL ShipHull_ShipHull_0() {
 		return new ShipHull();
@@ -725,8 +725,8 @@ extern "C" {
 		delete self;
 	}
 	// ShipSchema
-	mud::Type* DECL ShipSchema__type() {
-		return &mud::type<ShipSchema>();
+	two::Type* DECL ShipSchema__type() {
+		return &two::type<ShipSchema>();
 	}
 	ShipSchema* DECL ShipSchema_ShipSchema_0() {
 		return new ShipSchema();
@@ -753,27 +753,27 @@ extern "C" {
 		delete self;
 	}
 	// SpatialCombat
-	mud::Type* DECL SpatialCombat__type() {
-		return &mud::type<SpatialCombat>();
+	two::Type* DECL SpatialCombat__type() {
+		return &two::type<SpatialCombat>();
 	}
 	SpatialCombat* DECL SpatialCombat_SpatialCombat_0() {
 		return new SpatialCombat();
 	}
-	mud::uvec2* DECL SpatialCombat__get_coord(SpatialCombat* self) {
-		static mud::uvec2 temp;
+	two::uvec2* DECL SpatialCombat__get_coord(SpatialCombat* self) {
+		static two::uvec2 temp;
 		return (temp = self->m_coord, &temp);
 	}
-	void DECL SpatialCombat__set_coord(SpatialCombat* self, mud::uvec2* value) {
+	void DECL SpatialCombat__set_coord(SpatialCombat* self, two::uvec2* value) {
 		self->m_coord = *value;
 	}
 	void DECL SpatialCombat__destroy(SpatialCombat* self) {
 		delete self;
 	}
 	// Universe
-	mud::Type* DECL Universe__type() {
-		return &mud::type<Universe>();
+	two::Type* DECL Universe__type() {
+		return &two::type<Universe>();
 	}
-	Universe* DECL Universe_Universe_2(const char* name, mud::JobSystem* job_system) {
+	Universe* DECL Universe_Universe_2(const char* name, two::JobSystem* job_system) {
 		return new Universe(name, *job_system);
 	}
 	toy::World* DECL Universe__get_world(Universe* self) {
@@ -785,10 +785,10 @@ extern "C" {
 	void DECL Universe__destroy(Universe* self) {
 		delete self;
 	}
-	HStar DECL _generate_system_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {
+	HStar DECL _generate_system_3(Galaxy* galaxy, const two::uvec3* coord, const two::vec3* position) {
 		return generate_system(*galaxy, *coord, *position);
 	}
-	HFleet DECL _generate_fleet_3(Galaxy* galaxy, const mud::uvec3* coord, const mud::vec3* position) {
+	HFleet DECL _generate_fleet_3(Galaxy* galaxy, const two::uvec3* coord, const two::vec3* position) {
 		return generate_fleet(*galaxy, *coord, *position);
 	}
 	Commander* DECL _generate_commander_2(Galaxy* galaxy, Star* star) {

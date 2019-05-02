@@ -5,11 +5,11 @@
 #include <stl/vector.h>
 #include <minimal/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <type/Type.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <infra/Types.h>
 #include <jobs/Types.h>
 #include <type/Types.h>
@@ -37,16 +37,16 @@
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     
     
+    export_ template <> _MINIMAL_EXPORT Type& type<two::ComponentHandle<Bullet>>();
+    export_ template <> _MINIMAL_EXPORT Type& type<two::ComponentHandle<Human>>();
+    export_ template <> _MINIMAL_EXPORT Type& type<two::ComponentHandle<Crate>>();
     export_ template <> _MINIMAL_EXPORT Type& type<Bullet>();
-    export_ template <> _MINIMAL_EXPORT Type& type<mud::ComponentHandle<Bullet>>();
-    export_ template <> _MINIMAL_EXPORT Type& type<mud::ComponentHandle<Crate>>();
-    export_ template <> _MINIMAL_EXPORT Type& type<mud::ComponentHandle<Human>>();
-    export_ template <> _MINIMAL_EXPORT Type& type<Crate>();
     export_ template <> _MINIMAL_EXPORT Type& type<Human>();
+    export_ template <> _MINIMAL_EXPORT Type& type<Crate>();
     export_ template <> _MINIMAL_EXPORT Type& type<Player>();
 }

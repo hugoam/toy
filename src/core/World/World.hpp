@@ -10,7 +10,7 @@
 #include <core/Forward.h>
 #include <core/World/World.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	template <class T_Component, class... Args>
 	void World::add_loop(Task task)

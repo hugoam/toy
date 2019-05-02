@@ -3,7 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #include <ecs/ECS.hpp>

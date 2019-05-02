@@ -27,7 +27,7 @@ namespace toy
 		attr_ uint32_t m_index;
 		attr_ string m_name;
 
-		Meta& meta() { return mud::meta(m_type); }
+		Meta& meta() { return two::meta(m_type); }
 
 		virtual bool checkObject(Ref object) = 0;
 		virtual bool checkArgs(span<Ref> args) = 0;

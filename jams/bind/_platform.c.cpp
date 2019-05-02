@@ -34,29 +34,107 @@
 
 extern "C" {
 	
+	// ComponentHandle<Bullet>
+	two::Type* DECL two_ComponentHandle_Bullet__type() {
+		return &two::type<two::ComponentHandle<Bullet>>();
+	}
+	two::ComponentHandle<Bullet>* DECL two_ComponentHandle_Bullet__construct_0() {
+		return new two::ComponentHandle<Bullet>();
+	}
+	void DECL two_ComponentHandle_Bullet__destroy(two::ComponentHandle<Bullet>* self) {
+		delete self;
+	}
+	// ComponentHandle<Human>
+	two::Type* DECL two_ComponentHandle_Human__type() {
+		return &two::type<two::ComponentHandle<Human>>();
+	}
+	two::ComponentHandle<Human>* DECL two_ComponentHandle_Human__construct_0() {
+		return new two::ComponentHandle<Human>();
+	}
+	void DECL two_ComponentHandle_Human__destroy(two::ComponentHandle<Human>* self) {
+		delete self;
+	}
+	// ComponentHandle<Lamp>
+	two::Type* DECL two_ComponentHandle_Lamp__type() {
+		return &two::type<two::ComponentHandle<Lamp>>();
+	}
+	two::ComponentHandle<Lamp>* DECL two_ComponentHandle_Lamp__construct_0() {
+		return new two::ComponentHandle<Lamp>();
+	}
+	void DECL two_ComponentHandle_Lamp__destroy(two::ComponentHandle<Lamp>* self) {
+		delete self;
+	}
+	// ComponentHandle<Crate>
+	two::Type* DECL two_ComponentHandle_Crate__type() {
+		return &two::type<two::ComponentHandle<Crate>>();
+	}
+	two::ComponentHandle<Crate>* DECL two_ComponentHandle_Crate__construct_0() {
+		return new two::ComponentHandle<Crate>();
+	}
+	void DECL two_ComponentHandle_Crate__destroy(two::ComponentHandle<Crate>* self) {
+		delete self;
+	}
+	// TileWorld
+	two::Type* DECL TileWorld__type() {
+		return &two::type<TileWorld>();
+	}
+	TileWorld* DECL TileWorld__construct_2(const char* name, two::JobSystem* job_system) {
+		return new TileWorld(name, *job_system);
+	}
+	toy::World* DECL TileWorld__get_world(TileWorld* self) {
+		return &self->m_world;
+	}
+	toy::BulletWorld* DECL TileWorld__get_bullet_world(TileWorld* self) {
+		return &self->m_bullet_world;
+	}
+	toy::Navmesh* DECL TileWorld__get_navmesh(TileWorld* self) {
+		return &self->m_navmesh;
+	}
+	void DECL TileWorld__destroy(TileWorld* self) {
+		delete self;
+	}
+	// Bullet
+	two::Type* DECL Bullet__type() {
+		return &two::type<Bullet>();
+	}
+	two::vec3* DECL Bullet__get_source(Bullet* self) {
+		return &self->m_source;
+	}
+	void DECL Bullet__set_source(Bullet* self, two::vec3* value) {
+		self->m_source = *value;
+	}
+	two::vec3* DECL Bullet__get_velocity(Bullet* self) {
+		return &self->m_velocity;
+	}
+	void DECL Bullet__set_velocity(Bullet* self, two::vec3* value) {
+		self->m_velocity = *value;
+	}
+	void DECL Bullet__destroy(Bullet* self) {
+		delete self;
+	}
 	// Aim
-	mud::Type* DECL Aim__type() {
-		return &mud::type<Aim>();
+	two::Type* DECL Aim__type() {
+		return &two::type<Aim>();
 	}
 	Aim* DECL Aim__construct_0() {
 		return new Aim();
 	}
-	mud::quat* DECL Aim__get_rotation(Aim* self) {
+	two::quat* DECL Aim__get_rotation(Aim* self) {
 		return &self->rotation;
 	}
-	void DECL Aim__set_rotation(Aim* self, mud::quat* value) {
+	void DECL Aim__set_rotation(Aim* self, two::quat* value) {
 		self->rotation = *value;
 	}
-	mud::vec3* DECL Aim__get_start(Aim* self) {
+	two::vec3* DECL Aim__get_start(Aim* self) {
 		return &self->start;
 	}
-	void DECL Aim__set_start(Aim* self, mud::vec3* value) {
+	void DECL Aim__set_start(Aim* self, two::vec3* value) {
 		self->start = *value;
 	}
-	mud::vec3* DECL Aim__get_end(Aim* self) {
+	two::vec3* DECL Aim__get_end(Aim* self) {
 		return &self->end;
 	}
-	void DECL Aim__set_end(Aim* self, mud::vec3* value) {
+	void DECL Aim__set_end(Aim* self, two::vec3* value) {
 		self->end = *value;
 	}
 	toy::Spatial* DECL Aim__get_hit(Aim* self) {
@@ -68,87 +146,34 @@ extern "C" {
 	void DECL Aim__destroy(Aim* self) {
 		delete self;
 	}
-	// Bullet
-	mud::Type* DECL Bullet__type() {
-		return &mud::type<Bullet>();
+	// Stance
+	two::Type* DECL Stance__type() {
+		return &two::type<Stance>();
 	}
-	mud::vec3* DECL Bullet__get_source(Bullet* self) {
-		return &self->m_source;
+	Stance* DECL Stance__construct_0() {
+		return new Stance();
 	}
-	void DECL Bullet__set_source(Bullet* self, mud::vec3* value) {
-		self->m_source = *value;
+	Stance* DECL Stance__construct_2(const char* name, bool loop) {
+		return new Stance(name, loop);
 	}
-	mud::vec3* DECL Bullet__get_velocity(Bullet* self) {
-		return &self->m_velocity;
+	const char* DECL Stance__get_name(Stance* self) {
+		return self->name.c_str();
 	}
-	void DECL Bullet__set_velocity(Bullet* self, mud::vec3* value) {
-		self->m_velocity = *value;
+	void DECL Stance__set_name(Stance* self, const char* value) {
+		self->name = value;
 	}
-	void DECL Bullet__destroy(Bullet* self) {
-		delete self;
+	bool DECL Stance__get_loop(Stance* self) {
+		return self->loop;
 	}
-	// ComponentHandle<Bullet>
-	mud::Type* DECL mud_ComponentHandle_Bullet__type() {
-		return &mud::type<mud::ComponentHandle<Bullet>>();
+	void DECL Stance__set_loop(Stance* self, bool value) {
+		self->loop = value;
 	}
-	mud::ComponentHandle<Bullet>* DECL mud_ComponentHandle_Bullet__construct_0() {
-		return new mud::ComponentHandle<Bullet>();
-	}
-	void DECL mud_ComponentHandle_Bullet__destroy(mud::ComponentHandle<Bullet>* self) {
-		delete self;
-	}
-	// ComponentHandle<Crate>
-	mud::Type* DECL mud_ComponentHandle_Crate__type() {
-		return &mud::type<mud::ComponentHandle<Crate>>();
-	}
-	mud::ComponentHandle<Crate>* DECL mud_ComponentHandle_Crate__construct_0() {
-		return new mud::ComponentHandle<Crate>();
-	}
-	void DECL mud_ComponentHandle_Crate__destroy(mud::ComponentHandle<Crate>* self) {
-		delete self;
-	}
-	// ComponentHandle<Human>
-	mud::Type* DECL mud_ComponentHandle_Human__type() {
-		return &mud::type<mud::ComponentHandle<Human>>();
-	}
-	mud::ComponentHandle<Human>* DECL mud_ComponentHandle_Human__construct_0() {
-		return new mud::ComponentHandle<Human>();
-	}
-	void DECL mud_ComponentHandle_Human__destroy(mud::ComponentHandle<Human>* self) {
-		delete self;
-	}
-	// ComponentHandle<Lamp>
-	mud::Type* DECL mud_ComponentHandle_Lamp__type() {
-		return &mud::type<mud::ComponentHandle<Lamp>>();
-	}
-	mud::ComponentHandle<Lamp>* DECL mud_ComponentHandle_Lamp__construct_0() {
-		return new mud::ComponentHandle<Lamp>();
-	}
-	void DECL mud_ComponentHandle_Lamp__destroy(mud::ComponentHandle<Lamp>* self) {
-		delete self;
-	}
-	// Crate
-	mud::Type* DECL Crate__type() {
-		return &mud::type<Crate>();
-	}
-	Crate* DECL Crate__construct_0() {
-		return new Crate();
-	}
-	Crate* DECL Crate__construct_3(toy::HSpatial* spatial, toy::HMovable* movable, const mud::vec3* extents) {
-		return new Crate(*spatial, *movable, *extents);
-	}
-	mud::vec3* DECL Crate__get_extents(Crate* self) {
-		return &self->m_extents;
-	}
-	void DECL Crate__set_extents(Crate* self, mud::vec3* value) {
-		self->m_extents = *value;
-	}
-	void DECL Crate__destroy(Crate* self) {
+	void DECL Stance__destroy(Stance* self) {
 		delete self;
 	}
 	// Human
-	mud::Type* DECL Human__type() {
-		return &mud::type<Human>();
+	two::Type* DECL Human__type() {
+		return &two::type<Human>();
 	}
 	Human* DECL Human__construct_0() {
 		return new Human();
@@ -156,12 +181,12 @@ extern "C" {
 	Human* DECL Human__construct_6(toy::HSpatial* spatial, toy::HMovable* movable, toy::HEmitter* emitter, toy::HReceptor* receptor, toy::HEntityScript* script, Faction faction) {
 		return new Human(*spatial, *movable, *emitter, *receptor, *script, faction);
 	}
-	mud::quat* DECL Human_sight_0(Human* self) {
-		static mud::quat temp;
+	two::quat* DECL Human_sight_0(Human* self) {
+		static two::quat temp;
 		return (temp = self->sight(), &temp);
 	}
-	mud::quat* DECL Human_sight_1(Human* self, bool aiming) {
-		static mud::quat temp;
+	two::quat* DECL Human_sight_1(Human* self, bool aiming) {
+		static two::quat temp;
 		return (temp = self->sight(aiming), &temp);
 	}
 	Aim* DECL Human_aim_0(Human* self) {
@@ -222,10 +247,10 @@ extern "C" {
 	void DECL Human__set_target(Human* self, HHuman* value) {
 		self->m_target = *value;
 	}
-	mud::vec3* DECL Human__get_dest(Human* self) {
+	two::vec3* DECL Human__get_dest(Human* self) {
 		return &self->m_dest;
 	}
-	void DECL Human__set_dest(Human* self, mud::vec3* value) {
+	void DECL Human__set_dest(Human* self, two::vec3* value) {
 		self->m_dest = *value;
 	}
 	float DECL Human__get_cooldown(Human* self) {
@@ -244,8 +269,8 @@ extern "C" {
 		delete self;
 	}
 	// Lamp
-	mud::Type* DECL Lamp__type() {
-		return &mud::type<Lamp>();
+	two::Type* DECL Lamp__type() {
+		return &two::type<Lamp>();
 	}
 	Lamp* DECL Lamp__construct_0() {
 		return new Lamp();
@@ -256,55 +281,30 @@ extern "C" {
 	void DECL Lamp__destroy(Lamp* self) {
 		delete self;
 	}
+	// Crate
+	two::Type* DECL Crate__type() {
+		return &two::type<Crate>();
+	}
+	Crate* DECL Crate__construct_0() {
+		return new Crate();
+	}
+	Crate* DECL Crate__construct_3(toy::HSpatial* spatial, toy::HMovable* movable, const two::vec3* extents) {
+		return new Crate(*spatial, *movable, *extents);
+	}
+	two::vec3* DECL Crate__get_extents(Crate* self) {
+		return &self->m_extents;
+	}
+	void DECL Crate__set_extents(Crate* self, two::vec3* value) {
+		self->m_extents = *value;
+	}
+	void DECL Crate__destroy(Crate* self) {
+		delete self;
+	}
 	// Player
-	mud::Type* DECL Player__type() {
-		return &mud::type<Player>();
+	two::Type* DECL Player__type() {
+		return &two::type<Player>();
 	}
 	void DECL Player__destroy(Player* self) {
-		delete self;
-	}
-	// Stance
-	mud::Type* DECL Stance__type() {
-		return &mud::type<Stance>();
-	}
-	Stance* DECL Stance__construct_0() {
-		return new Stance();
-	}
-	Stance* DECL Stance__construct_2(const char* name, bool loop) {
-		return new Stance(name, loop);
-	}
-	const char* DECL Stance__get_name(Stance* self) {
-		return self->name.c_str();
-	}
-	void DECL Stance__set_name(Stance* self, const char* value) {
-		self->name = value;
-	}
-	bool DECL Stance__get_loop(Stance* self) {
-		return self->loop;
-	}
-	void DECL Stance__set_loop(Stance* self, bool value) {
-		self->loop = value;
-	}
-	void DECL Stance__destroy(Stance* self) {
-		delete self;
-	}
-	// TileWorld
-	mud::Type* DECL TileWorld__type() {
-		return &mud::type<TileWorld>();
-	}
-	TileWorld* DECL TileWorld__construct_2(const char* name, mud::JobSystem* job_system) {
-		return new TileWorld(name, *job_system);
-	}
-	toy::World* DECL TileWorld__get_world(TileWorld* self) {
-		return &self->m_world;
-	}
-	toy::BulletWorld* DECL TileWorld__get_bullet_world(TileWorld* self) {
-		return &self->m_bullet_world;
-	}
-	toy::Navmesh* DECL TileWorld__get_navmesh(TileWorld* self) {
-		return &self->m_navmesh;
-	}
-	void DECL TileWorld__destroy(TileWorld* self) {
 		delete self;
 	}
 	// Faction

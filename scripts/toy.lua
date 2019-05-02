@@ -10,7 +10,7 @@ if not _OPTIONS["compile-only"] then
     dofile(path.join(TOY_DIR, "scripts/3rdparty/detour.lua"))
 end
 
-dofile(path.join(MUD_DIR, "scripts/mud.lua"))
+dofile(path.join(TWO_DIR, "scripts/two.lua"))
 
 function toy_core()
     includedirs {
@@ -56,23 +56,23 @@ end
 
 function toy_shell()
     includedirs {
-        path.join(MUD_3RDPARTY_DIR, "tracy"),
+        path.join(TWO_3RDPARTY_DIR, "tracy"),
     }
 end
 
 toy = {}
 
 --                           base   name        root path    sub path   self decl       usage decl      reflect     dependencies
-toy.util        = mud_module("toy", "util",     TOY_SRC_DIR, "util",    nil,            nil,            true,       { mud.type, mud.math })
-toy.core        = mud_module("toy", "core",     TOY_SRC_DIR, "core",    toy_core,       uses_toy_core,  true,       { detour, mud.type, mud.jobs, mud.ecs, mud.math, mud.geom, mud.lang, toy.util })
+toy.util        = two_module("toy", "util",     TOY_SRC_DIR, "util",    nil,            nil,            true,       { two.type, two.math })
+toy.core        = two_module("toy", "core",     TOY_SRC_DIR, "core",    toy_core,       uses_toy_core,  true,       { detour, two.type, two.jobs, two.ecs, two.math, two.geom, two.lang, toy.util })
 if _OPTIONS["sound"] then
-    toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    toy_visu,       uses_toy_visu,  true,       { mud.type, mud.snd, mud.gfx, toy.util, toy.core })
+    toy.visu    = two_module("toy", "visu",     TOY_SRC_DIR, "visu",    toy_visu,       uses_toy_visu,  true,       { two.type, two.snd, two.gfx, toy.util, toy.core })
 else
-    toy.visu    = mud_module("toy", "visu",     TOY_SRC_DIR, "visu",    toy_visu,       uses_toy_visu,  true,       { mud.type, mud.gfx, toy.util, toy.core })
+    toy.visu    = two_module("toy", "visu",     TOY_SRC_DIR, "visu",    toy_visu,       uses_toy_visu,  true,       { two.type, two.gfx, toy.util, toy.core })
 end
-toy.edit        = mud_module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,            nil,            true,       { mud.type, mud.ui, mud.tool, toy.util, toy.core, toy.visu }) -- table.union(mud.all, 
-toy.block       = mud_module("toy", "block",    TOY_SRC_DIR, "block",   nil,            nil,            true,       { mud.type, mud.math, mud.wfc.gfx, toy.core, toy.visu, toy.edit })
-toy.shell       = mud_module("toy", "shell",    TOY_SRC_DIR, "shell",   toy_shell,      nil,            true,       table.union(mud.mud, { toy.core, toy.visu, toy.edit, toy.block }))
+toy.edit        = two_module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,            nil,            true,       { two.type, two.ui, two.tool, toy.util, toy.core, toy.visu }) -- table.union(two.all, 
+toy.block       = two_module("toy", "block",    TOY_SRC_DIR, "block",   nil,            nil,            true,       { two.type, two.math, two.wfc.gfx, toy.core, toy.visu, toy.edit })
+toy.shell       = two_module("toy", "shell",    TOY_SRC_DIR, "shell",   toy_shell,      nil,            true,       table.union(two.two, { toy.core, toy.visu, toy.edit, toy.block }))
 
 toy.toy = { toy.util, toy.core, toy.visu, toy.edit, toy.block, toy.shell }
 
@@ -88,13 +88,13 @@ end
 group "lib"
 if _OPTIONS["as-libs"] then
     group "lib/toy"
-        mud_libs(toy.toy, "StaticLib")
+        two_libs(toy.toy, "StaticLib")
     group "lib"
 else
     if _OPTIONS["compile-only"] then
-        toy.lib = mud_lib("toy", toy.toy, "StaticLib")
+        toy.lib = two_lib("toy", toy.toy, "StaticLib")
     else
-        toy.lib = mud_lib("toy", toy.toy, "SharedLib")
+        toy.lib = two_lib("toy", toy.toy, "SharedLib")
     end
     
         --files {
@@ -102,13 +102,13 @@ else
         --}
 end
 
-toy.all = table.union(mud.mud, toy.toy)
+toy.all = table.union(two.two, toy.toy)
 
 group "bin"
 --dofile(path.join(TOY_DIR, "scripts/shell.lua"))
 
 function toy_binary(name, modules, deps)
-    mud_lib(name, modules, "ConsoleApp", deps)
+    two_lib(name, modules, "ConsoleApp", deps)
     defines { "_" .. name:upper() .. "_EXE" }
     toy_binary_config()
 end
@@ -118,5 +118,5 @@ function toy_shell(name, modules, deps)
 end
 
 function toy_dll(name, modules, deps)
-    mud_lib(name, modules, "SharedLib", deps)
+    two_lib(name, modules, "SharedLib", deps)
 end

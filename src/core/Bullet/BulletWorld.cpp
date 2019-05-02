@@ -326,7 +326,7 @@ namespace toy
 		m_last_tick = tick;
 
 		if(m_dynamics_world)
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3, 0.032f);
 #else
 			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3);

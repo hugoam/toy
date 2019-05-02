@@ -5,11 +5,11 @@
 #include <stl/vector.h>
 #include <blocks/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <type/Type.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <infra/Types.h>
 #include <jobs/Types.h>
 #include <type/Types.h>
@@ -37,20 +37,20 @@
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     
     
-    export_ template <> _BLOCKS_EXPORT Type& type<Camp>();
-    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Camp>>();
-    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Shield>>();
-    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Slug>>();
-    export_ template <> _BLOCKS_EXPORT Type& type<mud::ComponentHandle<Tank>>();
+    export_ template <> _BLOCKS_EXPORT Type& type<two::ComponentHandle<Camp>>();
+    export_ template <> _BLOCKS_EXPORT Type& type<two::ComponentHandle<Shield>>();
+    export_ template <> _BLOCKS_EXPORT Type& type<two::ComponentHandle<Slug>>();
+    export_ template <> _BLOCKS_EXPORT Type& type<two::ComponentHandle<Tank>>();
     export_ template <> _BLOCKS_EXPORT Type& type<Faction>();
-    export_ template <> _BLOCKS_EXPORT Type& type<Player>();
+    export_ template <> _BLOCKS_EXPORT Type& type<Camp>();
     export_ template <> _BLOCKS_EXPORT Type& type<Shield>();
     export_ template <> _BLOCKS_EXPORT Type& type<Slug>();
     export_ template <> _BLOCKS_EXPORT Type& type<Tank>();
     export_ template <> _BLOCKS_EXPORT Type& type<BlockWorld>();
+    export_ template <> _BLOCKS_EXPORT Type& type<Player>();
 }

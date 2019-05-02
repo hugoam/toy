@@ -8,7 +8,7 @@
 
 //#define _BLOCKS_TOOLS
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 Material& highlight_material(const string& name, const Colour& colour, int factor)
@@ -544,7 +544,7 @@ void paint_viewer(Viewer& viewer)
 	glow.m_enabled = true;
 	glow.m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
 	glow.m_intensity = 0.8f;
-#ifndef MUD_PLATFORM_EMSCRIPTEN
+#ifndef TWO_PLATFORM_EMSCRIPTEN
 	glow.m_bicubic_filter = true;
 #endif
 }

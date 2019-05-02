@@ -7,7 +7,7 @@
 #include <wren/Forward.h>
 #include <toy/toy.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"

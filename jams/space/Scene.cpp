@@ -394,7 +394,7 @@ bool paint_weapon_ray(Gnode& parent, const WeaponRay& ray, WeaponType weapon)
 	}
 }
 
-namespace mud
+namespace two
 {
 	template <> Type& type<VisuShip>() { static Type ty; return ty; }
 }
@@ -569,7 +569,7 @@ void paint_viewer(Viewer& viewer)
 
 	viewer.m_viewport.comp<Glow>().m_enabled = true;
 	viewer.m_viewport.comp<Glow>().m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
-#ifndef MUD_PLATFORM_EMSCRIPTEN
+#ifndef TWO_PLATFORM_EMSCRIPTEN
 	viewer.m_viewport.comp<Glow>().m_bicubic_filter = true;
 #endif
 }

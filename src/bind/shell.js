@@ -1,3 +1,14 @@
+// GameScene
+function GameScene() { throw "cannot construct a GameScene, no constructor in IDL" }
+GameScene.prototype = Object.create(VisuScene.prototype);
+GameScene.prototype.constructor = GameScene;
+GameScene.prototype.__class = GameScene;
+GameScene.__base = VisuScene;
+GameScene.__cache = {};
+Module['GameScene'] = GameScene;
+GameScene.prototype["__destroy"] = GameScene.prototype.__destroy = function() {
+    _toy_GameScene__destroy(this.__ptr);
+};
 // Game
 function Game() { throw "cannot construct a Game, no constructor in IDL" }
 Game.prototype = Object.create(WrapperObject.prototype);
@@ -100,6 +111,50 @@ GameModule.prototype["paint"] = GameModule.prototype.paint = function(a0, a1, a2
 };
 GameModule.prototype["__destroy"] = GameModule.prototype.__destroy = function() {
     _toy_GameModule__destroy(this.__ptr);
+};
+// GameModuleBind
+function GameModuleBind() { throw "cannot construct a GameModuleBind, no constructor in IDL" }
+GameModuleBind.prototype = Object.create(GameModule.prototype);
+GameModuleBind.prototype.constructor = GameModuleBind;
+GameModuleBind.prototype.__class = GameModuleBind;
+GameModuleBind.__base = GameModule;
+GameModuleBind.__cache = {};
+Module['GameModuleBind'] = GameModuleBind;
+GameModuleBind.prototype["__destroy"] = GameModuleBind.prototype.__destroy = function() {
+    _toy_GameModuleBind__destroy(this.__ptr);
+};
+// GameWindow
+function GameWindow() { throw "cannot construct a GameWindow, no constructor in IDL" }
+GameWindow.prototype = Object.create(GfxWindow.prototype);
+GameWindow.prototype.constructor = GameWindow;
+GameWindow.prototype.__class = GameWindow;
+GameWindow.__base = GfxWindow;
+GameWindow.__cache = {};
+Module['GameWindow'] = GameWindow;
+Object.defineProperty(GameWindow.prototype, "index", {
+    get: function() {
+        return _toy_GameWindow__get_index(this.__ptr);
+    },
+    set: function(value) {
+        if (typeof value !== 'number') throw Error('GameWindow.index: expected integer');
+        _toy_GameWindow__set_index(this.__ptr, value);
+    }
+});
+Object.defineProperty(GameWindow.prototype, "ui_window", {
+    get: function() {
+        return wrapPointer(_toy_GameWindow__get_ui_window(this.__ptr), UiWindow);
+    }});
+Object.defineProperty(GameWindow.prototype, "ui", {
+    get: function() {
+        return wrapPointer(_toy_GameWindow__get_ui(this.__ptr), Ui);
+    },
+    set: function(value) {
+        if (!checkClass(value, Ui)) throw Error('GameWindow.ui: expected Ui');
+        _toy_GameWindow__set_ui(this.__ptr, value.__ptr);
+    }
+});
+GameWindow.prototype["__destroy"] = GameWindow.prototype.__destroy = function() {
+    _toy_GameWindow__destroy(this.__ptr);
 };
 // GameShell
 function GameShell(a0, a1) {
@@ -225,61 +280,6 @@ Object.defineProperty(GameShell.prototype, "editor", {
 GameShell.prototype["__destroy"] = GameShell.prototype.__destroy = function() {
     _toy_GameShell__destroy(this.__ptr);
 };
-// GameModuleBind
-function GameModuleBind() { throw "cannot construct a GameModuleBind, no constructor in IDL" }
-GameModuleBind.prototype = Object.create(GameModule.prototype);
-GameModuleBind.prototype.constructor = GameModuleBind;
-GameModuleBind.prototype.__class = GameModuleBind;
-GameModuleBind.__base = GameModule;
-GameModuleBind.__cache = {};
-Module['GameModuleBind'] = GameModuleBind;
-GameModuleBind.prototype["__destroy"] = GameModuleBind.prototype.__destroy = function() {
-    _toy_GameModuleBind__destroy(this.__ptr);
-};
-// GameScene
-function GameScene() { throw "cannot construct a GameScene, no constructor in IDL" }
-GameScene.prototype = Object.create(VisuScene.prototype);
-GameScene.prototype.constructor = GameScene;
-GameScene.prototype.__class = GameScene;
-GameScene.__base = VisuScene;
-GameScene.__cache = {};
-Module['GameScene'] = GameScene;
-GameScene.prototype["__destroy"] = GameScene.prototype.__destroy = function() {
-    _toy_GameScene__destroy(this.__ptr);
-};
-// GameWindow
-function GameWindow() { throw "cannot construct a GameWindow, no constructor in IDL" }
-GameWindow.prototype = Object.create(GfxWindow.prototype);
-GameWindow.prototype.constructor = GameWindow;
-GameWindow.prototype.__class = GameWindow;
-GameWindow.__base = GfxWindow;
-GameWindow.__cache = {};
-Module['GameWindow'] = GameWindow;
-Object.defineProperty(GameWindow.prototype, "index", {
-    get: function() {
-        return _toy_GameWindow__get_index(this.__ptr);
-    },
-    set: function(value) {
-        if (typeof value !== 'number') throw Error('GameWindow.index: expected integer');
-        _toy_GameWindow__set_index(this.__ptr, value);
-    }
-});
-Object.defineProperty(GameWindow.prototype, "ui_window", {
-    get: function() {
-        return wrapPointer(_toy_GameWindow__get_ui_window(this.__ptr), UiWindow);
-    }});
-Object.defineProperty(GameWindow.prototype, "ui", {
-    get: function() {
-        return wrapPointer(_toy_GameWindow__get_ui(this.__ptr), Ui);
-    },
-    set: function(value) {
-        if (!checkClass(value, Ui)) throw Error('GameWindow.ui: expected Ui');
-        _toy_GameWindow__set_ui(this.__ptr, value.__ptr);
-    }
-});
-GameWindow.prototype["__destroy"] = GameWindow.prototype.__destroy = function() {
-    _toy_GameWindow__destroy(this.__ptr);
-};
 Module['paint_physics'] = function(a0, a1) {
     if (!checkClass(a0, Gnode)) throw Error('paint_physics(0:parent): expected Gnode'); if (!checkClass(a1, World)) throw Error('paint_physics(1:world): expected World');
     _toy_paint_physics_2(/*parent*/a0.__ptr, /*world*/a1.__ptr);
@@ -291,12 +291,12 @@ Module['physic_painter'] = function(a0) {
 
 (function() {
     function setup() {
+        GameScene.prototype.__type = _toy_GameScene__type();
         Game.prototype.__type = _toy_Game__type();
         GameModule.prototype.__type = _toy_GameModule__type();
-        GameShell.prototype.__type = _toy_GameShell__type();
         GameModuleBind.prototype.__type = _toy_GameModuleBind__type();
-        GameScene.prototype.__type = _toy_GameScene__type();
         GameWindow.prototype.__type = _toy_GameWindow__type();
+        GameShell.prototype.__type = _toy_GameShell__type();
         // GameMode
         Module['GameMode'] = Module['GameMode'] || {};
         Module['GameMode']['Play'] = _toy_GameMode_Play();

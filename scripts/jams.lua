@@ -4,27 +4,27 @@
 function uses_jam()
     includedirs {
         path.join(TOY_DIR, "example"),
-        path.join(MUD_DIR, "example"),
-        path.join(MUD_3RDPARTY_DIR, "tracy"),
+        path.join(TWO_DIR, "example"),
+        path.join(TWO_3RDPARTY_DIR, "tracy"),
     }
     
     if _OPTIONS["profile"] then
         files {
-            path.join(MUD_3RDPARTY_DIR, "tracy", "TracyClientDLL.cpp"),
+            path.join(TWO_3RDPARTY_DIR, "tracy", "TracyClientDLL.cpp"),
         }
         
         defines { "TRACY_ENABLE" }
     end
 end
 
-test        = mud_module(nil, "_test",      path.join(TOY_DIR, "jams"), "test",     nil, uses_jam, true, toy.all)
-minimal     = mud_module(nil, "_minimal",   path.join(TOY_DIR, "jams"), "minimal",  nil, uses_jam, true, toy.all)
-boids       = mud_module(nil, "_boids",     path.join(TOY_DIR, "jams"), "boids",    nil, uses_jam, true, toy.all)
-space       = mud_module(nil, "_space",     path.join(TOY_DIR, "jams"), "space",    nil, uses_jam, true, toy.all)
-platform    = mud_module(nil, "_platform",  path.join(TOY_DIR, "jams"), "platform", nil, uses_jam, true, toy.all)
-blocks      = mud_module(nil, "_blocks",    path.join(TOY_DIR, "jams"), "blocks",   nil, uses_jam, true, toy.all)
-script      = mud_module(nil, "_wren",      path.join(TOY_DIR, "jams"), "wren",     nil, uses_jam, true, toy.all)
-godot       = mud_module(nil, "_godot",     path.join(TOY_DIR, "jams"), "godot",    nil, uses_jam, true, toy.all)
+test        = two_module(nil, "_test",      path.join(TOY_DIR, "jams"), "test",     nil, uses_jam, true, toy.all)
+minimal     = two_module(nil, "_minimal",   path.join(TOY_DIR, "jams"), "minimal",  nil, uses_jam, true, toy.all)
+boids       = two_module(nil, "_boids",     path.join(TOY_DIR, "jams"), "boids",    nil, uses_jam, true, toy.all)
+space       = two_module(nil, "_space",     path.join(TOY_DIR, "jams"), "space",    nil, uses_jam, true, toy.all)
+platform    = two_module(nil, "_platform",  path.join(TOY_DIR, "jams"), "platform", nil, uses_jam, true, toy.all)
+blocks      = two_module(nil, "_blocks",    path.join(TOY_DIR, "jams"), "blocks",   nil, uses_jam, true, toy.all)
+script      = two_module(nil, "_wren",      path.join(TOY_DIR, "jams"), "wren",     nil, uses_jam, true, toy.all)
+godot       = two_module(nil, "_godot",     path.join(TOY_DIR, "jams"), "godot",    nil, uses_jam, true, toy.all)
 
 function preload_example_folder(name)
     configuration { "asmjs" }

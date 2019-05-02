@@ -6,17 +6,17 @@
 #include <math/Forward.h>
 
 #ifndef TOY_UTIL_EXPORT
-#define TOY_UTIL_EXPORT MUD_IMPORT
+#define TOY_UTIL_EXPORT TWO_IMPORT
 #endif
 
-namespace mud
+namespace two
 {
     class Executable;
 }
 
 namespace toy
 {
-	using namespace mud;
+	using namespace two;
 
 	class ProcedureType;
     class Procedure;

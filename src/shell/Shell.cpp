@@ -7,7 +7,7 @@
 #include <toy/Modules.h>
 #include <shell/Shell.h>
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 #include <emscripten/emscripten.h>
 #endif
 
@@ -18,11 +18,11 @@
 
 class WrenVM;
 
-//#define MUD_GFX_DEFERRED
+//#define TWO_GFX_DEFERRED
 
 namespace toy
 {
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	static void iterate()
 	{
 		g_app->pump();
@@ -102,9 +102,9 @@ namespace toy
 
 	unique<Vg> create_vg(GfxSystem& gfx, const string& resource_path)
 	{
-#if defined MUD_VG_VG
+#if defined TWO_VG_VG
 		return make_unique<VgVg>(resource_path, &gfx.allocator());
-#elif defined MUD_VG_NANOVG
+#elif defined TWO_VG_NANOVG
 		return make_unique<VgNanoBgfx>(m_resource_path);
 #endif
 	}
@@ -279,7 +279,7 @@ namespace toy
 
 	void GameShell::run(size_t iterations)
 	{
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 		g_app = this;
 		//g_iterations = iterations;
 		emscripten_set_main_loop(iterate, 0, 1);
@@ -539,7 +539,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 extern "C"
 {
 	void copy(const char* text)

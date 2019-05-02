@@ -1,4 +1,43 @@
-Module['mud'] = Module['mud'] || {};
+Module['two'] = Module['two'] || {};
+// ComponentHandle<Bullet>
+function ComponentHandle_Bullet() {
+    
+    this.__ptr = _two_ComponentHandle_Bullet__construct_0(); getCache(ComponentHandle_Bullet)[this.__ptr] = this;
+};
+ComponentHandle_Bullet.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_Bullet.prototype.constructor = ComponentHandle_Bullet;
+ComponentHandle_Bullet.prototype.__class = ComponentHandle_Bullet;
+ComponentHandle_Bullet.__cache = {};
+Module['two']['ComponentHandle_Bullet'] = ComponentHandle_Bullet;
+ComponentHandle_Bullet.prototype["__destroy"] = ComponentHandle_Bullet.prototype.__destroy = function() {
+    _two_ComponentHandle_Bullet__destroy(this.__ptr);
+};
+// ComponentHandle<Human>
+function ComponentHandle_Human() {
+    
+    this.__ptr = _two_ComponentHandle_Human__construct_0(); getCache(ComponentHandle_Human)[this.__ptr] = this;
+};
+ComponentHandle_Human.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_Human.prototype.constructor = ComponentHandle_Human;
+ComponentHandle_Human.prototype.__class = ComponentHandle_Human;
+ComponentHandle_Human.__cache = {};
+Module['two']['ComponentHandle_Human'] = ComponentHandle_Human;
+ComponentHandle_Human.prototype["__destroy"] = ComponentHandle_Human.prototype.__destroy = function() {
+    _two_ComponentHandle_Human__destroy(this.__ptr);
+};
+// ComponentHandle<Crate>
+function ComponentHandle_Crate() {
+    
+    this.__ptr = _two_ComponentHandle_Crate__construct_0(); getCache(ComponentHandle_Crate)[this.__ptr] = this;
+};
+ComponentHandle_Crate.prototype = Object.create(WrapperObject.prototype);
+ComponentHandle_Crate.prototype.constructor = ComponentHandle_Crate;
+ComponentHandle_Crate.prototype.__class = ComponentHandle_Crate;
+ComponentHandle_Crate.__cache = {};
+Module['two']['ComponentHandle_Crate'] = ComponentHandle_Crate;
+ComponentHandle_Crate.prototype["__destroy"] = ComponentHandle_Crate.prototype.__destroy = function() {
+    _two_ComponentHandle_Crate__destroy(this.__ptr);
+};
 // Bullet
 function Bullet() { throw "cannot construct a Bullet, no constructor in IDL" }
 Bullet.prototype = Object.create(WrapperObject.prototype);
@@ -27,44 +66,20 @@ Object.defineProperty(Bullet.prototype, "velocity", {
 Bullet.prototype["__destroy"] = Bullet.prototype.__destroy = function() {
     _Bullet__destroy(this.__ptr);
 };
-// ComponentHandle<Bullet>
-function ComponentHandle_Bullet() {
-    
-    this.__ptr = _mud_ComponentHandle_Bullet__construct_0(); getCache(ComponentHandle_Bullet)[this.__ptr] = this;
+// Human
+function Human(a0, a1) {
+    if (a0 === undefined) {  }
+    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Human(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Human(1:movable): expected ComponentHandle<toy::Movable>'); }
+    if (a0 === undefined) { this.__ptr = _Human__construct_0(); getCache(Human)[this.__ptr] = this; }
+    else { this.__ptr = _Human__construct_2(/*spatial*/a0.__ptr, /*movable*/a1.__ptr); getCache(Human)[this.__ptr] = this; }
 };
-ComponentHandle_Bullet.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_Bullet.prototype.constructor = ComponentHandle_Bullet;
-ComponentHandle_Bullet.prototype.__class = ComponentHandle_Bullet;
-ComponentHandle_Bullet.__cache = {};
-Module['mud']['ComponentHandle_Bullet'] = ComponentHandle_Bullet;
-ComponentHandle_Bullet.prototype["__destroy"] = ComponentHandle_Bullet.prototype.__destroy = function() {
-    _mud_ComponentHandle_Bullet__destroy(this.__ptr);
-};
-// ComponentHandle<Crate>
-function ComponentHandle_Crate() {
-    
-    this.__ptr = _mud_ComponentHandle_Crate__construct_0(); getCache(ComponentHandle_Crate)[this.__ptr] = this;
-};
-ComponentHandle_Crate.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_Crate.prototype.constructor = ComponentHandle_Crate;
-ComponentHandle_Crate.prototype.__class = ComponentHandle_Crate;
-ComponentHandle_Crate.__cache = {};
-Module['mud']['ComponentHandle_Crate'] = ComponentHandle_Crate;
-ComponentHandle_Crate.prototype["__destroy"] = ComponentHandle_Crate.prototype.__destroy = function() {
-    _mud_ComponentHandle_Crate__destroy(this.__ptr);
-};
-// ComponentHandle<Human>
-function ComponentHandle_Human() {
-    
-    this.__ptr = _mud_ComponentHandle_Human__construct_0(); getCache(ComponentHandle_Human)[this.__ptr] = this;
-};
-ComponentHandle_Human.prototype = Object.create(WrapperObject.prototype);
-ComponentHandle_Human.prototype.constructor = ComponentHandle_Human;
-ComponentHandle_Human.prototype.__class = ComponentHandle_Human;
-ComponentHandle_Human.__cache = {};
-Module['mud']['ComponentHandle_Human'] = ComponentHandle_Human;
-ComponentHandle_Human.prototype["__destroy"] = ComponentHandle_Human.prototype.__destroy = function() {
-    _mud_ComponentHandle_Human__destroy(this.__ptr);
+Human.prototype = Object.create(WrapperObject.prototype);
+Human.prototype.constructor = Human;
+Human.prototype.__class = Human;
+Human.__cache = {};
+Module['Human'] = Human;
+Human.prototype["__destroy"] = Human.prototype.__destroy = function() {
+    _Human__destroy(this.__ptr);
 };
 // Crate
 function Crate(a0, a1, a2) {
@@ -90,21 +105,6 @@ Object.defineProperty(Crate.prototype, "extents", {
 Crate.prototype["__destroy"] = Crate.prototype.__destroy = function() {
     _Crate__destroy(this.__ptr);
 };
-// Human
-function Human(a0, a1) {
-    if (a0 === undefined) {  }
-    else { if (!checkClass(a0, ComponentHandle_toy_Spatial)) throw Error('Human(0:spatial): expected ComponentHandle<toy::Spatial>'); if (!checkClass(a1, ComponentHandle_toy_Movable)) throw Error('Human(1:movable): expected ComponentHandle<toy::Movable>'); }
-    if (a0 === undefined) { this.__ptr = _Human__construct_0(); getCache(Human)[this.__ptr] = this; }
-    else { this.__ptr = _Human__construct_2(/*spatial*/a0.__ptr, /*movable*/a1.__ptr); getCache(Human)[this.__ptr] = this; }
-};
-Human.prototype = Object.create(WrapperObject.prototype);
-Human.prototype.constructor = Human;
-Human.prototype.__class = Human;
-Human.__cache = {};
-Module['Human'] = Human;
-Human.prototype["__destroy"] = Human.prototype.__destroy = function() {
-    _Human__destroy(this.__ptr);
-};
 // Player
 function Player() { throw "cannot construct a Player, no constructor in IDL" }
 Player.prototype = Object.create(WrapperObject.prototype);
@@ -122,8 +122,8 @@ Module['HCrate'] = ComponentHandle_Crate;
 (function() {
     function setup() {
         Bullet.prototype.__type = _Bullet__type();
-        Crate.prototype.__type = _Crate__type();
         Human.prototype.__type = _Human__type();
+        Crate.prototype.__type = _Crate__type();
         Player.prototype.__type = _Player__type();
     }
     if (Module['calledRun']) setup();

@@ -5,21 +5,21 @@
 #include <stl/vector.h>
 #include <util/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <type/Type.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <type/Types.h>
 #include <math/Types.h>
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     
     
-    export_ template <> TOY_UTIL_EXPORT Type& type<toy::Procedure>();
     export_ template <> TOY_UTIL_EXPORT Type& type<toy::ProcedureType>();
+    export_ template <> TOY_UTIL_EXPORT Type& type<toy::Procedure>();
 }

@@ -31,12 +31,12 @@
 
 #include <meta/_test.meta.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 namespace test
 {
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 static Shell* g_app = nullptr;
 static size_t g_frame = 0U;
 static size_t g_iterations = 0U;
@@ -53,9 +53,9 @@ Shell::Shell(const string& resource_path, int argc, char *argv[])
 	, m_resource_path(resource_path)
 	, m_gfx(resource_path)
 {
-	System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
-	System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m() });
-	System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_ui::m(), &mud_tool::m() });
+	System::instance().load_modules({ &two_infra::m(), &two_type::m(), &two_pool::m(), &two_refl::m(), &two_ecs::m(), &two_tree::m() });
+	System::instance().load_modules({ &two_srlz::m(), &two_math::m(), &two_geom::m(), &two_lang::m() });
+	System::instance().load_modules({ &two_ctx::m(), &two_ui::m(), &two_gfx::m(), &two_gfx_ui::m(), &two_tool::m() });
 
 	// @todo this should be automatically done by math module
 	register_math_conversions();
@@ -72,7 +72,7 @@ void Shell::run(const function<void(Shell&)>& func, size_t iterations)
 {
 	m_pump = func;
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	g_app = this;
 	g_iterations = iterations;
 	emscripten_set_main_loop(iterate, 0, 1);
@@ -92,7 +92,7 @@ bool Shell::pump()
 
 void Shell::init()
 {
-	m_context = construct<GfxWindow>(m_gfx, "mud EditorCore", uvec2(1600, 900), false);
+	m_context = construct<GfxWindow>(m_gfx, "two EditorCore", uvec2(1600, 900), false);
 	GfxWindow& context = as<GfxWindow>(*m_context);
 
 	m_gfx.init_pipeline(pipeline_pbr);

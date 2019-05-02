@@ -1,5 +1,5 @@
 
-detour = mud_dep(nil, "detour")
+detour = two_dep(nil, "detour")
 	kind "StaticLib"
     
 	includedirs {

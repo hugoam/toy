@@ -6,7 +6,7 @@
 	path = 3rdparty/recast
 	url = https://github.com/recastnavigation/recastnavigation
 [submodule "mud"]
-	path = mud
+	path = two
 	url = https://github.com/hugoam/mud/
 [submodule "3rdparty/hashmap"]
 	path = 3rdparty/hashmap

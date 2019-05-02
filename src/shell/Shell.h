@@ -17,7 +17,7 @@
 
 #include <uio/ScriptEdit.h>
 
-namespace mud
+namespace two
 {
 	class Shell;
 }
@@ -212,12 +212,12 @@ namespace toy
 		table<Step, float> m_times = {};
 	};
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	static GameShell* g_app = nullptr;
 #endif
 }
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 extern "C"
 {
 	void copy(const char* text);

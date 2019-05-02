@@ -34,20 +34,82 @@
 
 extern "C" {
 	
+	// ComponentHandle<Camp>
+	two::Type* DECL two_ComponentHandle_Camp__type() {
+		return &two::type<two::ComponentHandle<Camp>>();
+	}
+	two::ComponentHandle<Camp>* DECL two_ComponentHandle_Camp__construct_0() {
+		return new two::ComponentHandle<Camp>();
+	}
+	void DECL two_ComponentHandle_Camp__destroy(two::ComponentHandle<Camp>* self) {
+		delete self;
+	}
+	// ComponentHandle<Shield>
+	two::Type* DECL two_ComponentHandle_Shield__type() {
+		return &two::type<two::ComponentHandle<Shield>>();
+	}
+	two::ComponentHandle<Shield>* DECL two_ComponentHandle_Shield__construct_0() {
+		return new two::ComponentHandle<Shield>();
+	}
+	void DECL two_ComponentHandle_Shield__destroy(two::ComponentHandle<Shield>* self) {
+		delete self;
+	}
+	// ComponentHandle<Slug>
+	two::Type* DECL two_ComponentHandle_Slug__type() {
+		return &two::type<two::ComponentHandle<Slug>>();
+	}
+	two::ComponentHandle<Slug>* DECL two_ComponentHandle_Slug__construct_0() {
+		return new two::ComponentHandle<Slug>();
+	}
+	void DECL two_ComponentHandle_Slug__destroy(two::ComponentHandle<Slug>* self) {
+		delete self;
+	}
+	// ComponentHandle<Tank>
+	two::Type* DECL two_ComponentHandle_Tank__type() {
+		return &two::type<two::ComponentHandle<Tank>>();
+	}
+	two::ComponentHandle<Tank>* DECL two_ComponentHandle_Tank__construct_0() {
+		return new two::ComponentHandle<Tank>();
+	}
+	void DECL two_ComponentHandle_Tank__destroy(two::ComponentHandle<Tank>* self) {
+		delete self;
+	}
+	// Faction
+	two::Type* DECL Faction__type() {
+		return &two::type<Faction>();
+	}
+	Faction* DECL Faction__construct_2(uint32_t id, const two::Colour* colour) {
+		return new Faction(id, *colour);
+	}
+	uint32_t DECL Faction__get_id(Faction* self) {
+		return self->m_id;
+	}
+	void DECL Faction__set_id(Faction* self, uint32_t value) {
+		self->m_id = value;
+	}
+	two::Colour* DECL Faction__get_colour(Faction* self) {
+		return &self->m_colour;
+	}
+	void DECL Faction__set_colour(Faction* self, two::Colour* value) {
+		self->m_colour = *value;
+	}
+	void DECL Faction__destroy(Faction* self) {
+		delete self;
+	}
 	// Camp
-	mud::Type* DECL Camp__type() {
-		return &mud::type<Camp>();
+	two::Type* DECL Camp__type() {
+		return &two::type<Camp>();
 	}
 	Camp* DECL Camp__construct_0() {
 		return new Camp();
 	}
-	Camp* DECL Camp__construct_3(toy::HSpatial* spatial, const mud::vec3* position, Faction* faction) {
+	Camp* DECL Camp__construct_3(toy::HSpatial* spatial, const two::vec3* position, Faction* faction) {
 		return new Camp(*spatial, *position, *faction);
 	}
-	mud::vec3* DECL Camp__get_position(Camp* self) {
+	two::vec3* DECL Camp__get_position(Camp* self) {
 		return &self->m_position;
 	}
-	void DECL Camp__set_position(Camp* self, mud::vec3* value) {
+	void DECL Camp__set_position(Camp* self, two::vec3* value) {
 		self->m_position = *value;
 	}
 	Faction* DECL Camp__get_faction(Camp* self) {
@@ -59,78 +121,9 @@ extern "C" {
 	void DECL Camp__destroy(Camp* self) {
 		delete self;
 	}
-	// ComponentHandle<Camp>
-	mud::Type* DECL mud_ComponentHandle_Camp__type() {
-		return &mud::type<mud::ComponentHandle<Camp>>();
-	}
-	mud::ComponentHandle<Camp>* DECL mud_ComponentHandle_Camp__construct_0() {
-		return new mud::ComponentHandle<Camp>();
-	}
-	void DECL mud_ComponentHandle_Camp__destroy(mud::ComponentHandle<Camp>* self) {
-		delete self;
-	}
-	// ComponentHandle<Shield>
-	mud::Type* DECL mud_ComponentHandle_Shield__type() {
-		return &mud::type<mud::ComponentHandle<Shield>>();
-	}
-	mud::ComponentHandle<Shield>* DECL mud_ComponentHandle_Shield__construct_0() {
-		return new mud::ComponentHandle<Shield>();
-	}
-	void DECL mud_ComponentHandle_Shield__destroy(mud::ComponentHandle<Shield>* self) {
-		delete self;
-	}
-	// ComponentHandle<Slug>
-	mud::Type* DECL mud_ComponentHandle_Slug__type() {
-		return &mud::type<mud::ComponentHandle<Slug>>();
-	}
-	mud::ComponentHandle<Slug>* DECL mud_ComponentHandle_Slug__construct_0() {
-		return new mud::ComponentHandle<Slug>();
-	}
-	void DECL mud_ComponentHandle_Slug__destroy(mud::ComponentHandle<Slug>* self) {
-		delete self;
-	}
-	// ComponentHandle<Tank>
-	mud::Type* DECL mud_ComponentHandle_Tank__type() {
-		return &mud::type<mud::ComponentHandle<Tank>>();
-	}
-	mud::ComponentHandle<Tank>* DECL mud_ComponentHandle_Tank__construct_0() {
-		return new mud::ComponentHandle<Tank>();
-	}
-	void DECL mud_ComponentHandle_Tank__destroy(mud::ComponentHandle<Tank>* self) {
-		delete self;
-	}
-	// Faction
-	mud::Type* DECL Faction__type() {
-		return &mud::type<Faction>();
-	}
-	Faction* DECL Faction__construct_2(uint32_t id, const mud::Colour* colour) {
-		return new Faction(id, *colour);
-	}
-	uint32_t DECL Faction__get_id(Faction* self) {
-		return self->m_id;
-	}
-	void DECL Faction__set_id(Faction* self, uint32_t value) {
-		self->m_id = value;
-	}
-	mud::Colour* DECL Faction__get_colour(Faction* self) {
-		return &self->m_colour;
-	}
-	void DECL Faction__set_colour(Faction* self, mud::Colour* value) {
-		self->m_colour = *value;
-	}
-	void DECL Faction__destroy(Faction* self) {
-		delete self;
-	}
-	// Player
-	mud::Type* DECL Player__type() {
-		return &mud::type<Player>();
-	}
-	void DECL Player__destroy(Player* self) {
-		delete self;
-	}
 	// Shield
-	mud::Type* DECL Shield__type() {
-		return &mud::type<Shield>();
+	two::Type* DECL Shield__type() {
+		return &two::type<Shield>();
 	}
 	Shield* DECL Shield__construct_0() {
 		return new Shield();
@@ -166,19 +159,19 @@ extern "C" {
 		delete self;
 	}
 	// Slug
-	mud::Type* DECL Slug__type() {
-		return &mud::type<Slug>();
+	two::Type* DECL Slug__type() {
+		return &two::type<Slug>();
 	}
-	mud::vec3* DECL Slug__get_source(Slug* self) {
+	two::vec3* DECL Slug__get_source(Slug* self) {
 		return &self->m_source;
 	}
-	void DECL Slug__set_source(Slug* self, mud::vec3* value) {
+	void DECL Slug__set_source(Slug* self, two::vec3* value) {
 		self->m_source = *value;
 	}
-	mud::vec3* DECL Slug__get_velocity(Slug* self) {
+	two::vec3* DECL Slug__get_velocity(Slug* self) {
 		return &self->m_velocity;
 	}
-	void DECL Slug__set_velocity(Slug* self, mud::vec3* value) {
+	void DECL Slug__set_velocity(Slug* self, two::vec3* value) {
 		self->m_velocity = *value;
 	}
 	float DECL Slug__get_power(Slug* self) {
@@ -191,8 +184,8 @@ extern "C" {
 		delete self;
 	}
 	// Tank
-	mud::Type* DECL Tank__type() {
-		return &mud::type<Tank>();
+	two::Type* DECL Tank__type() {
+		return &two::type<Tank>();
 	}
 	Tank* DECL Tank__construct_0() {
 		return new Tank();
@@ -204,10 +197,10 @@ extern "C" {
 		delete self;
 	}
 	// BlockWorld
-	mud::Type* DECL BlockWorld__type() {
-		return &mud::type<BlockWorld>();
+	two::Type* DECL BlockWorld__type() {
+		return &two::type<BlockWorld>();
 	}
-	BlockWorld* DECL BlockWorld__construct_2(const char* name, mud::JobSystem* job_system) {
+	BlockWorld* DECL BlockWorld__construct_2(const char* name, two::JobSystem* job_system) {
 		return new BlockWorld(name, *job_system);
 	}
 	toy::World* DECL BlockWorld__get_world(BlockWorld* self) {
@@ -219,31 +212,38 @@ extern "C" {
 	toy::Navmesh* DECL BlockWorld__get_navmesh(BlockWorld* self) {
 		return &self->m_navmesh;
 	}
-	mud::uvec3* DECL BlockWorld__get_block_subdiv(BlockWorld* self) {
+	two::uvec3* DECL BlockWorld__get_block_subdiv(BlockWorld* self) {
 		return &self->m_block_subdiv;
 	}
-	void DECL BlockWorld__set_block_subdiv(BlockWorld* self, mud::uvec3* value) {
+	void DECL BlockWorld__set_block_subdiv(BlockWorld* self, two::uvec3* value) {
 		self->m_block_subdiv = *value;
 	}
-	mud::vec3* DECL BlockWorld__get_tile_scale(BlockWorld* self) {
+	two::vec3* DECL BlockWorld__get_tile_scale(BlockWorld* self) {
 		return &self->m_tile_scale;
 	}
-	void DECL BlockWorld__set_tile_scale(BlockWorld* self, mud::vec3* value) {
+	void DECL BlockWorld__set_tile_scale(BlockWorld* self, two::vec3* value) {
 		self->m_tile_scale = *value;
 	}
-	mud::vec3* DECL BlockWorld__get_block_size(BlockWorld* self) {
+	two::vec3* DECL BlockWorld__get_block_size(BlockWorld* self) {
 		return &self->m_block_size;
 	}
-	void DECL BlockWorld__set_block_size(BlockWorld* self, mud::vec3* value) {
+	void DECL BlockWorld__set_block_size(BlockWorld* self, two::vec3* value) {
 		self->m_block_size = *value;
 	}
-	mud::vec3* DECL BlockWorld__get_world_size(BlockWorld* self) {
+	two::vec3* DECL BlockWorld__get_world_size(BlockWorld* self) {
 		return &self->m_world_size;
 	}
-	void DECL BlockWorld__set_world_size(BlockWorld* self, mud::vec3* value) {
+	void DECL BlockWorld__set_world_size(BlockWorld* self, two::vec3* value) {
 		self->m_world_size = *value;
 	}
 	void DECL BlockWorld__destroy(BlockWorld* self) {
+		delete self;
+	}
+	// Player
+	two::Type* DECL Player__type() {
+		return &two::type<Player>();
+	}
+	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	

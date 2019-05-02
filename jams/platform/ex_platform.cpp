@@ -596,7 +596,7 @@ void paint_viewer(Viewer& viewer)
 
 	Glow& glow = viewer.m_viewport.comp<Glow>();
 	glow.m_enabled = true;
-#ifndef MUD_PLATFORM_EMSCRIPTEN
+#ifndef TWO_PLATFORM_EMSCRIPTEN
 	glow.m_bicubic_filter = true;
 #endif
 }
@@ -939,7 +939,7 @@ public:
 
 		auto paint_hole_block = [&](Gnode& parent, Tileblock& block)
 		{
-#if 0 //ndef MUD_PLATFORM_EMSCRIPTEN
+#if 0 //ndef TWO_PLATFORM_EMSCRIPTEN
 			if(block.contains(player.m_human->m_spatial.m_position))
 			{
 				// cut a hole of 6x6 tiles above the character

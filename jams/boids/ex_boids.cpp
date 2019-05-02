@@ -31,9 +31,9 @@ namespace boids
 	constexpr size_t c_max_threads = 40;
 
 #ifdef BOIDS_SIMD
-	inline mud::vec3 to_mud(const vec3& v) { return v; }
+	inline two::vec3 to_mud(const vec3& v) { return v; }
 #else
-	inline mud::vec3 to_mud(const vec3& v) { return mud::vec3(v); }
+	inline two::vec3 to_mud(const vec3& v) { return two::vec3(v); }
 #endif
 
 	struct GridHash
@@ -446,7 +446,7 @@ namespace boids
 #else
 				//bxlookat(transform, position.m_value, position.m_value + heading.m_value, Y3);
 				//transform = bxTRS(vec3(1.f), look_dir(position.m_value, heading.m_value), position.m_value);
-				transform = bxtranslation(mud::vec3(position.m_value));
+				transform = bxtranslation(two::vec3(position.m_value));
 #endif
 			};
 
@@ -671,7 +671,7 @@ int main(int argc, char *argv[])
 	auto moveany = [](Any& any2, Any& any)
 	{
 		//printf("move\n");
-		using mud::move;
+		using two::move;
 		TAnyHandlerImpl<Heading>::create(any2, *static_cast<const TAnyHandler<Heading>*>(any.m_handler), move(TAnyHandler<Heading>::value(any)));
 		TAnyHandler<Heading>::me.destroy(any);
 		//printf("move\n");

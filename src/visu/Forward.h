@@ -9,7 +9,7 @@
 #include <core/Forward.h>
 
 #ifndef TOY_VISU_EXPORT
-#define TOY_VISU_EXPORT MUD_IMPORT
+#define TOY_VISU_EXPORT TWO_IMPORT
 #endif
 
 namespace toy

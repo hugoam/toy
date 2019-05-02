@@ -5,7 +5,7 @@
 #include <meta/_godot.meta.h>
 
 //#define _GODOT_TOOLS
-#ifndef MUD_PLATFORM_EMSCRIPTEN
+#ifndef TWO_PLATFORM_EMSCRIPTEN
 //#define GI_PROBE
 #define CLUSTERED
 #endif
@@ -534,7 +534,7 @@ void paint_level(Gnode& parent)
 #endif
 
 #ifdef LIGHTMAPS
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	string path = gfx.m_resource_path + "/lightmaps/";
 #else
 	string path = gfx.m_resource_path + "/examples/ex_godot/lightmaps/";
@@ -561,7 +561,7 @@ void paint_viewer(Viewer& viewer)
 
 	Glow& glow = viewer.m_viewport.comp<Glow>();
 	//glow.m_enabled = true;
-#ifndef MUD_GODOT_EMSCRIPTEN
+#ifndef TWO_GODOT_EMSCRIPTEN
 	glow.m_bicubic_filter = true;
 #endif
 }

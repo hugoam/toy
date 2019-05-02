@@ -32,6 +32,13 @@
 
 extern "C" {
 	
+	// GameScene
+	mud::Type* DECL toy_GameScene__type() {
+		return &mud::type<toy::GameScene>();
+	}
+	void DECL toy_GameScene__destroy(toy::GameScene* self) {
+		delete self;
+	}
 	// Game
 	mud::Type* DECL toy_Game__type() {
 		return &mud::type<toy::Game>();
@@ -101,6 +108,35 @@ extern "C" {
 		self->paint(*shell, *scene, *graph);
 	}
 	void DECL toy_GameModule__destroy(toy::GameModule* self) {
+		delete self;
+	}
+	// GameModuleBind
+	mud::Type* DECL toy_GameModuleBind__type() {
+		return &mud::type<toy::GameModuleBind>();
+	}
+	void DECL toy_GameModuleBind__destroy(toy::GameModuleBind* self) {
+		delete self;
+	}
+	// GameWindow
+	mud::Type* DECL toy_GameWindow__type() {
+		return &mud::type<toy::GameWindow>();
+	}
+	uint32_t DECL toy_GameWindow__get_index(toy::GameWindow* self) {
+		return self->m_index;
+	}
+	void DECL toy_GameWindow__set_index(toy::GameWindow* self, uint32_t value) {
+		self->m_index = value;
+	}
+	mud::UiWindow* DECL toy_GameWindow__get_ui_window(toy::GameWindow* self) {
+		return &self->m_ui_window;
+	}
+	mud::Ui* DECL toy_GameWindow__get_ui(toy::GameWindow* self) {
+		return self->m_ui;
+	}
+	void DECL toy_GameWindow__set_ui(toy::GameWindow* self, mud::Ui* value) {
+		self->m_ui = value;
+	}
+	void DECL toy_GameWindow__destroy(toy::GameWindow* self) {
 		delete self;
 	}
 	// GameShell
@@ -201,42 +237,6 @@ extern "C" {
 		return &self->m_editor;
 	}
 	void DECL toy_GameShell__destroy(toy::GameShell* self) {
-		delete self;
-	}
-	// GameModuleBind
-	mud::Type* DECL toy_GameModuleBind__type() {
-		return &mud::type<toy::GameModuleBind>();
-	}
-	void DECL toy_GameModuleBind__destroy(toy::GameModuleBind* self) {
-		delete self;
-	}
-	// GameScene
-	mud::Type* DECL toy_GameScene__type() {
-		return &mud::type<toy::GameScene>();
-	}
-	void DECL toy_GameScene__destroy(toy::GameScene* self) {
-		delete self;
-	}
-	// GameWindow
-	mud::Type* DECL toy_GameWindow__type() {
-		return &mud::type<toy::GameWindow>();
-	}
-	uint32_t DECL toy_GameWindow__get_index(toy::GameWindow* self) {
-		return self->m_index;
-	}
-	void DECL toy_GameWindow__set_index(toy::GameWindow* self, uint32_t value) {
-		self->m_index = value;
-	}
-	mud::UiWindow* DECL toy_GameWindow__get_ui_window(toy::GameWindow* self) {
-		return &self->m_ui_window;
-	}
-	mud::Ui* DECL toy_GameWindow__get_ui(toy::GameWindow* self) {
-		return self->m_ui;
-	}
-	void DECL toy_GameWindow__set_ui(toy::GameWindow* self, mud::Ui* value) {
-		self->m_ui = value;
-	}
-	void DECL toy_GameWindow__destroy(toy::GameWindow* self) {
 		delete self;
 	}
 	void DECL toy_paint_physics_2(mud::Gnode* parent, toy::World* world) {

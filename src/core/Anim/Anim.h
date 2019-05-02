@@ -4,14 +4,14 @@
 
 #pragma once
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <type/Var.h>
 #include <math/Timer.h>
 #endif
 #include <math/Interp.h>
 #include <core/Forward.h>
 
-namespace mud
+namespace two
 {
 	export_ struct TOY_CORE_EXPORT Anim
 	{

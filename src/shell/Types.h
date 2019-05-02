@@ -5,11 +5,11 @@
 #include <stl/vector.h>
 #include <shell/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <type/Type.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <infra/Types.h>
 #include <jobs/Types.h>
 #include <type/Types.h>
@@ -35,16 +35,16 @@
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameMode>();
     
     
+    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::Game>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModule>();
-    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>();
-    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameWindow>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>();
 }

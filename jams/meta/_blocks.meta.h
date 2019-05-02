@@ -1,6 +1,6 @@
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <refl/Module.h>
 #endif
 
@@ -8,10 +8,10 @@
 //#include <blocks/Types.h>
 
 #ifndef _BLOCKS_REFL_EXPORT
-#define _BLOCKS_REFL_EXPORT MUD_IMPORT
+#define _BLOCKS_REFL_EXPORT TWO_IMPORT
 #endif
 
-export_ class _BLOCKS_REFL_EXPORT _blocks : public mud::Module
+export_ class _BLOCKS_REFL_EXPORT _blocks : public two::Module
 {
 private:
 	_blocks();

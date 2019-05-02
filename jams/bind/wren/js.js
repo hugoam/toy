@@ -1,7 +1,7 @@
-Module['mud']['ui'] = Module['mud']['ui'] || {};
+Module['two']['ui'] = Module['two']['ui'] || {};
 Module['boids'] = Module['boids'] || {};
-Module['mud'] = Module['mud'] || {};
-Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['two'] = Module['two'] || {};
+Module['two']['gfx'] = Module['two']['gfx'] || {};
 Module['toy'] = Module['toy'] || {};
 
 (function() {

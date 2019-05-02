@@ -11,7 +11,7 @@
 #include <space/Scene.h>
 #include <space/Ui.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 void builtin_buildings(BuildingDatabase& database)

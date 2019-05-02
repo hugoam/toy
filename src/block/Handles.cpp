@@ -9,7 +9,7 @@
 #include <block/Chunk.h>
 #include <block/Sector.h>
 
-namespace mud
+namespace two
 {
 	template struct ComponentHandle<toy::Block>;
 	template struct ComponentHandle<toy::Chunk>;

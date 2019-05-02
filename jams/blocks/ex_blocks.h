@@ -20,7 +20,7 @@
 
 #include <map>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -28,7 +28,7 @@ extern "C"
 	//_BLOCKS_EXPORT void ex_blocks_game(GameShell& app, Game& game);
 }
 
-namespace mud
+namespace two
 {
 //	template <> struct TypedBuffer<Well>	{ static uint32_t index() { return 20; } };
 	template <> struct TypedBuffer<Camp>	{ static uint32_t index() { return 21; } };
@@ -37,7 +37,7 @@ namespace mud
 	template <> struct TypedBuffer<Tank>	{ static uint32_t index() { return 24; } };
 }
 
-namespace mud
+namespace two
 {
 //	template struct refl_ ComponentHandle<Well>;
 	template struct refl_ ComponentHandle<Camp>;

@@ -1,6 +1,6 @@
 #include <infra/Cpp20.h>
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.visu;
 #else
 #include <cstddef>
@@ -20,12 +20,12 @@ module toy.visu;
 
 #include <visu/Api.h>
 
-using namespace mud;
+using namespace two;
 
 void* toy_VisuScene__get_gfx(void* object) { return &(*static_cast<toy::VisuScene*>(object)).m_gfx; }
 void toy_VisuScene_next_frame(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::VisuScene*>(object)).next_frame(); }
 
-namespace mud
+namespace two
 {
 	void toy_visu_meta(Module& m)
 	{
@@ -60,8 +60,8 @@ namespace mud
 		// copy constructor
 		// members
 		static Member members[] = {
-			{ t, SIZE_MAX, type<mud::GfxSystem>(), "gfx", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_VisuScene__get_gfx },
-			{ t, offsetof(toy::VisuScene, m_scene), type<mud::Scene>(), "scene", nullptr, Member::NonMutable, nullptr }
+			{ t, SIZE_MAX, type<two::GfxSystem>(), "gfx", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_VisuScene__get_gfx },
+			{ t, offsetof(toy::VisuScene, m_scene), type<two::Scene>(), "scene", nullptr, Member::NonMutable, nullptr }
 		};
 		// methods
 		static Method methods[] = {

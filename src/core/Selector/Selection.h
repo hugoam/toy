@@ -10,6 +10,6 @@
 
 namespace toy
 {
-	using namespace mud;
+	using namespace two;
 
 }

@@ -1,5 +1,5 @@
 #ifndef USE_STL
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block;
 #else
 #include <stl/vector.hpp>

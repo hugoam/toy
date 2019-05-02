@@ -37,7 +37,7 @@
 #include <shell/Forward.h>
 
 #ifndef _GODOT_EXPORT
-#define _GODOT_EXPORT MUD_IMPORT
+#define _GODOT_EXPORT TWO_IMPORT
 #endif
 
 enum class Faction : int;

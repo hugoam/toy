@@ -37,7 +37,7 @@
 #include <shell/Forward.h>
 
 #ifndef _BOIDS_EXPORT
-#define _BOIDS_EXPORT MUD_IMPORT
+#define _BOIDS_EXPORT TWO_IMPORT
 #endif
 
 namespace boids

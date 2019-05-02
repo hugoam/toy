@@ -15,8 +15,8 @@
 #include <block/Forward.h>
 #include <block/Handles.h>
 
-#ifdef MUD_META_GENERATOR
-namespace mud
+#ifdef TWO_META_GENERATOR
+namespace two
 {
 	extern template class refl_ vector2d<toy::Block*>;
 }

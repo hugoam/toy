@@ -37,7 +37,7 @@
 #include <shell/Forward.h>
 
 #ifndef _SPACE_EXPORT
-#define _SPACE_EXPORT MUD_IMPORT
+#define _SPACE_EXPORT TWO_IMPORT
 #endif
 
 #include <stdint.h>
@@ -94,13 +94,13 @@ class Galaxy;
 class Universe;
 class CommanderBrush;
 
-//namespace mud
+//namespace two
 //{
 //	template struct refl_ ComponentHandle<Galaxy>;
 //	template struct refl_ ComponentHandle<Star>;
 //	template struct refl_ ComponentHandle<Fleet>;
 //}
 
-using HGalaxy = mud::ComponentHandle<Galaxy>;
-using HStar = mud::ComponentHandle<Star>;
-using HFleet = mud::ComponentHandle<Fleet>;
+using HGalaxy = two::ComponentHandle<Galaxy>;
+using HStar = two::ComponentHandle<Star>;
+using HFleet = two::ComponentHandle<Fleet>;

@@ -3,7 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block
 #else
 #include <math/Grid.hpp>
@@ -70,7 +70,7 @@ namespace toy
 		grid.m_center_offset.y = 0.f;
 
 		vector<uvec3> coords;
-		mud::grid(grid_subdiv, coords);
+		two::grid(grid_subdiv, coords);
 
 		vector<Block*> blocks;
 

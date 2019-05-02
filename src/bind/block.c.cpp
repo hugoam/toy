@@ -16,6 +16,66 @@
 
 extern "C" {
 	
+	// ComponentHandle<toy::Block>
+	mud::Type* DECL mud_ComponentHandle_toy_Block__type() {
+		return &mud::type<mud::ComponentHandle<toy::Block>>();
+	}
+	mud::ComponentHandle<toy::Block>* DECL mud_ComponentHandle_toy_Block__construct_0() {
+		return new mud::ComponentHandle<toy::Block>();
+	}
+	void DECL mud_ComponentHandle_toy_Block__destroy(mud::ComponentHandle<toy::Block>* self) {
+		delete self;
+	}
+	// ComponentHandle<toy::Chunk>
+	mud::Type* DECL mud_ComponentHandle_toy_Chunk__type() {
+		return &mud::type<mud::ComponentHandle<toy::Chunk>>();
+	}
+	mud::ComponentHandle<toy::Chunk>* DECL mud_ComponentHandle_toy_Chunk__construct_0() {
+		return new mud::ComponentHandle<toy::Chunk>();
+	}
+	void DECL mud_ComponentHandle_toy_Chunk__destroy(mud::ComponentHandle<toy::Chunk>* self) {
+		delete self;
+	}
+	// ComponentHandle<toy::Heap>
+	mud::Type* DECL mud_ComponentHandle_toy_Heap__type() {
+		return &mud::type<mud::ComponentHandle<toy::Heap>>();
+	}
+	mud::ComponentHandle<toy::Heap>* DECL mud_ComponentHandle_toy_Heap__construct_0() {
+		return new mud::ComponentHandle<toy::Heap>();
+	}
+	void DECL mud_ComponentHandle_toy_Heap__destroy(mud::ComponentHandle<toy::Heap>* self) {
+		delete self;
+	}
+	// ComponentHandle<toy::Sector>
+	mud::Type* DECL mud_ComponentHandle_toy_Sector__type() {
+		return &mud::type<mud::ComponentHandle<toy::Sector>>();
+	}
+	mud::ComponentHandle<toy::Sector>* DECL mud_ComponentHandle_toy_Sector__construct_0() {
+		return new mud::ComponentHandle<toy::Sector>();
+	}
+	void DECL mud_ComponentHandle_toy_Sector__destroy(mud::ComponentHandle<toy::Sector>* self) {
+		delete self;
+	}
+	// ComponentHandle<toy::Tileblock>
+	mud::Type* DECL mud_ComponentHandle_toy_Tileblock__type() {
+		return &mud::type<mud::ComponentHandle<toy::Tileblock>>();
+	}
+	mud::ComponentHandle<toy::Tileblock>* DECL mud_ComponentHandle_toy_Tileblock__construct_0() {
+		return new mud::ComponentHandle<toy::Tileblock>();
+	}
+	void DECL mud_ComponentHandle_toy_Tileblock__destroy(mud::ComponentHandle<toy::Tileblock>* self) {
+		delete self;
+	}
+	// vector2d<toy::Block*>
+	mud::Type* DECL mud_vector2d_toy_Block___type() {
+		return &mud::type<mud::vector2d<toy::Block*>>();
+	}
+	mud::vector2d<toy::Block*>* DECL mud_vector2d_toy_Block___construct_0() {
+		return new mud::vector2d<toy::Block*>();
+	}
+	void DECL mud_vector2d_toy_Block___destroy(mud::vector2d<toy::Block*>* self) {
+		delete self;
+	}
 	// Block
 	mud::Type* DECL toy_Block__type() {
 		return &mud::type<toy::Block>();
@@ -108,56 +168,6 @@ extern "C" {
 	void DECL toy_Chunk__destroy(toy::Chunk* self) {
 		delete self;
 	}
-	// ComponentHandle<toy::Block>
-	mud::Type* DECL mud_ComponentHandle_toy_Block__type() {
-		return &mud::type<mud::ComponentHandle<toy::Block>>();
-	}
-	mud::ComponentHandle<toy::Block>* DECL mud_ComponentHandle_toy_Block__construct_0() {
-		return new mud::ComponentHandle<toy::Block>();
-	}
-	void DECL mud_ComponentHandle_toy_Block__destroy(mud::ComponentHandle<toy::Block>* self) {
-		delete self;
-	}
-	// ComponentHandle<toy::Chunk>
-	mud::Type* DECL mud_ComponentHandle_toy_Chunk__type() {
-		return &mud::type<mud::ComponentHandle<toy::Chunk>>();
-	}
-	mud::ComponentHandle<toy::Chunk>* DECL mud_ComponentHandle_toy_Chunk__construct_0() {
-		return new mud::ComponentHandle<toy::Chunk>();
-	}
-	void DECL mud_ComponentHandle_toy_Chunk__destroy(mud::ComponentHandle<toy::Chunk>* self) {
-		delete self;
-	}
-	// ComponentHandle<toy::Heap>
-	mud::Type* DECL mud_ComponentHandle_toy_Heap__type() {
-		return &mud::type<mud::ComponentHandle<toy::Heap>>();
-	}
-	mud::ComponentHandle<toy::Heap>* DECL mud_ComponentHandle_toy_Heap__construct_0() {
-		return new mud::ComponentHandle<toy::Heap>();
-	}
-	void DECL mud_ComponentHandle_toy_Heap__destroy(mud::ComponentHandle<toy::Heap>* self) {
-		delete self;
-	}
-	// ComponentHandle<toy::Sector>
-	mud::Type* DECL mud_ComponentHandle_toy_Sector__type() {
-		return &mud::type<mud::ComponentHandle<toy::Sector>>();
-	}
-	mud::ComponentHandle<toy::Sector>* DECL mud_ComponentHandle_toy_Sector__construct_0() {
-		return new mud::ComponentHandle<toy::Sector>();
-	}
-	void DECL mud_ComponentHandle_toy_Sector__destroy(mud::ComponentHandle<toy::Sector>* self) {
-		delete self;
-	}
-	// ComponentHandle<toy::Tileblock>
-	mud::Type* DECL mud_ComponentHandle_toy_Tileblock__type() {
-		return &mud::type<mud::ComponentHandle<toy::Tileblock>>();
-	}
-	mud::ComponentHandle<toy::Tileblock>* DECL mud_ComponentHandle_toy_Tileblock__construct_0() {
-		return new mud::ComponentHandle<toy::Tileblock>();
-	}
-	void DECL mud_ComponentHandle_toy_Tileblock__destroy(mud::ComponentHandle<toy::Tileblock>* self) {
-		delete self;
-	}
 	// Element
 	mud::Type* DECL toy_Element__type() {
 		return &mud::type<toy::Element>();
@@ -217,6 +227,16 @@ extern "C" {
 	void DECL toy_Heap__destroy(toy::Heap* self) {
 		delete self;
 	}
+	// Earth
+	mud::Type* DECL toy_Earth__type() {
+		return &mud::type<toy::Earth>();
+	}
+	toy::Earth* DECL toy_Earth__construct_0() {
+		return new toy::Earth();
+	}
+	void DECL toy_Earth__destroy(toy::Earth* self) {
+		delete self;
+	}
 	// Sector
 	mud::Type* DECL toy_Sector__type() {
 		return &mud::type<toy::Sector>();
@@ -274,26 +294,6 @@ extern "C" {
 		self->m_populated = value;
 	}
 	void DECL toy_Tileblock__destroy(toy::Tileblock* self) {
-		delete self;
-	}
-	// vector2d<toy::Block*>
-	mud::Type* DECL mud_vector2d_toy_Block___type() {
-		return &mud::type<mud::vector2d<toy::Block*>>();
-	}
-	mud::vector2d<toy::Block*>* DECL mud_vector2d_toy_Block___construct_0() {
-		return new mud::vector2d<toy::Block*>();
-	}
-	void DECL mud_vector2d_toy_Block___destroy(mud::vector2d<toy::Block*>* self) {
-		delete self;
-	}
-	// Earth
-	mud::Type* DECL toy_Earth__type() {
-		return &mud::type<toy::Earth>();
-	}
-	toy::Earth* DECL toy_Earth__construct_0() {
-		return new toy::Earth();
-	}
-	void DECL toy_Earth__destroy(toy::Earth* self) {
 		delete self;
 	}
 	void DECL toy_paint_block_height_3(toy::Block* block, mud::Image256* image, toy::Element* element) {

@@ -8,7 +8,7 @@
 #include <infra/StringOps.h>
 #endif
 
-namespace mud
+namespace two
 {
 	export_ template <> inline void to_value(const string& str, Faction& val) { val = Faction(enu<Faction>().value(str.c_str())); };
 	export_ template <> inline void to_string(const Faction& val, string& str) { str = enu<Faction>().name(uint32_t(val)); };

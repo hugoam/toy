@@ -37,5 +37,5 @@
 #include <shell/Forward.h>
 
 #ifndef _WREN_EXPORT
-#define _WREN_EXPORT MUD_IMPORT
+#define _WREN_EXPORT TWO_IMPORT
 #endif

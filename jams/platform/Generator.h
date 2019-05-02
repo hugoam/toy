@@ -3,7 +3,7 @@
 
 #include <platform/Forward.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 WaveTileset& generator_tileset(GfxSystem& gfx);

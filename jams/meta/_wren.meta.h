@@ -1,6 +1,6 @@
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <refl/Module.h>
 #endif
 
@@ -8,10 +8,10 @@
 //#include <wren/Types.h>
 
 #ifndef _WREN_REFL_EXPORT
-#define _WREN_REFL_EXPORT MUD_IMPORT
+#define _WREN_REFL_EXPORT TWO_IMPORT
 #endif
 
-export_ class _WREN_REFL_EXPORT _wren : public mud::Module
+export_ class _WREN_REFL_EXPORT _wren : public two::Module
 {
 private:
 	_wren();

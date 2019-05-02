@@ -1,6 +1,6 @@
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <refl/Module.h>
 #endif
 
@@ -8,10 +8,10 @@
 //#include <godot/Types.h>
 
 #ifndef _GODOT_REFL_EXPORT
-#define _GODOT_REFL_EXPORT MUD_IMPORT
+#define _GODOT_REFL_EXPORT TWO_IMPORT
 #endif
 
-export_ class _GODOT_REFL_EXPORT _godot : public mud::Module
+export_ class _GODOT_REFL_EXPORT _godot : public two::Module
 {
 private:
 	_godot();

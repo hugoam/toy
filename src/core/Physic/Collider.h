@@ -136,7 +136,7 @@ namespace toy
 	};
 }
 
-namespace mud
+namespace two
 {
 	template <>
 	struct DestroyHandle<toy::Collider>

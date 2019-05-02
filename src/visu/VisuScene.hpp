@@ -11,7 +11,7 @@
 
 #include <ecs/ECS.hpp>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	template <class T>
 	inline void VisuScene::entity_painter(cstring name, World& world, void (*paint_func)(Gnode&, T&))

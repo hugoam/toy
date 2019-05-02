@@ -4,15 +4,15 @@
 
 #include <infra/Cpp20.h>
 
-#ifdef MUD_MODULES
-module mud.math;
+#ifdef TWO_MODULES
+module two.math;
 #else
 #include <stl/algorithm.h>
 #include <refl/Class.h>
 #include <core/Anim/Anim.h>
 #endif
 
-namespace mud
+namespace two
 {
 	Animator Animator::me;
 

@@ -3,7 +3,7 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.visu
 #else
 #include <infra/Reverse.h>
@@ -237,7 +237,7 @@ namespace toy
 		gfx::draw(parent, Cube(hover_bounds), Symbol(Colour::AlphaGrey));
 	}
 
-	void update_camera(Camera& camera, mud::Camera& gfx_camera)
+	void update_camera(Camera& camera, two::Camera& gfx_camera)
 	{
 		//gfx_camera.set_look_at(camera.m_lens_position, camera.m_spatial->absolute_position());
 

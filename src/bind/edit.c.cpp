@@ -16,14 +16,11 @@
 
 extern "C" {
 	
-	// ActionGroup
-	mud::Type* DECL toy_ActionGroup__type() {
-		return &mud::type<toy::ActionGroup>();
+	// Edit
+	mud::Type* DECL toy_Edit__type() {
+		return &mud::type<toy::Edit>();
 	}
-	toy::ActionGroup* DECL toy_ActionGroup__construct_0() {
-		return new toy::ActionGroup();
-	}
-	void DECL toy_ActionGroup__destroy(toy::ActionGroup* self) {
+	void DECL toy_Edit__destroy(toy::Edit* self) {
 		delete self;
 	}
 	// Clone
@@ -40,35 +37,11 @@ extern "C" {
 	void DECL toy_Cut__destroy(toy::Cut* self) {
 		delete self;
 	}
-	// Edit
-	mud::Type* DECL toy_Edit__type() {
-		return &mud::type<toy::Edit>();
-	}
-	void DECL toy_Edit__destroy(toy::Edit* self) {
-		delete self;
-	}
-	// GraphicsDebug
-	mud::Type* DECL toy_GraphicsDebug__type() {
-		return &mud::type<toy::GraphicsDebug>();
-	}
-	toy::GraphicsDebug* DECL toy_GraphicsDebug__construct_0() {
-		return new toy::GraphicsDebug();
-	}
-	void DECL toy_GraphicsDebug__destroy(toy::GraphicsDebug* self) {
-		delete self;
-	}
 	// Paste
 	mud::Type* DECL toy_Paste__type() {
 		return &mud::type<toy::Paste>();
 	}
 	void DECL toy_Paste__destroy(toy::Paste* self) {
-		delete self;
-	}
-	// Toolbelt
-	mud::Type* DECL toy_Toolbelt__type() {
-		return &mud::type<toy::Toolbelt>();
-	}
-	void DECL toy_Toolbelt__destroy(toy::Toolbelt* self) {
 		delete self;
 	}
 	// Toolbox
@@ -83,6 +56,47 @@ extern "C" {
 		return &mud::type<toy::DynamicToolbox>();
 	}
 	void DECL toy_DynamicToolbox__destroy(toy::DynamicToolbox* self) {
+		delete self;
+	}
+	// Toolbelt
+	mud::Type* DECL toy_Toolbelt__type() {
+		return &mud::type<toy::Toolbelt>();
+	}
+	void DECL toy_Toolbelt__destroy(toy::Toolbelt* self) {
+		delete self;
+	}
+	// PlayTool
+	mud::Type* DECL toy_PlayTool__type() {
+		return &mud::type<toy::PlayTool>();
+	}
+	void DECL toy_PlayTool__destroy(toy::PlayTool* self) {
+		delete self;
+	}
+	// RunTool
+	mud::Type* DECL toy_RunTool__type() {
+		return &mud::type<toy::RunTool>();
+	}
+	void DECL toy_RunTool__destroy(toy::RunTool* self) {
+		delete self;
+	}
+	// ActionGroup
+	mud::Type* DECL toy_ActionGroup__type() {
+		return &mud::type<toy::ActionGroup>();
+	}
+	toy::ActionGroup* DECL toy_ActionGroup__construct_0() {
+		return new toy::ActionGroup();
+	}
+	void DECL toy_ActionGroup__destroy(toy::ActionGroup* self) {
+		delete self;
+	}
+	// GraphicsDebug
+	mud::Type* DECL toy_GraphicsDebug__type() {
+		return &mud::type<toy::GraphicsDebug>();
+	}
+	toy::GraphicsDebug* DECL toy_GraphicsDebug__construct_0() {
+		return new toy::GraphicsDebug();
+	}
+	void DECL toy_GraphicsDebug__destroy(toy::GraphicsDebug* self) {
 		delete self;
 	}
 	// Editor
@@ -117,20 +131,6 @@ extern "C" {
 		self->m_play_game = value;
 	}
 	void DECL toy_Editor__destroy(toy::Editor* self) {
-		delete self;
-	}
-	// PlayTool
-	mud::Type* DECL toy_PlayTool__type() {
-		return &mud::type<toy::PlayTool>();
-	}
-	void DECL toy_PlayTool__destroy(toy::PlayTool* self) {
-		delete self;
-	}
-	// RunTool
-	mud::Type* DECL toy_RunTool__type() {
-		return &mud::type<toy::RunTool>();
-	}
-	void DECL toy_RunTool__destroy(toy::RunTool* self) {
 		delete self;
 	}
 	
