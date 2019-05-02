@@ -14,7 +14,7 @@
 #include <core/Event/EventTube.h>
 #include <core/Event/EventRelay.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	EventEmitter::EventEmitter(Entity& entity, EventRelay& event_relay)
 		: Emitter(entity)

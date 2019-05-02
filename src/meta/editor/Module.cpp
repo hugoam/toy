@@ -18,8 +18,8 @@ namespace toy
 		: Module("toy::editor")
 	{
         // ensure dependencies are instantiated
-        mud_obj::m();
-        mud_ui::m();
+        two_obj::m();
+        two_ui::m();
         toy_util::m();
         toy_core::m();
         toy_visu::m();

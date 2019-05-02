@@ -10,9 +10,9 @@
 #include <type/Vector.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
-#include <meta/mud.type.meta.h>
-#include <meta/mud.ui.meta.h>
-#include <meta/mud.tool.meta.h>
+#include <meta/two.type.meta.h>
+#include <meta/two.ui.meta.h>
+#include <meta/two.tool.meta.h>
 #include <meta/toy.util.meta.h>
 #include <meta/toy.core.meta.h>
 #include <meta/toy.visu.meta.h>
@@ -22,10 +22,10 @@
 
 #include <edit/Api.h>
 
-using namespace mud;
+using namespace two;
 
 
-namespace mud
+namespace two
 {
 	void toy_edit_meta(Module& m)
 	{

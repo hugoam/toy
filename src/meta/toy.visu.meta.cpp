@@ -10,8 +10,8 @@
 #include <type/Vector.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
-#include <meta/mud.type.meta.h>
-#include <meta/mud.gfx.meta.h>
+#include <meta/two.type.meta.h>
+#include <meta/two.gfx.meta.h>
 #include <meta/toy.util.meta.h>
 #include <meta/toy.core.meta.h>
 #include <meta/toy.visu.meta.h>
@@ -20,10 +20,10 @@
 
 #include <visu/Api.h>
 
-using namespace mud;
+using namespace two;
 
 
-namespace mud
+namespace two
 {
 	void toy_visu_meta(Module& m)
 	{

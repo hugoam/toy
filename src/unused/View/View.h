@@ -12,7 +12,7 @@
 #include <core/Entity/Entity.h>
 #include <core/Physic/Medium.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class TOY_CORE_EXPORT RecursiveStore : public Array<Spatial>, public StoreObserver<Spatial>
 	{

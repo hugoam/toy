@@ -18,7 +18,7 @@ struct sqlite3_stmt;
 
 #define CACHE_QUERY
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	using string = string;
 

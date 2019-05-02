@@ -10,9 +10,9 @@
 #include <type/Vector.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
-#include <meta/mud.type.meta.h>
-#include <meta/mud.math.meta.h>
-#include <meta/mud.wfc.gfx.meta.h>
+#include <meta/two.type.meta.h>
+#include <meta/two.math.meta.h>
+#include <meta/two.wfc.gfx.meta.h>
 #include <meta/toy.core.meta.h>
 #include <meta/toy.visu.meta.h>
 #include <meta/toy.edit.meta.h>
@@ -22,10 +22,10 @@
 
 #include <block/Api.h>
 
-using namespace mud;
+using namespace two;
 
 
-namespace mud
+namespace two
 {
 	void toy_block_meta(Module& m)
 	{
@@ -43,7 +43,7 @@ namespace mud
 namespace toy
 {
 	toy_block::toy_block()
-		: Module("block", { , , &mud_wfc_gfx::m(), , ,  })
+		: Module("block", { , , &two_wfc_gfx::m(), , ,  })
 	{
 		// setup reflection meta data
 		toy_block_meta(*this);

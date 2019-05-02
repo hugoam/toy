@@ -9,7 +9,7 @@
 
 #include <core/Event/Event.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	EventFilter::EventFilter(Type& type, const string& filterName)
 		: m_type(type)

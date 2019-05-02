@@ -7,7 +7,7 @@
 
 #include <core/Active/Active.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Effect::Effect(Active& active, const string& name, float duration, bool loop)
 		: m_active(&active)

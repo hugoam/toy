@@ -17,7 +17,7 @@
 #include <list>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class refl_ TOY_CORE_EXPORT EventEmitter : public Emitter, public EventTube
 	{

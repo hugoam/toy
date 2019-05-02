@@ -10,12 +10,12 @@
 #include <type/Vector.h>
 #include <refl/MetaDecl.h>
 #include <refl/Module.h>
-#include <meta/mud.type.meta.h>
-#include <meta/mud.jobs.meta.h>
-#include <meta/mud.ecs.meta.h>
-#include <meta/mud.math.meta.h>
-#include <meta/mud.geom.meta.h>
-#include <meta/mud.lang.meta.h>
+#include <meta/two.type.meta.h>
+#include <meta/two.jobs.meta.h>
+#include <meta/two.ecs.meta.h>
+#include <meta/two.math.meta.h>
+#include <meta/two.geom.meta.h>
+#include <meta/two.lang.meta.h>
 #include <meta/toy.util.meta.h>
 #include <meta/toy.core.meta.h>
 #include <meta/toy.core.conv.h>
@@ -23,10 +23,10 @@
 
 #include <core/Api.h>
 
-using namespace mud;
+using namespace two;
 
 
-namespace mud
+namespace two
 {
 	void toy_core_meta(Module& m)
 	{

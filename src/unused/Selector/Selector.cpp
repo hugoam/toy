@@ -14,7 +14,7 @@
 #include <util/Procedure.h>
 #include <core/Action.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Selector::Selector(User& user)
 		: m_user(user)

@@ -80,7 +80,7 @@ namespace two
 namespace toy
 {
 	toy_visu::toy_visu()
-		: Module("toy::visu", { &mud_type::m(), &mud_gfx::m(), &toy_util::m(), &toy_core::m() })
+		: Module("toy::visu", { &two_type::m(), &two_gfx::m(), &toy_util::m(), &toy_core::m() })
 	{
 		// setup reflection meta data
 		toy_visu_meta(*this);

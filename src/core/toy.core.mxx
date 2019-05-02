@@ -8,10 +8,10 @@ export import std.io;
 export import std.threading;
 export import std.regex;
 
-export import mud.obj;
-export import mud.proto;
-export import mud.math;
-export import mud.geom;
+export import two.obj;
+export import two.proto;
+export import two.math;
+export import two.geom;
 export import toy.util;
 
 #include <core/Api.h>

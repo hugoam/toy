@@ -1,6 +1,6 @@
-Module['mud']['ui'] = Module['mud']['ui'] || {};
-Module['mud'] = Module['mud'] || {};
-Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['two']['ui'] = Module['two']['ui'] || {};
+Module['two'] = Module['two'] || {};
+Module['two']['gfx'] = Module['two']['gfx'] || {};
 // ActionGroup
 function ActionGroup() {
     this.ptr = _toy_ActionGroup_ActionGroup_0(); getCache(ActionGroup)[this.ptr] = this;

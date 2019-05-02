@@ -8,7 +8,7 @@
 #include <core/Forward.h>
 #include <obj/Type.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	template <class T>
 	class Store;

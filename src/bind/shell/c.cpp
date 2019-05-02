@@ -39,8 +39,8 @@
 extern "C" {
 	
 	// Game
-	mud::Type* DECL toy_Game__type() {
-		return &mud::type<toy::Game>();
+	two::Type* DECL toy_Game__type() {
+		return &two::type<toy::Game>();
 	}
 	toy::User* DECL toy_Game__get_user(toy::Game* self) {
 		return self->m_user;
@@ -66,11 +66,11 @@ extern "C" {
 	void DECL toy_Game__set_module(toy::Game* self, toy::GameModule* value) {
 		self->m_module = value;
 	}
-	mud::Ref* DECL toy_Game__get_player(toy::Game* self) {
-		static mud::Ref temp;
+	two::Ref* DECL toy_Game__get_player(toy::Game* self) {
+		static two::Ref temp;
 		return (temp = self->m_player, &temp);
 	}
-	void DECL toy_Game__set_player(toy::Game* self, mud::Ref* value) {
+	void DECL toy_Game__set_player(toy::Game* self, two::Ref* value) {
 		self->m_player = *value;
 	}
 	toy::World* DECL toy_Game__get_world(toy::Game* self) {
@@ -79,18 +79,18 @@ extern "C" {
 	void DECL toy_Game__set_world(toy::Game* self, toy::World* value) {
 		self->m_world = value;
 	}
-	mud::Widget* DECL toy_Game__get_screen(toy::Game* self) {
+	two::Widget* DECL toy_Game__get_screen(toy::Game* self) {
 		return self->m_screen;
 	}
-	void DECL toy_Game__set_screen(toy::Game* self, mud::Widget* value) {
+	void DECL toy_Game__set_screen(toy::Game* self, two::Widget* value) {
 		self->m_screen = value;
 	}
 	void DECL toy_Game__destroy(toy::Game* self) {
 		delete self;
 	}
 	// GameModule
-	mud::Type* DECL toy_GameModule__type() {
-		return &mud::type<toy::GameModule>();
+	two::Type* DECL toy_GameModule__type() {
+		return &two::type<toy::GameModule>();
 	}
 	void DECL toy_GameModule_init_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
 		self->init(*shell, *game);
@@ -98,21 +98,21 @@ extern "C" {
 	void DECL toy_GameModule_start_2(toy::GameModule* self, toy::GameShell* shell, toy::Game* game) {
 		self->start(*shell, *game);
 	}
-	void DECL toy_GameModule_pump_3(toy::GameModule* self, toy::GameShell* shell, toy::Game* game, mud::Widget* ui) {
+	void DECL toy_GameModule_pump_3(toy::GameModule* self, toy::GameShell* shell, toy::Game* game, two::Widget* ui) {
 		self->pump(*shell, *game, *ui);
 	}
 	void DECL toy_GameModule_scene_2(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene) {
 		self->scene(*shell, *scene);
 	}
-	void DECL toy_GameModule_paint_3(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene, mud::Gnode* graph) {
+	void DECL toy_GameModule_paint_3(toy::GameModule* self, toy::GameShell* shell, toy::GameScene* scene, two::Gnode* graph) {
 		self->paint(*shell, *scene, *graph);
 	}
 	void DECL toy_GameModule__destroy(toy::GameModule* self) {
 		delete self;
 	}
 	// GameShell
-	mud::Type* DECL toy_GameShell__type() {
-		return &mud::type<toy::GameShell>();
+	two::Type* DECL toy_GameShell__type() {
+		return &two::type<toy::GameShell>();
 	}
 	toy::GameShell* DECL toy_GameShell_GameShell_1(const char* resource_path) {
 		return new toy::GameShell(resource_path);
@@ -186,54 +186,54 @@ extern "C" {
 	toy::Core* DECL toy_GameShell__get_core(toy::GameShell* self) {
 		return &self->core();
 	}
-	mud::LuaInterpreter* DECL toy_GameShell__get_lua(toy::GameShell* self) {
+	two::LuaInterpreter* DECL toy_GameShell__get_lua(toy::GameShell* self) {
 		return &self->lua();
 	}
-	mud::WrenInterpreter* DECL toy_GameShell__get_wren(toy::GameShell* self) {
+	two::WrenInterpreter* DECL toy_GameShell__get_wren(toy::GameShell* self) {
 		return &self->wren();
 	}
-	mud::GfxSystem* DECL toy_GameShell__get_gfx(toy::GameShell* self) {
+	two::GfxSystem* DECL toy_GameShell__get_gfx(toy::GameShell* self) {
 		return &self->gfx();
 	}
-	mud::Context* DECL toy_GameShell__get_context(toy::GameShell* self) {
+	two::Context* DECL toy_GameShell__get_context(toy::GameShell* self) {
 		return &self->context();
 	}
-	mud::Vg* DECL toy_GameShell__get_vg(toy::GameShell* self) {
+	two::Vg* DECL toy_GameShell__get_vg(toy::GameShell* self) {
 		return &self->vg();
 	}
-	mud::UiWindow* DECL toy_GameShell__get_ui_window(toy::GameShell* self) {
+	two::UiWindow* DECL toy_GameShell__get_ui_window(toy::GameShell* self) {
 		return &self->ui_window();
 	}
 	toy::Editor* DECL toy_GameShell__get_editor(toy::GameShell* self) {
 		return &self->m_editor;
 	}
-	mud::Ui* DECL toy_GameShell__get_ui(toy::GameShell* self) {
+	two::Ui* DECL toy_GameShell__get_ui(toy::GameShell* self) {
 		return self->m_ui;
 	}
-	void DECL toy_GameShell__set_ui(toy::GameShell* self, mud::Ui* value) {
+	void DECL toy_GameShell__set_ui(toy::GameShell* self, two::Ui* value) {
 		self->m_ui = value;
 	}
 	void DECL toy_GameShell__destroy(toy::GameShell* self) {
 		delete self;
 	}
 	// GameModuleBind
-	mud::Type* DECL toy_GameModuleBind__type() {
-		return &mud::type<toy::GameModuleBind>();
+	two::Type* DECL toy_GameModuleBind__type() {
+		return &two::type<toy::GameModuleBind>();
 	}
-	toy::GameModuleBind* DECL toy_GameModuleBind_GameModuleBind_2(mud::Module* module, const mud::VirtualMethod call) {
+	toy::GameModuleBind* DECL toy_GameModuleBind_GameModuleBind_2(two::Module* module, const two::VirtualMethod call) {
 		return new toy::GameModuleBind(*module, call);
 	}
 	void DECL toy_GameModuleBind__destroy(toy::GameModuleBind* self) {
 		delete self;
 	}
 	// GameScene
-	mud::Type* DECL toy_GameScene__type() {
-		return &mud::type<toy::GameScene>();
+	two::Type* DECL toy_GameScene__type() {
+		return &two::type<toy::GameScene>();
 	}
 	void DECL toy_GameScene__destroy(toy::GameScene* self) {
 		delete self;
 	}
-	void DECL toy_paint_physics_2(mud::Gnode* parent, toy::World* world) {
+	void DECL toy_paint_physics_2(two::Gnode* parent, toy::World* world) {
 		toy::paint_physics(*parent, *world);
 	}
 	void DECL toy_physic_painter_1(toy::GameScene* scene) {

@@ -14,11 +14,11 @@ module toy.util;
 
 #include <util/Api.h>
 
-using namespace mud;
+using namespace two;
 
 void* toy_ProcedureType__get_type(void* object) { return &(*static_cast<toy::ProcedureType*>(object)).m_type; }
 
-namespace mud
+namespace two
 {
 	void toy_util_meta(Module& m)
 	{
@@ -53,7 +53,7 @@ namespace mud
 		// copy constructor
 		// members
 		static Member members[] = {
-			{ t, SIZE_MAX, type<mud::Type>(), "type", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_ProcedureType__get_type },
+			{ t, SIZE_MAX, type<two::Type>(), "type", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_ProcedureType__get_type },
 			{ t, offsetof(toy::ProcedureType, m_index), type<uint32_t>(), "index", nullptr, Member::Value, nullptr },
 			{ t, offsetof(toy::ProcedureType, m_name), type<string>(), "name", nullptr, Member::Value, nullptr }
 		};
@@ -69,7 +69,7 @@ namespace mud
 namespace toy
 {
 	toy_util::toy_util()
-		: Module("toy::util", { &mud_type::m(), &mud_math::m() })
+		: Module("toy::util", { &two_type::m(), &two_math::m() })
 	{
 		// setup reflection meta data
 		toy_util_meta(*this);

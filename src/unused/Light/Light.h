@@ -13,7 +13,7 @@
 #include <core/Physic/Scope.h>
 #include <core/Entity/EntityObserver.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	//class TOY_CORE_EXPORT VisualEmitter object_ptr<LightReflector> m_lreflector;
 
@@ -37,7 +37,7 @@ using namespace mud; namespace toy
 #ifdef TOY_ECS
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<toy::LightReflector> { using type = ComponentBufferDense<toy::LightReflector>; static size_t index() { return 0; } };
 }
@@ -83,7 +83,7 @@ namespace toy
 #ifdef TOY_ECS
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<toy::LightSource> { using type = ComponentBufferDense<toy::LightSource>; static size_t index() { return 0; } };
 }

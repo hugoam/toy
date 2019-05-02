@@ -13,7 +13,7 @@
 #include <stl/vector>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	/*class TOY_UTIL_EXPORT Query
 	{

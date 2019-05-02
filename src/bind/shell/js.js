@@ -1,6 +1,6 @@
-Module['mud']['ui'] = Module['mud']['ui'] || {};
-Module['mud'] = Module['mud'] || {};
-Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['two']['ui'] = Module['two']['ui'] || {};
+Module['two'] = Module['two'] || {};
+Module['two']['gfx'] = Module['two']['gfx'] || {};
 // Game
 function Game() { throw "cannot construct a Game, no constructor in IDL" }
 Game.prototype = Object.create(WrapperObject.prototype);
@@ -325,7 +325,7 @@ GameShell.prototype["__destroy__"] = GameShell.prototype.__destroy__ = function(
 function GameModuleBind(module, call) {
     /* module <Module> [] */
     module = module.ptr;
-    /* call <mud::VirtualMethod> [] */
+    /* call <two::VirtualMethod> [] */
     this.ptr = _toy_GameModuleBind_GameModuleBind_2(module, call); getCache(GameModuleBind)[this.ptr] = this;
     this.type = GameModuleBind;
 };

@@ -1,6 +1,6 @@
-Module['mud']['ui'] = Module['mud']['ui'] || {};
-Module['mud'] = Module['mud'] || {};
-Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['two']['ui'] = Module['two']['ui'] || {};
+Module['two'] = Module['two'] || {};
+Module['two']['gfx'] = Module['two']['gfx'] || {};
 // ProcedureType
 function ProcedureType() { throw "cannot construct a ProcedureType, no constructor in IDL" }
 ProcedureType.prototype = Object.create(WrapperObject.prototype);

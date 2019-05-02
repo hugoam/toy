@@ -28,7 +28,7 @@
 
 #define CONTACT_THRESHOLD 0.1f
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Agent::Agent(Entity& entity, float radius, float height)
 		: m_entity(entity)

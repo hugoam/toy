@@ -1,6 +1,6 @@
-Module['mud']['ui'] = Module['mud']['ui'] || {};
-Module['mud'] = Module['mud'] || {};
-Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['two']['ui'] = Module['two']['ui'] || {};
+Module['two'] = Module['two'] || {};
+Module['two']['gfx'] = Module['two']['gfx'] || {};
 // BulletMedium
 function BulletMedium() { throw "cannot construct a BulletMedium, no constructor in IDL" }
 BulletMedium.prototype = Object.create(WrapperObject.prototype);

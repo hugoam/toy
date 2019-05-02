@@ -11,7 +11,7 @@
 #include <stl/vector>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	using Selection = vector<Ref>;
 }

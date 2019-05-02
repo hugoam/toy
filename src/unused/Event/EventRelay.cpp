@@ -10,7 +10,7 @@
 #include <core/Event/Event.h>
 #include <core/Event/EventTube.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	EventRelay::EventRelay(Entity& entity)
 		: m_entity(entity)

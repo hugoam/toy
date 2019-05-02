@@ -18,14 +18,14 @@ module toy.edit;
 
 #include <edit/Api.h>
 
-using namespace mud;
+using namespace two;
 
 void toy_ActionGroup__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::ActionGroup*>(ref))) toy::ActionGroup(  ); }
 void toy_ActionGroup__copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<toy::ActionGroup*>(ref))) toy::ActionGroup((*static_cast<toy::ActionGroup*>(other))); }
 void toy_GraphicsDebug__construct_0(void* ref, array<void*> args) { UNUSED(args); new(stl::placeholder(), &(*static_cast<toy::GraphicsDebug*>(ref))) toy::GraphicsDebug(  ); }
 void toy_GraphicsDebug__copy_construct(void* ref, void* other) { new(stl::placeholder(), &(*static_cast<toy::GraphicsDebug*>(ref))) toy::GraphicsDebug((*static_cast<toy::GraphicsDebug*>(other))); }
 
-namespace mud
+namespace two
 {
 	void toy_edit_meta(Module& m)
 	{
@@ -173,8 +173,8 @@ namespace mud
 		Type& t = type<toy::Editor>();
 		static Meta meta = { t, &namspc({ "toy" }), "Editor", sizeof(toy::Editor), TypeClass::Object };
 		// bases
-		static Type* bases[] = { &type<mud::EditContext>() };
-		static size_t bases_offsets[] = { base_offset<toy::Editor, mud::EditContext>() };
+		static Type* bases[] = { &type<two::EditContext>() };
+		static size_t bases_offsets[] = { base_offset<toy::Editor, two::EditContext>() };
 		// defaults
 		static toy::World* edited_world_default = nullptr;
 		static bool run_game_default = false;
@@ -185,7 +185,7 @@ namespace mud
 		static Member members[] = {
 			{ t, offsetof(toy::Editor, m_run_tool), type<toy::RunTool>(), "run_tool", nullptr, Member::NonMutable, nullptr },
 			{ t, offsetof(toy::Editor, m_play_tool), type<toy::PlayTool>(), "play_tool", nullptr, Member::NonMutable, nullptr },
-			{ t, offsetof(toy::Editor, m_frame_view_tool), type<mud::FrameViewTool>(), "frame_view_tool", nullptr, Member::NonMutable, nullptr },
+			{ t, offsetof(toy::Editor, m_frame_view_tool), type<two::FrameViewTool>(), "frame_view_tool", nullptr, Member::NonMutable, nullptr },
 			{ t, offsetof(toy::Editor, m_edited_world), type<toy::World>(), "edited_world", edited_world_default, Member::Flags(Member::Pointer|Member::Link), nullptr },
 			{ t, offsetof(toy::Editor, m_run_game), type<bool>(), "run_game", &run_game_default, Member::Value, nullptr },
 			{ t, offsetof(toy::Editor, m_play_game), type<bool>(), "play_game", &play_game_default, Member::Value, nullptr }
@@ -199,8 +199,8 @@ namespace mud
 		Type& t = type<toy::PlayTool>();
 		static Meta meta = { t, &namspc({ "toy" }), "PlayTool", sizeof(toy::PlayTool), TypeClass::Object };
 		// bases
-		static Type* bases[] = { &type<mud::Tool>() };
-		static size_t bases_offsets[] = { base_offset<toy::PlayTool, mud::Tool>() };
+		static Type* bases[] = { &type<two::Tool>() };
+		static size_t bases_offsets[] = { base_offset<toy::PlayTool, two::Tool>() };
 		// defaults
 		// constructors
 		// copy constructor
@@ -214,8 +214,8 @@ namespace mud
 		Type& t = type<toy::RunTool>();
 		static Meta meta = { t, &namspc({ "toy" }), "RunTool", sizeof(toy::RunTool), TypeClass::Object };
 		// bases
-		static Type* bases[] = { &type<mud::Tool>() };
-		static size_t bases_offsets[] = { base_offset<toy::RunTool, mud::Tool>() };
+		static Type* bases[] = { &type<two::Tool>() };
+		static size_t bases_offsets[] = { base_offset<toy::RunTool, two::Tool>() };
 		// defaults
 		// constructors
 		// copy constructor
@@ -242,7 +242,7 @@ namespace mud
 namespace toy
 {
 	toy_edit::toy_edit()
-		: Module("toy::edit", { &mud_type::m(), &mud_ui::m(), &mud_tool::m(), &toy_util::m(), &toy_core::m(), &toy_visu::m() })
+		: Module("toy::edit", { &two_type::m(), &two_ui::m(), &two_tool::m(), &toy_util::m(), &toy_core::m(), &toy_visu::m() })
 	{
 		// setup reflection meta data
 		toy_edit_meta(*this);

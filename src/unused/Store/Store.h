@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <stl/vector>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class GenStore
 	{

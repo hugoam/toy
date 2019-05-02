@@ -14,40 +14,40 @@
 #include <meta/toy.visu.meta.h>
 #include <meta/toy.edit.meta.h>
 #include <meta/toy.block.meta.h>
-#include <meta/mud.pool.meta.h>
-#include <meta/mud.refl.meta.h>
-#include <meta/mud.ecs.meta.h>
-#include <meta/mud.srlz.meta.h>
-#include <meta/mud.math.meta.h>
-#include <meta/mud.geom.meta.h>
-#include <meta/mud.noise.meta.h>
-#include <meta/mud.wfc.meta.h>
-#include <meta/mud.fract.meta.h>
-#include <meta/mud.lang.meta.h>
-#include <meta/mud.ctx.meta.h>
-#include <meta/mud.ui.meta.h>
-#include <meta/mud.uio.meta.h>
-#include <meta/mud.bgfx.meta.h>
-#include <meta/mud.gfx.meta.h>
-#include <meta/mud.gfx.pbr.meta.h>
-#include <meta/mud.gfx.obj.meta.h>
-#include <meta/mud.gltf.meta.h>
-#include <meta/mud.gfx.gltf.meta.h>
-#include <meta/mud.gfx.ui.meta.h>
-#include <meta/mud.gfx.edit.meta.h>
-#include <meta/mud.tool.meta.h>
-#include <meta/mud.wfc.gfx.meta.h>
-#include <meta/mud.frame.meta.h>
+#include <meta/two.pool.meta.h>
+#include <meta/two.refl.meta.h>
+#include <meta/two.ecs.meta.h>
+#include <meta/two.srlz.meta.h>
+#include <meta/two.math.meta.h>
+#include <meta/two.geom.meta.h>
+#include <meta/two.noise.meta.h>
+#include <meta/two.wfc.meta.h>
+#include <meta/two.fract.meta.h>
+#include <meta/two.lang.meta.h>
+#include <meta/two.ctx.meta.h>
+#include <meta/two.ui.meta.h>
+#include <meta/two.uio.meta.h>
+#include <meta/two.bgfx.meta.h>
+#include <meta/two.gfx.meta.h>
+#include <meta/two.gfx.pbr.meta.h>
+#include <meta/two.gfx.obj.meta.h>
+#include <meta/two.gltf.meta.h>
+#include <meta/two.gfx.gltf.meta.h>
+#include <meta/two.gfx.ui.meta.h>
+#include <meta/two.gfx.edit.meta.h>
+#include <meta/two.tool.meta.h>
+#include <meta/two.wfc.gfx.meta.h>
+#include <meta/two.frame.meta.h>
 #include <meta/toy.shell.meta.h>
 #include <meta/toy.shell.conv.h>
 #endif
 
 #include <shell/Api.h>
 
-using namespace mud;
+using namespace two;
 
 
-namespace mud
+namespace two
 {
 	void toy_shell_meta(Module& m)
 	{
@@ -65,7 +65,7 @@ namespace mud
 namespace toy
 {
 	toy_shell::toy_shell()
-		: Module("shell", { , , , , , , , , , , , , , , , , , , , &mud_gfx_pbr::m(), &mud_gfx_obj::m(), , &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_gfx_edit::m(), , &mud_wfc_gfx::m(),  })
+		: Module("shell", { , , , , , , , , , , , , , , , , , , , &two_gfx_pbr::m(), &two_gfx_obj::m(), , &two_gfx_gltf::m(), &two_gfx_ui::m(), &two_gfx_edit::m(), , &two_wfc_gfx::m(),  })
 	{
 		// setup reflection meta data
 		toy_shell_meta(*this);

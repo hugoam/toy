@@ -18,7 +18,7 @@
 #include <list>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class TOY_CORE_EXPORT Atoll : public Updatable
 	{

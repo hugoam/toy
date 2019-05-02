@@ -10,7 +10,7 @@
 #include <proto/Complex.h>
 #include <refl/Method.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Action::Action(ProcedureType& actionType, User* user, Entity& agent, Entity& target)
 		: Procedure(actionType, user, Ref(&agent), { Ref(&target) })

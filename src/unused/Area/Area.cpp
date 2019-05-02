@@ -10,7 +10,7 @@
 #include <core/Physic/CollisionShape.h>
 #include <core/Physic/Physic.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Area::Area(Entity& entity, const CollisionShape& shape)
 		: m_collider(entity, shape, AreaMedium::me, CM_AREA)

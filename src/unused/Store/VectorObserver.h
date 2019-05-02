@@ -15,7 +15,7 @@
 #include <stl/vector>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	template <class T, class R>
 	struct ResPointer { static inline T* pointer(R& r) { return &r; } };

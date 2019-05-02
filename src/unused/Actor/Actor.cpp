@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Actor::Actor(Entity& entity)
 		: m_entity(entity)

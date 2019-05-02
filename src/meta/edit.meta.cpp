@@ -254,7 +254,7 @@ namespace two
 namespace toy
 {
 	toy_edit::toy_edit()
-		: Module("toy::edit", { &mud_type::m(), &mud_ui::m(), &mud_tool::m(), &toy_util::m(), &toy_core::m(), &toy_visu::m() })
+		: Module("toy::edit", { &two_type::m(), &two_ui::m(), &two_tool::m(), &toy_util::m(), &toy_core::m(), &toy_visu::m() })
 	{
 		// setup reflection meta data
 		toy_edit_meta(*this);

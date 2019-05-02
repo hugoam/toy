@@ -162,9 +162,9 @@ namespace toy
 		, m_editor(*m_gfx)
 		, m_game(m_user, *m_gfx)
 	{
-		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
-		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m() });
-		System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
+		System::instance().load_modules({ &two_infra::m(), &two_type::m(), &two_pool::m(), &two_refl::m(), &two_ecs::m(), &two_tree::m() });
+		System::instance().load_modules({ &two_srlz::m(), &two_math::m(), &two_geom::m(), &two_lang::m() });
+		System::instance().load_modules({ &two_ctx::m(), &two_ui::m(), &two_gfx::m(), &two_gfx_pbr::m(), &two_gfx_obj::m(), &two_gfx_gltf::m(), &two_gfx_ui::m(), &two_tool::m() });
 
 		static Meta m = { type<VirtualMethod>(), &namspc({}), "VirtualMethod", sizeof(VirtualMethod), TypeClass::Object };
 		static Class c = { type<VirtualMethod>(), {}, {}, {}, {}, {}, {}, {} };

@@ -8,9 +8,9 @@ export import std.io;
 export import std.threading;
 export import std.regex;
 
-export import mud.obj;
-export import mud.ui;
-export import mud.tool;
+export import two.obj;
+export import two.ui;
+export import two.tool;
 export import toy.util;
 export import toy.core;
 export import toy.visu;

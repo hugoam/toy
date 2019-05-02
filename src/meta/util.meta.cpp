@@ -75,7 +75,7 @@ namespace two
 namespace toy
 {
 	toy_util::toy_util()
-		: Module("toy::util", { &mud_type::m(), &mud_math::m() })
+		: Module("toy::util", { &two_type::m(), &two_math::m() })
 	{
 		// setup reflection meta data
 		toy_util_meta(*this);

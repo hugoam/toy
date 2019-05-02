@@ -8,8 +8,8 @@ export import std.io;
 export import std.threading;
 export import std.regex;
 
-export import mud.obj;
-export import mud.math;
+export import two.obj;
+export import two.math;
 
 #include <util/Api.h>
 
