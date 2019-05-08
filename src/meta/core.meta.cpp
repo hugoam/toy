@@ -66,8 +66,8 @@ void toy_Spatial_set_rotation(void* object, span<void*> args, void*& result) { U
 void toy_Origin__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Origin(  ); }
 void toy_World__construct_0(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::World( *static_cast<uint32_t*>(args[0]), *static_cast<two::Complex*>(args[1]), *static_cast<stl::string*>(args[2]), *static_cast<two::JobSystem*>(args[3]) ); }
 void* toy_World__get_complex(void* object) { return &(*static_cast<toy::World*>(object)).m_complex; }
-void* toy_World__get_origin(void* object) { return &(*static_cast<toy::World*>(object)).origin(); }
-void* toy_World__get_unworld(void* object) { return &(*static_cast<toy::World*>(object)).unworld(); }
+void* toy_World__get_origin(void* object) { return (void*)(*static_cast<toy::World*>(object)).origin().as_uint(); }
+void* toy_World__get_unworld(void* object) { return (void*)(*static_cast<toy::World*>(object)).unworld().as_uint(); }
 void toy_CollisionShape__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::CollisionShape(  ); }
 void toy_CollisionShape__construct_1(void* ref, span<void*> args) { new(stl::placeholder(), ref) toy::CollisionShape( *static_cast<two::Shape*>(args[0]), *static_cast<two::vec3*>(args[1]), *static_cast<float*>(args[2]) ); }
 void toy_Movable__construct_0(void* ref, span<void*> args) { UNUSED(args); new(stl::placeholder(), ref) toy::Movable(  ); }
