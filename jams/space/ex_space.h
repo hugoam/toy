@@ -1034,7 +1034,7 @@ public:
 	GalaxyGrid m_grid;
 
 	uvec3 m_scale = uvec3(1U);
-	Plane m_plane = { Y3, 0.5f };
+	Plane m_plane = { y3, 0.5f };
 
 	uvec2 intersect_coord(Ray ray);
 };

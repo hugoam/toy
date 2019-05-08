@@ -1,12 +1,12 @@
-#include <mud/pool.h>
-#include <mud/geom.h>
+#include <two/pool.h>
+#include <two/geom.h>
 #include <toy/core.h>
-#include <mud/lang.h>
-#include <mud/ecs.h>
-#include <mud/math.h>
-#include <mud/refl.h>
-#include <mud/type.h>
-#include <mud/infra.h>
+#include <two/lang.h>
+#include <two/ecs.h>
+#include <two/math.h>
+#include <two/refl.h>
+#include <two/type.h>
+#include <two/infra.h>
 
 
 
@@ -48,7 +48,7 @@ namespace toy
 	{}
 }
 #ifndef USE_STL
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core;
 #else
 #include <stl/vector.hpp>
@@ -86,79 +86,79 @@ namespace stl
 }
 #endif
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core;
 #else
 #endif
 
-namespace mud
+namespace two
 {
     // Exported types
     template <> TOY_CORE_EXPORT Type& type<toy::CollisionGroup>() { static Type ty("CollisionGroup", sizeof(toy::CollisionGroup)); return ty; }
     
     template <> TOY_CORE_EXPORT Type& type<stl::vector<toy::HSpatial>>() { static Type ty("vector<toy::HSpatial>", sizeof(stl::vector<toy::HSpatial>)); return ty; }
     
-    template <> TOY_CORE_EXPORT Type& type<toy::BulletMedium>() { static Type ty("BulletMedium", sizeof(toy::BulletMedium)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::BulletShape>() { static Type ty("BulletShape", sizeof(toy::BulletShape)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Camera>() { static Type ty("Camera", sizeof(toy::Camera)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Collider>() { static Type ty("Collider", sizeof(toy::Collider)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::OwnedHandle<toy::Collider>>() { static Type ty("OwnedHandle<toy::Collider>", sizeof(two::OwnedHandle<toy::Collider>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::OwnedHandle<toy::Solid>>() { static Type ty("OwnedHandle<toy::Solid>", sizeof(two::OwnedHandle<toy::Solid>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::SparseHandle<toy::Collider>>() { static Type ty("SparseHandle<toy::Collider>", sizeof(two::SparseHandle<toy::Collider>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::SparseHandle<toy::Solid>>() { static Type ty("SparseHandle<toy::Solid>", sizeof(two::SparseHandle<toy::Solid>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Spatial>>() { static Type ty("ComponentHandle<toy::Spatial>", sizeof(two::ComponentHandle<toy::Spatial>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Movable>>() { static Type ty("ComponentHandle<toy::Movable>", sizeof(two::ComponentHandle<toy::Movable>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Camera>>() { static Type ty("ComponentHandle<toy::Camera>", sizeof(two::ComponentHandle<toy::Camera>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Emitter>>() { static Type ty("ComponentHandle<toy::Emitter>", sizeof(two::ComponentHandle<toy::Emitter>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Receptor>>() { static Type ty("ComponentHandle<toy::Receptor>", sizeof(two::ComponentHandle<toy::Receptor>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::EntityScript>>() { static Type ty("ComponentHandle<toy::EntityScript>", sizeof(two::ComponentHandle<toy::EntityScript>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::WorldPage>>() { static Type ty("ComponentHandle<toy::WorldPage>", sizeof(two::ComponentHandle<toy::WorldPage>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Navblock>>() { static Type ty("ComponentHandle<toy::Navblock>", sizeof(two::ComponentHandle<toy::Navblock>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Origin>>() { static Type ty("ComponentHandle<toy::Origin>", sizeof(two::ComponentHandle<toy::Origin>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<two::ComponentHandle<toy::Waypoint>>() { static Type ty("ComponentHandle<toy::Waypoint>", sizeof(two::ComponentHandle<toy::Waypoint>)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Spatial>() { static Type ty("Spatial", type<two::Transform>(), sizeof(toy::Spatial)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Origin>() { static Type ty("Origin", sizeof(toy::Origin)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::WorldClock>() { static Type ty("WorldClock", sizeof(toy::WorldClock)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::World>() { static Type ty("World", sizeof(toy::World)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Medium>() { static Type ty("Medium", sizeof(toy::Medium)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::CollisionShape>() { static Type ty("CollisionShape", sizeof(toy::CollisionShape)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Movable>() { static Type ty("Movable", sizeof(toy::Movable)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Collision>() { static Type ty("Collision", sizeof(toy::Collision)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::ColliderImpl>() { static Type ty("ColliderImpl", sizeof(toy::ColliderImpl)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::ColliderObject>() { static Type ty("ColliderObject", sizeof(toy::ColliderObject)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Collision>() { static Type ty("Collision", sizeof(toy::Collision)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::CollisionShape>() { static Type ty("CollisionShape", sizeof(toy::CollisionShape)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Camera>>() { static Type ty("ComponentHandle<toy::Camera>", sizeof(mud::ComponentHandle<toy::Camera>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Emitter>>() { static Type ty("ComponentHandle<toy::Emitter>", sizeof(mud::ComponentHandle<toy::Emitter>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::EntityScript>>() { static Type ty("ComponentHandle<toy::EntityScript>", sizeof(mud::ComponentHandle<toy::EntityScript>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Movable>>() { static Type ty("ComponentHandle<toy::Movable>", sizeof(mud::ComponentHandle<toy::Movable>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Navblock>>() { static Type ty("ComponentHandle<toy::Navblock>", sizeof(mud::ComponentHandle<toy::Navblock>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Origin>>() { static Type ty("ComponentHandle<toy::Origin>", sizeof(mud::ComponentHandle<toy::Origin>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Receptor>>() { static Type ty("ComponentHandle<toy::Receptor>", sizeof(mud::ComponentHandle<toy::Receptor>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Spatial>>() { static Type ty("ComponentHandle<toy::Spatial>", sizeof(mud::ComponentHandle<toy::Spatial>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::Waypoint>>() { static Type ty("ComponentHandle<toy::Waypoint>", sizeof(mud::ComponentHandle<toy::Waypoint>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::ComponentHandle<toy::WorldPage>>() { static Type ty("ComponentHandle<toy::WorldPage>", sizeof(mud::ComponentHandle<toy::WorldPage>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::ComponentPool>() { static Type ty("ComponentPool", sizeof(toy::ComponentPool)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Core>() { static Type ty("Core", sizeof(toy::Core)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::DetourPath>() { static Type ty("DetourPath", sizeof(toy::DetourPath)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Emitter>() { static Type ty("Emitter", sizeof(toy::Emitter)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::EntityScript>() { static Type ty("EntityScript", sizeof(toy::EntityScript)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Medium>() { static Type ty("Medium", sizeof(toy::Medium)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Movable>() { static Type ty("Movable", sizeof(toy::Movable)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Navblock>() { static Type ty("Navblock", sizeof(toy::Navblock)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Navmesh>() { static Type ty("Navmesh", sizeof(toy::Navmesh)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Origin>() { static Type ty("Origin", sizeof(toy::Origin)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::OwnedHandle<toy::Collider>>() { static Type ty("OwnedHandle<toy::Collider>", sizeof(mud::OwnedHandle<toy::Collider>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::OwnedHandle<toy::Solid>>() { static Type ty("OwnedHandle<toy::Solid>", sizeof(mud::OwnedHandle<toy::Solid>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Pathfinder>() { static Type ty("Pathfinder", sizeof(toy::Pathfinder)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::PhysicWorld>() { static Type ty("PhysicWorld", sizeof(toy::PhysicWorld)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Receptor>() { static Type ty("Receptor", sizeof(toy::Receptor)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Solid>() { static Type ty("Solid", sizeof(toy::Solid)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Collider>() { static Type ty("Collider", sizeof(toy::Collider)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::SolidImpl>() { static Type ty("SolidImpl", sizeof(toy::SolidImpl)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::SparseHandle<toy::Collider>>() { static Type ty("SparseHandle<toy::Collider>", sizeof(mud::SparseHandle<toy::Collider>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<mud::SparseHandle<toy::Solid>>() { static Type ty("SparseHandle<toy::Solid>", sizeof(mud::SparseHandle<toy::Solid>)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::User>() { static Type ty("User", sizeof(toy::User)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Waypoint>() { static Type ty("Waypoint", sizeof(toy::Waypoint)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::World>() { static Type ty("World", sizeof(toy::World)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::WorldClock>() { static Type ty("WorldClock", sizeof(toy::WorldClock)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Solid>() { static Type ty("Solid", sizeof(toy::Solid)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::WorldMedium>() { static Type ty("WorldMedium", type<toy::Medium>(), sizeof(toy::WorldMedium)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::WorldPage>() { static Type ty("WorldPage", sizeof(toy::WorldPage)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Navmesh>() { static Type ty("Navmesh", sizeof(toy::Navmesh)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Navblock>() { static Type ty("Navblock", sizeof(toy::Navblock)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>() { static Type ty("NavmeshShape", type<two::Shape>(), sizeof(toy::NavmeshShape)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::PhysicWorld>() { static Type ty("PhysicWorld", sizeof(toy::PhysicWorld)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::BulletMedium>() { static Type ty("BulletMedium", sizeof(toy::BulletMedium)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::BulletWorld>() { static Type ty("BulletWorld", type<toy::PhysicWorld>(), sizeof(toy::BulletWorld)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Core>() { static Type ty("Core", sizeof(toy::Core)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>() { static Type ty("DefaultWorld", type<two::Complex>(), sizeof(toy::DefaultWorld)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::User>() { static Type ty("User", sizeof(toy::User)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::BulletShape>() { static Type ty("BulletShape", sizeof(toy::BulletShape)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::BulletCollider>() { static Type ty("BulletCollider", type<toy::ColliderImpl>(), sizeof(toy::BulletCollider)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::BulletSolid>() { static Type ty("BulletSolid", type<toy::SolidImpl>(), sizeof(toy::BulletSolid)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::BulletWorld>() { static Type ty("BulletWorld", type<toy::PhysicWorld>(), sizeof(toy::BulletWorld)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::DefaultWorld>() { static Type ty("DefaultWorld", type<mud::Complex>(), sizeof(toy::DefaultWorld)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::NavmeshShape>() { static Type ty("NavmeshShape", type<mud::Shape>(), sizeof(toy::NavmeshShape)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::PhysicScope>() { static Type ty("PhysicScope", type<toy::ColliderObject>(), sizeof(toy::PhysicScope)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::EmitterScope>() { static Type ty("EmitterScope", type<toy::PhysicScope>(), sizeof(toy::EmitterScope)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>() { static Type ty("Obstacle", type<toy::Collider>(), sizeof(toy::Obstacle)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::ReceptorScope>() { static Type ty("ReceptorScope", type<toy::PhysicScope>(), sizeof(toy::ReceptorScope)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::SolidMedium>() { static Type ty("SolidMedium", type<toy::Medium>(), sizeof(toy::SolidMedium)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Emitter>() { static Type ty("Emitter", sizeof(toy::Emitter)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Receptor>() { static Type ty("Receptor", sizeof(toy::Receptor)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Camera>() { static Type ty("Camera", sizeof(toy::Camera)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::SoundMedium>() { static Type ty("SoundMedium", type<toy::Medium>(), sizeof(toy::SoundMedium)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::Spatial>() { static Type ty("Spatial", type<mud::Transform>(), sizeof(toy::Spatial)); return ty; }
     template <> TOY_CORE_EXPORT Type& type<toy::VisualMedium>() { static Type ty("VisualMedium", type<toy::Medium>(), sizeof(toy::VisualMedium)); return ty; }
-    template <> TOY_CORE_EXPORT Type& type<toy::WorldMedium>() { static Type ty("WorldMedium", type<toy::Medium>(), sizeof(toy::WorldMedium)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Waypoint>() { static Type ty("Waypoint", sizeof(toy::Waypoint)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::DetourPath>() { static Type ty("DetourPath", sizeof(toy::DetourPath)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Pathfinder>() { static Type ty("Pathfinder", sizeof(toy::Pathfinder)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::Obstacle>() { static Type ty("Obstacle", type<toy::Collider>(), sizeof(toy::Obstacle)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::SolidMedium>() { static Type ty("SolidMedium", type<toy::Medium>(), sizeof(toy::SolidMedium)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::ComponentPool>() { static Type ty("ComponentPool", sizeof(toy::ComponentPool)); return ty; }
+    template <> TOY_CORE_EXPORT Type& type<toy::EntityScript>() { static Type ty("EntityScript", sizeof(toy::EntityScript)); return ty; }
 }
 
 
 
-namespace mud
+namespace two
 {
 	template struct OwnedHandle<toy::Collider>;
 	template struct OwnedHandle<toy::Solid>;
@@ -186,13 +186,13 @@ namespace toy
 }
 
 
-#ifdef MUD_MODULES
-module mud.math;
+#ifdef TWO_MODULES
+module two.math;
 #else
 #include <stl/algorithm.h>
 #endif
 
-namespace mud
+namespace two
 {
 	Animator Animator::me;
 
@@ -243,8 +243,10 @@ namespace mud
 #include <LinearMath/btTransform.h>
 #include <LinearMath/btTransformUtil.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
+	using namespace two;
+
 	inline vec3 to_vec3(const btVector3& vec) { return { vec.x(), vec.y(), vec.z() }; }
 	inline btVector3 to_btvec3(const vec3& vec) { return { vec.x, vec.y, vec.z }; }
 	
@@ -886,7 +888,7 @@ namespace toy
 		m_last_tick = tick;
 
 		if(m_dynamics_world)
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3, 0.032f);
 #else
 			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3);
@@ -927,7 +929,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #endif
@@ -1014,10 +1016,33 @@ namespace toy
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotate(spatial.m_rotation, rotation, Y3)), 1.f);
 	}
 
+	void jump_camera_to(Spatial& spatial, toy::Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration)
+	{
+		animate(Ref(&camera), member(&toy::Camera::m_lens_distance), var(distance), duration);
+		animate(Ref(&camera), member(&toy::Camera::m_lens_angle), var(angle), duration);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), duration);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotation), duration);
+	}
+
 	void move_camera_to(Spatial& spatial, Camera& camera, const vec3& target)
 	{
 		UNUSED(camera);
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
+	}
+
+	void jump_camera_to(Entity camera, const vec3& target, float distance, float rotation)
+	{
+		jump_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target, distance, rotation);
+	}
+
+	void jump_camera_to(Entity camera, const vec3& target, const quat& rotation, float distance, float angle, float duration)
+	{
+		jump_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target, rotation, distance, angle, duration);
+	}
+
+	void move_camera_to(Entity camera, const vec3& target)
+	{
+		move_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target);
 	}
 }
 
@@ -1854,7 +1879,7 @@ namespace toy
 			if(geom.m_vertices.empty())
 				return;
 
-			printf("INFO: Updating Navmesh geometry block with %zu vertices\n", geom.m_vertices.size());
+			printf("[info] Updating Navmesh geometry block with %zu vertices\n", geom.m_vertices.size());
 
 			ShapeIndex offset = ShapeIndex(m_geometry.m_vertices.size());
 
@@ -2705,7 +2730,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #endif
@@ -2829,7 +2854,7 @@ namespace toy
 
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #endif
@@ -3050,7 +3075,7 @@ namespace toy
     }*/
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #include <stl/hash_base.hpp>
@@ -3315,7 +3340,7 @@ namespace toy
 {
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core;
 #else
 #include <stl/algorithm.h>
@@ -3379,19 +3404,19 @@ namespace toy
 
 	void Spatial::translate(const vec3& vec)
 	{
-		set_position(mud::rotate(m_rotation, vec) + m_position);
+		set_position(two::rotate(m_rotation, vec) + m_position);
 	}
 
 	void Spatial::rotate(const vec3& axis, float angle)
 	{
-		quat rot = angle_axis(angle, mud::rotate(m_rotation, axis));
+		quat rot = angle_axis(angle, two::rotate(m_rotation, axis));
 		set_rotation(rot * m_rotation);
 		normalize(m_rotation);
 	}
 
 	void Spatial::yaw(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, Y3));			
+		vec3 axis(two::rotate(m_rotation, Y3));			
 		rotate(axis, value);
 	}
 
@@ -3402,13 +3427,13 @@ namespace toy
 
 	void Spatial::pitch(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, X3));
+		vec3 axis(two::rotate(m_rotation, X3));
 		rotate(axis, value);
 	}
 
 	void Spatial::roll(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, Z3));
+		vec3 axis(two::rotate(m_rotation, Z3));
 		rotate(axis, value);
 	}
 
@@ -3470,7 +3495,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #endif
@@ -3625,13 +3650,13 @@ namespace toy
 
 	void WorldPage::update_geometry(size_t tick)
 	{
-		printf("INFO: Updating WorldPage world geometry\n");
+		printf("[info] Updating WorldPage world geometry\n");
 		m_solids.clear();
 		for(Geometry& geom : m_chunks)
 		{
 			if(geom.m_vertices.empty() || geom.m_triangles.empty())
 				continue;
-			printf("INFO: WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
+			printf("[info] WorldPage geometry chunk, %zu vertices\n", geom.m_vertices.size());
 			m_solids.push_back(Solid::create(m_spatial, HMovable(), geom, SolidMedium::me, CM_GROUND, true));
 		}
 
@@ -3672,7 +3697,7 @@ namespace toy
 		ground_point = as<PhysicWorld>(m_world->m_complex).ground_point(ray) - spatial.m_position;
 
 		if(any(isnan(ground_point)) || any(isinf(ground_point)))
-			printf("ERROR: raycast ground point failed, position result invalid\n");
+			printf("[ERROR] raycast ground point failed, position result invalid\n");
 	}
 
 	void WorldPage::raycast_ground(const vec3& start, const vec3& end, vec3& ground_point)

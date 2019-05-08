@@ -144,9 +144,9 @@ void Slug::update(Spatial& spatial)
 
 			Solid& solid = (*tank->m_solid);
 			if(tank->m_hitpoints < 0.f)
-				solid->impulse(Y3 * 100.f * m_power, location);
+				solid->impulse(y3 * 100.f * m_power, location);
 			else
-				solid->impulse((m_velocity + Y3 * 10.f) * m_power, location);
+				solid->impulse((m_velocity + y3 * 10.f) * m_power, location);
 		}
 
 		if(Shield* shield = try_asa<Shield>(hit))
@@ -184,7 +184,7 @@ Tank::Tank(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor recep
 	, m_emitter(emitter)
 	, m_receptor(receptor)
 	, m_faction(&faction)
-	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), false, 4.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), y3 * 1.1f), false, 4.f))
 {
 	m_emitter->add_sphere(VisualMedium::me, 0.1f);
 	m_receptor->add_sphere(VisualMedium::me, 100.f);
@@ -226,7 +226,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 		m_cooldown = max(0.f, m_cooldown - float(delta) * 0.01f);
 		if(m_target)
 		{
-			m_turret_angle = look_at(spatial.m_position, m_target->m_spatial->m_position, -Z3);
+			m_turret_angle = look_at(spatial.m_position, m_target->m_spatial->m_position, -z3);
 
 			float d = distance(m_target->m_spatial->m_position, spatial.m_position);
 			if(d > m_range)
@@ -248,14 +248,14 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 		if(m_dest != vec3(0.f))
 		{
 			if(!steer_2d(spatial, movable, m_dest, 15.f, float(delta) * float(c_tick_interval), m_range))
-				movable.set_linear_velocity(movable.m_linear_velocity - Y3 * 1.f);
+				movable.set_linear_velocity(movable.m_linear_velocity - y3 * 1.f);
 			else
 				m_dest = vec3(0.f);
 		}
 	}
 	else
 	{
-		//m_movable.set_linear_velocity(-Y3 * 1.f);
+		//m_movable.set_linear_velocity(-y3 * 1.f);
 		m_dest = vec3(0.f);
 	}
 }
@@ -314,7 +314,7 @@ void BlockWorld::generate_block(GfxSystem& gfx, const ivec2& coord)
 
 Player::Player(BlockWorld& world)
 	: m_world(&world)
-	, m_tank(Tank::create(world.m_world.m_ecs, world.m_world.origin(), Y3 * 20.f, g_factions[0]))
+	, m_tank(Tank::create(world.m_world.m_ecs, world.m_world.origin(), y3 * 20.f, g_factions[0]))
 {
 	m_tank->m_faction->m_leader = m_tank;
 	m_tank->m_ia = false;
@@ -576,10 +576,10 @@ static void tank_velocity_controller(Widget& widget, Tank& tank)
 
 	const KeyMove moves[8] =
 	{
-		{ Key::Up,    -Z3, vec3(0.f) }, { Key::W,  -Z3, vec3(0.f) },
-		{ Key::Down,   Z3, vec3(0.f) }, { Key::S,   Z3, vec3(0.f) },
-		{ Key::Left,  vec3(0.f),  Y3 }, { Key::A,  vec3(0.f),  Y3 },
-		{ Key::Right, vec3(0.f), -Y3 }, { Key::D,  vec3(0.f), -Y3 },
+		{ Key::Up,    -z3, vec3(0.f) }, { Key::W,  -z3, vec3(0.f) },
+		{ Key::Down,   z3, vec3(0.f) }, { Key::S,   z3, vec3(0.f) },
+		{ Key::Left,  vec3(0.f),  y3 }, { Key::A,  vec3(0.f),  y3 },
+		{ Key::Right, vec3(0.f), -y3 }, { Key::D,  vec3(0.f), -y3 },
 	};
 
 	for(const KeyMove& key_move : moves)
@@ -664,7 +664,7 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 #endif
 
 	Ray ray = viewer.mouse_ray();
-	vec3 target = plane_segment_intersection(Plane(Y3, spatial.m_position.y), to_segment(ray));
+	vec3 target = plane_segment_intersection(Plane(y3, spatial.m_position.y), to_segment(ray));
 
 	tank.m_turret_angle = look_at(spatial.m_position, target);
 
@@ -737,15 +737,15 @@ Viewer& ex_blocks_menu_viewport(Widget& parent, GameShell& app)
 	static EntityHandle<Origin> root = Origin::create(world.m_world.m_ecs, world.m_world);
 
 	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root, vec3(0.f), g_factions[0]);
-	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root, X3 * 10.f, g_factions[1]);
-	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root, Z3 * 10.f, g_factions[2]);
+	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root, x3 * 10.f, g_factions[1]);
+	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root, z3 * 10.f, g_factions[2]);
 
 	static bool once = false;
 	if(!once)
 	{
-		tank0->m_spatial->rotate(Y3, c_pi * 0.25f);
-		tank1->m_spatial->rotate(Y3, c_pi * 0.25f);
-		tank2->m_spatial->rotate(Y3, c_pi * 0.25f);
+		tank0->m_spatial->rotate(y3, c_pi * 0.25f);
+		tank1->m_spatial->rotate(y3, c_pi * 0.25f);
+		tank2->m_spatial->rotate(y3, c_pi * 0.25f);
 		once = true;
 	}
 

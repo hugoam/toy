@@ -16,7 +16,7 @@ Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat&
 Bullet::Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity)
 	: m_spatial(spatial)
 	, m_source(source)
-	, m_velocity(rotate(rotation, -Z3) * velocity)
+	, m_velocity(rotate(rotation, -z3) * velocity)
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
 {}
 
@@ -57,7 +57,7 @@ Human::Human(HSpatial spatial, HMovable movable)
 	: m_spatial(spatial)
 	, m_movable(movable)
 	, m_walk(false)
-	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), SolidMedium::me, CM_SOLID, false, 1.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), y3 * 0.9f), SolidMedium::me, CM_SOLID, false, 1.f))
 {}
 
 void Human::next_frame(Spatial& spatial, size_t tick, size_t delta)
@@ -76,7 +76,7 @@ void Human::next_frame(Spatial& spatial, size_t tick, size_t delta)
 quat Human::sight(bool aiming)
 {
 	Spatial& spatial = m_spatial;
-	return aiming ? rotate(spatial.m_rotation, X3, m_angles.y) : spatial.m_rotation;
+	return aiming ? rotate(spatial.m_rotation, x3, m_angles.y) : spatial.m_rotation;
 }
 
 Aim Human::aim()
@@ -91,7 +91,7 @@ void Human::shoot()
 {
 	Aim aim = this->aim();
 	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, randf(-0.05f, 0.05f)); };
-	quat rotation = fuzz(fuzz(aim.rotation, X3), Y3);
+	quat rotation = fuzz(fuzz(aim.rotation, x3), y3);
 	m_bullets.push_back(construct_owned<Bullet>(m_spatial, aim.source, rotation, 2.f));
 }
 
@@ -218,10 +218,10 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 
 	const KeyMove moves[8] =
 	{
-		{ Key::Up,    -Z3 }, { Key::W, -Z3 },
-		{ Key::Down,   Z3 }, { Key::S,  Z3 },
-		{ Key::Left,  -X3 }, { Key::A, -X3 },
-		{ Key::Right,  X3 }, { Key::D,  X3 },
+		{ Key::Up,    -z3 }, { Key::W, -z3 },
+		{ Key::Down,   z3 }, { Key::S,  z3 },
+		{ Key::Left,  -x3 }, { Key::A, -x3 },
+		{ Key::Right,  x3 }, { Key::D,  x3 },
 	};
 
 	const float speed = viewer.ui().m_keyboard.m_shift ? 4.f : 15.f;
@@ -230,7 +230,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 		movement_key(viewer, controller.m_force, controller.m_torque, key_move, speed);
 
 	if(viewer.key_event(Key::Space, EventType::Stroked))
-		(*human.m_solid)->impulse(Y3 * 16.f, vec3(0.f));
+		(*human.m_solid)->impulse(y3 * 16.f, vec3(0.f));
 
 	if(controller.m_force != vec3(0.f) || controller.m_torque != vec3(0.f))
 	{

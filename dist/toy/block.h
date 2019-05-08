@@ -1,14 +1,14 @@
 #pragma once
 
-#include <mud/gfx.h>
+#include <two/gfx.h>
 #include <toy/visu.h>
 #include <toy/core.h>
-#include <mud/ecs.h>
-#include <mud/math.h>
+#include <two/ecs.h>
+#include <two/math.h>
 #include <toy/edit.h>
-#include <mud/wfc.gfx.h>
-#include <mud/type.h>
-#include <mud/infra.h>
+#include <two/wfc.gfx.h>
+#include <two/type.h>
+#include <two/infra.h>
 
 
 
@@ -20,7 +20,7 @@
 
 
 #ifndef TOY_BLOCK_EXPORT
-#define TOY_BLOCK_EXPORT MUD_IMPORT
+#define TOY_BLOCK_EXPORT TWO_IMPORT
 #endif
 
 namespace toy
@@ -48,7 +48,7 @@ namespace toy
     struct BlockState;
 }
 
-#ifdef MUD_META_GENERATOR
+#ifdef TWO_META_GENERATOR
 #include <stl/span.h>
 #include <stl/vector.h>
 namespace stl
@@ -57,7 +57,7 @@ namespace stl
 	export_ extern template struct refl_ seque_ vector<toy::Block*>;
 	export_ extern template struct refl_ seque_ vector<toy::Sector*>;
 }
-namespace mud
+namespace two
 {
 	export_ extern template struct refl_ ComponentHandle<toy::Block>;
 	export_ extern template struct refl_ ComponentHandle<toy::Chunk>;
@@ -78,7 +78,7 @@ namespace toy
 
 
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<toy::Sector>		{ static uint32_t index() { return 12; } };
 	template <> struct TypedBuffer<toy::Tileblock>	{ static uint32_t index() { return 13; } };
@@ -87,8 +87,8 @@ namespace mud
 	template <> struct TypedBuffer<toy::Heap>		{ static uint32_t index() { return 16; } };
 }
 
-#ifdef MUD_META_GENERATOR
-namespace mud
+#ifdef TWO_META_GENERATOR
+namespace two
 {
 	extern template class refl_ vector2d<toy::Block*>;
 }
@@ -372,14 +372,14 @@ namespace toy
 #include <stl/string.h>
 #include <stl/vector.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::MatterState>();
@@ -388,19 +388,19 @@ namespace mud
     export_ template <> TOY_BLOCK_EXPORT Type& type<stl::vector<toy::Block*>>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<stl::vector<toy::Sector*>>();
     
+    export_ template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Block>>();
+    export_ template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Chunk>>();
+    export_ template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Heap>>();
+    export_ template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Sector>>();
+    export_ template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Tileblock>>();
+    export_ template <> TOY_BLOCK_EXPORT Type& type<two::vector2d<toy::Block*>>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Block>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Chunk>();
-    export_ template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Block>>();
-    export_ template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Chunk>>();
-    export_ template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Heap>>();
-    export_ template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Sector>>();
-    export_ template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Tileblock>>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Element>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Heap>();
+    export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Earth>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Sector>();
     export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Tileblock>();
-    export_ template <> TOY_BLOCK_EXPORT Type& type<mud::vector2d<toy::Block*>>();
-    export_ template <> TOY_BLOCK_EXPORT Type& type<toy::Earth>();
 }
 
 

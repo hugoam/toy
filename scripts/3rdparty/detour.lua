@@ -1,5 +1,5 @@
 
-detour = two_dep(nil, "detour")
+detour = dep(nil, "detour")
 	kind "StaticLib"
     
 	includedirs {

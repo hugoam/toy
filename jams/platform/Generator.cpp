@@ -21,7 +21,7 @@ void generate_crates(Tileblock& block)
 	vector<vec3> positions = distribute_poisson(to_xz(block.m_wfc_block.m_aabb.m_extents), crate_radius);
 	for(const vec3& position : positions)
 	{
-		construct<Crate>(origin, block.m_spatial->m_position + position + Y3 * 10.f, vec3(0.75f));
+		construct<Crate>(origin, block.m_spatial->m_position + position + y3 * 10.f, vec3(0.75f));
 	}
 }
 
@@ -33,7 +33,7 @@ void generate_npcs(Tileblock& block)
 	vector<vec3> positions = distribute_poisson(to_xz(block.m_wfc_block.m_aabb.m_extents), npc_radius);
 	for(const vec3& position : positions)
 	{
-		construct<Human>(origin, block.m_spatial->m_position + position + Y3 * 10.f, Faction::Enemy);
+		construct<Human>(origin, block.m_spatial->m_position + position + y3 * 10.f, Faction::Enemy);
 	}
 }
 
@@ -49,7 +49,7 @@ void generate_lamps(Tileblock& block)
 				if(tile.m_name == "cube_covered_side")
 					if(randi(0, 9) > 8)
 					{
-						construct<Lamp>(origin, block.m_wfc_block.to_position(uvec3(x, y, z)) + Y3 * 1.5f * block.m_wfc_block.m_scale);
+						construct<Lamp>(origin, block.m_wfc_block.to_position(uvec3(x, y, z)) + y3 * 1.5f * block.m_wfc_block.m_scale);
 					}
 			}
 }

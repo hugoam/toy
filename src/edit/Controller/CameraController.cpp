@@ -58,22 +58,22 @@ namespace toy
 
 	void CameraController::rotate_left()
 	{
-		m_movable->modify_angular_velocity(Y3 * -m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * -m_angular_velocity);
 	}
 
 	void CameraController::rotate_right()
 	{
-		m_movable->modify_angular_velocity(Y3 * m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * m_angular_velocity);
 	}
 
 	void CameraController::stop_rotate_left()
 	{
-		m_movable->modify_angular_velocity(Y3 * m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * m_angular_velocity);
 	}
 
 	void CameraController::stop_rotate_right()
 	{
-		m_movable->modify_angular_velocity(Y3 * -m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * -m_angular_velocity);
 
 	}
 	void CameraController::zoom_in()

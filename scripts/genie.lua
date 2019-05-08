@@ -20,6 +20,9 @@ BUILD_DIR = path.join(path.getabsolute(".."), "build")
 dofile "toolchain.lua"
 dofile "toy.lua"
 
+two_libs();
+toy_libs();
+
 group "bin"
 dofile "jams.lua"
 

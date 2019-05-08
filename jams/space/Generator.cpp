@@ -119,7 +119,7 @@ Commander* generate_commander(Galaxy& galaxy, Star& star)
 
 	generate_avatar(commander.m_colour, commander.m_avatar);
 
-	Fleet& fleet = construct<Fleet>(galaxy.m_spatial, galaxy, star.m_spatial->m_position + 1.0f * Y3, commander, star.m_coord, generate_name());
+	Fleet& fleet = construct<Fleet>(galaxy.m_spatial, galaxy, star.m_spatial->m_position + 1.0f * y3, commander, star.m_coord, generate_name());
 
 	float size = randf(1.f, 3.f);
 	fleet.set_ships("SONDE", size_t(1 * size));

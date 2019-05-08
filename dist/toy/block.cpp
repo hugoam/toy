@@ -1,16 +1,16 @@
-#include <mud/gfx.h>
-#include <mud/geom.h>
+#include <two/gfx.h>
+#include <two/geom.h>
 #include <toy/core.h>
-#include <mud/tree.h>
-#include <mud/ecs.h>
-#include <mud/math.h>
+#include <two/tree.h>
+#include <two/ecs.h>
+#include <two/math.h>
 #include <toy/block.h>
-#include <mud/math.refl.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/math.refl.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block
 #else
 #endif
@@ -239,14 +239,14 @@ namespace toy
 	}
 }
 #ifndef USE_STL
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block;
 #else
 #include <stl/vector.hpp>
 #include <stl/unordered_map.hpp>
 #endif
 
-namespace mud
+namespace two
 {
 	template class TOY_BLOCK_EXPORT vector2d<toy::Block*>;
 }
@@ -271,12 +271,12 @@ namespace stl
 }
 #endif
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block;
 #else
 #endif
 
-namespace mud
+namespace two
 {
     // Exported types
     template <> TOY_BLOCK_EXPORT Type& type<toy::MatterState>() { static Type ty("MatterState", sizeof(toy::MatterState)); return ty; }
@@ -285,22 +285,22 @@ namespace mud
     template <> TOY_BLOCK_EXPORT Type& type<stl::vector<toy::Block*>>() { static Type ty("vector<toy::Block*>", sizeof(stl::vector<toy::Block*>)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<stl::vector<toy::Sector*>>() { static Type ty("vector<toy::Sector*>", sizeof(stl::vector<toy::Sector*>)); return ty; }
     
+    template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Block>>() { static Type ty("ComponentHandle<toy::Block>", sizeof(two::ComponentHandle<toy::Block>)); return ty; }
+    template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Chunk>>() { static Type ty("ComponentHandle<toy::Chunk>", sizeof(two::ComponentHandle<toy::Chunk>)); return ty; }
+    template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Heap>>() { static Type ty("ComponentHandle<toy::Heap>", sizeof(two::ComponentHandle<toy::Heap>)); return ty; }
+    template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Sector>>() { static Type ty("ComponentHandle<toy::Sector>", sizeof(two::ComponentHandle<toy::Sector>)); return ty; }
+    template <> TOY_BLOCK_EXPORT Type& type<two::ComponentHandle<toy::Tileblock>>() { static Type ty("ComponentHandle<toy::Tileblock>", sizeof(two::ComponentHandle<toy::Tileblock>)); return ty; }
+    template <> TOY_BLOCK_EXPORT Type& type<two::vector2d<toy::Block*>>() { static Type ty("vector2d<toy::Block*>", sizeof(two::vector2d<toy::Block*>)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Block>() { static Type ty("Block", sizeof(toy::Block)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Chunk>() { static Type ty("Chunk", sizeof(toy::Chunk)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Block>>() { static Type ty("ComponentHandle<toy::Block>", sizeof(mud::ComponentHandle<toy::Block>)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Chunk>>() { static Type ty("ComponentHandle<toy::Chunk>", sizeof(mud::ComponentHandle<toy::Chunk>)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Heap>>() { static Type ty("ComponentHandle<toy::Heap>", sizeof(mud::ComponentHandle<toy::Heap>)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Sector>>() { static Type ty("ComponentHandle<toy::Sector>", sizeof(mud::ComponentHandle<toy::Sector>)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<mud::ComponentHandle<toy::Tileblock>>() { static Type ty("ComponentHandle<toy::Tileblock>", sizeof(mud::ComponentHandle<toy::Tileblock>)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Element>() { static Type ty("Element", sizeof(toy::Element)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Heap>() { static Type ty("Heap", sizeof(toy::Heap)); return ty; }
+    template <> TOY_BLOCK_EXPORT Type& type<toy::Earth>() { static Type ty("Earth", type<toy::Element>(), sizeof(toy::Earth)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Sector>() { static Type ty("Sector", sizeof(toy::Sector)); return ty; }
     template <> TOY_BLOCK_EXPORT Type& type<toy::Tileblock>() { static Type ty("Tileblock", sizeof(toy::Tileblock)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<mud::vector2d<toy::Block*>>() { static Type ty("vector2d<toy::Block*>", sizeof(mud::vector2d<toy::Block*>)); return ty; }
-    template <> TOY_BLOCK_EXPORT Type& type<toy::Earth>() { static Type ty("Earth", type<toy::Element>(), sizeof(toy::Earth)); return ty; }
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #endif
@@ -336,7 +336,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.core
 #else
 #endif
@@ -383,7 +383,7 @@ namespace toy
 }
 
 
-namespace mud
+namespace two
 {
 	template struct ComponentHandle<toy::Block>;
 	template struct ComponentHandle<toy::Chunk>;
@@ -392,7 +392,7 @@ namespace mud
 	template struct ComponentHandle<toy::Tileblock>;
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block
 #else
 #endif
@@ -448,7 +448,7 @@ namespace toy
 		grid.m_center_offset.y = 0.f;
 
 		vector<uvec3> coords;
-		mud::grid(grid_subdiv, coords);
+		two::grid(grid_subdiv, coords);
 
 		vector<Block*> blocks;
 
@@ -565,7 +565,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block
 #else
 #include <stl/hash_base.hpp>
@@ -688,7 +688,7 @@ namespace toy
 			{
 				string identifier = "sector_" + to_string(block.m_index) + "_" + element->m_name;
 
-				printf("INFO: Creating geometry for Block %s, %zu quads\n", identifier.c_str(), bodies[element].size());
+				printf("[info] Creating geometry for Block %s, %zu quads\n", identifier.c_str(), bodies[element].size());
 
 				state.m_models[element] = gen_model(identifier.c_str(), bodies[element], true);
 

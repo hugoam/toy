@@ -191,7 +191,7 @@ public:
 	void shoot(bool critical = false);
 
 	inline quat turret_rotation() { return m_turret_angle; } //quat(vec3(0.f, m_turret_angle, 0.f)); }
-	inline vec3 turret_direction() { return rotate(turret_rotation(), -Z3); }
+	inline vec3 turret_direction() { return rotate(turret_rotation(), -z3); }
 };
 
 class refl_ _BLOCKS_EXPORT BlockWorld : public Complex

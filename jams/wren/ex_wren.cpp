@@ -3,7 +3,9 @@
 #include <toy/toy.h>
 
 #include <wren/Api.h>
-#include <meta/wren/Module.h>
+#include <meta/_wren.meta.h>
+
+#include <stl/string.hpp>
 
 #ifdef _EX_WREN_EXE
 int main(int argc, char *argv[])

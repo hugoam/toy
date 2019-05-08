@@ -97,7 +97,7 @@ namespace toy
 	{
 		animate(Ref(&camera), member(&Camera::m_lens_distance), var(distance), 1.f);
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
-		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotate(spatial.m_rotation, rotation, Y3)), 1.f);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotate(spatial.m_rotation, rotation, y3)), 1.f);
 	}
 
 	void jump_camera_to(Spatial& spatial, toy::Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration)

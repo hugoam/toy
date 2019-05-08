@@ -1,15 +1,15 @@
 #include <toy/shell.h>
-#include <mud/ui.vg.h>
-#include <mud/lang.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/ui.vg.h>
+#include <two/lang.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 
 
 #include <toy/toy.h>
 #include <toy/Modules.h>
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 #include <emscripten/emscripten.h>
 #endif
 
@@ -20,11 +20,11 @@
 
 class WrenVM;
 
-//#define MUD_GFX_DEFERRED
+//#define TWO_GFX_DEFERRED
 
 namespace toy
 {
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	static void iterate()
 	{
 		g_app->pump();
@@ -104,9 +104,9 @@ namespace toy
 
 	unique<Vg> create_vg(GfxSystem& gfx, const string& resource_path)
 	{
-#if defined MUD_VG_VG
+#if defined TWO_VG_VG
 		return make_unique<VgVg>(resource_path, &gfx.allocator());
-#elif defined MUD_VG_NANOVG
+#elif defined TWO_VG_NANOVG
 		return make_unique<VgNanoBgfx>(m_resource_path);
 #endif
 	}
@@ -164,9 +164,9 @@ namespace toy
 		, m_editor(*m_gfx)
 		, m_game(m_user, *m_gfx)
 	{
-		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
-		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_lang::m() });
-		System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
+		System::instance().load_modules({ &two_infra::m(), &two_type::m(), &two_pool::m(), &two_refl::m(), &two_ecs::m(), &two_tree::m() });
+		System::instance().load_modules({ &two_srlz::m(), &two_math::m(), &two_geom::m(), &two_lang::m() });
+		System::instance().load_modules({ &two_ctx::m(), &two_ui::m(), &two_gfx::m(), &two_gfx_pbr::m(), &two_gfx_obj::m(), &two_gfx_gltf::m(), &two_gfx_ui::m(), &two_tool::m() });
 
 		static Meta m = { type<VirtualMethod>(), &namspc({}), "VirtualMethod", sizeof(VirtualMethod), TypeClass::Object };
 		static Class c = { type<VirtualMethod>(), {}, {}, {}, {}, {}, {}, {} };
@@ -195,7 +195,7 @@ namespace toy
 	template <class T_Asset>
 	void add_asset_loader(AssetStore<T_Asset>& store, cstring format)
 	{
-		auto loader = [&](T_Asset& asset, const string& path)
+		auto loader = [&](T_Asset& asset, const string& path, const NoConfig& config)
 		{
 			unpack_json_file(Ref(&asset), path + store.m_formats[0]);
 		};
@@ -208,7 +208,7 @@ namespace toy
 #ifdef TOY_SOUND
 		if(!m_sound_system->init())
 		{
-			printf("ERROR: Sound - failed to init\n");
+			printf("[ERROR] Sound - failed to init\n");
 		}
 #endif
 		if(window)
@@ -265,7 +265,7 @@ namespace toy
 		Module* module = system().open_module((m_exec_path + "/" + module_name).c_str());
 		if(module == nullptr)
 		{
-			printf("ERROR: could not locate/load module %s\n", module_name.c_str());
+			printf("[ERROR] could not locate/load module %s\n", module_name.c_str());
 			return;
 		}
 
@@ -281,7 +281,7 @@ namespace toy
 
 	void GameShell::run(size_t iterations)
 	{
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 		g_app = this;
 		//g_iterations = iterations;
 		emscripten_set_main_loop(iterate, 0, 1);
@@ -311,7 +311,7 @@ namespace toy
 				m_game.m_world = nullptr;
 
 				if(m_editor.m_viewer)
-					m_editor.m_viewer->m_viewport.m_active = false;
+					m_editor.m_viewer->m_viewport.m_autorender = false;
 
 				//Var args[2] = { Ref(this), Ref(&module) };
 				//script({ args, 2 });
@@ -330,7 +330,7 @@ namespace toy
 			//this->pump_game();
 
 			if(m_editor.m_viewer)
-				m_editor.m_viewer->m_viewport.m_active = true;
+				m_editor.m_viewer->m_viewport.m_autorender = true;
 		};
 
 		//m_editor.m_run_game = run;
@@ -541,7 +541,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 extern "C"
 {
 	void copy(const char* text)
@@ -556,7 +556,7 @@ extern "C"
 }
 #endif
 #ifndef USE_STL
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block;
 #else
 #include <stl/vector.hpp>
@@ -570,21 +570,21 @@ namespace stl
 }
 #endif
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.shell;
 #else
 #endif
 
-namespace mud
+namespace two
 {
     // Exported types
     template <> TOY_SHELL_EXPORT Type& type<toy::GameMode>() { static Type ty("GameMode", sizeof(toy::GameMode)); return ty; }
     
     
+    template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>() { static Type ty("GameScene", type<toy::VisuScene>(), sizeof(toy::GameScene)); return ty; }
     template <> TOY_SHELL_EXPORT Type& type<toy::Game>() { static Type ty("Game", sizeof(toy::Game)); return ty; }
     template <> TOY_SHELL_EXPORT Type& type<toy::GameModule>() { static Type ty("GameModule", sizeof(toy::GameModule)); return ty; }
-    template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>() { static Type ty("GameShell", sizeof(toy::GameShell)); return ty; }
     template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>() { static Type ty("GameModuleBind", type<toy::GameModule>(), sizeof(toy::GameModuleBind)); return ty; }
-    template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>() { static Type ty("GameScene", type<toy::VisuScene>(), sizeof(toy::GameScene)); return ty; }
-    template <> TOY_SHELL_EXPORT Type& type<toy::GameWindow>() { static Type ty("GameWindow", type<mud::GfxWindow>(), sizeof(toy::GameWindow)); return ty; }
+    template <> TOY_SHELL_EXPORT Type& type<toy::GameWindow>() { static Type ty("GameWindow", type<two::GfxWindow>(), sizeof(toy::GameWindow)); return ty; }
+    template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>() { static Type ty("GameShell", sizeof(toy::GameShell)); return ty; }
 }

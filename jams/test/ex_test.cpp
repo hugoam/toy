@@ -31,6 +31,8 @@
 
 #include <meta/_test.meta.h>
 
+#include <stl/string.hpp>
+
 using namespace two;
 using namespace toy;
 

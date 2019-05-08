@@ -25,7 +25,7 @@ namespace toy
 		vec3 vec1 = normalize(vec3(v1.x, 0.f, v1.z));
 		vec3 vec2 = normalize(vec3(v2.x, 0.f, v2.z));
 
-		return oriented_angle(vec1, vec2, Y3);
+		return oriented_angle(vec1, vec2, y3);
 	}
 
 	bool spin_2d(Spatial& spatial, const vec3& axis, const vec3& target, float velocity, float time_step, float margin)
@@ -43,8 +43,8 @@ namespace toy
 	{
 		UNUSED(axis); UNUSED(velocity); UNUSED(time_step); UNUSED(margin);
 		vec3 direction = normalize(target - spatial.m_position);
-		float targetAngle = angle_flat(-Z3, direction);
-		quat rotation = angle_axis(targetAngle, Y3);
+		float targetAngle = angle_flat(-z3, direction);
+		quat rotation = angle_axis(targetAngle, y3);
 		spatial.set_rotation(rotation);
 		return true;
 	}
@@ -111,16 +111,16 @@ namespace toy
 		if(distance < velocity / 10.f)
 			movable.m_direction = clamp(movable.m_direction, distance + 0.01f);
 
-		float angle = oriented_angle(normalize(movable.m_direction), -Z3, Y3);
-		spatial.set_rotation(rotate(ZeroQuat, -angle, Y3));
-		movable.set_linear_velocity(rotate(movable.m_direction, angle, Y3));
+		float angle = oriented_angle(normalize(movable.m_direction), -z3, y3);
+		spatial.set_rotation(rotate(ZeroQuat, -angle, y3));
+		movable.set_linear_velocity(rotate(movable.m_direction, angle, y3));
 
 		return false;
 	}
 
 	bool steer_2d(Spatial& spatial, const vec3& target, float velocity, float time_step, float margin)
 	{
-		bool done = spin_2d(spatial, Y3, target, 1.f, time_step, margin);
+		bool done = spin_2d(spatial, y3, target, 1.f, time_step, margin);
 		if(true) // m_agent.forecast(project_move_2d(spatial, target, velocity, time_step))
 			done &= move_2d(spatial, target, velocity, time_step, margin);
 		return done;
@@ -131,7 +131,7 @@ namespace toy
 		//if(m_target.moving())
 		//	m_target.stick(m_source);
 
-		spin_2d(spatial, Y3, target, 1.f, time_step, margin);
+		spin_2d(spatial, y3, target, 1.f, time_step, margin);
 		move_2d(spatial, target, velocity, time_step, margin);
 		return false;
 	}

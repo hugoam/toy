@@ -139,10 +139,10 @@ struct BuildQuery : public NodeState
 
 void draw_jump_hover(Gnode& parent, const vec3& start, const uvec2& dest, const Colour& colour)
 {
-	vec3 end = to_xz(vec2(dest)) + 0.5f + Y3;
-	vec3 middle = (end + start) / 2.f + Y3 * 0.2f * length(end - start);
+	vec3 end = to_xz(vec2(dest)) + 0.5f + y3;
+	vec3 middle = (end + start) / 2.f + y3 * 0.2f * length(end - start);
 	gfx::shape(parent, ArcLine(start, middle, end), Symbol::wire(colour));
-	gfx::shape(parent, Quad(to_xz(vec2(dest)) + 0.5f, vec2(1.f), X3, Z3), Symbol::wire(colour));
+	gfx::shape(parent, Quad(to_xz(vec2(dest)) + 0.5f, vec2(1.f), x3, z3), Symbol::wire(colour));
 }
 
 void jump_query(Widget& parent, Viewer& viewer, Fleet& fleet, uint32_t mode)
@@ -610,7 +610,7 @@ void turn_report_spatial_combats(Widget& parent, GameScene& scene, Turn& turn)
 
 	if(combat)
 	{
-		//vec3 position = to_xz(vec2(turn.m_current_combat->m_coord)) + 0.5f + Y3;
+		//vec3 position = to_xz(vec2(turn.m_current_combat->m_coord)) + 0.5f + y3;
 		//jump_camera_to(scene.m_camera, position);
 		UNUSED(scene);
 
@@ -635,7 +635,7 @@ void turn_report_planetary_combats(Widget& parent, GameScene& scene, Turn& turn)
 
 	if(combat)
 	{
-		//vec3 position = to_xz(vec2(turn.m_current_combat->m_coord)) + 0.5f + Y3;
+		//vec3 position = to_xz(vec2(turn.m_current_combat->m_coord)) + 0.5f + y3;
 		//jump_camera_to(scene.m_camera, position);
 		UNUSED(scene);
 
@@ -828,7 +828,7 @@ static void game_viewer_ui(Viewer& viewer, GameScene& scene, Player& player)
 
 		static Clock clock;
 		Spatial& spatial = asa<Spatial>(player.m_camera);
-		spatial.rotate(Y3, CAMERA_ROTATION_SPEED * float(clock.step()));
+		spatial.rotate(y3, CAMERA_ROTATION_SPEED * float(clock.step()));
 	}
 	else if(player.m_mode == GameStage::TurnReport)
 	{

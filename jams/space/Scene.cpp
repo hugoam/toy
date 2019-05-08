@@ -74,7 +74,7 @@ inline vec3 to_xz3(const vec3& vec) { return { vec.x, 0.f, vec.z }; }
 void paint_range_grid(Gnode& parent, const Colour& colour, int range)
 {
 	float side = float(range * 2 + 1);
-	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
+	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + y3 * 0.5f);
 	gfx::shape(projected, Grid2(vec2(side), vec2(2.5f)), Symbol::wire(colour));
 }
 
@@ -82,8 +82,8 @@ void paint_range(Gnode& parent, const Colour& colour, int range)
 {
 	if(range == 0) return;
 	float side = float(range * 2 + 1);
-	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
-	gfx::shape(projected, Quad(side, X3, Z3), Symbol::wire(colour));
+	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + y3 * 0.5f);
+	gfx::shape(projected, Quad(side, x3, z3), Symbol::wire(colour));
 }
 
 inline float sec(float a) { return 1.f / cos(a); }
@@ -95,9 +95,9 @@ void paint_range_sonar(Gnode& parent, const Colour& colour, int range)
 
 	float angle = fmod(float(clock.read()), c_2pi);
 	float length = min(abs(sec(angle)), abs(csc(angle))) * range;
-	vec3 end = rotate(X3 * length, angle, Y3);
+	vec3 end = rotate(x3 * length, angle, y3);
 
-	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + Y3 * 0.5f);
+	Gnode& projected = gfx::node(parent, to_xz3(parent.m_attach->position()) + y3 * 0.5f);
 	gfx::draw(projected, Line(vec3(0.f), end), Symbol::wire(colour));
 }
 
@@ -127,7 +127,7 @@ void paint_scan_star(Gnode& parent, Star& star, Player& player)
 			gfx::shape(parent, Circle(0.5f, Axis::Y), Symbol::wire(colour));
 
 		if(!star.m_constructions.empty())
-			gfx::shape(parent, Quad(0.5f, X3, Z3), Symbol::wire(colour));
+			gfx::shape(parent, Quad(0.5f, x3, z3), Symbol::wire(colour));
 
 		if(star.m_revolt)
 			gfx::shape(parent, Circle(0.3f, Axis::Y), Symbol::wire(Colour::Red));
@@ -186,7 +186,7 @@ void fill_fleet(VisuFleet& visu, const Ships& ships)
 
 vec3 ship_position(VisuFleet& fleet, VisuShip& ship, float radius)
 {
-	quat rot = angle_axis(fleet.m_angle, Z3);
+	quat rot = angle_axis(fleet.m_angle, z3);
 	return rotate(rot, fleet.m_dilate * ship.m_spot * radius);
 }
 
@@ -234,8 +234,8 @@ void paint_fleet_orders(Gnode& parent, Fleet& fleet, const Colour& colour)
 	if(fleet.m_jump.m_state == Jump::Ordered)
 	{
 		vec3 start = fleet.m_jump.m_start_pos;
-		vec3 end = to_xz(vec2(fleet.m_jump.m_dest)) + 0.5f + Y3;
-		vec3 middle = (end + start) / 2.f + Y3 * 0.2f * length(end - start);
+		vec3 end = to_xz(vec2(fleet.m_jump.m_dest)) + 0.5f + y3;
+		vec3 middle = (end + start) / 2.f + y3 * 0.2f * length(end - start);
 		gfx::shape(parent, ArcLine(-start, start, middle, end), Symbol::wire(colour));
 	}
 }
@@ -497,7 +497,7 @@ void paint_combat(Gnode& parent, SpatialCombat& combat)
 		}
 	};
 
-	vec3 center = to_xz(vec2(combat.m_coord)) + 0.5f + Y3;;
+	vec3 center = to_xz(vec2(combat.m_coord)) + 0.5f + y3;;
 
 	for(CombatFleet& fleet : combat.m_attack)
 		destroy_ships(*fleet.m_fleet, fleet.m_hull_losses);
@@ -516,14 +516,14 @@ void paint_combat(Gnode& parent, SpatialCombat& combat)
 void galaxy_grid(Gnode& parent, Galaxy& galaxy)
 {
 	Colour colour = Colour::White * 3.f;
-	Gnode& self = gfx::node(parent, Y3 * 0.5f);
+	Gnode& self = gfx::node(parent, y3 * 0.5f);
 	gfx::shape(self, Grid2(vec2(galaxy.m_size)), Symbol::wire(colour));
 }
 
 void highlighted_sector(Gnode& parent, const vec2& coord)
 {
 	Gnode& self = gfx::node(parent, vec3(coord.x, 0.f, coord.y) + 0.5f);
-	gfx::shape(self, Quad(1.f, X3, Z3), Symbol::wire(Colour::White));
+	gfx::shape(self, Quad(1.f, x3, z3), Symbol::wire(Colour::White));
 }
 
 void paint_galaxy(Gnode& parent, Galaxy& galaxy)

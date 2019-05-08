@@ -33,7 +33,7 @@ namespace toy
 		attr_ vec3 m_linear_velocity = vec3(0.f);
 		attr_ vec3 m_angular_velocity = vec3(0.f);
 
-		vec3 m_direction = -Z3;
+		vec3 m_direction = -z3;
 		vec3 m_acceleration = vec3(0.f);
 
 		attr_ bool m_moving = false;

@@ -1,26 +1,26 @@
 #pragma once
 
-#include <mud/math.h>
-#include <mud/refl.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/math.h>
+#include <two/refl.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 //#include <util/Executable.h>
 
 
 
 #ifndef TOY_UTIL_EXPORT
-#define TOY_UTIL_EXPORT MUD_IMPORT
+#define TOY_UTIL_EXPORT TWO_IMPORT
 #endif
 
-namespace mud
+namespace two
 {
     class Executable;
 }
 
 namespace toy
 {
-	using namespace mud;
+	using namespace two;
 
 	class ProcedureType;
     class Procedure;
@@ -35,9 +35,9 @@ namespace toy
 //#include <atomic>
 #include <stl/stddef.h>
 
-namespace mud
+namespace two
 {
-	class MUD_TYPE_EXPORT Executable
+	class TWO_TYPE_EXPORT Executable
 	{
 	public:
 		Executable() : m_done(false), m_done_flag(0) {}
@@ -74,7 +74,7 @@ namespace toy
 		attr_ uint32_t m_index;
 		attr_ string m_name;
 
-		Meta& meta() { return mud::meta(m_type); }
+		Meta& meta() { return two::meta(m_type); }
 
 		virtual bool checkObject(Ref object) = 0;
 		virtual bool checkArgs(span<Ref> args) = 0;
@@ -121,20 +121,20 @@ namespace toy
 #include <stl/string.h>
 #include <stl/vector.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     
     
-    export_ template <> TOY_UTIL_EXPORT Type& type<toy::Procedure>();
     export_ template <> TOY_UTIL_EXPORT Type& type<toy::ProcedureType>();
+    export_ template <> TOY_UTIL_EXPORT Type& type<toy::Procedure>();
 }
 
 

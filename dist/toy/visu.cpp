@@ -1,18 +1,18 @@
 #include <toy/visu.h>
-#include <mud/gfx.h>
-#include <mud/snd.h>
-#include <mud/pool.h>
-#include <mud/geom.h>
+#include <two/gfx.h>
+#include <two/snd.h>
+#include <two/pool.h>
+#include <two/geom.h>
 #include <toy/core.h>
-#include <mud/tree.h>
-#include <mud/ecs.h>
-#include <mud/math.h>
-#include <mud/refl.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/tree.h>
+#include <two/ecs.h>
+#include <two/math.h>
+#include <two/refl.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 #ifndef USE_STL
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.visu;
 #else
 #include <stl/vector.hpp>
@@ -23,16 +23,17 @@ namespace stl
 {
 	using namespace toy;
 	template class TOY_VISU_EXPORT vector<Gnode*>;
+	template class TOY_VISU_EXPORT vector<vector<Gnode*>>;
 	template class TOY_VISU_EXPORT vector<unique<VisuPainter>>;
 }
 #endif
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.visu;
 #else
 #endif
 
-namespace mud
+namespace two
 {
     // Exported types
     
@@ -41,7 +42,7 @@ namespace mud
     template <> TOY_VISU_EXPORT Type& type<toy::VisuScene>() { static Type ty("VisuScene", sizeof(toy::VisuScene)); return ty; }
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.visu
 #else
 #include <stl/algorithm.h>
@@ -58,7 +59,7 @@ namespace toy
 	{
 		if(page.m_updated > page.m_last_rebuilt)
 		{
-			printf("INFO: Rebuilding WorldPage geometry\n");
+			printf("[info] Rebuilding WorldPage geometry\n");
 			build_world_page_geometry(*parent.m_scene, page);
 			page.update_geometry(page.m_spatial->m_last_tick);
 		}
@@ -86,7 +87,7 @@ namespace toy
 		for(Item* item : items)
 			for(const ModelElem& elem : item->m_model->m_items)
 			{
-				uint16_t num = item->m_batch ? 0U : 1U;
+				uint16_t num = item->m_batch ? item->m_batch->m_cache.size() / 16 : 1U;
 				if(elem.m_mesh->m_primitive < PrimitiveType::Triangles)
 					continue;
 				vertex_count += num * elem.m_mesh->m_vertex_count;
@@ -109,17 +110,26 @@ namespace toy
 					continue;
 
 				if(!item->m_batch)
-					elem.m_mesh->m_cache.xcopy(data, item->m_node->m_transform);
-				//else
-				//	for(const mat4& transform : item->m_instances)
-				//		elem.m_mesh->read(data, transform);
+				{
+					elem.m_mesh->m_cache.xcopy(data, item->m_node->m_transform * elem.m_transform);
+					data.next();
+				}
+				else
+				{
+					span<mat4> transforms = { (mat4*)item->m_batch->m_cache.data(), item->m_batch->m_cache.size() / 16 };
+					for(const mat4& transform : transforms)
+					{
+						elem.m_mesh->m_cache.xcopy(data, transform);
+						data.next();
+					}
+				}
+
 			}
 	}
 
 	void build_world_page_geometry(WorldPage& page, span<Item*> items)
 	{
-		page.m_chunks.emplace_back();
-		Geometry& geom = page.m_chunks.back();
+		Geometry& geom = push(page.m_chunks);
 		build_geometry(geom, items);
 	}
 
@@ -137,11 +147,11 @@ namespace toy
 			//}
 			//else
 			{
-				bool add = has(page.m_geometry_filter, string(item.m_model->m_name))
-						&& item.m_node->m_object && item.m_node->m_object.m_type->is<EntityRef>();
+				bool add = has(page.m_geometry_filter, item.m_model->m_name);
+				add &= bool(item.m_node->m_object);
 				if(add)
 				{
-					Entity entity = { as_ent(item.m_node->m_object), 0 };
+					Entity entity = item.m_node->m_object;
 					Spatial& object = asa<Spatial>(entity);
 					if((object.is_child_of(page.m_spatial) || &object == &spatial) && !isa<Movable>(entity))
 						items.push_back(&item);
@@ -154,7 +164,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.visu
 #else
 #ifdef TOY_SOUND
@@ -182,8 +192,10 @@ module toy.visu
 #include <LinearMath/btTransform.h>
 #include <LinearMath/btTransformUtil.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
+	using namespace two;
+
 	inline vec3 to_vec3(const btVector3& vec) { return { vec.x(), vec.y(), vec.z() }; }
 	inline btVector3 to_btvec3(const vec3& vec) { return { vec.x, vec.y, vec.z }; }
 	
@@ -304,13 +316,25 @@ namespace toy
 	VisuScene::~VisuScene()
     {}
 
-	Gnode& VisuScene::entity_node(Gnode& parent, uint32_t entity, Spatial& spatial, size_t painter)
+	Gnode& VisuScene::entity_node(Gnode& parent, Entity entity, Spatial& spatial, size_t painter)
 	{
-		if(m_entities.size() <= entity)
-			m_entities.resize((entity + 1) * 2);
-		if(m_entities[entity] == nullptr)
-			m_entities[entity] = &gfx::node(parent.subx(uint16_t(entity)), ent_ref(entity), spatial.absolute_position(), spatial.absolute_rotation());
-		return m_entities[entity]->subx(uint16_t(painter));
+		const size_t index = entity.m_handle;
+
+		if(m_entities.size() <= entity.m_stream)
+			m_entities.resize(entity.m_stream + 1);
+
+		vector<Gnode*>& nodes = m_entities[entity.m_stream];
+
+		if(nodes.size() <= index)
+			nodes.resize((index + 1) * 2);
+
+		if(nodes[index] == nullptr)
+		{
+			nodes[index] = &gfx::node(parent.subx(uint16_t(index)), spatial.absolute_position(), spatial.absolute_rotation());
+			nodes[index]->m_node->m_object = entity;
+		}
+
+		return nodes[index]->subx(uint16_t(painter));
 	}
 
 	void VisuScene::next_frame()
@@ -326,8 +350,11 @@ namespace toy
 		m_snd_manager.update();
 #endif
 
-		for(size_t i = 0; i < m_entities.size(); ++i)
-			m_entities[i] = nullptr;
+		for(vector<Gnode*>& entities : m_entities)
+		{
+			for(size_t i = 0; i < entities.size(); ++i)
+				entities[i] = nullptr;
+		}
 
 		Gnode& root = m_scene.begin();
 
@@ -348,19 +375,19 @@ namespace toy
 
 		parent.m_scene->m_pool->pool<Item>().iterate([&](Item& item)
 		{
-			for(Ref object : selection)
-				if(item.m_node->m_object == object)
-					select_bounds.merge(item.m_aabb);
-
-			if(hovered != Ref() && item.m_node->m_object == hovered)
-				hover_bounds.merge(item.m_aabb);
+			//for(Ref object : selection)
+			//	if(item.m_node->m_object == object)
+			//		select_bounds.merge(item.m_aabb);
+			//
+			//if(hovered != Ref() && item.m_node->m_object == hovered)
+			//	hover_bounds.merge(item.m_aabb);
 		});
 
 		gfx::draw(parent, Cube(select_bounds), Symbol(Colour::White));
 		gfx::draw(parent, Cube(hover_bounds), Symbol(Colour::AlphaGrey));
 	}
 
-	void update_camera(Camera& camera, mud::Camera& gfx_camera)
+	void update_camera(Camera& camera, two::Camera& gfx_camera)
 	{
 		//gfx_camera.set_look_at(camera.m_lens_position, camera.m_spatial->absolute_position());
 

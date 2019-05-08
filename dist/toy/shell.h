@@ -1,40 +1,40 @@
 #pragma once
 
-#include <mud/gfx.h>
+#include <two/gfx.h>
 #include <toy/visu.h>
-#include <mud/ui.h>
-#include <mud/geom.h>
-#include <mud/gfx.obj.h>
-#include <mud/gfx.gltf.h>
-#include <mud/pool.h>
+#include <two/ui.h>
+#include <two/geom.h>
+#include <two/gfx.obj.h>
+#include <two/gfx.gltf.h>
+#include <two/pool.h>
 #include <toy/core.h>
-#include <mud/srlz.h>
-#include <mud/uio.h>
-#include <mud/ctx.glfw.h>
-#include <mud/ui.vg.h>
-#include <mud/gfx.pbr.h>
-#include <mud/tree.h>
-#include <mud/lang.h>
-#include <mud/jobs.h>
-#include <mud/ecs.h>
-#include <mud/bgfx.h>
-#include <mud/frame.h>
+#include <two/srlz.h>
+#include <two/uio.h>
+#include <two/ctx.glfw.h>
+#include <two/ui.vg.h>
+#include <two/gfx.pbr.h>
+#include <two/tree.h>
+#include <two/lang.h>
+#include <two/jobs.h>
+#include <two/ecs.h>
+#include <two/bgfx.h>
+#include <two/frame.h>
 #include <toy/edit.h>
-#include <mud/math.h>
-#include <mud/tool.h>
-#include <mud/refl.h>
+#include <two/math.h>
+#include <two/tool.h>
+#include <two/refl.h>
 #include <toy/block.h>
-#include <mud/ctx.h>
-#include <mud/gfx.ui.h>
-#include <mud/wfc.gfx.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/ctx.h>
+#include <two/gfx.ui.h>
+#include <two/wfc.gfx.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 
 
 
 #ifndef TOY_SHELL_EXPORT
-#define TOY_SHELL_EXPORT MUD_IMPORT
+#define TOY_SHELL_EXPORT TWO_IMPORT
 #endif
 
 namespace toy
@@ -47,6 +47,7 @@ namespace toy
     class GameModule;
     class GameModuleBind;
     class GameShell;
+	class GameWindow;
 }
 
 
@@ -54,7 +55,7 @@ namespace toy
 
 
 
-namespace mud
+namespace two
 {
 	class Shell;
 }
@@ -63,8 +64,6 @@ namespace toy
 {
 	class SqliteDatabase;
 	
-	using Selection = vector<Ref>;
-
 	class refl_ TOY_SHELL_EXPORT GameScene : public VisuScene
 	{
 	public:
@@ -251,12 +250,12 @@ namespace toy
 		table<Step, float> m_times = {};
 	};
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	static GameShell* g_app = nullptr;
 #endif
 }
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 extern "C"
 {
 	void copy(const char* text);
@@ -268,24 +267,24 @@ extern "C"
 #include <stl/string.h>
 #include <stl/vector.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameMode>();
     
     
+    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::Game>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModule>();
-    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameModuleBind>();
-    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameScene>();
     export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameWindow>();
+    export_ template <> TOY_SHELL_EXPORT Type& type<toy::GameShell>();
 }
 

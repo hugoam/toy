@@ -1,15 +1,15 @@
 #include <toy/visu.h>
 #include <toy/core.refl.h>
-#include <mud/gfx.refl.h>
+#include <two/gfx.refl.h>
 #include <toy/visu.refl.h>
-#include <mud/type.refl.h>
-#include <mud/refl.h>
+#include <two/type.refl.h>
+#include <two/refl.h>
 #include <toy/util.refl.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.visu;
 #else
 #include <cstddef>
@@ -17,12 +17,12 @@ module toy.visu;
 #endif
 
 
-using namespace mud;
+using namespace two;
 
 void* toy_VisuScene__get_gfx(void* object) { return &(*static_cast<toy::VisuScene*>(object)).m_gfx; }
 void toy_VisuScene_next_frame(void* object, span<void*> args, void*& result) { UNUSED(result); UNUSED(args); (*static_cast<toy::VisuScene*>(object)).next_frame(); }
 
-namespace mud
+namespace two
 {
 	void toy_visu_meta(Module& m)
 	{
@@ -57,8 +57,8 @@ namespace mud
 		// copy constructor
 		// members
 		static Member members[] = {
-			{ t, SIZE_MAX, type<mud::GfxSystem>(), "gfx", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_VisuScene__get_gfx },
-			{ t, offsetof(toy::VisuScene, m_scene), type<mud::Scene>(), "scene", nullptr, Member::NonMutable, nullptr }
+			{ t, SIZE_MAX, type<two::GfxSystem>(), "gfx", nullptr, Member::Flags(Member::NonMutable|Member::Link), toy_VisuScene__get_gfx },
+			{ t, offsetof(toy::VisuScene, m_scene), type<two::Scene>(), "scene", nullptr, Member::NonMutable, nullptr }
 		};
 		// methods
 		static Method methods[] = {
@@ -77,7 +77,7 @@ namespace mud
 namespace toy
 {
 	toy_visu::toy_visu()
-		: Module("toy::visu", { &mud_type::m(), &mud_gfx::m(), &toy_util::m(), &toy_core::m() })
+		: Module("toy::visu", { &two_type::m(), &two_gfx::m(), &toy_util::m(), &toy_core::m() })
 	{
 		// setup reflection meta data
 		toy_visu_meta(*this);

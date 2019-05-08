@@ -1,25 +1,25 @@
-#include <mud/gfx.h>
+#include <two/gfx.h>
 #include <toy/visu.h>
-#include <mud/ui.h>
-#include <mud/geom.h>
-#include <mud/pool.h>
+#include <two/ui.h>
+#include <two/geom.h>
+#include <two/pool.h>
 #include <toy/core.h>
-#include <mud/uio.h>
-#include <mud/gfx.pbr.h>
-#include <mud/tree.h>
-#include <mud/lang.h>
-#include <mud/ecs.h>
-#include <mud/gfx.edit.h>
+#include <two/uio.h>
+#include <two/gfx.pbr.h>
+#include <two/tree.h>
+#include <two/lang.h>
+#include <two/ecs.h>
+#include <two/gfx.edit.h>
 #include <toy/edit.h>
-#include <mud/tool.h>
-#include <mud/ctx.h>
-#include <mud/gfx.ui.h>
-#include <mud/refl.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/tool.h>
+#include <two/ctx.h>
+#include <two/gfx.ui.h>
+#include <two/refl.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 #ifndef USE_STL
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.edit;
 #else
 #include <stl/vector.hpp>
@@ -37,28 +37,28 @@ namespace stl
 }
 #endif
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.edit;
 #else
 #endif
 
-namespace mud
+namespace two
 {
     // Exported types
     
     
-    template <> TOY_EDIT_EXPORT Type& type<toy::ActionGroup>() { static Type ty("ActionGroup", sizeof(toy::ActionGroup)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::Edit>() { static Type ty("Edit", sizeof(toy::Edit)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Clone>() { static Type ty("Clone", sizeof(toy::Clone)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Cut>() { static Type ty("Cut", sizeof(toy::Cut)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::Edit>() { static Type ty("Edit", sizeof(toy::Edit)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::GraphicsDebug>() { static Type ty("GraphicsDebug", sizeof(toy::GraphicsDebug)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Paste>() { static Type ty("Paste", sizeof(toy::Paste)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::Toolbelt>() { static Type ty("Toolbelt", sizeof(toy::Toolbelt)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::Toolbox>() { static Type ty("Toolbox", sizeof(toy::Toolbox)); return ty; }
     template <> TOY_EDIT_EXPORT Type& type<toy::DynamicToolbox>() { static Type ty("DynamicToolbox", type<toy::Toolbox>(), sizeof(toy::DynamicToolbox)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::Editor>() { static Type ty("Editor", type<mud::EditContext>(), sizeof(toy::Editor)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::PlayTool>() { static Type ty("PlayTool", type<mud::Tool>(), sizeof(toy::PlayTool)); return ty; }
-    template <> TOY_EDIT_EXPORT Type& type<toy::RunTool>() { static Type ty("RunTool", type<mud::Tool>(), sizeof(toy::RunTool)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::Toolbelt>() { static Type ty("Toolbelt", sizeof(toy::Toolbelt)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::PlayTool>() { static Type ty("PlayTool", type<two::Tool>(), sizeof(toy::PlayTool)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::RunTool>() { static Type ty("RunTool", type<two::Tool>(), sizeof(toy::RunTool)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::ActionGroup>() { static Type ty("ActionGroup", sizeof(toy::ActionGroup)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::GraphicsDebug>() { static Type ty("GraphicsDebug", sizeof(toy::GraphicsDebug)); return ty; }
+    template <> TOY_EDIT_EXPORT Type& type<toy::Editor>() { static Type ty("Editor", type<two::EditContext>(), sizeof(toy::Editor)); return ty; }
 }
 
 
@@ -136,7 +136,7 @@ namespace toy
 #endif
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.edit
 #else
 #include <stl/hash_base.hpp>
@@ -255,16 +255,16 @@ namespace toy
 		//else
 		//m_inputWidget->ui().m_cursor.show();
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
 		{
-			vec2 angle = mouse_event.m_delta / viewer.m_frame.m_size;
+			vec2 angle = event.m_delta / viewer.m_frame.m_size;
 			spatial.pitch(-angle.x * 4);
 			spatial.yaw_fixed(-angle.y * 4);
 		}
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.edit
 #else
 #endif
@@ -300,42 +300,42 @@ namespace toy
 		// deactivate
 		//mWidget->ui().cursor()->free();
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Moved))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Moved))
 		{
-			if(mouse_event.m_deltaZ > 0)
+			if(event.m_deltaZ > 0)
 				camera.zoom(1.3f);
 			else
 				camera.zoom(0.75f);
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
 		{
 			viewer.take_focus();
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputMod::Ctrl))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputMod::Ctrl))
 		{
 #if DRAG_BY_GRAB
 			Plane horizontal_plane = { Y3, spatial.m_position.y };
-			vec3 from = m_viewer.m_viewport.raycast(horizontal_plane, mouse_event.m_relative);
-			vec3 to = m_viewer.m_viewport.raycast(horizontal_plane, mouse_event.m_relative - mouse_event.m_delta);
+			vec3 from = m_viewer.m_viewport.raycast(horizontal_plane, event.m_relative);
+			vec3 to = m_viewer.m_viewport.raycast(horizontal_plane, event.m_relative - event.m_delta);
 
 			//spatial.translate(to - from);
 			spatial.set_position(spatial.m_position + (to - from));
 #else
-			spatial.translate(to_vec3(Side::Right) * 0.02f * m_camera.m_lensDistance * -mouse_event.m_delta.x);
-			spatial.translate(to_vec3(Side::Front) * 0.02f * m_camera.m_lensDistance * mouse_event.m_delta.y);
+			spatial.translate(to_vec3(Side::Right) * 0.02f * m_camera.m_lensDistance * -event.m_delta.x);
+			spatial.translate(to_vec3(Side::Front) * 0.02f * m_camera.m_lensDistance * event.m_delta.y);
 #endif
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged))
 		{
-			spatial.rotate(to_vec3(Side::Down), 0.02f * mouse_event.m_delta.x);
-			//spatial.rotateRelative(to_vec3(Side::Left), 0.02f * mouse_event.m_delta.y);
-			camera.set_lens_angle(m_camera->m_lens_angle + 0.02f * mouse_event.m_delta.y);
+			spatial.rotate(to_vec3(Side::Down), 0.02f * event.m_delta.x);
+			//spatial.rotateRelative(to_vec3(Side::Left), 0.02f * event.m_delta.y);
+			camera.set_lens_angle(m_camera->m_lens_angle + 0.02f * event.m_delta.y);
 		}
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Heartbeat))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::Mouse, EventType::Heartbeat))
 		{
 #if 0
 			static const float threshold = 4.f;
@@ -370,7 +370,7 @@ namespace toy
 	}
 }
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.edit
 #else
 #include <stl/hash_base.hpp>
@@ -431,8 +431,11 @@ namespace toy
 	{
 		Widget& self = ui::select_list(parent);
 
-		for(Ref object : selection)
+		for(Ref object : selection.objects)
 			object_item(self, object);
+
+		//for(Entity entity : selection.entities)
+		//	object_item(self, object);
 	}
 
 #if 0
@@ -465,7 +468,7 @@ namespace toy
 		for(Type* type : system().m_types)
 			if(g_class[type->m_id])
 			{
-				if(has_component(cls(*type), mud::type<Spatial>()))
+				if(has_component(cls(*type), two::type<Spatial>()))
 					types.push_back(type);
 			}
 		return types;
@@ -476,7 +479,7 @@ namespace toy
 		enum Modes { CREATE = 1 << 0 };
 
 		Section& self = section(parent, string(indexer.m_type->m_name) + " Registry");
-		complex_indexer(*self.m_body, indexer, &selection);
+		complex_indexer(*self.m_body, indexer, &selection.objects);
 
 		if(ui::modal_button(self, *self.m_toolbar, "Create", CREATE))
 		{
@@ -526,22 +529,22 @@ namespace toy
 
 	string entity_name(Entity entity)
 	{
-		return string(entity_prototype(entity)) + ":" + to_string(entity.m_handle);
+		return entity_prototype(entity) + ":" + to_string(entity.m_handle);
 	}
 
 	string entity_icon(Entity entity)
 	{
-		return "(" + string(entity_prototype(entity)) + ")";
+		return "(" + entity_prototype(entity) + ")";
 	}
 
-	void outliner_node(Widget& parent, Entity entity, HSpatial spatial, vector<Ref>& selection)
+	void outliner_node(Widget& parent, Entity entity, HSpatial spatial, Selection& selection)
 	{
 		TreeNode& self = ui::tree_node(parent, { entity_icon(entity).c_str(), entity_name(entity).c_str() }, false, false);
 
-		self.m_header->set_state(SELECTED, has(selection, ent_ref(entity)));
+		self.m_header->set_state(SELECTED, has(selection.entities, entity));
 
 		if(self.m_header->activated())
-			select(selection, ent_ref(entity));
+			select(selection.entities, entity);
 
 		//object_item(self, object);
 
@@ -552,7 +555,7 @@ namespace toy
 			}
 	}
 
-	void outliner_graph(Widget& parent, HSpatial spatial, vector<Ref>& selection)
+	void outliner_graph(Widget& parent, HSpatial spatial, Selection& selection)
 	{
 		ScrollSheet& sheet = ui::scroll_sheet(parent);
 		Widget& tree = ui::tree(*sheet.m_body);
@@ -631,10 +634,10 @@ namespace toy
 
 		if(editor.m_viewer)
 		{
-			if(MouseEvent mouse_event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
+			if(MouseEvent event = editor.m_viewer->mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::None, false))
 				editor.m_viewer->take_focus();
 
-			ui::viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection);
+			ui::viewport_picker(*editor.m_viewer, *editor.m_viewer, editor.m_selection.objects);
 
 			KeyEvent key_event = editor.m_viewer->key_event(Key::F, EventType::Pressed);
 			if(key_event)
@@ -642,7 +645,7 @@ namespace toy
 		}
 
 		if(editor.m_spatial_tool && editor.m_viewer)
-			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection);
+			editor.m_spatial_tool->process(*editor.m_viewer, editor.m_selection.objects);
 	}
 
 	Widget& editor_viewer_overlay(Viewer& viewer, Editor& editor)
@@ -700,7 +703,7 @@ namespace toy
 
 		if(editor.m_viewer)
 		{
-			Ref hovered = editor.m_viewer->m_hovered ? editor.m_viewer->m_hovered->m_node->m_object : Ref();
+			Ref hovered = Ref(); // editor.m_viewer->m_hovered ? editor.m_viewer->m_hovered->m_node->m_object : Ref();
 			paint_selection(editor.m_viewer->m_scene->m_graph, editor.m_selection, hovered);
 			//Widget& layout = toy::editor_viewer_overlay(*editor.m_viewer, editor);
 			//time_entries(layout);
@@ -834,7 +837,7 @@ namespace toy
 	{
 		m_tool_context.m_action_stack = &m_action_stack;
 		m_tool_context.m_work_plane = &m_work_plane;
-		m_tool_context.m_selection = &m_selection;
+		m_tool_context.m_selection = &m_selection.objects;
 
 		m_run_tool.m_state = m_run_game ? ToolState::Active : ToolState::Inactive;
 		m_play_tool.m_state = m_play_game ? ToolState::Active : ToolState::Inactive;
@@ -886,7 +889,7 @@ namespace toy
 		m_current_tools.clear();
 
 		for(auto& tool : m_tools)
-			if(tool->enabled(targets))
+			if(tool->enabled(targets.objects))
 				add(m_current_tools, tool);
 	}
 

@@ -412,7 +412,7 @@ namespace boids
 
 			auto move_forward_rotation = [delta](Position& position, const Rotation& rotation, const MoveSpeed& move_speed)
 			{
-				position = position.m_value + (delta * move_speed.m_value * rotate(rotation.m_value, -Z3), 0.f);
+				position = position.m_value + (delta * move_speed.m_value * rotate(rotation.m_value, -z3), 0.f);
 			};
 
 			Job* job_move_rotation = for_components<Position, Rotation, MoveSpeed>(job_system, job_move, ecs, move_forward_rotation);
@@ -444,7 +444,7 @@ namespace boids
 				static vec3 up = vec3(0.f, 1.f, 0.f);
 				lookat(transform, position.m_value, heading.m_value, up);
 #else
-				//bxlookat(transform, position.m_value, position.m_value + heading.m_value, Y3);
+				//bxlookat(transform, position.m_value, position.m_value + heading.m_value, y3);
 				//transform = bxTRS(vec3(1.f), look_dir(position.m_value, heading.m_value), position.m_value);
 				transform = bxtranslation(two::vec3(position.m_value));
 #endif
@@ -618,10 +618,10 @@ namespace boids
 				Widget& left = ui::widget(header, panel_style);
 				Widget& numbers = ui::columns(left, { 0.15f, 0.85f });
 
-				ui::slider_field<size_t>(numbers, "num targets",   m_num_targets, { 0, 10, 1 });
-				ui::slider_field<size_t>(numbers, "num obstacles", m_num_obstacles, { 0, 10, 1 });
-				ui::slider_field<size_t>(numbers, "num boids",     m_num_boids, { 0, 250'000, 1000 });
-				ui::slider_field<size_t>(numbers, "num visible",   m_num_visible, { 0, 250'000, 100 });
+				ui::slider_field(numbers, "num targets",   m_num_targets, { 0, 10, 1 });
+				ui::slider_field(numbers, "num obstacles", m_num_obstacles, { 0, 10, 1 });
+				ui::slider_field(numbers, "num boids",     m_num_boids, { 0, 250'000, 1000 });
+				ui::slider_field(numbers, "num visible",   m_num_visible, { 0, 250'000, 100 });
 				if(ui::button(numbers, "reset").activated())
 				{
 					this->destroy_entities(ecs);

@@ -87,24 +87,24 @@ namespace toy
 
 	void Spatial::yaw(float value)
 	{
-		vec3 axis(two::rotate(m_rotation, Y3));			
+		vec3 axis(two::rotate(m_rotation, y3));			
 		rotate(axis, value);
 	}
 
 	void Spatial::yaw_fixed(float value)
 	{			
-		rotate(Y3, value);
+		rotate(y3, value);
 	}
 
 	void Spatial::pitch(float value)
 	{
-		vec3 axis(two::rotate(m_rotation, X3));
+		vec3 axis(two::rotate(m_rotation, x3));
 		rotate(axis, value);
 	}
 
 	void Spatial::roll(float value)
 	{
-		vec3 axis(two::rotate(m_rotation, Z3));
+		vec3 axis(two::rotate(m_rotation, z3));
 		rotate(axis, value);
 	}
 

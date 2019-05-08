@@ -1,22 +1,22 @@
 #pragma once
 
 #include <toy/visu.h>
-#include <mud/ui.h>
+#include <two/ui.h>
 #include <toy/core.h>
-#include <mud/uio.h>
-#include <mud/tool.h>
+#include <two/uio.h>
+#include <two/tool.h>
 #include <toy/util.h>
-#include <mud/math.h>
-#include <mud/gfx.ui.h>
-#include <mud/infra.h>
-#include <mud/type.h>
+#include <two/math.h>
+#include <two/gfx.ui.h>
+#include <two/infra.h>
+#include <two/type.h>
 
 
 
 
 
 #ifndef TOY_EDIT_EXPORT
-#define TOY_EDIT_EXPORT MUD_IMPORT
+#define TOY_EDIT_EXPORT TWO_IMPORT
 #endif
 
 namespace toy
@@ -69,30 +69,30 @@ namespace toy
 #include <stl/string.h>
 #include <stl/vector.h>
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #endif
 
 
-namespace mud
+namespace two
 {
     // Exported types
     
     
-    export_ template <> TOY_EDIT_EXPORT Type& type<toy::ActionGroup>();
+    export_ template <> TOY_EDIT_EXPORT Type& type<toy::Edit>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::Clone>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::Cut>();
-    export_ template <> TOY_EDIT_EXPORT Type& type<toy::Edit>();
-    export_ template <> TOY_EDIT_EXPORT Type& type<toy::GraphicsDebug>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::Paste>();
-    export_ template <> TOY_EDIT_EXPORT Type& type<toy::Toolbelt>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::Toolbox>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::DynamicToolbox>();
-    export_ template <> TOY_EDIT_EXPORT Type& type<toy::Editor>();
+    export_ template <> TOY_EDIT_EXPORT Type& type<toy::Toolbelt>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::PlayTool>();
     export_ template <> TOY_EDIT_EXPORT Type& type<toy::RunTool>();
+    export_ template <> TOY_EDIT_EXPORT Type& type<toy::ActionGroup>();
+    export_ template <> TOY_EDIT_EXPORT Type& type<toy::GraphicsDebug>();
+    export_ template <> TOY_EDIT_EXPORT Type& type<toy::Editor>();
 }
 
 
@@ -208,8 +208,6 @@ namespace toy
 
 namespace toy
 {
-	using Selection = vector<Ref>;
-
 	//TOY_EDIT_EXPORT void context_menu(Widget& parent, Selector& selector, Ref object);
 
 	TOY_EDIT_EXPORT void edit_toolbox(Widget& parent, Toolbox& toolbox);
@@ -263,8 +261,6 @@ namespace toy
 
 namespace toy
 {
-	using Selection = vector<Ref>;
-
 	class refl_ Toolbox
 	{
 	public:
@@ -307,8 +303,6 @@ namespace toy
 
 namespace toy
 {
-	using Selection = vector<Ref>;
-
 	export_ class refl_ TOY_EDIT_EXPORT PlayTool : public Tool
 	{
 	public:

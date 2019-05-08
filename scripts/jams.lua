@@ -17,14 +17,14 @@ function uses_jam()
     end
 end
 
-test        = two_module(nil, "_test",      path.join(TOY_DIR, "jams"), "test",     nil, uses_jam, true, toy.all)
-minimal     = two_module(nil, "_minimal",   path.join(TOY_DIR, "jams"), "minimal",  nil, uses_jam, true, toy.all)
-boids       = two_module(nil, "_boids",     path.join(TOY_DIR, "jams"), "boids",    nil, uses_jam, true, toy.all)
-space       = two_module(nil, "_space",     path.join(TOY_DIR, "jams"), "space",    nil, uses_jam, true, toy.all)
-platform    = two_module(nil, "_platform",  path.join(TOY_DIR, "jams"), "platform", nil, uses_jam, true, toy.all)
-blocks      = two_module(nil, "_blocks",    path.join(TOY_DIR, "jams"), "blocks",   nil, uses_jam, true, toy.all)
-script      = two_module(nil, "_wren",      path.join(TOY_DIR, "jams"), "wren",     nil, uses_jam, true, toy.all)
-godot       = two_module(nil, "_godot",     path.join(TOY_DIR, "jams"), "godot",    nil, uses_jam, true, toy.all)
+test        = module(nil, "_test",      path.join(TOY_DIR, "jams"), "test",     nil, uses_jam, true, toy.all)
+minimal     = module(nil, "_minimal",   path.join(TOY_DIR, "jams"), "minimal",  nil, uses_jam, true, toy.all)
+boids       = module(nil, "_boids",     path.join(TOY_DIR, "jams"), "boids",    nil, uses_jam, true, toy.all)
+space       = module(nil, "_space",     path.join(TOY_DIR, "jams"), "space",    nil, uses_jam, true, toy.all)
+platform    = module(nil, "_platform",  path.join(TOY_DIR, "jams"), "platform", nil, uses_jam, true, toy.all)
+blocks      = module(nil, "_blocks",    path.join(TOY_DIR, "jams"), "blocks",   nil, uses_jam, true, toy.all)
+script      = module(nil, "_wren",      path.join(TOY_DIR, "jams"), "wren",     nil, uses_jam, true, toy.all)
+godot       = module(nil, "_godot",     path.join(TOY_DIR, "jams"), "godot",    nil, uses_jam, true, toy.all)
 
 function preload_example_folder(name)
     configuration { "asmjs" }

@@ -159,7 +159,7 @@ namespace toy
 				TileModel& tile = tileblock.m_tile_models[index];
 				if(tile.m_model)
 				{
-					vec3 position = tileblock.to_position({ uint(x), uint(y), uint(z) }) - tileblock.m_position + Y3 * 0.5f * tileblock.m_scale;
+					vec3 position = tileblock.to_position({ uint(x), uint(y), uint(z) }) - tileblock.m_position + y3 * 0.5f * tileblock.m_scale;
 					cubes.push_back({ position, tileblock.m_scale / 2.f });
 					shapes.push_back({ Symbol(), &cubes.back(), PLAIN });
 				}

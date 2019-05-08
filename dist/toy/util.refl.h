@@ -1,22 +1,22 @@
 #pragma once
 
 #include <toy/util.h>
-#include <mud/refl.h>
-#include <mud/infra.h>
+#include <two/refl.h>
+#include <two/infra.h>
 
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #endif
 
 //#include <util/Types.h>
 
 #ifndef TOY_UTIL_REFL_EXPORT
-#define TOY_UTIL_REFL_EXPORT MUD_IMPORT
+#define TOY_UTIL_REFL_EXPORT TWO_IMPORT
 #endif
 
 namespace toy
 {
-	export_ class TOY_UTIL_REFL_EXPORT toy_util : public mud::Module
+	export_ class TOY_UTIL_REFL_EXPORT toy_util : public two::Module
 	{
 	private:
 		toy_util();
@@ -35,7 +35,7 @@ TOY_UTIL_REFL_EXPORT Module& getModule();
 #if !defined MUD_MODULES || defined MUD_TYPE_LIB
 #endif
 
-namespace mud
+namespace two
 {
 	
 }

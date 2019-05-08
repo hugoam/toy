@@ -63,7 +63,7 @@ namespace toy
 		if(MouseEvent event = viewer.mouse_event(DeviceType::MouseMiddle, EventType::Dragged, InputMod::Ctrl))
 		{
 #if DRAG_BY_GRAB
-			Plane horizontal_plane = { Y3, spatial.m_position.y };
+			Plane horizontal_plane = { y3, spatial.m_position.y };
 			vec3 from = m_viewer.m_viewport.raycast(horizontal_plane, event.m_relative);
 			vec3 to = m_viewer.m_viewport.raycast(horizontal_plane, event.m_relative - event.m_delta);
 

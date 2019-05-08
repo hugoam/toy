@@ -42,7 +42,7 @@ Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat&
 Bullet::Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity)
 	: m_spatial(spatial)
 	, m_source(source)
-	, m_velocity(rotate(rotation, -Z3) * velocity)
+	, m_velocity(rotate(rotation, -z3) * velocity)
 	//, m_solid(Solid::create(m_spatial, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(energy), false, 1.f))
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
 {}
@@ -66,7 +66,7 @@ void Bullet::update()
 			if(shot->m_shield && shot->m_energy > 0.f)
 			{
 				auto reflect = [](const vec3& I, const vec3& N) { return I - 2.f * dot(N, I) * N; };
-				vec3 N = normalize(collision.m_hit_point - shot_spatial.m_position + Y3);
+				vec3 N = normalize(collision.m_hit_point - shot_spatial.m_position + y3);
 				m_velocity = reflect(m_velocity, N);
 				spatial.m_rotation = look_at(vec3(0.f), m_velocity);
 
@@ -114,7 +114,7 @@ Human::Human(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor rec
 	, m_receptor(receptor)
 	, m_script(script)
 	, m_faction(faction)
-	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), y3 * 0.9f), false, 1.f))
 	, m_walk(false)
 {
 	emitter->add_sphere(VisualMedium::me, 0.1f);
@@ -200,7 +200,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 		}
 		else
 		{
-			auto is_walkable = [&](const vec3& pos) { return as<PhysicWorld>(spatial.m_world->m_complex).ground_point(to_ray(pos, -Y3)) != vec3(0.f); };
+			auto is_walkable = [&](const vec3& pos) { return as<PhysicWorld>(spatial.m_world->m_complex).ground_point(to_ray(pos, -y3)) != vec3(0.f); };
 
 			if(m_dest == vec3(0.f))
 			{
@@ -222,7 +222,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 				else
 				{
 					m_state = { m_walk ? "Walk" : "RunAim", true };
-					movable.set_linear_velocity(movable.m_linear_velocity - Y3 * 1.f);
+					movable.set_linear_velocity(movable.m_linear_velocity - y3 * 1.f);
 				}
 			}
 		}
@@ -232,7 +232,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 quat Human::sight(bool aiming)
 {
 	Spatial& spatial = m_spatial;
-	return aiming ? rotate(spatial.m_rotation, X3, m_angles.y) : spatial.m_rotation;
+	return aiming ? rotate(spatial.m_rotation, x3, m_angles.y) : spatial.m_rotation;
 }
 
 void Human::stop()
@@ -248,7 +248,7 @@ Aim Human::aim()
 	Spatial& spatial = m_spatial;
 	quat rotation = this->sight(m_aiming);
 	vec3 muzzle = spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset);
-	vec3 end = muzzle + rotate(rotation, -Z3) * 1000.f;
+	vec3 end = muzzle + rotate(rotation, -z3) * 1000.f;
 
 	Collision hit = as<PhysicWorld>(spatial.m_world->m_complex).raycast({ muzzle, end }, CM_GROUND | CM_SOLID);
 	Spatial* target = nullptr;//hit.m_second ? &((Spatial&)hit.m_second->m_spatial) : nullptr;
@@ -259,9 +259,9 @@ void Human::shoot()
 {
 	Aim aim = this->aim();
 	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, randf(-0.05f, 0.05f)); };
-	quat rotation = fuzz(fuzz(aim.rotation, X3), Y3);
+	quat rotation = fuzz(fuzz(aim.rotation, x3), y3);
 	m_bullets.push_back(construct_owned<Bullet>(m_spatial, aim.start, rotation, 2.f));
-	//m_solid->impulse(rotate(m_spatial.m_rotation, Z3 * 4.f), vec3(0.f));
+	//m_solid->impulse(rotate(m_spatial.m_rotation, z3 * 4.f), vec3(0.f));
 }
 
 void Human::damage(float amount)
@@ -458,7 +458,7 @@ void paint_human(Gnode& parent, Human& human)
 		
 		shield.m_fresnel.m_value.m_value = shield_colour * shield_intensity;
 
-		Gnode& center = gfx::node(parent.subx(Shield), spatial.m_position + rotate(spatial.m_rotation, Y3), spatial.m_rotation);
+		Gnode& center = gfx::node(parent.subx(Shield), spatial.m_position + rotate(spatial.m_rotation, y3), spatial.m_rotation);
 		//center.m_node->m_object = human.m_spatial;
 
 		gfx::shape(center, Sphere(1.f), Symbol(shield_colour), 0U, &shield);
@@ -484,8 +484,8 @@ void paint_human(Gnode& parent, Human& human)
 	if(human.m_faction == Faction::Ally)
 	{
 		Gnode& visor = gfx::node(parent.subx(Visor), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight(human.m_aiming));
-		//gfx::shape(visor, Line(-Z3 * 4.f, -Z3 * 8.f), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
-		gfx::shape(visor, Circle(-Z3 * 8.f, 0.2f, Axis::Z), Symbol(Colour::None, Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
+		//gfx::shape(visor, Line(-z3 * 4.f, -z3 * 8.f), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
+		gfx::shape(visor, Circle(-z3 * 8.f, 0.2f, Axis::Z), Symbol(Colour::None, Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
 	}
 }
 
@@ -585,7 +585,7 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 	ui::velocity_controller(viewer, controller.m_force, controller.m_torque, speed);
 
 	if(viewer.key_event(Key::Space, EventType::Stroked))
-		(*human.m_solid)->impulse(Y3 * 20.f, vec3(0.f));
+		(*human.m_solid)->impulse(y3 * 20.f, vec3(0.f));
 
 	if(controller.m_force != vec3(0.f) || controller.m_torque != vec3(0.f))
 	{

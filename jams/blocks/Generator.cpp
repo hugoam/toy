@@ -30,7 +30,7 @@ void flat_low(GfxSystem& gfx)
 {
 	static Material& material = ground_material(gfx);
 	Model& model = gfx.models().create("flat_low");
-	Quad quad = { 1.f, X3, Z3 };
+	Quad quad = { 1.f, x3, z3 };
 	quad.m_center = vec3(0.f);
 	gen_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
 }
@@ -39,8 +39,8 @@ void flat_high(GfxSystem& gfx)
 {
 	static Material& material = ground_material(gfx);
 	Model& model = gfx.models().create("flat_high");
-	Quad quad = { 1.f, X3, Z3 };
-	quad.m_center = Y3;
+	Quad quad = { 1.f, x3, z3 };
+	quad.m_center = y3;
 	gen_model(ProcShape{ Symbol(), &quad, PLAIN }, model, true, &material);
 }
 
@@ -77,7 +77,7 @@ Grid3 extrude(const vec3& offset, span<Edge> edges, span<size_t> points, const v
 		for(uint16_t h = 0; h < points.size(); h++)
 		{
 			size_t p = points[h];
-			vertices.at(i, h) = offset + float(i) * du + edges[i].m_points[p].y * Y3;
+			vertices.at(i, h) = offset + float(i) * du + edges[i].m_points[p].y * y3;
 			vertices.at(i, h) += normal * edges[i].m_points[p].x;
 		}
 
@@ -99,7 +99,7 @@ Grid3 revolve(const vec3& center, float radius, float start_angle, float end_ang
 			float angle = start_angle + r * increment;
 			vec3 point = { radius * cos(angle), 0.f, -radius * sin(angle) };
 
-			vertices.at(r, h) = center + edges[r].m_points[p].y * Y3;
+			vertices.at(r, h) = center + edges[r].m_points[p].y * y3;
 			vertices.at(r, h) += normalize(point) * (reverse_edge ? (1.f - edges[r].m_points[p].x) : edges[r].m_points[p].x);
 		}
 
@@ -155,8 +155,8 @@ void cliff_side(GfxSystem& gfx, const string& name, Edge& edge0, Edge& edge1)
 
 	auto extrusion = [&](span<size_t> points, Material& material)
 	{
-		vec3 offset = Z3 * 0.5f - X3 * 0.5f;
-		Grid3 grid = extrude(offset, { cliff.edges, Cliff::subdiv }, points, X3, -Z3);
+		vec3 offset = z3 * 0.5f - x3 * 0.5f;
+		Grid3 grid = extrude(offset, { cliff.edges, Cliff::subdiv }, points, x3, -z3);
 		gen_mesh(ProcShape{ Symbol(), &grid, PLAIN }, model, PLAIN, true, &material);
 	};
 
@@ -181,12 +181,12 @@ void cliff_corner(GfxSystem& gfx, const string& name, Edge& edge0, Edge& edge1, 
 		Grid3 grid;
 		if(inner)
 		{
-			vec3 offset = Z3 - Z3 * 0.5f - X3 * 0.5f;
+			vec3 offset = z3 - z3 * 0.5f - x3 * 0.5f;
 			grid = revolve(offset, 0.5f, c_pi2, 0.f, { cliff.edges, Cliff::subdiv }, points, false);
 		}
 		else
 		{
-			vec3 offset = X3 - Z3 * 0.5f - X3 * 0.5f;
+			vec3 offset = x3 - z3 * 0.5f - x3 * 0.5f;
 			grid = revolve(offset, 0.5f, c_pi, c_pi * 3.f / 2.f, { cliff.edges, Cliff::subdiv }, points, true);
 		}
 		gen_mesh(ProcShape{ Symbol(), &grid, PLAIN }, model, PLAIN, true, &material);
@@ -366,7 +366,7 @@ void generate_camps(BlockWorld& world)
 		vector<vec3> tank_positions = distribute_poisson(vec2(camp_radius), 15.f);
 		for(const vec3& tank_position : tank_positions)
 		{
-			construct<Tank>(world.m_world.origin(), camp_position + tank_position + Y3 * 10.f, faction);
+			construct<Tank>(world.m_world.origin(), camp_position + tank_position + y3 * 10.f, faction);
 		}
 	}
 }

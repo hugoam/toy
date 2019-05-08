@@ -527,7 +527,7 @@ GalaxyGrid::GalaxyGrid()
 
 void GalaxyGrid::update_slots(uvec2 coord)
 {
-	vec3 center = to_xz(vec2(coord)) + 0.5f + Y3;
+	vec3 center = to_xz(vec2(coord)) + 0.5f + y3;
 
 	map<Commander*, vector<Fleet*>> fleets;
 	for(Fleet* fleet : m_fleets[coord])
@@ -539,14 +539,14 @@ void GalaxyGrid::update_slots(uvec2 coord)
 	float angle = 0.f;
 	for(auto& commander_fleets : fleets)
 	{
-		vec3 slot = fleets.size() == 1 ? center : center + rotate(-Z3 * 0.2f, angle, X3);
+		vec3 slot = fleets.size() == 1 ? center : center + rotate(-z3 * 0.2f, angle, x3);
 		for(Fleet* fleet : commander_fleets.second)
 		{
 			float size = c_fleet_visu_sizes[fleet->estimated_size()];
 			fleet->m_slot = slot;
 			//fleet->m_spatial.set_position(slot);
 			//animate(Ref(&as<Transform>(fleet->m_spatial)), member(&Spatial::m_position), var(slot), 0.25f);
-			slot += Y3 * -size;
+			slot += y3 * -size;
 		}
 		angle += theta;
 	}
@@ -779,7 +779,7 @@ static constexpr StateFunc s_fleet_states[5] = { jump_none, jump_ordered, jump_s
 Jump::Jump(Fleet& fleet, uvec2 start, uvec2 dest, FleetStance stance, size_t tick)
 	: m_fleet(&fleet), m_start(start), m_dest(dest), m_stance(stance), m_state(Ordered), m_state_updated(tick)
 	, m_start_pos(fleet.m_spatial->m_position)
-	, m_dest_pos(to_xz(vec2(dest)) + 0.5f + Y3)
+	, m_dest_pos(to_xz(vec2(dest)) + 0.5f + y3)
 {}
 
 void Jump::update(Fleet& fleet, size_t tick)
@@ -1003,7 +1003,7 @@ Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 	paint_viewer(viewer);
 	paint_scene(scene);
 
-	viewer.m_camera.m_eye = Z3;
+	viewer.m_camera.m_eye = z3;
 
 	static Ships ships;
 	static VisuFleet fleet;
@@ -1025,7 +1025,7 @@ Viewer& ex_space_menu_viewport(Widget& parent, GameShell& app)
 	update_visu_fleet(fleet, tick, delta);
 
 	float angle = fmod(float(clock.read()) / 50.f, c_2pi);
-	Gnode& node = gfx::node(scene, vec3(0.f), angle_axis(angle, Y3), vec3(1.f));
+	Gnode& node = gfx::node(scene, vec3(0.f), angle_axis(angle, y3), vec3(1.f));
 	paint_fleet_ships(node, fleet, 1.f, 0.1f);
 	
 	//toy::sound(node, "complexambient", true);

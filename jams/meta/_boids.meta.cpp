@@ -264,7 +264,6 @@ namespace two
 		m.m_aliases.push_back(&alias);
 	}
 	
-		m.m_types.push_back(&type<boids::vec3>());
 		m.m_types.push_back(&type<boids::Position>());
 		m.m_types.push_back(&type<boids::Heading>());
 		m.m_types.push_back(&type<boids::Rotation>());
