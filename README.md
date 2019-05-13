@@ -9,7 +9,7 @@ toy is a **thin and modular c++ game engine**. it aims to provide the **thinnest
 
 **toy is under heavy development, not yet stable, fully documented or production ready. this mean we can't guarantee any kind of stability yet (including the git history too)**
 
-toy simplicity and modularity makes it deeply **hackable**, **extensible** and **versatile**. toy is perfect to build games with **atypical constraint**: complex user interface and rendering schemes, procedural generation, etc. it provides a **fully programmable 3d renderer**, with full control over *shaders, materials and render paths*, as well as higher level primitives and systems such as **entities**, **physics**, **navmesh generation and navigation**, and **procedural generation** helpers.
+toy simplicity and modularity makes it deeply **hackable**, **extensible** and **versatile**. toy is perfect to build games with **atypical constraints**: complex user interface and rendering schemes, procedural generation, etc. it provides a **fully programmable 3d renderer**, with full control over *shaders, materials and render paths*, as well as higher level primitives and systems such as **entities**, **physics**, **navmesh generation and navigation**, and **procedural generation** helpers.
 
 As a collection of game programming **building blocks**, toy aims to foster an ecosystem of **simple minimal reusable components** suited for **building your own game technology**.
 
@@ -17,7 +17,7 @@ Note: I've released toy, for the time being, under the **GPL v3.0** license, hop
 
 ### live demo
 
-Try [a live demo](https://hugoam.github.io/toy-io/ex_godot.html) in this gorgeous lightmapped scene ported to toy engine from godot:
+Try [a live demo](https://hugoam.github.io/toy-io/ex_godot.html) in this gorgeous lightmapped scene ported to toy engine from godot (also beware that it includes potentially loud sound):
 
 [![reactor](media/reactor.jpg?raw=true)](https://hugoam.github.io/toy-io/ex_godot.html)
 
