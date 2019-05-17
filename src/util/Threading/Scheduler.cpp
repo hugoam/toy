@@ -9,7 +9,7 @@
 
 #include <util/Threading/Scheduler.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Scheduler::Scheduler(size_t queueSize)
 		: m_actions(queueSize)

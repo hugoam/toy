@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <stl/map.h>
 #include <visu/VisuScene.h>
 #include <block/Forward.h>
 #include <block/Block.h>
@@ -12,11 +13,7 @@
 #include <gfx/Node3.h>
 #include <gfx/Light.h>
 
-#ifndef MUD_CPP_20
-#include <stl/map.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	export_ TOY_BLOCK_EXPORT void paint_heap(Gnode& parent, Heap& heap);
 	export_ TOY_BLOCK_EXPORT void paint_block(Gnode& parent, Block& block, Material* material);
@@ -29,5 +26,5 @@ using namespace mud; namespace toy
 		map<Element*, object<Model>> m_models;
 	};
 
-	export_ TOY_BLOCK_EXPORT void update_block_geometry(GfxSystem& gfx_system, Block& block, BlockState& state);
+	export_ TOY_BLOCK_EXPORT void update_block_geometry(GfxSystem& gfx, Block& block, BlockState& state);
 }

@@ -124,7 +124,7 @@ toy_shell("game", { game })
 
 - First we declare the module itself, passing its main namespace `nil`, its name `"game"`, base path `ROOT_PATH`, subpath `"game"`, three declaration functions `nil, nil, nil`, and finally the list of dependencies `toy.all`.
 
-  In this case, we select all toy modules as dependencies. We could pass a specific set of dependencies like so: `{ mud.infra, mud.math, toy.core }` for example.
+  In this case, we select all toy modules as dependencies. We could pass a specific set of dependencies like so: `{ two.infra, two.math, toy.core }` for example.
 
 - Second, we declare the project itself that will be built, which consists of one module. This allows to have a finer granularity of modules on one hand, and projects composed of modules on the other hand.
 
@@ -135,9 +135,9 @@ This script will be processed when using the [GENie](https://github.com/bkaradzi
 Now our basic project is setup, we can start writing the code.
 
 Once the script is written, we can bootstrap the project, and regenerate project files, reflection, with the three following commands, `<platform>` being one of `win`, `linux`, `darwin`:
-- `toy\mud\bin\<plaftorm>\genie bootstrap`
-- `toy\mud\bin\<plaftorm>\genie <generator>` with a generator one of `gmake`, `vs2015`, `vs2017` depending on the target build system
-- `toy\mud\bin\<plaftorm>\genie reflect`
+- `toy\two\bin\<plaftorm>\genie bootstrap`
+- `toy\two\bin\<plaftorm>\genie <generator>` with a generator one of `gmake`, `vs2015`, `vs2017` depending on the target build system
+- `toy\two\bin\<plaftorm>\genie reflect`
 
 ## creating the app
 ```cpp
@@ -216,7 +216,7 @@ public:
     {
         // ... (initialize the viewer)
         
-        Model& model = app.m_gfx_system.models().file("my_model.obj");
+        Model& model = app.m_gfx.models().file("my_model.obj");
         
         Gnode& node = gfx::node(scene, {}, vec3(0.f, 0.f, 0.f));
         gfx::item(node, model);
@@ -356,14 +356,14 @@ func_ void bar(MyObject& object, int value);
 ```
 Notice how this is a standard c++ definition, with some added [reflection hints](#hints): `refl_` to reflect a class, `_constr_` to reflect a constructor, `_meth_` for a reflected method, and `_attr_` for a reflected attribute.
 
-Using these annotations, the reflection [generator](#generator) produces a couple of reflection files, which declares and registers [constructs](#constructs) using mud corresponding types: [functions](../src/type/Reflect/Method.h), [types](../src/type/Reflect/Meta.h), [classes](../src/type/Reflect/Class.h), [class members](../src/type/Reflect/Member.h), [class methods](../src/type/Reflect/Method.h), [enums](../src/type/Reflect/Enum.h).  
+Using these annotations, the reflection [generator](#generator) produces a couple of reflection files, which declares and registers [constructs](#constructs) using two corresponding types: [functions](../src/type/Reflect/Method.h), [types](../src/type/Reflect/Meta.h), [classes](../src/type/Reflect/Class.h), [class members](../src/type/Reflect/Member.h), [class methods](../src/type/Reflect/Method.h), [enums](../src/type/Reflect/Enum.h).  
 
 ## precompiling
 
 # scripting
 
 # context
-mud supports four context providers :
+two supports four context providers :
 - [glfw](../src/ctx-glfw): cross-platform OpenGL context
 - [windows](../src/ctx-win): native Windows context
 - [emscripten](../src/ctx-wasm): native asmjs/WebAssembly context
@@ -373,13 +373,13 @@ you mostly don't need to touch these directly : contexts will be provided to you
 - [bgfx](../src/ctx-bgfx): lower level render system, on top of bgfx library (wraps all of the above)
 - [gfx](../src/gfx): higher level gfx library
 
-if you wish to only use mud up to the ui level, you must create a [bgfx render system](../src/ctx-bgfx/BgfxSystem.h) :
+if you wish to only use two up to the ui level, you must create a [bgfx render system](../src/ctx-bgfx/BgfxSystem.h) :
 ```c++
 BgfxSystem render_system = {};
 UiWindow& ui_window = render_system.create_window("My App", 800, 600, false);
 ```
 
-if you wish to use mud gfx rendering library, just replace it with the [mud gfx render system](../src/gfx/GfxSystem.h) :
+if you wish to use two gfx rendering library, just replace it with the [two gfx render system](../src/gfx/GfxSystem.h) :
 ```c++
 GfxSystem render_system = {};
 UiWindow& ui_window = render_system.create_window("My App", 800, 600, false);
@@ -416,14 +416,14 @@ To load a resource, you need to use the AssetStore using the `load()` function, 
 Each Asset Store holds the specific operations to do in order to load a given type of resource. 
 
 ```cpp
-Texture* texture = gfx_system.textures().file("my_texture.png");
-Model* model = gfx_system.models().file("my_model.gltf");
+Texture* texture = gfx.textures().file("my_texture.png");
+Model* model = gfx.models().file("my_model.gltf");
 ```
 
 Resources lifetimes are managed by the user explicitly: to free a resource, simply call
 
 ```cpp
-gfx_system.textures().release(texture);
+gfx.textures().release(texture);
 ```
 
 ### asynchronous loading
@@ -435,7 +435,7 @@ resources can be loaded in a background thread. the returned pointer is null unt
 Scenes represent a graph of objects to be rendered.
 
 ```cpp
-Scene scene = { gfx_system };
+Scene scene = { gfx };
 
 while(true)
 {
@@ -450,7 +450,7 @@ This means you don't need to manage the lifetimes of the rendered objects yourse
 ```cpp
 // inside the drawing loop
 Gnode& root = scene.begin();
-Model& model = gfx_system.models().file("my_model.obj");
+Model& model = gfx.models().file("my_model.obj");
 gfx::item(root, model);
 ```
 
@@ -464,7 +464,7 @@ In this case you can interact with the underlying Camera and Viewport directly t
 If you want to interact with the rendering layer directly though, the only things needed to start rendering is a Camera, a Viewport, and a Scene.
 
 ```cpp
-Scene scene = { gfx_system };
+Scene scene = { gfx };
 Camera camera = { &scene };
 Viewport viewport = { camera, scene };
 
@@ -539,7 +539,7 @@ toy uses the bimg library to load textures, which supports the following formats
 A Texture is loaded explicitly with the following code:
 ```cpp
 // loads and return a texture, or nullptr if the file isn't found in any resource paths
-Texture* texture = gfx_system.textures().file("my_texture.png");
+Texture* texture = gfx.textures().file("my_texture.png");
 ```
 
 Some properties are stored in the Texture object for convenience:
@@ -573,12 +573,12 @@ The BasicBlock holds the following Material attributes, which are used by every 
 
 ```cpp
 // fetch the program
-Program& program = gfx_system.programs().file("unshaded");
+Program& program = gfx.programs().file("solid");
 
 // initialize a material with the required blocks
 BasicBlock base_block = {};
-UnshadedBlock unshaded_block = {};
-Material material = { program, base_block, { unshaded_block } };
+UnshadedBlock solid_block = {};
+Material material = { program, base_block, { solid_block } };
 ```
 
 ### material parameters
@@ -591,7 +591,7 @@ Their only particularity is that most parameters are of the type MaterialParam<T
 
 ```cpp
 material.block<UnshadedBlock>().m_color.m_value = Colour::White;
-material.block<UnshadedBlock>().m_color.m_texture = gfx_system.textures().file("my_texture.png");
+material.block<UnshadedBlock>().m_color.m_texture = gfx.textures().file("my_texture.png");
 ```
 
 ## models
@@ -688,7 +688,7 @@ in general, events are dispatched in the following way :
 - mouse events are dispatched to the top-most `OPAQUE` widget under the mouse cursor.
 - key events are dispatched to the widget that has focus / is modal for the given input device.
 
-to check for an event after you declared a widget, use the [following functions](https://github.com/hugoam/mud/blob/master/src/ui/Structs/Widget.h#L69) on the `Widget` object :
+to check for an event after you declared a widget, use the [following functions](https://github.com/hugoam/two/blob/master/src/ui/Structs/Widget.h#L69) on the `Widget` object :
 ```c++
 KeyEvent key_event(KeyCode code, EventType event_type, InputModifier modifier = InputModifier::Any);
 KeyEvent key_event(KeyCode code, InputModifier modifier = InputModifier::Any);
@@ -763,7 +763,7 @@ namespace ui
 ```
 
 ### [text editor](../src/ui/TypeIn.h)
-mud has a pretty full featured [text editor](../src/ui/TypeIn.h#L147) with mouse and keyboard selection, line numbers, undo and redo, syntax hilighting, on-hover tooltips, and auto-complete.
+two has a pretty full featured [text editor](../src/ui/TypeIn.h#L147) with mouse and keyboard selection, line numbers, undo and redo, syntax hilighting, on-hover tooltips, and auto-complete.
 
 ```c++
 namespace ui
@@ -880,8 +880,8 @@ namespace ui
 ## viewers
 
 ## layout system
-the first fundamental block of **mud ui** is the **layout system** : it dictates the positioning and sizing of **all** widgets on the screen.  
-each widget in mud has a [frame](../src/ui/Frame/Frame.h) object : mostly a rectangle with a few additional properties.  
+the first fundamental block of **two ui** is the **layout system** : it dictates the positioning and sizing of **all** widgets on the screen.  
+each widget in two has a [frame](../src/ui/Frame/Frame.h) object : mostly a rectangle with a few additional properties.  
 every frame that is in the [flow]() is automatically laid out by its parent [solver](), depending on both children and parent layout properties.
 
 the most important properties governing layout are the following :
@@ -959,7 +959,7 @@ static Style my_style = { "MyStyle", Args{ { &Layout::m_space, BLOCK } } };
 
 styles can be modified and created from code. but more interestingly, they can be modified all at once by loading a `json style sheet`.
 by switching between style sheets on the fly, you can instantly change the **whole** appearance of the ui.
-mud ui provides four default style sheets : `minimal`, `vector`, `blendish` and `blendish dark`.
+two ui provides four default style sheets : `minimal`, `vector`, `blendish` and `blendish dark`.
 
 to load a style sheet, use the following parser [functions](../src/ui/Style/StyleParser.h#L13) :
 ```c++

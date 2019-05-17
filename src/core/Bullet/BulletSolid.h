@@ -9,11 +9,11 @@
 #include <core/Bullet/BulletCollider.h>
 #include <core/Spatial/Spatial.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class BulletMotionState;
 
-	class refl_ TOY_CORE_EXPORT BulletSolid : public NonCopy, public SolidImpl
+	class refl_ TOY_CORE_EXPORT BulletSolid : public SolidImpl
     {
     public:
 		BulletSolid(BulletMedium& bullet_world, BulletCollider& bullet_collider, HSpatial spatial, HCollider collider, HSolid solid);

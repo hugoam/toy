@@ -37,7 +37,7 @@
 #include <shell/Forward.h>
 
 #ifndef _BLOCKS_EXPORT
-#define _BLOCKS_EXPORT MUD_IMPORT
+#define _BLOCKS_EXPORT TWO_IMPORT
 #endif
 
 enum CustomCollisionGroup : short;

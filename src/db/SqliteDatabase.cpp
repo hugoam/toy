@@ -15,7 +15,7 @@
 /* sqlite */
 #include "sqlite3.h"
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	SqliteDatabase::SqliteDatabase(cstring path)
 		: m_path(path)

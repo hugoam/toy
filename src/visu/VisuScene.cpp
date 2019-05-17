@@ -3,51 +3,47 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#include <visu/Types.h>
-#include <visu/VisuScene.h>
-#include <visu/VisuPage.h>
-
+#ifdef TWO_MODULES
+module toy.visu
+#else
 #include <infra/Reverse.h>
+#include <tree/Graph.hpp>
+#include <pool/Pool.hpp>
+#include <pool/ObjectPool.hpp>
 #include <ecs/Complex.h>
 #include <refl/Member.h>
+#include <math/Timer.h>
 #include <geom/Shapes.h>
 #include <geom/ShapesComplex.h>
-
-#include <core/World/Section.h>
-#include <core/World/World.h>
-#include <core/Spatial/Spatial.h>
-#include <core/Physic/Obstacle.h>
-#include <core/WorldPage/WorldPage.h>
-//#include <core/Symbolic/Symbolic.h>
-//#include <core/Light/Light.h>
-//#include <core/Active/Active.h>
-//#include <core/Active/Effect.h>
-
-#include <core/Selector/Selection.h>
-
-//#include <core/Buffer/BufferView.h>
-
-#include <core/Navmesh/Navmesh.h>
-//#include <visu/Ogre/FacetNavmesh/OgreNavmesh.h>
-
 #include <gfx/Gfx.h>
 #include <gfx/Item.h>
 #include <gfx/GfxSystem.h>
 #include <gfx/Draw.h>
 #include <gfx/Camera.h>
 #include <gfx/Frustum.h>
+#include <gfx/Material.h>
+#ifdef TOY_SOUND
+#include <snd/SoundManager.h>
+#include <snd/Sound.h>
+#endif
+#include <core/World/Section.h>
+#include <core/World/World.h>
+#include <core/Spatial/Spatial.h>
+#include <core/Physic/Obstacle.h>
+#include <core/WorldPage/WorldPage.h>
+#include <core/Selector/Selection.h>
+#include <core/Navmesh/Navmesh.h>
+#include <core/Bullet/BulletWorld.h>
+#include <core/Physic/Solid.h>
+#include <visu/Types.h>
+#include <visu/VisuScene.h>
+#include <visu/VisuScene.hpp>
+#include <visu/VisuPage.h>
+#endif
 
 #include <cctype>
 
-#include <snd/SoundManager.h>
-
-#include <math/Timer.h>
-
-#include <gfx/Material.h>
-#include <gfx/Item.h>
 #include <bgfx/bgfx.h>
-#include <core/Bullet/BulletWorld.h>
-#include <core/Physic/Solid.h>
 
 #ifdef _MSC_VER
 #	pragma warning (push)
@@ -66,12 +62,8 @@
 #	pragma warning (pop)
 #endif
 
-#ifdef TOY_SOUND
-#include <snd/SoundManager.h>
-#include <snd/Sound.h>
-#endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 #ifdef TOY_PHYSIC_DEBUG_DRAW
 	class PhysicDebugDraw::Impl : public btIDebugDraw
@@ -159,9 +151,9 @@ using namespace mud; namespace toy
 		bullet_world.m_collision_world->debugDrawWorld();
 	}
 
-	VisuScene::VisuScene(GfxSystem& gfx_system, SoundManager* sound_system)
-		: m_gfx_system(gfx_system)
-		, m_scene(gfx_system)
+	VisuScene::VisuScene(GfxSystem& gfx, SoundManager* sound_system)
+		: m_gfx(gfx)
+		, m_scene(gfx)
 #ifdef TOY_SOUND
 		, m_snd_manager(*sound_system)
 #endif
@@ -174,13 +166,25 @@ using namespace mud; namespace toy
 	VisuScene::~VisuScene()
     {}
 
-	Gnode& VisuScene::entity_node(Gnode& parent, uint32_t entity, Spatial& spatial, size_t painter)
+	Gnode& VisuScene::entity_node(Gnode& parent, Entity entity, Spatial& spatial, size_t painter)
 	{
-		if(m_entities.size() <= entity)
-			m_entities.resize((entity + 1) * 2);
-		if(m_entities[entity] == nullptr)
-			m_entities[entity] = &gfx::node(parent.subx(uint16_t(entity)), ent_ref(entity), spatial.absolute_position(), spatial.absolute_rotation());
-		return m_entities[entity]->subx(uint16_t(painter));
+		const size_t index = entity.m_handle;
+
+		if(m_entities.size() <= entity.m_stream)
+			m_entities.resize(entity.m_stream + 1);
+
+		vector<Gnode*>& nodes = m_entities[entity.m_stream];
+
+		if(nodes.size() <= index)
+			nodes.resize((index + 1) * 2);
+
+		if(nodes[index] == nullptr)
+		{
+			nodes[index] = &gfx::node(parent.subx(uint16_t(index)), spatial.absolute_position(), spatial.absolute_rotation());
+			nodes[index]->m_node->m_object = entity;
+		}
+
+		return nodes[index]->subx(uint16_t(painter));
 	}
 
 	void VisuScene::next_frame()
@@ -190,14 +194,17 @@ using namespace mud; namespace toy
 			if(sound->m_loop || sound->m_state == Sound::STOPPED)
 			{
 				m_snd_manager.destroy_sound(*sound);
-				vector_remove(m_scene.m_orphan_sounds, sound);
+				remove(m_scene.m_orphan_sounds, sound);
 			}
 
 		m_snd_manager.update();
 #endif
 
-		for(size_t i = 0; i < m_entities.size(); ++i)
-			m_entities[i] = nullptr;
+		for(vector<Gnode*>& entities : m_entities)
+		{
+			for(size_t i = 0; i < entities.size(); ++i)
+				entities[i] = nullptr;
+		}
 
 		Gnode& root = m_scene.begin();
 
@@ -218,21 +225,21 @@ using namespace mud; namespace toy
 
 		parent.m_scene->m_pool->pool<Item>().iterate([&](Item& item)
 		{
-			for(Ref object : selection)
-				if(item.m_node->m_object == object)
-					select_bounds.mergeSafe(item.m_aabb);
-
-			if(hovered != Ref() && item.m_node->m_object == hovered)
-				hover_bounds.mergeSafe(item.m_aabb);
+			//for(Ref object : selection)
+			//	if(item.m_node->m_object == object)
+			//		select_bounds.merge(item.m_aabb);
+			//
+			//if(hovered != Ref() && item.m_node->m_object == hovered)
+			//	hover_bounds.merge(item.m_aabb);
 		});
 
-		gfx::draw(parent, select_bounds, Symbol(Colour::White));
-		gfx::draw(parent, hover_bounds, Symbol(Colour::AlphaGrey));
+		gfx::draw(parent, Cube(select_bounds), Symbol(Colour::White));
+		gfx::draw(parent, Cube(hover_bounds), Symbol(Colour::AlphaGrey));
 	}
 
-	void update_camera(Camera& camera, mud::Camera& gfx_camera)
+	void update_camera(Camera& camera, two::Camera& gfx_camera)
 	{
-		gfx_camera.set_look_at(camera.m_lens_position, camera.m_spatial->absolute_position());
+		//gfx_camera.set_look_at(camera.m_lens_position, camera.m_spatial->absolute_position());
 
 		gfx_camera.m_near = camera.m_near;
 		gfx_camera.m_far = camera.m_far;
@@ -328,7 +335,7 @@ using namespace mud; namespace toy
 			return self.m_sound->m_state != Sound::STOPPED;
 		}
 
-		LocatedFile location = parent.m_scene->m_gfx_system.locate_file("sounds/" + sound + ".ogg");
+		LocatedFile location = parent.m_scene->m_gfx.locate_file("sounds/" + sound + ".ogg");
 		self.m_sound = parent.m_sound_manager->create_sound(location.path(true), loop, false, [](Sound&) {});
 
 		if(self.m_sound)

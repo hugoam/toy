@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <stl/memory.h>
 #include <math/Vec.h>
 #include <pool/Pool.h>
 #include <core/Forward.h>
@@ -12,11 +13,7 @@
 #include <core/Physic/CollisionShape.h>
 #include <core/Movable/MotionState.h>
 
-#ifndef MUD_CPP_20
-#include <stl/memory.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	struct refl_ TOY_CORE_EXPORT Collision
 	{
@@ -24,7 +21,7 @@ using namespace mud; namespace toy
 		Collision(HCollider first, HCollider second, const vec3& hit_point) : m_first(first), m_second(second), m_hit_point(hit_point) {}
 		attr_ HCollider m_first = {};
 		attr_ HCollider m_second = {};
-		attr_ vec3 m_hit_point = Zero3;
+		attr_ vec3 m_hit_point = vec3(0.f);
 	};
 
 	class refl_ TOY_CORE_EXPORT ColliderImpl : public TransformSource
@@ -139,7 +136,7 @@ using namespace mud; namespace toy
 	};
 }
 
-namespace mud
+namespace two
 {
 	template <>
 	struct DestroyHandle<toy::Collider>

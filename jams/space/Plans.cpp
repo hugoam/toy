@@ -2,8 +2,8 @@
 #include <space/ex_space.h>
 #include <toy/toy.h>
 
-#include <meta/space/Convert.h>
-#include <meta/space/Module.h>
+#include <meta/_space.conv.h>
+#include <meta/_space.meta.h>
 #include <space/Api.h>
 #include <shell/Shell.h>
 
@@ -11,7 +11,7 @@
 #include <space/Scene.h>
 #include <space/Ui.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 void builtin_buildings(BuildingDatabase& database)

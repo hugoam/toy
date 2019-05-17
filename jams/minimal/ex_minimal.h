@@ -5,9 +5,20 @@
 #pragma once
 
 #include <minimal/Forward.h>
+
+#include <ecs/ECS.hpp>
+#include <stl/vector.hpp>
+#include <stl/string.hpp>
+#include <pool/SparsePool.hpp>
+#include <pool/ObjectPool.hpp>
+#include <pool/Pool.hpp>
+#include <core/World/World.hpp>
+#include <visu/VisuScene.hpp>
+#include <tree/Graph.hpp>
+
 #include <toy/toy.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -15,14 +26,14 @@ extern "C"
 	//_MINIMAL_EXPORT void ex_minimal_game(GameShell& app, Game& game);
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<Bullet> { static uint32_t index() { return 20; } };
 	template <> struct TypedBuffer<Human>  { static uint32_t index() { return 21; } };
 	template <> struct TypedBuffer<Crate>  { static uint32_t index() { return 22; } };
 }
 
-namespace mud
+namespace two
 {
 	template struct refl_ ComponentHandle<Bullet>;
 	template struct refl_ ComponentHandle<Human>;
@@ -48,7 +59,7 @@ public:
 
 	bool m_impacted = false;
 	bool m_destroy = false;
-	vec3 m_impact = Zero3;
+	vec3 m_impact = vec3(0.f);
 
 	//OSolid m_solid;
 	OCollider m_collider;
@@ -64,8 +75,8 @@ struct Aim
 
 struct HumanController
 {
-	vec3 m_force = Zero3;
-	vec3 m_torque = Zero3;
+	vec3 m_force = vec3(0.f);
+	vec3 m_torque = vec3(0.f);
 };
 
 class refl_ _MINIMAL_EXPORT Human
@@ -81,12 +92,12 @@ public:
 
 	OSolid m_solid;
 
-	vec2 m_angles = Zero2;
+	vec2 m_angles = vec2(0.f);
 	bool m_aiming = false;
 
 	bool m_walk = true;
 
-	vector<unique<Bullet>> m_bullets;
+	vector<EntityHandle<Bullet>> m_bullets;
 
 	struct State { string name; bool loop; };
 	State m_state = { "IdleAim", true };

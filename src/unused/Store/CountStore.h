@@ -17,7 +17,7 @@
 #include <unordered_set>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	template <class T>
 	class CountStore : public StoreBase<CountStore<T>, T>

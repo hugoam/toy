@@ -5,12 +5,11 @@
 
 #pragma once
 
-#include <infra/NonCopy.h>
 #include <core/Forward.h>
 #include <core/Physic/CollisionGroup.h>
 #include <core/Physic/Collider.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Obstacle : public Collider
 	{

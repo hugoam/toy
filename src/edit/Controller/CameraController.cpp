@@ -3,14 +3,16 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <edit/Controller/CameraController.h>
-
-#include <core/Spatial/Spatial.h>
+#ifdef TWO_MODULES
+module toy.edit
+#else
+#include <stl/hash_base.hpp>
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
+#include <edit/Controller/CameraController.h>
+#endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 	CameraController::CameraController(Viewer& viewer, HCamera camera, HMovable movable)
 		: m_viewer(viewer)
@@ -50,28 +52,28 @@ using namespace mud; namespace toy
 
 	void CameraController::stop()
 	{
-		m_movable->set_linear_velocity(Zero3);
-		m_movable->set_angular_velocity(Zero3);
+		m_movable->set_linear_velocity(vec3(0.f));
+		m_movable->set_angular_velocity(vec3(0.f));
 	}
 
 	void CameraController::rotate_left()
 	{
-		m_movable->modify_angular_velocity(Y3 * -m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * -m_angular_velocity);
 	}
 
 	void CameraController::rotate_right()
 	{
-		m_movable->modify_angular_velocity(Y3 * m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * m_angular_velocity);
 	}
 
 	void CameraController::stop_rotate_left()
 	{
-		m_movable->modify_angular_velocity(Y3 * m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * m_angular_velocity);
 	}
 
 	void CameraController::stop_rotate_right()
 	{
-		m_movable->modify_angular_velocity(Y3 * -m_angular_velocity);
+		m_movable->modify_angular_velocity(y3 * -m_angular_velocity);
 
 	}
 	void CameraController::zoom_in()

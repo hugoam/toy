@@ -7,11 +7,11 @@
 
 #include <core/Forward.h>
 
-#include <core/Spatial/Spatial.h> // @array-include
+#include <core/Spatial/Spatial.h> // @span-include
 #include <core/Physic/Collider.h>
 #include <core/Physic/Signal.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT PhysicScope : public ColliderObject
     {
@@ -64,7 +64,7 @@ using namespace mud; namespace toy
 	using HReceptorScope = ReceptorScope&;
 #endif
 
-	class refl_ TOY_CORE_EXPORT Emitter : public Movabl
+	class refl_ TOY_CORE_EXPORT Emitter// : public Movabl
 	{
 	public:
 		constr_ Emitter() {}
@@ -83,7 +83,7 @@ using namespace mud; namespace toy
 		vector<OEmitterScope> m_emitters;
 	};
 
-	class refl_ TOY_CORE_EXPORT Receptor : public Movabl
+	class refl_ TOY_CORE_EXPORT Receptor// : public Movabl
 	{
 	public:
 		constr_ Receptor() {}

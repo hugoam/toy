@@ -8,7 +8,7 @@
 #include <core/Entity/Entity.h>
 #include <math/Colour.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Symbolic::Symbolic(Entity& entity, vector<Symbol> shapes)
 		: m_entity(entity)

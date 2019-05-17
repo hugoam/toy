@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	struct BoundsItem
 	{

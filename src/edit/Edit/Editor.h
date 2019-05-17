@@ -5,18 +5,12 @@
 
 #pragma once
 
+#include <stl/vector.h>
 #include <gfx-ui/Forward.h>
 #include <edit/Forward.h>
-#include <uio/Unode.h>
 
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
-	using Selection = vector<Ref>;
-
 	//TOY_EDIT_EXPORT void context_menu(Widget& parent, Selector& selector, Ref object);
 
 	TOY_EDIT_EXPORT void edit_toolbox(Widget& parent, Toolbox& toolbox);
@@ -29,8 +23,8 @@ using namespace mud; namespace toy
 
 	TOY_EDIT_EXPORT void registry(Widget& parent, Indexer& indexer, Selection& selection);
 	TOY_EDIT_EXPORT void registry_section(Widget& parent, Indexer& indexer, Selection& selection);
-	TOY_EDIT_EXPORT void library(Widget& parent, const vector<Type*>& types, Selection& selection);
-	TOY_EDIT_EXPORT void library_section(Widget& parent, const vector<Type*>& types, Selection& selection);
+	TOY_EDIT_EXPORT void library(Widget& parent, span<Type*> types, Selection& selection);
+	TOY_EDIT_EXPORT void library_section(Widget& parent, span<Type*> types, Selection& selection);
 
 	TOY_EDIT_EXPORT void editor_menu(Widget& parent, ActionGroup& action_group);
 	TOY_EDIT_EXPORT void editor_menu_bar(Widget& parent, Editor& editor);

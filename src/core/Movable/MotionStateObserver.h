@@ -7,7 +7,7 @@
 
 #include <core/Forward.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class MotionStateObserver { public:	virtual void update(MotionState* motionState) = 0; };
 }

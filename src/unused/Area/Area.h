@@ -10,7 +10,7 @@
 #include <core/Forward.h>
 #include <core/Physic/Collider.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Area : public ColliderObject
 	{

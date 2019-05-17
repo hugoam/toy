@@ -12,7 +12,7 @@
 #include <immintrin.h>
 #endif
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -65,11 +65,11 @@ namespace boids
 		vec3(__m128 v) : value(v) {}
 		vec3(float v) : value(_mm_set_ps1(v)) {}
 		vec3(float* v) : value(_mm_load_ps(v)) {}
-		//vec3(float x, float y, float z, float w = 0.f) : vec3(std::array<float, 4>{ x, y, z, w }.data()) {}
+		//vec3(float x, float y, float z, float w = 0.f) : vec3(std::span<float, 4>{ x, y, z, w }.data()) {}
 		//vec3(float x, float y, float z, float w = 0.f) : value(_mm_set_ps(x, y, z, w)) {}
 		vec3(float x, float y, float z, float w = 0.f) : value(_mm_setr_ps(x, y, z, w)) {}
 		operator float3() const { float3 result; _mm_store_ps(result.m_f, value); return result; }
-		operator mud::vec3() const { float3 result; _mm_store_ps(result.m_f, value); return { result[0], result[1], result[2] }; }
+		operator two::vec3() const { float3 result; _mm_store_ps(result.m_f, value); return { result[0], result[1], result[2] }; }
 		__m128 value;
 	};
 
@@ -87,8 +87,8 @@ namespace boids
 	inline float dot(const vec3& a, const vec3& b) { return dot_simd(a.value, b.value); }
 	inline vec3 cross(const vec3& a, const vec3& b) { return vec3(cross_simd(a.value, b.value)); }
 #else
-	using vec3 = mud::vec4;
-	//using vec3 = mud::vec3;
+	using vec3 = two::vec4;
+	//using vec3 = two::vec3;
 #endif
 
 	template <class T>
@@ -166,7 +166,7 @@ namespace boids
 	};
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<boids::Position> { static uint32_t index() { return 12; } };
 	template <> struct TypedBuffer<boids::Heading> { static uint32_t index() { return 13; } };

@@ -5,6 +5,7 @@
 
 #include <core/Types.h>
 #include <core/World/World.h>
+#include <core/World/World.hpp>
 
 #include <core/World/Origin.h>
 #include <core/Physic/Collider.h>
@@ -12,13 +13,13 @@
 #include <core/Api.h>
 
 #include <type/Indexer.h>
+#include <type/Proto.h>
 #include <math/Timer.h>
-#include <ecs/Proto.h>
 #include <math/Vec.h>
 #include <core/Spatial/Spatial.h>
 #include <core/World/Section.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	World::World(uint32_t id, Complex& complex, const string& name, JobSystem& job_system)
         : m_id(complex.m_id)
@@ -30,8 +31,8 @@ using namespace mud; namespace toy
 		UNUSED(id);
 		s_ecs[0] = &m_ecs;
 
-		m_origin = { Origin::create(m_ecs, *this), 0 };
-		m_unworld = { Origin::create(m_ecs, *this), 0 };
+		m_origin = Origin::create(m_ecs, *this);
+		m_unworld = Origin::create(m_ecs, *this);
 
 		auto update_colliders = [&](size_t tick, size_t delta)
 		{

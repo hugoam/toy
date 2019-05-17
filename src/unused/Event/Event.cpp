@@ -8,7 +8,7 @@
 #include <core/Entity/Entity.h>
 #include <core/Event/EventRelay.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Event::Event(Type& eventType, EventRelay& source)
 		: m_eventType(eventType)

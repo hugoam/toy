@@ -3,16 +3,17 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
+#include <stl/algorithm.h>
 #include <edit/Types.h>
 #include <edit/Editor/Toolbox.h>
 
+#include <tool/EditContext.h>
 #include <tool/Tool.h>
 #include <tool/Brush.h>
 
 #include <core/Selector/Selection.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Toolbox::Toolbox(cstring name)
 		: m_name(name)
@@ -36,8 +37,8 @@ using namespace mud; namespace toy
 		m_current_tools.clear();
 
 		for(auto& tool : m_tools)
-			if(tool->enabled(targets))
-				vector_add(m_current_tools, tool);
+			if(tool->enabled(targets.objects))
+				add(m_current_tools, tool);
 	}
 
 	Toolbelt::Toolbelt()
@@ -49,7 +50,7 @@ using namespace mud; namespace toy
 	Toolbox& Toolbelt::toolbox(cstring name)
 	{
 		if(!m_toolboxes[name])
-			m_toolboxes[name] = make_object<Toolbox>(name);
+			m_toolboxes[name] = oconstruct<Toolbox>(name);
 		return *m_toolboxes[name];
 	}
 

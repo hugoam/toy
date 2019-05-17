@@ -5,7 +5,7 @@
 
 #include <core/Physic/Solid.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	SolidMedium SolidMedium::me;
 

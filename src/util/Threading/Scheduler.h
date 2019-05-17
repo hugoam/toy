@@ -9,7 +9,7 @@
 #include <util/Forward.h>
 #include <type/Util/LocklessQueue.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_UTIL_EXPORT Scheduler
 	{

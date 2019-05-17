@@ -6,7 +6,7 @@
 #include <core/Types.h>
 #include <core/Core.h>
 
-#include <core/HandlesDecl.h>
+#include <core/Handles.h>
 #include <core/World/Section.h>
 #include <core/Anim/Anim.h>
 
@@ -20,7 +20,7 @@
 #include <type/Indexer.h>
 #include <core/Script/Script.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Core::Core(JobSystem& job_system)
 		: m_job_system(job_system)

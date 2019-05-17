@@ -3,37 +3,38 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#ifdef TWO_MODULES
+module toy.core
+#else
+#include <math/Random.h>
+#include <type/Any.h>
+#include <ecs/ECS.hpp>
+#include <refl/Class.h>
 #include <core/Types.h>
 #include <core/Camera/Camera.h>
-
-#include <type/Any.h>
-#include <refl/Class.h>
-#include <math/Random.h>
-
 #include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
 #include <core/Anim/Anim.h>
-
 #include <core/World/Section.h>
+#endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Camera::create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near, float far)
 	{
-		Entity entity = { ecs.create<Spatial, Movable, toy::Camera>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Movable, toy::Camera>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
-		ecs.set(entity, Movable(HSpatial(entity)));
-		ecs.set(entity, toy::Camera(HSpatial(entity), lens_distance, near, far));
+		ecs.set(entity, Movable(position));
+		ecs.set(entity, Camera(lens_distance, near, far));
 		return entity;
 	}
 
-    Camera::Camera(HSpatial spatial, float lens_distance, float near, float far)
-        : m_spatial(spatial)
-		, m_lens_distance(lens_distance)
+    Camera::Camera(float distance, float near, float far)
+        : m_lens_distance(distance)
 		, m_near(near)
         , m_far(far)
     {
-		calc_lens_position(spatial);
+		//calc_lens_position(spatial);
 	}
 
 	Camera::~Camera()
@@ -96,12 +97,35 @@ using namespace mud; namespace toy
 	{
 		animate(Ref(&camera), member(&Camera::m_lens_distance), var(distance), 1.f);
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
-		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotate(spatial.m_rotation, rotation, Y3)), 1.f);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotate(spatial.m_rotation, rotation, y3)), 1.f);
+	}
+
+	void jump_camera_to(Spatial& spatial, toy::Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration)
+	{
+		animate(Ref(&camera), member(&toy::Camera::m_lens_distance), var(distance), duration);
+		animate(Ref(&camera), member(&toy::Camera::m_lens_angle), var(angle), duration);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), duration);
+		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_rotation), var(rotation), duration);
 	}
 
 	void move_camera_to(Spatial& spatial, Camera& camera, const vec3& target)
 	{
 		UNUSED(camera);
 		animate(Ref(&as<Transform>(spatial)), member(&Transform::m_position), var(target), 1.f);
+	}
+
+	void jump_camera_to(Entity camera, const vec3& target, float distance, float rotation)
+	{
+		jump_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target, distance, rotation);
+	}
+
+	void jump_camera_to(Entity camera, const vec3& target, const quat& rotation, float distance, float angle, float duration)
+	{
+		jump_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target, rotation, distance, angle, duration);
+	}
+
+	void move_camera_to(Entity camera, const vec3& target)
+	{
+		move_camera_to(asa<Spatial>(camera), asa<Camera>(camera), target);
 	}
 }

@@ -5,13 +5,11 @@
 
 #pragma once
 
+#include <stl/vector.h>
 #include <type/Ref.h>
 
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
-	using Selection = vector<Ref>;
+	using namespace two;
+
 }

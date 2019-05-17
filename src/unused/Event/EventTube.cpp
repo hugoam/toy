@@ -10,7 +10,7 @@
 #include <core/Event/Event.h>
 #include <core/Event/EventFilter.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	EventTube::EventTube()
 		: m_subscribers()

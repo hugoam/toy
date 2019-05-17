@@ -13,7 +13,7 @@
 #include <core/Path/Pathfinder.h>
 #include <core/Navmesh/Navmesh.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	GroundMotion::GroundMotion(Entity& entity, Agent& agent)
 		: m_entity(entity)

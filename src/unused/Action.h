@@ -10,7 +10,7 @@
 
 #include <core/Entity/Entity.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Action : public Procedure
 	{

@@ -16,7 +16,7 @@
 
 struct sqlite3;
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	using string = string;
 

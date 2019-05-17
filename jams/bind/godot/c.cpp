@@ -45,31 +45,31 @@
 extern "C" {
 	
 	// Aim
-	mud::Type* DECL Aim__type() {
-		return &mud::type<Aim>();
+	two::Type* DECL Aim__type() {
+		return &two::type<Aim>();
 	}
 	Aim* DECL Aim_Aim_0() {
 		return new Aim();
 	}
-	mud::quat* DECL Aim__get_rotation(Aim* self) {
-		static mud::quat temp;
+	two::quat* DECL Aim__get_rotation(Aim* self) {
+		static two::quat temp;
 		return (temp = self->rotation, &temp);
 	}
-	void DECL Aim__set_rotation(Aim* self, mud::quat* value) {
+	void DECL Aim__set_rotation(Aim* self, two::quat* value) {
 		self->rotation = *value;
 	}
-	mud::vec3* DECL Aim__get_start(Aim* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Aim__get_start(Aim* self) {
+		static two::vec3 temp;
 		return (temp = self->start, &temp);
 	}
-	void DECL Aim__set_start(Aim* self, mud::vec3* value) {
+	void DECL Aim__set_start(Aim* self, two::vec3* value) {
 		self->start = *value;
 	}
-	mud::vec3* DECL Aim__get_end(Aim* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Aim__get_end(Aim* self) {
+		static two::vec3 temp;
 		return (temp = self->end, &temp);
 	}
-	void DECL Aim__set_end(Aim* self, mud::vec3* value) {
+	void DECL Aim__set_end(Aim* self, two::vec3* value) {
 		self->end = *value;
 	}
 	toy::Spatial* DECL Aim__get_hit(Aim* self) {
@@ -82,49 +82,49 @@ extern "C" {
 		delete self;
 	}
 	// Bullet
-	mud::Type* DECL Bullet__type() {
-		return &mud::type<Bullet>();
+	two::Type* DECL Bullet__type() {
+		return &two::type<Bullet>();
 	}
-	mud::vec3* DECL Bullet__get_source(Bullet* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Bullet__get_source(Bullet* self) {
+		static two::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
-	void DECL Bullet__set_source(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_source(Bullet* self, two::vec3* value) {
 		self->m_source = *value;
 	}
-	mud::vec3* DECL Bullet__get_velocity(Bullet* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Bullet__get_velocity(Bullet* self) {
+		static two::vec3 temp;
 		return (temp = self->m_velocity, &temp);
 	}
-	void DECL Bullet__set_velocity(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_velocity(Bullet* self, two::vec3* value) {
 		self->m_velocity = *value;
 	}
 	void DECL Bullet__destroy(Bullet* self) {
 		delete self;
 	}
 	// Crate
-	mud::Type* DECL Crate__type() {
-		return &mud::type<Crate>();
+	two::Type* DECL Crate__type() {
+		return &two::type<Crate>();
 	}
 	Crate* DECL Crate_Crate_0() {
 		return new Crate();
 	}
-	Crate* DECL Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
+	Crate* DECL Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const two::vec3* extents) {
 		return new Crate(spatial, movable, *extents);
 	}
-	mud::vec3* DECL Crate__get_extents(Crate* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Crate__get_extents(Crate* self) {
+		static two::vec3 temp;
 		return (temp = self->m_extents, &temp);
 	}
-	void DECL Crate__set_extents(Crate* self, mud::vec3* value) {
+	void DECL Crate__set_extents(Crate* self, two::vec3* value) {
 		self->m_extents = *value;
 	}
 	void DECL Crate__destroy(Crate* self) {
 		delete self;
 	}
 	// Human
-	mud::Type* DECL Human__type() {
-		return &mud::type<Human>();
+	two::Type* DECL Human__type() {
+		return &two::type<Human>();
 	}
 	Human* DECL Human_Human_0() {
 		return new Human();
@@ -132,12 +132,12 @@ extern "C" {
 	Human* DECL Human_Human_6(toy::HSpatial spatial, toy::HMovable movable, toy::HEmitter emitter, toy::HReceptor receptor, toy::HEntityScript script, Faction faction) {
 		return new Human(spatial, movable, emitter, receptor, script, faction);
 	}
-	mud::quat* DECL Human_sight_0(Human* self) {
-		static mud::quat temp;
+	two::quat* DECL Human_sight_0(Human* self) {
+		static two::quat temp;
 		return (temp = self->sight(), &temp);
 	}
-	mud::quat* DECL Human_sight_1(Human* self, bool aiming) {
-		static mud::quat temp;
+	two::quat* DECL Human_sight_1(Human* self, bool aiming) {
+		static two::quat temp;
 		return (temp = self->sight(aiming), &temp);
 	}
 	Aim* DECL Human_aim_0(Human* self) {
@@ -198,11 +198,11 @@ extern "C" {
 	void DECL Human__set_target(Human* self, HHuman value) {
 		self->m_target = value;
 	}
-	mud::vec3* DECL Human__get_dest(Human* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Human__get_dest(Human* self) {
+		static two::vec3 temp;
 		return (temp = self->m_dest, &temp);
 	}
-	void DECL Human__set_dest(Human* self, mud::vec3* value) {
+	void DECL Human__set_dest(Human* self, two::vec3* value) {
 		self->m_dest = *value;
 	}
 	float DECL Human__get_cooldown(Human* self) {
@@ -222,8 +222,8 @@ extern "C" {
 		delete self;
 	}
 	// Lamp
-	mud::Type* DECL Lamp__type() {
-		return &mud::type<Lamp>();
+	two::Type* DECL Lamp__type() {
+		return &two::type<Lamp>();
 	}
 	Lamp* DECL Lamp_Lamp_0() {
 		return new Lamp();
@@ -235,15 +235,15 @@ extern "C" {
 		delete self;
 	}
 	// Player
-	mud::Type* DECL Player__type() {
-		return &mud::type<Player>();
+	two::Type* DECL Player__type() {
+		return &two::type<Player>();
 	}
 	void DECL Player__destroy(Player* self) {
 		delete self;
 	}
 	// Stance
-	mud::Type* DECL Stance__type() {
-		return &mud::type<Stance>();
+	two::Type* DECL Stance__type() {
+		return &two::type<Stance>();
 	}
 	Stance* DECL Stance_Stance_0() {
 		return new Stance();
@@ -267,20 +267,20 @@ extern "C" {
 		delete self;
 	}
 	// WorldBlock
-	mud::Type* DECL WorldBlock__type() {
-		return &mud::type<WorldBlock>();
+	two::Type* DECL WorldBlock__type() {
+		return &two::type<WorldBlock>();
 	}
 	WorldBlock* DECL WorldBlock_WorldBlock_0() {
 		return new WorldBlock();
 	}
-	WorldBlock* DECL WorldBlock_WorldBlock_4(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const mud::vec3* extents) {
+	WorldBlock* DECL WorldBlock_WorldBlock_4(toy::HSpatial spatial, toy::HWorldPage world_page, toy::HNavblock navblock, const two::vec3* extents) {
 		return new WorldBlock(spatial, world_page, navblock, *extents);
 	}
-	mud::vec3* DECL WorldBlock__get_extents(WorldBlock* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL WorldBlock__get_extents(WorldBlock* self) {
+		static two::vec3 temp;
 		return (temp = self->m_extents, &temp);
 	}
-	void DECL WorldBlock__set_extents(WorldBlock* self, mud::vec3* value) {
+	void DECL WorldBlock__set_extents(WorldBlock* self, two::vec3* value) {
 		self->m_extents = *value;
 	}
 	void DECL WorldBlock__destroy(WorldBlock* self) {

@@ -37,7 +37,7 @@
 #include <shell/Forward.h>
 
 #ifndef _PLATFORM_EXPORT
-#define _PLATFORM_EXPORT MUD_IMPORT
+#define _PLATFORM_EXPORT TWO_IMPORT
 #endif
 
 enum class Faction : int;

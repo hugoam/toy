@@ -5,7 +5,7 @@
 
 #include <map>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 using Ships = std::map<ShipSchema*, uint32_t>;

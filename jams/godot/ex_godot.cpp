@@ -1,12 +1,11 @@
-
 #include <godot/ex_godot.h>
 #include <toy/toy.h>
 
 #include <godot/Api.h>
-#include <meta/godot/Module.h>
+#include <meta/_godot.meta.h>
 
 //#define _GODOT_TOOLS
-#ifndef MUD_PLATFORM_EMSCRIPTEN
+#ifndef TWO_PLATFORM_EMSCRIPTEN
 //#define GI_PROBE
 #define CLUSTERED
 #endif
@@ -34,7 +33,7 @@ float spot_attenuation(vec3 ray, vec3 light, float range, float attenuation_fact
 
 Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, float velocity)
 {
-	Entity entity = { ecs.create<Spatial, Bullet>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Bullet>();
 	ecs.set(entity, Spatial(parent, source, rotation));
 	ecs.set(entity, Bullet(HSpatial(entity), source, rotation, velocity));
 	return entity;
@@ -43,7 +42,7 @@ Entity Bullet::create(ECS& ecs, HSpatial parent, const vec3& source, const quat&
 Bullet::Bullet(HSpatial spatial, const vec3& source, const quat& rotation, float velocity)
 	: m_spatial(spatial)
 	, m_source(source)
-	, m_velocity(rotate(rotation, -Z3) * velocity)
+	, m_velocity(rotate(rotation, -z3) * velocity)
 	//, m_solid(Solid::create(m_spatial, *this, Sphere(0.1f), SolidMedium::me, CollisionGroup(energy), false, 1.f))
 	, m_collider(Collider::create(m_spatial, HMovable(), Sphere(0.1f), SolidMedium::me, CM_SOLID))
 {}
@@ -67,9 +66,9 @@ void Bullet::update()
 			if(shot->m_shield && shot->m_energy > 0.f)
 			{
 				auto reflect = [](const vec3& I, const vec3& N) { return I - 2.f * dot(N, I) * N; };
-				vec3 N = normalize(collision.m_hit_point - shot_spatial.m_position + Y3);
+				vec3 N = normalize(collision.m_hit_point - shot_spatial.m_position + y3);
 				m_velocity = reflect(m_velocity, N);
-				spatial.m_rotation = look_at(Zero3, m_velocity);
+				spatial.m_rotation = look_at(vec3(0.f), m_velocity);
 
 				shot->m_energy -= 0.5f;
 				shot->m_discharge += 0.5f;
@@ -98,9 +97,9 @@ float Human::headlight_angle = 40.f;
 
 Entity Human::create(ECS& ecs, HSpatial parent, const vec3& position, Faction faction)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Emitter, Receptor, EntityScript, Human>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Emitter, Receptor, EntityScript, Human>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	ecs.set(entity, Receptor(HSpatial(entity)));
 	ecs.set(entity, EntityScript(entity));
@@ -115,7 +114,7 @@ Human::Human(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor rec
 	, m_receptor(receptor)
 	, m_script(script)
 	, m_faction(faction)
-	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), Y3 * 0.9f), false, 1.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Capsule(0.35f, 1.1f), y3 * 0.9f), false, 1.f))
 	, m_walk(false)
 {
 	emitter->add_sphere(VisualMedium::me, 0.1f);
@@ -125,7 +124,7 @@ Human::Human(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor rec
 void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, size_t tick, size_t delta)
 {
 	UNUSED(tick);
-	(*m_solid)->set_angular_factor(Zero3);
+	(*m_solid)->set_angular_factor(vec3(0.f));
 
 	vec3 velocity = (*m_solid)->linear_velocity();
 
@@ -201,20 +200,20 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 		}
 		else
 		{
-			auto is_walkable = [&](const vec3& pos) { return as<PhysicWorld>(spatial.m_world->m_complex).ground_point(to_ray(pos, -Y3)) != Zero3; };
+			auto is_walkable = [&](const vec3& pos) { return as<PhysicWorld>(spatial.m_world->m_complex).ground_point(to_ray(pos, -y3)) != vec3(0.f); };
 
-			if(m_dest == Zero3)
+			if(m_dest == vec3(0.f))
 			{
 				float amplitude = 10.f;
-				m_dest = spatial.m_position + vec3(random_scalar(-amplitude, amplitude), 0.f, random_scalar(-amplitude, amplitude));
+				m_dest = spatial.m_position + vec3(randf(-amplitude, amplitude), 0.f, randf(-amplitude, amplitude));
 				if(!is_walkable(m_dest))
-					m_dest = Zero3;
+					m_dest = vec3(0.f);
 			}
 
-			//(*m_solid)->set_linear_velocity(Zero3);
+			//(*m_solid)->set_linear_velocity(vec3(0.f));
 			//return;
 
-			if(m_dest != Zero3)
+			if(m_dest != vec3(0.f))
 			{
 				if(steer_2d(spatial, movable, m_dest, 3.f, float(delta) * float(c_tick_interval), 1.f))
 				{
@@ -223,7 +222,7 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 				else
 				{
 					m_state = { m_walk ? "Walk" : "RunAim", true };
-					movable.set_linear_velocity(movable.m_linear_velocity - Y3 * 1.f);
+					movable.set_linear_velocity(movable.m_linear_velocity - y3 * 1.f);
 				}
 			}
 		}
@@ -233,15 +232,15 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 quat Human::sight(bool aiming)
 {
 	Spatial& spatial = m_spatial;
-	return aiming ? rotate(spatial.m_rotation, X3, m_angles.y) : spatial.m_rotation;
+	return aiming ? rotate(spatial.m_rotation, x3, m_angles.y) : spatial.m_rotation;
 }
 
 void Human::stop()
 {
 	Movable& movable = m_movable;
 	m_state = { "IdleAim", true };
-	movable.m_linear_velocity = Zero3;
-	m_dest = Zero3;
+	movable.m_linear_velocity = vec3(0.f);
+	m_dest = vec3(0.f);
 }
 
 Aim Human::aim()
@@ -249,7 +248,7 @@ Aim Human::aim()
 	Spatial& spatial = m_spatial;
 	quat rotation = this->sight(m_aiming);
 	vec3 muzzle = spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset);
-	vec3 end = muzzle + rotate(rotation, -Z3) * 1000.f;
+	vec3 end = muzzle + rotate(rotation, -z3) * 1000.f;
 
 	Collision hit = as<PhysicWorld>(spatial.m_world->m_complex).raycast({ muzzle, end }, CM_GROUND | CM_SOLID);
 	Spatial* target = nullptr;//hit.m_second ? &((Spatial&)hit.m_second->m_spatial) : nullptr;
@@ -259,10 +258,10 @@ Aim Human::aim()
 void Human::shoot()
 {
 	Aim aim = this->aim();
-	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, random_scalar(-0.05f, 0.05f)); };
-	quat rotation = fuzz(fuzz(aim.rotation, X3), Y3);
-	m_bullets.emplace_back(construct_owned<Bullet>(m_spatial, aim.start, rotation, 2.f));
-	//m_solid->impulse(rotate(m_spatial.m_rotation, Z3 * 4.f), Zero3);
+	auto fuzz = [](const quat& rotation, const vec3& axis) { return rotate(rotation, axis, randf(-0.05f, 0.05f)); };
+	quat rotation = fuzz(fuzz(aim.rotation, x3), y3);
+	m_bullets.push_back(construct_owned<Bullet>(m_spatial, aim.start, rotation, 2.f));
+	//m_solid->impulse(rotate(m_spatial.m_rotation, z3 * 4.f), vec3(0.f));
 }
 
 void Human::damage(float amount)
@@ -272,15 +271,15 @@ void Human::damage(float amount)
 	if(m_life <= 0.f)
 	{
 		m_headlight = false;
-		movable.m_linear_velocity = Zero3;
+		movable.m_linear_velocity = vec3(0.f);
 	}
 }
 
 Entity Lamp::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Lamp>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Lamp>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Lamp(HSpatial(entity), HMovable(entity)));
 	return entity;
 }
@@ -292,9 +291,9 @@ Lamp::Lamp(HSpatial spatial, HMovable movable)
 
 Entity Crate::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Crate>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Crate>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Crate(HSpatial(entity), HMovable(entity), extents));
 	return entity;
 }
@@ -308,7 +307,7 @@ Crate::Crate(HSpatial spatial, HMovable movable, const vec3& extents)
 
 Entity WorldBlock::create(ECS& ecs, HSpatial parent, const vec3& position, const vec3& extents)
 {
-	Entity entity = { ecs.create<Spatial, WorldPage, Navblock, WorldBlock>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, WorldPage, Navblock, WorldBlock>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, WorldPage(HSpatial(entity), true, extents));
 	ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
@@ -339,28 +338,29 @@ void Player::spawn(const vec3& start_position)
 
 void paint_bullet(Gnode& parent, Bullet& bullet)
 {
+	return;
 	Spatial& spatial = bullet.m_spatial;
 
-	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
+	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
-	Gnode& source = gfx::node(parent, {}, bullet.m_source, spatial.m_rotation);
-	gfx::particles(source, *flash);
+	Gnode& source = gfx::node(parent, bullet.m_source, spatial.m_rotation);
+	gfx::flows(source, *flash);
 
 	//toy::sound(source, "rifle", false, 0.4f);
 	toy::sound(source, "rifle2", false, 0.4f);
 
 	if(!bullet.m_impacted)
 	{
-		Gnode& projectile = gfx::node(parent, {}, spatial.m_position, spatial.m_rotation);
+		Gnode& projectile = gfx::node(parent, spatial.m_position, spatial.m_rotation);
 		gfx::shape(projectile, Cube(vec3(0.02f, 0.02f, 0.4f)), Symbol(Colour(2.f, 0.3f, 0.3f) * 4.f));
 	}
 
 	if(bullet.m_impacted)
 	{
-		Gnode& hit = gfx::node(parent, {}, bullet.m_impact, spatial.m_rotation);
+		Gnode& hit = gfx::node(parent, bullet.m_impact, spatial.m_rotation);
 		toy::sound(source, "impact2", false, 0.4f);
-		if(gfx::particles(hit, *impact).m_ended)
+		if(gfx::flows(hit, *impact).m_ended)
 			bullet.m_destroy = true;
 	}
 }
@@ -374,30 +374,27 @@ void paint_lamp(Gnode& parent, Lamp& lamp)
 
 Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
-	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
-	material.m_pbr_block.m_enabled = true;
-	material.m_pbr_block.m_albedo.m_value = Colour::Black;
-	material.m_pbr_block.m_emissive.m_value = colour;
-	material.m_pbr_block.m_emissive.m_value.m_a = float(factor);
+	Material& material = Material::ms_gfx->fetch_material(name.c_str(), "pbr/pbr");
+	material.m_pbr.m_albedo.m_value = Colour::Black;
+	material.m_lit.m_emissive.m_value = colour;
+	material.m_lit.m_emissive.m_value.a = float(factor);
 	return material;
 }
 
-Model& human_model_glow(GfxSystem& gfx_system)
+Model& human_model_glow(GfxSystem& gfx)
 {
 	//Material& glow_material = highlight_material("JointsGlow", Colour(0.2f, 0.8f, 2.4f), 2);
 	static Material& glow_material = highlight_material("JointsGlow", Colour::Red, 4);
-	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_glow", carray<string, 1>{ "Joints" },
-																		 carray<Material*, 1>{ &glow_material });
+	static Model& human = *gfx.models().file("human00");
+	static Model& model = model_variant(gfx, human, "human_glow", { "Joints" }, { &glow_material });
 	return model;
 }
 
-Model& human_model_stealth(GfxSystem& gfx_system)
+Model& human_model_stealth(GfxSystem& gfx)
 {
 	static Material& stealth_material = highlight_material("JointsStealth", Colour(0.2f, 0.2f, 0.2f), 2);
-	static Model& human = *gfx_system.models().file("human00");
-	static Model& model = model_variant(gfx_system, human, "human_stealth", carray<string, 1>{ "Joints" },
-																		    carray<Material*, 1>{ &stealth_material });
+	static Model& human = *gfx.models().file("human00");
+	static Model& model = model_variant(gfx, human, "human_stealth", { "Joints" }, { &stealth_material });
 	return model;
 }
 
@@ -405,37 +402,38 @@ void paint_human(Gnode& parent, Human& human)
 {
 	Spatial& spatial = human.m_spatial;
 
-	//static Model& model_normal = *parent.m_scene->m_gfx_system.models().file("human00");
-	static Model& model_stealth = human_model_stealth(parent.m_scene->m_gfx_system);
-	static Model& model_glow = human_model_glow(parent.m_scene->m_gfx_system);
+	//static Model& model_normal = *parent.m_scene->m_gfx.models().file("human00");
+	static Model& model_stealth = human_model_stealth(parent.m_scene->m_gfx);
+	static Model& model_glow = human_model_glow(parent.m_scene->m_gfx);
 
 	Model& model = human.m_stealth ? model_stealth : model_glow;
 	
-	Gnode& self = gfx::node(parent, Ref(&human), spatial.m_position, spatial.m_rotation);
-	
+	Gnode& self = gfx::node(parent, spatial.m_position, spatial.m_rotation);
+	self.m_node->m_object = human.m_spatial;
+
 	Item& item = gfx::item(self, model, ItemFlag::Default | ItemFlag::Selectable);
-	Animated& animated = gfx::animated(self, item);
+	Mime& animated = gfx::animated(self, item);
 
 	if(animated.m_playing.empty() || animated.playing() != human.m_state.name)
 		animated.start(human.m_state.name.c_str(), human.m_state.loop, 0.f, human.m_walk ? 0.7f : 1.f);
 
-	Bone* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
+	Node3* bone = animated.m_rig.m_skeleton.find_bone("RightHand");
 
 	mat4 pose = bxrotation(spatial.m_rotation) * fix_bone_pose(*bone);
-	Gnode& arm = gfx::node(self, {}, spatial.m_position + vec3(pose * vec4(Zero3, 1.f)), spatial.m_rotation);
+	Gnode& arm = gfx::node(self, spatial.m_position + vec3(pose * vec4(vec3(0.f), 1.f)), spatial.m_rotation);
 	gfx::model(arm, "rifle");
 
 	enum States { Seek = 3, Dead = 4, Shield = 5, Headlight = 6, Visor = 7 };
 
 	if(human.m_target)
 	{
-		Gnode& seek = gfx::node(parent.subx(Seek), Ref(&human), spatial.m_position, spatial.m_rotation);
+		Gnode& seek = gfx::node(parent.subx(Seek), spatial.m_position, spatial.m_rotation);
 		toy::sound(seek, "destroy", false, 0.5f);
 	}
 
 	if(human.m_life <= 0.f)
 	{
-		Gnode& dead = gfx::node(parent.subx(Dead), Ref(&human), spatial.m_position, spatial.m_rotation);
+		Gnode& dead = gfx::node(parent.subx(Dead), spatial.m_position, spatial.m_rotation);
 		//toy::sound(dead, "robotdeath", false, 0.1f);
 		toy::sound(dead, "sparks", false, 0.1f);
 	}
@@ -444,11 +442,10 @@ void paint_human(Gnode& parent, Human& human)
 	{
 		auto shield_material = [&](Colour colour, float bias) -> Material&
 		{
-			Material& material = parent.m_scene->m_gfx_system.fetch_material("shield", "fresnel");
-			material.m_fresnel_block.m_enabled = true;
-			material.m_fresnel_block.m_value.m_value = colour;
-			material.m_fresnel_block.m_fresnel_bias = bias;
-			//material.m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
+			Material& material = parent.m_scene->m_gfx.fetch_material("shield", "fresnel");
+			material.m_fresnel.m_value.m_value = colour;
+			material.m_fresnel.m_fresnel_bias = bias;
+			//material.m_fresnel_block.m_value = parent.m_scene->m_gfx.textures().file("beehive.png");
 			return material;
 		};
 
@@ -459,9 +456,11 @@ void paint_human(Gnode& parent, Human& human)
 		float shield_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.3f, 1.4f) * (human.m_energy + human.m_discharge * 10.f);
 		float light_intensity = remap_trig(sin(float(clock.read()) * 2.f), 0.8f, 1.4f) * (human.m_energy + human.m_discharge * 5.f);
 		
-		shield.m_fresnel_block.m_value.m_value = shield_colour * shield_intensity;
+		shield.m_fresnel.m_value.m_value = shield_colour * shield_intensity;
 
-		Gnode& center = gfx::node(parent.subx(Shield), Ref(&human), spatial.m_position + rotate(spatial.m_rotation, Y3), spatial.m_rotation);
+		Gnode& center = gfx::node(parent.subx(Shield), spatial.m_position + rotate(spatial.m_rotation, y3), spatial.m_rotation);
+		//center.m_node->m_object = human.m_spatial;
+
 		gfx::shape(center, Sphere(1.f), Symbol(shield_colour), 0U, &shield);
 		gfx::light(center, LightType::Point, false, Colour(0.3f, 0.4f, 1.f) * light_intensity, 10.f);
 	
@@ -476,7 +475,7 @@ void paint_human(Gnode& parent, Human& human)
 
 	if(human.m_headlight)
 	{
-		Gnode& headlight = gfx::node(parent.subx(Headlight), Ref(&human), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight());
+		Gnode& headlight = gfx::node(parent.subx(Headlight), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight());
 		Light& light = gfx::light(headlight, LightType::Spot, false, Colour::White, 30.f);
 		light.m_spot_angle = Human::headlight_angle;
 		light.m_spot_attenuation = 0.9f;
@@ -484,86 +483,86 @@ void paint_human(Gnode& parent, Human& human)
 
 	if(human.m_faction == Faction::Ally)
 	{
-		Gnode& visor = gfx::node(parent.subx(Visor), Ref(&human), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight(human.m_aiming));
-		//gfx::shape(visor, Line(-Z3 * 4.f, -Z3 * 8.f), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
-		gfx::shape(visor, Circle(-Z3 * 8.f, 0.2f, Axis::Z), Symbol(Colour::None, Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
+		Gnode& visor = gfx::node(parent.subx(Visor), spatial.m_position + rotate(spatial.m_rotation, Human::muzzle_offset), human.sight(human.m_aiming));
+		//gfx::shape(visor, Line(-z3 * 4.f, -z3 * 8.f), Symbol(Colour(0.2f, 0.8f, 2.4f) * 4.f, Colour::None, true));
+		gfx::shape(visor, Circle(-z3 * 8.f, 0.2f, Axis::Z), Symbol(Colour::None, Colour(0.2f, 0.8f, 2.4f) * 4.f, true));
 	}
 }
 
 void paint_crate(Gnode& parent, Crate& crate)
 {
-	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx_system, "crate", Colour::White);
+	static Material& material = gfx::pbr_material(parent.m_scene->m_gfx, "crate", Colour::White);
 	gfx::shape(parent, Cube(crate.m_extents), Symbol(), ItemFlag::Default | ItemFlag::Selectable, &material);
 }
 
 void paint_scene(Gnode& parent)
 {
-	parent.m_scene->m_environment.m_radiance.m_energy = 0.2f;
-	parent.m_scene->m_environment.m_radiance.m_ambient = 0.04f;
+	GfxSystem& gfx = parent.m_scene->m_gfx;
 
-	gfx::radiance(parent, "radiance/tiber_1_1k.hdr", BackgroundMode::None);
+	Zone& env = parent.m_scene->m_env;
+	env.m_radiance.m_energy = 0.2f;
+	//env.m_radiance.m_ambient = Colour(0.04f);
+	//env.m_radiance.m_texture = gfx.textures().file("radiance/tiber_1_1k.hdr");
 
 	//toy::sound(parent, "complexambient", true, 0.1f);
 }
 
 void paint_level(Gnode& parent)
 {
-	GfxSystem& gfx_system = parent.m_scene->m_gfx_system;
+	GfxSystem& gfx = parent.m_scene->m_gfx;
 
 #ifdef REPACK
 	ImportConfig config;
 	config.m_optimize_geometry = true;
 	config.m_cache_geometry = true;
 	config.m_flags = ItemFlag::Static;
-	static Prefab& reactor = import_prefab(gfx_system, ModelFormat::gltf, "reactor", config);
+	static Prefab& reactor = import_prefab(gfx, ModelFormat::gltf, "reactor", config);
 #else
 	ImportConfig config;
 	config.m_flags = ItemFlag::Static;
-	static Prefab& reactor = import_prefab(gfx_system, ModelFormat::gltf, "reactor.repack", config);
+	static Prefab& reactor = import_prefab(gfx, ModelFormat::gltf, "reactor.repack", config);
 #endif
 	gfx::prefab(parent, reactor, false, ItemFlag::NoUpdate);
 
 #ifdef GI_PROBE
-		GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(128.f, 64.f, 128.f));
-		//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f, 32.f, 64.f));
-		//probe.m_bounces = 1;
-		probe.m_diffuse = 1.f;
-		probe.m_mode = GIProbeMode::Voxelize;
-		//probe.m_mode = GIProbeMode::LoadVoxels;
+	GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(128.f, 64.f, 128.f));
+	//GIProbe& probe = gfx::gi_probe(parent, 512U, vec3(64.f, 32.f, 64.f));
+	//probe.m_bounces = 1;
+	probe.m_diffuse = 1.f;
+	probe.m_mode = GIProbeMode::Voxelize;
+	//probe.m_mode = GIProbeMode::LoadVoxels;
 #endif
 
 #ifdef LIGHTMAPS
-#ifdef MUD_PLATFORM_EMSCRIPTEN
-		string path = gfx_system.m_resource_path + "/lightmaps/";
+#ifdef TWO_PLATFORM_EMSCRIPTEN
+	string path = gfx.m_resource_path + "/lightmaps/";
 #else
-		string path = gfx_system.m_resource_path + "/examples/ex_godot/lightmaps/";
+	string path = gfx.m_resource_path + "/examples/ex_godot/lightmaps/";
 #endif
 
-		LightmapAtlas& lightmap = gfx::lightmap(parent, 4096U, 4.f, path);
-		lightmap.m_capture_transform = bxidentity();
-		lightmap.m_capture_extents = vec3(128.f, 64.f, 128.f);
-		//gfx::lightmap(parent, 4096U, 8.f, path);
+	LightmapAtlas& lightmap = gfx::lightmap(parent, 4096U, 4.f, path);
+	lightmap.m_capture_transform = bxidentity();
+	lightmap.m_capture_extents = vec3(128.f, 64.f, 128.f);
+	//gfx::lightmap(parent, 4096U, 8.f, path);
 #endif
 }
 
 void paint_viewer(Viewer& viewer)
 {
 #ifdef CLUSTERED
-	if(rect_size(vec4(viewer.m_viewport.m_rect)) != vec2(0.f) && !viewer.m_camera.m_clusters)
-	{
-		mud::Camera& camera = viewer.m_camera;
-		camera.m_clustered = true;
-		camera.m_clusters = make_unique<Froxelizer>(viewer.m_scene->m_gfx_system);
-		camera.m_clusters->prepare(viewer.m_viewport, camera.m_projection, camera.m_near, camera.m_far);
-	}
+	viewer.m_viewport.set_clustered(viewer.m_scene->m_gfx);
 #endif
 
-	viewer.m_viewport.comp<Tonemap>().m_enabled = true;
-	viewer.m_viewport.comp<Tonemap>().m_mode = TonemapMode::ACES;
+	viewer.m_viewport.m_to_gamma = true;
 
-	viewer.m_viewport.comp<Glow>().m_enabled = true;
-#ifndef MUD_GODOT_EMSCRIPTEN
-	viewer.m_viewport.comp<Glow>().m_bicubic_filter = true;
+	Tonemap& tonemap = viewer.m_viewport.comp<Tonemap>();
+	tonemap.m_enabled = true;
+	//tonemap.m_mode = TonemapMode::ACES;
+
+	Glow& glow = viewer.m_viewport.comp<Glow>();
+	//glow.m_enabled = true;
+#ifndef TWO_GODOT_EMSCRIPTEN
+	glow.m_bicubic_filter = true;
 #endif
 }
 
@@ -586,9 +585,9 @@ static void human_velocity_controller(Viewer& viewer, HumanController& controlle
 	ui::velocity_controller(viewer, controller.m_force, controller.m_torque, speed);
 
 	if(viewer.key_event(Key::Space, EventType::Stroked))
-		(*human.m_solid)->impulse(Y3 * 20.f, Zero3);
+		(*human.m_solid)->impulse(y3 * 20.f, vec3(0.f));
 
-	if(controller.m_force != Zero3 || controller.m_torque != Zero3)
+	if(controller.m_force != vec3(0.f) || controller.m_torque != vec3(0.f))
 	{
 		human.m_state = { human.m_walk ? "Walk" : "RunAim", true };
 	}
@@ -611,7 +610,7 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	//OrbitController& orbit = ui::orbit_controller(viewer);
 	OrbitController& orbit = ui::hybrid_controller(viewer, mode, human.m_spatial, human.m_aiming, human.m_angles, scene.m_game.m_mode == GameMode::Play);
 
-	if(scene.m_gfx_system.m_frame == 1)
+	if(scene.m_gfx.m_frame == 1)
 	{
 		orbit.m_pitch = -c_pi / 16.f;
 		orbit.m_distance = 4.f;
@@ -621,8 +620,8 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 	if(human.m_life <= 0.f)
 	{
-		controller.m_force = Zero3;
-		controller.m_torque = Zero3;
+		controller.m_force = vec3(0.f);
+		controller.m_torque = vec3(0.f);
 		human.m_state = { "Die", false };
 	}
 
@@ -630,8 +629,8 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 	{
 		human_velocity_controller(viewer, controller, human, orbit, mode != ui::OrbitMode::Isometric);
 
-		if(mode == ui::OrbitMode::Isometric && controller.m_force != Zero3)
-			spatial.set_rotation(look_at(Zero3, rotate(quat(vec3(0.f, orbit.m_yaw, 0.f)), controller.m_force)));
+		if(mode == ui::OrbitMode::Isometric && controller.m_force != vec3(0.f))
+			spatial.set_rotation(look_at(vec3(0.f), rotate(quat(vec3(0.f, orbit.m_yaw, 0.f)), controller.m_force)));
 
 		if(viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
 		{
@@ -661,21 +660,21 @@ void ex_godot_game_hud(Viewer& viewer, GameScene& scene, Human& human)
 
 void viewport_item_picker(Viewer& viewer, Widget& widget, vector<Item*>& selection)
 {
-	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::Mouse, EventType::Moved, InputMod::None, false))
+	if(MouseEvent event = widget.mouse_event(DeviceType::Mouse, EventType::Moved, InputMod::None, false))
 	{
 		auto callback = [&](Item* item) { viewer.m_hovered = item; };
-		viewer.picker(0).pick_point(viewer.m_viewport, mouse_event.m_relative, callback, ItemFlag::Static);
+		viewer.picker(0).pick_point(viewer.m_viewport, event.m_relative, callback, ItemFlag::Static);
 	}
 
-	if(MouseEvent mouse_event = widget.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
+	if(MouseEvent event = widget.mouse_event(DeviceType::MouseLeft, EventType::Stroked))
 	{
 		if(viewer.m_hovered)
 		{
 			bool shift = widget.ui().m_keyboard.m_shift;
 			if(!shift)
-				vector_select(selection, viewer.m_hovered);
+				select(selection, viewer.m_hovered);
 			else
-				vector_swap(selection, viewer.m_hovered);
+				select_swap(selection, viewer.m_hovered);
 		}
 	}
 }
@@ -692,9 +691,9 @@ void ex_godot_edit_ui(Viewer& viewer, GameScene& scene)
 	for(Item* item : selection)
 	{
 		static const Colour colour = Colour::AlphaGrey;
-		Gnode& n = gfx::node(scene.m_scene.m_graph, {}, item->m_node->m_transform);
-		gfx::draw(n, item->m_model->m_aabb, Symbol::wire(colour, true));
-		gfx::draw(scene.m_scene.m_graph, item->m_aabb, Symbol::wire(colour, true));
+		Gnode& n = gfx::node(scene.m_scene.m_graph, item->m_node->m_transform);
+		gfx::draw(n, Cube(item->m_model->m_aabb), Symbol::wire(colour, true));
+		gfx::draw(scene.m_scene.m_graph, Cube(item->m_aabb), Symbol::wire(colour, true));
 		//scene.m_scene.m_immediate->draw(identity, { Symbol::wire(colour, true), &item->m_aabb, OUTLINE });
 	}
 }
@@ -731,10 +730,10 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		//app.m_gfx_system->add_resource_path("examples/ex_godot_hd");
-		app.m_gfx_system->add_resource_path("examples/ex_godot");
-		app.m_gfx_system->add_resource_path("examples/05_character");
-		app.m_gfx_system->add_resource_path("examples/17_wfc");
+		//app.m_gfx->add_resource_path("examples/ex_godot_hd");
+		app.m_gfx->add_resource_path("examples/ex_godot");
+		app.m_gfx->add_resource_path("examples/05_character");
+		app.m_gfx->add_resource_path("examples/17_wfc");
 
 		this->start(app, game);
 	}
@@ -746,20 +745,20 @@ public:
 		game.m_world = &world;
 
 #ifdef PHYSICS
-		WorldBlock& block = construct<WorldBlock>(world.origin(), Zero3, vec3(128.f, 64.f, 128.f));
+		WorldBlock& block = construct<WorldBlock>(world.origin(), vec3(0.f), vec3(128.f, 64.f, 128.f));
 
 		ImportConfig config;
 		config.m_cache_geometry = true;
-		Prefab& collision_world = import_prefab(*app.m_gfx_system, ModelFormat::gltf, "reactor.collision", config);
+		Prefab& collision_world = import_prefab(*app.m_gfx, ModelFormat::gltf, "reactor.collision", config);
 
 		vector<Item*> items;
-		for(Item& item : collision_world.m_items)
-			items.push_back(&item);
+		for(Prefab::Elem& elem : collision_world.m_items)
+			items.push_back(&elem.item);
 
 		build_world_page_geometry(block.m_world_page, items);
 		block.m_world_page->update_geometry(block.m_spatial->m_last_tick);
 
-		destroy_prefab(*app.m_gfx_system, collision_world);
+		destroy_prefab(*app.m_gfx, collision_world);
 #endif
 
 		world.add_loop<Human, Spatial, Movable, Receptor>(Task::GameObject);
@@ -812,10 +811,10 @@ public:
 	{
 #ifdef REPACK
 		static bool repacked = false;
-		if(app.m_gfx_system->m_frame > 100 && !repacked)
+		if(app.m_gfx->m_frame > 100 && !repacked)
 		{
-			LocatedFile location = app.m_gfx_system->locate_file("models/reactor", carray<cstring, 1>{ ".gltf" });
-			Importer& importer = *app.m_gfx_system->importer(ModelFormat::gltf);
+			LocatedFile location = app.m_gfx->locate_file("models/reactor", { ".gltf" });
+			Importer& importer = *app.m_gfx->importer(ModelFormat::gltf);
 			importer.repack(location.path(false), ImportConfig());
 			repacked = true;
 		}

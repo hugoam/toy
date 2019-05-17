@@ -13,7 +13,7 @@
 class TOY_CORE_EXPORT btMotionState;
 #include <LinearMath/btMotionState.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
     class TOY_CORE_EXPORT BulletMotionState : public btMotionState
     {

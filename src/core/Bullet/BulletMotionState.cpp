@@ -9,7 +9,7 @@
 #include <core/Physic/Collider.h>
 #include <core/Bullet/Bullet.h.inl>
 
-using namespace mud; namespace toy
+namespace toy
 {
     BulletMotionState::BulletMotionState(HSpatial spatial, HCollider collider)
         : btMotionState()

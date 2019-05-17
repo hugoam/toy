@@ -2,7 +2,7 @@
 #include <shell/Config.h>
 #include <shell/Shell.h>
 
-using using namespace mud; namespace toy;
+using using namespace two; namespace toy;
 
 int main(int argc, char *argv[])
 {

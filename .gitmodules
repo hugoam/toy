@@ -5,9 +5,9 @@
 [submodule "3rdparty/recast"]
 	path = 3rdparty/recast
 	url = https://github.com/recastnavigation/recastnavigation
-[submodule "mud"]
-	path = mud
-	url = https://github.com/hugoam/mud/
+[submodule "two"]
+	path = two
+	url = https://github.com/hugoam/two/
 [submodule "3rdparty/hashmap"]
 	path = 3rdparty/hashmap
 	url = https://github.com/skarupke/flat_hash_map

@@ -3,19 +3,18 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <core/Types.h>
-#include <core/Bullet/BulletWorld.h>
-
+#ifndef USE_STL
+#include <stl/vector.hpp>
+#endif
+#include <math/Timer.h>
 #include <geom/Geom.h>
 #include <geom/Shape.h>
-
-#include <core/World/World.h>
+#include <core/Types.h>
+#include <core/Bullet/BulletWorld.h>
+#include <core/World/World.hpp>
 #include <core/Bullet/BulletSolid.h>
 #include <core/Bullet/BulletCollider.h>
 #include <core/Physic/Solid.h>
-
-#include <math/Timer.h>
 
 #ifdef _MSC_VER
 #	pragma warning (push)
@@ -42,7 +41,7 @@ extern CollisionStartedCallback gCollisionStartedCallback;
 extern CollisionEndedCallback gCollisionEndedCallback;
 #endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 #ifdef TRIGGER_COLLISIONS
 	static void collisionStarted(btPersistentManifold* manifold)
@@ -57,7 +56,7 @@ using namespace mud; namespace toy
 		if(&col0->m_spatial == &col1->m_spatial)
 			return;
 
-		if (col0->m_object && col1->m_object)
+		if(col0->m_object && col1->m_object)
 		{
 			// printf << "Remove contact " << col0->m_spatial.m_id << " : " << col1->m_spatial.m_id << endl;
 			col0->m_object->remove_contact(*col1);
@@ -102,12 +101,12 @@ using namespace mud; namespace toy
 
 	object<ColliderImpl> BulletMedium::make_collider(HCollider collider)
 	{
-		return make_object<BulletCollider>(*this, collider->m_spatial, collider, collider->m_collision_shape);
+		return oconstruct<BulletCollider>(*this, collider->m_spatial, collider, collider->m_collision_shape);
 	}
 
 	object<SolidImpl> BulletMedium::make_solid(HSolid solid)
 	{
-		return make_object<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
+		return oconstruct<BulletSolid>(*this, as<BulletCollider>(*solid->m_collider->m_impl), solid->m_spatial, solid->m_collider, solid);
 	}
 
 	void BulletMedium::add_solid(HCollider collider, HSolid solid)
@@ -327,7 +326,7 @@ using namespace mud; namespace toy
 		m_last_tick = tick;
 
 		if(m_dynamics_world)
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3, 0.032f);
 #else
 			m_dynamics_world->stepSimulation(float(delta * c_tick_interval), 3);
@@ -352,7 +351,7 @@ using namespace mud; namespace toy
 
 	object<PhysicMedium> BulletWorld::create_sub_world(Medium& medium)
 	{
-		return make_object<BulletMedium>(m_world, *this, medium);
+		return oconstruct<BulletMedium>(m_world, *this, medium);
 	}
 
 	vec3 BulletWorld::ground_point(const Ray& ray)

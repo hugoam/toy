@@ -20,7 +20,7 @@
 
 #include <set>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	GlobalLoader::GlobalLoader()
 		: m_loaders(c_max_types)

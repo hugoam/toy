@@ -8,7 +8,7 @@
 #include <core/Spatial/Spatial.h>
 #include <core/Physic/Collider.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	VisualMedium VisualMedium::me;
 

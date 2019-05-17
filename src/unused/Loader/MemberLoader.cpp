@@ -18,7 +18,7 @@
 
 #include <infra/String.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	MemberLoader::MemberLoader(ObjectLoader& parent, Member& member, size_t index)
 		: Loader(*member.m_type, parent.m_dataSource, &parent)

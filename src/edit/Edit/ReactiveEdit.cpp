@@ -7,12 +7,11 @@
 #include <edit/Types.h>
 #include <edit/Edit/ReactiveEdit.h>
 
-#include <uio/Unode.h>
 #include <uio/Object.h>
 
 #include <core/Reactive/Reactive.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	void edit_reactive(Widget& parent, Reactive& reactive)
 	{

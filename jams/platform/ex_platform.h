@@ -7,9 +7,19 @@
 #include <platform/Forward.h>
 #include <toy/toy.h>
 
+#include <ecs/ECS.hpp>
+#include <stl/vector.hpp>
+#include <stl/string.hpp>
+#include <pool/SparsePool.hpp>
+#include <pool/ObjectPool.hpp>
+#include <pool/Pool.hpp>
+#include <core/World/World.hpp>
+#include <visu/VisuScene.hpp>
+#include <tree/Graph.hpp>
+
 #include <map>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -17,7 +27,7 @@ extern "C"
 	//_PLATFORM_EXPORT void ex_platform_game(GameShell& app, Game& game);
 }
 
-namespace mud
+namespace two
 {
 	template <> struct TypedBuffer<Bullet> { static uint32_t index() { return 20; } };
 	template <> struct TypedBuffer<Human>  { static uint32_t index() { return 21; } };
@@ -25,7 +35,7 @@ namespace mud
 	template <> struct TypedBuffer<Crate>  { static uint32_t index() { return 23; } };
 }
 
-namespace mud
+namespace two
 {
 	template struct refl_ ComponentHandle<Bullet>;
 	template struct refl_ ComponentHandle<Human>;
@@ -57,8 +67,8 @@ public:
 
 	void next_frame();
 
-	void generate_block(GfxSystem& gfx_system, const ivec2& coord);
-	void open_blocks(GfxSystem& gfx_system, const vec3& position, const ivec2& radius);
+	void generate_block(GfxSystem& gfx, const ivec2& coord);
+	void open_blocks(GfxSystem& gfx, const vec3& position, const ivec2& radius);
 };
 
 class refl_ _PLATFORM_EXPORT Bullet
@@ -76,7 +86,7 @@ public:
 
 	bool m_impacted = false;
 	bool m_destroy = false;
-	vec3 m_impact = Zero3;
+	vec3 m_impact = vec3(0.f);
 
 	//OSolid m_solid;
 	OCollider m_collider;
@@ -100,8 +110,8 @@ struct refl_ Aim
 
 struct HumanController
 {
-	vec3 m_force = Zero3;
-	vec3 m_torque = Zero3;
+	vec3 m_force = vec3(0.f);
+	vec3 m_torque = vec3(0.f);
 };
 
 struct refl_ Stance
@@ -130,7 +140,7 @@ public:
 
 	attr_ Faction m_faction;
 
-	vec2 m_angles = Zero2;
+	vec2 m_angles = vec2(0.f);
 	bool m_aiming = false;
 	Aim m_visor;
 
@@ -145,7 +155,7 @@ public:
 	bool m_stealth = false;
 
 	attr_ HHuman m_target = {};
-	attr_ vec3 m_dest = Zero3;
+	attr_ vec3 m_dest = vec3(0.f);
 	attr_ float m_cooldown = 0.f;
 
 	attr_ Stance m_state = { "IdleAim", true };

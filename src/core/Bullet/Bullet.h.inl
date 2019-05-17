@@ -15,8 +15,10 @@
 #include <LinearMath/btTransform.h>
 #include <LinearMath/btTransformUtil.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
+	using namespace two;
+
 	inline vec3 to_vec3(const btVector3& vec) { return { vec.x(), vec.y(), vec.z() }; }
 	inline btVector3 to_btvec3(const vec3& vec) { return { vec.x, vec.y, vec.z }; }
 	

@@ -23,7 +23,7 @@
 
 #define CONTACT_THRESHOLD 0.1f
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Atoll::Atoll()
 		: m_center(0.f,0.f,0.f)

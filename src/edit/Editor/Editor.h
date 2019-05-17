@@ -13,12 +13,10 @@
 #include <edit/Forward.h>
 #include <edit/Editor/Toolbox.h>
 
-#include <uio/Edit/Script.h>
+#include <uio/ScriptEdit.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
-	using Selection = vector<Ref>;
-
 	export_ class refl_ TOY_EDIT_EXPORT PlayTool : public Tool
 	{
 	public:
@@ -53,7 +51,7 @@ using namespace mud; namespace toy
 	class refl_ TOY_EDIT_EXPORT Editor : public EditContext
     {
     public:
-		Editor(GfxSystem& gfx_system);
+		Editor(GfxSystem& gfx);
         
 		Toolbelt m_toolbelt;
 

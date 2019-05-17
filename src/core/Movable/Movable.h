@@ -5,16 +5,11 @@
 
 #pragma once
 
-#include <infra/NonCopy.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 
-#ifndef MUD_CPP_20
-#include <atomic>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	TOY_CORE_EXPORT func_ bool move_2d(Spatial& spatial, Movable& movable, const vec3& target, float velocity, float time_step, float margin = 0.1f);
 	TOY_CORE_EXPORT func_ bool steer_2d(Spatial& spatial, Movable& movable, const vec3& target, float velocity, float time_step, float margin = 0.1f);
@@ -30,21 +25,21 @@ using namespace mud; namespace toy
 	{
 	public:
 		constr_ Movable() {}
-		constr_ Movable(HSpatial spatial);
+		constr_ Movable(const vec3& position);
 		~Movable();
 
 		MotionState* m_motion_state = nullptr;
 
-		attr_ vec3 m_linear_velocity = Zero3;
-		attr_ vec3 m_angular_velocity = Zero3;
+		attr_ vec3 m_linear_velocity = vec3(0.f);
+		attr_ vec3 m_angular_velocity = vec3(0.f);
 
-		vec3 m_direction = -Z3;
-		vec3 m_acceleration = Zero3;
+		vec3 m_direction = -z3;
+		vec3 m_acceleration = vec3(0.f);
 
 		attr_ bool m_moving = false;
 		attr_ vec3 m_previous_position;
 
-		vec3 m_max_linear_velocity = Zero3;
+		vec3 m_max_linear_velocity = vec3(0.f);
 
 		size_t m_updated = 0;
 		size_t m_acceleration_updated = 0;

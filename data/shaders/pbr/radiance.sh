@@ -2,47 +2,65 @@
 #define MUD_SHADER_RADIANCE
 
 #include <spherical.sh>
+#include <gpu/zone.sh>
 
-uniform vec4 u_radiance_color_energy;
-#define u_radiance_color u_radiance_color_energy.rgb
-#define u_radiance_energy u_radiance_color_energy.w
-
-uniform vec4 u_ambient_params;
-#define u_ambient u_ambient_params.x
-
-uniform vec4 u_pbr_globals;
-#define u_roughness_levels u_pbr_globals.x
-
-#ifdef RADIANCE_ENVMAP
 #define RADIANCE_MAX_LOD 7.0
 
-#ifdef RADIANCE_ARRAY
-SAMPLER2DARRAY(s_radiance_map, 8);
+#ifdef RADIANCE_ENVMAP
+
+#ifdef RADIANCE_CUBE
+SAMPLERCUBE(s_radiance, 10);
 #else
-SAMPLER2D(s_radiance_map, 8);
+SAMPLER2D(s_radiance, 10);
 #endif
 
-vec3 radiance_reflection(vec3 view, vec3 normal, float roughness)
+vec3 ibl_refract(vec3 view, vec3 normal, float refraction, float level)
 {
-    float roughness_level = roughness * RADIANCE_MAX_LOD;
-	vec3 reflection = reflect(-view, normal);
-	reflection = normalize(mul(u_invView, vec4(reflection, 0.0)).xyz);
-#ifdef RADIANCE_ARRAY
-	return textureSpherical2DArray(s_radiance_map, reflection, roughness_level).rgb * u_radiance_color * u_radiance_energy;
+	vec3 dir = refract(-view, normal, refraction);
+	dir = normalize(mul(u_invView, vec4(dir, 0.0)).xyz);
+#ifdef RADIANCE_CUBE
+	vec3 rad = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), level).rgb;
 #else
-	return textureSpherical2D(s_radiance_map, reflection, roughness_level).rgb * u_radiance_color * u_radiance_energy;
+	vec3 rad = textureSpherical2D(s_radiance, dir, level).rgb;
 #endif
+    return rad;
 }
 
-vec3 radiance_ambient(vec3 normal)
+vec3 ibl_reflect(vec3 view, vec3 normal, float level)
 {
-	vec3 ambient_dir = normalize(mul(u_invView, vec4(normal, 0.0)).xyz);
-#ifdef RADIANCE_ARRAY
-	vec3 tex_ambient = textureSpherical2DArray(s_radiance_map, ambient_dir, RADIANCE_MAX_LOD).rgb * u_radiance_color;
+	vec3 dir = reflect(-view, normal);
+	dir = normalize(mul(u_invView, vec4(dir, 0.0)).xyz);
+#ifdef RADIANCE_CUBE
+	vec3 rad = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), level).rgb;
 #else
-	vec3 tex_ambient = textureSpherical2D(s_radiance_map, ambient_dir, RADIANCE_MAX_LOD).rgb * u_radiance_color;
+	vec3 rad = textureSpherical2D(s_radiance, dir, level).rgb;
 #endif
-	return tex_ambient * u_ambient;
+    return rad;
+}
+
+vec3 ibl_reflect0(vec3 view, vec3 normal)
+{
+	vec3 dir = reflect(-view, normal);
+	dir = normalize(mul(u_invView, vec4(dir, 0.0)).xyz);
+#ifdef RADIANCE_CUBE
+	vec3 rad = textureCube(s_radiance, vec3(-dir.x, dir.y, dir.z)).rgb;
+#else
+	vec3 rad = textureSpherical2D(s_radiance, dir, 0.0).rgb;
+#endif
+    return rad;
+}
+
+vec3 ibl_diffuse(vec3 normal)
+{
+    // @todo it seems wrong that last level is too uniform, look into how those are generated
+    float level = RADIANCE_MAX_LOD - 3.0;
+	vec3 dir = normalize(mul(u_invView, vec4(normal, 0.0)).xyz);
+#ifdef RADIANCE_CUBE
+	vec3 amb = textureCubeLod(s_radiance, vec3(-dir.x, dir.y, dir.z), level).rgb;
+#else
+	vec3 amb = textureSpherical2D(s_radiance, dir, level).rgb;
+#endif
+	return amb;
 }
 #endif
 

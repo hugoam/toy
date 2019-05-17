@@ -10,7 +10,7 @@
 #include <type/Indexer.h>
 #include <core/Forward.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT User
 	{

@@ -9,7 +9,7 @@
 #include <core/World/World.h>
 #include <core/World/Section.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Behavior::Behavior(Type& type, Reactive& reactive)
 		: m_type(type)

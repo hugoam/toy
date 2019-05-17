@@ -6,14 +6,13 @@
 #pragma once
 
 #include <stl/map.h>
-#include <infra/NonCopy.h>
 #include <type/Unique.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
 #include <core/Physic/Collider.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class TOY_CORE_EXPORT PhysicMedium
 	{
@@ -41,7 +40,7 @@ using namespace mud; namespace toy
 		virtual Collision raycast(HCollider collider, const vec3& target, const vec3& end, short int mask) = 0;
 	};
 
-	class refl_ TOY_CORE_EXPORT PhysicWorld : public NonCopy
+	class refl_ TOY_CORE_EXPORT PhysicWorld
     {
 	public:
         PhysicWorld(World& world);

@@ -37,10 +37,10 @@
 #include <shell/Forward.h>
 
 #ifndef _SPACE_EXPORT
-#define _SPACE_EXPORT MUD_IMPORT
+#define _SPACE_EXPORT TWO_IMPORT
 #endif
 
-#include <cstdint>
+#include <stdint.h>
 
 enum class GameStage : uint32_t;
 enum class Race : unsigned int;
@@ -93,3 +93,14 @@ struct SpatialCombat;
 class Galaxy;
 class Universe;
 class CommanderBrush;
+
+//namespace two
+//{
+//	template struct refl_ ComponentHandle<Galaxy>;
+//	template struct refl_ ComponentHandle<Star>;
+//	template struct refl_ ComponentHandle<Fleet>;
+//}
+
+using HGalaxy = two::ComponentHandle<Galaxy>;
+using HStar = two::ComponentHandle<Star>;
+using HFleet = two::ComponentHandle<Fleet>;

@@ -6,13 +6,14 @@
 #pragma once
 
 #include <stl/string.h>
+#include <stl/span.h>
 #include <type/Ref.h>
 #include <type/Indexer.h>
 #include <util/Forward.h>
 #include <util/Executable.h>
 #include <refl/Meta.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class User;
 
@@ -26,10 +27,10 @@ using namespace mud; namespace toy
 		attr_ uint32_t m_index;
 		attr_ string m_name;
 
-		Meta& meta() { return mud::meta(m_type); }
+		Meta& meta() { return two::meta(m_type); }
 
 		virtual bool checkObject(Ref object) = 0;
-		virtual bool checkArgs(const vector<Ref>& args) = 0;
+		virtual bool checkArgs(span<Ref> args) = 0;
 		virtual object<Procedure> instance(User* user, Ref object, vector<Ref> args) = 0;
 	};
 
@@ -51,7 +52,7 @@ using namespace mud; namespace toy
 		ProcedureDef() : ProcedureType(type<T_Procedure>()) {}
 
 		bool checkObject(Ref object) { return T_Procedure::checkObject(object); }
-		bool checkArgs(const vector<Ref>& args) { return T_Procedure::checkArgs(args); }
+		bool checkArgs(span<Ref> args) { return T_Procedure::checkArgs(args); }
 		object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return T_Procedure::instance(user, object, args); }
 	};
 
@@ -62,8 +63,8 @@ using namespace mud; namespace toy
 		TypedProcedure(User* user, Ref object, vector<Ref> args = {}) : Procedure(T_Procedure::def(), user, object, args) {}
 
 		static bool checkObject(Ref object) { UNUSED(object); return true; }
-		static bool checkArgs(const vector<Ref>& args) { UNUSED(args); return true; }
-		static object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return make_object<T_Procedure>(user, object, args); }
+		static bool checkArgs(span<Ref> args) { UNUSED(args); return true; }
+		static object<Procedure> instance(User* user, Ref object, vector<Ref> args) { return oconstruct<T_Procedure>(user, object, args); }
 
 		static ProcedureType& def() { static ProcedureDef<T_Procedure> df; return df; }
 	};

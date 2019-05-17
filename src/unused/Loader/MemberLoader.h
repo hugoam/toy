@@ -10,7 +10,7 @@
 #include <util/Forward.h>
 #include <util/Loader/Loader.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	/* The loader system and its nodes are responsible for transcripting a hierarchy of objects into a linear list of data values for each object 
 		It uses the dataloader, through two main interfaces :

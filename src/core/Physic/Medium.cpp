@@ -9,7 +9,7 @@
 #include <core/Physic/Obstacle.h>
 #include <core/Physic/Scope.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Medium::Medium(const string& name, bool occlusions)
 		: m_name(name)

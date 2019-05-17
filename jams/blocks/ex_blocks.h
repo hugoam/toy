@@ -5,11 +5,22 @@
 #pragma once
 
 #include <blocks/Forward.h>
+
+#include <ecs/ECS.hpp>
+#include <stl/vector.hpp>
+#include <stl/string.hpp>
+#include <pool/SparsePool.hpp>
+#include <pool/ObjectPool.hpp>
+#include <pool/Pool.hpp>
+#include <core/World/World.hpp>
+#include <visu/VisuScene.hpp>
+#include <tree/Graph.hpp>
+
 #include <toy/toy.h>
 
 #include <map>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 extern "C"
@@ -17,7 +28,7 @@ extern "C"
 	//_BLOCKS_EXPORT void ex_blocks_game(GameShell& app, Game& game);
 }
 
-namespace mud
+namespace two
 {
 //	template <> struct TypedBuffer<Well>	{ static uint32_t index() { return 20; } };
 	template <> struct TypedBuffer<Camp>	{ static uint32_t index() { return 21; } };
@@ -26,7 +37,7 @@ namespace mud
 	template <> struct TypedBuffer<Tank>	{ static uint32_t index() { return 24; } };
 }
 
-namespace mud
+namespace two
 {
 //	template struct refl_ ComponentHandle<Well>;
 	template struct refl_ ComponentHandle<Camp>;
@@ -130,7 +141,7 @@ public:
 
 	bool m_impacted = false;
 	bool m_destroy = false;
-	vec3 m_impact = Zero3;
+	vec3 m_impact = vec3(0.f);
 
 	//OSolid m_solid;
 	OCollider m_collider;
@@ -155,8 +166,8 @@ public:
 
 	OSolid m_solid;
 
-	vec3 m_force = Zero3;
-	vec3 m_torque = Zero3;
+	vec3 m_force = vec3(0.f);
+	vec3 m_torque = vec3(0.f);
 
 	quat m_turret_angle = ZeroQuat;
 
@@ -169,7 +180,7 @@ public:
 	float m_shock = 0.f;
 
 	Tank* m_target = nullptr;
-	vec3 m_dest = Zero3;
+	vec3 m_dest = vec3(0.f);
 
 	bool m_ia = true;
 
@@ -180,7 +191,7 @@ public:
 	void shoot(bool critical = false);
 
 	inline quat turret_rotation() { return m_turret_angle; } //quat(vec3(0.f, m_turret_angle, 0.f)); }
-	inline vec3 turret_direction() { return rotate(turret_rotation(), -Z3); }
+	inline vec3 turret_direction() { return rotate(turret_rotation(), -z3); }
 };
 
 class refl_ _BLOCKS_EXPORT BlockWorld : public Complex
@@ -202,7 +213,7 @@ public:
 	std::map<ivec2, Tileblock*> m_blocks;
 	Tileblock* m_center_block = nullptr;
 
-	void generate_block(GfxSystem& gfx_system, const ivec2& coord);
+	void generate_block(GfxSystem& gfx, const ivec2& coord);
 };
 
 class refl_ _BLOCKS_EXPORT Player

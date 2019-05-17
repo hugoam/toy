@@ -11,7 +11,7 @@
 #include <core/Store/Array.h>
 #include <core/Action.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Actor : public NonCopy, public Updatable
 	{

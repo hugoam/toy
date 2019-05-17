@@ -5,7 +5,7 @@
 
 #pragma once
 
-using namespace mud; namespace toy
+namespace toy
 {
 	enum refl_ CollisionGroup : short int
 	{

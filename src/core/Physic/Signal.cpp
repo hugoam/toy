@@ -13,14 +13,11 @@
 #include <core/Physic/PhysicWorld.h>
 #include <core/Physic/Obstacle.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Signal::Signal(EmitterScope& emitter, ReceptorScope& receptor)
 		: m_emitter(&emitter)
 		, m_receptor(&receptor)
-		, m_strength(0.f)
-		, m_on(false)
-		, m_occluding()
 	{
 		if(!m_emitter->m_collider->m_medium->m_occlusions)
 			this->on();

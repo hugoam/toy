@@ -6,26 +6,22 @@
 #pragma once
 
 #include <stl/function.h>
-#include <ecs/Proto.h>
-#include <math/Math.h>
 #include <math/Vec.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 #include <core/Physic/Scope.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Camera
 	{
 	public:
 		constr_ Camera() {}
-		constr_ Camera(HSpatial spatial, float lens_distance = 1.f, float near = 0.001f, float far = 1000.f);
+		constr_ Camera(float distance, float near = 0.001f, float far = 1000.f);
 		~Camera();
 
 		static Entity create(ECS& ecs, HSpatial parent, const vec3& position, float lens_distance, float near = 0.001f, float far = 1000.f);
-
-		comp_ HSpatial m_spatial;
 
 		attr_ float m_lens_distance = 1.f;
 		attr_ float m_lens_angle = 0.f;
@@ -37,7 +33,7 @@ using namespace mud; namespace toy
 
 		bool m_lens_updated = true;
 
-		vec3 m_lens_position = Zero3;
+		vec3 m_lens_position = vec3(0.f);
 		quat m_lens_rotation = ZeroQuat;
 
 		size_t m_last_updated = 0;
@@ -68,6 +64,11 @@ using namespace mud; namespace toy
 #endif
 	};
 
+	export_ TOY_CORE_EXPORT void jump_camera_to(Spatial& spatial, Camera& camera, const vec3& target, const quat& rotation, float distance, float angle, float duration = 1.f);
 	export_ TOY_CORE_EXPORT void jump_camera_to(Spatial& spatial, Camera& camera, const vec3& position, float distance = 1.f, float rotation = 0.f);
 	export_ TOY_CORE_EXPORT void move_camera_to(Spatial& spatial, Camera& camera, const vec3& position);
+
+	export_ TOY_CORE_EXPORT void jump_camera_to(Entity camera, const vec3& target, const quat& rotation, float distance, float angle, float duration = 1.f);
+	export_ TOY_CORE_EXPORT void jump_camera_to(Entity camera, const vec3& position, float distance = 1.f, float rotation = 0.f);
+	export_ TOY_CORE_EXPORT void move_camera_to(Entity camera, const vec3& position);
 }

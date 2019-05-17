@@ -10,7 +10,7 @@
 #include <core/Entity/EntityObserver.h>
 #include <core/Selector/Selection.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class TargetDispatcher
 	{

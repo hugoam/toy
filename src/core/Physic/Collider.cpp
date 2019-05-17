@@ -3,19 +3,23 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#ifdef TWO_MODULES
+module toy.core
+#else
+#include <pool/SparsePool.hpp>
+#include <ecs/Complex.h>
 #include <core/Types.h>
 #include <core/Physic/Collider.h>
-
-#include <ecs/Complex.h>
 #include <core/Spatial/Spatial.h>
 #include <core/World/Section.h>
-#include <core/World/World.h>
+#include <core/World/World.hpp>
 #include <core/Physic/Medium.h>
 #include <core/Physic/PhysicWorld.h>
 #include <core/Physic/CollisionShape.h>
 #include <core/Physic/Solid.h>
+#endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 	OCollider Collider::create(HSpatial spatial, HMovable movable, const CollisionShape& collision_shape, Medium& medium, CollisionGroup group)
 	{

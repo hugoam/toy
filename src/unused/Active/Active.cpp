@@ -10,7 +10,7 @@
 #include <core/Entity/Entity.h>
 #include <core/World/World.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	template <class T>
 	inline void vector_remove_named(vector<T>& vector, const string& name)

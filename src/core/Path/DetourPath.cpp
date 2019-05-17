@@ -3,27 +3,27 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#ifdef TWO_MODULES
+module toy.core
+#else
+#include <ecs/ECS.hpp>
 #include <core/Types.h>
 #include <core/Path/DetourPath.h>
-
 #include <core/Spatial/Spatial.h>
 #include <core/Path/Pathfinder.h>
+#endif
 
 #include <DetourNavMeshQuery.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Waypoint::create(ECS& ecs, HSpatial parent, const vec3& position)
 	{
-		Entity entity = { ecs.create<Spatial, Waypoint>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Waypoint>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
-		ecs.set(entity, Waypoint(HSpatial(entity)));
+		ecs.set(entity, Waypoint());
 		return entity;
 	}
-
-	Waypoint::Waypoint(HSpatial spatial)
-		: m_spatial(spatial)
-	{}
 
 	DetourPath::DetourPath(Pathfinder& pathfinder, const vec3& origin, const vec3& destination)
 		: m_pathfinder(pathfinder)

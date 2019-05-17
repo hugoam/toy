@@ -9,7 +9,7 @@
 #include <core/World/World.h>
 #include <math/Timer.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
     WorldClock::WorldClock()
 	{}

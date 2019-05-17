@@ -13,8 +13,9 @@
 #include <core/Spatial/Spatial.h>
 
 #include <stl/vector.h>
+#include <sstream>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	EntityScript::EntityScript(HSpatial spatial)
 		: m_spatial(spatial)
@@ -49,8 +50,8 @@ using namespace mud; namespace toy
 		if(m_render_script)
 		{
 			Spatial& spatial = m_spatial;
-			vector<Var> args = { Ref(&spatial) };
-			(*m_render_script)(args);
+			//vector<Var> args = { Ref(&spatial) };
+			//(*m_render_script)(args);
 		}
 	}
 }

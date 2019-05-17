@@ -1,6 +1,6 @@
-Module['mud']['ui'] = Module['mud']['ui'] || {};
-Module['mud'] = Module['mud'] || {};
-Module['mud']['gfx'] = Module['mud']['gfx'] || {};
+Module['two']['ui'] = Module['two']['ui'] || {};
+Module['two'] = Module['two'] || {};
+Module['two']['gfx'] = Module['two']['gfx'] || {};
 // PhysicDebugDraw
 function PhysicDebugDraw() { throw "cannot construct a PhysicDebugDraw, no constructor in IDL" }
 PhysicDebugDraw.prototype = Object.create(WrapperObject.prototype);

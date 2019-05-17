@@ -3,31 +3,37 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#include <visu/Types.h>
-#include <visu/VisuPage.h>
-
-#include <core/Movable/Movable.h>
-#include <core/Navmesh/Navmesh.h>
-#include <core/WorldPage/WorldPage.h>
-
+#ifdef TWO_MODULES
+module toy.visu
+#else
+#include <stl/algorithm.h>
+#include <pool/Pool.hpp>
+#include <pool/ObjectPool.hpp>
+#include <ecs/ECS.hpp>
 #include <gfx/Node3.h>
 #include <gfx/Item.h>
 #include <gfx/Mesh.h>
 #include <gfx/Model.h>
 #include <gfx/GfxSystem.h>
+#include <core/Movable/Movable.h>
+#include <core/Navmesh/Navmesh.h>
+#include <core/WorldPage/WorldPage.h>
+#include <visu/Types.h>
+#include <visu/VisuPage.h>
+#endif
 
 #include <cstdio>
 
 #define DEBUG_NAVMESH_GEOM 0
 #define DEBUG_NAVMESH 0
 
-using namespace mud; namespace toy
+namespace toy
 {
 	void paint_world_page(Gnode& parent, WorldPage& page)
 	{
 		if(page.m_updated > page.m_last_rebuilt)
 		{
-			printf("INFO: Rebuilding WorldPage geometry\n");
+			printf("[info] Rebuilding WorldPage geometry\n");
 			build_world_page_geometry(*parent.m_scene, page);
 			page.update_geometry(page.m_spatial->m_last_tick);
 		}
@@ -47,19 +53,19 @@ using namespace mud; namespace toy
 #endif
 	}
 
-	void build_geometry(Geometry& geometry, array<Item*> items)
+	void build_geometry(Geometry& geometry, span<Item*> items)
 	{
 		size_t vertex_count = 0;
 		size_t index_count = 0;
 
 		for(Item* item : items)
-			for(const ModelItem& model_item : item->m_model->m_items)
+			for(const ModelElem& elem : item->m_model->m_items)
 			{
-				uint16_t num = item->m_instances.empty() ? 1U : uint16_t(item->m_instances.size());
-				if(model_item.m_mesh->m_draw_mode != PLAIN)
+				uint16_t num = item->m_batch ? item->m_batch->m_cache.size() / 16 : 1U;
+				if(elem.m_mesh->m_primitive < PrimitiveType::Triangles)
 					continue;
-				vertex_count += num * model_item.m_mesh->m_vertex_count;
-				index_count += num * model_item.m_mesh->m_index_count;
+				vertex_count += num * elem.m_mesh->m_vertex_count;
+				index_count += num * elem.m_mesh->m_index_count;
 			}
 
 		if(vertex_count == 0 || index_count == 0)
@@ -67,28 +73,37 @@ using namespace mud; namespace toy
 
 		geometry.allocate(vertex_count, index_count / 3);
 
-		array<Vertex> vertices = geometry.vertices();
-		array<uint32_t> indices = geometry.indices();
-		MeshAdapter data(Vertex::vertex_format, vertices.data(), uint32_t(vertices.size()), indices.data(), uint32_t(indices.size()), true);
+		span<Vertex> vertices = geometry.vertices();
+		span<uint32_t> indices = geometry.indices();
+		MeshAdapter data(Vertex::vertex_format, { vertices.data(), uint32_t(vertices.size()) }, { indices.data(), uint32_t(indices.size()) }, true);
 
 		for(Item* item : items)
-			for(const ModelItem& model_item : item->m_model->m_items)
+			for(const ModelElem& elem : item->m_model->m_items)
 			{
-				if(model_item.m_mesh->m_draw_mode != PLAIN)
+				if(elem.m_mesh->m_primitive < PrimitiveType::Triangles)
 					continue;
 
-				if(item->m_instances.empty())
-					model_item.m_mesh->read(data, item->m_node->m_transform);
+				if(!item->m_batch)
+				{
+					elem.m_mesh->m_cache.xcopy(data, item->m_node->m_transform * elem.m_transform);
+					data.next();
+				}
 				else
-					for(const mat4& transform : item->m_instances)
-						model_item.m_mesh->read(data, transform);
+				{
+					span<mat4> transforms = { (mat4*)item->m_batch->m_cache.data(), item->m_batch->m_cache.size() / 16 };
+					for(const mat4& transform : transforms)
+					{
+						elem.m_mesh->m_cache.xcopy(data, transform);
+						data.next();
+					}
+				}
+
 			}
 	}
 
-	void build_world_page_geometry(WorldPage& page, array<Item*> items)
+	void build_world_page_geometry(WorldPage& page, span<Item*> items)
 	{
-		page.m_chunks.emplace_back();
-		Geometry& geom = page.m_chunks.back();
+		Geometry& geom = push(page.m_chunks);
 		build_geometry(geom, items);
 	}
 
@@ -106,11 +121,11 @@ using namespace mud; namespace toy
 			//}
 			//else
 			{
-				bool add = vector_has(page.m_geometry_filter, string(item.m_model->m_name))
-						&& item.m_node->m_object && item.m_node->m_object.m_type->is<EntityRef>();
+				bool add = has(page.m_geometry_filter, item.m_model->m_name);
+				add &= bool(item.m_node->m_object);
 				if(add)
 				{
-					Entity entity = { as_ent(item.m_node->m_object), 0 };
+					Entity entity = item.m_node->m_object;
 					Spatial& object = asa<Spatial>(entity);
 					if((object.is_child_of(page.m_spatial) || &object == &spatial) && !isa<Movable>(entity))
 						items.push_back(&item);

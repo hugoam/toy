@@ -8,10 +8,10 @@
 #include <visu/Forward.h>
 #include <visu/VisuScene.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
-	export_ TOY_VISU_EXPORT void build_geometry(Geometry& geometry, array<Item*> items);
-	export_ TOY_VISU_EXPORT void build_world_page_geometry(WorldPage& page, array<Item*> items);
+	export_ TOY_VISU_EXPORT void build_geometry(Geometry& geometry, span<Item*> items);
+	export_ TOY_VISU_EXPORT void build_world_page_geometry(WorldPage& page, span<Item*> items);
 	export_ TOY_VISU_EXPORT void build_world_page_geometry(Scene& scene, WorldPage& page);
 
 	export_ TOY_VISU_EXPORT void paint_world_page(Gnode& parent, WorldPage& page);

@@ -12,7 +12,7 @@
 #include <core/Navmesh/rcTileMesh.h>
 #include <core/Navmesh/NavGeom.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	TOY_CORE_EXPORT uint32_t navmesh_num_vertices(const Navmesh& navmesh);
 	

@@ -1,18 +1,15 @@
 
-#include <shell/Shell.h>
 
+#include <lang/Script.hpp>
+#include <lang/Wren.h>
+#include <ui-vg/VgVg.h>
 #include <toy/toy.h>
 #include <toy/Modules.h>
+#include <shell/Shell.h>
 
-#include <ui-vg/VgVg.h>
-
-#include <edit/Edit/Viewport.h>
-
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 #include <emscripten/emscripten.h>
 #endif
-
-#include <lang/Wren.h>
 
 #include <Tracy.hpp>
 
@@ -21,11 +18,11 @@
 
 class WrenVM;
 
-//#define MUD_GFX_DEFERRED
+//#define TWO_GFX_DEFERRED
 
-using namespace mud; namespace toy
+namespace toy
 {
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	static void iterate()
 	{
 		g_app->pump();
@@ -49,14 +46,14 @@ using namespace mud; namespace toy
 	};
 
 	template <class T_Func>
-	auto time(float* times, GameShell::Step step, cstring name, T_Func f)
+	void time(table<GameShell::Step, float>& times, GameShell::Step step, cstring name, T_Func f)
 	{
-		UNUSED(name); static SmoothTimer timer = { 10 }; timer.begin(); f(); times[size_t(step)] = timer.read();
+		UNUSED(name); static SmoothTimer timer = { 10 }; timer.begin(); f(); times[step] = timer.read();
 	}
 
-	Game::Game(User& user, GfxSystem& gfx_system)
+	Game::Game(User& user, GfxSystem& gfx)
 		: m_user(&user)
-		, m_editor(gfx_system)
+		, m_editor(gfx)
 	{}
 
 	Game::~Game()
@@ -65,15 +62,15 @@ using namespace mud; namespace toy
 	GameScene& Game::add_scene()
 	{
 #ifdef TOY_SOUND
-		m_scenes.emplace_back(make_unique<GameScene>(*m_user, *m_shell->m_gfx_system, m_shell->m_sound_system.get(), *this, m_player));
+		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx, m_shell->m_sound_system.get(), *this, m_player));
 #else
-		m_scenes.emplace_back(make_unique<GameScene>(*m_user, *m_shell->m_gfx_system, nullptr, *this, m_player));
+		m_scenes.push_back(construct<GameScene>(*m_user, *m_shell->m_gfx, nullptr, *this, m_player));
 #endif
 		return *m_scenes.back();
 	}
 
-	GameScene::GameScene(User& user, GfxSystem& gfx_system, SoundManager* sound_system, Game& game, Ref player)
-		: VisuScene(gfx_system, sound_system)
+	GameScene::GameScene(User& user, GfxSystem& gfx, SoundManager* sound_system, Game& game, Ref player)
+		: VisuScene(gfx, sound_system)
 		, m_selection(user.m_selection)
 		, m_game(game)
 	{
@@ -103,25 +100,75 @@ using namespace mud; namespace toy
 		});
 	}
 
+	unique<Vg> create_vg(GfxSystem& gfx, const string& resource_path)
+	{
+#if defined TWO_VG_VG
+		return make_unique<VgVg>(resource_path, &gfx.allocator());
+#elif defined TWO_VG_NANOVG
+		return make_unique<VgNanoBgfx>(m_resource_path);
+#endif
+	}
+
+	GameWindow::GameWindow(GfxSystem& gfx, uint32_t index, const string& name, const uvec2& size, bool fullscreen)
+		: GfxWindow(gfx, name, size, fullscreen, index == 0)
+#if !GLOBAL_VG
+		, m_vg(create_vg(gfx, gfx.m_resource_path))
+#endif
+		, m_index(index)
+		, m_ui_window(*this, *m_vg)
+	{
+#if GLOBAL_VG
+		if(index == 0) m_vg->setup_context();
+#else
+		GfxWindow::m_vg = m_vg.get();
+		m_vg->setup_context();
+#endif
+
+		m_reset_vg = [](GfxWindow& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.m_tex.idx); };
+
+		m_ui_window.init();
+		m_ui = m_ui_window.m_ui.get();
+
+		style_minimal(m_ui_window);
+
+		//string stylesheet = "minimal.yml";
+		//string stylesheet = "vector.yml";
+		//string stylesheet = "blendish_dark.yml";
+		//set_style_sheet(*m_ui_window->m_styler, (string(m_ui_window->m_resource_path) + "interface/styles/" + stylesheet).c_str());
+	}
+
+	bool GameWindow::begin_frame()
+	{
+		GfxWindow::begin_frame();
+		return m_ui_window.input_frame();
+	}
+
+	void GameWindow::render_frame()
+	{
+		GfxWindow::render_frame();
+		bgfx::setViewFrameBuffer(240 + m_index, m_target->m_backbuffer.m_fbo);
+		m_ui_window.render_frame(240 + m_index);
+	}
+
 	GameShell::GameShell(const string& resource_path, cstring exec_path)
 		: m_exec_path(exec_path ? string(exec_path) : "")
 		, m_resource_path(resource_path)
-		, m_job_system(make_object<JobSystem>())
-		, m_core(make_object<toy::Core>(*m_job_system))
-		, m_gfx_system(make_object<GfxSystem>(resource_path))
+		, m_job_system(oconstruct<JobSystem>())
+		, m_core(oconstruct<toy::Core>(*m_job_system))
+		, m_gfx(oconstruct<GfxSystem>(resource_path))
 #ifdef TOY_SOUND
-		, m_sound_system(make_object<SoundManager>(resource_path))
+		, m_sound_system(oconstruct<SoundManager>(resource_path))
 #endif
-		, m_editor(*m_gfx_system)
-		, m_game(m_user, *m_gfx_system)
+		, m_editor(*m_gfx)
+		, m_game(m_user, *m_gfx)
 	{
-		System::instance().load_modules({ &mud_infra::m(), &mud_type::m(), &mud_pool::m(), &mud_refl::m(), &mud_ecs::m(), &mud_tree::m() });
-		System::instance().load_modules({ &mud_srlz::m(), &mud_math::m(), &mud_geom::m(), &mud_noise::m(), &mud_wfc::m(), &mud_fract::m(), &mud_lang::m() });
-		System::instance().load_modules({ &mud_ctx::m(), &mud_ui::m(), &mud_gfx::m(), &mud_gfx_pbr::m(), &mud_gfx_obj::m(), &mud_gfx_gltf::m(), &mud_gfx_ui::m(), &mud_tool::m() });
+		System::instance().load_modules({ &two_infra::m(), &two_type::m(), &two_pool::m(), &two_refl::m(), &two_ecs::m(), &two_tree::m() });
+		System::instance().load_modules({ &two_srlz::m(), &two_math::m(), &two_geom::m(), &two_lang::m() });
+		System::instance().load_modules({ &two_ctx::m(), &two_ui::m(), &two_gfx::m(), &two_gfx_pbr::m(), &two_gfx_obj::m(), &two_gfx_gltf::m(), &two_gfx_ui::m(), &two_tool::m() });
 
 		static Meta m = { type<VirtualMethod>(), &namspc({}), "VirtualMethod", sizeof(VirtualMethod), TypeClass::Object };
 		static Class c = { type<VirtualMethod>(), {}, {}, {}, {}, {}, {}, {} };
-		meta_class<VirtualMethod>();
+		//meta_class<VirtualMethod>();
 
 		System::instance().load_modules({ &toy_util::m(), &toy_core::m(), &toy_visu::m(), &toy_block::m(), &toy_edit::m(), &toy_shell::m() });
 
@@ -132,10 +179,10 @@ using namespace mud; namespace toy
 
 		m_game.m_shell = this;
 
-		m_gfx_system->m_job_system = m_job_system.get();
+		m_gfx->m_job_system = m_job_system.get();
 		m_job_system->adopt();
 
-		this->init();
+		this->init(true);
 	}
 
 	GameShell::~GameShell()
@@ -146,7 +193,7 @@ using namespace mud; namespace toy
 	template <class T_Asset>
 	void add_asset_loader(AssetStore<T_Asset>& store, cstring format)
 	{
-		auto loader = [&](T_Asset& asset, const string& path)
+		auto loader = [&](T_Asset& asset, const string& path, const NoConfig& config)
 		{
 			unpack_json_file(Ref(&asset), path + store.m_formats[0]);
 		};
@@ -154,52 +201,43 @@ using namespace mud; namespace toy
 		store.add_format(format, loader);
 	}
 
-	void GameShell::init()
+	void GameShell::init(bool window)
 	{
 #ifdef TOY_SOUND
 		if(!m_sound_system->init())
 		{
-			printf("ERROR: Sound - failed to init\n");
+			printf("[ERROR] Sound - failed to init\n");
 		}
 #endif
-		//m_context = m_gfx_system->create_context("mud EditorCore", 1920, 1080, false);
-		m_context = m_gfx_system->create_context("mud EditorCore", 1600, 900, false);
-		//m_context = m_gfx_system.create_context("mud EditorCore", 1280, 720, false);
-		GfxContext& context = as<GfxContext>(*m_context);
+		if(window)
+			this->window("toy", uvec2(1600U, 900U), false);
 
-#if defined MUD_VG_VG
-		m_vg = make_object<VgVg>(m_resource_path.c_str(), &m_gfx_system->m_allocator);
-#elif defined MUD_VG_NANOVG
-		m_vg = make_object<VgNanoBgfx>(m_resource_path.c_str());
-#endif
-		m_gfx_system->m_vg = &*m_vg;
-		context.m_reset_vg = [](GfxContext& context, Vg& vg) { return vg.load_texture(context.m_target->m_diffuse.idx); };
+		m_gfx->init_pipeline(pipeline_pbr);
 
-		m_ui_window = make_unique<UiWindow>(*m_context, *m_vg);
-
-		m_gfx_system->init_pipeline(pipeline_pbr);
-
-		static ImporterOBJ obj_importer(*m_gfx_system);
-		static ImporterGltf gltf_importer(*m_gfx_system);
-
-		string stylesheet = "minimal.yml";
-		//string stylesheet = "vector.yml";
-		//string stylesheet = "blendish_dark.yml";
-		//set_style_sheet(*m_ui_window->m_styler, (string(m_ui_window->m_resource_path) + "interface/styles/" + stylesheet).c_str());
-
-		style_minimal(*m_ui_window);
+		static ImporterOBJ obj_importer(*m_gfx);
+		static ImporterGltf gltf_importer(*m_gfx);
 
 		//declare_gfx_edit();
 
-		m_ui = m_ui_window->m_root_sheet.get();
+		add_asset_loader(m_gfx->flows(), ".ptc");
+	}
 
-		add_asset_loader(m_gfx_system->particles(), ".ptc");
+	GameWindow& GameShell::window(const string& name, const uvec2& size, bool fullscreen)
+	{
+		const uint32_t index = m_windows.size();
+		m_windows.push_back(make_unique<GameWindow>(*m_gfx, index, name, size, fullscreen));
+		return *m_windows.back();
+	}
+
+	GameWindow& GameShell::main_window()
+	{
+		return *m_windows[0];
 	}
 
 	void GameShell::reset_interpreters(bool reflect)
 	{
-		m_lua = make_object<LuaInterpreter>(false);
-		m_wren = make_object<WrenInterpreter>(false);
+		m_lua = oconstruct<LuaInterpreter>(false);
+		m_wren = oconstruct<WrenInterpreter>(false);
 
 		m_editor.m_script_editor.reset_interpreters(*m_lua, *m_wren);
 		m_game.m_editor.m_script_editor.reset_interpreters(*m_lua, *m_wren);
@@ -225,7 +263,7 @@ using namespace mud; namespace toy
 		Module* module = system().open_module((m_exec_path + "/" + module_name).c_str());
 		if(module == nullptr)
 		{
-			printf("ERROR: could not locate/load module %s\n", module_name.c_str());
+			printf("[ERROR] could not locate/load module %s\n", module_name.c_str());
 			return;
 		}
 
@@ -241,7 +279,7 @@ using namespace mud; namespace toy
 
 	void GameShell::run(size_t iterations)
 	{
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 		g_app = this;
 		//g_iterations = iterations;
 		emscripten_set_main_loop(iterate, 0, 1);
@@ -253,10 +291,10 @@ using namespace mud; namespace toy
 
 	void GameShell::run_script(Module& module, const string& file, bool run)
 	{
-		LocatedFile location = m_gfx_system->locate_file("scripts/" + file);
+		LocatedFile location = m_gfx->locate_file("scripts/" + file);
 		if(!location) return;
 
-		Signature signature = { { Param{ "app", Ref(type<GameShell>()) }, Param{ "module", Ref(type<Module>()) } } };
+		Signature signature = { vector<Param>{ { "app", type<GameShell>() }, { "module", type<Module>() } } };
 
 		TextScript& script = m_editor.m_script_editor.create_script(file.c_str(), Language::Wren, signature);
 		script.m_script = read_text_file(location.path(false));
@@ -271,10 +309,10 @@ using namespace mud; namespace toy
 				m_game.m_world = nullptr;
 
 				if(m_editor.m_viewer)
-					m_editor.m_viewer->m_viewport.m_active = false;
+					m_editor.m_viewer->m_viewport.m_autorender = false;
 
-				Var args[2] = { Ref(this), Ref(&module) };
-				script({ args, 2 });
+				//Var args[2] = { Ref(this), Ref(&module) };
+				//script({ args, 2 });
 
 				GameModuleBind* game_module = m_wren->tget<GameModuleBind>("game");
 				if(game_module)
@@ -290,7 +328,7 @@ using namespace mud; namespace toy
 			//this->pump_game();
 
 			if(m_editor.m_viewer)
-				m_editor.m_viewer->m_viewport.m_active = true;
+				m_editor.m_viewer->m_viewport.m_autorender = true;
 		};
 
 		//m_editor.m_run_game = run;
@@ -344,14 +382,13 @@ using namespace mud; namespace toy
 		timer.begin();
 
 		bool pursue = true;
-		for(float& time : m_times)
+		for(float& time : m_times.m_values)
 			time = 0.f;
-		time(m_times, Step::Input,		"ui input",		[&] { ZoneScopedNC("ui input",  tracy::Color::Salmon);    pursue &= m_ui_window->input_frame(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",		tracy::Color::Green);	  pursue &= m_gfx->begin_frame(); });
 		time(m_times, Step::Core,		"core",			[&] { ZoneScopedNC("core",      tracy::Color::Red);       m_core->next_frame(); });
 		m_pump();
-		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",		tracy::Color::Green);	  m_gfx_system->begin_frame(); });
-		time(m_times, Step::UiRender,	"ui render",	[&] { ZoneScopedNC("ui render", tracy::Color::LightBlue); m_ui_window->render_frame(); });
-		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     pursue &= m_gfx_system->next_frame(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("contexts",  tracy::Color::Pink);      m_gfx->render_contexts(); });
+		time(m_times, Step::GfxRender,	"gfx",			[&] { ZoneScopedNC("gfx",       tracy::Color::Green);     m_gfx->end_frame(); });
 
 		FrameMark;
 		timer.end();
@@ -374,7 +411,10 @@ using namespace mud; namespace toy
 	void GameShell::frame_game()
 	{
 		if(m_game_module)
-			m_game_module->pump(*this, m_game, m_game.m_screen ? *m_game.m_screen : m_ui->begin());
+		{
+			Widget& ui = m_game.m_screen ? *m_game.m_screen : this->main_window().m_ui->begin();
+			m_game_module->pump(*this, m_game, ui);
+		}
 	}
 
 	void GameShell::frame_scenes()
@@ -395,7 +435,7 @@ using namespace mud; namespace toy
 		m_editor.m_edited_world = m_game.m_world;
 
 		//Widget& ui = m_ui->begin();
-		Widget& ui = *m_ui;
+		Widget& ui = *this->main_window().m_ui;
 
 		if(m_mini_editor)
 			toy::mini_editor(ui, m_editor, m_game.m_screen);
@@ -409,7 +449,7 @@ using namespace mud; namespace toy
 
 		time(m_times, Step::Scene, "scenes", [&] { ZoneScopedNC("scenes", tracy::Color::Orange); this->frame_scenes(); });
 
-		m_ui->begin(); // well maybe we should call it end() then
+		this->main_window().m_ui->begin(); // well maybe we should call it end() then
 	}
 
 	GameScene& GameShell::add_scene()
@@ -479,27 +519,27 @@ using namespace mud; namespace toy
 			ui::label(row, truncate_number(to_string(value)).c_str());
 		};
 
-		entry(parent, "ui input",	int(1000.f * m_times[size_t(Step::Input)]));
-		entry(parent, "core",		int(1000.f * m_times[size_t(Step::Core)]));
-		entry(parent, "world",		int(1000.f * m_times[size_t(Step::World)]));
-		entry(parent, "game",		int(1000.f * m_times[size_t(Step::Game)]));
-		entry(parent, "scenes",		int(1000.f * m_times[size_t(Step::Scene)]));
-		entry(parent, "ui render",	int(1000.f * m_times[size_t(Step::UiRender)]));
-		entry(parent, "gfx",		int(1000.f * m_times[size_t(Step::GfxRender)]));
+		entry(parent, "ui input",	int(1000.f * m_times[Step::Input]));
+		entry(parent, "core",		int(1000.f * m_times[Step::Core]));
+		entry(parent, "world",		int(1000.f * m_times[Step::World]));
+		entry(parent, "game",		int(1000.f * m_times[Step::Game]));
+		entry(parent, "scenes",		int(1000.f * m_times[Step::Scene]));
+		entry(parent, "ui render",	int(1000.f * m_times[Step::UiRender]));
+		entry(parent, "gfx",		int(1000.f * m_times[Step::GfxRender]));
 	}
 
 	void GameShell::copy(const string& text)
 	{
-		m_ui_window->m_clipboard = { text, false };
+		this->main_window().m_ui_window.m_clipboard = { text, false };
 	}
 
 	void GameShell::paste(const string& text)
 	{
-		m_ui_window->m_clipboard.m_pasted.push_back(text);
+		this->main_window().m_ui_window.m_clipboard.m_pasted.push_back(text);
 	}
 }
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 extern "C"
 {
 	void copy(const char* text)

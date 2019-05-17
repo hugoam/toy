@@ -45,49 +45,49 @@
 extern "C" {
 	
 	// Bullet
-	mud::Type* DECL Bullet__type() {
-		return &mud::type<Bullet>();
+	two::Type* DECL Bullet__type() {
+		return &two::type<Bullet>();
 	}
-	mud::vec3* DECL Bullet__get_source(Bullet* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Bullet__get_source(Bullet* self) {
+		static two::vec3 temp;
 		return (temp = self->m_source, &temp);
 	}
-	void DECL Bullet__set_source(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_source(Bullet* self, two::vec3* value) {
 		self->m_source = *value;
 	}
-	mud::vec3* DECL Bullet__get_velocity(Bullet* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Bullet__get_velocity(Bullet* self) {
+		static two::vec3 temp;
 		return (temp = self->m_velocity, &temp);
 	}
-	void DECL Bullet__set_velocity(Bullet* self, mud::vec3* value) {
+	void DECL Bullet__set_velocity(Bullet* self, two::vec3* value) {
 		self->m_velocity = *value;
 	}
 	void DECL Bullet__destroy(Bullet* self) {
 		delete self;
 	}
 	// Crate
-	mud::Type* DECL Crate__type() {
-		return &mud::type<Crate>();
+	two::Type* DECL Crate__type() {
+		return &two::type<Crate>();
 	}
 	Crate* DECL Crate_Crate_0() {
 		return new Crate();
 	}
-	Crate* DECL Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const mud::vec3* extents) {
+	Crate* DECL Crate_Crate_3(toy::HSpatial spatial, toy::HMovable movable, const two::vec3* extents) {
 		return new Crate(spatial, movable, *extents);
 	}
-	mud::vec3* DECL Crate__get_extents(Crate* self) {
-		static mud::vec3 temp;
+	two::vec3* DECL Crate__get_extents(Crate* self) {
+		static two::vec3 temp;
 		return (temp = self->m_extents, &temp);
 	}
-	void DECL Crate__set_extents(Crate* self, mud::vec3* value) {
+	void DECL Crate__set_extents(Crate* self, two::vec3* value) {
 		self->m_extents = *value;
 	}
 	void DECL Crate__destroy(Crate* self) {
 		delete self;
 	}
 	// Human
-	mud::Type* DECL Human__type() {
-		return &mud::type<Human>();
+	two::Type* DECL Human__type() {
+		return &two::type<Human>();
 	}
 	Human* DECL Human_Human_0() {
 		return new Human();
@@ -99,8 +99,8 @@ extern "C" {
 		delete self;
 	}
 	// Player
-	mud::Type* DECL Player__type() {
-		return &mud::type<Player>();
+	two::Type* DECL Player__type() {
+		return &two::type<Player>();
 	}
 	void DECL Player__destroy(Player* self) {
 		delete self;

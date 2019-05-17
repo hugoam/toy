@@ -20,7 +20,7 @@
 
 #include <core/WorldPage/WorldPage.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	BufferPage::BufferPage(Entity& entity, WorldPage& world_page, bool loaded)
         : m_entity(entity)

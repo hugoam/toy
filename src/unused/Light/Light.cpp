@@ -18,7 +18,7 @@
 
 #include <math/Colour.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	LightReflector::LightReflector(HSpatial spatial, HReceptor receptor)
 		: m_spatial(spatial)

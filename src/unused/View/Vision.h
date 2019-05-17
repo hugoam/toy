@@ -11,7 +11,7 @@
 #include <core/View/View.h>
 #include <core/Types.h> // @kludge because of Array
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Vision : public StoreObserver<Spatial>
 	{

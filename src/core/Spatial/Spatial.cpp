@@ -3,24 +3,27 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-#include <core/Spatial/Spatial.h>
-
-#include <ecs/Proto.h>
+#ifdef TWO_MODULES
+module toy.core;
+#else
+#include <stl/algorithm.h>
+#include <type/Proto.h>
 #include <type/Indexer.h>
 #include <math/Timer.h>
 #include <math/Math.h>
-
 #include <refl/Meta.h>
-
+#include <core/Spatial/Spatial.h>
 #include <core/World/World.h>
 #include <core/World/Section.h>
+#endif
 
 #include <cstdio>
+#include <cassert>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Spatial::Spatial(World& world, HSpatial parent, const vec3& position, const quat& rotation)
-        : Transform(position, rotation, Unit3)
+		: Transform{ position, rotation, vec3(1.f) }
 		, m_world(&world)
 		, m_parent(parent)
 		, m_hooked(true)
@@ -72,36 +75,36 @@ using namespace mud; namespace toy
 
 	void Spatial::translate(const vec3& vec)
 	{
-		set_position(mud::rotate(m_rotation, vec) + m_position);
+		set_position(two::rotate(m_rotation, vec) + m_position);
 	}
 
 	void Spatial::rotate(const vec3& axis, float angle)
 	{
-		quat rot = angle_axis(angle, mud::rotate(m_rotation, axis));
+		quat rot = angle_axis(angle, two::rotate(m_rotation, axis));
 		set_rotation(rot * m_rotation);
 		normalize(m_rotation);
 	}
 
 	void Spatial::yaw(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, Y3));			
+		vec3 axis(two::rotate(m_rotation, y3));			
 		rotate(axis, value);
 	}
 
 	void Spatial::yaw_fixed(float value)
 	{			
-		rotate(Y3, value);
+		rotate(y3, value);
 	}
 
 	void Spatial::pitch(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, X3));
+		vec3 axis(two::rotate(m_rotation, x3));
 		rotate(axis, value);
 	}
 
 	void Spatial::roll(float value)
 	{
-		vec3 axis(mud::rotate(m_rotation, Z3));
+		vec3 axis(two::rotate(m_rotation, z3));
 		rotate(axis, value);
 	}
 
@@ -144,7 +147,7 @@ using namespace mud; namespace toy
 	void Spatial::detach(Spatial& child)
 	{
 		child.m_parent = {};
-		//vector_remove(m_contents, child);
+		//remove(m_contents, child);
 	}
 
 	void detach_to(HSpatial self, HSpatial target)
@@ -152,7 +155,7 @@ using namespace mud; namespace toy
 		Spatial& spatial = self;
 		Spatial& movefrom = spatial.m_parent;
 		spatial.m_parent = target;
-		vector_remove(movefrom.m_contents, self);
+		remove(movefrom.m_contents, self);
 		target->m_contents.push_back(self);
 		spatial.set_dirty(false);
 	}

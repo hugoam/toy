@@ -5,19 +5,13 @@
 
 #pragma once
 
-#include <ecs/Proto.h>
-#include <math/Math.h>
+#include <stl/vector.h>
+#include <stl/memory.h>
 #include <math/Vec.h>
-#include <infra/NonCopy.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 
-#ifndef MUD_CPP_20
-#include <stl/vector.h>
-#include <stl/memory.h>
-#endif
-
-using namespace mud; namespace toy
+namespace toy
 {
 	typedef unsigned int dtPolyRef;
 
@@ -25,11 +19,8 @@ using namespace mud; namespace toy
 	{
 	public:
 		constr_ Waypoint() {}
-		constr_ Waypoint(HSpatial parent);
 
 		static Entity create(ECS& ecs, HSpatial parent, const vec3& position);
-
-		comp_ HSpatial m_spatial;
 	};
 
     class refl_ TOY_CORE_EXPORT DetourPath

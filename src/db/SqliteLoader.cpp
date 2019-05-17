@@ -21,7 +21,7 @@
 /* std */
 #include <stdio.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Type& dataType(Type& type)
 	{

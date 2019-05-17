@@ -13,7 +13,7 @@
 #include <core/Camera/Camera.h>
 #include <core/View/Vision.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	RecursiveStore::RecursiveStore()
 		: Array<Spatial>()

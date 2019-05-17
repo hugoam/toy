@@ -2,21 +2,20 @@
 #include <toy/toy.h>
 
 #include <blocks/Api.h>
-#include <meta/blocks/Module.h>
+#include <meta/_blocks.meta.h>
 
 #include <shell/Shell.h>
 
 //#define _BLOCKS_TOOLS
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 Material& highlight_material(const string& name, const Colour& colour, int factor)
 {
-	Material& material = Material::ms_gfx_system->fetch_material(name.c_str(), "pbr/pbr");
-	material.m_pbr_block.m_enabled = true;
-	material.m_pbr_block.m_emissive.m_value = colour;
-	material.m_pbr_block.m_emissive.m_value.m_a = float(factor);
+	Material& material = Material::ms_gfx->fetch_material(name.c_str(), "pbr/pbr");
+	material.m_lit.m_emissive.m_value = colour;
+	material.m_lit.m_emissive.m_value.a = float(factor);
 	return material;
 }
 
@@ -42,7 +41,7 @@ vector<Faction> g_factions;
 
 /*Entity Well::create(ECS& ecs, HSpatial parent, const vec3& position)
 {
-	Entity entity = { ecs.create<Spatial, Emitter, Well>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Emitter, Well>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	return entity;
@@ -60,7 +59,7 @@ void Well::next_frame(size_t tick, size_t delta)
 
 Entity Camp::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	Entity entity = { ecs.create<Spatial, Camp>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Camp>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Camp(HSpatial(entity), position, faction));
 	return entity;
@@ -74,7 +73,7 @@ Camp::Camp(HSpatial spatial, const vec3& position, Faction& faction)
 
 Entity Shield::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction, float radius)
 {
-	Entity entity = { ecs.create<Spatial, Emitter, Shield>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Emitter, Shield>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	ecs.set(entity, Shield(HSpatial(entity), HEmitter(entity), faction, radius));
@@ -105,7 +104,7 @@ void Shield::next_frame(size_t tick, size_t delta)
 
 Entity Slug::create(ECS& ecs, HSpatial parent, const vec3& source, const quat& rotation, const vec3& velocity, float power)
 {
-	Entity entity = { ecs.create<Spatial, Slug>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Slug>();
 	ecs.set(entity, Spatial(parent, source, rotation));
 	ecs.set(entity, Slug(HSpatial(entity), source, velocity, power));
 	return entity;
@@ -141,13 +140,13 @@ void Slug::update(Spatial& spatial)
 			tank->m_shock += 1.f;
 			tank->m_hitpoints -= 25.f;
 
-			vec3 location = Zero3;//rotate(inverse(m_spatial.m_rotation), m_impact - m_spatial.m_position);
+			vec3 location = vec3(0.f);//rotate(inverse(m_spatial.m_rotation), m_impact - m_spatial.m_position);
 
 			Solid& solid = (*tank->m_solid);
 			if(tank->m_hitpoints < 0.f)
-				solid->impulse(Y3 * 100.f * m_power, location);
+				solid->impulse(y3 * 100.f * m_power, location);
 			else
-				solid->impulse((m_velocity + Y3 * 10.f) * m_power, location);
+				solid->impulse((m_velocity + y3 * 10.f) * m_power, location);
 		}
 
 		if(Shield* shield = try_asa<Shield>(hit))
@@ -161,7 +160,7 @@ void Slug::update(Spatial& spatial)
 		}
 	}
 
-	if(distance(spatial.m_position, Zero3) > 1000.f)
+	if(distance(spatial.m_position, vec3(0.f)) > 1000.f)
 		m_destroy = true;
 
 	spatial.set_position(spatial.m_position + m_velocity);
@@ -170,9 +169,9 @@ void Slug::update(Spatial& spatial)
 
 Entity Tank::create(ECS& ecs, HSpatial parent, const vec3& position, Faction& faction)
 {
-	Entity entity = { ecs.create<Spatial, Movable, Emitter, Receptor, Tank>(), ecs.m_index };
+	Entity entity = ecs.create<Spatial, Movable, Emitter, Receptor, Tank>();
 	ecs.set(entity, Spatial(parent, position, ZeroQuat));
-	ecs.set(entity, Movable(HSpatial(entity)));
+	ecs.set(entity, Movable(position));
 	ecs.set(entity, Emitter(HSpatial(entity)));
 	ecs.set(entity, Receptor(HSpatial(entity)));
 	ecs.set(entity, Tank(HSpatial(entity), HMovable(entity), HEmitter(entity), HReceptor(entity), faction));
@@ -185,7 +184,7 @@ Tank::Tank(HSpatial spatial, HMovable movable, HEmitter emitter, HReceptor recep
 	, m_emitter(emitter)
 	, m_receptor(receptor)
 	, m_faction(&faction)
-	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), Y3 * 1.1f), false, 4.f))
+	, m_solid(Solid::create(m_spatial, m_movable, CollisionShape(Cube(vec3(2.0f, 1.1f, 3.2f)), y3 * 1.1f), false, 4.f))
 {
 	m_emitter->add_sphere(VisualMedium::me, 0.1f);
 	m_receptor->add_sphere(VisualMedium::me, 100.f);
@@ -206,7 +205,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 	{
 		slug->update(slug->m_spatial);
 		//if(slug->m_destroy)
-		//	vector_remove(m_slugs, *slug);
+		//	remove(m_slugs, *slug);
 	}
 
 	if(!m_ia)
@@ -227,7 +226,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 		m_cooldown = max(0.f, m_cooldown - float(delta) * 0.01f);
 		if(m_target)
 		{
-			m_turret_angle = look_at(spatial.m_position, m_target->m_spatial->m_position, -Z3);
+			m_turret_angle = look_at(spatial.m_position, m_target->m_spatial->m_position, -z3);
 
 			float d = distance(m_target->m_spatial->m_position, spatial.m_position);
 			if(d > m_range)
@@ -237,7 +236,7 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 			else if(m_cooldown == 0.f)
 			{
 				this->shoot();
-				m_dest = Zero3;
+				m_dest = vec3(0.f);
 				m_cooldown = 1.f;
 			}
 		}
@@ -246,18 +245,18 @@ void Tank::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, si
 		if(leader && !m_target && distance(leader->m_spatial->m_position, spatial.m_position) > 50.f)
 			m_dest = leader->m_spatial->m_position;
 		
-		if(m_dest != Zero3)
+		if(m_dest != vec3(0.f))
 		{
 			if(!steer_2d(spatial, movable, m_dest, 15.f, float(delta) * float(c_tick_interval), m_range))
-				movable.set_linear_velocity(movable.m_linear_velocity - Y3 * 1.f);
+				movable.set_linear_velocity(movable.m_linear_velocity - y3 * 1.f);
 			else
-				m_dest = Zero3;
+				m_dest = vec3(0.f);
 		}
 	}
 	else
 	{
-		//m_movable.set_linear_velocity(-Y3 * 1.f);
-		m_dest = Zero3;
+		//m_movable.set_linear_velocity(-y3 * 1.f);
+		m_dest = vec3(0.f);
 	}
 }
 
@@ -274,7 +273,7 @@ void Tank::shoot(bool critical)
 	quat rotation = this->turret_rotation();
 
 	Spatial& spatial = m_spatial;
-	m_slugs.emplace_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
+	m_slugs.push_back(construct_owned<Slug>(m_spatial, spatial.m_position + rotate(rotation, tank_muzzle), rotation, velocity, critical ? 10.f : 1.f));
 }
 
 Prototype block_world = { type<BlockWorld>(), { &type<World>(), &type<BulletWorld>(), &type<Navmesh>() } };
@@ -298,11 +297,11 @@ BlockWorld::BlockWorld(const string& name, JobSystem& job_system)
 BlockWorld::~BlockWorld()
 {}
 
-void BlockWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
+void BlockWorld::generate_block(GfxSystem& gfx, const ivec2& coord)
 {
-	static WaveTileset& tileset = generator_tileset(gfx_system);
+	static WaveTileset& tileset = generator_tileset(gfx);
 
-	Tileblock& block = ::generate_block(gfx_system, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale, false);
+	Tileblock& block = ::generate_block(gfx, tileset, m_world.origin(), coord, m_block_subdiv, m_tile_scale, false);
 
 	block.m_world_page->m_geometry_filter = { "flat_low", "flat_high", "cliff_side_0_0", "cliff_corner_in_0_0", "cliff_corner_out_0_0" };
 
@@ -315,7 +314,7 @@ void BlockWorld::generate_block(GfxSystem& gfx_system, const ivec2& coord)
 
 Player::Player(BlockWorld& world)
 	: m_world(&world)
-	, m_tank(Tank::create(world.m_world.m_ecs, world.m_world.origin(), Y3 * 20.f, g_factions[0]))
+	, m_tank(Tank::create(world.m_world.m_ecs, world.m_world.origin(), y3 * 20.f, g_factions[0]))
 {
 	m_tank->m_faction->m_leader = m_tank;
 	m_tank->m_ia = false;
@@ -328,7 +327,8 @@ void paint_well(Gnode& parent, Well& well)
 
 void paint_shield(Gnode& parent, Shield& shield)
 {
-	static Material* discharge = &parent.m_scene->m_gfx_system.fetch_material("shield_discharge", "fresnel");
+	return;
+	static Material* discharge = &parent.m_scene->m_gfx.fetch_material("shield_discharge", "fresnel");
 
 	static vector<Material*> power = vector<Material*>(4);
 
@@ -336,14 +336,13 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 	auto fresnel_material = [&](Material& material, const Colour& colour)
 	{
-		material.m_fresnel_block.m_enabled = true;
-		material.m_fresnel_block.m_value.m_value = colour;
-		material.m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
+		material.m_fresnel.m_value = colour;
+		material.m_fresnel.m_value = parent.m_scene->m_gfx.textures().file("beehive.png");
 	};
 
 	if(power[faction.m_id] == nullptr)
 	{
-		Material* material = &parent.m_scene->m_gfx_system.fetch_material(("shield_faction_" + to_string(faction.m_id)).c_str(), "fresnel");
+		Material* material = &parent.m_scene->m_gfx.fetch_material(("shield_faction_" + to_string(faction.m_id)).c_str(), "fresnel");
 		fresnel_material(*material, faction.m_colour * 4.f);
 		power[faction.m_id] = material;
 	}
@@ -355,13 +354,13 @@ void paint_shield(Gnode& parent, Shield& shield)
 	auto paint = [&](Material& material, float bias, const Colour& colour)
 	{
 		fresnel_material(material, colour);
-		material.m_fresnel_block.m_fresnel_bias = bias;
+		material.m_fresnel.m_fresnel_bias = bias;
 		gfx::shape(parent, Sphere(shield.m_radius), Symbol(colour), 0U, &material);
 	};
 
 	if(shield.m_discharge > 0.f)
 	{
-		paint(*discharge, shield.m_discharge, Colour::hsl(random_scalar(0.f, 1.f), 1.f, 0.5f) * shield.m_discharge * 10.f);
+		paint(*discharge, shield.m_discharge, Colour::hsl(randf(0.f, 1.f), 1.f, 0.5f) * shield.m_discharge * 10.f);
 	}
 	else
 	{
@@ -374,27 +373,29 @@ void paint_shield(Gnode& parent, Shield& shield)
 
 void paint_shell(Gnode& parent, Slug& shell)
 {
-	static ParticleFlow* flash = parent.m_scene->m_gfx_system.particles().file("flash");
-	static ParticleFlow* trail = parent.m_scene->m_gfx_system.particles().file("trail");
-	static ParticleFlow* impact = parent.m_scene->m_gfx_system.particles().file("impact");
+	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
+	static Flow* trail = parent.m_scene->m_gfx.flows().file("trail");
+	static Flow* impact = parent.m_scene->m_gfx.flows().file("impact");
 
-	Gnode& source = gfx::node(parent, Ref(&shell), shell.m_source, shell.m_spatial->m_rotation);
-	gfx::particles(source, *flash);
+	Gnode& source = gfx::node(parent, shell.m_source, shell.m_spatial->m_rotation);
+	source.m_node->m_object = shell.m_spatial;
+
+	gfx::flows(source, *flash);
 
 	bool active = toy::sound(source, "bang", false, 0.5f);
 
 	enum States { Fly = 1, Impact = 2 };
 	if(!shell.m_impacted)
 	{
-		Gnode& projectile = gfx::node(parent.subx(Fly), Ref(&shell), shell.m_spatial->m_position, shell.m_spatial->m_rotation);
+		Gnode& projectile = gfx::node(parent.subx(Fly), shell.m_spatial->m_position, shell.m_spatial->m_rotation);
 		gfx::shape(projectile, Cube(vec3(0.4f, 0.4f, 1.f)), Symbol(Colour(1.f, 2.f, 1.5f)));
-		gfx::particles(projectile, *trail);
+		gfx::flows(projectile, *trail);
 	}
 
 	if(shell.m_impacted)
 	{
-		Gnode& hit = gfx::node(parent.subx(Impact), Ref(&shell), shell.m_impact, shell.m_spatial->m_rotation);
-		active |= !gfx::particles(hit, *impact).m_ended;
+		Gnode& hit = gfx::node(parent.subx(Impact), shell.m_impact, shell.m_spatial->m_rotation);
+		active |= !gfx::flows(hit, *impact).m_ended;
 		active |= toy::sound(hit, "impact", false, 0.2f);
 		//active |= toy::sound(hit, "explode", false, 0.2f);
 	}
@@ -402,20 +403,18 @@ void paint_shell(Gnode& parent, Slug& shell)
 	shell.m_destroy |= !active;
 }
 
-Model& faction_model_dead_variant(GfxSystem& gfx_system, Model& model)
+Model& faction_model_dead_variant(GfxSystem& gfx, Model& model)
 {
 	static Material& material = highlight_material("no_highlight", Colour::Black, 0);
 
 	string name = model.m_name + "_dead";
-	return model_variant(gfx_system, model, name.c_str(), carray<string, 2>{ "Highlight11", "Highlight2" }, 
-														  carray<Material*, 2>{ &material, &material });
+	return model_variant(gfx, model, name.c_str(), { "Highlight11", "Highlight2" }, { &material, &material });
 }
 
-Model& faction_model_variant(GfxSystem& gfx_system, Faction& faction, Model& model)
+Model& faction_model_variant(GfxSystem& gfx, Faction& faction, Model& model)
 {
 	string name = model.m_name + "_faction" + to_string(faction.m_id);
-	return model_variant(gfx_system, model, name.c_str(), carray<string, 2>{ "Highlight11", "Highlight2" }, 
-														  carray<Material*, 2>{ faction.m_highlight11, faction.m_highlight2 });
+	return model_variant(gfx, model, name.c_str(), { "Highlight11", "Highlight2" }, { faction.m_highlight11, faction.m_highlight2 });
 }
 
 void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float percentage, Colour colour)
@@ -423,36 +422,34 @@ void hud_bar(Gnode& parent, const vec3& position, const vec2& offset, float perc
 	static const vec2 size = { 4.f, 0.2f };
 	vec2 fill_offset = { size.x * -(1.f - percentage) / 2.f, 0.f };
 	gfx::shape(parent, Quad(position, offset, vec2(4.f, 0.2f)), Symbol(Colour::White, Colour::None, true), ItemFlag::Render | ItemFlag::Billboard);
-	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(colour, true, true), ItemFlag::Render | ItemFlag::Billboard);
+	gfx::shape(parent, Quad(position, offset + fill_offset, vec2(4.f * percentage, 0.2f)), Symbol(colour, Colour::None, true), ItemFlag::Render | ItemFlag::Billboard);
 }
 
 void paint_tank(Gnode& parent, Tank& tank)
 {
-	static Material* debug = &parent.m_scene->m_gfx_system.debug_material();
-	static Material* stealth = &parent.m_scene->m_gfx_system.fetch_material("tank_stealth", "fresnel");
-	{
-		stealth->m_fresnel_block.m_enabled = true;
-		stealth->m_fresnel_block.m_value.m_value = { 0.8f, 0.9f, 5.f };
-		//stealth->m_fresnel_block.m_value.m_texture = parent.m_scene->m_gfx_system.textures().file("beehive.png");
-	}
+	static Material* debug = &parent.m_scene->m_gfx.debug_material();
+	static Material* stealth = &parent.m_scene->m_gfx.fetch_material("tank_stealth", "fresnel");
 
-	GfxSystem& gfx_system = parent.m_scene->m_gfx_system;
+	stealth->m_fresnel.m_value.m_value = { 0.8f, 0.9f, 5.f };
+	//stealth->m_fresnel_block.m_value = parent.m_scene->m_gfx.textures().file("beehive.png");
+
+	GfxSystem& gfx = parent.m_scene->m_gfx;
 
 	static vector<Model*> tank_base_models = vector<Model*>(size_t(Faction::s_max_factions));
 	static vector<Model*> tank_turret_models = vector<Model*>(size_t(Faction::s_max_factions));
 
-	static Model& tank_base_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_base"));
-	static Model& tank_turret_dead = faction_model_dead_variant(gfx_system, *gfx_system.models().file("scifi_tank_turret"));
+	static Model& tank_base_dead = faction_model_dead_variant(gfx, *gfx.models().file("scifi_tank_base"));
+	static Model& tank_turret_dead = faction_model_dead_variant(gfx, *gfx.models().file("scifi_tank_turret"));
 
 	Faction& faction = *tank.m_faction;
 
 	if(tank_base_models[faction.m_id] == nullptr)
 	{
-		tank_base_models[faction.m_id] = &faction_model_variant(gfx_system, faction, *gfx_system.models().file("scifi_tank_base"));
-		tank_turret_models[faction.m_id] = &faction_model_variant(gfx_system, faction, *gfx_system.models().file("scifi_tank_turret"));
+		tank_base_models[faction.m_id] = &faction_model_variant(gfx, faction, *gfx.models().file("scifi_tank_base"));
+		tank_turret_models[faction.m_id] = &faction_model_variant(gfx, faction, *gfx.models().file("scifi_tank_turret"));
 	}
 
-	Gnode& turret = gfx::node(parent, {}, parent.m_attach->position(), tank.turret_rotation());
+	Gnode& turret = gfx::node(parent, parent.m_attach->position(), tank.turret_rotation());
 
 	if(tank.m_hitpoints > 0.f)
 	{
@@ -480,7 +477,7 @@ void paint_tank(Gnode& parent, Tank& tank)
 		if(false)
 		{
 			Gnode& alive = parent.subx(Alive);
-			Gnode& symbol = gfx::node(alive, {}, parent.m_attach->m_transform);
+			Gnode& symbol = gfx::node(alive, parent.m_attach->m_transform);
 			gfx::shape(symbol, Torus(4.f, 0.1f), Symbol(faction.m_colour * 2.f));
 
 			if(false)
@@ -488,17 +485,17 @@ void paint_tank(Gnode& parent, Tank& tank)
 				static const Colour energy = { 0.f, 0.6f, 1.f };
 				static const Colour life = { 0.f, 1.f, 0.2f };
 
-				hud_bar(alive, Zero3, vec2(0.f), max(0.f, tank.m_hitpoints * 0.01f), life);
-				hud_bar(alive, Zero3, vec2(0.f, -0.4f), max(0.f, tank.m_energy * 0.01f), energy);
+				hud_bar(alive, vec3(0.f), vec2(0.f), max(0.f, tank.m_hitpoints * 0.01f), life);
+				hud_bar(alive, vec3(0.f), vec2(0.f, -0.4f), max(0.f, tank.m_energy * 0.01f), energy);
 			}
 		}
 	}
 	else
 	{
 		Gnode& dead = parent.subx(Dead);
-		static ParticleFlow* explode = parent.m_scene->m_gfx_system.particles().file("explode");
+		static Flow* explode = parent.m_scene->m_gfx.flows().file("explode");
 
-		gfx::particles(dead, *explode);
+		gfx::flows(dead, *explode);
 		//toy::sound(dead, "explosion", false, 0.2f);
 		toy::sound(dead, "explode", false, 0.2f);
 	}
@@ -512,7 +509,16 @@ void paint_block_wire(Gnode& parent, Block& block)
 void paint_block(Gnode& parent, Tileblock& block)
 {
 	if(block.m_wfc_block.m_wave.m_solved)
-		paint_tiles(parent, ent_ref(block.m_spatial.m_handle), block.m_wfc_block);
+	{
+		paint_tiles(parent, block.m_spatial, block.m_wfc_block);
+
+		WorldPage& world_page = block.m_world_page;
+		if(world_page.m_updated > world_page.m_last_rebuilt)
+		{
+			build_world_page_geometry(*parent.m_scene, world_page);
+			world_page.update_geometry(world_page.m_spatial->m_last_tick);
+		}
+	}
 }
 
 void paint_scene(Gnode& parent, bool radiance)
@@ -529,13 +535,17 @@ void paint_viewer(Viewer& viewer)
 {
 	viewer.m_camera.m_far = 500.f;
 
-	viewer.m_viewport.comp<Tonemap>().m_enabled = true;
+	viewer.m_viewport.m_to_gamma = true;
 
-	viewer.m_viewport.comp<Glow>().m_enabled = true;
-	viewer.m_viewport.comp<Glow>().m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
-	viewer.m_viewport.comp<Glow>().m_intensity = 0.8f;
-#ifndef MUD_PLATFORM_EMSCRIPTEN
-	viewer.m_viewport.comp<Glow>().m_bicubic_filter = true;
+	Tonemap& tonemap = viewer.m_viewport.comp<Tonemap>();
+	tonemap.m_enabled = true;
+
+	Glow& glow = viewer.m_viewport.comp<Glow>();
+	glow.m_enabled = true;
+	glow.m_levels_1_4 = { 1.f, 1.f, 0.f, 0.f };
+	glow.m_intensity = 0.8f;
+#ifndef TWO_PLATFORM_EMSCRIPTEN
+	glow.m_bicubic_filter = true;
 #endif
 }
 
@@ -566,10 +576,10 @@ static void tank_velocity_controller(Widget& widget, Tank& tank)
 
 	const KeyMove moves[8] =
 	{
-		{ Key::Up,    -Z3, Zero3 }, { Key::W,  -Z3, Zero3 },
-		{ Key::Down,   Z3, Zero3 }, { Key::S,   Z3, Zero3 },
-		{ Key::Left,  Zero3,  Y3 }, { Key::A,  Zero3,  Y3 },
-		{ Key::Right, Zero3, -Y3 }, { Key::D,  Zero3, -Y3 },
+		{ Key::Up,    -z3, vec3(0.f) }, { Key::W,  -z3, vec3(0.f) },
+		{ Key::Down,   z3, vec3(0.f) }, { Key::S,   z3, vec3(0.f) },
+		{ Key::Left,  vec3(0.f),  y3 }, { Key::A,  vec3(0.f),  y3 },
+		{ Key::Right, vec3(0.f), -y3 }, { Key::D,  vec3(0.f), -y3 },
 	};
 
 	for(const KeyMove& key_move : moves)
@@ -578,7 +588,7 @@ static void tank_velocity_controller(Widget& widget, Tank& tank)
 
 Style& screen_style()
 {
-	static Style style = { "GameScreen", styles().wedge, [](Layout& l) { l.m_space = LAYOUT; l.m_padding = vec4(30.f); } };
+	static Style style = { "GameScreen", styles().wedge, [](Layout& l) { l.m_space = Preset::Layout; l.m_padding = vec4(30.f); } };
 	return style;
 }
 
@@ -587,7 +597,7 @@ Style& right_panel_style(UiWindow& ui_window)
 	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Right, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Right, Align::Center }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
 													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
@@ -597,7 +607,7 @@ Style& center_panel_style(UiWindow& ui_window)
 	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { CENTER, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Center, Align::Center }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
 													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
@@ -607,14 +617,14 @@ Style& left_panel_style(UiWindow& ui_window)
 	UNUSED(ui_window);
 	//static ImageSkin skin = { *ui_window.find_image("graphic/red_on"), 46, 28, 38, 30 };
 	
-	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
+	static Style style = { "GamePanel", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Left, Align::Center }; l.m_padding = vec4(30.f); l.m_spacing = vec2(30.f); } };
 													    //[](InkStyle& s) { s.m_empty = false; s.m_image_skin = skin; } };
 	return style;
 }
 
 Style& menu_style()
 {
-	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = UNIT; l.m_align = { Left, CENTER }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
+	static Style style = { "GameMenu", styles().wedge, [](Layout& l) { l.m_space = Preset::Unit; l.m_align = { Align::Left, Align::Center }; l.m_padding = vec4(120.f); l.m_padding.x = 240.f; l.m_spacing = vec2(30.f); } };
 	return style;
 }
 
@@ -646,15 +656,15 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	Tank& tank = player.m_tank;
 	Spatial& spatial = tank.m_spatial;
 
-	OrbitController& orbit = ui::orbit_controller(viewer, 0.f, -c_pi / 4.f, 200.f);
+	OrbitController& orbit = ui::orbit_controller(viewer, 0.f, -c_pi4, 200.f);
 	orbit.set_target(spatial.m_position);
 
 #ifdef TOY_SOUND
-	scene.m_snd_manager.m_listener.setTransform(viewer.m_camera.m_eye, look_at(viewer.m_camera.m_eye, viewer.m_camera.m_target));
+	scene.m_snd_manager.m_listener.set_transform(viewer.m_camera.m_eye, look_at(viewer.m_camera.m_eye, viewer.m_camera.m_target));
 #endif
 
 	Ray ray = viewer.mouse_ray();
-	vec3 target = plane_segment_intersection(Plane(Y3, spatial.m_position.y), to_segment(ray));
+	vec3 target = plane_segment_intersection(Plane(y3, spatial.m_position.y), to_segment(ray));
 
 	tank.m_turret_angle = look_at(spatial.m_position, target);
 
@@ -663,27 +673,28 @@ void ex_blocks_game_ui(Widget& parent, GameScene& scene)
 	if(KeyEvent key_event = viewer.key_stroke(Key::LeftControl))
 		tank.m_stealth = !tank.m_stealth;
 
-	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::Any))
+	if(MouseEvent event = viewer.mouse_event(DeviceType::MouseLeft, EventType::Stroked, InputMod::Any))
 	{
 		viewer.take_focus();
 		tank.shoot(viewer.ui().m_keyboard.m_shift);
 	}
 
-	static vec3 destination = Zero3;
+	static vec3 destination = vec3(0.f);
 
-	if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::MouseRight, EventType::Stroked))
+	if(MouseEvent event = viewer.mouse_event(DeviceType::MouseRight, EventType::Stroked))
 	{
 		viewer.take_focus();
 
-		Ray pick_ray = viewer.m_viewport.ray(mouse_event.m_relative);
+		Ray pick_ray = viewer.mouse_ray();
+		//Ray pick_ray = viewer.ray(event.m_relative);
 		destination = player.m_world->m_bullet_world.ground_point(pick_ray);
 	}
 
-	if(destination != Zero3)
+	if(destination != vec3(0.f))
 	{
 		static Clock clock;
 		if(steer_2d(spatial, tank.m_movable, destination, 15.f, float(clock.step()), 0.1f))
-			destination = Zero3;
+			destination = vec3(0.f);
 	}
 
 	paint_viewer(viewer);
@@ -723,22 +734,22 @@ Viewer& ex_blocks_menu_viewport(Widget& parent, GameShell& app)
 	viewer.m_camera.m_eye = viewer.m_camera.m_target + vec3(-1.5f, 1.0f, -0.5f) * (10.f + sinf(float(clock.read()) * 0.1f));
 
 	static DefaultWorld world = { "", *app.m_job_system };
-	static EntityHandle<Origin> root = { Origin::create(world.m_world.m_ecs, world.m_world), 0 };
+	static EntityHandle<Origin> root = Origin::create(world.m_world.m_ecs, world.m_world);
 
-	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root->m_spatial, Zero3, g_factions[0]);
-	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root->m_spatial, X3 * 10.f, g_factions[1]);
-	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root->m_spatial, Z3 * 10.f, g_factions[2]);
+	static EntityHandle<Tank> tank0 = construct_owned<Tank>(root, vec3(0.f), g_factions[0]);
+	static EntityHandle<Tank> tank1 = construct_owned<Tank>(root, x3 * 10.f, g_factions[1]);
+	static EntityHandle<Tank> tank2 = construct_owned<Tank>(root, z3 * 10.f, g_factions[2]);
 
 	static bool once = false;
 	if(!once)
 	{
-		tank0->m_spatial->rotate(Y3, c_pi * 0.25f);
-		tank1->m_spatial->rotate(Y3, c_pi * 0.25f);
-		tank2->m_spatial->rotate(Y3, c_pi * 0.25f);
+		tank0->m_spatial->rotate(y3, c_pi * 0.25f);
+		tank1->m_spatial->rotate(y3, c_pi * 0.25f);
+		tank2->m_spatial->rotate(y3, c_pi * 0.25f);
 		once = true;
 	}
 
-	auto paint = [&](Tank& tank) { Gnode& node = gfx::node(scene, {}, tank.m_spatial->m_position, tank.m_spatial->m_rotation); paint_tank(node, tank); };
+	auto paint = [&](Tank& tank) { Gnode& node = gfx::node(scene, tank.m_spatial->m_position, tank.m_spatial->m_rotation); paint_tank(node, tank); };
 	paint(tank0);
 	paint(tank1);
 	paint(tank2);
@@ -784,11 +795,11 @@ public:
 	virtual void init(GameShell& app, Game& game) final
 	{
 		UNUSED(game);
-		app.m_gfx_system->add_resource_path("examples/ex_blocks");
+		app.m_gfx->add_resource_path("examples/ex_blocks");
 
-		g_factions.emplace_back(0, Colour::Red);
-		g_factions.emplace_back(0, Colour::Pink);
-		g_factions.emplace_back(0, Colour::Cyan);
+		g_factions.push_back({ 0, Colour::Red });
+		g_factions.push_back({ 0, Colour::Pink });
+		g_factions.push_back({ 0, Colour::Cyan });
 	}
 
 	virtual void start(GameShell& app, Game& game) final
@@ -806,7 +817,7 @@ public:
 		static Player player = { block_world };
 		game.m_player = Ref(&player);
 
-		block_world.generate_block(*app.m_gfx_system, ivec2(0));
+		block_world.generate_block(*app.m_gfx, ivec2(0));
 		generate_camps(block_world);
 	}
 
@@ -825,12 +836,7 @@ public:
 		scene.entity_painter<Tileblock>("Tileblocks", world, paint_block);
 		scene_painters(scene, world);
 
-		static PhysicDebugDraw physic_draw = { *scene.m_scene.m_immediate };
-
-		scene.painter("PhysicsDebug", [&](size_t index, VisuScene& visu_scene, Gnode& parent) {
-			UNUSED(index); UNUSED(visu_scene); UNUSED(parent);
-			//physic_draw.draw_physics(parent, *scene.m_game.m_world, SolidMedium::me);
-		});
+		//physic_painter(scene);
 	}
 
 	virtual void pump(GameShell& app, Game& game, Widget& ui) final

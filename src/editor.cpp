@@ -7,7 +7,7 @@
 #include <meta/block/Module.h>
 #include <meta/shell/Module.h>
 
-using namespace mud; using namespace toy;
+using namespace two; using namespace toy;
 
 int main(int argc, char *argv[])
 {

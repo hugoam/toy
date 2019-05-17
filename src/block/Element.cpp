@@ -3,17 +3,19 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <block/Types.h>
-#include <block/Element.h>
-
+#ifdef TWO_MODULES
+module toy.core
+#else
+#include <ecs/ECS.hpp>
 #include <core/Spatial/Spatial.h>
 #include <core/WorldPage/WorldPage.h>
-
+#include <block/Types.h>
+#include <block/Element.h>
 #include <block/Sector.h>
 #include <block/Chunk.h>
+#endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 	bool GroundChunk::filter(Chunk& chunk)
 	{
@@ -29,15 +31,14 @@ using namespace mud; namespace toy
 
 	Entity Heap::create(ECS& ecs, HSpatial parent, const vec3& position, Element& element, float radius)
 	{
-		Entity entity = { ecs.create<Spatial, Heap>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Heap>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
-		ecs.set(entity, Heap(entity, element, radius));
+		ecs.set(entity, Heap(element, radius));
 		return entity;
 	}
 
-	Heap::Heap(HSpatial spatial, Element& element, float radius)
-		: m_spatial(spatial)
-		, m_element(&element)
+	Heap::Heap(Element& element, float radius)
+		: m_element(&element)
 		, m_radius(radius)
 	{}
 }

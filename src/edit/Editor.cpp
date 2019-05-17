@@ -2,13 +2,13 @@
 #include <edit/Types.h>
 #include <edit/Editor.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 #if 0
 	/*EditorUser& EditorCore::connect(const string& name, EditorApp& frontApp)
 	{
 		if(m_users.find(name) == m_users.end())
-			m_users[name] = make_object<EditorUser>(*this, frontApp);
+			m_users[name] = oconstruct<EditorUser>(*this, frontApp);
 
 		return *m_users[name];
 	}*/
@@ -17,7 +17,7 @@ using namespace mud; namespace toy
 
 	EditorApp::EditorApp(const string& execPath, const string& resourcePath)
 		: m_user(0, "admin")
-		, m_shell(make_object<Shell>(execPath, resourcePath))
+		, m_shell(oconstruct<Shell>(execPath, resourcePath))
 		, m_editor(nullptr)
 	{
 		System::instance().loadModules({ &toyobj::module(), &toymath::module(), &toyutil::module(), &toycore::module(),
@@ -51,7 +51,7 @@ using namespace mud; namespace toy
 	{
 		printf("Starting Editor\n");
 
-		m_editor = make_object<Editor>(m_user, *m_shell->m_visuSystem);
+		m_editor = oconstruct<Editor>(m_user, *m_shell->m_visuSystem);
 
 		//m_editorUi = &m_shell->m_rootDevice->emplace<DEditor>(*m_editor, *m_shell->m_visuSystem);
 		

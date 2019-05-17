@@ -7,7 +7,7 @@
 
 #include <vector>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 _SPACE_EXPORT func_ HStar generate_system(Galaxy& galaxy, const uvec3& coord, const vec3& position);

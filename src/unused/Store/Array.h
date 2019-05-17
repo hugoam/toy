@@ -15,7 +15,7 @@
 #include <algorithm>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	template <class T>
 	class refl_ Array : public StoreBase<Array<T>, T>

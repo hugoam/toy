@@ -11,7 +11,7 @@
 #include <core/Physic/Medium.h>
 #include <core/Physic/Collider.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT WorldMedium final : public Medium
 	{
@@ -27,7 +27,7 @@ using namespace mud; namespace toy
 		- adjacent worldpages
 	*/
 
-	class refl_ TOY_CORE_EXPORT WorldPage : public Movabl
+	class refl_ TOY_CORE_EXPORT WorldPage// : public Movabl
     {
 	public:
 		constr_ WorldPage() {}
@@ -40,7 +40,7 @@ using namespace mud; namespace toy
 		comp_ HSpatial m_spatial;
 
 		attr_ bool m_open = true;
-		attr_ vec3 m_extents = Zero3;
+		attr_ vec3 m_extents = vec3(0.f);
 		attr_ World* m_world = nullptr;
 		attr_ size_t m_last_rebuilt = 0;
 

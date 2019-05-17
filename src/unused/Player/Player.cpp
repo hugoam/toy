@@ -5,7 +5,7 @@
 
 #include <core/Player/Player.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 #if 0
 	Player::Player(Id id, const string& name)

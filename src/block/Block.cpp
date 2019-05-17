@@ -3,28 +3,28 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
-#include <block/Types.h>
-#include <block/Block.h>
-
-#include <geom/Shapes.h>
+#ifdef TWO_MODULES
+module toy.block
+#else
+#include <math/Grid.hpp>
 #include <math/Image256.h>
-
-#include <core/World/World.h>
+#include <geom/Shapes.h>
+#include <ecs/ECS.hpp>
+#include <core/World/World.hpp>
 #include <core/Spatial/Spatial.h>
-
 #include <core/Physic/Scope.h>
 #include <core/Physic/CollisionShape.h>
-
 #include <core/WorldPage/WorldPage.h>
-
+#include <block/Types.h>
+#include <block/Block.h>
 #include <block/Sector.h>
+#endif
 
 #define BLOCK_SUBDIV 20U
 
-using namespace mud; namespace toy
+namespace toy
 {
-	void index_blocks(const uvec3& grid_size, Grid<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors)
+	void index_blocks(const uvec3& grid_size, vector2d<Block*>& grid, span<Block*> blocks, span<Sector*> sectors)
 	{
 		grid.reset(grid_size.x, grid_size.y, grid_size.z);
 
@@ -39,7 +39,7 @@ using namespace mud; namespace toy
 			uvec3 coord = sectors[i]->m_coordinate;
 			size_t index = grid.index_at(coord.x, coord.y, coord.z);
 			for(Side side : c_sides)
-				blocks[i]->m_neighbours[size_t(side)] = grid.border(index, side) ? nullptr : grid.neighbour_item(index, side);
+				blocks[i]->m_neighbours[side] = grid.border(index, side) ? nullptr : grid.neighbour_item(index, side);
 		}
 	}
 	
@@ -51,20 +51,20 @@ using namespace mud; namespace toy
 		for(uint16_t y = 0; y < subdiv; ++y)
 			for(uint16_t x = 0; x < subdiv; ++x)
 			{
-				uint32_t height = image.at(x, y);
+				uint32_t height = image.at(uvec2(x, y));
 				for(uint32_t z = 0; z <= height; ++z)
 					block.chunk(x, z, y, element);
 			}
 	}
 
-	void paint_block_elements(Block& block, Image256& image, array<Element*> elements)
+	void paint_block_elements(Block& block, Image256& image, span<Element*> elements)
 	{
 		uint16_t subdiv = block.subdiv();
 		for(uint16_t y = 0; y < subdiv; ++y)
 			for(uint16_t x = 0; x < subdiv; ++x)
 				for(uint16_t z = 0; z < subdiv; ++z)
 				{
-					size_t colour = image.at(x, y);
+					size_t colour = image.at(uvec2(x, y));
 					Element* element = block.m_chunks.at(x, z, y);
 
 					if(element->m_state == MatterState::Solid)
@@ -74,13 +74,14 @@ using namespace mud; namespace toy
 
 	Entity Block::create(ECS& ecs, HSpatial parent, HWorldPage world_page, const vec3& position, Block* parentblock, size_t index, const vec3& size)
 	{
-		Entity entity = { ecs.create<Spatial, Block>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, Block>();
 		asa<Spatial>(entity) = Spatial(parent, position, ZeroQuat);
 		asa<Block>(entity) = Block(HSpatial(entity), world_page, parentblock, index, size);
 		//, m_emitter(*this, m_spatial, m_movable)
 		return entity;
 	}
 
+	Block::Block() {}
 	Block::Block(HSpatial spatial, HWorldPage world_page, Block* parentblock, size_t index, const vec3& size)
 		: m_spatial(spatial)
 		, m_world_page(world_page)
@@ -224,11 +225,11 @@ using namespace mud; namespace toy
 	{
 		if(m_chunks.border(index, side))
 		{
-			if(!m_neighbours[size_t(side)])
+			if(!m_neighbours[side])
 				return Hunk();
 
-			size_t neighbour = m_neighbours[size_t(side)]->m_chunks.neighbour_mod(index, side);
-			return m_neighbours[size_t(side)]->hunk_at(neighbour);
+			size_t neighbour = m_neighbours[side]->m_chunks.neighbour_mod(index, side);
+			return m_neighbours[side]->hunk_at(neighbour);
 		}
 		else
 		{

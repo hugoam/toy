@@ -16,7 +16,7 @@
 #include <core/Core.h>
 
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Pathfinder::Pathfinder(Navmesh& navmesh)
 		: m_navmesh(*navmesh.m_navmesh)

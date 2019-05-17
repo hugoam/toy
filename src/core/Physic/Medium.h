@@ -11,7 +11,7 @@
 #include <core/Forward.h>
 #include <core/Physic/CollisionGroup.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	//@todo : cleanup, remove references to emitters and receptors since it's not supposed to be specific
 	//			make_unique masks stored in a map based on the group

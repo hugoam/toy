@@ -37,7 +37,7 @@
 #include <shell/Forward.h>
 
 #ifndef _TEST_EXPORT
-#define _TEST_EXPORT MUD_IMPORT
+#define _TEST_EXPORT TWO_IMPORT
 #endif
 
 class Bullet;

@@ -15,7 +15,7 @@
 #include <stl/string>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {		
 	using string = string;
 

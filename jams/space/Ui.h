@@ -6,7 +6,7 @@
 
 #include <space/Forward.h>
 
-using namespace mud;
+using namespace two;
 using namespace toy;
 
 void ex_space_ui(Widget& parent, GameScene& scene);

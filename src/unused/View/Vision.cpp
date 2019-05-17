@@ -19,7 +19,7 @@
 
 #include <core/Core.h>
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	Vision::Vision(World& world)
 		: m_world(world)

@@ -7,8 +7,8 @@
 
 #include <stl/vector.h>
 #include <stl/function.h>
-#include <ecs/Proto.h>
-#include <wfc-gfx/Wfc/Tileblock.h>
+#include <type/Proto.h>
+#include <wfc-gfx/Tileblock.h>
 #include <core/WorldPage/WorldPage.h>
 //#include <core/WorldPage/BufferPage.h>
 #include <core/Navmesh/Navmesh.h>
@@ -16,7 +16,7 @@
 #include <block/Element.h>
 #include <block/Structs.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	typedef vector<Chunk*> ChunkVector;
 
@@ -64,9 +64,9 @@ using namespace mud; namespace toy
 		bool contains(const vec3& position);
 	};
 
-	TOY_BLOCK_EXPORT func_ HTileblock generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file = true);
+	TOY_BLOCK_EXPORT func_ HTileblock generate_block(GfxSystem& gfx, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file = true);
 
 	TOY_BLOCK_EXPORT func_ void build_block_geometry(Scene& scene, WorldPage& page, Tileblock& block);
 
-	TOY_BLOCK_EXPORT func_ void index_blocks(const uvec3& grid_size, Grid<Block*>& grid, const vector<Block*>& blocks, const vector<Sector*>& sectors);
+	TOY_BLOCK_EXPORT func_ void index_blocks(const uvec3& grid_size, vector2d<Block*>& grid, span<Block*> blocks, span<Sector*> sectors);
 }

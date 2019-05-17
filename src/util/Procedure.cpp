@@ -8,7 +8,7 @@
 
 #include <refl/Method.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	ProcedureType::ProcedureType(Type& type)
 		: m_type(type), m_index(index(type, Ref(this)))

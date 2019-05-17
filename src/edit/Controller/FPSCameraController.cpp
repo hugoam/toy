@@ -11,12 +11,12 @@
 #include <ui/Frame/Frame.h>
 #include <ui/Widget.h>
 #include <ui/Cursor.h>
-#include <ui/Structs/RootSheet.h>
+#include <ui/UiRoot.h>
 #include <ctx/InputDevice.h>
 
 #include <gfx-ui/Viewer.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	FPSCameraController::FPSCameraController(Viewer& viewer, HCamera camera, HMovable movable)
 		: CameraController(viewer, camera, movable)
@@ -28,7 +28,7 @@ using namespace mud; namespace toy
 	void FPSCameraController::process(Viewer& viewer)
 	{
 		EventDispatch::process(viewer);
-		this->process(viewer, m_camera->m_spatial, m_camera);
+		//this->process(viewer, m_camera->m_spatial, m_camera);
 	}
 
 	void FPSCameraController::process(Viewer& viewer, Spatial& spatial, Camera& camera)
@@ -39,9 +39,9 @@ using namespace mud; namespace toy
 		//else
 		//m_inputWidget->ui().m_cursor.show();
 
-		if(MouseEvent mouse_event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
+		if(MouseEvent event = viewer.mouse_event(DeviceType::Mouse, EventType::Moved))
 		{
-			vec2 angle = mouse_event.m_delta / viewer.m_frame.m_size;
+			vec2 angle = event.m_delta / viewer.m_frame.m_size;
 			spatial.pitch(-angle.x * 4);
 			spatial.yaw_fixed(-angle.y * 4);
 		}

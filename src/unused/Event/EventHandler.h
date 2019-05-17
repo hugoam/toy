@@ -11,7 +11,7 @@
 #include <functional>
 #endif
 
-using namespace mud; namespace toy
+using namespace two; namespace toy
 {
 	class EventHandler
 	{

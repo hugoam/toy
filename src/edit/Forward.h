@@ -10,7 +10,7 @@
 #include <visu/Forward.h>
 
 #ifndef TOY_EDIT_EXPORT
-#define TOY_EDIT_EXPORT MUD_IMPORT
+#define TOY_EDIT_EXPORT TWO_IMPORT
 #endif
 
 namespace toy

@@ -42,7 +42,7 @@
 #	define snprintf _snprintf
 #endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class MyContext : public rcContext
 	{
@@ -99,7 +99,7 @@ using namespace mud; namespace toy
 		// Max tiles and max polys affect how the tile IDs are caculated.
 		// There are 22 bits available for identifying a tile and a polygon.
 		int tileBits = rcMin((int)ilog2(nextPow2(tw*th)), 14);
-		if (tileBits > 14) tileBits = 14;
+		if(tileBits > 14) tileBits = 14;
 		int polyBits = 22 - tileBits;
 
 		m_maxTiles = 1 << tileBits;
@@ -142,7 +142,7 @@ using namespace mud; namespace toy
 
 	bool rcTileMesh::handleBuild()
 	{
-		if (m_geometry.m_triangles.empty())
+		if(m_geometry.m_triangles.empty())
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildTiledNavigation: No vertices and triangles.");
 			return false;
@@ -151,7 +151,7 @@ using namespace mud; namespace toy
 		dtFreeNavMesh(m_navmesh);
 
 		m_navmesh = dtAllocNavMesh();
-		if (!m_navmesh)
+		if(!m_navmesh)
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildTiledNavigation: Could not allocate navmesh.");
 			return false;
@@ -167,13 +167,13 @@ using namespace mud; namespace toy
 		dtStatus status;
 	
 		status = m_navmesh->init(&params);
-		if (dtStatusFailed(status))
+		if(dtStatusFailed(status))
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildTiledNavigation: Could not init navmesh.");
 			return false;
 		}
 	
-		if (m_buildAll)
+		if(m_buildAll)
 			buildAllTiles();
 
 		return true;
@@ -182,7 +182,7 @@ using namespace mud; namespace toy
 	void rcTileMesh::buildTile(const float* pos)
 	{
 		if(m_geometry.m_triangles.empty()) return;
-		if (!m_navmesh) return;
+		if(!m_navmesh) return;
 		
 		const float* bmin = value_ptr(m_geometry.m_bounds_min);
 		const float* bmax = value_ptr(m_geometry.m_bounds_max);
@@ -204,14 +204,14 @@ using namespace mud; namespace toy
 		int dataSize = 0;
 		unsigned char* data = buildTileMesh(tx, ty, m_tileBmin, m_tileBmax, dataSize);
 	
-		if (data)
+		if(data)
 		{
 			// Remove any previous data (navmesh owns and deletes the data).
 			m_navmesh->removeTile(m_navmesh->getTileRefAt(tx,ty,0),0,0);
 		
 			// Let the navmesh own the data.
 			dtStatus status = m_navmesh->addTile(data,dataSize,DT_TILE_FREE_DATA,0,0);
-			if (dtStatusFailed(status))
+			if(dtStatusFailed(status))
 				dtFree(data);
 		}
 	
@@ -220,7 +220,7 @@ using namespace mud; namespace toy
 
 	void rcTileMesh::getTilePos(const float* pos, int& tx, int& ty)
 	{
-		if (m_geometry.m_triangles.empty()) return;
+		if(m_geometry.m_triangles.empty()) return;
 	
 		const float* bmin = value_ptr(m_geometry.m_bounds_min);
 	
@@ -232,7 +232,7 @@ using namespace mud; namespace toy
 	void rcTileMesh::removeTile(const float* pos)
 	{
 		if(m_geometry.m_triangles.empty()) return;
-		if (!m_navmesh) return;
+		if(!m_navmesh) return;
 	
 		const float* bmin = value_ptr(m_geometry.m_bounds_min);
 		const float* bmax = value_ptr(m_geometry.m_bounds_max);
@@ -255,7 +255,7 @@ using namespace mud; namespace toy
 	void rcTileMesh::buildAllTiles()
 	{
 		if(m_geometry.m_triangles.empty()) return;
-		if (!m_navmesh) return;
+		if(!m_navmesh) return;
 	
 		const float* bmin = value_ptr(m_geometry.m_bounds_min);
 		const float* bmax = value_ptr(m_geometry.m_bounds_max);
@@ -270,9 +270,9 @@ using namespace mud; namespace toy
 		// Start the build process.
 		m_ctx->startTimer(RC_TIMER_TEMP);
 
-		for (int y = 0; y < th; ++y)
+		for(int y = 0; y < th; ++y)
 		{
-			for (int x = 0; x < tw; ++x)
+			for(int x = 0; x < tw; ++x)
 			{
 				m_tileBmin[0] = bmin[0] + x*tcs;
 				m_tileBmin[1] = bmin[1];
@@ -284,13 +284,13 @@ using namespace mud; namespace toy
 			
 				int dataSize = 0;
 				unsigned char* data = buildTileMesh(x, y, m_tileBmin, m_tileBmax, dataSize);
-				if (data)
+				if(data)
 				{
 					// Remove any previous data (navmesh owns and deletes the data).
 					m_navmesh->removeTile(m_navmesh->getTileRefAt(x,y,0),0,0);
 					// Let the navmesh own the data.
 					dtStatus status = m_navmesh->addTile(data,dataSize,DT_TILE_FREE_DATA,0,0);
-					if (dtStatusFailed(status))
+					if(dtStatusFailed(status))
 						dtFree(data);
 				}
 			}
@@ -313,8 +313,8 @@ using namespace mud; namespace toy
 		const int tw = (gw + ts-1) / ts;
 		const int th = (gh + ts-1) / ts;
 	
-		for (int y = 0; y < th; ++y)
-			for (int x = 0; x < tw; ++x)
+		for(int y = 0; y < th; ++y)
+			for(int x = 0; x < tw; ++x)
 				m_navmesh->removeTile(m_navmesh->getTileRefAt(x,y,0),0,0);
 	}
 
@@ -377,22 +377,22 @@ using namespace mud; namespace toy
 
 		// Allocate voxel heightfield where we rasterize our input data to.
 		m_solid = rcAllocHeightfield();
-		if (!m_solid)
+		if(!m_solid)
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'solid'.");
 			return 0;
 		}
-		if (!rcCreateHeightfield(m_ctx.get(), *m_solid, m_cfg->width, m_cfg->height, m_cfg->bmin, m_cfg->bmax, m_cfg->cs, m_cfg->ch))
+		if(!rcCreateHeightfield(m_ctx.get(), *m_solid, m_cfg->width, m_cfg->height, m_cfg->bmin, m_cfg->bmax, m_cfg->cs, m_cfg->ch))
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not create solid heightfield.");
 			return 0;
 		}
 	
-		// Allocate array that can hold triangle flags.
+		// Allocate span that can hold triangle flags.
 		// If you have multiple meshes you need to process, allocate
-		// and array which can hold the max number of triangles you need to process.
+		// and span which can hold the max number of triangles you need to process.
 		m_triareas = new/*memory*/unsigned char[chunkyMesh->maxTrisPerChunk];
-		if (!m_triareas)
+		if(!m_triareas)
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'm_triareas' (%d).", chunkyMesh->maxTrisPerChunk);
 			return 0;
@@ -405,12 +405,12 @@ using namespace mud; namespace toy
 		tbmax[1] = m_cfg->bmax[2];
 		int cid[512];// TODO: Make grow when returning too many items.
 		const int ncid = rcGetChunksOverlappingRect(chunkyMesh, tbmin, tbmax, cid, 512);
-		if (!ncid)
+		if(!ncid)
 			return 0;
 	
 		m_tileTriCount = 0;
 	
-		for (int i = 0; i < ncid; ++i)
+		for(int i = 0; i < ncid; ++i)
 		{
 			const rcChunkyTriMeshNode& node = chunkyMesh->nodes[cid[i]];
 			const int* tris = &chunkyMesh->tris[node.i*3];
@@ -425,7 +425,7 @@ using namespace mud; namespace toy
 			rcRasterizeTriangles(m_ctx.get(), verts, nverts, tris, m_triareas, ntris, *m_solid, m_cfg->walkableClimb);
 		}
 	
-		if (!m_keepInterResults)
+		if(!m_keepInterResults)
 		{
 			delete [] m_triareas;
 			m_triareas = 0;
@@ -442,25 +442,25 @@ using namespace mud; namespace toy
 		// This will result more cache coherent data as well as the neighbours
 		// between walkable cells will be calculated.
 		m_chf = rcAllocCompactHeightfield();
-		if (!m_chf)
+		if(!m_chf)
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'chf'.");
 			return 0;
 		}
-		if (!rcBuildCompactHeightfield(m_ctx.get(), m_cfg->walkableHeight, m_cfg->walkableClimb, *m_solid, *m_chf))
+		if(!rcBuildCompactHeightfield(m_ctx.get(), m_cfg->walkableHeight, m_cfg->walkableClimb, *m_solid, *m_chf))
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build compact data.");
 			return 0;
 		}
 	
-		if (!m_keepInterResults)
+		if(!m_keepInterResults)
 		{
 			rcFreeHeightField(m_solid);
 			m_solid = 0;
 		}
 
 		// Erode the walkable area by agent radius.
-		if (!rcErodeWalkableArea(m_ctx.get(), m_cfg->walkableRadius, *m_chf))
+		if(!rcErodeWalkableArea(m_ctx.get(), m_cfg->walkableRadius, *m_chf))
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not erode.");
 			return 0;
@@ -468,13 +468,13 @@ using namespace mud; namespace toy
 
 		// (Optional) Mark areas.
 		const ConvexVolume* vols = m_navgeom->getConvexVolumes();
-		for (int i  = 0; i < m_navgeom->getConvexVolumeCount(); ++i)
+		for(int i  = 0; i < m_navgeom->getConvexVolumeCount(); ++i)
 			rcMarkConvexPolyArea(m_ctx.get(), vols[i].verts, vols[i].nverts, vols[i].hmin, vols[i].hmax, (unsigned char)vols[i].area, *m_chf);
 	
-		if (m_monotonePartitioning)
+		if(m_monotonePartitioning)
 		{
 			// Partition the walkable surface into simple regions without holes.
-			if (!rcBuildRegionsMonotone(m_ctx.get(), *m_chf, m_cfg->borderSize, m_cfg->minRegionArea, m_cfg->mergeRegionArea))
+			if(!rcBuildRegionsMonotone(m_ctx.get(), *m_chf, m_cfg->borderSize, m_cfg->minRegionArea, m_cfg->mergeRegionArea))
 			{
 				m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build regions.");
 				return 0;
@@ -483,14 +483,14 @@ using namespace mud; namespace toy
 		else
 		{
 			// Prepare for region partitioning, by calculating distance field along the walkable surface.
-			if (!rcBuildDistanceField(m_ctx.get(), *m_chf))
+			if(!rcBuildDistanceField(m_ctx.get(), *m_chf))
 			{
 				m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build distance field.");
 				return 0;
 			}
 		
 			// Partition the walkable surface into simple regions without holes.
-			if (!rcBuildRegions(m_ctx.get(), *m_chf, m_cfg->borderSize, m_cfg->minRegionArea, m_cfg->mergeRegionArea))
+			if(!rcBuildRegions(m_ctx.get(), *m_chf, m_cfg->borderSize, m_cfg->minRegionArea, m_cfg->mergeRegionArea))
 			{
 				m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not build regions.");
 				return 0;
@@ -499,30 +499,30 @@ using namespace mud; namespace toy
  	
 		// Create contours.
 		m_cset = rcAllocContourSet();
-		if (!m_cset)
+		if(!m_cset)
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'cset'.");
 			return 0;
 		}
-		if (!rcBuildContours(m_ctx.get(), *m_chf, m_cfg->maxSimplificationError, m_cfg->maxEdgeLen, *m_cset))
+		if(!rcBuildContours(m_ctx.get(), *m_chf, m_cfg->maxSimplificationError, m_cfg->maxEdgeLen, *m_cset))
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not create contours.");
 			return 0;
 		}
 	
-		if (m_cset->nconts == 0)
+		if(m_cset->nconts == 0)
 		{
 			return 0;
 		}
 	
 		// Build polygon navmesh from the contours.
 		m_pmesh = rcAllocPolyMesh();
-		if (!m_pmesh)
+		if(!m_pmesh)
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'pmesh'.");
 			return 0;
 		}
-		if (!rcBuildPolyMesh(m_ctx.get(), *m_cset, m_cfg->maxVertsPerPoly, *m_pmesh))
+		if(!rcBuildPolyMesh(m_ctx.get(), *m_cset, m_cfg->maxVertsPerPoly, *m_pmesh))
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Could not triangulate contours.");
 			return 0;
@@ -530,13 +530,13 @@ using namespace mud; namespace toy
 	
 		// Build detail mesh.
 		m_dmesh = rcAllocPolyMeshDetail();
-		if (!m_dmesh)
+		if(!m_dmesh)
 		{
 			m_ctx->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'dmesh'.");
 			return 0;
 		}
 	
-		if (!rcBuildPolyMeshDetail(m_ctx.get(), *m_pmesh, *m_chf,
+		if(!rcBuildPolyMeshDetail(m_ctx.get(), *m_pmesh, *m_chf,
 								   m_cfg->detailSampleDist, m_cfg->detailSampleMaxError,
 								   *m_dmesh))
 		{
@@ -544,7 +544,7 @@ using namespace mud; namespace toy
 			return 0;
 		}
 	
-		if (!m_keepInterResults)
+		if(!m_keepInterResults)
 		{
 			rcFreeCompactHeightfield(m_chf);
 			m_chf = 0;
@@ -554,9 +554,9 @@ using namespace mud; namespace toy
 	
 		unsigned char* navData = 0;
 		int navDataSize = 0;
-		if (m_cfg->maxVertsPerPoly <= DT_VERTS_PER_POLYGON)
+		if(m_cfg->maxVertsPerPoly <= DT_VERTS_PER_POLYGON)
 		{
-			if (m_pmesh->nverts >= 0xffff)
+			if(m_pmesh->nverts >= 0xffff)
 			{
 				// The vertex indices are ushorts, and cannot point to more than 0xffff vertices.
 				m_ctx->log(RC_LOG_ERROR, "Too many vertices per tile %d (max: %d).", m_pmesh->nverts, 0xffff);
@@ -564,22 +564,22 @@ using namespace mud; namespace toy
 			}
 		
 			// Update poly flags from areas.
-			for (int i = 0; i < m_pmesh->npolys; ++i)
+			for(int i = 0; i < m_pmesh->npolys; ++i)
 			{
-				if (m_pmesh->areas[i] == RC_WALKABLE_AREA)
+				if(m_pmesh->areas[i] == RC_WALKABLE_AREA)
 					m_pmesh->areas[i] = SAMPLE_POLYAREA_GROUND;
 			
-				if (m_pmesh->areas[i] == SAMPLE_POLYAREA_GROUND ||
+				if(m_pmesh->areas[i] == SAMPLE_POLYAREA_GROUND ||
 					m_pmesh->areas[i] == SAMPLE_POLYAREA_GRASS ||
 					m_pmesh->areas[i] == SAMPLE_POLYAREA_ROAD)
 				{
 					m_pmesh->flags[i] = SAMPLE_POLYFLAGS_WALK;
 				}
-				else if (m_pmesh->areas[i] == SAMPLE_POLYAREA_WATER)
+				else if(m_pmesh->areas[i] == SAMPLE_POLYAREA_WATER)
 				{
 					m_pmesh->flags[i] = SAMPLE_POLYFLAGS_SWIM;
 				}
-				else if (m_pmesh->areas[i] == SAMPLE_POLYAREA_DOOR)
+				else if(m_pmesh->areas[i] == SAMPLE_POLYAREA_DOOR)
 				{
 					m_pmesh->flags[i] = SAMPLE_POLYFLAGS_WALK | SAMPLE_POLYFLAGS_DOOR;
 				}
@@ -618,7 +618,7 @@ using namespace mud; namespace toy
 			params.ch = m_cfg->ch;
 			params.buildBvTree = true;
 		
-			if (!dtCreateNavMeshData(&params, &navData, &navDataSize))
+			if(!dtCreateNavMeshData(&params, &navData, &navDataSize))
 			{
 				m_ctx->log(RC_LOG_ERROR, "Could not build Detour navmesh.");
 				return 0;
@@ -644,17 +644,17 @@ using namespace mud; namespace toy
 
 		const dtMeshTile* tile = 0;
 		const dtPoly* poly = 0;
-		if (dtStatusFailed(m_navmesh->getTileAndPolyByRef(ref, &tile, &poly)))
+		if(dtStatusFailed(m_navmesh->getTileAndPolyByRef(ref, &tile, &poly)))
 			return DT_FAILURE | DT_INVALID_PARAM;
 	
-		if (poly->getType() == DT_POLYTYPE_OFFMESH_CONNECTION)
+		if(poly->getType() == DT_POLYTYPE_OFFMESH_CONNECTION)
 		{
 			const float* v0 = &tile->verts[poly->verts[0]*3];
 			const float* v1 = &tile->verts[poly->verts[1]*3];
 			const float d0 = dtVdist(pos, v0);
 			const float d1 = dtVdist(pos, v1);
 			const float u = d0 / (d0+d1);
-			if (height)
+			if(height)
 				*height = v0[1] + (v1[1] - v0[1]) * u;
 			return DT_SUCCESS;
 		}
@@ -662,21 +662,21 @@ using namespace mud; namespace toy
 		{
 			const unsigned int ip = (unsigned int)(poly - tile->polys);
 			const dtPolyDetail* pd = &tile->detailMeshes[ip];
-			for (int j = 0; j < pd->triCount; ++j)
+			for(int j = 0; j < pd->triCount; ++j)
 			{
 				const unsigned char* t = &tile->detailTris[(pd->triBase+j)*4];
 				const float* v[3];
-				for (int k = 0; k < 3; ++k)
+				for(int k = 0; k < 3; ++k)
 				{
-					if (t[k] < poly->vertCount)
+					if(t[k] < poly->vertCount)
 						v[k] = &tile->verts[poly->verts[t[k]]*3];
 					else
 						v[k] = &tile->detailVerts[(pd->vertBase+(t[k]-poly->vertCount))*3];
 				}
 				float h;
-				if (dtClosestHeightPointTriangle(pos, v[0], v[1], v[2], h))
+				if(dtClosestHeightPointTriangle(pos, v[0], v[1], v[2], h))
 				{
-					if (height)
+					if(height)
 						*height = h;
 					return DT_SUCCESS;
 				}

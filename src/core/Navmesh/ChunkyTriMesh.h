@@ -28,7 +28,7 @@
 
 #include <stdint.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	struct rcChunkyTriMeshNode
 	{

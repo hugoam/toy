@@ -8,12 +8,12 @@
 #include <stl/memory.h>
 #include <stl/vector.h>
 #include <pool/ObjectPool.h>
-#include <math/VecOps.h>
+#include <math/Vec.hpp>
 #include <math/Axes.h>
 #include <core/Forward.h>
 #include <core/Structs.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT Spatial : public Transform
     {
@@ -50,10 +50,10 @@ using namespace mud; namespace toy
 		inline void sync_position(const vec3& position) { m_position = position; this->set_sync_dirty(true); }
 		inline void sync_rotation(const quat& rotation) { m_rotation = rotation; this->set_sync_dirty(false); }
 
-		inline vec3 front() const { return mud::rotate(m_rotation, to_vec3(Side::Front)); }
-		inline vec3 right() const { return mud::rotate(m_rotation, to_vec3(Side::Right)); }
-		inline vec3 up()    const { return mud::rotate(m_rotation, to_vec3(Side::Up)); }
-		inline vec3 down()  const { return mud::rotate(m_rotation, to_vec3(Side::Down)); }
+		inline vec3 front() const { return two::rotate(m_rotation, to_vec3(Side::Front)); }
+		inline vec3 right() const { return two::rotate(m_rotation, to_vec3(Side::Right)); }
+		inline vec3 up()    const { return two::rotate(m_rotation, to_vec3(Side::Up)); }
+		inline vec3 down()  const { return two::rotate(m_rotation, to_vec3(Side::Down)); }
 
 		void translate(const vec3& vec);
 		void rotate(const vec3& axis, float angle);
@@ -72,8 +72,8 @@ using namespace mud; namespace toy
 		void hook();
 		void unhook();
 
-		template <class T_Visitor>
-		void visit(const T_Visitor& visitor)
+		template <class Visitor>
+		void visit(const Visitor& visitor)
 		{
 			if(!visitor(*this))
 				return;

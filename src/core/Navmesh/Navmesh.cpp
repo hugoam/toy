@@ -25,7 +25,7 @@
 #include <DetourNavMesh.h>
 #include <DetourNavMeshBuilder.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	uint32_t navmesh_num_vertices(const Navmesh& navmesh)
 	{
@@ -45,7 +45,7 @@ using namespace mud; namespace toy
 	{
 		UNUSED(shape);
 		uint16_t num_verts = uint16_t(navmesh_num_vertices(navmesh.m_navmesh));
-		return { num_verts, num_verts * 2 };
+		return { num_verts, uint16_t(num_verts * 2U) };
 	}
 
 	void draw_shape_lines(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshAdapter& writer)
@@ -65,9 +65,9 @@ using namespace mud; namespace toy
 
 			for(int p = 0; p < tile->header->polyCount; ++p)
 			{
-				float r = random_scalar(0.f, 1.f);
-				float g = random_scalar(0.f, 1.f);
-				float b = random_scalar(0.f, 1.f);
+				float r = randf(0.f, 1.f);
+				float g = randf(0.f, 1.f);
+				float b = randf(0.f, 1.f);
 
 				Colour colour = { r, g, b, 1.f };
 
@@ -97,7 +97,7 @@ using namespace mud; namespace toy
 	{
 		UNUSED(shape);
 		uint16_t num_verts = uint16_t(navmesh_num_vertices(navmesh.m_navmesh));
-		return { num_verts, num_verts * 3 };
+		return { num_verts, uint16_t(num_verts * 3U) };
 	}
 
 	void draw_shape_triangles(const ProcShape& shape, const NavmeshShape& navmesh_shape, MeshAdapter& writer)
@@ -117,13 +117,13 @@ using namespace mud; namespace toy
 
 			for(int p = 0; p < tile->header->polyCount; ++p)
 			{
-				float r = random_scalar(0.f, 1.f);
-				float g = random_scalar(0.f, 1.f);
-				float b = random_scalar(0.f, 1.f);
+				float r = randf(0.f, 1.f);
+				float g = randf(0.f, 1.f);
+				float b = randf(0.f, 1.f);
 
 				Colour colour = { r, g, b, 0.6f };
 
-				vec3 center = Zero3;
+				vec3 center = vec3(0.f);
 
 				for(int v = 0; v < tile->polys[p].vertCount; ++v)
 				{
@@ -160,7 +160,7 @@ using namespace mud; namespace toy
 	{
 		NavmeshShapeDeclaration()
 		{
-			declare_shape<NavmeshShape>(DispatchDrawProcShape::me);
+			decl_shape<NavmeshShape>(DispatchDrawProcShape::me);
 		}
 	};
 
@@ -208,15 +208,15 @@ using namespace mud; namespace toy
 			if(geom.m_vertices.empty())
 				return;
 
-			printf("INFO: Updating Navmesh geometry block with %zu vertices\n", geom.m_vertices.size());
+			printf("[info] Updating Navmesh geometry block with %zu vertices\n", geom.m_vertices.size());
 
 			ShapeIndex offset = ShapeIndex(m_geometry.m_vertices.size());
 
 			for(const Vertex& vertex : geom.m_vertices)
-				m_geometry.m_vertices.emplace_back(Vertex{ spatial.m_position + vertex.m_position });
+				m_geometry.m_vertices.push_back({ spatial.m_position + vertex.m_position });
 
 			for(const Tri& tri : geom.m_triangles)
-				m_geometry.m_triangles.push_back(Tri{ ShapeIndex(offset + tri.a), ShapeIndex(offset + tri.b), ShapeIndex(offset + tri.c) });
+				m_geometry.m_triangles.push_back({ ShapeIndex(offset + tri.a), ShapeIndex(offset + tri.b), ShapeIndex(offset + tri.c) });
 
 			m_dirty = true;
 		}
@@ -281,10 +281,10 @@ using namespace mud; namespace toy
 
 	void Navmesh::_save(const char* path, const dtNavMesh* mesh)
 	{
-		if (!mesh) return;
+		if(!mesh) return;
 	
 		FILE* fp = fopen(path, "wb");
-		if (!fp)
+		if(!fp)
 			return;
 	
 		// Array header.
@@ -292,20 +292,20 @@ using namespace mud; namespace toy
 		header.magic = NAVMESHSET_MAGIC;
 		header.version = NAVMESHSET_VERSION;
 		header.numTiles = 0;
-		for (int i = 0; i < mesh->getMaxTiles(); ++i)
+		for(int i = 0; i < mesh->getMaxTiles(); ++i)
 		{
 			const dtMeshTile* tile = mesh->getTile(i);
-			if (!tile || !tile->header || !tile->dataSize) continue;
+			if(!tile || !tile->header || !tile->dataSize) continue;
 			header.numTiles++;
 		}
 		memcpy(&header.params, mesh->getParams(), sizeof(dtNavMeshParams));
 		fwrite(&header, sizeof(NavmeshSetHeader), 1, fp);
 
 		// Array tiles.
-		for (int i = 0; i < mesh->getMaxTiles(); ++i)
+		for(int i = 0; i < mesh->getMaxTiles(); ++i)
 		{
 			const dtMeshTile* tile = mesh->getTile(i);
-			if (!tile || !tile->header || !tile->dataSize) continue;
+			if(!tile || !tile->header || !tile->dataSize) continue;
 
 			NavmeshTileHeader tileHeader;
 			tileHeader.tileRef = mesh->getTileRef(tile);
@@ -321,45 +321,45 @@ using namespace mud; namespace toy
 	dtNavMesh* Navmesh::_load(const char* path)
 	{
 		FILE* fp = fopen(path, "rb");
-		if (!fp) return 0;
+		if(!fp) return 0;
 	
 		// Read header.
 		NavmeshSetHeader header;
 		fread(&header, sizeof(NavmeshSetHeader), 1, fp);
-		if (header.magic != NAVMESHSET_MAGIC)
+		if(header.magic != NAVMESHSET_MAGIC)
 		{
 			fclose(fp);
 			return 0;
 		}
-		if (header.version != NAVMESHSET_VERSION)
+		if(header.version != NAVMESHSET_VERSION)
 		{
 			fclose(fp);
 			return 0;
 		}
 	
 		dtNavMesh* mesh = dtAllocNavMesh();
-		if (!mesh)
+		if(!mesh)
 		{
 			fclose(fp);
 			return 0;
 		}
 		dtStatus status = mesh->init(&header.params);
-		if (dtStatusFailed(status))
+		if(dtStatusFailed(status))
 		{
 			fclose(fp);
 			return 0;
 		}
 		
 		// Read tiles.
-		for (int i = 0; i < header.numTiles; ++i)
+		for(int i = 0; i < header.numTiles; ++i)
 		{
 			NavmeshTileHeader tileHeader;
 			fread(&tileHeader, sizeof(tileHeader), 1, fp);
-			if (!tileHeader.tileRef || !tileHeader.dataSize)
+			if(!tileHeader.tileRef || !tileHeader.dataSize)
 				break;
 
 			unsigned char* data = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
-			if (!data) break;
+			if(!data) break;
 			memset(data, 0, tileHeader.dataSize);
 			fread(data, tileHeader.dataSize, 1, fp);
 		
@@ -376,5 +376,5 @@ using namespace mud; namespace toy
 		, m_navmesh(navmesh)
 	{}
 
-	object<Shape> NavmeshShape::clone() const { return make_object<NavmeshShape>(m_navmesh); }
+	object<Shape> NavmeshShape::clone() const { return oconstruct<NavmeshShape>(m_navmesh); }
 }

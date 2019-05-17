@@ -8,7 +8,7 @@
 #include <core/Forward.h>
 #include <core/Physic/Medium.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT SolidMedium final : public Medium
 	{

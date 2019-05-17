@@ -3,20 +3,20 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
+#ifdef TWO_MODULES
+module toy.core
+#else
+#include <ecs/ECS.hpp>
 #include <core/Types.h>
 #include <core/World/Origin.h>
+#endif
 
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Origin::create(ECS& ecs, World& world)
 	{
-		Entity entity = { ecs.create<Spatial, Origin>(), ecs.m_index };
-		ecs.set(entity, Spatial(world, HSpatial(), Zero3, ZeroQuat));
-		ecs.set(entity, Origin(entity));
+		Entity entity = ecs.create<Spatial, Origin>();
+		ecs.set(entity, Spatial(world, HSpatial(), vec3(0.f), ZeroQuat));
 		return entity;
 	}
-
-	Origin::Origin(HSpatial spatial)
-		: m_spatial(spatial)
-	{}
 }

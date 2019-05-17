@@ -1,9 +1,12 @@
+#ifndef MUD_SHADER_SKELETON
+#define MUD_SHADER_SKELETON
+
 #include <common.sh>
 
 #define SKELETON_TEXTURE_WIDTH 256
 #define SKELETON_TEXTURE_HEIGHT 4
 
-SAMPLER2D(s_skeleton, 5);
+SAMPLER2D(s_skeleton, 15);
 
 #ifdef NO_TEXEL_FETCH
 #define texelFetch(_sampler, _coord, _level) texture2DLod(_sampler, vec2(_coord) / vec2(float(SKELETON_TEXTURE_WIDTH), float(SKELETON_TEXTURE_HEIGHT)), _level)
@@ -37,4 +40,6 @@ mat4 skeleton_matrix(sampler2D skeleton_texture, ivec4 bone_indices, vec4 bone_w
 
 #ifdef NO_TEXEL_FETCH
 #undef texelFetch
+#endif
+
 #endif

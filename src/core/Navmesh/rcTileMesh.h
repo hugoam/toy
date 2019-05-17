@@ -18,9 +18,8 @@
 #ifndef RECASTSAMPLETILEMESH_H
 #define RECASTSAMPLETILEMESH_H
 
-#include <infra/NonCopy.h>
 #include <type/Unique.h>
-#include <geom/Mesh.h>
+#include <geom/Geometry.h>
 #include <core/Navmesh/NavGeom.h>
 
 struct rcHeightfield;
@@ -40,7 +39,7 @@ class dtNavMeshQuery;
 class dtQueryFilter;
 class dtNavMesh;
 
-using namespace mud; namespace toy
+namespace toy
 {
 	enum SamplePolyAreas : unsigned int
 	{
@@ -61,7 +60,7 @@ using namespace mud; namespace toy
 		SAMPLE_POLYFLAGS_ALL = 0xffff		// All abilities.
 	};
 
-	class TOY_CORE_EXPORT rcTileMesh : public NonCopy
+	class TOY_CORE_EXPORT rcTileMesh
 	{
 	public:
 		float m_cellSize = 0.3f;

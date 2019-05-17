@@ -3,24 +3,27 @@
 //  See the attached LICENSE.txt file or https://www.gnu.org/licenses/gpl-3.0.en.html.
 //  This notice and the license may not be removed or altered from any source distribution.
 
-
+#ifdef TWO_MODULES
+module toy.block
+#else
+#include <math/Grid.hpp>
+#include <geom/Shapes.h>
+#include <ecs/Complex.h>
+#include <ecs/ECS.hpp>
+#include <core/Spatial/Spatial.h>
+#include <core/World/World.hpp>
+#include <core/World/Section.h>
 #include <block/Types.h>
 #include <block/Sector.h>
-
-#include <ecs/Complex.h>
-#include <core/Spatial/Spatial.h>
-#include <core/World/World.h>
-
 #include <block/Element.h>
 #include <block/Block.h>
+#endif
 
-#include <core/World/Section.h>
-
-using namespace mud; namespace toy
+namespace toy
 {
 	Entity Sector::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& coordinate, const vec3& size)
 	{
-		Entity entity = { ecs.create<Spatial, WorldPage, Navblock, Sector>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, WorldPage, Navblock, Sector>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
 		ecs.set(entity, WorldPage(HSpatial(entity), true, size));
 		ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
@@ -55,7 +58,7 @@ using namespace mud; namespace toy
 		attr_ vector<Element*> m_elements;
 
 		attr_ vector<Sector*> m_sectors;
-		attr_ Grid<Block*> m_blocks;
+		attr_ vector2d<Block*> m_blocks;
 
 	};
 
@@ -67,7 +70,7 @@ using namespace mud; namespace toy
 		grid.m_center_offset.y = 0.f;
 
 		vector<uvec3> coords;
-		mud::grid(grid_subdiv, coords);
+		two::grid(grid_subdiv, coords);
 
 		vector<Block*> blocks;
 
@@ -76,7 +79,7 @@ using namespace mud; namespace toy
 			vec3 position = grid_center(coord, grid.m_sector_size) - grid.m_center_offset;
 
 			Sector& sector = construct<Sector>(world.origin(), position, coord, grid.m_sector_size);
-			Block& block = construct<Block>(sector.m_spatial, sector.m_world_page, Zero3, nullptr, 0, grid.m_sector_size);
+			Block& block = construct<Block>(sector.m_spatial, sector.m_world_page, vec3(0.f), nullptr, 0, grid.m_sector_size);
 
 			grid.m_sectors.push_back(&sector);
 			blocks.push_back(&block);
@@ -88,7 +91,7 @@ using namespace mud; namespace toy
 
 	Entity Tileblock::create(ECS& ecs, HSpatial parent, const vec3& position, const uvec3& size, const vec3& tile_scale, WaveTileset& tileset)
 	{
-		Entity entity = { ecs.create<Spatial, WorldPage, Navblock, Tileblock>(), ecs.m_index };
+		Entity entity = ecs.create<Spatial, WorldPage, Navblock, Tileblock>();
 		ecs.set(entity, Spatial(parent, position, ZeroQuat));
 		ecs.set(entity, WorldPage(HSpatial(entity), true, vec3(size)));
 		ecs.set(entity, Navblock(HSpatial(entity), HWorldPage(entity), as<Navmesh>(parent->m_world->m_complex)));
@@ -126,13 +129,13 @@ using namespace mud; namespace toy
 		return !outside;
 	}
 
-	HTileblock generate_block(GfxSystem& gfx_system, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
+	HTileblock generate_block(GfxSystem& gfx, WaveTileset& tileset, HSpatial origin, const ivec2& coord, const uvec3& block_subdiv, const vec3& tile_scale, bool from_file)
 	{
 		vec3 position = vec3(to_xz(coord)) * vec3(block_subdiv) * tile_scale;
 		HTileblock block = construct<Tileblock>(origin, position, block_subdiv, tile_scale, tileset);
 
 		if(block->m_wfc_block.m_tile_models.empty())
-			block->m_wfc_block.load_models(gfx_system, from_file);
+			block->m_wfc_block.load_models(gfx, from_file);
 
 		return block;
 	}
@@ -156,7 +159,7 @@ using namespace mud; namespace toy
 				TileModel& tile = tileblock.m_tile_models[index];
 				if(tile.m_model)
 				{
-					vec3 position = tileblock.to_position({ uint(x), uint(y), uint(z) }) - tileblock.m_position + Y3 * 0.5f * tileblock.m_scale;
+					vec3 position = tileblock.to_position({ uint(x), uint(y), uint(z) }) - tileblock.m_position + y3 * 0.5f * tileblock.m_scale;
 					cubes.push_back({ position, tileblock.m_scale / 2.f });
 					shapes.push_back({ Symbol(), &cubes.back(), PLAIN });
 				}
@@ -172,9 +175,9 @@ using namespace mud; namespace toy
 
 		geometry.allocate(size.vertex_count, size.index_count);
 
-		array<Vertex> vertices = geometry.vertices();
-		array<uint32_t> indices = geometry.indices();
-		MeshAdapter data(Vertex::vertex_format, vertices.data(), vertices.size(), indices.data(), indices.size(), true);
+		span<Vertex> vertices = geometry.vertices();
+		span<uint32_t> indices = geometry.indices();
+		MeshAdapter data(Vertex::vertex_format, { vertices.data(), vertices.size() }, { indices.data(), indices.size() }, true);
 
 		for(const ProcShape& shape : shapes)
 		{

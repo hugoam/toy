@@ -6,11 +6,10 @@
 #pragma once
 
 #include <stl/string.h>
-#include <infra/NonCopy.h>
 #include <core/Forward.h>
 #include <core/Spatial/Spatial.h>
 
-using namespace mud; namespace toy
+namespace toy
 {
 	class refl_ TOY_CORE_EXPORT ComponentPool
 	{
