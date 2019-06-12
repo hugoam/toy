@@ -62,7 +62,7 @@ end
 
 toy = {}
 
---                           base   name        root path    sub path   self decl       usage decl      reflect     dependencies
+--                       base   name        root path    sub path   self decl       usage decl      reflect     dependencies
 toy.util        = module("toy", "util",     TOY_SRC_DIR, "util",    nil,            nil,            true,       { two.type, two.math })
 toy.core        = module("toy", "core",     TOY_SRC_DIR, "core",    toy_core,       uses_toy_core,  true,       { detour, two.type, two.jobs, two.ecs, two.math, two.geom, two.lang, toy.util })
 if _OPTIONS["sound"] then
@@ -73,6 +73,7 @@ end
 toy.edit        = module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,            nil,            true,       { two.type, two.ui, two.tool, toy.util, toy.core, toy.visu }) -- table.union(two.all, 
 toy.block       = module("toy", "block",    TOY_SRC_DIR, "block",   nil,            nil,            true,       { two.type, two.math, two.wfc.gfx, toy.core, toy.visu, toy.edit })
 toy.shell       = module("toy", "shell",    TOY_SRC_DIR, "shell",   toy_shell,      nil,            true,       table.union(two.two, { toy.core, toy.visu, toy.edit, toy.block }))
+toy.misc        = module("toy", "misc",     TOY_SRC_DIR, "misc",    nil,            nil,            true,       { two.type, two.math, toy.core })
 
 toy.toy = { toy.util, toy.core, toy.visu, toy.edit, toy.block, toy.shell }
 
