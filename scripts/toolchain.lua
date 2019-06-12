@@ -1,5 +1,10 @@
 -- toy toolchain
 
+newoption {
+    trigger = "misc",
+    description = "Use toy misc module",
+}
+
 TOY_DIR        = path.getabsolute("..")
 TWO_DIR        = path.join(TOY_DIR, "two")
 

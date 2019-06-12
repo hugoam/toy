@@ -73,9 +73,14 @@ end
 toy.edit        = module("toy", "edit",     TOY_SRC_DIR, "edit",    nil,            nil,            true,       { two.type, two.ui, two.tool, toy.util, toy.core, toy.visu }) -- table.union(two.all, 
 toy.block       = module("toy", "block",    TOY_SRC_DIR, "block",   nil,            nil,            true,       { two.type, two.math, two.wfc.gfx, toy.core, toy.visu, toy.edit })
 toy.shell       = module("toy", "shell",    TOY_SRC_DIR, "shell",   toy_shell,      nil,            true,       table.union(two.two, { toy.core, toy.visu, toy.edit, toy.block }))
-toy.misc        = module("toy", "misc",     TOY_SRC_DIR, "misc",    nil,            nil,            true,       { two.type, two.math, toy.core })
+if _OPTIONS["misc"] then
+    toy.misc    = module("toy", "misc",     TOY_SRC_DIR, "misc",    nil,            nil,            true,       { two.type, two.math, toy.core })
+end
 
 toy.toy = { toy.util, toy.core, toy.visu, toy.edit, toy.block, toy.shell }
+if _OPTIONS["misc"] then
+    table.insert(toy.toy, toy.misc)
+end
 
 function toy_libs()
     if _OPTIONS["unity"] then
