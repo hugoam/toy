@@ -1,19 +1,19 @@
 -- toy engine
 
 solution "toy"
-	configurations {
-		"Debug",
-		"Release",
-	}
+    configurations {
+        "Debug",
+        "Release",
+    }
 
-	platforms {
-		"x32",
-		"x64"
-	}
+    platforms {
+        --"x32",
+        "x64"
+    }
 
-	language "C++"
-    
-    
+    language "C++"
+
+
 PROJECT_DIR = path.getabsolute("..")
 BUILD_DIR = path.join(path.getabsolute(".."), "build")
 
