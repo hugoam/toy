@@ -1,5 +1,5 @@
-#ifndef MUD_SHADER_COMMON
-#define MUD_SHADER_COMMON
+#ifndef TWO_SHADER_COMMON
+#define TWO_SHADER_COMMON
 
 #include <bgfx_shader.sh>
 #include <srgb.sh>
@@ -183,7 +183,7 @@ mat4 mat4_from_vec4(vec4 v0, vec4 v1, vec4 v2, vec4 v3)
     mat[1] = v1;
     mat[2] = v2;
     mat[3] = v3;
-#if BGFX_SHADER_LANGUAGE_HLSL
+#if !BGFX_SHADER_LANGUAGE_GLSL
     return transpose(mat);
 #else
     return mat;

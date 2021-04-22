@@ -28,6 +28,8 @@ $output v_view, v_position, v_normal, v_tangent, v_color, v_uv0, v_uv1, v_binorm
 #define a_morph2 a_texcoord4
 #define a_morph3 a_texcoord5
 
+//#define DEBUG_BONES
+
 void main()
 {
 #include "modelview.sh"
@@ -70,7 +72,6 @@ void main()
     vec3 binormal = normalize(a_tangent.a * cross(a_normal, a_tangent.xyz));
     v_binormal = normalize(mul(normalModelView, vec4(binormal, 0.0)).xyz);
 
-//#define DEBUG_BONES
 #if defined SKELETON && defined DEBUG_BONES 
     vec3 hsv = vec3(float(a_indices.x) / 64.0, 1.0, 1.0);
     v_color.rgb = hsv_to_rgb(hsv);

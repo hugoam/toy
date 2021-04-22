@@ -1,5 +1,5 @@
-#ifndef MUD_SHADER_SHADOW
-#define MUD_SHADER_SHADOW
+#ifndef TWO_SHADER_SHADOW
+#define TWO_SHADER_SHADOW
 
 #include <encode.sh>
 #include <pbr/light.sh>
@@ -9,14 +9,12 @@
 #define PCF5 2
 #define PCF13 3
 
-#if 0 // PCF_LEVEL != HARD_PCF
+#ifdef SHADOWS_COMPARE // PCF_LEVEL != HARD_PCF
     SAMPLER2DSHADOW(s_shadow_atlas, 11);
 #define samplerShadow sampler2DShadow
-#define SHADOW_SAMPLER 1
 #else
     SAMPLER2D(s_shadow_atlas, 11);
 #define samplerShadow sampler2D
-#define SHADOW_SAMPLER 0
 #endif
 
 uniform vec4 u_pcf_p0;
@@ -35,9 +33,12 @@ uniform vec4 u_csm_p0;
 
 float texture2DCompare(samplerShadow depth, vec2 uv, float compare)
 {
-#if !SHADOW_SAMPLER
+#ifndef SHADOWS_COMPARE
+#ifdef SHADOWS_PACKED
     return step(compare, unpackRgbaToFloat(texture2D(depth, uv)));
-    //return step(compare, texture2D(depth, uv).r);
+#else
+    return step(compare, texture2D(depth, uv).r);
+#endif
 #else
     return shadow2D(depth, vec3(uv, compare));
 #endif
@@ -61,7 +62,7 @@ float texture2DShadowLerp(samplerShadow depth, vec2 size, vec2 uv, float compare
 
 float sample_shadow(samplerShadow shadowmap, vec4 coord, float bias)
 {
-#if SHADOW_SAMPLER
+#ifdef SHADOWS_COMPARE
     return shadow2D(shadowmap, vec3(coord.xy / coord.w, (coord.z - bias) / coord.w));
 #else
 
@@ -75,10 +76,15 @@ float sample_shadow(samplerShadow shadowmap, vec4 coord, float bias)
         return 1.0;
     }
 
-    float receiver = (coord.z - bias) / coord.w;
-    float occluder = texture2D(shadowmap, uv).r;
+    float depth = (coord.z - bias) / coord.w;
 
-    return step(receiver, occluder);
+#ifdef SHADOWS_PACKED
+    float occluder = unpackRgbaToFloat(texture2D(shadowmap, uv));
+#else
+    float occluder = texture2D(shadowmap, uv).r;
+#endif
+
+    return step(depth, occluder);
 #endif
 }
 
@@ -115,36 +121,37 @@ float sample_shadow_pcf(samplerShadow shadowmap, vec4 coord, float bias, vec2 te
 	vec2 pos = coord.xy / coord.w;
     float depth = (coord.z - bias) / coord.w;
 
+    if (depth > 1.0)
+    {
+        return 1.0;
+    }
+
 #if PCF_LEVEL == NO_PCF
-#if SHADOW_SAMPLER
-	return shadow2D(shadowmap, vec3(pos, depth));
-#else
-    return step(depth, texture2D(shadowmap, pos).r);
-#endif
-    //return sample_shadow(shadowmap, coord, bias);
+	//return sample_shadow(shadowmap, coord, bias);
+	return texture2DCompare(shadowmap, pos, depth);
 #elif PCF_LEVEL == HARD_PCF
     return sample_shadow_hard_pcf(shadowmap, coord, bias, texel_size);
 #elif PCF_LEVEL == PCF5
-	float avg = shadow2D(shadowmap, vec3(pos, depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(texel_size.x, 0.0), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(-texel_size.x, 0.0), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(0.0,  texel_size.y), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(0.0, -texel_size.y), depth));
+	float avg = texture2DCompare(shadowmap, pos, depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(texel_size.x, 0.0), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(-texel_size.x, 0.0), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(0.0,  texel_size.y), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(0.0, -texel_size.y), depth);
 	return avg * (1.0 / 5.0);
 #elif PCF_LEVEL == PCF13
-	float avg = shadow2D(shadowmap, vec3(pos, depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(texel_size.x, 0.0), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(-texel_size.x, 0.0), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(0.0,  texel_size.y), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(0.0, -texel_size.y), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(texel_size.x,  texel_size.y), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(-texel_size.x,  texel_size.y), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(texel_size.x, -texel_size.y), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(-texel_size.x, -texel_size.y), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(texel_size.x * 2.0, 0.0), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(-texel_size.x * 2.0, 0.0), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(0.0,  texel_size.y * 2.0), depth));
-	avg += shadow2D(shadowmap, vec3(pos + vec2(0.0, -texel_size.y * 2.0), depth));
+	float avg = texture2DCompare(shadowmap, pos, depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(texel_size.x, 0.0), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(-texel_size.x, 0.0), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(0.0,  texel_size.y), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(0.0, -texel_size.y), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(texel_size.x,  texel_size.y), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(-texel_size.x,  texel_size.y), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(texel_size.x, -texel_size.y), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(-texel_size.x, -texel_size.y), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(texel_size.x * 2.0, 0.0), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(-texel_size.x * 2.0, 0.0), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(0.0,  texel_size.y * 2.0), depth);
+	avg += texture2DCompare(shadowmap, pos + vec2(0.0, -texel_size.y * 2.0), depth);
 	return avg * (1.0 / 13.0);
 #endif
 }
@@ -162,22 +169,31 @@ vec3 debug_sample_cascade(CSMShadow csm, int index, vec3 frag, float bias, vec2 
     vec4 coord = mul(u_shadow_matrix[matindex], vec4(frag, 1.0));
 	vec2 pos = coord.xy / coord.w;
     float depth = (coord.z - bias) / coord.w;
-#if !SHADOW_SAMPLER
+#ifndef SHADOWS_COMPARE
+    #ifdef SHADOWS_PACKED
+        return vec3_splat(unpackRgbaToFloat(texture2D(s_shadow_atlas, pos)));
+    #else
+        return vec3_splat(texture2D(s_shadow_atlas, pos).r);
+    #endif
     return vec3(pos, depth) * vec3_splat(sample_shadow(s_shadow_atlas, vec4(pos, depth, 0.0), 0.0));
 #else
     return vec3(pos, depth) * vec3_splat(shadow2D(s_shadow_atlas, vec3(pos, depth)));
 #endif
 }
 
-float shadow_csm(CSMShadow csm, vec3 frag, float w)
+int select_cascade(CSMShadow csm, float w)
 {
     // alternative / todo : transform to all shadowmap spaces in the vertex shader and select here
-
     vec4 comparison = vec4(greaterThan(vec4_splat(w), csm.splits));
     float findex = dot(vec4(float(csm.count > 0), float(csm.count > 1), float(csm.count > 2), float(csm.count > 3)), comparison);
     int cascade = int(min(findex, float(csm.count) - 1.0));
+    return cascade;
+}
 
-    float shadow_bias = 0.0;
+float shadow_csm(CSMShadow csm, vec3 frag, float w)
+{
+    int cascade = select_cascade(csm, w);
+    float shadow_bias = 0.0012;
     float shadowmap = sample_cascade(csm, cascade, frag, shadow_bias, u_csm_atlas_pixel_size);
 
 #ifdef CSM_BLEND
@@ -228,7 +244,7 @@ vec2 atlasCubeUV(vec2 slot, vec2 subdiv, vec3 v, float texelSizeY)
 {
     vec2 side = cubeUV(v, texelSizeY);
     vec2 uv = slot + side * subdiv * vec2(4.0, 2.0);
-#if !BGFX_SHADER_LANGUAGE_HLSL
+#if BGFX_SHADER_LANGUAGE_GLSL
     uv.y = 1.0 - uv.y;
 #endif
     return uv;

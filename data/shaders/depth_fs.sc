@@ -1,6 +1,7 @@
 $input v_position, v_uv0
 
 #include <common.sh>
+#include <encode.sh>
 
 void main()
 {
@@ -12,4 +13,7 @@ void main()
 #include "fs_alphatest.sh"
 
     gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+
+    float depth = gl_FragCoord.z;
+    gl_FragColor = packFloatToRgba(depth);
 }

@@ -1,6 +1,6 @@
 
-uint cluster_index = cluster_index(fragment.coord.xyz);
-LightCluster cluster = read_cluster(cluster_index);
+uint index = cluster_index(fragment.coord.xyz);
+LightCluster cluster = read_cluster(index);
 
 uint offset = cluster.record_offset;
 

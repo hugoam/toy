@@ -1,5 +1,5 @@
-#ifndef MUD_SHADER_GI_LIGHT
-#define MUD_SHADER_GI_LIGHT
+#ifndef TWO_SHADER_GI_LIGHT
+#define TWO_SHADER_GI_LIGHT
 
 #include <common.sh>
 #include <pbr/pbr.sh>
@@ -71,8 +71,9 @@ vec3 compute_voxel_lights(vec3 voxel_position, vec3 voxel_color, vec3 voxel_norm
         int index = int(u_light_indices[i][LIGHT_DIRECT]);
         diffuse += accumulate_light(voxel_position, voxel_color, voxel_normal, index, LIGHT_DIRECT);
 #ifdef CSM_SHADOW
-        diffuse *= sample_cascade(0, voxel_position, 0.0, u_csm_atlas_pixel_size);
-        //diffuse = debug_sample_cascade(0, voxel_position, 0.0, u_csm_atlas_pixel_size);
+        CSMShadow csm = read_csm_shadow(int(u_light_indices[0][LIGHT_DIRECT]));
+        diffuse *= sample_cascade(csm, 0, voxel_position, 0.0, u_csm_atlas_pixel_size);
+        //diffuse = debug_sample_cascade(csm, 0, voxel_position, 0.0, u_csm_atlas_pixel_size);
 #endif
     }
     

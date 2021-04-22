@@ -36,7 +36,7 @@ vec4 a_tangent      : TANGENT;
 vec2 a_texcoord0    : TEXCOORD0;
 vec2 a_texcoord1    : TEXCOORD1;
 vec4 a_weight       : BLENDWEIGHT;
-ivec4 a_indices     : BLENDINDICES;
+uvec4 a_indices     : BLENDINDICES;
 vec3 a_texcoord2    : TEXCOORD2;
 vec3 a_texcoord3    : TEXCOORD3;
 vec3 a_texcoord4    : TEXCOORD4;

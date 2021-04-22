@@ -1,5 +1,5 @@
-#ifndef MUD_SHADER_BSDF_THREE
-#define MUD_SHADER_BSDF_THREE
+#ifndef TWO_SHADER_BSDF_THREE
+#define TWO_SHADER_BSDF_THREE
 
 // Analytical approximation of the DFG LUT, one half of the
 // split-sum approximation used in indirect specular lighting.

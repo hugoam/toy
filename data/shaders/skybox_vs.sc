@@ -16,8 +16,6 @@ void main()
     uvndc.y = -uvndc.y;
 #endif
 
-    float aspect = u_screen_size.x / u_screen_size.y;
-    
     float height = tan(radians(u_fov) * 0.5);
     float width = height * u_aspect;
     vec2 corner = uvndc * vec2(width, height);

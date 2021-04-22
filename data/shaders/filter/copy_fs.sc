@@ -2,6 +2,7 @@ $input v_uv0
 
 #include <common.sh>
 #include <filter.sh>
+#include <encode.sh>
 #include <spherical.sh>
 
 #if defined SOURCE_DEPTH || defined UNPACK_DEPTH
@@ -28,7 +29,7 @@ void main()
 
 #ifdef UNPACK_DEPTH
     float depth = unpackRgbaToFloat(color);
-    color = vec4(vec3_splat(pow(depth, depth_value_pow), 1.0));
+    color = vec4(vec3_splat(pow(depth, depth_value_pow)), 1.0);
 #endif
 
 #ifdef TO_SRGB
