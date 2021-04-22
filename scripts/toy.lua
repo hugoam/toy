@@ -4,13 +4,13 @@
 -- glfw3 on ubuntu is installed as libglfw.so (and not libglfw3.so)
 -- if yacc is not found it will generate an empty glcpp-lexer.c file
 
+dofile(path.join(TWO_DIR, "scripts/two.lua"))
+
 if not _OPTIONS["compile-only"] then
     group "3rdparty"
     dofile(path.join(TOY_DIR, "scripts/3rdparty/bullet.lua"))
     dofile(path.join(TOY_DIR, "scripts/3rdparty/detour.lua"))
 end
-
-dofile(path.join(TWO_DIR, "scripts/two.lua"))
 
 function toy_core()
     includedirs {

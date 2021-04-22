@@ -6,7 +6,7 @@ newoption {
 }
 
 TOY_DIR        = path.getabsolute("..")
-TWO_DIR        = path.join(TOY_DIR, "two")
+TWO_DIR        = path.join(TOY_DIR, "..", "two")
 
 TOY_SRC_DIR         = path.join(TOY_DIR, "src")
 TOY_3RDPARTY_DIR    = path.join(TOY_DIR, "3rdparty")
