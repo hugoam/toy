@@ -7,28 +7,45 @@ addons:
     packages:
       - gcc-8
       - g++-8
+      - libgl1-mesa-dev
+      - libglu1-mesa-dev
       - xorg-dev
 
 dist: xenial
+
+before_script:
+  - git clone --depth 1 https://github.com/bkaradzic/bx ../bx
+  - git clone --depth 1 https://github.com/hugoam/bimg ../bimg
+  - git clone --depth 1 https://github.com/hugoam/bgfx ../bgfx
+  - git clone --depth 1 https://github.com/hugoam/two ../two
 
 matrix:
   include:
     - os: linux
       compiler: gcc
+      script:
+        - bin/linux/genie --compile-only --gcc=linux-gcc-8 gmake
+        - cd build/projects/gmake-linux-gcc-8
+        - time make config=debug64
     - os: linux
       compiler: clang
+      script:
+        - bin/linux/genie --compile-only --gcc=linux-clang gmake
+        - cd build/projects/gmake-linux-clang
+        - time make config=debug64
     - os: osx
       compiler: clang
       osx_image: xcode10
+      script:
+        - bin/darwin/genie --compile-only --gcc=osx gmake
+        - cd build/projects/gmake-osx
+        - time make config=debug64
+    - os: windows
+      env:
+        - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
+      script:
+        - bin/windows/genie --compile-only vs2017
+        - cd build/projects/vs2017
+        - export PATH=$MSBUILD_PATH:$PATH
+        - MSBuild.exe two.sln //m //nologo //verbosity:minimal //p:Configuration=Debug //p:Platform=x64
 
-install:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export GENIE_FOLDER="linux"; fi
-  - if [ "$CXX" = "g++" ]; then export TOOLCHAIN="linux-gcc-8" GMAKE_FOLDER="gmake-linux"; fi
-  - if [ "$CXX" = "clang++" ]; then export TOOLCHAIN="linux-clang" GMAKE_FOLDER="gmake-linux-clang"; fi
-
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then export GENIE_FOLDER="darwin" TOOLCHAIN="osx" GMAKE_FOLDER="gmake-osx"; fi
-  
-script:
-  - bin/$GENIE_FOLDER/genie --compile-only --gcc=$TOOLCHAIN gmake
-  - cd build/projects/$GMAKE_FOLDER
-  - time make config=debug64 toy
