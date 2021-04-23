@@ -19,22 +19,22 @@
 
 namespace two
 {
-	template struct OwnedHandle<toy::Collider>;
-	template struct OwnedHandle<toy::Solid>;
-	template struct SparseHandle<toy::Collider>;
-	template struct SparseHandle<toy::Solid>;
+	template struct TOY_CORE_EXPORT OwnedHandle<toy::Collider>;
+	template struct TOY_CORE_EXPORT OwnedHandle<toy::Solid>;
+	template struct TOY_CORE_EXPORT SparseHandle<toy::Collider>;
+	template struct TOY_CORE_EXPORT SparseHandle<toy::Solid>;
 
-	template struct ComponentHandle<toy::Spatial>;
-	template struct ComponentHandle<toy::Movable>;
-	template struct ComponentHandle<toy::Camera>;
-	template struct ComponentHandle<toy::Emitter>;
-	template struct ComponentHandle<toy::Receptor>;
-	template struct ComponentHandle<toy::EntityScript>;
-	template struct ComponentHandle<toy::WorldPage>;
-	template struct ComponentHandle<toy::Navblock>;
-	//emplate struct ComponentHandle<toy::Collider>;
-	//emplate struct ComponentHandle<toy::Solid>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Spatial>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Movable>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Camera>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Emitter>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Receptor>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::EntityScript>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::WorldPage>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Navblock>;
+	//emplate struct TOY_CORE_EXPORT ComponentHandle<toy::Collider>;
+	//emplate struct TOY_CORE_EXPORT ComponentHandle<toy::Solid>;
 
-	template struct ComponentHandle<toy::Origin>;
-	template struct ComponentHandle<toy::Waypoint>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Origin>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Waypoint>;
 }

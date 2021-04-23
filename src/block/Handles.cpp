@@ -11,9 +11,9 @@
 
 namespace two
 {
-	template struct ComponentHandle<toy::Block>;
-	template struct ComponentHandle<toy::Chunk>;
-	template struct ComponentHandle<toy::Heap>;
-	template struct ComponentHandle<toy::Sector>;
-	template struct ComponentHandle<toy::Tileblock>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Block>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Chunk>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Heap>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Sector>;
+	template struct TOY_CORE_EXPORT ComponentHandle<toy::Tileblock>;
 }
