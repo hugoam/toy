@@ -17,7 +17,7 @@ before_script:
   - git clone --depth 1 https://github.com/bkaradzic/bx ../bx
   - git clone --depth 1 https://github.com/hugoam/bimg ../bimg
   - git clone --depth 1 https://github.com/hugoam/bgfx ../bgfx
-  - git clone --depth 1 https://github.com/hugoam/two ../two
+  - git clone --depth 1 --recurse-submodules -j8 https://github.com/hugoam/two ../two
 
 matrix:
   include:
