@@ -236,6 +236,7 @@ namespace toy
 		outliner_graph(*self.m_body, origin, selection);
 	}
 
+#ifdef _DEBUG
 	void graphics_debug_section(Widget& parent, Dockspace& dockspace, Editor& editor)
 	{
 		UNUSED(dockspace);
@@ -259,6 +260,7 @@ namespace toy
 			}
 		}
 	}
+#endif
 	
 	Docksystem& editor_docksystem()
 	{

@@ -12,6 +12,7 @@
 #include <geom/ShapesComplex.h>
 #include <geom/Geometry.h>
 #include <geom/Geom.h>
+#include <geom/Geom.hpp>
 #include <geom/Primitive.h>
 
 #include <core/World/World.h>
