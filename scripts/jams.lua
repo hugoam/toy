@@ -27,7 +27,7 @@ script      = module(nil, "_wren",      path.join(TOY_DIR, "jams"), "wren",     
 godot       = module(nil, "_godot",     path.join(TOY_DIR, "jams"), "godot",    nil, uses_jam, true, toy.all)
 
 function preload_example_folder(name)
-    configuration { "asmjs" }
+    configuration { "wasm*" }
         linkoptions {
             "--preload-file ../../../data/examples/" .. name .. "@data/",
         }
@@ -60,7 +60,7 @@ project "ex_boids"
         path.join(TOY_3RDPARTY_DIR, "hashmap"),
     }
     
-    configuration { "not asmjs" }
+    configuration { "not wasm*" }
         defines { "BOIDS_SIMD" }
         
     configuration { "vs*" }
@@ -69,7 +69,7 @@ project "ex_boids"
 	configuration { "mingw* or linux or osx" }
         buildoptions { "-msse4.1" }
         
-    configuration { "asmjs" }
+    configuration { "wasm*" }
         --defines { "BOIDS_SIMD" }
         --buildoptions { "-msse4.1" }
     

@@ -15,15 +15,15 @@ detour = dep(nil, "detour")
         path.join(TOY_3RDPARTY_DIR, "recast", "Detour", "Source", "*.cpp"),
 	}
     
-    configuration { "mingw* or linux or osx or asmjs" }
+    configuration { "mingw* or linux or osx or wasm*" }
         buildoptions {
         }
         
-    configuration { "osx or *-clang* or asmjs" }
+    configuration { "osx or *-clang* or wasm*" }
         buildoptions {
         }
         
-    configuration { "vs*", "not asmjs" }
+    configuration { "vs*", "not wasm*" }
         buildoptions {
         }
     

@@ -16,12 +16,12 @@ dofile(path.join(TWO_DIR, "scripts/toolchain.lua"))
 function toy_binary_config()
     two_binary_config()
     
-    configuration { "not osx", "not asmjs" }
+    configuration { "not osx", "not wasm*" }
         defines {
             "TOY_RESOURCE_PATH=\"" .. path.join(TOY_DIR, "data") .. "\"",
         }
 
-    configuration { "osx", "not asmjs" }
+    configuration { "osx", "not wasm*" }
         defines {
             -- might need to update GENie to remove that special case
             "TOY_RESOURCE_PATH=\\\"" .. path.join(TOY_DIR, "data") .. "\\\"",

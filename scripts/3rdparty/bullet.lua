@@ -24,7 +24,7 @@ function bullet_warnings()
             "/wd4702", -- warning C4702: unreachable code
         }
 
-    configuration { "mingw* or linux or osx or asmjs" }
+    configuration { "mingw* or linux or osx or wasm*" }
         buildoptions {
             "-Wno-strict-aliasing",
             "-Wno-unused-parameter",
@@ -33,7 +33,7 @@ function bullet_warnings()
             "-Wno-sign-compare",
         }
 
-    configuration { "osx or *-clang* or asmjs" }
+    configuration { "osx or *-clang* or wasm*" }
         buildoptions {
             "-Wno-undef",
         }
