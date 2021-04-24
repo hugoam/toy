@@ -7,7 +7,7 @@ solution "toy"
     }
 
     platforms {
-        --"x32",
+        "x32",
         "x64"
     }
 
