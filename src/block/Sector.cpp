@@ -8,6 +8,7 @@ module toy.block
 #else
 #include <math/Grid.hpp>
 #include <geom/Shapes.h>
+#include <geom/Primitive.hpp>
 #include <ecs/Complex.h>
 #include <ecs/ECS.hpp>
 #include <core/Spatial/Spatial.h>

@@ -9,6 +9,7 @@ module toy.visu
 #include <stl/algorithm.h>
 #include <pool/Pool.hpp>
 #include <pool/ObjectPool.hpp>
+#include <geom/Primitive.hpp>
 #include <ecs/ECS.hpp>
 #include <gfx/Node3.h>
 #include <gfx/Item.h>
