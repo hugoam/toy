@@ -1,6 +1,6 @@
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #include <refl/Module.h>
 #endif
 
@@ -8,7 +8,7 @@
 #include <block/Types.h>
 
 #ifndef TOY_BLOCK_REFL_EXPORT
-#define TOY_BLOCK_REFL_EXPORT MUD_IMPORT
+#define TOY_BLOCK_REFL_EXPORT TWO_IMPORT
 #endif
 
 namespace toy

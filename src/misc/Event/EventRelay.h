@@ -9,7 +9,7 @@
 #include <core/Forward.h>
 #include <core/Event/EventTube.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <set>
 #include <memory>
 #endif

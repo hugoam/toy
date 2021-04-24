@@ -2,12 +2,12 @@
 
 #include <05_character/Forward.h>
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
+#if !defined TWO_MODULES || defined TWO_OBJ_LIB
 #include <obj/Type.h>
 #include <obj/Vector.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <util/Types.h>
 #include <core/Types.h>
 #include <visu/Types.h>
@@ -16,7 +16,7 @@
 #include <shell/Types.h>
 #endif
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <string>
 #include <cstdint>
 #include <vector>

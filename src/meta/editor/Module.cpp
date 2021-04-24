@@ -1,12 +1,12 @@
 #include <infra/Cpp20.h>
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.editor;
 #else
 #include <meta/editor/Module.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <meta/editor/Convert.h>
 #endif
 #define TOY_EDITOR_REFLECTION_IMPL

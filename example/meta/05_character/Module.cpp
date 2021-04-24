@@ -1,12 +1,12 @@
 #include <infra/Cpp20.h>
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module ._05_character;
 #else
 #include <meta/05_character/Module.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <meta/05_character/Convert.h>
 #endif
 #define _05_CHARACTER_REFLECTION_IMPL

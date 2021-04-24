@@ -10,7 +10,7 @@
 #include <core/Store/Store.h>
 #include <core/Store/StoreObserver.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <stl/vector>
 #include <algorithm>
 #endif

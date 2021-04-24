@@ -7,7 +7,7 @@
 
 #include <obj/Ref.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <stl/vector>
 #endif
 

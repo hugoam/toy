@@ -19,7 +19,7 @@ using namespace two; namespace toy
 {
 	SqliteDatabase::SqliteDatabase(cstring path)
 		: m_path(path)
-		, m_models(MUD_MAX_TYPES)
+		, m_models(TWO_MAX_TYPES)
 	{}
 
 	SqliteDatabase::~SqliteDatabase()

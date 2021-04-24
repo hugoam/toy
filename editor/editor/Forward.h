@@ -32,7 +32,7 @@
 #include <shell/Forward.h>
 
 #ifndef TOY_EDITOR_EXPORT
-#define TOY_EDITOR_EXPORT MUD_IMPORT
+#define TOY_EDITOR_EXPORT TWO_IMPORT
 #endif
 
 

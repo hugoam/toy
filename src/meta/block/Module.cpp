@@ -1,6 +1,6 @@
 #include <infra/Cpp20.h>
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.block;
 #else
 #include <type/Vector.h>

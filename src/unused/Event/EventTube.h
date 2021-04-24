@@ -9,7 +9,7 @@
 #include <obj/Unique.h>
 #include <core/Forward.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <set>
 #include <stl/map>
 #include <stl/string>

@@ -37,7 +37,7 @@
 #include <platform/Config.h>
 
 #if defined EX_00_CUBE_EXPORT
-#define TOY_EX_00_CUBE_EXPORT MUD_EXPORT
+#define TOY_EX_00_CUBE_EXPORT TWO_EXPORT
 #else
 #define TOY_EX_00_CUBE_EXPORT
 #endif

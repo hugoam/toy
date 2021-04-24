@@ -12,7 +12,7 @@
 #include <shell/Forward.h>
 
 #ifndef _05_CHARACTER_EXPORT
-#define _05_CHARACTER_EXPORT MUD_IMPORT
+#define _05_CHARACTER_EXPORT TWO_IMPORT
 #endif
 
 

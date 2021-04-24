@@ -24,7 +24,7 @@
 #include <shell/Api.h>
 #include <wren/Api.h>
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 #include <emscripten.h>
 #define DECL EMSCRIPTEN_KEEPALIVE
 #else

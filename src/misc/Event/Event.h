@@ -10,7 +10,7 @@
 #include <core/Forward.h>
 #include <core/Event/EventHandler.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <stl/map>
 #endif
 

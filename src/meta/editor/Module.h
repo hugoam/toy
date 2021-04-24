@@ -1,11 +1,11 @@
 
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
+#if !defined TWO_MODULES || defined TWO_OBJ_LIB
 #include <refl/Module.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <meta/obj/Module.h>
 #include <meta/ui/Module.h>
 #include <meta/util/Module.h>
@@ -20,7 +20,7 @@
 #include <meta/editor/Convert.h>
 
 #ifndef TOY_EDITOR_REFL_EXPORT
-#define TOY_EDITOR_REFL_EXPORT MUD_IMPORT
+#define TOY_EDITOR_REFL_EXPORT TWO_IMPORT
 #endif
 
 namespace toy

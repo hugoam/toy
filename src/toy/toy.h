@@ -12,6 +12,6 @@
 #include <edit/Api.h>
 #include <shell/Api.h>
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 #define TOY_RESOURCE_PATH "/data/"
 #endif

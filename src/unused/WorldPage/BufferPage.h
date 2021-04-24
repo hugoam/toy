@@ -12,7 +12,7 @@
 #include <core/Physic/Medium.h>
 #include <core/Entity/Entity.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <memory>
 #endif
 

@@ -1,6 +1,6 @@
 #include <infra/Cpp20.h>
 
-#ifdef MUD_MODULES
+#ifdef TWO_MODULES
 module toy.util;
 #else
 #include <cstddef>

@@ -66,7 +66,7 @@ bool pump(Shell& app)
 	return app.pump();
 }
 
-#if MUD_PLATFORM_EMSCRIPTEN
+#if TWO_PLATFORM_EMSCRIPTEN
 #define TOY_RESOURCE_PATH "/data/"
 #include <emscripten/emscripten.h>
 
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 	static Shell app(execDir, TOY_RESOURCE_PATH);
 	app.initVisu(user, false);
 
-#ifdef MUD_PLATFORM_EMSCRIPTEN
+#ifdef TWO_PLATFORM_EMSCRIPTEN
 	g_app = &app;
 	emscripten_set_main_loop(iterate, 0, 1);
 #else

@@ -1,11 +1,11 @@
 
 #pragma once
 
-#if !defined MUD_MODULES || defined MUD_OBJ_LIB
+#if !defined TWO_MODULES || defined TWO_OBJ_LIB
 #include <refl/Module.h>
 #endif
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <meta/util/Module.h>
 #include <meta/core/Module.h>
 #include <meta/visu/Module.h>
@@ -21,7 +21,7 @@
 #include <meta/05_character/Convert.h>
 
 #ifndef _05_CHARACTER_REFL_EXPORT
-#define _05_CHARACTER_REFL_EXPORT MUD_IMPORT
+#define _05_CHARACTER_REFL_EXPORT TWO_IMPORT
 #endif
 
 	export_ class _05_CHARACTER_REFL_EXPORT _05_character : public Module

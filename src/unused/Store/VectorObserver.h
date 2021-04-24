@@ -10,7 +10,7 @@
 #include <obj/TypeUtils.h>
 #include <core/Store/StoreObserver.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <memory>
 #include <stl/vector>
 #endif

@@ -11,7 +11,7 @@
 #include <core/Store/StoreObserver.h>
 #include <core/Store/Store.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <stl/vector>
 #include <unordered_map>
 #include <unordered_set>

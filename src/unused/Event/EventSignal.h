@@ -12,7 +12,7 @@
 #include <core/Physic/Scope.h>
 #include <core/Event/EventTube.h>
 
-#ifndef MUD_CPP_20
+#ifndef TWO_CPP_20
 #include <algorithm>
 #include <list>
 #endif

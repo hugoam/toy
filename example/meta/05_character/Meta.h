@@ -2,7 +2,7 @@
 
 #pragma once
 
-#ifndef MUD_MODULES
+#ifndef TWO_MODULES
 #include <meta/05_character/Module.h>
 
 #include <obj/Any.h>

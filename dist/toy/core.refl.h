@@ -32,7 +32,7 @@ TOY_CORE_REFL_EXPORT Module& getModule();
 #endif
 
 
-#if !defined MUD_MODULES || defined MUD_TYPE_LIB
+#if !defined TWO_MODULES || defined TWO_TYPE_LIB
 #endif
 
 namespace two
