@@ -7,6 +7,7 @@
 #include <pool/SparsePool.hpp>
 #include <ecs/ECS.hpp>
 
+#include <core/Types.h>
 #include <core/Spatial/Spatial.h>
 #include <core/Movable/Movable.h>
 #include <core/Camera/Camera.h>

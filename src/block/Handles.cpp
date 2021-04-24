@@ -4,6 +4,7 @@
 //  This notice and the license may not be removed or altered from any source distribution.
 
 #include <ecs/ECS.hpp>
+#include <block/Types.h>
 #include <block/Forward.h>
 #include <block/Block.h>
 #include <block/Chunk.h>
