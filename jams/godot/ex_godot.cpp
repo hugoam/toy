@@ -339,7 +339,6 @@ void Player::spawn(const vec3& start_position)
 
 void paint_bullet(Gnode& parent, Bullet& bullet)
 {
-	return;
 	Spatial& spatial = bullet.m_spatial;
 
 	static Flow* flash = parent.m_scene->m_gfx.flows().file("flash");
@@ -561,8 +560,8 @@ void paint_viewer(Viewer& viewer)
 	//tonemap.m_mode = TonemapMode::ACES;
 
 	Glow& glow = viewer.m_viewport.comp<Glow>();
-	//glow.m_enabled = true;
-#ifndef TWO_GODOT_EMSCRIPTEN
+	glow.m_enabled = true;
+#ifndef TWO_PLATFORM_EMSCRIPTEN
 	glow.m_bicubic_filter = true;
 #endif
 }
