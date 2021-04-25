@@ -7,6 +7,7 @@
 #include <core/Navmesh/Navmesh.h>
 
 #include <infra/ToString.h>
+#include <geom/Primitive.hpp>
 #include <geom/Shape/ProcShape.h>
 #include <geom/Shape/DrawShape.h>
 #include <math/Random.h>

@@ -130,12 +130,13 @@ void Human::next_frame(Spatial& spatial, Movable& movable, Receptor& receptor, s
 
 	m_visor = this->aim();
 
-	for(llong i = m_bullets.size() - 1; i >= 0; --i)
-	{
-		m_bullets[i]->update();
-		if(m_bullets[i]->m_destroy)
-			m_bullets.erase(m_bullets.begin() + i);
-	}
+	if (!m_bullets.empty())
+		for(llong i = m_bullets.size() - 1; i >= 0; --i)
+		{
+			m_bullets[i]->update();
+			if(m_bullets[i]->m_destroy)
+				m_bullets.erase(m_bullets.begin() + i);
+		}
 
 	m_energy = min(1.f, m_energy + delta * 0.01f);
 	m_discharge = max(0.f, m_discharge - delta * 0.05f);
