@@ -8,7 +8,7 @@
 using namespace two; namespace toy
 {
 #if 0
-	Player::Player(Id id, const string& name)
+	Player::Player(const Id & id, const string& name)
 		: m_id(id)
 		, m_name(name)
 	{}
